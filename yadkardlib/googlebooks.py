@@ -5,7 +5,6 @@
 
 import re
 import urllib2
-import cookielib
 from urlparse import parse_qs
 from urlparse import urlparse
 
