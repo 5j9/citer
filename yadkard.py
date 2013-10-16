@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import urllib2
-from wsgiref.simple_server import make_server
 from cgi import escape
 from urlparse import parse_qs
 
@@ -57,14 +56,13 @@ def application(environ, start_response):
     except (TypeError, AttributeError), e:
         response_body = html % ('این ابزار برای تولید یادکرد مناسب ویکی‌پدیا\
  برابر شیوه‌نامهٔ شیکاگو کاربرد دارد.',
-                                'هم‌اکنون از وب‌گاه‌های زیر پشتیبانی می‌شود:\n\
+                                'در صورت بروز مشکل یا درست عمل نکردن ابزار \
+می‌توانید با من (دالبا) تماس بگیرید\n\n\
+امکان گسترش ابزار برای کتابخانه‌های دیجیتالی که خروجی bibtex یا refman (ris)‎ \
+تولید می‌کنند وجود دارد. هم‌اکنون از وب‌گاه‌های زیر پشتیبانی می‌شود:\n\n\
 * http://books.google.com\n\
 * http://www.noormags.com\n\
-* http://www.noorlib.ir\n\
-کافیست نشانی وب صفحه‌ای که کتاب در آن هست را در بخش «نشانی وب» در بالا کپی کنید و\
- دکمهٔ یادکرد را بفشارید.\n\n\
-در صورت بروز مشکل یا درست عمل نکردن ابزار می‌توانید با من (دالبا) تماس بگیرید.\
-امکان گسترش ابزار برای کتابخانه‌های دیجیتال ديگر وجود دارد.',
+* http://www.noorlib.ir',
                                 '??')
     status = '200 OK'
 
@@ -74,5 +72,12 @@ def application(environ, start_response):
 
     return [response_body]
 
-httpd = make_server('localhost', 8051, application)
-httpd.serve_forever()
+try:
+    from flup.server.fcgi import WSGIServer
+    #on toolserver:
+    WSGIServer(application).run()
+except ImportError:
+    #on local computer:
+    from wsgiref.simple_server import make_server
+    httpd = make_server('localhost', 8051, application)
+    httpd.serve_forever()
