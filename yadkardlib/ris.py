@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+from doi import pattern as doi_pattern
 
 def parse(ris_text):
     '''Parses RIS_text data and returns a dictionary of information'''
@@ -30,25 +31,36 @@ def parse(ris_text):
             
     m = re.search('(T1|TI)  - (.*)', ris_text)
     if m:
-        d['title'] = m.group(2).strip()
+        if m.group(2):
+            d['title'] = m.group(2).strip()
     m = re.search('PB  - (.*)', ris_text)
     if m:
         d['publisher'] = m.group(1).strip()
     m = re.search('(JF|JA)  - (.*)', ris_text)
-    if m:
-        d['journal'] = m.group(2).strip()
+    if m.group(2):
+        if m.group(2):
+            d['journal'] = m.group(2).strip()
     m = re.search('IS  - (.*)', ris_text)
     if m:
         d['number'] = m.group(1).strip()
+    m = re.search('VL  - (.*)', ris_text)
+    if m:
+        d['volume'] = m.group(1).strip()
     m = re.search('(PY|Y1|DA)  - (\d*)', ris_text)
-    if m:
-        d['year'] = m.group(2).strip()
+    if m.group(2):
+        if m.group(2):
+            d['year'] = m.group(2).strip()
     m = re.search('(PY|Y1|DA)  - \d+/(\d*)', ris_text)
-    if m:
-        d['month'] = m.group(2).strip()
+    if m.group(2):
+        if m.group(2):
+            d['month'] = m.group(2).strip()
     m = re.search('SN  - (.*)', ris_text)
     if m:
         d['isbn'] = m.group(1).strip()
+    #DOIs may be in N1 (notes) tag, search for it in any tag
+    m = re.search(doi_pattern, ris_text)
+    if m:
+        d['doi'] = m.group(0).strip()
     m = re.search('SP  - (.*)', ris_text)
     if m:
         d['startpage'] = m.group(1).strip()
