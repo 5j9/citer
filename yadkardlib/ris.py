@@ -7,7 +7,7 @@ def parse(ris_text):
     '''Parses RIS_text data and returns a dictionary of information'''
     d = {}
     #type: (book, journal, . . . )
-    m = re.match('TY  - (.*)', ris_text)
+    m = re.search('TY  - (.*)', ris_text)
     if m:
         d['type'] = m.group(1).strip()
     #author:
@@ -28,21 +28,24 @@ def parse(ris_text):
             d['lastnames'].append(lastname.strip())
             d['firstnames'].append(firstname.strip())
             
-    m = re.search('T1  - (.*)', ris_text)
+    m = re.search('(T1|TI)  - (.*)', ris_text)
     if m:
-        d['title'] = m.group(1).strip()
+        d['title'] = m.group(2).strip()
     m = re.search('PB  - (.*)', ris_text)
     if m:
         d['publisher'] = m.group(1).strip()
-    m = re.search('JF  - (.*)', ris_text)
+    m = re.search('(JF|JA)  - (.*)', ris_text)
     if m:
-        d['journal'] = m.group(1).strip()
+        d['journal'] = m.group(2).strip()
     m = re.search('IS  - (.*)', ris_text)
     if m:
         d['number'] = m.group(1).strip()
-    m = re.search('Y1  - (\d*)', ris_text)
+    m = re.search('(PY|Y1|DA)  - (\d*)', ris_text)
     if m:
-        d['year'] = m.group(1).strip()
+        d['year'] = m.group(2).strip()
+    m = re.search('(PY|Y1|DA)  - \d+/(\d*)', ris_text)
+    if m:
+        d['month'] = m.group(2).strip()
     m = re.search('SN  - (.*)', ris_text)
     if m:
         d['isbn'] = m.group(1).strip()
