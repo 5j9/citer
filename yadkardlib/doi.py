@@ -5,6 +5,7 @@
 
 import re
 import urllib2
+import xml.sax.saxutils as sax
 
 import langid
 
@@ -15,9 +16,14 @@ import citation
 class Doi():
     '''Creates a doi object'''
     
-    def __init__(self, doi_url):
-        self.url = doi_url
-        self.bibtex = get_bibtex(doi_url)
+    def __init__(self, doi_or_url):
+        #unescape '&amp;', '&lt;', and '&gt;' in doi_or_url befor applying regex
+        unescaped_url = sax.unescape(doi_or_url)
+        #it's assumed that there is always a match, this is (checked yadkard.py)
+        self.doi = re.search(pattern, unescaped_url).group(1)
+        self.url = 'http://dx.doi.org/' + self.doi
+        self.bibtex = get_bibtex(self.url)
+        print self.bibtex
         self.dictionary = bibtex.parse(self.bibtex)
         #although google does not provide a language field:
         if 'language' in self.dictionary:
@@ -44,3 +50,9 @@ def detect_language(string):
     language = m[0]
     error = m[1]
     return language, error
+
+#pattern from:
+#http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
+pattern = re.compile(
+                    r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'])\S)+)\b'
+                    )

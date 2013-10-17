@@ -33,14 +33,14 @@ def application(environ, start_response):
         if not url:
             #on first run url is not defined yet:
             response_body = html.skeleton %html.default_response
-        elif 'dx.doi.org' in url:
-            obj = doi.Doi(url)
         elif 'noormags.com' in url:
             obj = noormags.NoorMag(url)
         elif 'noorlib.ir' in url:
             obj = noorlib.NoorLib(url)
         elif 'books.google' in url:
             obj = googlebooks.GoogleBook(url)
+        elif doi.re.search(doi.pattern, doi.sax.unescape(url)):
+            obj = doi.Doi(url)
         else:
             obj = html.ResposeObj(*html.undefined_url_response)
             logger.info('%s\r\n%s' %('there was an undefined_url_response', url))
