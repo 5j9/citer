@@ -30,7 +30,6 @@ def application(environ, start_response):
     url = qdict.get('url', [''])[0]
     url = escape(url)
     try:
-        print url
         if not url:
             #on first run url is not defined yet:
             obj = html.ResposeObj(*html.default_response)
@@ -49,14 +48,10 @@ def application(environ, start_response):
         response_body = html.skeleton %(obj.ref, obj.cite, obj.error)
         
     except urllib2.HTTPError as e:
-        #todo:
-        print e
         logger.error('%s, %s' %(e, url))
         response_body = html.skeleton %html.httperror_response
     except Exception as e:
-        #todo:
         logger.critical('%s, %s' %(e, url))
-        print e
         response_body = html.skeleton %html.other_exception_response
     status = '200 OK'
 
