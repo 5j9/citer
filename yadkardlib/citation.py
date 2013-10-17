@@ -26,6 +26,8 @@ def create(d):
             s += '|جلد=' + d['volume']
         if 'year' in d:
             s += '|سال=' + d['year']
+        if 'month' in d:
+            s += '|ماه=' + d['month']
         if 'isbn' in d:
             s += '|شابک=' + d['isbn']
         if 'url' in d:
@@ -53,6 +55,8 @@ def create(d):
             s += '|ژورنال=' + d['journal']
         if 'year' in d:
             s += '|سال=' + d['year']
+        if 'month' in d:
+            s += '|ماه=' + d['month']
         if 'number' in d:
             s += '|شماره=' + d['number']
         if 'pages' in d:

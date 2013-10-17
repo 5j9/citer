@@ -66,6 +66,9 @@ def parse(bibtex_text):
     m = re.search('year\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
         d['year'] = m.group(1).strip()
+    m = re.search('month\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
+    if m:
+        d['month'] = m.group(1).strip()
     m = re.search('isbn\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
         d['isbn'] = m.group(1).strip()
