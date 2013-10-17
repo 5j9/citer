@@ -1,69 +1,62 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging, logging.handlers
 import urllib2
 from cgi import escape
 from urlparse import parse_qs
 
-from yadkardlib import noormags, googlebooks, noorlib
+from yadkardlib import noormags, googlebooks, noorlib, doi, html
 
+def mylogger():
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    handler = logging.handlers.RotatingFileHandler(
+                                    filename='./yadkardlib/yadkard.log',
+                                    mode='a',
+                                    maxBytes=20000,
+                                    backupCount=0,
+                                    encoding='utf-8',
+                                    delay=0) 
+    handler.setLevel(logging.DEBUG)
+    fmt = '%(asctime)s\r\n%(levelname)s\r\n%(message)s\r\n\r\n'
+    formatter = logging.Formatter(fmt)
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return logger
 
-html = """
-<html dir="rtl">
-<head>
- <title>یادکرد</title>
-</head>
-<body style="font-family: tahoma; font-size:0.8em">
- <form method="get" action="yadkard.fcgi">
-  <p>
-   نشانی وب:<br><input type="text" size="100" name="url">
-  <input type="submit" value="یادکرد">
-  </p>
- </form>
-  <p>
-   پانویس کوتاه‌شده و یادکرد:<br>
-   <textarea rows="10" cols="80" readonly>%s\n\n%s</textarea>
-  </p>
-  <p>
-   احتمال خطا در تشخیص زبان: %s ٪
-  </p>
-</body>
-</html>"""
-
-    	
 def application(environ, start_response):
     qdict = parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0]
     url = escape(url)
-    
     try:
-        if 'noormags.com' in url:
+        if not url:
+            #on first run url is not defined yet:
+            response_body = html.skeleton %html.default_response
+        elif 'dx.doi.org' in url:
+            obj = doi.Doi(url)
+        elif 'noormags.com' in url:
             obj = noormags.NoorMag(url)
         elif 'noorlib.ir' in url:
             obj = noorlib.NoorLib(url)
         elif 'books.google' in url:
             obj = googlebooks.GoogleBook(url)
         else:
-            obj = object()
-            obj.ref = 'نشانی‌وارد شده برای این ابزار تعریف نشده است'
-            obj.cite = 'اگر کتابخانهٔ دیجیتالی می‌شناسید که خروجی bibtex یا RIS \
-تولید می‌کند، لطفاً موضوع را با توسعه‌دهندهٔ ابزار در میان بگذارید تا در صورت \
-امکان به ابزار افزوده شود'
-            obj.error = '۱۰۰'
-        response_body = html % (obj.ref,
-                                obj.cite,
-                                obj.error)
-    except (TypeError, AttributeError), e:
-        response_body = html % ('این ابزار برای تولید یادکرد مناسب ویکی‌پدیا\
- برابر شیوه‌نامهٔ شیکاگو کاربرد دارد.',
-                                'در صورت بروز مشکل یا درست عمل نکردن ابزار \
-می‌توانید با من (دالبا) تماس بگیرید\n\n\
-امکان گسترش ابزار برای کتابخانه‌های دیجیتالی که خروجی bibtex یا refman (ris)‎ \
-تولید می‌کنند وجود دارد. هم‌اکنون از وب‌گاه‌های زیر پشتیبانی می‌شود:\n\n\
-* http://books.google.com\n\
-* http://www.noormags.com\n\
-* http://www.noorlib.ir',
-                                '??')
+            obj = html.ResposeObj(*html.undefined_url_response)
+            logger.info('%s\r\n%s' %('there was an undefined_url_response', url))
+        
+        response_body = html.skeleton %(obj.ref, obj.cite, obj.error)
+        
+    except urllib2.HTTPError as e:
+        #todo:
+        print e
+        logger.error('%s, %s' %(e, url))
+        response_body = html.skeleton %html.httperror_response
+    except Exception as e:
+        #todo:
+        logger.critical('%s, %s' %(e, url))
+        print e
+        response_body = html.skeleton %html.other_exception_response
     status = '200 OK'
 
     response_headers = [('Content-Type', 'text/html; charset=UTF-8'),
@@ -71,6 +64,8 @@ def application(environ, start_response):
     start_response(status, response_headers)
 
     return [response_body]
+
+logger = mylogger()
 
 try:
     from flup.server.fcgi import WSGIServer

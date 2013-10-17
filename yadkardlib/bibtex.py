@@ -75,12 +75,16 @@ def parse(bibtex_text):
     m = re.search('pages\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
         d['pages'] = m.group(1).strip()
-        if '–-' in d['pages']:
-            d['startpage'], d['endpage'] = d['pages'].split('--')
-            d['pages'] = d['pages'].replace('--', '–')
+        d['pages'] = d['pages'].replace('--', '–')
+        d['pages'] = d['pages'].replace('-', '–')
+        if '–' in d['pages']:
+            d['startpage'], d['endpage'] = d['pages'].split('–')
     m = re.search('url\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
         d['url'] = m.group(1).strip()
+    m = re.search('doi\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
+    if m:
+        d['doi'] = m.group(1).strip()
     m = re.search('address\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
         d['address'] = m.group(1).strip()

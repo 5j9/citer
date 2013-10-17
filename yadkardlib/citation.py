@@ -30,12 +30,14 @@ def create(d):
             s += '|شابک=' + d['isbn']
         if 'url' in d:
             s += '|پیوند=' + d['url']
+        if 'doi' in d:
+            s += '|doi=' + d['doi']
         if 'language' in d:
             s += '|زبان=' + d['language']
         s += '|تاریخ بازبینی=' + date.isoformat(date.today())
         s += '}}'
         return s
-    elif d['type'].lower == 'article' or d['type'] == 'JOUR':
+    elif d['type'].lower() == 'article' or d['type'] == 'JOUR':
         s = '* {{یادکرد ژورنال'
         if 'lastnames' in d:
             c = 0
@@ -57,6 +59,8 @@ def create(d):
             s += '|صفحه=' + d['pages']
         if 'url' in d:
             s += '|پیوند=' + d['url']
+        if 'doi' in d:
+            s += '|doi=' + d['doi']
         if 'language' in d:
             s += '|زبان=' + d['language']
         s += '|تاریخ بازبینی=' + date.isoformat(date.today())
