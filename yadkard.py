@@ -30,9 +30,10 @@ def application(environ, start_response):
     url = qdict.get('url', [''])[0]
     url = escape(url)
     try:
+        print url
         if not url:
             #on first run url is not defined yet:
-            response_body = html.skeleton %html.default_response
+            obj = html.ResposeObj(*html.default_response)
         elif 'noormags.com' in url:
             obj = noormags.NoorMag(url)
         elif 'noorlib.ir' in url:
