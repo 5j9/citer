@@ -6,7 +6,8 @@ import urllib2
 from cgi import escape
 from urlparse import parse_qs
 
-from yadkardlib import noormags, googlebooks, noorlib, doi, html
+from yadkardlib import noormags, googlebooks, noorlib, adinebook
+from yadkardlib import doi, isbn, html
 
 def mylogger():
     logger = logging.getLogger(__name__)
@@ -17,9 +18,9 @@ def mylogger():
                                     maxBytes=20000,
                                     backupCount=0,
                                     encoding='utf-8',
-                                    delay=0) 
+                                    delay=0)
     handler.setLevel(logging.DEBUG)
-    fmt = '%(asctime)s\r\n%(levelname)s\r\n%(message)s\r\n\r\n'
+    fmt = '\r\n%(asctime)s\r\n%(levelname)s\r\n%(message)s\r\n'
     formatter = logging.Formatter(fmt)
     handler.setFormatter(formatter)
     logger.addHandler(handler)
@@ -31,27 +32,40 @@ def application(environ, start_response):
     url = escape(url)
     try:
         if not url:
-            #on first run url is not defined yet:
+            #on first run url is not defined yet and is None:
             obj = html.ResposeObj(*html.default_response)
         elif 'noormags.com' in url:
             obj = noormags.NoorMag(url)
         elif 'noorlib.ir' in url:
             obj = noorlib.NoorLib(url)
+        elif 'adinebook.com' in url:
+            obj = adinebook.AdineBook(url)
         elif 'books.google' in url:
             obj = googlebooks.GoogleBook(url)
-        elif doi.re.search(doi.pattern, doi.sax.unescape(url)):
-            obj = doi.Doi(url)
         else:
-            obj = html.ResposeObj(*html.undefined_url_response)
-            logger.info('%s\r\n%s' %('there was an undefined_url_response', url))
-        
+            doi_m = doi.re.search(doi.doi_regex, doi.sax.unescape(url))
+            if doi_m:
+                obj = doi.Doi(doi_m.group(1), pure=True)
+            else:
+                isbn13_m = isbn.re.search(isbn.isbn13_regex, url)
+                if isbn13_m:
+                    obj = isbn.Isbn(isbn13_m.group(0), pure=True)
+                else:
+                    isbn10_m = isbn.re.search(isbn.isbn10_regex, url)
+                    if isbn10_m:
+                        obj = isbn.Isbn(isbn10_m.group(0), pure=True)
+                    else:
+                        obj = html.ResposeObj(*html.undefined_url_response)
+                        logger.info(u'There was an undefined_url_response\r\n' +\
+                                    url)
+
         response_body = html.skeleton %(obj.ref, obj.cite, obj.error)
-        
+
     except urllib2.HTTPError as e:
-        logger.error('%s, %s' %(e, url))
+        logger.exception(unicode(url))
         response_body = html.skeleton %html.httperror_response
     except Exception as e:
-        logger.critical('%s, %s' %(e, url))
+        logger.exception(unicode(url))
         response_body = html.skeleton %html.other_exception_response
     status = '200 OK'
 

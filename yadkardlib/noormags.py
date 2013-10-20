@@ -8,8 +8,8 @@ import urllib2
 
 #import bibtex[1]
 import ris
-import reference
-import citation
+import fawikiref
+import fawikicite
 
 class NoorMag():
     '''A class to deal with noormags articles'''
@@ -20,8 +20,8 @@ class NoorMag():
         #self.dictionary = bibtex.parse(self.bibtex)[1]
         self.ris = get_ris(noormags_url)
         self.dictionary = ris.parse(self.ris) 
-        self.ref = reference.create(self.dictionary)
-        self.cite = citation.create(self.dictionary)
+        self.ref = fawikiref.create(self.dictionary)
+        self.cite = fawikicite.create(self.dictionary)
         self.error = 0
 
         

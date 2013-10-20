@@ -11,8 +11,8 @@ from urlparse import urlparse
 import langid
 
 import bibtex
-import reference
-import citation
+import fawikiref
+import fawikicite
 
 class GoogleBook():
     '''Creates a google book object'''
@@ -32,23 +32,13 @@ class GoogleBook():
             self.dictionary['url'] += '&pg=' + pq['pg'][0]
         #although google does not provide a language field:
         if 'language' in self.dictionary:
-            self.dictionary['language']
             self.error = 0
         else:
             self.dictionary['language'], self.dictionary['error'] =\
-                                     detect_language(self.dictionary['title'])
+                                     langid.classify(self.dictionary['title'])
             self.error = round((1 - self.dictionary['error']) * 100, 2)
-        self.ref =reference.create(self.dictionary)
-        self.cite = citation.create(self.dictionary)
-
-
-def detect_language(string):
-    m = langid.classify(string)
-    #langid.identifier.set_languages(['en','de','fr','es','ja','fa'])
-    #m = langid.classify(string)
-    error = m[1]
-    language = m[0]
-    return language, error
+        self.ref = fawikiref.create(self.dictionary)
+        self.cite = fawikicite.create(self.dictionary)
 
 def get_bibtex(googlebook_url):
     '''Gets bibtex file content from a noormags url'''

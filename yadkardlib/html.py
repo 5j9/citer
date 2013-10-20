@@ -23,7 +23,7 @@ skeleton = """
  </form>
   <p>
    پانویس کوتاه‌شده و یادکرد:<br>
-   <textarea rows="12" cols="80" readonly>%s\n\n%s</textarea>
+   <textarea rows="13" cols="80" readonly>%s\n\n%s</textarea>
   </p>
   <p>
    احتمال خطا در تشخیص زبان: %s ٪
@@ -38,8 +38,9 @@ default_response = (
 * http://books.google.com (گوگل بوکس)\n\
 * http://www.noormags.com (نورمگز)\n\
 * http://www.noorlib.ir (کتابخانه دیجیتال نور)\n\
-* http://dx.doi.org (کلیهٔ نشانی‌های وب «شناسانۀ برنمود رقمی»، امکان واردکردن \
-مستقیم doi نیز وجود دارد)\n\n\
+http://www.adinebook.com (آدینه‌بوک)\n\
+* http://dx.doi.org (یا متنی که شامل «شناسانۀ برنمود رقمی» (doi) باشد)\n\
+* شابک (ISBN) برای بیشتر کتاب‌ها (ایرانی و خارجی)\n\n\
 در صورت بروز مشکل یا درست عمل نکردن ابزار می‌توانید با من (دالبا) تماس \
 بگیرید\n\
 امکان گسترش ابزار برای کتابخانه‌های دیجیتالی که خروجی Bibtex یا \

@@ -3,10 +3,10 @@
 
 def create(d):
     '''Creates citation based on the given dictionary'''
-    if 'lastnames' in d:
+    if 'authors' in d:
         s = '<ref>{{پک'
-        for lastname in d['lastnames']:
-            s += '|' + lastname
+        for name in d['authors']:
+            s += '|' + name.lastname
     else:
         s = '<ref>{{پک/بن'
     if 'year' in d:

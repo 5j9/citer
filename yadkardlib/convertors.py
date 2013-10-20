@@ -3,6 +3,28 @@
 
 # These functions can be useful, but are not implemented yet
 
+'''common functions and classes'''
+
+class Name():
+    '''Takes a fullname and its' seperator; converts it to a Name object.'''
+    def __init__(self, fullname, seperator=None):
+        self.firstname, self.lastname = firstname_lastname(fullname, seperator)
+        self.fullname = self.firstname + ' ' + self.lastname
+
+        
+def firstname_lastname(fullname, seperator):
+    fullname = fullname.strip()
+    if seperator:
+        if seperator in fullname:
+            lastname, firstname = fullname.split(seperator)
+        else:
+            lastname, firstname = fullname, ''
+    else:
+        sname = fullname.split(seperator)
+        lastname = sname.pop()
+        firstname = ' '.join(sname)
+    return firstname.strip(), lastname.strip()
+    
 def fanum2en(string):
     string = string.replace('۰', '0')
     string = string.replace('۱', '1')

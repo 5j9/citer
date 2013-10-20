@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import re
-from doi import pattern as doi_pattern
+from doi import doi_regex
+
+import convertors as conv
 
 def parse(ris_text):
     '''Parses RIS_text data and returns a dictionary of information'''
@@ -16,18 +18,9 @@ def parse(ris_text):
     #d['authors'] should not be created unless there are some authors
     if m:
         d['authors'] = []
-        for author in m:
-            d['authors'].append(author[1])
-        #author parameter needs to be parsed itself:
-        d['lastnames'] = []
-        d['firstnames'] = []
-        for author in d['authors']:
-            if ',' in author:
-                lastname, firstname = author.split(',')
-            else:
-                lastname, firstname = author, ''
-            d['lastnames'].append(lastname.strip())
-            d['firstnames'].append(firstname.strip())
+        for match in m:
+            name = conv.Name(match[1], ',')
+            d['authors'].append(name)
             
     m = re.search('(T1|TI)  - (.*)', ris_text)
     if m:
@@ -58,7 +51,7 @@ def parse(ris_text):
     if m:
         d['isbn'] = m.group(1).strip()
     #DOIs may be in N1 (notes) tag, search for it in any tag
-    m = re.search(doi_pattern, ris_text)
+    m = re.search(doi_regex, ris_text)
     if m:
         d['doi'] = m.group(0).strip()
     m = re.search('SP  - (.*)', ris_text)

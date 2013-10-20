@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+import convertors as conv
 
 #Known issues: currently it does not detect special symbols and escapes
 #more information: http://www.bibtex.org/SpecialSymbols/
@@ -29,21 +30,11 @@ def parse(bibtex_text):
     #author:
     m = re.search('author\s*=\s*\{\s*(.*?)\\s*}', bibtex_text, re.I)
     if m:
-        d['authors'] = m.group(1).strip()
-        #author parameter needs to be parsed itself:
-        if ' and ' in d['authors']:
-            author_list = d['authors'].split(' and ')
-        else:
-            author_list = [d['authors']]
-        d['lastnames'] = []
-        d['firstnames'] = []
-        for author in author_list:
-            if ',' in author:
-                lastname, firstname = author.split(',')
-            else:
-                lastname, fistname = author, ''
-            d['lastnames'].append(lastname.strip())
-            d['firstnames'].append(firstname.strip())
+        d['authors'] = []
+        authors = m.group(1).split(' and ')
+        for author in authors:
+            name = conv.Name(author, ',')
+            d['authors'].append(name)
         
     m = re.search('title\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:

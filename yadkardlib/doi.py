@@ -10,31 +10,32 @@ import xml.sax.saxutils as sax
 import langid
 
 import bibtex
-import reference
-import citation
+import fawikiref
+import fawikicite
 
 class Doi():
     '''Creates a doi object'''
     
-    def __init__(self, doi_or_url):
-        #unescape '&amp;', '&lt;', and '&gt;' in doi_or_url befor applying regex
-        unescaped_url = sax.unescape(doi_or_url)
-        #it's assumed that there is always a match, this is (checked yadkard.py)
-        self.doi = re.search(pattern, unescaped_url).group(1)
+    def __init__(self, doi_or_url, pure=False):
+        if pure:
+            self.doi = doi_or_url
+        else:
+            #unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
+            unescaped_url = sax.unescape(doi_or_url)
+            m = re.search(doi_regex, unescaped_url)
+            if m:
+                self.doi = m.group(1)
         self.url = 'http://dx.doi.org/' + self.doi
         self.bibtex = get_bibtex(self.url)
-        print self.bibtex
         self.dictionary = bibtex.parse(self.bibtex)
-        #although google does not provide a language field:
         if 'language' in self.dictionary:
-            self.dictionary['language']
             self.error = 0
         else:
             self.dictionary['language'], self.dictionary['error'] =\
-                                     detect_language(self.dictionary['title'])
+                                     langid.classify(self.dictionary['title'])
             self.error = round((1 - self.dictionary['error']) * 100, 2)
-        self.ref =reference.create(self.dictionary)
-        self.cite = citation.create(self.dictionary)
+        self.ref =fawikiref.create(self.dictionary)
+        self.cite = fawikicite.create(self.dictionary)
 
 def get_bibtex(doi_url):
     '''Gets bibtex file content from a doi url'''
@@ -43,16 +44,8 @@ def get_bibtex(doi_url):
     bibtex = urllib2.urlopen(req).read()
     return bibtex
 
-def detect_language(string):
-    m = langid.classify(string)
-    #langid.identifier.set_languages(['en','de','fr','es','ja','fa'])
-    #m = langid.classify(string)
-    language = m[0]
-    error = m[1]
-    return language, error
-
-#pattern from:
+#regex from:
 #http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
-pattern = re.compile(
+doi_regex = re.compile(
                     r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'])\S)+)\b'
                     )
