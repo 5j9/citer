@@ -76,13 +76,12 @@ def url2dictionary(adinebook_url):
                 d['editors'].append(conv.Name(
                                 name.split('(ويراستار)')[0]
                                 ))
-            #todo: add tranlators support to citation:
             elif '(مترجم)' in name:
                 d['translators'].append(conv.Name(
                                     name.split('(مترجم)')[0]
                                     ))
             elif '(' in name:
-                #todo: log
+                #others are not important for wiki citation
                 pass
             else:
                 d['authors'].append(conv.Name(
