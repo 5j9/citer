@@ -3,8 +3,9 @@
 
 #todo: editor and author and ... article link
 
-import convertors as conv
 from datetime import date
+
+import conv
 
 def create(d):
     '''Creates citation based on the given dictionary'''   
@@ -107,7 +108,7 @@ def translators2para(translators):
         c += 1
         if c == 1:
             s += name.fullname
-        elif c == len(names):
+        elif c == len(translators):
             s += ' و ' + name.fullname
         else:
             s += '، ' + name.fullname

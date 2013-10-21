@@ -15,7 +15,7 @@ import adinebook
 
 class Isbn():
     '''Creates a isbn object'''
-    
+
     def __init__(self, isbn_container_string, pure=False):
         '''gets an ISBN containing string and returns an ISBN onject
 The digits parameter, if passed, should be 10 or 13.
@@ -31,13 +31,14 @@ The digits parameter, if passed, should be 10 or 13.
                 #search for isbn10
                 m = re.search(isbn10_regex, isbn_container_string)
                 self.isbn = m.group(0)
-        self.bibtex = ottobib(self.isbn)
-        if self.bibtex:
-            self.dictionary = bibtex.parse(self.bibtex)
-        else:
-            adinebook_url = adinebook.isbn2url(self.isbn)
+        adinebook_url = adinebook.isbn2url(self.isbn)
+        try:
+            #it's possible that adinebook is not available
             self.dictionary = adinebook.url2dictionary(adinebook_url)
-        if ('language' in self.dictionary) or (not self.bibtex):
+        except:
+            self.bibtex = ottobib(self.isbn)
+            self.dictionary = bibtex.parse(self.bibtex)
+        if 'language' in self.dictionary:
             self.error = 0
         else:
             self.dictionary['language'], self.dictionary['error'] =\
@@ -48,12 +49,12 @@ The digits parameter, if passed, should be 10 or 13.
 
 def ottobib(isbn):
     '''converts ISBN to bibtex using ottobib.com'''
-    ottobib_url = 'http://www.ottobib.com/isbn/' + isbn + '/bibtex'                
+    ottobib_url = 'http://www.ottobib.com/isbn/' + isbn + '/bibtex'
     ottobib_html = urllib2.urlopen(ottobib_url).read()
     m = re.search('<textarea.*>(.*)</textarea>', ottobib_html, re.DOTALL)
     bibtex = m.group(1)
     return bibtex
-        
+
 #original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
 isbn13_regex = re.compile(
     r'97(?:8|9)([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'

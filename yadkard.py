@@ -7,7 +7,7 @@ from cgi import escape
 from urlparse import parse_qs
 
 from yadkardlib import noormags, googlebooks, noorlib, adinebook
-from yadkardlib import doi, isbn, html
+from yadkardlib import doi, isbn, html, conv
 
 def mylogger():
     logger = logging.getLogger(__name__)
@@ -38,20 +38,21 @@ def application(environ, start_response):
             obj = noormags.NoorMag(url)
         elif 'noorlib.ir' in url:
             obj = noorlib.NoorLib(url)
-        elif 'adinebook.com' in url:
+        elif 'adinebook.com/gp/product/' in url:
             obj = adinebook.AdineBook(url)
         elif 'books.google' in url:
             obj = googlebooks.GoogleBook(url)
         else:
-            doi_m = doi.re.search(doi.doi_regex, doi.sax.unescape(url))
+            en_url = conv.fanum2en(url)
+            doi_m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
             if doi_m:
                 obj = doi.Doi(doi_m.group(1), pure=True)
             else:
-                isbn13_m = isbn.re.search(isbn.isbn13_regex, url)
+                isbn13_m = isbn.re.search(isbn.isbn13_regex, en_url)
                 if isbn13_m:
                     obj = isbn.Isbn(isbn13_m.group(0), pure=True)
                 else:
-                    isbn10_m = isbn.re.search(isbn.isbn10_regex, url)
+                    isbn10_m = isbn.re.search(isbn.isbn10_regex, en_url)
                     if isbn10_m:
                         obj = isbn.Isbn(isbn10_m.group(0), pure=True)
                     else:
@@ -61,11 +62,11 @@ def application(environ, start_response):
 
         response_body = html.skeleton %(obj.ref, obj.cite, obj.error)
 
-    except urllib2.HTTPError as e:
-        logger.exception(unicode(url))
+    except urllib2.HTTPError:
+        logger.exception(url.decode('utf-8'))
         response_body = html.skeleton %html.httperror_response
-    except Exception as e:
-        logger.exception(unicode(url))
+    except:
+        logger.exception(url.decode('utf-8'))
         response_body = html.skeleton %html.other_exception_response
     status = '200 OK'
 

@@ -4,7 +4,7 @@
 import re
 from doi import doi_regex
 
-import convertors as conv
+import conv
 
 def parse(ris_text):
     '''Parses RIS_text data and returns a dictionary of information'''

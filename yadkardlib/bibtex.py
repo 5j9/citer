@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import re
-import convertors as conv
+
+import conv
 
 #Known issues: currently it does not detect special symbols and escapes
 #more information: http://www.bibtex.org/SpecialSymbols/

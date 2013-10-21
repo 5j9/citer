@@ -10,7 +10,7 @@ import langid
 
 import fawikiref
 import fawikicite
-import convertors as conv
+import conv
 import isbn
 
 class AdineBook():
@@ -45,7 +45,11 @@ def isbn2url(isbn):
 
 def url2dictionary(adinebook_url):
     '''This is a parser function. Get adinebook_url and returns a dict'''
-    adinebook_html = urllib2.urlopen(adinebook_url).read()
+    try:
+        adinebook_html = urllib2.urlopen(adinebook_url).read()
+    except:
+        #todo: log
+        return
     if 'صفحه مورد نظر پبدا نشد.' in adinebook_html:
         return
     else:
@@ -54,7 +58,10 @@ def url2dictionary(adinebook_url):
         pattern = '<title>آدینه بوک:\s?(?P<title>.*?)\s?' +\
                 '~(?P<names>.*?)\s?</title>'
         m = re.search(pattern, adinebook_html)
-        d['title'] = m.group('title')
+        if m:
+            d['title'] = m.group('title')
+        else:
+            return
         names = m.group('names').split('،')
         #initiating name lists:
         if m.group('names'):
