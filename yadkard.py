@@ -30,11 +30,11 @@ def application(environ, start_response):
     qdict = parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0]
     url = escape(url)
-    if (url is not None) and (not url.startswith('http')):
+    if not url.startswith('http'):
         url = 'http://' + url
     try:
-        if url is None:
-            #on first run url is not defined yet and is None:
+        if url == 'http://':
+            #on first run url is ''
             obj = html.ResposeObj(*html.default_response)
         elif 'noormags.com' in url:
             obj = noormags.NoorMag(url)
@@ -61,9 +61,7 @@ def application(environ, start_response):
                         obj = html.ResposeObj(*html.undefined_url_response)
                         logger.info(u'There was an undefined_url_response\r\n' +\
                                     url)
-
         response_body = html.skeleton %(obj.ref, obj.cite, obj.error)
-
     except urllib2.HTTPError:
         logger.exception(url.decode('utf-8'))
         response_body = html.skeleton %html.httperror_response
