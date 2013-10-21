@@ -32,10 +32,8 @@ The digits parameter, if passed, should be 10 or 13.
                 m = re.search(isbn10_regex, isbn_container_string)
                 self.isbn = m.group(0)
         adinebook_url = adinebook.isbn2url(self.isbn)
-        try:
-            #it's possible that adinebook is not available
-            self.dictionary = adinebook.url2dictionary(adinebook_url)
-        except:
+        self.dictionary = adinebook.url2dictionary(adinebook_url)
+        if not self.dictionary:
             self.bibtex = ottobib(self.isbn)
             self.dictionary = bibtex.parse(self.bibtex)
         if 'language' in self.dictionary:

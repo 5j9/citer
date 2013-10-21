@@ -35,7 +35,7 @@ def get_bibtex(noormags_url):
     return bibtex
 
 def get_ris(noormags_url):
-    #This is copied from noormags module (currently not supported)[1]
+    #This is copied from noormags module (currently not supported but may be)[1]
     '''Gets bibtex file content from a noormags url'''
     pagetext = urllib2.urlopen(noormags_url).read()
     article_id = re.search('RIS&id=(\d+)', pagetext).group(1)

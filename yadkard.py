@@ -30,8 +30,10 @@ def application(environ, start_response):
     qdict = parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0]
     url = escape(url)
+    if (url is not None) and (not url.startswith('http')):
+        url = 'http://' + url
     try:
-        if not url:
+        if url is None:
             #on first run url is not defined yet and is None:
             obj = html.ResposeObj(*html.default_response)
         elif 'noormags.com' in url:

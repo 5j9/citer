@@ -9,81 +9,61 @@ import conv
 
 def create(d):
     '''Creates citation based on the given dictionary'''   
-    if d['type'].lower() == 'book':
+    if d['type'] == 'book':
         s = '* {{یادکرد کتاب'
-        if 'authors' in d:
-            s += names2para(d['authors'],
-                              'نام',
-                              'نام خانوادگی'
-                              )             
-        if 'editors' in d:
-            s += names2para(d['editors'],
-                              'نام ویراستار',
-                              'نام خانوادگی ویراستار'
-                              )
-        if 'translators' in d:
-            s += translators2para(d['translators'])
-        if 'title' in d:
-            s += '|کتاب=' +  d['title']
-        if 'publisher' in d:
-            s += '|ناشر=' + d['publisher']
-        if 'series' in d:
-            s += '|سری=' + d['series']
-        if 'volume' in d:
-            s += '|جلد=' + d['volume']
-        if 'year' in d:
-            s += '|سال=' + d['year']
-        if 'month' in d:
-            s += '|ماه=' + d['month']
-        if 'isbn' in d:
-            s += '|شابک=' + d['isbn']
-        if 'url' in d:
-            s += '|پیوند=' + d['url']
-        if 'doi' in d:
-            s += '|doi=' + d['doi']
-        if 'language' in d:
-            s += '|زبان=' + d['language']
-        s += '|تاریخ بازبینی=' + date.isoformat(date.today())
-        s += '}}'
-        return s
-    elif d['type'].lower() == 'article' or d['type'] == 'JOUR':
+    elif d['type'] == 'article' or d['type'] == 'jour':
         s = '* {{یادکرد ژورنال'
-        if 'authors' in d:
-            s += names2para(d['authors'],
-                              'نام',
-                              'نام خانوادگی'
-                              )
-        if 'editors' in d:
-            s += names2para(d['editors'],
-                              'نام ویراستار',
-                              'نام خانوادگی ویراستار'
-                              )
-        if 'translators' in d:
-            s += translators2para(d['translators'])
-        if 'title' in d:
-            s += '|عنوان=' +  d['title']
-        if 'journal' in d:
-            s += '|ژورنال=' + d['journal']
-        if 'year' in d:
-            s += '|سال=' + d['year']
-        if 'month' in d:
-            s += '|ماه=' + d['month']
-        if 'number' in d:
-            s += '|شماره=' + d['number']
-        if 'pages' in d:
-            s += '|صفحه=' + d['pages']
-        if 'url' in d:
-            s += '|پیوند=' + d['url']
-        if 'doi' in d:
-            s += '|doi=' + d['doi']
-        if 'language' in d:
-            s += '|زبان=' + d['language']
-        s += '|تاریخ بازبینی=' + date.isoformat(date.today())
-        s += '}}'
-        return s
     else:
         raise KeyError, d['type'] + " is not a defined condition for d['type']"
 
+    if 'authors' in d:
+        s += names2para(d['authors'],
+                          'نام',
+                          'نام خانوادگی'
+                          )             
+    if 'editors' in d:
+        s += names2para(d['editors'],
+                          'نام ویراستار',
+                          'نام خانوادگی ویراستار'
+                          )
+    if 'translators' in d:
+        s += names1para(d['translators'], 'ترجمه')
+    if 'others' in d:
+        s += names1para(d['others'], 'دیگران')
+    if 'title' in d:
+        if d['type'] == 'book':
+            s += '|کتاب=' +  d['title']
+        else:
+            s += '|عنوان=' +  d['title']
+    if 'journal' in d:
+        s += '|ژورنال=' + d['journal']
+    if 'publisher' in d:
+        s += '|ناشر=' + d['publisher']
+    if 'series' in d:
+        s += '|سری=' + d['series']
+    if 'volume' in d:
+        s += '|جلد=' + d['volume']
+    if 'number' in d:
+        s += '|شماره=' + d['number']
+    if 'year' in d:
+        s += '|سال=' + d['year']
+    if 'month' in d:
+        s += '|ماه=' + d['month']
+    if 'isbn' in d:
+        s += '|شابک=' + d['isbn']
+    if d['type'] == 'article' or d['type'] == 'jour':
+        if 'pages' in d:
+            s += '|صفحه=' + d['pages']
+    if 'url' in d:
+        s += '|پیوند=' + d['url']
+    if 'doi' in d:
+        s += '|doi=' + d['doi']
+    if 'language' in d:
+        s += '|زبان=' + d['language']
+    s += '|تاریخ بازبینی=' + date.isoformat(date.today())
+    s += '}}'
+    return s
+    
 def names2para(names, fn_parameter, ln_parameter):
     '''takes lists of firstnames and lastnames and returns the string to be
 appended to citation string'''
@@ -101,8 +81,8 @@ appended to citation string'''
                  name.firstname
     return s
             
-def translators2para(translators):
-    s = '|ترجمه='
+def names1para(translators, para):
+    s = '|' + para + '='
     c = 0
     for name in translators:
         c += 1

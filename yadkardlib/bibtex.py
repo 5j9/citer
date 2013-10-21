@@ -23,11 +23,7 @@ def parse(bibtex_text):
     #type: (book, journal, . . . )
     m = re.search('@(.*?)\s*\{', bibtex_text, re.I)
     if m:
-        d['type'] = m.group(1).strip()
-    #citation-key:
-    m = re.search('@.*?{\s*(.*?)\s*,', bibtex_text, re.I)
-    if m:
-        d['citation-key'] = m.group(1).strip()
+        d['type'] = m.group(1).strip().lower()
     #author:
     m = re.search('author\s*=\s*\{\s*(.*?)\\s*}', bibtex_text, re.I)
     if m:

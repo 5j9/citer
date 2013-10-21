@@ -12,7 +12,7 @@ def parse(ris_text):
     #type: (book, journal, . . . )
     m = re.search('TY  - (.*)', ris_text)
     if m:
-        d['type'] = m.group(1).strip()
+        d['type'] = m.group(1).strip().lower()
     #author:
     m = re.findall('(:?AU|A\d)  - (.*)', ris_text)
     #d['authors'] should not be created unless there are some authors

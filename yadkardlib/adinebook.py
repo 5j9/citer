@@ -32,6 +32,7 @@ class AdineBook():
         self.ref =fawikiref.create(self.dictionary)
         self.cite = fawikicite.create(self.dictionary)
 
+
 def isbn2url(isbn):
     #apparently adinebook uses 10 digit codes (without hyphens) for its books
     #if it's an isbn13 then the first 3 digits are excluded:
@@ -46,6 +47,8 @@ def isbn2url(isbn):
 def url2dictionary(adinebook_url):
     '''This is a parser function. Get adinebook_url and returns a dict'''
     try:
+        #this try statement is needed because if adinebook is not available then
+        #    ottobib should continoue its' work in isbn.py
         adinebook_html = urllib2.urlopen(adinebook_url).read()
     except:
         #todo: log
@@ -66,6 +69,7 @@ def url2dictionary(adinebook_url):
         #initiating name lists:
         if m.group('names'):
             d['authors'] = []
+            d['others'] = []
         if '(ويراستار)' in m.group('names'):
             d['editors'] = []
         if '(مترجم)' in m.group('names'):
@@ -81,12 +85,18 @@ def url2dictionary(adinebook_url):
                                     name.split('(مترجم)')[0]
                                     ))
             elif '(' in name:
-                #others are not important for wiki citation
-                pass
+                d['others'].append(conv.Name(
+                                        re.split('\(.*\)', name)[0]
+                                        ))
+                d['others'][-1].fullname = name
             else:
                 d['authors'].append(conv.Name(
                                 name
                                 ))
+        if not d['authors']:
+            del d['authors']
+        if not d['others']:
+            del d['others']
         m = re.search('نشر:</b>\s*(.*?)\s*\(.*</li>', adinebook_html)
         if m:
             d['publisher'] = m.group(1)
