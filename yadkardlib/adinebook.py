@@ -38,7 +38,6 @@ def isbn2url(isbn):
     #if it's an isbn13 then the first 3 digits are excluded:
     isbn = isbn.replace('-', '')
     isbn = isbn.replace(' ', '')
-    isbn = isbn.replace('-', '')
     if len(isbn) == 13:
         isbn = isbn [3:]
     url = 'http://www.adinebook.com/gp/product/' + isbn

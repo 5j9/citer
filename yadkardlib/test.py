@@ -135,6 +135,13 @@ class IsbnTest(unittest.TestCase):
         self.assertIn(e.decode('utf-8'), o.cite.decode('utf-8'))
 
     def test_is3(self):
+        '''exists in both'''
+        i = '964-6736-34-3 '
+        o = isbn.Isbn(i)
+        e = '* {{یادکرد کتاب|دیگران=سحر معصومی (به اهتمام)|کتاب=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری|ناشر=نگاه|سال=1386|ماه=بهمن|شابک=964-6736-34-3|زبان=fa|تاریخ بازبینی='
+        self.assertIn(e.decode('utf-8'), o.cite.decode('utf-8')) 
+
+    def test_is4(self):
         '''unpure isbn10'''
         i = 'choghondar 964-92962-6-3 شلغم'
         o = isbn.Isbn(i)

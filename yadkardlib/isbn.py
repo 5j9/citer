@@ -32,10 +32,10 @@ The digits parameter, if passed, should be 10 or 13.
                 m = re.search(isbn10_regex, isbn_container_string)
                 self.isbn = m.group(0)
         adinebook_url = adinebook.isbn2url(self.isbn)
-        self.dictionary = adinebook.url2dictionary(adinebook_url)
-        if not self.dictionary:
-            self.bibtex = ottobib(self.isbn)
-            self.dictionary = bibtex.parse(self.bibtex)
+        a = adinebook.url2dictionary(adinebook_url)
+        self.bibtex = ottobib(self.isbn)
+        o = bibtex.parse(self.bibtex)
+        self.dictionary = choose_dict(a, o)
         if 'language' in self.dictionary:
             self.error = 0
         else:
@@ -44,6 +44,30 @@ The digits parameter, if passed, should be 10 or 13.
             self.error = round((1 - self.dictionary['error']) * 100, 2)
         self.ref = fawikiref.create(self.dictionary)
         self.cite = fawikicite.create(self.dictionary)
+
+def choose_dict(adinebook, ottobib):
+    '''returns adinebook if both contain the same isbn or if adinebook is None.
+Background: adinebook.com ommits 3 digits from it's isbn when converting them to
+urls. This may make them volnarable to resolve for wrong isbn.'''
+    if adinebook and ottobib:
+        #both exist
+        if isbn2int(adinebook['isbn']) == isbn2int(ottobib['isbn']):
+            #both isbns are equal
+            return adinebook
+        else:
+            #isbns are not equal
+            return ottobib
+    elif adinebook:
+        #only adinebook exists
+        return adinebook
+    else:
+        #only ottobib exists
+        return ottobib    
+
+def isbn2int(isbn):
+    isbn = isbn.replace('-', '')
+    isbn = isbn.replace(' ', '')
+    return int(isbn)
 
 def ottobib(isbn):
     '''converts ISBN to bibtex using ottobib.com'''
