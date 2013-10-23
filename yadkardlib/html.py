@@ -13,6 +13,19 @@ skeleton = """
 <html dir="rtl">
 <head>
  <title>یادکرد</title>
+ <style type="text/css">
+  select, textarea, input {
+   background-color: rgb(255, 255, 255);
+   border: 1px solid rgb(204, 204, 204);
+   padding: 2px 2px;
+   margin-bottom: 10px;
+   font-size: 14px;
+   line-height: 16px;
+   color: rgb(85, 85, 85);
+   vertical-align: middle;
+   border-radius: 5px 5px 5px 5px;
+   }
+  </style>
 </head>
 <body style="font-family: tahoma; font-size:0.8em">
  <form method="get" action="yadkard.fcgi">
@@ -38,14 +51,13 @@ default_response = (
 * http://books.google.com (گوگل بوکس)\n\
 * http://www.noormags.com (نورمگز)\n\
 * http://www.noorlib.ir (کتابخانه دیجیتال نور)\n\
-http://www.adinebook.com (آدینه‌بوک)\n\
+* http://www.adinebook.com (آدینه‌بوک)\n\
 * http://dx.doi.org (یا متنی که شامل «شناسانۀ برنمود رقمی» (doi) باشد)\n\
 * شابک (ISBN) برای بیشتر کتاب‌ها (ایرانی و خارجی)\n\n\
 در صورت بروز مشکل یا درست عمل نکردن ابزار می‌توانید با من (دالبا) تماس \
-بگیرید\n\
-امکان گسترش ابزار برای کتابخانه‌های دیجیتالی که خروجی Bibtex یا \
+بگیرید. امکان گسترش ابزار برای کتابخانه‌های دیجیتالی که خروجی Bibtex یا \
 RefMan ‏(RIS) تولید می‌کنند وجود دارد.',
-    '??')
+    '؟؟')
 
 undefined_url_response = ('نشانی واردشده برای این ابزار تعریف نشده‌است.',
                       'اگر کتابخانهٔ دیجیتالی می‌شناسید که خروجی \
