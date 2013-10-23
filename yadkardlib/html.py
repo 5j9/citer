@@ -25,9 +25,13 @@ skeleton = """
    vertical-align: middle;
    border-radius: 5px 5px 5px 5px;
    }
+  body {
+  font-family: tahoma;
+  font-size:0.8em
+  }
   </style>
 </head>
-<body style="font-family: tahoma; font-size:0.8em">
+<body>
  <form method="get" action="yadkard.fcgi">
   <p>
    نشانی وب:<br><input type="text" size="100" name="url">
