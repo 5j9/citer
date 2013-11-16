@@ -67,7 +67,16 @@ class GooglebookTest(unittest.TestCase):
         e = '* {{یادکرد کتاب|نام خانوادگی=Arms|نام=W.Y.|کتاب=Digital Libraries|ناشر=MIT Press|سری=Digital libraries and electronic publishing|سال=2001|شابک=9780262261340|پیوند=http://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11|زبان=en|تاریخ بازبینی='
         self.assertIn(e.decode('utf-8'), o.cite.decode('utf-8'))
 
+    def test_gb2(self):
+        '''a book with more than 4 authors (10 authors)'''
+        i = 'http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
+        o = googlebooks.GoogleBook(i)
+        e1 = '<ref>{{پک|Anderson|DeBolt|Featherstone|Gunther|2010|ک=InterACT with Web Standards: A holistic approach to web design|زبان=en|ص=57}}</ref>'
+        e2 = '* {{یادکرد کتاب|نام خانوادگی=Anderson|نام=E.|نام خانوادگی۲=DeBolt|نام۲=V.|نام خانوادگی۳=Featherstone|نام۳=D.|نام خانوادگی۴=Gunther|نام۴=L.|نام خانوادگی۵=Jacobs|نام۵=D.R.|نام خانوادگی۶=Mills|نام۶=C.|نام خانوادگی۷=Schmitt|نام۷=C.|نام خانوادگی۸=Sims|نام۸=G.|نام خانوادگی۹=Walter|نام۹=A.|نام خانوادگی۱۰=Jensen-Inman|نام۱۰=L.|کتاب=InterACT with Web Standards: A holistic approach to web design|ناشر=Pearson Education|سال=2010|شابک=9780132704908|پیوند=http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57|زبان=en|تاریخ بازبینی='
+        self.assertIn(e1.decode('utf-8'), o.ref.decode('utf-8'))
+        self.assertIn(e2.decode('utf-8'), o.cite.decode('utf-8'))
 
+        
 class NoormagsTest(unittest.TestCase):
 
     def test_nm1(self):
