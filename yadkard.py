@@ -61,8 +61,8 @@ def application(environ, start_response):
                         obj = html.ResposeObj(*html.undefined_url_response)
                         logger.info(u'There was an undefined_url_response\r\n' +\
                                     url)
-        response_body = html.skeleton %(obj.ref.encode('utf-8'),
-                                        obj.cite.encode('utf-8'),
+        response_body = html.skeleton %(obj.ref,
+                                        obj.cite,
                                         obj.error)
     except urllib2.HTTPError:
         logger.exception(url.decode('utf-8'))
@@ -76,7 +76,7 @@ def application(environ, start_response):
                   ('Content-Length', str(len(response_body)))]
     start_response(status, response_headers)
 
-    return [response_body]
+    return [response_body.encode('utf-8')]
 
 logger = mylogger()
 
