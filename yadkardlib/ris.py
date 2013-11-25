@@ -61,7 +61,7 @@ def parse(ris_text):
     m = re.search('EP  - (.*)', ris_text)
     if m:
         d['endpage'] = m.group(1).strip()
-        d['pages'] = d['startpage'] + '–' + d['endpage']
+        d['pages'] = d['startpage'] + u'–' + d['endpage']
     m = re.search('UR  - (.*)', ris_text)
     if m:
         #in IRS, url can be seprated using a ";"

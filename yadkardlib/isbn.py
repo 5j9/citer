@@ -72,7 +72,7 @@ def isbn2int(isbn):
 def ottobib(isbn):
     '''converts ISBN to bibtex using ottobib.com'''
     ottobib_url = 'http://www.ottobib.com/isbn/' + isbn + '/bibtex'
-    ottobib_html = urllib2.urlopen(ottobib_url).read()
+    ottobib_html = urllib2.urlopen(ottobib_url).read().decode('utf8')
     m = re.search('<textarea.*>(.*)</textarea>', ottobib_html, re.DOTALL)
     bibtex = m.group(1)
     return bibtex

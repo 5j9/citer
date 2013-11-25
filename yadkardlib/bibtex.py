@@ -12,7 +12,7 @@ import conv
 def parse(bibtex_text):
     '''Parses bibtex_text data and returns a dictionary of information'''
     #replacing common latex special commonds:
-    bibtex_text = bibtex_text.replace('{\textregistered}', '®')
+    bibtex_text = bibtex_text.replace(r'{\textregistered}', u'®')
     bibtex_text = bibtex_text.replace('\%', '%')
     bibtex_text = bibtex_text.replace('\$', '$')
     bibtex_text = bibtex_text.replace('\{', '{')
@@ -67,10 +67,10 @@ def parse(bibtex_text):
     m = re.search('pages\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
         d['pages'] = m.group(1).strip()
-        d['pages'] = d['pages'].replace('--', '–')
-        d['pages'] = d['pages'].replace('-', '–')
-        if '–' in d['pages']:
-            d['startpage'], d['endpage'] = d['pages'].split('–')
+        d['pages'] = d['pages'].replace('--', u'–')
+        d['pages'] = d['pages'].replace('-', u'–')
+        if u'–' in d['pages']:
+            d['startpage'], d['endpage'] = d['pages'].split(u'–')
     m = re.search('url\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
         d['url'] = m.group(1).strip()

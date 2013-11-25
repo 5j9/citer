@@ -41,7 +41,7 @@ def get_bibtex(doi_url):
     '''Gets bibtex file content from a doi url'''
     req = urllib2.Request(doi_url)
     req.add_header('Accept', 'text/bibliography; style=bibtex')
-    bibtex = urllib2.urlopen(req).read()
+    bibtex = urllib2.urlopen(req).read().decode('utf8')
     return bibtex
 
 #regex from:

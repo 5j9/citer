@@ -31,7 +31,7 @@ def get_bibtex(noormags_url):
     article_id = re.search('CitationHandler\.ashx\?id=(\d+)', pagetext).group(1)
     url = 'http://www.noorlib.ir/View/HttpHandler/CitationHandler.ashx?' +\
           'id=' + article_id + '&format=BibTex'
-    bibtex = urllib2.urlopen(url).read()
+    bibtex = urllib2.urlopen(url).read().decode('utf8')
     return bibtex
 
 def get_ris(noormags_url):
@@ -41,5 +41,5 @@ def get_ris(noormags_url):
     article_id = re.search('RIS&id=(\d+)', pagetext).group(1)
     url = 'http://www.noormags.com/view/CitationHandler.ashx?' +\
           'format=RIS&id=' + article_id
-    ris = urllib2.urlopen(url).read()
+    ris = urllib2.urlopen(url).read().decode('utf8')
     return ris

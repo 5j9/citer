@@ -48,40 +48,40 @@ def url2dictionary(adinebook_url):
     try:
         #this try statement is needed because if adinebook is not available then
         #    ottobib should continoue its' work in isbn.py
-        adinebook_html = urllib2.urlopen(adinebook_url).read()
+        adinebook_html = urllib2.urlopen(adinebook_url).read().decode('utf-8')
     except:
         #todo: log
         return
-    if 'صفحه مورد نظر پبدا نشد.' in adinebook_html:
+    if u'صفحه مورد نظر پبدا نشد.' in adinebook_html:
         return
     else:
         d = {}
         d['type'] = 'book'
-        pattern = '<title>آدینه بوک:\s?(?P<title>.*?)\s?' +\
+        pattern = u'<title>آدینه بوک:\s?(?P<title>.*?)\s?' +\
                 '~(?P<names>.*?)\s?</title>'
         m = re.search(pattern, adinebook_html)
         if m:
             d['title'] = m.group('title')
         else:
             return
-        names = m.group('names').split('،')
+        names = m.group('names').split(u'،')
         #initiating name lists:
         if m.group('names'):
             d['authors'] = []
             d['others'] = []
-        if '(ويراستار)' in m.group('names'):
+        if u'(ويراستار)' in m.group('names'):
             d['editors'] = []
-        if '(مترجم)' in m.group('names'):
+        if u'(مترجم)' in m.group('names'):
             d['translators'] = []
         #building lists:
         for name in names:
-            if '(ويراستار)' in name:
+            if u'(ويراستار)' in name:
                 d['editors'].append(conv.Name(
-                                name.split('(ويراستار)')[0]
+                                name.split(u'(ويراستار)')[0]
                                 ))
-            elif '(مترجم)' in name:
+            elif u'(مترجم)' in name:
                 d['translators'].append(conv.Name(
-                                    name.split('(مترجم)')[0]
+                                    name.split(u'(مترجم)')[0]
                                     ))
             elif '(' in name:
                 d['others'].append(conv.Name(
@@ -96,16 +96,16 @@ def url2dictionary(adinebook_url):
             del d['authors']
         if not d['others']:
             del d['others']
-        m = re.search('نشر:</b>\s*(.*?)\s*\(.*</li>', adinebook_html)
+        m = re.search(u'نشر:</b>\s*(.*?)\s*\(.*</li>', adinebook_html)
         if m:
             d['publisher'] = m.group(1)
-        m = re.search('نشر:</b>.*\([\d\s]*(.*?)،.*', adinebook_html)
+        m = re.search(u'نشر:</b>.*\([\d\s]*(.*?)،.*', adinebook_html)
         if m:
             d['month'] = m.group(1)
-        m = re.search('نشر:</b>.*?\(.*?(\d\d\d\d)\)</li>', adinebook_html)
+        m = re.search(u'نشر:</b>.*?\(.*?(\d\d\d\d)\)</li>', adinebook_html)
         if m:
             d['year'] = m.group(1)
-        m = re.search('شابک:.*?([\d-]*)</span></li>', adinebook_html)
+        m = re.search(u'شابک:.*?([\d-]*)</span></li>', adinebook_html)
         if m:
             d['isbn'] = m.group(1)          
     return d

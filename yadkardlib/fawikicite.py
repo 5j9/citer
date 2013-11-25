@@ -10,57 +10,57 @@ import conv
 def create(d):
     '''Creates citation based on the given dictionary'''   
     if d['type'] == 'book':
-        s = '* {{یادکرد کتاب'
+        s = u'* {{یادکرد کتاب'
     elif d['type'] == 'article' or d['type'] == 'jour':
-        s = '* {{یادکرد ژورنال'
+        s = u'* {{یادکرد ژورنال'
     else:
         raise KeyError, d['type'] + " is not a defined condition for d['type']"
 
     if 'authors' in d:
         s += names2para(d['authors'],
-                          'نام',
-                          'نام خانوادگی'
+                          u'نام',
+                          u'نام خانوادگی'
                           )             
     if 'editors' in d:
         s += names2para(d['editors'],
-                          'نام ویراستار',
-                          'نام خانوادگی ویراستار'
+                          u'نام ویراستار',
+                          u'نام خانوادگی ویراستار'
                           )
     if 'translators' in d:
-        s += names1para(d['translators'], 'ترجمه')
+        s += names1para(d['translators'], u'ترجمه')
     if 'others' in d:
-        s += names1para(d['others'], 'دیگران')
+        s += names1para(d['others'], u'دیگران')
     if 'title' in d:
         if d['type'] == 'book':
-            s += '|کتاب=' +  d['title']
+            s += u'|کتاب=' +  d['title']
         else:
-            s += '|عنوان=' +  d['title']
+            s += u'|عنوان=' +  d['title']
     if 'journal' in d:
-        s += '|ژورنال=' + d['journal']
+        s += u'|ژورنال=' + d['journal']
     if 'publisher' in d:
-        s += '|ناشر=' + d['publisher']
+        s += u'|ناشر=' + d['publisher']
     if 'series' in d:
-        s += '|سری=' + d['series']
+        s += u'|سری=' + d['series']
     if 'volume' in d:
-        s += '|جلد=' + d['volume']
+        s += u'|جلد=' + d['volume']
     if 'number' in d:
-        s += '|شماره=' + d['number']
+        s += u'|شماره=' + d['number']
     if 'year' in d:
-        s += '|سال=' + d['year']
+        s += u'|سال=' + d['year']
     if 'month' in d:
-        s += '|ماه=' + d['month']
+        s += u'|ماه=' + d['month']
     if 'isbn' in d:
-        s += '|شابک=' + d['isbn']
+        s += u'|شابک=' + d['isbn']
     if d['type'] == 'article' or d['type'] == 'jour':
         if 'pages' in d:
-            s += '|صفحه=' + d['pages']
+            s += u'|صفحه=' + d['pages']
     if 'url' in d:
-        s += '|پیوند=' + d['url']
+        s += u'|پیوند=' + d['url']
     if 'doi' in d:
         s += '|doi=' + d['doi']
     if 'language' in d:
-        s += '|زبان=' + d['language']
-    s += '|تاریخ بازبینی=' + date.isoformat(date.today())
+        s += u'|زبان=' + d['language']
+    s += u'|تاریخ بازبینی=' + date.isoformat(date.today())
     s += '}}'
     return s
     
@@ -89,8 +89,8 @@ def names1para(translators, para):
         if c == 1:
             s += name.fullname
         elif c == len(translators):
-            s += ' و ' + name.fullname
+            s += u' و ' + name.fullname
         else:
-            s += '، ' + name.fullname
+            s += u'، ' + name.fullname
     return s
         
