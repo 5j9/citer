@@ -12,6 +12,7 @@ import conv
 def parse(bibtex_text):
     '''Parses bibtex_text data and returns a dictionary of information'''
     #replacing common latex special commonds:
+    bibtex_text = bibtex_text.replace('{\textregistered}', '®')
     bibtex_text = bibtex_text.replace('\%', '%')
     bibtex_text = bibtex_text.replace('\$', '$')
     bibtex_text = bibtex_text.replace('\{', '{')
