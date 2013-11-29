@@ -84,6 +84,16 @@ class GooglebookTest(unittest.TestCase):
         e2 = u'* {{یادکرد کتاب|نام خانوادگی=Farrell|نام=J.|کتاب=Microsoft® Visual C# 2008 Comprehensive: An Introduction to Object-Oriented Programming|شابک=9781111786199|پیوند=http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588|زبان=en|تاریخ بازبینی='
         self.assertIn(e1, o.ref)
         self.assertIn(e2, o.cite)
+
+    def test_gb4(self):
+        '''Non-ascii characters in author's name.'''
+        i = 'http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa=X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q=%22legal%20translation%20is%22&f=false'
+        o = googlebooks.GoogleBook(i)
+        e1 = u'<ref>{{پک|Šarčević|1997|ک=New Approach to Legal Translation|زبان=en|ص=229}}</ref>'
+        e2 = u'* {{یادکرد کتاب|نام خانوادگی=Šarčević|نام=S.|کتاب=New Approach to Legal Translation|ناشر=Kluwer Law International|سال=1997|شابک=9789041104014|پیوند=http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229|زبان=en|تاریخ بازبینی='
+        self.assertIn(e1, o.ref)
+        self.assertIn(e2, o.cite)
+
         
 class NoormagsTest(unittest.TestCase):
 
