@@ -36,6 +36,11 @@ The digits parameter, if passed, should be 10 or 13.
         self.bibtex = ottobib(self.isbn)
         o = bibtex.parse(self.bibtex)
         self.dictionary = choose_dict(a, o)
+        if not a and not o:
+            self.ref = u'شابک در دادگان یافت نشد.'
+            self.cite = u'اطلاعات این شابک در دسترس نیست.'
+            self.error = 100
+            return
         if 'language' in self.dictionary:
             self.error = 0
         else:
