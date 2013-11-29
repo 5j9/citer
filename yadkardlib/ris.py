@@ -26,11 +26,14 @@ def parse(ris_text):
     if m:
         if m.group(2):
             d['title'] = m.group(2).strip()
+    m = re.search('T3  - (.*)', ris_text)
+    if m:
+        d['series'] = m.group(1).strip()
     m = re.search('PB  - (.*)', ris_text)
     if m:
         d['publisher'] = m.group(1).strip()
     m = re.search('(JF|JA)  - (.*)', ris_text)
-    if m.group(2):
+    if m:
         if m.group(2):
             d['journal'] = m.group(2).strip()
     m = re.search('IS  - (.*)', ris_text)
@@ -40,11 +43,11 @@ def parse(ris_text):
     if m:
         d['volume'] = m.group(1).strip()
     m = re.search('(PY|Y1|DA)  - (\d*)', ris_text)
-    if m.group(2):
+    if m:
         if m.group(2):
             d['year'] = m.group(2).strip()
     m = re.search('(PY|Y1|DA)  - \d+/(\d*)', ris_text)
-    if m.group(2):
+    if m:
         if m.group(2):
             d['month'] = m.group(2).strip()
     m = re.search('SN  - (.*)', ris_text)
