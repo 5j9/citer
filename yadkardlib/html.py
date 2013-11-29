@@ -40,7 +40,7 @@ skeleton = u"""
  </form>
   <p>
    پانویس کوتاه‌شده و یادکرد:<br>
-   <textarea rows="13" cols="80" readonly>%s\n\n%s</textarea>
+   <textarea rows="15" cols="80" readonly>%s\n\n%s</textarea>
   </p>
   <p>
    احتمال خطا در تشخیص زبان: %s ٪
