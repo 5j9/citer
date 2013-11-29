@@ -10,7 +10,8 @@ from urlparse import urlparse
 
 import langid
 
-import bibtex
+#import bibtex [1]
+import ris
 import fawikiref
 import fawikicite
 
@@ -19,8 +20,10 @@ class GoogleBook():
     
     def __init__(self, googlebook_url):
         self.url = googlebook_url
-        self.bibtex = get_bibtex(googlebook_url)
-        self.dictionary = bibtex.parse(self.bibtex)
+        #self.bibtex = get_bibtex(googlebook_url) [1]
+        #self.dictionary = bibtex.parse(self.bibtex) [1]
+        self.bibtex = get_ris(googlebook_url)
+        self.dictionary = ris.parse(self.bibtex)
         pu = urlparse(googlebook_url)
         pq = parse_qs(pu.query)
         #default domain is prefered:
@@ -53,21 +56,21 @@ def get_bibtex(googlebook_url):
     opener.addheaders = [('User-agent',
                           'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
                           ' Gecko/20100101 Firefox/24.0')]
-    bibtex = opener.open(url).read()
+    bibtex = opener.open(url).read().decode('utf8')
     return bibtex
 
-def get_irs(googlebook_url):
+def get_ris(googlebook_url):
     '''Gets bibtex file content from a noormags url'''
     #getting id:
     pu = urlparse(googlebook_url)
     pq = parse_qs(pu.query)
     bookid = pq['id'][0]
     url = 'http://books.google.com/books/download/?id=' +\
-      bookid + '&output=bibtex'
+      bookid + '&output=ris'
     #Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
     opener = urllib2.build_opener()
     opener.addheaders = [('User-agent',
                           'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
                           ' Gecko/20100101 Firefox/24.0')]
-    bibtex = opener.open(url).read()
-    return bibtex
+    ris = opener.open(url).read().decode('utf8')
+    return ris
