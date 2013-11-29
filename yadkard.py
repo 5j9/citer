@@ -28,7 +28,7 @@ def mylogger():
 
 def application(environ, start_response):
     qdict = parse_qs(environ['QUERY_STRING'])
-    url = qdict.get('url', [''])[0]
+    url = qdict.get('url', [''])[0].decode('utf8')
     url = escape(url)
     if not url.startswith('http'):
         url = 'http://' + url
@@ -65,10 +65,10 @@ def application(environ, start_response):
                                         obj.cite,
                                         obj.error)
     except urllib2.HTTPError:
-        logger.exception(url.decode('utf-8'))
+        logger.exception(url)
         response_body = html.skeleton %html.httperror_response
     except:
-        logger.exception(url.decode('utf-8'))
+        logger.exception(url)
         response_body = html.skeleton %html.other_exception_response
     status = '200 OK'
 
