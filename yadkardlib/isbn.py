@@ -9,9 +9,15 @@ import urllib2
 import langid
 
 import bibtex
-import fawikiref
-import fawikicite
 import adinebook
+import config
+
+if config.lang == 'en':
+    import wikiref_en as wikiref
+    import wikicite_en as wikicite
+else:
+    import wikiref_fa as wikiref
+    import wikicite_fa as wikicite
 
 class Isbn():
     '''Creates a isbn object'''
@@ -37,8 +43,8 @@ The digits parameter, if passed, should be 10 or 13.
         o = bibtex.parse(self.bibtex)
         self.dictionary = choose_dict(a, o)
         if not a and not o:
-            self.ref = u'شابک در دادگان یافت نشد.'
-            self.cite = u'اطلاعات این شابک در دسترس نیست.'
+            self.ref = 'ISBN was not found.'
+            self.cite = 'Bibliographic information is not available.'
             self.error = 100
             return
         if 'language' in self.dictionary:
@@ -47,8 +53,8 @@ The digits parameter, if passed, should be 10 or 13.
             self.dictionary['language'], self.dictionary['error'] =\
                                      langid.classify(self.dictionary['title'])
             self.error = round((1 - self.dictionary['error']) * 100, 2)
-        self.ref = fawikiref.create(self.dictionary)
-        self.cite = fawikicite.create(self.dictionary)
+        self.ref = wikiref.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary)
 
 def choose_dict(adinebook, ottobib):
     '''returns adinebook if both contain the same isbn or if adinebook is None.
