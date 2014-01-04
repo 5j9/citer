@@ -7,7 +7,12 @@ from cgi import escape
 from urlparse import parse_qs
 
 from yadkardlib import noormags, googlebooks, noorlib, adinebook
-from yadkardlib import doi, isbn, html, conv
+from yadkardlib import doi, isbn, conv, config
+
+if config.lang == 'en':
+    from yadkardlib import html_en as html
+else:
+    from yadkardlib import html_fa as html
 
 def mylogger():
     logger = logging.getLogger(__name__)
@@ -73,7 +78,8 @@ def application(environ, start_response):
     status = '200 OK'
 
     response_headers = [('Content-Type', 'text/html; charset=UTF-8'),
-                  ('Content-Length', str(len(response_body)))]
+                        ('Content-Length', '')
+                        ]
     start_response(status, response_headers)
 
     return [response_body.encode('utf-8')]
