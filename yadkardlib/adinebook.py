@@ -8,10 +8,16 @@ import urllib2
 
 import langid
 
-import fawikiref
-import fawikicite
 import conv
 import isbn
+import config
+
+if config.lang == 'en':
+    import wikiref_en as wikiref
+    import wikicite_en as wikicite
+else:
+    import wikiref_fa as wikiref
+    import wikicite_fa  as wikicite
 
 class AdineBook():
     '''Creates a google book object'''
@@ -29,8 +35,8 @@ class AdineBook():
             self.dictionary['language'], confidence =\
                                      langid.classify(self.dictionary['title'])
             self.error = round((1 - confidence) * 100, 2)
-        self.ref =fawikiref.create(self.dictionary)
-        self.cite = fawikicite.create(self.dictionary)
+        self.ref = wikiref.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary)
 
 
 def isbn2url(isbn):
@@ -48,7 +54,11 @@ def url2dictionary(adinebook_url):
     try:
         #this try statement is needed because if adinebook is not available then
         #    ottobib should continoue its' work in isbn.py
-        adinebook_html = urllib2.urlopen(adinebook_url).read().decode('utf-8')
+        opener = urllib2.build_opener()
+        opener.addheaders = [('User-agent',
+                              'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
+                              ' Gecko/20100101 Firefox/24.0')]
+        adinebook_html = opener.open(adinebook_url).read().decode('utf8')
     except:
         #todo: log
         return
