@@ -8,8 +8,14 @@ import urllib2
 
 import bibtex
 #import ris[1]
-import fawikiref
-import fawikicite
+import config
+
+if config.lang == 'en':
+    import wikiref_en  as wikiref
+    import wikicite_en as wikicite
+else:
+    import wikiref_fa as wikiref
+    import wikicite_fa as wikicite
 
 class NoorLib():
     '''A class to deal with noormags articles'''
@@ -20,8 +26,8 @@ class NoorLib():
         self.dictionary = bibtex.parse(self.bibtex)
         #self.ris = get_ris(noormags_url)[1]
         #self.dictionary = ris.parse(self.ris)[1]
-        self.ref = fawikiref.create(self.dictionary)
-        self.cite = fawikicite.create(self.dictionary)
+        self.ref = wikiref.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary)
         self.error = 0
 
         
