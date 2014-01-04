@@ -12,8 +12,14 @@ import langid
 
 #import bibtex [1]
 import ris
-import fawikiref
-import fawikicite
+import config
+
+if config.lang == 'en':
+    import wikiref_en as wikiref
+    import wikicite_en as wikicite
+else:
+    import wikiref_fa as wikiref
+    import wikicite_fa as wikicite
 
 class GoogleBook():
     '''Creates a google book object'''
@@ -40,8 +46,8 @@ class GoogleBook():
             self.dictionary['language'], self.dictionary['error'] =\
                                      langid.classify(self.dictionary['title'])
             self.error = round((1 - self.dictionary['error']) * 100, 2)
-        self.ref = fawikiref.create(self.dictionary)
-        self.cite = fawikicite.create(self.dictionary)
+        self.ref = wikiref.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary)
 
 def get_bibtex(googlebook_url):
     '''Gets bibtex file content from a noormags url'''
