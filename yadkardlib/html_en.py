@@ -50,23 +50,23 @@ skeleton = u"""<!DOCTYPE html>
 
 default_response = (
     u'You can use this tool to create shortened footnotes.',
-    u'Following inputs are supported:\n\
-* http://books.google.com (google book urls)\n\
-* DOI \n\
-* ISBN (works, but is not as accurate as other options)\n\n\
-If there is any prolem or issue you can contact me on my talk page \
+    u'Currently the following inputs are supported:\n\
+* http://books.google.com (Google Books URLs)\n\
+* DOI (Any Digital object identifier)\n\
+* ISBN (Not as accurate as other options)\n\n\
+If there is any problem you can contact me on my talk page. \
 (user:Dalba).',
     u'??')
 
 undefined_url_response = ('Undefined input.',
-                      'Sorry, but your input was not recognized. \
+                      'Sorry, but your input was not recognized \
 Error was logged.',
                       '100')
 
-httperror_response = ('HTTP error.',
-                      'A web-source was not accessible.',
+httperror_response = ('HTTP error:',
+                      'One or more of web resources are not accessible',
                       u'100')
 
-other_exception_response = (u'An unknown error occured.',
-                      u'Make sure you have entered the url correctly.',
+other_exception_response = (u'An unknown error occurred.',
+                      u'Make sure you have entered the URL correctly.',
                       u'100')
