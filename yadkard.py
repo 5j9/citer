@@ -47,7 +47,7 @@ def application(environ, start_response):
             obj = noorlib.NoorLib(url)
         elif 'adinebook.com/gp/product/' in url:
             obj = adinebook.AdineBook(url)
-        elif 'books.google' in url:
+        elif 'google.com/books' in url:
             obj = googlebooks.GoogleBook(url)
         else:
             en_url = conv.fanum2en(url)
