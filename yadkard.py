@@ -69,7 +69,6 @@ def application(environ, start_response):
         response_body = html.skeleton %(obj.ref,
                                         obj.cite,
                                         obj.error)
-        print obj.error
     except urllib2.HTTPError:
         logger.exception(url)
         response_body = html.skeleton %html.httperror_response
