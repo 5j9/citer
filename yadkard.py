@@ -47,7 +47,7 @@ def application(environ, start_response):
             obj = noorlib.NoorLib(url)
         elif 'adinebook.com/gp/product/' in url:
             obj = adinebook.AdineBook(url)
-        elif 'google.com/books' in url:
+        elif '.google.com/books' in url:
             obj = googlebooks.GoogleBook(url)
         else:
             en_url = conv.fanum2en(url)
@@ -69,6 +69,7 @@ def application(environ, start_response):
         response_body = html.skeleton %(obj.ref,
                                         obj.cite,
                                         obj.error)
+        print obj.error
     except urllib2.HTTPError:
         logger.exception(url)
         response_body = html.skeleton %html.httperror_response
