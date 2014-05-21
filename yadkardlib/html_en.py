@@ -43,7 +43,7 @@ skeleton = u"""<!DOCTYPE html>
    <textarea rows="15" cols="80" readonly>%s\n\n%s</textarea>
   </p>
   <p>
-   There may be error in language detection. %s %%
+   <!-- There may be error in language detection. %s %% -->
   </p>
 </body>
 </html>"""
@@ -54,19 +54,19 @@ default_response = (
 * http://books.google.com (Google Books URLs)\n\
 * DOI (Any Digital object identifier)\n\
 * ISBN (Not as accurate as other options)\n\n\
-If there is any problem you can contact me on my talk page. \
-(user:Dalba).',
+Found a bug or have a suggestion? Contact me on my talk page. (User:Dalba).',
     u'??')
 
 undefined_url_response = ('Undefined input.',
-                      'Sorry, but your input was not recognized \
-Error was logged.',
+                      'Sorry, the input was not recognized. \
+The error was logged.',
                       '100')
 
 httperror_response = ('HTTP error:',
-                      'One or more of web resources are not accessible',
+                      'One or more of web resources needed to create \
+the citation are not accessible at this moment.',
                       u'100')
 
 other_exception_response = (u'An unknown error occurred.',
-                      u'Make sure you have entered the URL correctly.',
+                      u'The error was logged.',
                       u'100')
