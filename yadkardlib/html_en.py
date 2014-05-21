@@ -1,7 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''This module contains html body of application and its predefined responses'''
+'''This module contains html skeleton of the application and its predefined
+ responses'''
 
 class ResposeObj():
     def __init__(self, ref, cite, error):
@@ -63,8 +64,8 @@ The error was logged.',
                       '100')
 
 httperror_response = ('HTTP error:',
-                      'One or more of web resources needed to create \
-the citation are not accessible at this moment.',
+                      'One or more of the web resources required to create \
+this citation are not accessible at this moment.',
                       u'100')
 
 other_exception_response = (u'An unknown error occurred.',
