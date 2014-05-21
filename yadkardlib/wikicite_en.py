@@ -62,8 +62,9 @@ def create(d):
         s += '|url=' + d['url']
     if 'doi' in d:
         s += '|doi=' + d['doi']
-    if 'language' in d:
-        s += '|language=' + d['language']
+##    if 'language' in d:
+##        if d['language'] not in 'Englishenglish'
+##            s += '|language=' + d['language']
     if 'authors' in d:
         s += '|ref=harv'
     else:
