@@ -14,6 +14,7 @@ if config.lang == 'en':
 else:
     from yadkardlib import html_fa as html
 
+
 def mylogger():
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
