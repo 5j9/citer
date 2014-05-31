@@ -13,6 +13,8 @@ class Name():
 
         
 def firstname_lastname(fullname, seperator):
+    '''Returns firstname and lastname as a tuple.
+Usually this function is not used directly. It's called from class Name()'''
     fullname = fullname.strip()
     if seperator:
         if seperator in fullname:
