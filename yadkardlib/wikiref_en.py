@@ -15,7 +15,8 @@ def create(d):
         s += '|' + d['publisher'] if 'publisher' in d else \
                     d['journal'] if 'journal' in d else \
                     d['website'] if 'website' in d else \
-                    d['title'] or 'Anon.'
+                    d['title'] if 'title' in d else \
+                    'Anon.'
     if 'year' in d:
         s += '|' + d['year']
     if 'pages' in d:
