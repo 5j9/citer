@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''All things that are specifically related to Noormags website'''
+'''All things that are specifically related to Google Books'''
 
 import re
 import urllib2
