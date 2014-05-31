@@ -46,23 +46,14 @@ def url2dictionary(nyt_url):
         m = re.search(pattern, r.text)
         if m:
             d['title'] = m.group(1)
-        pattern = r'<meta +name="author" +content="(.*)"'
+        pattern = r'<meta +name="byl" +content="(.*)"'
         m = re.search(pattern, r.text)
         if m:
-            fullnames = m.group(1).split(' and ').split(';')
-            d['authors'] = []
-            for fullname in fullnames:
-                d['authors'].append(conv.Name(fullname))
-        else:
-            #if there is no author tag, try the byl tag
-            pattern = r'<meta +name="byl" +content="(.*)"'
-            m = re.search(pattern, r.text)
             #remove the 'By ' prefix before splitting
             fullnames = m.group(1)[3:].split(' and ')
             d['authors'] = []
             for fullname in fullnames:
                 d['authors'].append(conv.Name(fullname))
-            
         pattern = r'<meta +name="pg" +content="(.*)"'
         m = re.search(pattern, r.text)
         if m:
