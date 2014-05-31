@@ -68,18 +68,21 @@ def create(d):
         s += '|url=' + d['url']
     if 'doi' in d:
         s += '|doi=' + d['doi']
-##    if 'language' in d:
-##        if d['language'] not in 'Englishenglish'
-##            s += '|language=' + d['language']
+    if 'language' in d:
+        if d['language'] not in 'Englishenglish':
+            s += '|language=' + d['language']
     if 'authors' in d:
         s += '|ref=harv'
     else:
+        #order should be matched with wikiref
         s += '|ref={{sfnref|' +\
-             #order should be matched with wikiref
-             d['publisher'] if 'publisher' in d else \
-               d['journal'] if 'journal' in d else \
-               d['website'] if 'website' in d else \
-               d['title'] or 'Anon.' +\
+             (
+                 d['publisher'] if 'publisher' in d else \
+                 d['journal'] if 'journal' in d else \
+                 d['website'] if 'website' in d else \
+                 d['title'] if 'title' in d else \
+                 'Anon.'
+                 ) +\
              '|' + d['year'] + '}}'
     s += '|accessdate=' + date.isoformat(date.today())
     s += '}}'
