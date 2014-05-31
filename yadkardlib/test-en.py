@@ -4,8 +4,31 @@
 import unittest
 from pprint import pprint as p
 
-import adinebook, googlebooks, noormags, noorlib
+import adinebook, googlebooks, noormags, noorlib, nyt
 import doi, isbn
+
+class NYTimes(unittest.TestCase):
+
+    def test_nyt1(self):
+        '''newstyle, 1 author'''
+        i = 'http://www.nytimes.com/2014/05/30/business/international/on-the-internet-the-right-to-forget-vs-the-right-to-know.html?hp&_r=0'
+        o = nyt.NYT(i)
+        e = u'* {{cite web|last=Hakim|first=Danny|title=Right to Be Forgotten? Not That Easy|website=The New York Times|date=2014-05-29|year=2014|url=http://www.nytimes.com/2014/05/30/business/international/on-the-internet-the-right-to-forget-vs-the-right-to-know.html?hp&_r=0|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+
+    def test_nyt2(self):
+        '''newstyle, 2 author'''
+        i = 'http://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp'
+        o = nyt.NYT(i)
+        e = u'* {{cite web|last=Belson|first=Ken|last2=Sandomir|first2=Richard|title=$2 Billion for Clippers? In Time, It May Be a Steal for Steve Ballmer|website=The New York Times|date=2014-05-30|year=2014|url=http://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+
+    def test_nyt3(self):
+        '''oldstyle, 1 author'''
+        i = 'http://www.nytimes.com/2007/12/25/world/africa/25kenya.html '
+        o = nyt.NYT(i)
+        e = u'* {{cite web|last=Belson|first=Ken|last2=Sandomir|first2=Richard|title=$2 Billion for Clippers? In Time, It May Be a Steal for Steve Ballmer|website=The New York Times|date=2014-05-30|year=2014|url=http://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
 
 class AdinebookTest(unittest.TestCase):
 
