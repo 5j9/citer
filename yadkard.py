@@ -6,7 +6,7 @@ import urllib2
 from cgi import escape
 from urlparse import parse_qs
 
-from yadkardlib import noormags, googlebooks, noorlib, adinebook
+from yadkardlib import noormags, googlebooks, noorlib, adinebook, nyt
 from yadkardlib import doi, isbn, conv, config
 
 if config.lang == 'en':
@@ -35,21 +35,23 @@ def mylogger():
 def application(environ, start_response):
     qdict = parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0].decode('utf8')
-    url = escape(url)
+    url = escape(url).strip()
     if not url.startswith('http'):
         url = 'http://' + url
     try:
         if url == 'http://':
             #on first run url is ''
             obj = html.ResposeObj(*html.default_response)
-        elif 'noormags.com' in url:
+        elif 'noormags.com/' in url:
             obj = noormags.NoorMag(url)
-        elif 'noorlib.ir' in url:
+        elif 'noorlib.ir/' in url:
             obj = noorlib.NoorLib(url)
         elif 'adinebook.com/gp/product/' in url:
             obj = adinebook.AdineBook(url)
         elif '.google.com/books' in url:
             obj = googlebooks.GoogleBook(url)
+        elif 'nytimes.com/' in url:
+            obj = nyt.NYT(url)
         else:
             en_url = conv.fanum2en(url)
             doi_m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
