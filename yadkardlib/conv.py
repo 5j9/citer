@@ -25,8 +25,18 @@ Usually this function is not used directly. It's called from class Name()'''
         sname = fullname.split(seperator)
         lastname = sname.pop()
         firstname = ' '.join(sname)
-    return firstname.strip(), lastname.strip()
-    
+    return camelize(firstname.strip()), camelize(lastname.strip())
+
+def camelize(string):
+    '''Returnes CamelCased string only if it's completely uppercase/lowercase.
+First letter and letters after space or dot will be capitalized.'''
+    if string != string.upper() and string != string.lower():
+        return string
+    else:
+        string = ' '.join([t.capitalize() for t in string.split()])
+        string = '.'.join([t.capitalize() for t in string.split('.')])
+        return string
+  
 def fanum2en(string):
     string = string.replace(u'۰', '0')
     string = string.replace(u'۱', '1')
