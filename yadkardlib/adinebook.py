@@ -20,7 +20,7 @@ else:
     import wikicite_fa  as wikicite
 
 class AdineBook():
-    '''Creates a google book object'''
+    '''Creates an adinebook object'''
     
     def __init__(self, adinebook_url):
         self.url = adinebook_url
