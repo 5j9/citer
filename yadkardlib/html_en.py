@@ -53,6 +53,7 @@ default_response = (
     u'You can use this tool to create shortened footnotes.',
     u'Currently the following inputs are supported:\n\
 * http://books.google.com (Google Books URLs)\n\
+* http://www.nytimes.com (New York Times)\n\
 * DOI (Any Digital object identifier)\n\
 * ISBN (Not as accurate as other options)\n\n\
 Found a bug or have a suggestion? Contact me on my talk page. (User:Dalba).',
