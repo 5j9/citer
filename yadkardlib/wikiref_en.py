@@ -11,7 +11,11 @@ def create(d):
             if c < 5: #{{sfn}} only supports a maximum of four authors
                 s += '|' + name.lastname
     else:
-        s += '|' + d['title']
+        #the same order should be used in wikicite:
+        s += '|' + d['publisher'] if 'publisher' in d else \
+                    d['journal'] if 'journal' in d else \
+                    d['website'] if 'website' in d else \
+                    d['title'] or 'Anon.'
     if 'year' in d:
         s += '|' + d['year']
     if 'pages' in d:
@@ -19,7 +23,5 @@ def create(d):
             s += '|pp=' + d['pages']
         else:
             s += '|p=' + d['pages']
-    else:
-        s += '|p='
     s += '}}'
     return s
