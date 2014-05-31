@@ -13,6 +13,8 @@ def create(d):
         s = '* {{cite book'
     elif d['type'] == 'article' or d['type'] == 'jour':
         s = '* {{cite journal'
+    elif d['type'] == 'web':
+        s = '* {{cite web'
     else:
         raise KeyError, d['type'] + " is not a defined condition for d['type']"
 
@@ -42,12 +44,16 @@ def create(d):
         s += '|journal=' + d['journal']
     if 'publisher' in d:
         s += '|publisher=' + d['publisher']
+    if 'website' in d:
+        s += '|website=' + d['website']
     if 'series' in d:
         s += '|series=' + d['series']
     if 'volume' in d:
         s += '|volume=' + d['volume']
     if 'number' in d:
         s += '|issue=' + d['number']
+    if 'date' in d:
+        s += '|date=' + d['date']
     if 'year' in d:
         s += '|year=' + d['year']
     if 'isbn' in d:
@@ -68,7 +74,13 @@ def create(d):
     if 'authors' in d:
         s += '|ref=harv'
     else:
-        s += '|ref={{sfnref|' + d['title'] + '|' + d['year'] + '}}'
+        s += '|ref={{sfnref|' +\
+             #order should be matched with wikiref
+             d['publisher'] if 'publisher' in d else \
+               d['journal'] if 'journal' in d else \
+               d['website'] if 'website' in d else \
+               d['title'] or 'Anon.' +\
+             '|' + d['year'] + '}}'
     s += '|accessdate=' + date.isoformat(date.today())
     s += '}}'
     return s
