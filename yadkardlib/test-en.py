@@ -7,7 +7,7 @@ from pprint import pprint as p
 import adinebook, googlebooks, noormags, noorlib, nyt
 import doi, isbn
 
-class NYTimes(unittest.TestCase):
+class NytTest(unittest.TestCase):
 
     def test_nyt1(self):
         '''newstyle, 1 author'''
@@ -17,7 +17,7 @@ class NYTimes(unittest.TestCase):
         self.assertIn(e, o.cite)
 
     def test_nyt2(self):
-        '''newstyle, 2 author'''
+        '''newstyle, 2 authors'''
         i = 'http://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp'
         o = nyt.NYT(i)
         e = u'* {{cite web|last=Belson|first=Ken|last2=Sandomir|first2=Richard|title=$2 Billion for Clippers? In Time, It May Be a Steal for Steve Ballmer|website=The New York Times|date=2014-05-30|year=2014|url=http://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp|ref=harv|accessdate='
@@ -25,9 +25,16 @@ class NYTimes(unittest.TestCase):
 
     def test_nyt3(self):
         '''oldstyle, 1 author'''
-        i = 'http://www.nytimes.com/2007/12/25/world/africa/25kenya.html '
+        i = 'http://www.nytimes.com/2007/12/25/world/africa/25kenya.html'
         o = nyt.NYT(i)
-        e = u'* {{cite web|last=Belson|first=Ken|last2=Sandomir|first2=Richard|title=$2 Billion for Clippers? In Time, It May Be a Steal for Steve Ballmer|website=The New York Times|date=2014-05-30|year=2014|url=http://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp|ref=harv|accessdate='
+        e = u'* {{cite web|last=Gettleman|first=Jeffrey|title=Election Rules Complicate Kenya Race|website=The New York Times|date=2007-12-25|year=2007|url=http://www.nytimes.com/2007/12/25/world/africa/25kenya.html|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+
+    def test_nyt4(self):
+        '''newstyle, 2 authors, only byline'''
+        i = 'http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/'
+        o = nyt.NYT(i)
+        e = u'* {{cite web|last=Goldstein|first=Matthew|last2=Protess|first2=Ben|website=The New York Times|date=2014-05-30|year=2014|url=http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
 class AdinebookTest(unittest.TestCase):
@@ -87,7 +94,7 @@ class GooglebookTest(unittest.TestCase):
     def test_gb1(self):
         i = 'http://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library'
         o = googlebooks.GoogleBook(i)
-        e = u'* {{cite book|last=Arms|first=W.Y.|title=Digital Libraries|publisher=MIT Press|series=Digital libraries and electronic publishing|year=2001|isbn=9780262261340|url=http://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11|language=en|ref=harv|accessdate='
+        e = u'* {{cite book|last=Arms|first=W.Y.|title=Digital Libraries|publisher=MIT Press|series=Digital libraries and electronic publishing|year=2000|isbn=9780262261340|url=http://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
     def test_gb2(self):
@@ -95,16 +102,16 @@ class GooglebookTest(unittest.TestCase):
         i = 'http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
         o = googlebooks.GoogleBook(i)
         e1 = u'{{sfn|Anderson|DeBolt|Featherstone|Gunther|2010|p=57}}'
-        e2 = u'* {{cite book|last=Anderson|first=E.|last2=DeBolt|first2=V.|last3=Featherstone|first3=D.|last4=Gunther|first4=L.|last5=Jacobs|first5=D.R.|last6=Mills|first6=C.|last7=Schmitt|first7=C.|last8=Sims|first8=G.|last9=Walter|first9=A.|last10=Jensen-Inman|first10=L.|title=InterACT with Web Standards: A holistic approach to web design|publisher=Pearson Education|year=2010|isbn=9780132704908|url=http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57|language=en|ref=harv|accessdate='
+        e2 = u'* {{cite book|last=Anderson|first=E.|last2=DeBolt|first2=V.|last3=Featherstone|first3=D.|last4=Gunther|first4=L.|last5=Jacobs|first5=D.R.|last6=Mills|first6=C.|last7=Schmitt|first7=C.|last8=Sims|first8=G.|last9=Walter|first9=A.|last10=Jensen-Inman|first10=L.|title=InterACT with Web Standards: A holistic approach to web design|publisher=Pearson Education|year=2010|isbn=9780132704908|url=http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57|ref=harv|accessdate='
         self.assertIn(e1, o.ref)
         self.assertIn(e2, o.cite)
 
     def test_gb3(self):
-        '''Non-ascii characters in title'''
+        '''Non-ascii characters in title (Some of them where removed later)'''
         i = 'http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588&dq=%22a+Delimiter+is%22&hl=en&sa=X&ei=oNKSUrKeDovItAbO_4CoBA&ved=0CC4Q6AEwAA#v=onepage&q=%22a%20Delimiter%20is%22&f=false'
         o = googlebooks.GoogleBook(i)
-        e1 = u'{{sfn|Farrell|p=588}}'
-        e2 = u'* {{cite book|last=Farrell|first=J.|title=Microsoft\xae Visual C# 2008 Comprehensive: An Introduction to Object-Oriented Programming|publisher=Cengage Learning|isbn=9781111786199|url=http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588|language=en|ref=harv|accessdate='
+        e1 = u'{{sfn|Farrell|2009|p=588}}'
+        e2 = u'* {{cite book|last=Farrell|first=J.|title=Microsoft Visual C# 2008 Comprehensive: An Introduction to Object-Oriented Programming|publisher=Cengage Learning|year=2009|isbn=9781111786199|url=http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588|ref=harv|accessdate='
         self.assertIn(e1, o.ref)
         self.assertIn(e2, o.cite)
 
@@ -113,7 +120,7 @@ class GooglebookTest(unittest.TestCase):
         i = 'http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa=X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q=%22legal%20translation%20is%22&f=false'
         o = googlebooks.GoogleBook(i)
         e1 = u'{{sfn|Šarčević|1997|p=229}}'
-        e2 = u'* {{cite book|last=Šarčević|first=S.|title=New Approach to Legal Translation|publisher=Kluwer Law International|year=1997|isbn=9789041104014|url=http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229|language=en|ref=harv|accessdate='
+        e2 = u'* {{cite book|last=Šarčević|first=S.|title=New Approach to Legal Translation|publisher=Kluwer Law International|year=1997|isbn=9789041104014|url=http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229|ref=harv|accessdate='
         self.assertIn(e1, o.ref)
         self.assertIn(e2, o.cite)
 
@@ -147,7 +154,7 @@ class DoiTest(unittest.TestCase):
     def test_di1(self):
         i = 'http://dx.doi.org/10.1038/nrd842'
         o = doi.Doi(i)
-        e = u'* {{cite journal|last=Atkins|first=Joshua H.|last2=Gershell|first2=Leland J.|title=From the analysts couch: Selective anticancer drugs|journal=Nature Reviews Drug Discovery|publisher=Nature Publishing Group|volume=1|issue=7|year=2002|pages=491–492|url=http://dx.doi.org/10.1038/nrd842|doi=10.1038/nrd842|language=en|ref=harv|accessdate='
+        e = u'* {{cite journal|last=Atkins|first=Joshua H.|last2=Gershell|first2=Leland J.|title=From the analyst’s couch: Selective anticancer drugs|journal=Nat. Rev. Drug Disc.|publisher=Nature Publishing Group|volume=1|issue=7|year=2002|pages=491–492|url=http://dx.doi.org/10.1038/nrd842|doi=10.1038/nrd842|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
     def test_di2(self):
@@ -158,7 +165,7 @@ expected output'''
 
         i = '10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5'
         o = doi.Doi(i, pure = True)
-        e = u'* {{cite journal|last=Dian|first=Noor Lida Habi Mat|last2=Sudin|first2=Nor’aini|last3=Yusoff|first3=Mohd Suria Affandi|title=Characteristics of Microencapsulated Palm-Based Oil as Affected by Type of Wall Material|journal=Journal of the Science of Food and Agriculture|publisher=Wiley Blackwell (John Wiley &amp; Sons)|volume=70|issue=4|year=1996|pages=422–426|url=http://dx.doi.org/10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|doi=10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|language=en|ref=harv|accessdate='
+        e = u'* {{cite journal|last=Dian|first=Noor Lida Habi Mat|last2=Sudin|first2=Nor’aini|last3=Yusoff|first3=Mohd Suria Affandi|title=Characteristics of Microencapsulated Palm-Based Oil as Affected by Type of Wall Material|journal=Journal of the Science of Food and Agriculture|publisher=Wiley Blackwell (John Wiley &amp; Sons)|volume=70|issue=4|year=1996|pages=422–426|url=http://dx.doi.org/10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|doi=10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
 
@@ -168,21 +175,21 @@ class IsbnTest(unittest.TestCase):
         '''not found in adinebook'''
         i = '9780349119168'
         o = isbn.Isbn(i, pure = True)
-        e = u'* {{cite book|last=Adkins|first=Roy|title=The war for all the oceans : from Nelson at the Nile to Napoleon at Waterloo|publisher=Abacus|year=2007|isbn=9780349119168|language=en|ref=harv|accessdate='
+        e = u'* {{cite book|last=Adkins|first=Roy|title=The war for all the oceans : from Nelson at the Nile to Napoleon at Waterloo|publisher=Abacus|year=2007|isbn=9780349119168|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
     def test_is2(self):
         '''not found in ottobib'''
         i = '978-964-6736-71-9'
         o = isbn.Isbn(i, pure = True)
-        e = u'* {{cite book|others=بدیل بن علی خاقانی (شاعر),  جهانگیر منصور (به اهتمام), and  بدیع الزمان فروزانفر (مقدمه)|title=دیوان خاقانی شروانی|publisher=نگاه|year=1389|isbn=978-964-6736-71-9|language=fa|ref={{sfnref|دیوان خاقانی شروانی|1389}}|accessdate='
+        e = u'* {{cite book|others=بدیل بن علی خاقانی (شاعر),  جهانگیر منصور (به اهتمام), and  بدیع الزمان فروزانفر (مقدمه)|title=دیوان خاقانی شروانی|publisher=نگاه|year=1389|isbn=978-964-6736-71-9|language=fa|ref={{sfnref|نگاه|1389}}|accessdate='
         self.assertIn(e, o.cite)
 
     def test_is3(self):
         '''exists in both'''
         i = '964-6736-34-3 '
         o = isbn.Isbn(i)
-        e = u'* {{cite book|others=سحر معصومی (به اهتمام)|title=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری|publisher=نگاه|year=1386|isbn=964-6736-34-3|language=fa|ref={{sfnref|راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری|1386}}|accessdate='
+        e = u'* {{cite book|others=سحر معصومی (به اهتمام)|title=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری|publisher=نگاه|year=1386|isbn=964-6736-34-3|language=fa|ref={{sfnref|نگاه|1386}}|accessdate='
         self.assertIn(e, o.cite)
         
     def test_is4(self):
