@@ -4,9 +4,9 @@
 import logging, logging.handlers
 import urllib2
 from cgi import escape
-from urlparse import parse_qs
+import urlparse
 
-from yadkardlib import noormags, googlebooks, noorlib, adinebook, nyt
+from yadkardlib import noormags, googlebooks, noorlib, adinebook, nyt, bbc
 from yadkardlib import doi, isbn, conv, config
 
 if config.lang == 'en':
@@ -33,7 +33,7 @@ def mylogger():
     return logger
 
 def application(environ, start_response):
-    qdict = parse_qs(environ['QUERY_STRING'])
+    qdict = urlparse.parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0].decode('utf8')
     url = escape(url).strip()
     if not url.startswith('http'):
@@ -52,6 +52,8 @@ def application(environ, start_response):
             obj = googlebooks.GoogleBook(url)
         elif 'nytimes.com/' in url:
             obj = nyt.NYT(url)
+        elif 'bbc.com' in urlparse.urlparse(url)[1]:
+            obj = bbc.BBC(url)
         else:
             en_url = conv.fanum2en(url)
             doi_m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
