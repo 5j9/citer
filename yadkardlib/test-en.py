@@ -4,7 +4,7 @@
 import unittest
 from pprint import pprint as p
 
-import adinebook, googlebooks, noormags, noorlib, nyt
+import adinebook, googlebooks, noormags, noorlib, nyt, bbc
 import doi, isbn
 
 class BbcTest(unittest.TestCase):
@@ -12,21 +12,21 @@ class BbcTest(unittest.TestCase):
     def test_bbc1(self):
         '''no authors'''
         i = 'https://www.bbc.com/news/world-asia-27653361'
-        o = nyt.NYT(i)
+        o = bbc.BBC(i)
         e = u"* {{cite web|title=US 'received Qatar assurances' on Afghan prisoner deal|website=BBC|date=2014-06-01|year=2014|url=https://www.bbc.com/news/world-asia-27653361|ref={{sfnref|BBC|2014}}|accessdate="
         self.assertIn(e, o.cite)
 
     def test_bbc2(self):
         '''1 author'''
         i = 'https://www.bbc.com/news/science-environment-23814524'
-        o = nyt.NYT(i)
+        o = bbc.BBC(i)
         e = u'* {{cite web|last=Gage|first=Suzi|title=Sea otter return boosts ailing seagrass in California|website=BBC|date=2013-08-26|year=2013|url=https://www.bbc.com/news/science-environment-23814524|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
     def test_bbc3(self):
         '''1 author'''
         i = 'https://www.bbc.com/news/science-environment-23814524'
-        o = nyt.NYT(i)
+        o = bbc.BBC(i)
         e = u'* {{cite web|last=Gage|first=Suzi|title=Sea otter return boosts ailing seagrass in California|website=BBC|date=2013-08-26|year=2013|url=https://www.bbc.com/news/science-environment-23814524|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
@@ -60,6 +60,14 @@ class NytTest(unittest.TestCase):
         o = nyt.NYT(i)
         e = u'* {{cite web|last=Goldstein|first=Matthew|last2=Protess|first2=Ben|website=The New York Times|date=2014-05-30|year=2014|url=http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/|ref=harv|accessdate='
         self.assertIn(e, o.cite)
+
+    def test_nyt5(self):
+        '''special case for date format (not in usual meta tags)'''
+        i = 'http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html'
+        o = nyt.NYT(i)
+        e = u'* {{cite web|website=The New York Times|date=2007-06-13|year=2007|url=http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html|ref={{sfnref|The New York Times|2007}}|accessdate='
+        self.assertIn(e, o.cite)
+        
 
 class AdinebookTest(unittest.TestCase):
 
