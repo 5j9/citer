@@ -82,8 +82,9 @@ def create(d):
                  d['website'] if 'website' in d else \
                  d['title'] if 'title' in d else \
                  'Anon.'
-                 ) +\
-             '|' + d['year'] + '}}'
+                 )
+        if 'year' in d:
+            s += '|' + d['year'] + '}}'
     s += '|accessdate=' + date.isoformat(date.today())
     s += '}}'
     return s
