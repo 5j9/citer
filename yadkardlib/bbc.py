@@ -59,7 +59,7 @@ a dictionary.'''
             d['authors'] = []
             for fullname in fullnames:
                 d['authors'].append(conv.Name(fullname))
-        m = re.search('data-seconds="(.*)"')
+        m = re.search('data-seconds="(.*)"', r.text)
         if m:
             t = time.gmtime(int(m.group(1)))
             d['date'] = time.strftime('%Y-%m-%d', t)
