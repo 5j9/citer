@@ -49,8 +49,11 @@ def url2dictionary(nyt_url):
         pattern = r'<meta +name="byl" +content="(.*)"'
         m = re.search(pattern, r.text)
         if m:
-            #remove the 'By ' prefix before splitting
-            fullnames = m.group(1)[3:].split(' and ')
+            fullnames = m.group(1)
+            if fullnames.startswith('By '):
+                fullnames = fullnames[3:].split(' and ')
+            else:
+                fullnames = fullnames.split(' and ')
             d['authors'] = []
             for fullname in fullnames:
                 d['authors'].append(conv.Name(fullname))
