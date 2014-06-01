@@ -7,7 +7,10 @@ import re
 import time
 
 import requests
-from bs4 import BeautifulSoup as BS
+try:
+    from bs4 import BeautifulSoup as BS
+except ImportError:
+    import BeautifulSoup as BS
 import langid
 
 import conv
