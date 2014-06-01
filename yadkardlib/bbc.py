@@ -51,8 +51,9 @@ a dictionary.'''
         bs = BS(r.text)
         if bs.h1:
             d['title'] = bs.h1.text
-        if bs.find('span', class_='name'):
-            fullnames = bs.find('span', class_='name').text
+        m = re.search('<span class="name">(.*)</span>', r.text)
+        if m:
+            fullnames = m.group(1)
             if fullnames.startswith('By '):
                 fullnames = fullnames[3:]
             fullnames = fullnames.split(' and ')
