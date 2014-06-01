@@ -10,7 +10,7 @@ import requests
 try:
     from bs4 import BeautifulSoup as BS
 except ImportError:
-    import BeautifulSoup as BS
+    from BeautifulSoup import BeautifulSoup as BS
 import langid
 
 import conv
@@ -59,9 +59,9 @@ a dictionary.'''
             d['authors'] = []
             for fullname in fullnames:
                 d['authors'].append(conv.Name(fullname))
-        m = bs.find('p', class_=re.compile('.*date.*'))
+        m = re.search('data-seconds="(.*)"')
         if m:
-            t = time.gmtime(int(m['data-seconds']))
+            t = time.gmtime(int(m.group(1)))
             d['date'] = time.strftime('%Y-%m-%d', t)
             d['year'] = str(t.tm_year)      
     return d
