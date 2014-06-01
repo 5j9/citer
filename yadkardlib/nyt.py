@@ -42,11 +42,11 @@ def url2dictionary(nyt_url):
         d['url'] = nyt_url
         d['type'] = 'web'
         d['website'] = 'The New York Times'
-        pattern = r'<meta +name="hdl" +content="(.*)"'
+        pattern = r'<meta +name="hdl" +content="(.+)"'
         m = re.search(pattern, r.text)
         if m:
             d['title'] = m.group(1)
-        pattern = r'<meta +name="byl" +content="(.*)"'
+        pattern = r'<meta +name="byl" +content="(.+)"'
         m = re.search(pattern, r.text)
         if m:
             fullnames = m.group(1)
@@ -57,11 +57,11 @@ def url2dictionary(nyt_url):
             d['authors'] = []
             for fullname in fullnames:
                 d['authors'].append(conv.Name(fullname))
-        pattern = r'<meta +name="pg" +content="(.*)"'
+        pattern = r'<meta +name="pg" +content="(.+)"'
         m = re.search(pattern, r.text)
         if m:
             d['page'] = m.group(1)
-        pattern = r'<meta +name="pdate" +content="(\d\d\d\d)(\d\d)(\d\d)"'
+        pattern = r'"(\d\d\d\d)(\d\d)(\d\d)"'
         m = re.search(pattern, r.text)
         if m:
             d['date'] = '-'.join(m.groups())
