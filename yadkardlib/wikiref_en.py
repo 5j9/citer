@@ -12,11 +12,11 @@ def create(d):
                 s += '|' + name.lastname
     else:
         #the same order should be used in wikicite:
-        s += '|' + d['publisher'] if 'publisher' in d else \
+        s += '|' + (d['publisher'] if 'publisher' in d else \
                     d['journal'] if 'journal' in d else \
                     d['website'] if 'website' in d else \
                     d['title'] if 'title' in d else \
-                    'Anon.'
+                    'Anon.')
     if 'year' in d:
         s += '|' + d['year']
     if 'pages' in d:
