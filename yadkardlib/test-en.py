@@ -7,6 +7,30 @@ from pprint import pprint as p
 import adinebook, googlebooks, noormags, noorlib, nyt
 import doi, isbn
 
+class BbcTest(unittest.TestCase):
+
+    def test_bbc1(self):
+        '''no authors'''
+        i = 'https://www.bbc.com/news/world-asia-27653361'
+        o = nyt.NYT(i)
+        e = u"* {{cite web|title=US 'received Qatar assurances' on Afghan prisoner deal|website=BBC|date=2014-06-01|year=2014|url=https://www.bbc.com/news/world-asia-27653361|ref={{sfnref|BBC|2014}}|accessdate="
+        self.assertIn(e, o.cite)
+
+    def test_bbc2(self):
+        '''1 author'''
+        i = 'https://www.bbc.com/news/science-environment-23814524'
+        o = nyt.NYT(i)
+        e = u'* {{cite web|last=Gage|first=Suzi|title=Sea otter return boosts ailing seagrass in California|website=BBC|date=2013-08-26|year=2013|url=https://www.bbc.com/news/science-environment-23814524|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+
+    def test_bbc3(self):
+        '''1 author'''
+        i = 'https://www.bbc.com/news/science-environment-23814524'
+        o = nyt.NYT(i)
+        e = u'* {{cite web|last=Gage|first=Suzi|title=Sea otter return boosts ailing seagrass in California|website=BBC|date=2013-08-26|year=2013|url=https://www.bbc.com/news/science-environment-23814524|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+
+        
 class NytTest(unittest.TestCase):
 
     def test_nyt1(self):
