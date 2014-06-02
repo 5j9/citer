@@ -4,8 +4,21 @@
 import unittest
 from pprint import pprint as p
 
-import adinebook, googlebooks, noormags, noorlib, nyt, bbc
+import adinebook, googlebooks, noormags, noorlib, nyt, bbc, dailymail
 import doi, isbn
+
+
+class DilyMailTest(unittest.TestCase):
+
+    def test_dm1(self):
+        '''4 authors'''
+        i = 'http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html'
+        o = dailymail.DM(i)
+        e1 = u'{{sfn|Malm|Witheridge|Drury|Bates|2014}}'
+        e2 = u'* {{cite web|last=Malm|first=Sara|last2=Witheridge|first2=Annette|last3=Drury|first3=Ian|last4=Bates|first4=Daniel|title=Hate preacher Abu Hamza GUILTY of setting up US terror training camps|website=Daily Mail|date=2014-05-20|year=2014|url=http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html|ref=harv|accessdate='
+        self.assertIn(e1, o.ref)
+        self.assertIn(e2, o.cite)
+        
 
 class BbcTest(unittest.TestCase):
 
