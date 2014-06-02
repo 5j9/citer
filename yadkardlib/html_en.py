@@ -51,12 +51,13 @@ skeleton = u"""<!DOCTYPE html>
 
 default_response = (
     u'You can use this tool to create shortened footnotes.',
-    u'Currently the following inputs are supported:\n\
-* http://books.google.com (Google Books URLs)\n\
-* http://www.nytimes.com (New York Times)\n\
-* http://www.bbc.com (BBC)\n\
-* DOI (Any Digital object identifier)\n\
-* ISBN (Not as accurate as other options)\n\n\
+    u'Currently the following inputs are supported:\n\n\
+* http://books.google.com\t(Google Books URLs)\n\
+* http://www.nytimes.com\t(New York Times)\n\
+* http://www.bbc.com\t\t(BBC)\n\
+* http://www.dailymail.co.uk\t(Daily Mail)\n\
+* DOI\t\t\t\t(Any Digital object identifier)\n\
+* ISBN\t\t\t\t(Not as accurate as other options)\n\n\
 Found a bug or have a suggestion? Contact me on my talk page. (User:Dalba).',
     u'??')
 
