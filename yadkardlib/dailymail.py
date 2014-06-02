@@ -59,7 +59,13 @@ result as a dictionary.'''
             d['authors'] = []
             for fullname in m:
                 fullname = fullname.text
-                d['authors'].append(conv.Name(fullname))
+                if 'Reporter' in fullname:
+                    name = conv.Name(fullname)
+                    name.lastname = name.fullname
+                    name.firstname = ''
+                    d['authors'].append(name)
+                else:
+                    d['authors'].append(conv.Name(fullname))
         m = bs.find(attrs={'property':'article:modified_time'})
         if m:
             d['date'] = m['content'][:10]
