@@ -4,8 +4,20 @@
 import unittest
 from pprint import pprint as p
 
-import adinebook, googlebooks, noormags, noorlib, nyt, bbc, dailymail
+import adinebook, googlebooks, noormags, noorlib, nyt, bbc, dailymail, mirror
 import doi, isbn
+
+
+class DilyMirrorTest(unittest.TestCase):
+
+    def test_dm1(self):
+        '''no authors'''
+        i = 'http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471'
+        o = mirror.DM(i)
+        e1 = u'{{sfn|Daily Mirror|2005}}'
+        e2 = u'* {{cite web|title=WHALE DOOMED TO DIE|website=Daily Mirror|date=2005-09-15|year=2005|url=http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471|ref={{sfnref|Daily Mirror|2005}}|accessdate='
+        self.assertIn(e1, o.ref)
+        self.assertIn(e2, o.cite)
 
 
 class DilyMailTest(unittest.TestCase):
