@@ -7,7 +7,7 @@ from cgi import escape
 import urlparse
 
 from yadkardlib import noormags, googlebooks, noorlib, adinebook, nyt, bbc,\
-     dailymail, mirror
+     dailymail, mirror, telegraph
 from yadkardlib import doi, isbn, conv, config
 
 if config.lang == 'en':
@@ -43,12 +43,6 @@ def application(environ, start_response):
         if url == 'http://':
             #on first run url is ''
             obj = html.ResposeObj(*html.default_response)
-        elif 'noormags.com/' in url:
-            obj = noormags.NoorMag(url)
-        elif 'noorlib.ir/' in url:
-            obj = noorlib.NoorLib(url)
-        elif 'adinebook.com/gp/product/' in url:
-            obj = adinebook.AdineBook(url)
         elif '.google.com/books' in url:
             obj = googlebooks.GoogleBook(url)
         elif 'nytimes.com/' in url:
@@ -59,6 +53,14 @@ def application(environ, start_response):
             obj = dailymail.DM(url)
         elif 'mirror.' in urlparse.urlparse(url)[1]:
             obj = mirror.DM(url)
+        elif 'telegraph.' in urlparse.urlparse(url)[1]:
+            obj = telegraph.DT(url)
+        elif 'noormags.com/' in url:
+            obj = noormags.NoorMag(url)
+        elif 'noorlib.ir/' in url:
+            obj = noorlib.NoorLib(url)
+        elif 'adinebook.com/gp/product/' in url:
+            obj = adinebook.AdineBook(url)
         else:
             en_url = conv.fanum2en(url)
             doi_m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
