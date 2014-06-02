@@ -41,7 +41,7 @@ a dictionary.'''
     r = requests.get(bbc_url)
     if r.status_code != 200:
         #not OK. Probably 404
-        print 'status_code != 200'
+        print 'status_code = ', r.status_code, ' != 200'
         return
     else:
         d = {}
@@ -51,20 +51,37 @@ a dictionary.'''
         bs = BS(r.text)
         if bs.h1:
             d['title'] = bs.h1.text
-        m = re.search('<span class="name">(.*)</span>', r.text)
+        else:
+            m = bs.find('meta', attrs={'name':'Headline'})
+            if m:
+                 d['title'] = m['content']
+        m = bs.find(attrs={'class':'byline'})
         if m:
-            fullnames = m.group(1)
+            m = m.find(attrs={'class':'name'})
+        if not m:
+            m = bs.find(attrs={'class':'byline-name'})
+        if not m:
+            m = bs.find(attrs={'class':'byl'})
+        if not m:
+            m = bs.find(attrs={'class':'bylineAuthor'})
+        if m:
+            fullnames = m.text.strip()
             if fullnames.startswith('By '):
                 fullnames = fullnames[3:]
             fullnames = fullnames.split(' and ')
             d['authors'] = []
             for fullname in fullnames:
                 d['authors'].append(conv.Name(fullname))
-        m = re.search('data-seconds="(.*)"', r.text)
+        m = re.search('data-seconds="(.*?)"', r.text)
         if m:
             t = time.gmtime(int(m.group(1)))
             d['date'] = time.strftime('%Y-%m-%d', t)
-            d['year'] = str(t.tm_year)      
+            d['year'] = str(t.tm_year)
+        else:
+            m = bs.find(attrs={'name':'OriginalPublicationDate'})
+            if m:
+                d['date'] = m['content'][:10].replace('/','-')
+                d['year'] = m['content'][:4]
     return d
 
 
