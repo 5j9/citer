@@ -7,7 +7,7 @@ from cgi import escape
 import urlparse
 
 from yadkardlib import noormags, googlebooks, noorlib, adinebook, nyt, bbc,\
-     dailymail
+     dailymail, mirror
 from yadkardlib import doi, isbn, conv, config
 
 if config.lang == 'en':
@@ -57,6 +57,8 @@ def application(environ, start_response):
             obj = bbc.BBC(url)
         elif 'dailymail.' in urlparse.urlparse(url)[1]:
             obj = dailymail.DM(url)
+        elif 'mirror.' in urlparse.urlparse(url)[1]:
+            obj = mirror.DM(url)
         else:
             en_url = conv.fanum2en(url)
             doi_m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
