@@ -4,8 +4,21 @@
 import unittest
 from pprint import pprint as p
 
-import adinebook, googlebooks, noormags, noorlib, nyt, bbc, dailymail, mirror
+import adinebook, googlebooks, noormags, noorlib, nyt, bbc, dailymail, mirror,\
+       telegraph
 import doi, isbn
+
+
+class DilyTelegraphTest(unittest.TestCase):
+
+    def test_dm1(self):
+        '''`1 author, 2005'''
+        i = 'http://www.telegraph.co.uk/health/3334755/We-could-see-the-whales-eyes-mouth...-the-barnacles-on-its-back.html'
+        o = telegraph.DT(i)
+        e1 = u'{{sfn|Fogle|2005}}'
+        e2 = u"* {{cite web|last=Fogle|first=Ben|title=We could see the whale's eyes, mouth... the barnacles on its back|website=The Daily Telegraph|date=2005-12-22|year=2005|url=http://www.telegraph.co.uk/health/3334755/We-could-see-the-whales-eyes-mouth...-the-barnacles-on-its-back.html|ref=harv|accessdate="
+        self.assertIn(e1, o.ref)
+        self.assertIn(e2, o.cite)
 
 
 class DilyMirrorTest(unittest.TestCase):
