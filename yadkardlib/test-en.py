@@ -29,7 +29,13 @@ class BbcTest(unittest.TestCase):
         o = bbc.BBC(i)
         e = u'* {{cite web|last=Gage|first=Suzi|title=Sea otter return boosts ailing seagrass in California|website=BBC|date=2013-08-26|year=2013|url=https://www.bbc.com/news/science-environment-23814524|ref=harv|accessdate='
         self.assertIn(e, o.cite)
-
+        
+    def test_bbc4(self):
+        '''news.bbc.co.uk, 1 author'''
+        i = 'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm'
+        o = bbc.BBC(i)
+        e = u'* {{cite web|last=Jones|first=Meirion|title=Malaria advice 'risks lives'|website=BBC|date=2006-07-13|year=2006|url=http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
         
 class NytTest(unittest.TestCase):
 
