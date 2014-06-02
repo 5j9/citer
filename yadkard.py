@@ -52,7 +52,7 @@ def application(environ, start_response):
             obj = googlebooks.GoogleBook(url)
         elif 'nytimes.com/' in url:
             obj = nyt.NYT(url)
-        elif 'bbc.com' in urlparse.urlparse(url)[1]:
+        elif 'bbc.co' in urlparse.urlparse(url)[1]:
             obj = bbc.BBC(url)
         else:
             en_url = conv.fanum2en(url)
