@@ -57,6 +57,7 @@ default_response = (
 * http://www.bbc.com\t\t(BBC)\n\
 * http://www.dailymail.co.uk\t(Daily Mail)\n\
 * http://www.mirror.co.uk\t(Daily Mirror)\n\
+* http://www.telegraph.co.uk\t(The Daily Telegraph)\n\
 * DOI\t\t\t\t(Any Digital object Identifier)\n\
 * ISBN\t\t\t\t(Not as accurate as other options)\n\n\
 Found a bug or have a suggestion? Contact me on my talk page. (User:Dalba).',
