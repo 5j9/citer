@@ -4,8 +4,8 @@
 '''All things that are specifically related to New York Times website'''
 
 import re
-import requests
 
+import requests
 import langid
 
 import conv
