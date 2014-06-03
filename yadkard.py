@@ -7,7 +7,7 @@ from cgi import escape
 import urlparse
 
 from yadkardlib import noormags, googlebooks, noorlib, adinebook, nyt, bbc,\
-     dailymail, mirror, telegraph
+     dailymail, mirror, telegraph, huffingtonpost
 from yadkardlib import doi, isbn, conv, config
 
 if config.lang == 'en':
@@ -37,6 +37,7 @@ def application(environ, start_response):
     qdict = urlparse.parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0].decode('utf8')
     url = escape(url).strip()
+    netloc = urlparse.urlparse(url)[1]
     if not url.startswith('http'):
         url = 'http://' + url
     try:
@@ -45,19 +46,21 @@ def application(environ, start_response):
             obj = html.ResposeObj(*html.default_response)
         elif '.google.com/books' in url:
             obj = googlebooks.GoogleBook(url)
-        elif 'nytimes.com/' in url:
+        elif 'nytimes.com' in netloc:
             obj = nyt.NYT(url)
-        elif 'bbc.co' in urlparse.urlparse(url)[1]:
+        elif 'bbc.co' in netloc:
             obj = bbc.BBC(url)
-        elif 'dailymail.' in urlparse.urlparse(url)[1]:
+        elif 'huffingtonpost.c' in netloc:
+            obj = huffingtonpost.HP(url)
+        elif 'dailymail.' in netloc:
             obj = dailymail.DM(url)
-        elif 'mirror.' in urlparse.urlparse(url)[1]:
+        elif 'mirror.' in netloc:
             obj = mirror.DM(url)
-        elif 'telegraph.' in urlparse.urlparse(url)[1]:
+        elif 'telegraph.' in netloc:
             obj = telegraph.DT(url)
-        elif 'noormags.com/' in url:
+        elif 'noormags.' in netloc:
             obj = noormags.NoorMag(url)
-        elif 'noorlib.ir/' in url:
+        elif 'noorlib.ir' in netloc:
             obj = noorlib.NoorLib(url)
         elif 'adinebook.com/gp/product/' in url:
             obj = adinebook.AdineBook(url)
