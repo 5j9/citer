@@ -23,9 +23,14 @@ Usually this function is not used directly. It's called from class Name()'''
             lastname, firstname = fullname, ''
     else:
         sname = fullname.split(seperator)
-        lastname = sname.pop()
-        firstname = ' '.join(sname)
-    return camelize(firstname.strip()), camelize(lastname.strip())
+        lastname = sname.pop().strip()
+        firstname = ' '.join(sname).strip()
+    if firstname:
+        #if there is no firstname, it's probably name of an orgnization
+        #e.g. CBC, or AP. (no captalization is needed)
+        return camelize(firstname), camelize(lastname)
+    else:
+        return firstname, lastname
 
 def camelize(string):
     '''Returnes CamelCased string only if it's completely uppercase/lowercase.
