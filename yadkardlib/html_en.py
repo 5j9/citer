@@ -59,6 +59,7 @@ default_response = (
 * http://www.mirror.co.uk\t(Daily Mirror)\n\
 * http://www.telegraph.co.uk\t(The Daily Telegraph)\n\
 * http://www.huffingtonpost.com\t(The Huffington Post)\n\
+* http://www.washingtonpost.com\t(The Washington Post)\n\
 * DOI\t\t\t\t(Any Digital object Identifier)\n\
 * ISBN\t\t\t\t(International Standard Book Number)\n\n\
 Found a bug or have a suggestion? Contact me on my talk page. (User:Dalba).',
