@@ -3,18 +3,23 @@
 
 # These functions can be useful, but are not implemented yet
 
-'''common functions and classes'''
+'''
+Some common variables, functions, and classes usually used in string conversions
+'''
 
 class Name():
-    '''Takes a fullname and its' seperator; converts it to a Name object.'''
+    '''Take a fullname and its' seperator; convert it to a Name object.
+'''
     def __init__(self, fullname, seperator=None):
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
         self.fullname = self.firstname + ' ' + self.lastname
 
         
 def firstname_lastname(fullname, seperator):
-    '''Returns firstname and lastname as a tuple.
-Usually this function is not used directly. It's called from class Name()'''
+    '''Return firstname and lastname as a tuple.
+
+Usually not used directly. Call from class Name() instead.
+'''
     fullname = fullname.strip()
     if seperator:
         if seperator in fullname:
@@ -28,13 +33,16 @@ Usually this function is not used directly. It's called from class Name()'''
     if firstname:
         #if there is no firstname, it's probably name of an orgnization
         #e.g. CBC, or AP. (no captalization is needed)
-        return camelize(firstname), camelize(lastname)
+        return capwords(firstname), capwords(lastname)
     else:
         return firstname, lastname
 
-def camelize(string):
-    '''Returnes CamelCased string only if it's completely uppercase/lowercase.
-First letter and letters after space or dot will be capitalized.'''
+def capwords(string):
+    '''Captalizes the first letter of each word in the string.
+
+Capitalize first letter and letters after space|dot
+If the string is completely uppercase/lowercase don't change it.
+'''
     if string != string.upper() and string != string.lower():
         return string
     else:
@@ -83,3 +91,6 @@ def famonth2num(string):
     string = string.replace(u'نوامبر', '11')
     string = string.replace(u'دسامبر', '12')
     return string
+
+en_month_pattern = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
+                'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
