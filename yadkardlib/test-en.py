@@ -5,8 +5,19 @@ import unittest
 from pprint import pprint as p
 
 import adinebook, googlebooks, noormags, noorlib, nyt, bbc, dailymail, mirror,\
-       telegraph
+       telegraph, huffingtonpost
 import doi, isbn
+
+class HuffingtonpostTest(unittest.TestCase):
+
+    def test_hp1(self):
+        '''`1 author, 2013'''
+        i = 'http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html'
+        o = huffingtonpost.HP(i)
+        e1 = u'{{sfn|Sorg|2013}}'
+        e2 = u'* {{cite web|last=Sorg|first=Annelise|title=When Killer Whales Kill: Why the movie "Blackfish" Should Sink Captive Whale Programs|website=The Huffington Post|date=2013-08-01|year=2013|url=http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html|ref=harv|accessdate='
+        self.assertIn(e1, o.ref)
+        self.assertIn(e2, o.cite)
 
 
 class DilyTelegraphTest(unittest.TestCase):
@@ -165,7 +176,7 @@ class AdinebookTest(unittest.TestCase):
         self.assertIn(e, o.cite)
 
 
-class GooglebookTest(unittest.TestCase):
+class GooglebooksTest(unittest.TestCase):
 
     def test_gb1(self):
         i = 'http://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library'
