@@ -7,7 +7,7 @@ from cgi import escape
 import urlparse
 
 from yadkardlib import noormags, googlebooks, noorlib, adinebook, nyt, bbc,\
-     dailymail, mirror, telegraph, huffingtonpost
+     dailymail, mirror, telegraph, huffingtonpost, washingtonpost
 from yadkardlib import doi, isbn, conv, config
 
 if config.lang == 'en':
@@ -52,6 +52,8 @@ def application(environ, start_response):
             obj = bbc.BBC(url)
         elif 'huffingtonpost.c' in netloc:
             obj = huffingtonpost.HP(url)
+        elif 'washingtonpost.' in netloc:
+            obj = washingtonpost.WP(url)
         elif 'dailymail.' in netloc:
             obj = dailymail.DM(url)
         elif 'mirror.' in netloc:
