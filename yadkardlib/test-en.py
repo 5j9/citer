@@ -5,8 +5,21 @@ import unittest
 from pprint import pprint as p
 
 import adinebook, googlebooks, noormags, noorlib, nyt, bbc, dailymail, mirror,\
-       telegraph, huffingtonpost
+       telegraph, huffingtonpost, washingtonpost
 import doi, isbn
+
+
+class WashingtonpostTest(unittest.TestCase):
+
+    def test_hp1(self):
+        '''`1 author, 2005, the pubdate is different from last edit date'''
+        i = 'http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html'
+        o = washingtonpost.WP(i)
+        e1 = u'{{sfn|Sachs|2005}}'
+        e2 = u'* {{cite web|last=Sachs|first=Andrea|title=March of the Migration|website=The Washingtonpost Post|date=2005-09-04|year=2005|url=http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html|ref=harv|accessdate='
+        self.assertIn(e1, o.ref)
+        self.assertIn(e2, o.cite)
+
 
 class HuffingtonpostTest(unittest.TestCase):
 
