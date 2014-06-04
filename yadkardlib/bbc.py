@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /data/project/yadkard/venv/bin
 # -*- coding: utf-8 -*-
 
 '''This module contains codes specifically related to BBC news website.'''
@@ -9,8 +9,7 @@ import time
 import requests
 try:
     from bs4 import BeautifulSoup as BS
-except ImportError:
-    from BeautifulSoup import BeautifulSoup as BS
+
 import langid
 
 import conv

@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /data/project/yadkard/venv/bin
 # -*- coding: utf-8 -*-
 
 import logging, logging.handlers

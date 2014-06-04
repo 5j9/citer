@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /data/project/yadkard/venv/bin
 # -*- coding: utf-8 -*-
 
 #todo: editor and author and ... article link

@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /data/project/yadkard/venv/bin
 # -*- coding: utf-8 -*-
 
 '''Codes specifically related to the dailymail website.'''
@@ -9,8 +9,7 @@ import time
 import requests
 try:
     from bs4 import BeautifulSoup as BS
-except ImportError:
-    from BeautifulSoup import BeautifulSoup as BS
+
 import langid
 
 import conv

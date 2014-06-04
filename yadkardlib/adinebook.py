@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /data/project/yadkard/venv/bin
 # -*- coding: utf-8 -*-
 
 '''All things that are specifically related to adinebook website'''

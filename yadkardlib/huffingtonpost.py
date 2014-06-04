@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /data/project/yadkard/venv/bin
 # -*- coding: utf-8 -*-
 
 '''Contains codes specifically related to The Huffington Post website.'''
@@ -10,8 +10,7 @@ import time
 import requests
 try:
     from bs4 import BeautifulSoup as BS
-except ImportError:
-    from BeautifulSoup import BeautifulSoup as BS
+
 import langid
 
 
