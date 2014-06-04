@@ -1,4 +1,4 @@
-#! /data/project/yadkard/venv/bin python
+#!/data/project/yadkard/venv/bin python
 # -*- coding: utf-8 -*-
 
 # These functions can be useful, but are not implemented yet

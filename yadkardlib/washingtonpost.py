@@ -1,4 +1,4 @@
-#! /data/project/yadkard/venv/bin python
+#!/data/project/yadkard/venv/bin python
 # -*- coding: utf-8 -*-
 
 '''Codes specifically related to the washingtonpost website.'''
