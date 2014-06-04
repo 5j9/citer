@@ -7,8 +7,7 @@ import re
 from datetime import datetime
 
 import requests
-try:
-    from bs4 import BeautifulSoup as BS
+from bs4 import BeautifulSoup as BS
 
 import langid
 

@@ -8,8 +8,7 @@ import time
 
 
 import requests
-try:
-    from bs4 import BeautifulSoup as BS
+from bs4 import BeautifulSoup as BS
 
 import langid
 
