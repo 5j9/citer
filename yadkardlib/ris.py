@@ -7,7 +7,7 @@ from doi import doi_regex
 import conv
 
 def parse(ris_text):
-    '''Parses RIS_text data and returns a dictionary of information'''
+    '''Parse RIS_text data and return the result as a dictionary.'''
     d = {}
     #type: (book, journal, . . . )
     m = re.search('TY  - (.*)', ris_text)

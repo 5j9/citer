@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''This module contains codes specifically related to Daily Telegraph website'''
+'''Codes specifically related to the Daily Telegraph website.'''
 
 import re
 import time
@@ -26,8 +26,9 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa  as wikicite
 
-class DT():
-    '''Creates citation object'''
+class Citation():
+    
+    '''Create the telegraph citation object uring it's url.'''
     
     def __init__(self, telegraph_url):
         self.url = telegraph_url
@@ -38,8 +39,7 @@ class DT():
 
 
 def url2dictionary(telegraph_url):
-    '''This is the page parser function. Gets telegraph_url and returns the
-result as a dictionary.'''
+    '''Get telegraph_url and returns the result as a dictionary.'''
     r = requests.get(telegraph_url)
     if r.status_code != 200:
         #not OK. Probably 404

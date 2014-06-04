@@ -1,13 +1,18 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''This module contains html body of application and its predefined resposes'''
+'''HTML skeleton of the application and its predefined resposes.'''
+
 
 class ResposeObj():
+
+    '''Create the response object used in the main application.'''
+    
     def __init__(self, ref, cite, error):
         self.ref = ref
         self.cite = cite
         self.error = error
+
 
 skeleton = u"""<!DOCTYPE html>
 <html dir="rtl">

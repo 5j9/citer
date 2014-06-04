@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''This module contains codes specifically related to BBC news website'''
+'''This module contains codes specifically related to BBC news website.'''
 
 import re
 import time
@@ -24,8 +24,8 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa  as wikicite
 
-class BBC():
-    '''Creates an BBC object'''
+class Citation():
+    '''Create BBC citation object.'''
     
     def __init__(self, bbc_url):
         self.url = bbc_url
@@ -36,8 +36,7 @@ class BBC():
 
 
 def url2dictionary(bbc_url):
-    '''This is the page parser function. Gets bbc_url and returns the result as
-a dictionary.'''
+    '''Get bbc_url and return the result as a dictionary.'''
     r = requests.get(bbc_url)
     if r.status_code != 200:
         #not OK. Probably 404

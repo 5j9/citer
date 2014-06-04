@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''All things that are specifically related to Google Books'''
+'''All things specifically related to the Google Books website.'''
 
 import re
 import urllib2
@@ -21,8 +21,10 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa as wikicite
 
-class GoogleBook():
-    '''Creates a google book object'''
+
+class Citation():
+    
+    '''Create google book citation object.'''
     
     def __init__(self, googlebook_url):
         self.url = googlebook_url
@@ -49,8 +51,9 @@ class GoogleBook():
         self.ref = wikiref.create(self.dictionary)
         self.cite = wikicite.create(self.dictionary)
 
+
 def get_bibtex(googlebook_url):
-    '''Gets bibtex file content from a noormags url'''
+    '''Get bibtex file content from a noormags url.'''
     #getting id:
     pu = urlparse(googlebook_url)
     pq = parse_qs(pu.query)
@@ -66,7 +69,7 @@ def get_bibtex(googlebook_url):
     return bibtex
 
 def get_ris(googlebook_url):
-    '''Gets bibtex file content from a noormags url'''
+    '''Get ris file content from a noormags url.'''
     #getting id:
     pu = urlparse(googlebook_url)
     pq = parse_qs(pu.query)

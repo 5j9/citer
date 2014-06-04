@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''All things that are specifically related to ISBN'''
+'''Codes specifically related to ISBNs.'''
 
 import re
 import urllib2
@@ -19,13 +19,11 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa as wikicite
 
-class Isbn():
-    '''Creates a isbn object'''
+class Citation():
+    '''Create isbn citation object.'''
 
     def __init__(self, isbn_container_string, pure=False):
-        '''gets an ISBN containing string and returns an ISBN onject
-The digits parameter, if passed, should be 10 or 13.
-'''
+        '''Get an ISBN-containing string and return an ISBN object.'''
         if pure:
             self.isbn = isbn_container_string
         else:
@@ -57,9 +55,12 @@ The digits parameter, if passed, should be 10 or 13.
         self.cite = wikicite.create(self.dictionary)
 
 def choose_dict(adinebook, ottobib):
-    '''returns adinebook if both contain the same isbn or if adinebook is None.
+    '''Choose which source to use.
+
+Return adinebook if both sourses contain the same ISBN or if adinebook is None.
 Background: adinebook.com ommits 3 digits from it's isbn when converting them to
-urls. This may make them volnarable to resolve for wrong isbn.'''
+urls. This may make them volnarable to resolving into wrong ISBN.
+'''
     if adinebook and ottobib:
         #both exist
         if isbn2int(adinebook['isbn']) == isbn2int(ottobib['isbn']):
@@ -76,12 +77,13 @@ urls. This may make them volnarable to resolve for wrong isbn.'''
         return ottobib    
 
 def isbn2int(isbn):
+    '''Get ISBN string and return it as in integer.'''
     isbn = isbn.replace('-', '')
     isbn = isbn.replace(' ', '')
     return int(isbn)
 
 def ottobib(isbn):
-    '''converts ISBN to bibtex using ottobib.com'''
+    '''Convert ISBN to bibtex using ottobib.com.'''
     ottobib_url = 'http://www.ottobib.com/isbn/' + isbn + '/bibtex'
     ottobib_html = urllib2.urlopen(ottobib_url).read().decode('utf8')
     m = re.search('<textarea.*>(.*)</textarea>', ottobib_html, re.DOTALL)

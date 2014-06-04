@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''This module contains codes specifically related to mirror website'''
+'''Codes specifically related to mirror website.'''
 
 import re
 import time
@@ -26,8 +26,10 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa  as wikicite
 
-class DM():
-    '''Creates an mirror object'''
+
+class Citation():
+    
+    '''Create mirror citation object.'''
     
     def __init__(self, mirror_url):
         self.url = mirror_url
@@ -38,8 +40,7 @@ class DM():
 
 
 def url2dictionary(mirror_url):
-    '''This is the page parser function. Gets mirror_url and returns the
-result as a dictionary.'''
+    '''Get mirror_url and returns the result as a dictionary.'''
     r = requests.get(mirror_url)
     if r.status_code != 200:
         #not OK. Probably 404
@@ -67,5 +68,3 @@ result as a dictionary.'''
             d['date'] = m['content'][:10]
             d['year'] = m['content'][:4]
     return d
-
-

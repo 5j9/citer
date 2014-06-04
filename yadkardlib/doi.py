@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''All things that are specifically related to doi urls'''
+'''Codes specifically related to DOI inputs.'''
 
 import re
 import urllib2
@@ -19,8 +19,10 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa as wikicite
 
-class Doi():
-    '''Creates a doi object'''
+
+class Citation():
+    
+    '''Create a DOI citation object.'''
     
     def __init__(self, doi_or_url, pure=False):
         if pure:
@@ -43,8 +45,9 @@ class Doi():
         self.ref = wikiref.create(self.dictionary)
         self.cite = wikicite.create(self.dictionary)
 
+
 def get_bibtex(doi_url):
-    '''Gets bibtex file content from a doi url'''
+    '''Get bibtex file content from a doi url. Return as string.'''
     req = urllib2.Request(doi_url)
     req.add_header('Accept', 'text/bibliography; style=bibtex')
     bibtex = urllib2.urlopen(req).read().decode('utf8')

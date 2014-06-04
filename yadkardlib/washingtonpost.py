@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''This module contains codes specifically related to washingtonpost website'''
+'''Codes specifically related to the washingtonpost website.'''
 
 import re
 from datetime import datetime
@@ -26,8 +26,8 @@ else:
     import wikicite_fa  as wikicite
 
 
-class WP():
-    '''Creates an washingtonpost's response object'''
+class Citation():
+    '''Create washingtonpost's citation object.'''
     
     def __init__(self, washingtonpost_url):
         self.url = washingtonpost_url
@@ -38,8 +38,7 @@ class WP():
 
 
 def url2dictionary(washingtonpost_url):
-    '''This is the page parser function. Gets washingtonpost_url and returns the
-result as a dictionary.'''
+    '''Get washingtonpost_url content and return the result as a dictionary.'''
     r = requests.get(washingtonpost_url)
     if r.status_code != 200:
         #not OK. Probably 404
@@ -110,7 +109,7 @@ result as a dictionary.'''
                 d['date'] = m.group().replace('/', '-')
                 d['year'] = d['date'][:4]
         elif bs.find(attrs={'class':"posted",'style':"line-height: 140%;"}):
-            m = re.search(conv.en_month_pattern + ' \d\d, \d\d\d\d',
+            m = re.search(conv.en_month_pattern + ' \d\d?, \d\d\d\d',
                           bs.find(attrs={'class':"posted",'style':
                                          "line-height: 140%;"}).text)
             if m:

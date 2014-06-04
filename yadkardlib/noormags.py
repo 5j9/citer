@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''All things that are specifically related to Noormags website'''
+'''Codes specifically related to Noormags website.'''
 
 import re
 import urllib2
@@ -17,8 +17,9 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa as wikicite
 
-class NoorMag():
-    '''A class to deal with noormags articles'''
+class Citation():
+    
+    '''Create noormags citation object.'''
     
     def __init__(self, noormags_url):
         self.url = noormags_url
@@ -37,7 +38,7 @@ class NoorMag():
 
         
 def get_bibtex(noormags_url):
-    '''Gets bibtex file content from a noormags url'''
+    '''Get bibtex file content from a noormags_url. Return as string.'''
     pagetext = urllib2.urlopen(noormags_url).read()
     article_id = re.search('BibTex&id=(\d+)', pagetext).group(1)
     url = 'http://www.noormags.com/view/CitationHandler.ashx?' +\
@@ -46,7 +47,7 @@ def get_bibtex(noormags_url):
     return bibtex
 
 def get_ris(noormags_url):
-    '''Gets bibtex file content from a noormags url'''
+    '''Get ris file content from a noormags url. Return as string.'''
     pagetext = urllib2.urlopen(noormags_url).read()
     article_id = re.search('RIS&id=(\d+)', pagetext).group(1)
     url = 'http://www.noormags.com/view/CitationHandler.ashx?' +\

@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''Contains codes specifically related to The Huffington Post website'''
+'''Contains codes specifically related to The Huffington Post website.'''
 
 import re
 import time
@@ -26,8 +26,10 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa  as wikicite
 
-class HP():
-    '''Creates citation object'''
+
+class Citation():
+    
+    '''Create the huffingtonpost citation object.'''
     
     def __init__(self, huffingtonpost_url):
         self.url = huffingtonpost_url
@@ -38,8 +40,7 @@ class HP():
 
 
 def url2dictionary(huffingtonpost_url):
-    '''This is the page parser function. Gets huffingtonpost_url and returns the
-result as a dictionary.'''
+    '''Get huffingtonpost_url and return the result as a dictionary.'''
     r = requests.get(huffingtonpost_url)
     if r.status_code != 200:
         #not OK. Probably 404

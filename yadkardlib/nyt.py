@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''All things that are specifically related to New York Times website'''
+'''Codes specifically related to the New York Times website.'''
 
 import re
 
@@ -19,8 +19,9 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa  as wikicite
 
-class NYT():
-    '''Creates an NYT object'''
+class Citation():
+    
+    '''Creates New York Time citation object.'''
     
     def __init__(self, nyt_url):
         self.url = nyt_url
@@ -31,7 +32,7 @@ class NYT():
 
 
 def url2dictionary(nyt_url):
-    '''This is a parser function. Get nyt_url and returns a dict'''
+    '''Parse nyt_url and returns a dict.'''
     r = requests.get(nyt_url)
     if r.status_code != 200:
         #not OK. Probably 404
