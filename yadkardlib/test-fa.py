@@ -1,4 +1,4 @@
-#! /data/project/yadkard/venv/bin
+#! /data/project/yadkard/venv/bin python
 # -*- coding: utf-8 -*-
 
 import unittest

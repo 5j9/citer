@@ -1,4 +1,4 @@
-#! /data/project/yadkard/venv/bin
+#! /data/project/yadkard/venv/bin python
 # -*- coding: utf-8 -*-
 
 '''HTML skeleton of the application and its predefined responses.'''

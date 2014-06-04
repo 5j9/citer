@@ -1,4 +1,4 @@
-#! /data/project/yadkard/venv/bin
+#! /data/project/yadkard/venv/bin python
 # -*- coding: utf-8 -*-
 
 '''This module contains codes specifically related to BBC news website.'''
