@@ -4,15 +4,18 @@
 # These functions can be useful, but are not implemented yet
 
 '''
-Some common variables, functions, and classes usually used in string conversions
+Common variables, functions, and classes usually used in string conversions.
 '''
 
+
 class Name():
-    '''Take a fullname and its' seperator; convert it to a Name object.
-'''
+    
+    '''Take a fullname and its' seperator; convert it to a Name object.'''
+    
     def __init__(self, fullname, seperator=None):
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
         self.fullname = self.firstname + ' ' + self.lastname
+
 
         
 def firstname_lastname(fullname, seperator):
@@ -28,8 +31,10 @@ Usually not used directly. Call from class Name() instead.
             lastname, firstname = fullname, ''
     else:
         sname = fullname.split(seperator)
-        lastname = sname.pop().strip()
-        firstname = ' '.join(sname).strip()
+        lastname = sname.pop()
+        firstname = ' '.join(sname)
+    firstname = firstname.strip()
+    lastname = lastname.strip()
     if firstname:
         #if there is no firstname, it's probably name of an orgnization
         #e.g. CBC, or AP. (no captalization is needed)
@@ -37,7 +42,7 @@ Usually not used directly. Call from class Name() instead.
     else:
         return firstname, lastname
 
-def capwords(string):
+def capwords(string): 
     '''Captalizes the first letter of each word in the string.
 
 Capitalize first letter and letters after space|dot
@@ -51,6 +56,7 @@ If the string is completely uppercase/lowercase don't change it.
         return string
   
 def fanum2en(string):
+    '''Convert Persian numerical string to equivalent English one.'''
     string = string.replace(u'۰', '0')
     string = string.replace(u'۱', '1')
     string = string.replace(u'۲', '2')
@@ -64,6 +70,7 @@ def fanum2en(string):
     return string
 
 def ennum2fa(string_or_num):
+    '''Convert English numerical string to equivalent Persian one.'''
     string = str(string_or_num)
     string = string.replace('0', u'۰')
     string = string.replace('1', u'۱')
@@ -78,6 +85,7 @@ def ennum2fa(string_or_num):
     return string
 
 def famonth2num(string):
+    '''Convert English month number to Persian string.'''
     string = string.replace(u'ژانویهٔ', '01')
     string = string.replace(u'فوریهٔ', '02')
     string = string.replace(u'مارس', '03')
