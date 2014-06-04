@@ -32,7 +32,7 @@ class Citation():
 
 
 def url2dictionary(nyt_url):
-    '''Parse nyt_url and returns a dict.'''
+    '''Parse nyt_url and return the result as a dict.'''
     r = requests.get(nyt_url)
     if r.status_code != 200:
         #not OK. Probably 404
