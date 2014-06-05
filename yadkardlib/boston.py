@@ -80,25 +80,9 @@ def url2dictionary(boston_url):
             m = datetime.strptime(m['content'], '%a, %d %b %Y %H:%M:%S EDT')
             d['date'] = m.strftime('%Y-%m-%d')
             d['year'] = d['date'][:4]
-##        elif bs.find(attrs={'name':'pub_date'}):
-##            m = bs.find(attrs={'name':'pub_date'})['content']
-##            d['year'] = m[:4]
-##            d['date'] = m[:4] + '-' + \
-##                        m[4:6] + '-' + \
-##                        m[6:]
-##        elif bs.find(attrs={'property':'og:url'}):
-##            m = bs.find(attrs={'property':'og:url'})
-##            m = re.search('\d\d\d\d/\d\d/\d\d', m['content'])
-##            if not m:
-##                m = re.search('\d\d\d\d/\d\d/\d\d', boston_url)
-##            if m:
-##                d['date'] = m.group().replace('/', '-')
-##                d['year'] = d['date'][:4]
         elif bs.find(attrs={'class':'byline'}):
-            m = re.search(conv.en_month_pattern + ' \d\d?, \d\d\d\d',
-                          bs.find(attrs={'class':'byline'}).text)
+            m = conv.finddate(bs.find(attrs={'class':'byline'}).text)
             if m:
-                d['date'] = datetime.strptime(m.group(),
-                                              '%B %d, %Y').strftime('%Y-%m-%d')
+                d['date'] = m.strftime('%Y-%m-%d')
                 d['year'] = d['date'][:4] 
     return d
