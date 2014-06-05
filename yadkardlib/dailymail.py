@@ -51,7 +51,7 @@ def url2dictionary(dailymail_url):
         m = bs.find('meta', attrs={'property':'og:title'})
         if m:
             d['title'] = m['content']
-        m = bs.findAll(attrs={'class':'author'})
+        m = bs.find_all(attrs={'class':'author'})
         if m:
             d['authors'] = []
             for fullname in m:
