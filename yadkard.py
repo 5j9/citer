@@ -37,9 +37,9 @@ def application(environ, start_response):
     qdict = urlparse.parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0].decode('utf8')
     url = escape(url).strip()
-    netloc = urlparse.urlparse(url)[1]
     if not url.startswith('http'):
         url = 'http://' + url
+    netloc = urlparse.urlparse(url)[1]
     try:
         if url == 'http://':
             #on first run url is ''
