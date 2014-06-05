@@ -28,7 +28,7 @@ class BostonTest(unittest.TestCase):
 
 class WashingtonpostTest(unittest.TestCase):
 
-    def test_hp1(self):
+    def test_wp1(self):
         '''`1 author, 2005, the pubdate is different from last edit date'''
         i = 'http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html'
         o = washingtonpost.Citation(i)
@@ -52,7 +52,7 @@ class HuffingtonpostTest(unittest.TestCase):
 
 class DilyTelegraphTest(unittest.TestCase):
 
-    def test_dm1(self):
+    def test_dt1(self):
         '''`1 author, 2005'''
         i = 'http://www.telegraph.co.uk/health/3334755/We-could-see-the-whales-eyes-mouth...-the-barnacles-on-its-back.html'
         o = telegraph.Citation(i)
@@ -160,49 +160,49 @@ class AdinebookTest(unittest.TestCase):
         '''authors = 1, translators = 2, otheo = 1, isbn13'''
         i = 'http://www.adinebook.com/gp/product/9648165814/ref=sr_1_1000_42/905-6618179-9188955'
         o = adinebook.Citation(i)
-        e = u'* {{cite book|last=لانسکی|first=ویکی|others= کی وایت (تصويرگر), فیروزه دالکی (مترجم), and مژگان امیرفروغی (مترجم)|title=101 راه برای اینکه پدر بهتری باشید|publisher=پیک ادبیات|year=1386|isbn=978-964-8165-81-4|language=fa|ref=harv|accessdate='
+        e = u'* {{cite book|last=لانسکی|first=ویکی|others= کی وایت (تصويرگر), فیروزه دالکی (مترجم), and مژگان امیرفروغی (مترجم)|title=101 راه برای اینکه پدر بهتری باشید|publisher=پیک ادبیات|year=1386|isbn=978-964-8165-81-4|language=fa|ref=harv'
         self.assertIn(e, o.cite)
 
     def test_ab2(self):
         '''authors = 3, translators = 2, otheo = 0, isbn13'''
         i = 'http://www.adinebook.com/gp/product/9642823352/ref=sr_1_1000_41/905-6618179-9188955'
         o = adinebook.Citation(i)
-        e = u'* {{cite book|last=کرسول|first=جان|last2=کلارک|first2=ویکی پلانو|others=محسن نیازی (مترجم), and عباس زارعی (مترجم)|title=روش های تحقیق تلفیقی|publisher=علم و دانش|year=1387|isbn=978-964-2823-35-2|language=fa|ref=harv|accessdate='
+        e = u'* {{cite book|last=کرسول|first=جان|last2=کلارک|first2=ویکی پلانو|others=محسن نیازی (مترجم), and عباس زارعی (مترجم)|title=روش های تحقیق تلفیقی|publisher=علم و دانش|year=1387|isbn=978-964-2823-35-2|language=fa|ref=harv'
         self.assertIn(e, o.cite)
 
     def test_ab3(self):
         '''authors = 2, translators = 0, otheo = 4, isbn13'''
         i = 'http://www.adinebook.com/gp/product/6005883435'
         o = adinebook.Citation(i)
-        e = u'* {{cite book|last=فخررحیمی|first=علیرضا|last2=فخررحیمی|first2=الهام|others= آرش نادرپور (مقدمه),  امیر جابری (مقدمه),  وحید شهبازیان (مقدمه), and  رضا مقدم (مقدمه)|title=آموزش گام به گام پیکربندی مسیریابهای میکروتیک: آمادگی آزمون MTCNA|publisher=نشرگستر|year=1391|isbn=978-600-5883-43-5|language=fa|ref=harv|accessdate='
+        e = u'* {{cite book|last=فخررحیمی|first=علیرضا|last2=فخررحیمی|first2=الهام|others= آرش نادرپور (مقدمه),  امیر جابری (مقدمه),  وحید شهبازیان (مقدمه), and  رضا مقدم (مقدمه)|title=آموزش گام به گام پیکربندی مسیریابهای میکروتیک: آمادگی آزمون MTCNA|publisher=نشرگستر|year=1391|isbn=978-600-5883-43-5|language=fa|ref=harv'
         self.assertIn(e, o.cite)
 
     def test_ab4(self):
         '''authors = 3, translators = 0, otheo = 0, isbn13'''
         i = 'http://www.adinebook.com/gp/product/9649563342/ref=ftr_1/905-6618179-9188955'
         o = adinebook.Citation(i)
-        e = u'* {{cite book|last=کریمی|first=نجمه|last2=یزدخواستی|first2=فروغ|last3=مختاری|first3=صفورا|title=11 سپتامبر ... آرماگدون|publisher=حدیث راه عشق|year=1386|isbn=978-964-95633-4-3|language=fa|ref=harv|accessdate='
+        e = u'* {{cite book|last=کریمی|first=نجمه|last2=یزدخواستی|first2=فروغ|last3=مختاری|first3=صفورا|title=11 سپتامبر ... آرماگدون|publisher=حدیث راه عشق|year=1386|isbn=978-964-95633-4-3|language=fa|ref=harv'
         self.assertIn(e, o.cite)
 
     def test_ab5(self):
         '''Year is interesting here.'''
         i = 'http://www.adinebook.com/gp/product/9642656349/'
         o = adinebook.Citation(i)
-        e = u'* {{cite book|last=نژاد|first=یوسف علی یوسف|title=فراهنجاری در مثنوی سرایی|publisher=اردیبهشت|year=1388|isbn=978-964-2656-34-9|language=fa|ref=harv|accessdate='
+        e = u'* {{cite book|last=نژاد|first=یوسف علی یوسف|title=فراهنجاری در مثنوی سرایی|publisher=اردیبهشت|year=1388|isbn=978-964-2656-34-9|language=fa|ref=harv'
         self.assertIn(e, o.cite)
 
     def test_ab6(self):
         '''Month and year detection.'''
         i = 'http://www.adinebook.com/gp/product/9645300363/ref=pd_sim_b_title_4/905-6618179-9188955'
         o = adinebook.Citation(i)
-        e = u'* {{cite book|last=مونس|first=حسین|others=حمیدرضا شیخی (مترجم)|title=تاریخ و تمدن مغرب|publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها|year=1392|isbn=978-964-530-036-2|language=fa|ref=harv|accessdate='
+        e = u'* {{cite book|last=مونس|first=حسین|others=حمیدرضا شیخی (مترجم)|title=تاریخ و تمدن مغرب|publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها|year=1392|isbn=978-964-530-036-2|language=fa|ref=harv'
         self.assertIn(e, o.cite)
 
     def test_ab7(self):
         '''1 Editor.'''
         i = 'http://www.adinebook.com/gp/product/9644593987/ref=pd_pos_b_title_4/905-6618179-9188955'
         o = adinebook.Citation(i)
-        e = u'* {{cite book|last=دیماتیو|first=ام.رابین|editor-last=جباری|editor-first=کریم|others= کیانوش هاشمیان (زيرنظر), and محمد کاویانی (مترجم)|title=روانشناسی سلامت به ضمیمه نگرشی بر منابع اسلامی|publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها|year=1389|isbn=978-964-459-398-7|language=fa|ref=harv|accessdate='
+        e = u'* {{cite book|last=دیماتیو|first=ام.رابین|editor-last=جباری|editor-first=کریم|others= کیانوش هاشمیان (زيرنظر), and محمد کاویانی (مترجم)|title=روانشناسی سلامت به ضمیمه نگرشی بر منابع اسلامی|publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها|year=1389|isbn=978-964-459-398-7|language=fa|ref=harv'
         self.assertIn(e, o.cite)
 
 
@@ -275,14 +275,15 @@ class DoiTest(unittest.TestCase):
         self.assertIn(e, o.cite)
 
     def test_di2(self):
-        '''DOI with unsafe characters (<>) Warning: this test fials a lot due
-to "HTTPError: HTTP Error 500: Internal Server Error".
-Also be aware that there was an &amp; entity which was manually substitute in
-expected output'''
+        '''DOI with unsafe characters (<>)
 
+Warning: this test fials a lot due to "HTTPError: HTTP Error 500: Internal
+Server Error". Also be aware that there was an &amp; entity which was manually substitute in
+expected output
+'''
         i = '10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5'
         o = doi.Citation(i, pure = True)
-        e = u'* {{cite journal|last=Dian|first=Noor Lida Habi Mat|last2=Sudin|first2=Nor’aini|last3=Yusoff|first3=Mohd Suria Affandi|title=Characteristics of Microencapsulated Palm-Based Oil as Affected by Type of Wall Material|journal=Journal of the Science of Food and Agriculture|publisher=Wiley Blackwell (John Wiley &amp; Sons)|volume=70|issue=4|year=1996|pages=422–426|url=http://dx.doi.org/10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|doi=10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|ref=harv|accessdate='
+        e = u'* {{cite journal|last=Dian|first=Noor Lida Habi Mat|last2=Sudin|first2=Nor\u2019aini|last3=Yusoff|first3=Mohd Suria Affandi|title=Characteristics of Microencapsulated Palm-Based Oil as Affected by Type of Wall Material|journal=J. Sci. Food Agric.|publisher=Wiley-Blackwell|volume=70|issue=4|year=1996|pages=422\u2013426|url=http://dx.doi.org/10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|doi=10.1002/(sici)1097-0010(199604)70:4<422::aid-jsfa514>3.0.co;2-5|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
 
@@ -292,28 +293,28 @@ class IsbnTest(unittest.TestCase):
         '''not found in adinebook'''
         i = '9780349119168'
         o = isbn.Citation(i, pure = True)
-        e = u'* {{cite book|last=Adkins|first=Roy|title=The war for all the oceans : from Nelson at the Nile to Napoleon at Waterloo|publisher=Abacus|year=2007|isbn=9780349119168|ref=harv|accessdate='
+        e = u'* {{cite book|last=Adkins|first=Roy|title=The war for all the oceans : from Nelson at the Nile to Napoleon at Waterloo|publisher=Abacus|year=2007|isbn=9780349119168|ref=harv'
         self.assertIn(e, o.cite)
 
     def test_is2(self):
         '''not found in ottobib'''
         i = '978-964-6736-71-9'
         o = isbn.Citation(i, pure = True)
-        e = u'* {{cite book|others=بدیل بن علی خاقانی (شاعر),  جهانگیر منصور (به اهتمام), and  بدیع الزمان فروزانفر (مقدمه)|title=دیوان خاقانی شروانی|publisher=نگاه|year=1389|isbn=978-964-6736-71-9|language=fa|ref={{sfnref|نگاه|1389}}|accessdate='
+        e = u'* {{cite book|others=بدیل بن علی خاقانی (شاعر),  جهانگیر منصور (به اهتمام), and  بدیع الزمان فروزانفر (مقدمه)|title=دیوان خاقانی شروانی|publisher=نگاه|year=1389|isbn=978-964-6736-71-9|language=fa|ref={{sfnref|نگاه|1389}}'
         self.assertIn(e, o.cite)
 
     def test_is3(self):
         '''exists in both'''
         i = '964-6736-34-3 '
         o = isbn.Citation(i)
-        e = u'* {{cite book|others=سحر معصومی (به اهتمام)|title=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری|publisher=نگاه|year=1386|isbn=964-6736-34-3|language=fa|ref={{sfnref|نگاه|1386}}|accessdate='
+        e = u'* {{cite book|others=سحر معصومی (به اهتمام)|title=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری|publisher=نگاه|year=1386|isbn=964-6736-34-3|language=fa|ref={{sfnref|نگاه|1386}}'
         self.assertIn(e, o.cite)
         
     def test_is4(self):
         '''unpure isbn10 not found in ottobib'''
         i = 'choghondar 964-92962-6-3 شلغم'
         o = isbn.Citation(i)
-        e = u'* {{cite book|last=حافظ|first=شمس الدین محمد|others= رضا نظرزاده (به اهتمام)|title=دیوان کامل حافظ همراه با فالنامه|publisher=دیوان|year=1385|isbn=964-92962-6-3|language=fa|ref=harv|accessdate='
+        e = u'* {{cite book|last=حافظ|first=شمس الدین محمد|others= رضا نظرزاده (به اهتمام)|title=دیوان کامل حافظ همراه با فالنامه|publisher=دیوان|year=1385|isbn=964-92962-6-3|language=fa|ref=harv'
         self.assertIn(e, o.cite)
 
 if __name__ == '__main__':
