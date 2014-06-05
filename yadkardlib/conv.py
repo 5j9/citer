@@ -1,12 +1,12 @@
 #!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
-# These functions can be useful, but are not implemented yet
-
 '''
 Common variables, functions, and classes usually used in string conversions.
 '''
 
+from datetime import datetime
+import re
 
 class Name():
     
@@ -100,5 +100,54 @@ def famonth2num(string):
     string = string.replace(u'دسامبر', '12')
     return string
 
-en_month_pattern = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
-                'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
+def finddate(string):
+    '''Try to find a date in input string and return it as a datetime object.
+
+If there is no matching date, return None.
+'''
+    m = re.search(BdY, string)
+    if m:
+        return datetime.strptime(m.group(), '%B %d, %Y')
+    m = re.search(bdY, string)
+    if m:
+        return datetime.strptime(m.group(), '%b %d, %Y')
+    m = re.search(dBY, string)
+    if m:
+        return datetime.strptime(m.group(), '%d %B %Y')
+    m = re.search(dbY, string)
+    if m:
+        return datetime.strptime(m.group(), '%d %b %Y')
+    m = re.search(Ymd_dashed, string)
+    if m:
+        return datetime.strptime(m.group(), '%Y-%m-%d')
+    m = re.search(Ymd_slashed, string)
+    if m:
+        return datetime.strptime(m.group(), '%Y/%m/%d')
+    m = re.search(Ymd, string)
+    if m:
+        return datetime.strptime(m.group(), '%Y%m%d')
+
+#Date patterns:
+
+#January|February...
+B = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
+    'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
+#Abbreviation:
+b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
+
+#July 3, 2001
+BdY = B + ' \d\d?, \d\d\d\d'
+#Aug 22, 2001
+bdY = b + ' \d\d?, \d\d\d\d'
+
+#22 August 2001
+dBY = '\d\d? ' + B + ' \d\d\d\d'
+#22 Aug 2001
+dbY = '\d\d? ' + b + ' \d\d\d\d'
+
+#1900-01-01,2099-12-31
+Ymd_dashed = r'(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])'
+#1900/01/01, 2099/12/31
+Ymd_slashed = r'(19|20)\d\d/(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])'
+#19000101, 20991231
+Ymd = r'(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])'
