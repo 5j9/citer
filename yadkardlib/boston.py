@@ -24,6 +24,7 @@ else:
 
 
 class Citation():
+    
     '''Create Boston Globe citation object.'''
     
     def __init__(self, boston_url):
@@ -35,8 +36,7 @@ class Citation():
 
 
 def url2dictionary(boston_url):
-    '''This is the page parser function. Gets boston_url and returns the
-result as a dictionary.'''
+    '''Get boston_url and return the result as a dictionary.'''
     r = requests.get(boston_url)
     if r.status_code != 200:
         #not OK. Probably 404
