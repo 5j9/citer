@@ -85,7 +85,8 @@ def create(d):
                  )
         if 'year' in d:
             s += '|' + d['year'] + '}}'
-    s += '|accessdate=' + date.isoformat(date.today())
+    if 'url' in d:
+        s += '|accessdate=' + date.isoformat(date.today())
     s += '}}'
     return s
     
