@@ -68,7 +68,7 @@ def application(environ, start_response):
             obj = noormags.Citation(url)
         elif 'noorlib.ir' in netloc:
             obj = noorlib.Citation(url)
-        elif 'adinebook.com/gp/product/' in url:
+        elif ('adinebook' in netloc) or ('adinehbook' in netloc):
             obj = adinebook.Citation(url)
         else:
             en_url = conv.fanum2en(url)
