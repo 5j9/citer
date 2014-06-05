@@ -4,9 +4,10 @@
 '''All things that are specifically related to adinebook website'''
 
 import re
-import urllib2
 
 import langid
+import requests
+from bs4 import BeautifulSoup as BS
 
 import conv
 import isbn
@@ -55,11 +56,11 @@ def url2dictionary(adinebook_url):
     try:
         #this try statement is needed because if adinebook is not available then
         #    ottobib should continoue its' work in isbn.py
-        opener = urllib2.build_opener()
-        opener.addheaders = [('User-agent',
-                              'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
-                              ' Gecko/20100101 Firefox/24.0')]
-        adinebook_html = opener.open(adinebook_url).read().decode('utf8')
+        headers = {'User-agent':
+                   'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:29.0)' +
+                   ' Gecko/20100101 Firefox/29.0'}
+        r = requests.get(adinebook_url, headers=headers)
+        adinebook_html = r.content.decode('utf-8')
     except:
         #todo: log
         return
@@ -68,13 +69,12 @@ def url2dictionary(adinebook_url):
     else:
         d = {}
         d['type'] = 'book'
-        pattern = u'<title>آدینه بوک:\s?(?P<title>.*?)\s?' +\
-                '~(?P<names>.*?)\s?</title>'
-        m = re.search(pattern, adinebook_html)
-        if m:
-            d['title'] = m.group('title')
-        else:
-            return
+        bs = BS(adinebook_html)
+        if bs.title:
+            pattern = u'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$'
+            m = re.search(pattern, bs.title.text)
+            if m:
+                d['title'] = m.group('title')
         names = m.group('names').split(u'،')
         #initiating name lists:
         if m.group('names'):
@@ -118,5 +118,5 @@ def url2dictionary(adinebook_url):
             d['year'] = m.group(1)
         m = re.search(u'شابک:.*?([\d-]*)</span></li>', adinebook_html)
         if m:
-            d['isbn'] = m.group(1)          
+            d['isbn'] = m.group(1)       
     return d
