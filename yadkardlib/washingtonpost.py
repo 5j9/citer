@@ -107,11 +107,9 @@ def url2dictionary(washingtonpost_url):
                 d['date'] = m.group().replace('/', '-')
                 d['year'] = d['date'][:4]
         elif bs.find(attrs={'class':"posted",'style':"line-height: 140%;"}):
-            m = re.search(conv.en_month_pattern + ' \d\d?, \d\d\d\d',
-                          bs.find(attrs={'class':"posted",'style':
+            m = conv.finddate(bs.find(attrs={'class':"posted",'style':
                                          "line-height: 140%;"}).text)
             if m:
-                d['date'] = datetime.strptime(m.group(),
-                                              '%B %d, %Y').strftime('%Y-%m-%d')
+                d['date'] = m.strftime('%Y-%m-%d')
                 d['year'] = d['date'][:4] 
     return d
