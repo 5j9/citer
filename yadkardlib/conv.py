@@ -8,6 +8,7 @@ Common variables, functions, and classes usually used in string conversions.
 from datetime import datetime
 import re
 
+
 class Name():
     
     '''Take a fullname and its' seperator; convert it to a Name object.'''
@@ -132,7 +133,7 @@ If there is no matching date, return None.
 #January|February...
 B = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
     'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
-#Abbreviation:
+#Month abbreviations:
 b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
 
 #July 3, 2001

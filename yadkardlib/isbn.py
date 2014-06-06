@@ -20,6 +20,7 @@ else:
     import wikicite_fa as wikicite
 
 class Citation():
+    
     '''Create isbn citation object.'''
 
     def __init__(self, isbn_container_string, pure=False):
