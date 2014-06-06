@@ -44,6 +44,8 @@ def create(d):
         s += '|journal=' + d['journal']
     if 'publisher' in d:
         s += '|publisher=' + d['publisher']
+    if 'address' in d:
+        s += '|location=' + d['address']
     if 'website' in d:
         s += '|website=' + d['website']
     if 'series' in d:
