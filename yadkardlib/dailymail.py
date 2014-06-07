@@ -46,7 +46,7 @@ def url2dictionary(dailymail_url):
         d = {}
         d['url'] = dailymail_url
         d['type'] = 'web'
-        d['website'] = 'Daily Mail'
+        d['website'] = 'Mail Online'
         bs = BS(r.text)
         m = bs.find('meta', attrs={'property':'og:title'})
         if m:
