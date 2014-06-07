@@ -9,20 +9,62 @@ from datetime import datetime
 import re
 
 
+#Date patterns:
+
+#January|February...
+B = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
+    'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
+#Month abbreviations:
+b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
+
+#July 3, 2001
+BdY = B + ' \d\d?, \d\d\d\d'
+#Aug 22, 2001
+bdY = b + ' \d\d?, \d\d\d\d'
+
+#22 August 2001
+dBY = '\d\d? ' + B + ' \d\d\d\d'
+#22 Aug 2001
+dbY = '\d\d? ' + b + ' \d\d\d\d'
+
+#1900-01-01,2099-12-31
+Ymd_dashed = r'(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])'
+#1900/01/01, 2099/12/31
+Ymd_slashed = r'(19|20)\d\d/(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])'
+#19000101, 20991231
+Ymd = r'(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])'
+
+
+class LongNameError(Exception):
+    
+    '''Raise when a Name() is too long to be a name.'''
+
+    pass
+
+
 class Name():
     
     '''Take a fullname and its' seperator; convert it to a Name object.'''
     
     def __init__(self, fullname, seperator=None):
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
+        if len(self.lastname)>30:
+            raise LongNameError('Detected lastname was longer than 30 chars.')
         self.fullname = self.firstname + ' ' + self.lastname
 
+    def nofirst_fulllast(self):
+        '''Change firstname to an empty string and assign fullname to lastname.
 
+Use this method for corporate authors.
+'''
+        self.lastname = self.fullname
+        self.firstname = ''
         
+    
 def firstname_lastname(fullname, seperator):
     '''Return firstname and lastname as a tuple.
 
-Usually not used directly. Call from class Name() instead.
+Usually not used directly, called from Name() class.
 '''
     fullname = fullname.strip()
     if seperator:
@@ -42,6 +84,7 @@ Usually not used directly. Call from class Name() instead.
         return capwords(firstname), capwords(lastname)
     else:
         return firstname, lastname
+
 
 def capwords(string): 
     '''Captalizes the first letter of each word in the string.
@@ -127,28 +170,3 @@ If there is no matching date, return None.
     m = re.search(Ymd, string)
     if m:
         return datetime.strptime(m.group(), '%Y%m%d')
-
-#Date patterns:
-
-#January|February...
-B = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
-    'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
-#Month abbreviations:
-b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
-
-#July 3, 2001
-BdY = B + ' \d\d?, \d\d\d\d'
-#Aug 22, 2001
-bdY = b + ' \d\d?, \d\d\d\d'
-
-#22 August 2001
-dBY = '\d\d? ' + B + ' \d\d\d\d'
-#22 Aug 2001
-dbY = '\d\d? ' + b + ' \d\d\d\d'
-
-#1900-01-01,2099-12-31
-Ymd_dashed = r'(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])'
-#1900/01/01, 2099/12/31
-Ymd_slashed = r'(19|20)\d\d/(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])'
-#19000101, 20991231
-Ymd = r'(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])'
