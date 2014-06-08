@@ -64,9 +64,21 @@ Use this method for corporate authors.
 def firstname_lastname(fullname, seperator):
     '''Return firstname and lastname as a tuple.
 
+Add Jr.|Sr. suffix to first name.
 Usually not used directly, called from Name() class.
+
+Example:
+
+>>> firstname_lastname('JAMES C. MCKINLEY Jr.', None)
+('James C. Jr.', 'McKinley')
 '''
     fullname = fullname.strip()
+    m = re.search(' (Jr\.|Sr\.)$', fullname, re.I)
+    if m:
+        suffix = m.group()
+        fullname = fullname[:-4]
+    else:
+        suffix = None
     if seperator:
         if seperator in fullname:
             lastname, firstname = fullname.split(seperator)
@@ -77,27 +89,20 @@ Usually not used directly, called from Name() class.
         lastname = sname.pop()
         firstname = ' '.join(sname)
     firstname = firstname.strip()
-    lastname = lastname.strip()
+    if suffix:
+        firstname += suffix
     if firstname:
-        #if there is no firstname, it's probably name of an orgnization
-        #e.g. CBC, or AP. (no captalization is needed)
-        return capwords(firstname), capwords(lastname)
-    else:
-        return firstname, lastname
+        #if there is no firstname, it's probably an orgnization name
+        #e.g. CBC, or AP. (no word-captalization should be done)
+        firstname = firstname.title()
+        lastname = lastname.title()
+    lastname = re.sub('MC(\w)',
+                      lambda m: 'Mc' + m.group(1).upper(),
+                      lastname,
+                      flags =re.I
+                      )
+    return firstname, lastname
 
-
-def capwords(string): 
-    '''Captalizes the first letter of each word in the string.
-
-Capitalize first letter and letters after space|dot
-If the string is completely uppercase/lowercase don't change it.
-'''
-    if string != string.upper() and string != string.lower():
-        return string
-    else:
-        string = ' '.join([t.capitalize() for t in string.split()])
-        string = '.'.join([t.capitalize() for t in string.split('.')])
-        return string
   
 def fanum2en(string):
     '''Convert Persian numerical string to equivalent English one.'''
