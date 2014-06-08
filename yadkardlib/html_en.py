@@ -37,6 +37,7 @@ skeleton = u"""<!DOCTYPE html>
                 margin-left: auto;
                 margin-right: auto;  
                 width:100%%;
+                word-break: break-all;
                 }
             body {
                 font-family: tahoma;
@@ -68,7 +69,7 @@ skeleton = u"""<!DOCTYPE html>
             </form>
             <p>
                 <a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:<br>
-                <textarea rows="10" readonly>%s\n\n%s</textarea>
+                <textarea rows="8" readonly>%s\n\n%s</textarea>
             </p>
             <p>
                 <!-- There may be error in language detection. %s %% -->
