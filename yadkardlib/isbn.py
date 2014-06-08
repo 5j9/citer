@@ -19,6 +19,29 @@ else:
     import wikiref_fa as wikiref
     import wikicite_fa as wikicite
 
+
+#original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
+isbn13_regex = re.compile(
+    r'97(?:8|9)([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
+    )
+#original regex from: https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
+isbn10_regex = re.compile(
+    r'(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
+    )
+#original regex from: http://stackoverflow.com/a/14260708/2705757
+isbn_regex = re.compile(
+    r'(?=[-0-9 ]{17}|[-0-9X ]{13}|[0-9X]{10})(?:97[89][- ]?)\
+?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
+    )
+
+
+class IsbnError(Exception):
+    
+    '''Raise when bibliographic information is not available.'''
+    
+    pass
+
+
 class Citation():
     
     '''Create isbn citation object.'''
@@ -42,10 +65,7 @@ class Citation():
         o = bibtex.parse(self.bibtex)
         self.dictionary = choose_dict(a, o)
         if not a and not o:
-            self.ref = 'ISBN was not found.'
-            self.cite = 'Bibliographic information is not available.'
-            self.error = 100
-            return
+            raise IsbnError('Bibliographic information not found.')
         if 'language' in self.dictionary:
             self.error = 0
         else:
@@ -54,6 +74,7 @@ class Citation():
             self.error = round((1 - self.dictionary['error']) * 100, 2)
         self.ref = wikiref.create(self.dictionary)
         self.cite = wikicite.create(self.dictionary)
+
 
 def choose_dict(adinebook, ottobib):
     '''Choose which source to use.
@@ -75,13 +96,15 @@ urls. This may make them volnarable to resolving into wrong ISBN.
         return adinebook
     else:
         #only ottobib exists
-        return ottobib    
+        return ottobib
+    
 
 def isbn2int(isbn):
     '''Get ISBN string and return it as in integer.'''
     isbn = isbn.replace('-', '')
     isbn = isbn.replace(' ', '')
     return int(isbn)
+
 
 def ottobib(isbn):
     '''Convert ISBN to bibtex using ottobib.com.'''
@@ -90,17 +113,3 @@ def ottobib(isbn):
     m = re.search('<textarea.*>(.*)</textarea>', ottobib_html, re.DOTALL)
     bibtex = m.group(1)
     return bibtex
-
-#original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
-isbn13_regex = re.compile(
-    r'97(?:8|9)([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
-    )
-#original regex from: https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
-isbn10_regex = re.compile(
-    r'(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
-    )
-#original regex from: http://stackoverflow.com/a/14260708/2705757
-isbn_regex = re.compile(
-    r'(?=[-0-9 ]{17}|[-0-9X ]{13}|[0-9X]{10})(?:97[89][- ]?)\
-?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
-    )
