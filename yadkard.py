@@ -6,8 +6,7 @@ import urllib2
 from cgi import escape
 import urlparse
 
-from yadkardlib import noormags, googlebooks, noorlib, adinebook, nyt, bbc,\
-     dailymail, mirror, telegraph, huffingtonpost, washingtonpost, boston
+from yadkardlib import noormags, googlebooks, noorlib, adinebook, urls
 from yadkardlib import doi, isbn, conv, config
 
 if config.lang == 'en':
@@ -33,6 +32,7 @@ def mylogger():
     logger.addHandler(handler)
     return logger
 
+
 def application(environ, start_response):
     qdict = urlparse.parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0].decode('utf8')
@@ -40,53 +40,43 @@ def application(environ, start_response):
     if not url.startswith('http'):
         url = 'http://' + url
     netloc = urlparse.urlparse(url)[1]
+    path = urlparse.urlparse(url)[2]
+    en_url = conv.fanum2en(url) #used in doi and isbn matching
     try:
+        obj = None
         if url == 'http://':
             #on first run url is ''
             obj = html.ResposeObj(*html.default_response)
         elif '.google.com/books' in url:
             obj = googlebooks.Citation(url)
-        elif 'nytimes.com' in netloc:
-            obj = nyt.Citation(url)
-        elif 'bbc.co' in netloc:
-            obj = bbc.Citation(url)
-        elif 'boston' in netloc:
-            obj = boston.Citation(url)
-        elif 'washingtonpost.' in netloc:
-            obj = washingtonpost.Citation(url)
-        elif 'huffingtonpost.' in netloc:
-            obj = huffingtonpost.Citation(url)
-        elif 'boston.' in netloc:
-            obj = boston.Citation(url)
-        elif 'telegraph.' in netloc:
-            obj = telegraph.Citation(url)
-        elif 'dailymail.' in netloc:
-            obj = dailymail.Citation(url)
-        elif 'mirror.' in netloc:
-            obj = mirror.Citation(url)
         elif 'noormags.' in netloc:
             obj = noormags.Citation(url)
         elif 'noorlib.ir' in netloc:
             obj = noorlib.Citation(url)
         elif ('adinebook' in netloc) or ('adinehbook' in netloc):
             obj = adinebook.Citation(url)
-        else:
-            en_url = conv.fanum2en(url)
-            doi_m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
-            if doi_m:
-                obj = doi.Citation(doi_m.group(1), pure=True)
-            else:
-                isbn13_m = isbn.re.search(isbn.isbn13_regex, en_url)
-                if isbn13_m:
-                    obj = isbn.Citation(isbn13_m.group(0), pure=True)
-                else:
-                    isbn10_m = isbn.re.search(isbn.isbn10_regex, en_url)
-                    if isbn10_m:
-                        obj = isbn.Citation(isbn10_m.group(0), pure=True)
-                    else:
-                        obj = html.ResposeObj(*html.undefined_url_response)
-                        logger.info(u'There was an undefined_url_response\r\n' +\
-                                    url)
+        if not obj:
+            #DOI and ISBN check
+            try:
+                m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
+                if m:
+                    obj = doi.Citation(m.group(1), pure=True)
+                elif isbn.re.search(isbn.isbn13_regex, en_url):
+                    obj = isbn.Citation(
+                        isbn.re.search(isbn.isbn13_regex, en_url).group(0),
+                        pure=True)
+                elif isbn.re.search(isbn.isbn10_regex, en_url):
+                    obj = isbn.Citation(
+                        isbn.re.search(isbn.isbn10_regex, en_url).group(0),
+                        pure=True)
+            except isbn.IsbnError:
+                pass
+        if not obj:
+            obj = urls.Citation(url)
+        if not obj:
+            #All the above cases have been unsuccessful
+            obj = html.ResposeObj(*html.undefined_url_response)
+            logger.info(u'There was an undefined_url_response\r\n' + url)
         response_body = html.skeleton %(obj.ref,
                                         obj.cite,
                                         obj.error)
