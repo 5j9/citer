@@ -40,8 +40,6 @@ def application(environ, start_response):
     if not url.startswith('http'):
         url = 'http://' + url
     netloc = urlparse.urlparse(url)[1]
-    path = urlparse.urlparse(url)[2]
-    en_url = conv.fanum2en(url) #used in doi and isbn matching
     try:
         obj = None
         if url == 'http://':
@@ -57,6 +55,7 @@ def application(environ, start_response):
             obj = adinebook.Citation(url)
         if not obj:
             #DOI and ISBN check
+            en_url = conv.fanum2en(url)
             try:
                 m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
                 if m:
