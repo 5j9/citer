@@ -105,5 +105,5 @@ this citation are not accessible at this moment.',
                       u'100')
 
 other_exception_response = (u'An unknown error occurred.',
-                      u'The error was logged.',
-                      u'100')
+                            u'The error was logged.',
+                            u'100')
