@@ -89,6 +89,12 @@ def find_title(bs):
     except Exception:
         pass
     try:
+        #http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
+        #Should be tried before og:title
+        return bs.find(class_='arttle').text.strip()
+    except Exception:
+        pass
+    try:
         #http://www.bbc.com/news/science-environment-26878529
         return bs.find(attrs={'property':'og:title'})['content'].strip()
     except Exception:
@@ -197,8 +203,14 @@ Return result as a datetime object.
         return conv.finddate(m).strftime('%Y-%m-%d')
     except Exception:
         pass
-    #https://www.bbc.com/news/uk-england-25462900
     try:
+        #http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
+        m = bs.find(class_='byline').text
+        return conv.finddate(m).strftime('%Y-%m-%d')
+    except Exception:
+        pass
+    try:
+        #https://www.bbc.com/news/uk-england-25462900
         warnings.warn('Finding date in bs.text.')
         return conv.finddate(bs.text).strftime('%Y-%m-%d')
     except Exception:
@@ -247,6 +259,12 @@ def find_byline_names(bs):
     except Exception:
         pass
     try:
+        #http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
+        m = bs.find(attrs={'rel':'author'}).text
+        return byline_to_names(m)
+    except Exception:
+        pass    
+    try:
         m = bs.find(class_='byline').text
         return byline_to_names(m)
     except Exception:
@@ -267,6 +285,12 @@ def find_byline_names(bs):
         #http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html
         m = bs.find(attrs={'name':'byl'})
         return byline_to_names(m['content'])
+    except Exception:
+        pass
+    try:
+        #http://timesofindia.indiatimes.com/city/pune/UK-allows-working-visas-for-Indian-students/articleshow/1163528927.cms?
+        m = bs.find(id='authortext').text
+        return byline_to_names(m)
     except Exception:
         pass
     try:
