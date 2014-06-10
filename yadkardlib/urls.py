@@ -72,7 +72,12 @@ Get a BeautifulSoup object of a webpage. Return site's name as a string.
         return bs.find(attrs={'name':'cre'})['content'].strip()
     except Exception:
         pass
-
+    try:
+        m = re.search('^.+( - | \| )(.+?)$', bs.title.text)
+        return m.group(2).strip()
+    except Exception:
+        pass
+    
 
 def find_title(bs):
     '''Get a BeautifulSoup object and return title as a string.'''
@@ -115,20 +120,19 @@ def find_title(bs):
     except Exception:
         pass
     try:
-        return bs.h1.text.strip()
+        #ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+        return bs.find(class_='entry-title').text.strip()
     except Exception:
         pass
     try:
+        warnings.warn('\nSearching for site_name in bs.title.\n')
         return bs.title.text.strip()
     except Exception:
         pass
 
 
 def find_date(bs):
-    '''Get a BeautifulSoup object and find the date in it.
-
-Return result as a datetime object.
-'''
+    '''Get the BS object of a page. Return the date in it as a datetime obj.'''
     try:
         #http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
         m = bs.find(attrs={'name':'last-modified'})
@@ -175,6 +179,12 @@ Return result as a datetime object.
     except Exception:
         pass
     try:
+        #http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2Fea29ffb6-c759-11e0-9cac-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=#axzz31G5ZgwCH
+        m = bs.find(id = 'publicationDate')
+        return conv.finddate(m.text).strftime('%Y-%m-%d')
+    except Exception:
+        pass
+    try:
         #http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
         m = bs.find(class_='dateline').text
         return conv.finddate(m).strftime('%Y-%m-%d')
@@ -199,6 +209,12 @@ Return result as a datetime object.
     except Exception:
         pass
     try:
+        #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+        m = bs.find(class_='entry-date').text
+        return conv.finddate(m).strftime('%Y-%m-%d')
+    except Exception:
+        pass
+    try:
         m = unicode(bs.find(class_='updated'))
         return conv.finddate(m).strftime('%Y-%m-%d')
     except Exception:
@@ -210,8 +226,13 @@ Return result as a datetime object.
     except Exception:
         pass
     try:
+        #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+        return conv.finddate(bs.url).strftime('%Y-%m-%d')
+    except Exception:
+        pass
+    try:
         #https://www.bbc.com/news/uk-england-25462900
-        warnings.warn('Finding date in bs.text.')
+        warnings.warn('\nSearching for date in bs.text.\n')
         return conv.finddate(bs.text).strftime('%Y-%m-%d')
     except Exception:
         pass
@@ -229,6 +250,12 @@ def find_byline_names(bs):
         #http://www.telegraph.co.uk/science/8323909/The-sperm-whale-works-in-extraordinary-ways.html
         m = bs.find(attrs={'name':'DCSext.author'})
         return byline_to_names(m['content'])
+    except Exception:
+        pass
+    try:
+        #http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
+        m = bs.find(class_='author_byline').text
+        return byline_to_names(m)
     except Exception:
         pass
     try:
@@ -300,7 +327,7 @@ def find_byline_names(bs):
         pass
     try:
         #http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-        m = re.search('[\n>"\']\s*By\s*(.*)[<\n"\']',bs.text).group(1)
+        m = re.search('[\n>"\']\s*By\s*(.*)[<\n"\']',bs.text,re.I).group(1)
         return byline_to_names(m)
     except Exception:
         pass
@@ -314,6 +341,8 @@ Names will be seperated either with " and " or ", ".
 '''
     if '|' in byline:
         raise Exception('Invalid character ("|") in byline.')
+    if re.search('\d\d\d\d', byline):
+        raise Exception('Found \d\d\d\d in byline. (byline needs to be pure)')
     byline = byline.strip()
     if byline.startswith('By '):
         byline = byline[3:]
@@ -351,7 +380,9 @@ def url2dictionary(url):
             d['website'] = urlparse(url)[1]
     m = find_title(bs)
     if m:
-        d['title'] = m
+        #for example: m = "Rockhopper raises Falklands oil estimate - FT.com" 
+        d['title'] = re.split(' - | \| ', m)[0]
+    bs.url = url
     m = find_date(bs)
     if m:
         d['date'] = m
