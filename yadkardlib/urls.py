@@ -157,10 +157,10 @@ Examples:
 (None, 'Alpha decay', 'Wikipedia, the free encyclopedia')
 '''
     intitle_author = intitle_sitename = None
-    sep_regex = '( - | \| )'
+    sep_regex = '( - | — | \| )'
     title_parts = re.split(sep_regex, title_string.strip())
     if len(title_parts) == 1:
-        return (None, pure_title, None)
+        return (None, title_string, None)
     for part in title_parts:
         if re.match(sep_regex, part):
             continue
