@@ -43,15 +43,16 @@ class LongNameError(Exception):
 
 
 class Name():
-    
+
     '''Take a fullname and its' seperator; convert it to a Name object.'''
-    
+
     def __init__(self, fullname, seperator=None):
         if len(fullname)>40:
-            raise LongNameError('Detected lastname was longer than 40 chars.')
+            raise LongNameError('Lastname was longer than 40 chars.')
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
         self.fullname = self.firstname + ' ' + self.lastname
-
+    def __repr__(self):
+        return 'Name(' + self.fullname + ')'
     def nofirst_fulllast(self):
         '''Change firstname to an empty string and assign fullname to lastname.
 
