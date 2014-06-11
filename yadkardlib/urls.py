@@ -7,6 +7,7 @@ import re
 from datetime import datetime
 from urlparse import urlparse
 import warnings
+import difflib
 
 import requests
 from bs4 import BeautifulSoup as BS
@@ -152,41 +153,43 @@ Examples:
 
 >>> title_string = "Alpha decay - Wikipedia, the free encyclopedia"
 >>> url = "https://en.wikipedia.org/wiki/Alpha_decay"
->>> authors_list = None
 >>> parse_title(title_string, url, authors_list)
 (None, 'Alpha decay', 'Wikipedia, the free encyclopedia')
 '''
     intitle_author = intitle_sitename = None
-    sep_regex = '( - | — | \| )'
+    sep_regex = u'( - | — | \| )'
     title_parts = re.split(sep_regex, title_string.strip())
     if len(title_parts) == 1:
         return (None, title_string, None)
-    for part in title_parts:
-        if re.match(sep_regex, part):
-            continue
-        if any(p.lower() in urlparse(url)[1].lower() for
-               p in re.split(u'[ ,]', part)
-               ):
-            intitle_sitename = part
-            continue
-        if authors:
-            for author in authors:
+    #detecting intitle_sitename
+    netloc = urlparse(url)[1].lower().replace('www.', '')
+    print title_parts
+    print netloc
+    close_matches = difflib.get_close_matches(netloc, title_parts, n = 2,
+                                              cutoff = .35)
+    if close_matches:
+        intitle_sitename = close_matches[0]
+    #detecting intitle_author
+    if authors:
+        for author in authors:
+            for part in title_parts:
                 if author.lastname.lower() in part.lower():
                     intitle_author = part
     if intitle_sitename:
         title_parts.remove(intitle_sitename)
+        intitle_sitename = intitle_sitename.strip()
     if intitle_author:
         title_parts.remove(intitle_author)
+        intitle_author = intitle_author.strip()
     if re.match(sep_regex, title_parts[0]):
         title_parts.pop(0)
     if re.match(sep_regex, title_parts[-1]):
         title_parts.pop()
     pure_title = ''.join(title_parts)
-    pure_title = re.sub(sep_regex + sep_regex, ' - ', pure_title)
+    pure_title = re.sub(sep_regex + sep_regex, '\1', pure_title)
     # '|' is not allowed in wiki templates
-    pure_title = pure_title.replace('|', '-')
-    print (intitle_author, pure_title, intitle_sitename)
-    return (intitle_author, pure_title, intitle_sitename)
+    pure_title = pure_title.replace('|', '-').strip()
+    return intitle_author, pure_title, intitle_sitename
 
 
 def find_date(bs):
@@ -460,7 +463,9 @@ Examples:
 
 def url2dictionary(url):
     '''Get url and return the result as a dictionary.'''
-    r = requests.get(url)
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:29.0)' +
+               ' Gecko/20100101 Firefox/29.0'}
+    r = requests.get(url, headers=headers)
     if r.status_code != 200:
         raise StatusCodeError, r.status_code
     bs = BS(r.text)
