@@ -43,10 +43,10 @@ class StatusCodeError(Exception):
     pass
 
 
-def find_sitename(bs):
+def find_sitename(bs, url, authors):
     '''Return site's name as a string.
 
-Get a BeautifulSoup object of a webpage. Return site's name as a string.
+Get page's bs object, it's title, and authors. Return site's name as a string.
 '''
     try:
         return bs.find(attrs={'name':'og:site_name'})['content'].strip()
@@ -73,8 +73,8 @@ Get a BeautifulSoup object of a webpage. Return site's name as a string.
     except Exception:
         pass
     try:
-        m = re.search('^.+( - | \| )(.+?)$', bs.title.text)
-        return m.group(2).strip()
+        warnings.warn('Searching for site_name through bs.title.')
+        return parse_title(bs.title.text, url, authors)[2]
     except Exception:
         pass
     
@@ -125,10 +125,68 @@ def find_title(bs):
     except Exception:
         pass
     try:
-        warnings.warn('\nSearching for site_name in bs.title.\n')
+        #http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
+        return bs.find(id='entryhead').text.strip()
+    except Exception:
+        pass
+    try:
         return bs.title.text.strip()
     except Exception:
         pass
+
+
+def parse_title(title_string, url, authors):
+    '''Return (intitle_author, pure_title, intitle_sitename).
+
+Examples:
+
+>>> title_string = "Rockhopper raises Falklands oil estimate - FT.com"
+>>> url = "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0"
+>>> authors_list = None
+>>> parse_title(title_string, url, authors_list)
+(None, 'Rockhopper raises Falklands oil estimate', 'FT.com')
+
+>>> title_string = "some title - FT.com - something unknown"
+>>> parse_title(title_string, url, authors_list)
+(None, 'some title - something unknown', 'FT.com')
+
+>>> title_string = "Alpha decay - Wikipedia, the free encyclopedia"
+>>> url = "https://en.wikipedia.org/wiki/Alpha_decay"
+>>> authors_list = None
+>>> parse_title(title_string, url, authors_list)
+(None, 'Alpha decay', 'Wikipedia, the free encyclopedia')
+'''
+    intitle_author = intitle_sitename = None
+    sep_regex = '( - | \| )'
+    title_parts = re.split(sep_regex, title_string.strip())
+    if len(title_parts) == 1:
+        return (None, pure_title, None)
+    for part in title_parts:
+        if re.match(sep_regex, part):
+            continue
+        if any(p.lower() in urlparse(url)[1].lower() for
+               p in re.split(u'[ ,]', part)
+               ):
+            intitle_sitename = part
+            continue
+        if authors:
+            for author in authors:
+                if author.lastname.lower() in part.lower():
+                    intitle_author = part
+    if intitle_sitename:
+        title_parts.remove(intitle_sitename)
+    if intitle_author:
+        title_parts.remove(intitle_author)
+    if re.match(sep_regex, title_parts[0]):
+        title_parts.pop(0)
+    if re.match(sep_regex, title_parts[-1]):
+        title_parts.pop()
+    pure_title = ''.join(title_parts)
+    pure_title = re.sub(sep_regex + sep_regex, ' - ', pure_title)
+    # '|' is not allowed in wiki templates
+    pure_title = pure_title.replace('|', '-')
+    print (intitle_author, pure_title, intitle_sitename)
+    return (intitle_author, pure_title, intitle_sitename)
 
 
 def find_date(bs):
@@ -227,19 +285,19 @@ def find_date(bs):
         pass
     try:
         #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-        return conv.finddate(bs.url).strftime('%Y-%m-%d')
+        return conv.finddate(d['url']).strftime('%Y-%m-%d')
     except Exception:
         pass
     try:
         #https://www.bbc.com/news/uk-england-25462900
-        warnings.warn('\nSearching for date in bs.text.\n')
+        warnings.warn('Searching for date in bs.text.')
         return conv.finddate(bs.text).strftime('%Y-%m-%d')
     except Exception:
         pass
 
 
 def find_byline_names(bs):
-    '''Get a BeautifulSoup object and return byline names as list.'''
+    '''Get a BeautifulSoup object and return byline names as a list.'''
     try:
         #http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
         m = bs.find(attrs={'name':'author'})
@@ -331,35 +389,72 @@ def find_byline_names(bs):
         return byline_to_names(m)
     except Exception:
         pass
-    
 
+    
+def find_url(bs, url):
+    '''Get a BeautifulSoup object it's url. Return og:url or url as a string.'''
+    try:
+        #http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
+        return bs.find(attrs={'property':'og:url'})['content']
+    except Exception:
+        pass
+    return url
+
+    
 def byline_to_names(byline):
     '''Find authors in byline sting. Return name objects as a list.
 
 The "By " prefix will be omitted.
 Names will be seperated either with " and " or ", ".
+
+stopwords = ('Reporter',
+             'People',
+             'Editor',
+             'Correspondent',
+             )
+
+If any of the stopwords is found in a name. Then it will be omitted from the
+result, unless it is the only name available.
+
+Examples:
+
+>>> byline_to_names('\n By Roger Highfield, Science Editor \n')
+[Name(Roger Highfield)]
+
+>>> byline_to_names(' By Erika Solomon in Beirut and Borzou Daragahi, Middle East correspondent')
+[Name(Erika Solomon), Name(Borzou Daragahi)]
+
 '''
     if '|' in byline:
         raise Exception('Invalid character ("|") in byline.')
     if re.search('\d\d\d\d', byline):
         raise Exception('Found \d\d\d\d in byline. (byline needs to be pure)')
     byline = byline.strip()
-    if byline.startswith('By '):
+    if re.match('by ', byline, re.I):
         byline = byline[3:]
-    byline = re.split(' and |, ', byline)
+    slist = re.split(', | and ', byline, re.I)
+##    #splitting names:
+##    t = byline.split(' and ')
+##    slist = [t[-1].split(', ')[0]]
+##    for i in range(len(t)-1):
+##        slist.extend(t[i].split(', '))
     names = []
-    for fullname in byline:
+    stopwords = ('Reporter',
+                 'People',
+                 'Editor',
+                 'Correspondent',
+                 )
+    for fullname in slist:
         if ' in ' in fullname:
-            #http://www.telegraph.co.uk/earth/earthnews/3324585/Shocking-pictures-of-Japanese-whaling.html
             fullname = fullname.split(' in ')[0]
         name = conv.Name(fullname)
-        if ('Reporter' in name.lastname) or ('People' in name.lastname):
+        if re.search('|'.join(stopwords), name.lastname, re.I):
             name.nofirst_fulllast()
-        if 'Editor' in name.lastname:
-            #http://www.telegraph.co.uk/education/3296593/Inner-ear-offers-clue-to-when-whales-first-swam.html
-            #http://www.telegraph.co.uk/news/worldnews/1335525/Plan-to-cut-whaling-dropped.html
-            continue
         names.append(name)
+    if len(names)>1:
+        for name in names:
+            if re.search('|'.join(stopwords), name.lastname, re.I):
+                names.remove(name)
     return names
 
 
@@ -368,27 +463,25 @@ def url2dictionary(url):
     r = requests.get(url)
     if r.status_code != 200:
         raise StatusCodeError, r.status_code
-    d = {}
-    d['url'] = url
-    d['type'] = 'web'
     bs = BS(r.text)
-    d['website'] = find_sitename(bs)
+    d = {}
+    d['type'] = 'web'
+    d['url'] = url
+    d['url'] = find_url(bs, url)
+    authors = find_byline_names(bs)
+    if authors:
+        d['authors'] = authors
+    d['website'] = find_sitename(bs, url, authors)
     if not d['website']:
         if urlparse(url)[1].startswith('www.'):
             d['website'] = urlparse(url)[1][4:]
         else:
             d['website'] = urlparse(url)[1]
-    m = find_title(bs)
-    if m:
-        #for example: m = "Rockhopper raises Falklands oil estimate - FT.com" 
-        d['title'] = re.split(' - | \| ', m)[0]
-    bs.url = url
+    title = find_title(bs)
+    d['title'] = parse_title(title, url, authors)[1]
     m = find_date(bs)
     if m:
         d['date'] = m
         d['year'] = d['date'][:4]
-    d['authors'] = find_byline_names(bs)
-    if not d['authors']:
-        del d['authors']
     return d
 
