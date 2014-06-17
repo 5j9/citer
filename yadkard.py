@@ -5,6 +5,7 @@ import logging, logging.handlers
 import urllib2
 from cgi import escape
 import urlparse
+import requests
 
 from yadkardlib import noormags, googlebooks, noorlib, adinebook, urls
 from yadkardlib import doi, isbn, conv, config
@@ -79,7 +80,7 @@ def application(environ, start_response):
         response_body = html.skeleton %(obj.ref,
                                         obj.cite,
                                         obj.error)
-    except urllib2.HTTPError:
+    except (urllib2.HTTPError, requests.ConnectionError):
         logger.exception(url)
         response_body = html.skeleton %html.httperror_response
     except:
