@@ -42,6 +42,13 @@ class LongNameError(Exception):
     pass
 
 
+class NumberInNameError(Exception):
+    
+    '''Raise when a Name() contains digits..'''
+
+    pass
+
+
 class Name():
 
     '''Take a fullname and its' seperator; convert it to a Name object.'''
@@ -49,6 +56,9 @@ class Name():
     def __init__(self, fullname, seperator=None):
         if len(fullname)>40:
             raise LongNameError('Lastname was longer than 40 chars.')
+        if re.search('\d\d', fullname, re.U):
+            #Remember "Jennifer 8. Lee"
+            raise NumberInNameError('The name contains a two-digit number.')
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
         self.fullname = self.firstname + ' ' + self.lastname
     def __repr__(self):
