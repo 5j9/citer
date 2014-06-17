@@ -1,7 +1,7 @@
 #!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
-'''Codes used for parsing contents of an arbitrary URL.'''
+"""Codes used for parsing contents of an arbitrary URL."""
 
 import re
 from datetime import datetime
@@ -27,7 +27,7 @@ else:
 
 class Citation():
 
-    '''Create citation object.'''
+    """Create citation object."""
 
     def __init__(self, url):
         self.url = url
@@ -39,7 +39,7 @@ class Citation():
 
 class StatusCodeError(Exception):
 
-    '''Raise when requests.get.status_code != 200.'''
+    """Raise when requests.get.status_code != 200."""
 
     pass
 
@@ -81,7 +81,7 @@ Get page's bs object, it's title, and authors. Return site's name as a string.
     
 
 def find_title(bs):
-    '''Get a BeautifulSoup object and return title as a string.'''
+    """Get a BeautifulSoup object and return title as a string."""
     try:
         #http://www.telegraph.co.uk/earth/earthnews/6190335/Whale-found-dead-in-Thames.html
         #Should be tried before og:title
@@ -193,7 +193,7 @@ Examples:
 
 
 def find_date(bs):
-    '''Get the BS object of a page. Return the date in it as a datetime obj.'''
+    """Get the BS object of a page. Return the date in it as a datetime obj."""
     try:
         #http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
         m = bs.find(attrs={'name':'last-modified'})
@@ -300,7 +300,7 @@ def find_date(bs):
 
 
 def find_byline_names(bs):
-    '''Get a BeautifulSoup object and return byline names as a list.'''
+    """Get a BeautifulSoup object and return byline names as a list."""
     try:
         #http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
         m = bs.find(attrs={'name':'author'})
@@ -395,7 +395,7 @@ def find_byline_names(bs):
 
     
 def find_url(bs, url):
-    '''Get a BeautifulSoup object it's url. Return og:url or url as a string.'''
+    """Get a BeautifulSoup object it's url. Return og:url or url as a string."""
     try:
         #http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
         return bs.find(attrs={'property':'og:url'})['content']
@@ -462,7 +462,7 @@ Examples:
 
 
 def url2dictionary(url):
-    '''Get url and return the result as a dictionary.'''
+    """Get url and return the result as a dictionary."""
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:29.0)' +
                ' Gecko/20100101 Firefox/29.0'}
     r = requests.get(url, headers=headers)

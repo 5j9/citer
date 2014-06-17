@@ -1,7 +1,7 @@
 #!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
-'''Codes specifically related to ISBNs.'''
+"""Codes specifically related to ISBNs."""
 
 import re
 import urllib2
@@ -37,17 +37,17 @@ isbn_regex = re.compile(
 
 class IsbnError(Exception):
     
-    '''Raise when bibliographic information is not available.'''
+    """Raise when bibliographic information is not available."""
     
     pass
 
 
 class Citation():
     
-    '''Create isbn citation object.'''
+    """Create isbn citation object."""
 
     def __init__(self, isbn_container_string, pure=False):
-        '''Get an ISBN-containing string and return an ISBN object.'''
+        """Get an ISBN-containing string and return an ISBN object."""
         if pure:
             self.isbn = isbn_container_string
         else:
@@ -100,14 +100,14 @@ urls. This may make them volnarable to resolving into wrong ISBN.
     
 
 def isbn2int(isbn):
-    '''Get ISBN string and return it as in integer.'''
+    """Get ISBN string and return it as in integer."""
     isbn = isbn.replace('-', '')
     isbn = isbn.replace(' ', '')
     return int(isbn)
 
 
 def ottobib(isbn):
-    '''Convert ISBN to bibtex using ottobib.com.'''
+    """Convert ISBN to bibtex using ottobib.com."""
     ottobib_url = 'http://www.ottobib.com/isbn/' + isbn + '/bibtex'
     ottobib_html = urllib2.urlopen(ottobib_url).read().decode('utf8')
     m = re.search('<textarea.*>(.*)</textarea>', ottobib_html, re.DOTALL)

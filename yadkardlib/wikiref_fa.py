@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 def create(d):
-    '''Creates citation based on the given dictionary'''
+    """Creates citation based on the given dictionary"""
     if 'authors' in d:
         s = u'<ref>{{پک'
         c = 0

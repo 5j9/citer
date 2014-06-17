@@ -37,21 +37,21 @@ Ymd = r'(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])'
 
 class LongNameError(Exception):
     
-    '''Raise when a Name() is too long to be a name.'''
+    """Raise when a Name() is too long to be a name."""
 
     pass
 
 
 class NumberInNameError(Exception):
     
-    '''Raise when a Name() contains digits..'''
+    """Raise when a Name() contains digits.."""
 
     pass
 
 
 class Name():
 
-    '''Take a fullname and its' seperator; convert it to a Name object.'''
+    """Take a fullname and its' seperator; convert it to a Name object."""
 
     def __init__(self, fullname, seperator=None):
         if len(fullname)>40:
@@ -116,7 +116,7 @@ Example:
 
   
 def fanum2en(string):
-    '''Convert Persian numerical string to equivalent English one.'''
+    """Convert Persian numerical string to equivalent English one."""
     string = string.replace(u'۰', '0')
     string = string.replace(u'۱', '1')
     string = string.replace(u'۲', '2')
@@ -130,7 +130,7 @@ def fanum2en(string):
     return string
 
 def ennum2fa(string_or_num):
-    '''Convert English numerical string to equivalent Persian one.'''
+    """Convert English numerical string to equivalent Persian one."""
     string = str(string_or_num)
     string = string.replace('0', u'۰')
     string = string.replace('1', u'۱')
@@ -145,7 +145,7 @@ def ennum2fa(string_or_num):
     return string
 
 def famonth2num(string):
-    '''Convert English month number to Persian string.'''
+    """Convert English month number to Persian string."""
     string = string.replace(u'ژانویهٔ', '01')
     string = string.replace(u'فوریهٔ', '02')
     string = string.replace(u'مارس', '03')

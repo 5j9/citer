@@ -1,7 +1,7 @@
 #!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
-'''Codes specifically related to DOI inputs.'''
+"""Codes specifically related to DOI inputs."""
 
 import re
 import urllib2
@@ -22,7 +22,7 @@ else:
 
 class Citation():
     
-    '''Create a DOI citation object.'''
+    """Create a DOI citation object."""
     
     def __init__(self, doi_or_url, pure=False):
         if pure:
@@ -47,7 +47,7 @@ class Citation():
 
 
 def get_bibtex(doi_url):
-    '''Get bibtex file content from a doi url. Return as string.'''
+    """Get bibtex file content from a doi url. Return as string."""
     req = urllib2.Request(doi_url)
     req.add_header('Accept', 'text/bibliography; style=bibtex')
     bibtex = urllib2.urlopen(req).read().decode('utf8')

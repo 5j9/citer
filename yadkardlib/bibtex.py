@@ -10,7 +10,7 @@ import conv
 #cases: '\_' in urls and '\&' in titles
 
 def parse(bibtex_text):
-    '''Parse bibtex_text data and return a dictionary of information.'''
+    """Parse bibtex_text data and return a dictionary of information."""
     #replacing common latex special commonds:
     bibtex_text = bibtex_text.replace(r'{\textregistered}', u'®')
     bibtex_text = bibtex_text.replace(r'\%', '%')

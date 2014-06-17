@@ -1,7 +1,7 @@
 #!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
-'''All things specifically related to the Google Books website.'''
+"""All things specifically related to the Google Books website."""
 
 import re
 import urllib2
@@ -24,7 +24,7 @@ else:
 
 class Citation():
     
-    '''Create google book citation object.'''
+    """Create google book citation object."""
     
     def __init__(self, googlebook_url):
         self.url = googlebook_url
@@ -53,7 +53,7 @@ class Citation():
 
 
 def get_bibtex(googlebook_url):
-    '''Get bibtex file content from a noormags url.'''
+    """Get bibtex file content from a noormags url."""
     #getting id:
     pu = urlparse(googlebook_url)
     pq = parse_qs(pu.query)
@@ -69,7 +69,7 @@ def get_bibtex(googlebook_url):
     return bibtex
 
 def get_ris(googlebook_url):
-    '''Get ris file content from a noormags url.'''
+    """Get ris file content from a noormags url."""
     #getting id:
     pu = urlparse(googlebook_url)
     pq = parse_qs(pu.query)

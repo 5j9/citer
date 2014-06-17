@@ -1,3 +1,3 @@
-'''Common configurations used among modules.'''
+"""Common configurations used among modules."""
 
 lang = 'en'

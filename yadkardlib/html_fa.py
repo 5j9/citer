@@ -1,12 +1,12 @@
 #!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
-'''HTML skeleton of the application and its predefined resposes.'''
+"""HTML skeleton of the application and its predefined resposes."""
 
 
 class ResposeObj():
 
-    '''Create the response object used in the main application.'''
+    """Create the response object used in the main application."""
     
     def __init__(self, ref, cite, error):
         self.ref = ref

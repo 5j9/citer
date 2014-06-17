@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 def create(d):
-    '''Creates citation based on the given dictionary'''
+    """Creates citation based on the given dictionary"""
     s = '{{sfn'
     if 'authors' in d:
         c = 0

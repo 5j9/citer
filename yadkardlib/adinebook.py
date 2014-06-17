@@ -1,7 +1,7 @@
 #!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
-'''All things that are specifically related to adinebook website'''
+"""All things that are specifically related to adinebook website"""
 
 import re
 
@@ -21,7 +21,7 @@ else:
     import wikicite_fa  as wikicite
 
 class Citation():
-    '''Create Adinebook citation object.'''
+    """Create Adinebook citation object."""
     
     def __init__(self, adinebook_url):
         self.url = adinebook_url
@@ -41,7 +41,7 @@ class Citation():
 
 
 def isbn2url(isbn):
-    '''Convert isbn string to AdinebookURL. Return the url as string.'''
+    """Convert isbn string to AdinebookURL. Return the url as string."""
     #apparently adinebook uses 10 digit codes (without hyphens) for its books
     #if it's an isbn13 then the first 3 digits are excluded:
     isbn = isbn.replace('-', '')
@@ -52,7 +52,7 @@ def isbn2url(isbn):
     return url
 
 def url2dictionary(adinebook_url):
-    '''Get adinebook_url and return the result as a dict.'''
+    """Get adinebook_url and return the result as a dict."""
     try:
         #this try statement is needed because if adinebook is not available then
         #    ottobib should continoue its' work in isbn.py

@@ -8,7 +8,7 @@ from datetime import date
 import wikiref_en as wikiref
 
 def create(d):
-    '''Creates citation based on the given dictionary'''   
+    """Creates citation based on the given dictionary"""   
     if d['type'] == 'book':
         s = '* {{cite book'
     elif d['type'] == 'article' or d['type'] == 'jour':
