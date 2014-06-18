@@ -376,6 +376,8 @@ def find_authors(bs):
             for s in ss:
                 name = conv.Name(s, ',')
                 authors.append(name)
+        if not authors:
+            raise Exception('"authors" remained an empty list.')
         return authors
     except Exception:
         pass
@@ -504,7 +506,6 @@ Examples:
 
 >>> byline_to_names(' By Erika Solomon in Beirut and Borzou Daragahi, Middle East correspondent')
 [Name(Erika Solomon), Name(Borzou Daragahi)]
-
 '''
     if '|' in byline:
         raise Exception('Invalid character ("|") in byline.')
@@ -577,7 +578,6 @@ def url2dictionary(url):
     #Remove all empty keys
     dictionary = {}
     for key in d:
-	if d[key]:
-		dictionary[key] = d[key]
+        if d[key]:
+            dictionary[key] = d[key]
     return dictionary
-
