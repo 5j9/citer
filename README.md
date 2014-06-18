@@ -1,4 +1,4 @@
-yadkard
+Yadkard
 =======
 
 A citation generator tool for Wikipedia. Currently accessible on:
