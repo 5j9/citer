@@ -78,7 +78,7 @@ Get page's bs object, it's title, and authors. Return site's name as a string.
         return parse_title(bs.title.text, url, authors)[2]
     except Exception:
         pass
-    
+
 
 def find_title(bs):
     """Get a BeautifulSoup object and return title as a string."""
@@ -351,7 +351,7 @@ def find_byline_names(bs):
         m = bs.find(attrs={'rel':'author'}).text
         return byline_to_names(m)
     except Exception:
-        pass    
+        pass
     try:
         m = bs.find(class_='byline').text
         return byline_to_names(m)
@@ -393,7 +393,7 @@ def find_byline_names(bs):
     except Exception:
         pass
 
-    
+
 def find_url(bs, url):
     """Get a BeautifulSoup object it's url. Return og:url or url as a string."""
     try:
@@ -403,7 +403,7 @@ def find_url(bs, url):
         pass
     return url
 
-    
+
 def byline_to_names(byline):
     '''Find authors in byline sting. Return name objects as a list.
 
@@ -468,7 +468,7 @@ def url2dictionary(url):
     r = requests.get(url, headers=headers)
     if r.status_code != 200:
         raise StatusCodeError, r.status_code
-    bs = BS(r.text)
+    bs = BS(r.content)
     d = {}
     d['type'] = 'web'
     d['url'] = url
