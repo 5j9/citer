@@ -73,7 +73,7 @@ def create(d):
     if 'doi' in d:
         s += '|doi=' + d['doi']
     if 'language' in d:
-        if d['language'] not in 'Englishenglish':
+        if d['language'].lower() not in ['english','en']:
             s += '|language=' + d['language']
     if 'authors' in d:
         s += '|ref=harv'
