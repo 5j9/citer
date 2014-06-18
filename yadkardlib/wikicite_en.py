@@ -11,7 +11,7 @@ def create(d):
     """Creates citation based on the given dictionary"""   
     if d['type'] == 'book':
         s = '* {{cite book'
-    elif d['type'] == 'article' or d['type'] == 'jour':
+    elif d['type'] in ['article', 'jour']:
         s = '* {{cite journal'
     elif d['type'] == 'web':
         s = '* {{cite web'
@@ -52,14 +52,16 @@ def create(d):
         s += '|series=' + d['series']
     if 'volume' in d:
         s += '|volume=' + d['volume']
-    if 'number' in d:
-        s += '|issue=' + d['number']
+    if 'issue' in d:
+        s += '|issue=' + d['issue']
     if 'date' in d:
         s += '|date=' + d['date']
     if 'year' in d:
         s += '|year=' + d['year']
     if 'isbn' in d:
         s += '|isbn=' + d['isbn']
+    if 'issn' in d:
+        s += '|issn=' + d['issn']
     if d['type'] == 'article' or d['type'] == 'jour':
         if 'pages' in d:
             if u'–' in d['pages']:
