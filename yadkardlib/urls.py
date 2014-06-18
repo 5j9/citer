@@ -80,8 +80,68 @@ Get page's bs object, it's title, and authors. Return site's name as a string.
         pass
 
 
+def find_journal(bs):
+    """Return journal title as a string."""
+    try:
+        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        m = bs.find(attrs={'name':'citation_journal_title'})
+        return m['content'].strip()
+    except Exception:
+        pass
+    
+
+def find_issn(bs):
+    """Return International Standard Serial Number as a string.
+
+Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this function
+does not check that.
+"""
+    try:
+        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        m = bs.find(attrs={'name':'citation_issn'})
+        return m['content'].strip()
+    except Exception:
+        pass
+
+
+def find_volume(bs):
+    """Return citatoin volume number as a string."""
+    try:
+        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        m = bs.find(attrs={'name':'citation_volume'})
+        return m['content'].strip()
+    except Exception:
+        pass
+    
+
+def find_issue(bs):
+    """Return citatoin issue number as a string."""
+    try:
+        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        m = bs.find(attrs={'name':'citation_issue'})
+        return m['content'].strip()
+    except Exception:
+        pass
+
+
+def find_pages(bs):
+    """Return citatoin pages as a string."""
+    try:
+        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        fp = bs.find(attrs={'name':'citation_firstpage'})['content'].strip()
+        lp = bs.find(attrs={'name':'citation_lastpage'})['content'].strip()
+        return fp + u'–' + lp
+    except Exception:
+        pass
+
+    
 def find_title(bs):
     """Get a BeautifulSoup object and return title as a string."""
+    try:
+        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        return bs.find(attrs={'name':'citation_title'})['content'].strip()
+    except Exception:
+        pass
     try:
         #http://www.telegraph.co.uk/earth/earthnews/6190335/Whale-found-dead-in-Thames.html
         #Should be tried before og:title
@@ -195,6 +255,12 @@ Examples:
 def find_date(bs):
     """Get the BS object of a page. Return the date in it as a datetime obj."""
     try:
+        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        m = bs.find(attrs={'name':'citation_date'})
+        return conv.finddate(m['content']).strftime('%Y-%m-%d')
+    except Exception:
+        pass
+    try:
         #http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
         m = bs.find(attrs={'name':'last-modified'})
         return conv.finddate(m['content']).strftime('%Y-%m-%d')
@@ -299,8 +365,20 @@ def find_date(bs):
         pass
 
 
-def find_byline_names(bs):
+def find_authors(bs):
     """Get a BeautifulSoup object and return byline names as a list."""
+    try:
+        #http://socialhistory.ihcs.ac.ir/article_571_84.html
+        m = bs.find_all(attrs={'name':'citation_author'})
+        authors = []
+        for a in m:
+            ss = a['content'].split(' and ')
+            for s in ss:
+                name = conv.Name(s, ',')
+                authors.append(name)
+        return authors
+    except Exception:
+        pass
     try:
         #http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
         m = bs.find(attrs={'name':'author'})
@@ -459,7 +537,7 @@ Examples:
             if re.search('|'.join(stopwords), name.lastname, re.I):
                 names.remove(name)
     return names
-
+    
 
 def url2dictionary(url):
     """Get url and return the result as a dictionary."""
@@ -470,14 +548,22 @@ def url2dictionary(url):
         raise StatusCodeError, r.status_code
     bs = BS(r.content)
     d = {}
-    d['type'] = 'web'
+    d['journal'] = find_journal(bs)
+    if d['journal']:
+        d['type'] = 'jour'
+    else:
+        d['type'] = 'web'
     d['url'] = url
     d['url'] = find_url(bs, url)
-    authors = find_byline_names(bs)
+    authors = find_authors(bs)
     if authors:
         d['authors'] = authors
+    d['issn'] = find_issn(bs)
+    d['volume'] = find_volume(bs)
+    d['issue'] = find_issue(bs)
+    d['pages'] = find_pages(bs)
     d['website'] = find_sitename(bs, url, authors)
-    if not d['website']:
+    if d['type']=='web' and not d['website']:
         if urlparse(url)[1].startswith('www.'):
             d['website'] = urlparse(url)[1][4:]
         else:
@@ -488,5 +574,10 @@ def url2dictionary(url):
     if m:
         d['date'] = m
         d['year'] = d['date'][:4]
-    return d
+    #Remove all empty keys
+    dictionary = {}
+    for key in d:
+	if d[key]:
+		dictionary[key] = d[key]
+    return dictionary
 
