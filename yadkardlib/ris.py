@@ -38,7 +38,7 @@ def parse(ris_text):
             d['journal'] = m.group(2).strip()
     m = re.search('IS  - (.*)', ris_text)
     if m:
-        d['number'] = m.group(1).strip()
+        d['issue'] = m.group(1).strip()
     m = re.search('VL  - (.*)', ris_text)
     if m:
         d['volume'] = m.group(1).strip()

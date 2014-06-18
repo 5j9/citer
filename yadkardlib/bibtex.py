@@ -66,7 +66,7 @@ def parse(bibtex_text):
         d['journal'] = m.group(1).strip()
     m = re.search('number\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
-        d['number'] = m.group(1).strip()
+        d['issue'] = m.group(1).strip()
     m = re.search('series\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
         d['series'] = m.group(1).strip()

@@ -43,8 +43,8 @@ def create(d):
         s += u'|سری=' + d['series']
     if 'volume' in d:
         s += u'|جلد=' + d['volume']
-    if 'number' in d:
-        s += u'|شماره=' + d['number']
+    if 'issue' in d:
+        s += u'|شماره=' + d['issue']
     if 'year' in d:
         s += u'|سال=' + d['year']
     if 'month' in d:
