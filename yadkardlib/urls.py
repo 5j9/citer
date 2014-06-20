@@ -4,7 +4,6 @@
 """Codes used for parsing contents of an arbitrary URL."""
 
 import re
-from datetime import datetime
 from urlparse import urlparse
 import warnings
 import difflib
@@ -253,7 +252,7 @@ Examples:
 
 
 def find_date(bs):
-    """Get the BS object of a page. Return the date in it as a datetime obj."""
+    """Get the BS object of a page. Return the date in it as a date obj."""
     try:
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
         m = bs.find(attrs={'name':'citation_date'})
