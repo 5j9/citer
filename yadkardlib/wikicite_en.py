@@ -3,12 +3,14 @@
 
 #todo: editor and author and ... article link
 
+
 from datetime import date
 
 import wikiref_en as wikiref
 
+
 def create(d):
-    """Creates citation based on the given dictionary"""   
+    """Create citation based on the given dictionary."""   
     if d['type'] == 'book':
         s = '* {{cite book'
     elif d['type'] in ['article', 'jour']:
@@ -94,10 +96,10 @@ def create(d):
         s += '|accessdate=' + date.isoformat(date.today())
     s += '}}'
     return s
+
     
 def names2para(names, fn_parameter, ln_parameter):
-    '''takes lists of firstnames and lastnames and returns the string to be
-appended to citation string'''
+    """Take list of names. Return the string to be appended to citation."""
     c = 0
     s = ''
     for name in names:
@@ -111,8 +113,10 @@ appended to citation string'''
             s += '|' + fn_parameter + str(c) + '=' +\
                  name.firstname
     return s
+
             
 def names1para(translators, para):
+    """Take list of names. Return the string to be appended to citation."""
     s = '|' + para + '='
     c = 0
     for name in translators:
