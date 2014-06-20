@@ -15,7 +15,7 @@ skeleton = u"""<!DOCTYPE html>
         <style type="text/css">
 
             textarea, input {
-                transition: background-color 1s ease-in;
+                transition: background-color 5s ease-in;
                 background-color: rgb(255, 255, 255);
                 border: 1px solid rgb(204, 204, 204);
                 padding: 2px 2px;
@@ -48,7 +48,7 @@ skeleton = u"""<!DOCTYPE html>
                 color:#666666;
                 }
             input[type=submit]:hover{
-                transition: background-color 2s ease-in;
+                transition: background-color 1s ease-in;
                 background-color:#EB551A;
                 }
         </style>
@@ -58,14 +58,14 @@ skeleton = u"""<!DOCTYPE html>
             <form method="get" action="yadkard.fcgi">
                 <p>
                     URL/DOI/ISBN:<br><input type="text" name="url">
-                    <input type="submit" value="Citation">
+                    <input type="submit" value="Submit">
                 </p>
                 <p>Date format:</p>
-                <input type="radio" value="Ymd" name="dateformat" checked>%(Ymd)s
-                <input type="radio" value="BdY" name="dateformat">%(BdY)s
-                <input type="radio" value="bdY" name="dateformat">%(bdY)s
-                <input type="radio" value="dBY" name="dateformat">%(dBY)s
-                <input type="radio" value="dbY" name="dateformat">%(dbY)s
+                <input type="radio" value="%%%%Y-%%%%m-%%%%d" name="dateformat" checked>%(Ymd)s
+                <input type="radio" value="%%%%B %%%%d, %%%%Y" name="dateformat">%(BdY)s
+                <input type="radio" value="%%%%b %%%%d, %%%%Y" name="dateformat">%(bdY)s
+                <input type="radio" value="%%%%d %%%%B %%%%Y" name="dateformat">%(dBY)s
+                <input type="radio" value="%%%%d %%%%b %%%%Y" name="dateformat">%(dbY)s
             </form>
             <p>
                 <a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:<br>
