@@ -4,16 +4,10 @@
 """HTML skeleton of the application and its predefined responses."""
 
 
-class ResposeObj():
-
-    """Create the responce object used by the main application."""
-    
-    def __init__(self, ref, cite, error):
-        self.ref = ref
-        self.cite = cite
-        self.error = error
+from datetime import date
 
 
+today = date.today()
 skeleton = u"""<!DOCTYPE html>
 <html>
     <head>
@@ -22,7 +16,7 @@ skeleton = u"""<!DOCTYPE html>
 
             textarea, input {
                 transition: background-color 1s ease-in;
-                background-background-color: rgb(255, 255, 255);
+                background-color: rgb(255, 255, 255);
                 border: 1px solid rgb(204, 204, 204);
                 padding: 2px 2px;
                 margin-bottom: 10px;
@@ -36,7 +30,7 @@ skeleton = u"""<!DOCTYPE html>
                 display:block;
                 margin-left: auto;
                 margin-right: auto;  
-                width:100%%;
+                width:100%%%%;
                 word-break: break-all;
                 }
             body {
@@ -44,13 +38,13 @@ skeleton = u"""<!DOCTYPE html>
                 font-size:0.8em
                 }
             input[type=text]{
-                width:50%%;
+                width:50%%%%;
                 }
             input[type=submit]{
                 float:right;
                 }
             #info{
-                font-size:90%%;
+                font-size:90%%%%;
                 color:#666666;
                 }
             input[type=submit]:hover{
@@ -60,19 +54,25 @@ skeleton = u"""<!DOCTYPE html>
         </style>
     </head>
     <body>
-        <div style="margin-left:auto; margin-right:auto; width:62%%;">
+        <div style="margin-left:auto; margin-right:auto; width:62%%%%;">
             <form method="get" action="yadkard.fcgi">
                 <p>
                     URL/DOI/ISBN:<br><input type="text" name="url">
                     <input type="submit" value="Citation">
                 </p>
+                <p>Date format:</p>
+                <input type="radio" value="Ymd" name="dateformat" checked>%(Ymd)s
+                <input type="radio" value="BdY" name="dateformat">%(BdY)s
+                <input type="radio" value="bdY" name="dateformat">%(bdY)s
+                <input type="radio" value="dBY" name="dateformat">%(dBY)s
+                <input type="radio" value="dbY" name="dateformat">%(dbY)s
             </form>
             <p>
                 <a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:<br>
-                <textarea rows="8" readonly>%s\n\n%s</textarea>
+                <textarea rows="8" readonly>%(s)s\n\n%(s)s</textarea>
             </p>
             <p>
-                <!-- There may be error in language detection. %s %% -->
+                <!-- There may be error in language detection. %(s)s %%%% -->
             </p>
             <div id="info">
                 <p>
@@ -87,7 +87,12 @@ skeleton = u"""<!DOCTYPE html>
             </div>
         </div>
     </body>
-</html>"""
+</html>""" %{'Ymd': today.strftime('%Y-%m-%d'),
+             'BdY': today.strftime('%B %d, %Y'),
+             'bdY': today.strftime('%b %d, %Y'),
+             'dBY': today.strftime('%d %B %Y'),
+             'dbY': today.strftime('%d %b %Y'),
+             's': '%s'}
 
 default_response = (
     u'Generated citation will appear here...',
@@ -107,3 +112,13 @@ this citation are not accessible at this moment.',
 other_exception_response = (u'An unknown error occurred.',
                             u'The error was logged.',
                             u'100')
+
+class ResposeObj():
+
+    """Create the responce object used by the main application."""
+    
+    def __init__(self, ref, cite, error):
+        self.ref = ref
+        self.cite = cite
+        self.error = error
+        
