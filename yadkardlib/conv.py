@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-Common variables, functions, and classes usually used in string conversions.
+Common variables, functions, and classes used in string conversions.
 '''
 
 from datetime import datetime
@@ -36,14 +36,14 @@ Ymd = r'(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])'
 
 
 class LongNameError(Exception):
-    
+
     """Raise when a Name() is too long to be a name."""
 
     pass
 
 
 class NumberInNameError(Exception):
-    
+
     """Raise when a Name() contains digits.."""
 
     pass
@@ -61,8 +61,10 @@ class Name():
             raise NumberInNameError('The name contains a two-digit number.')
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
         self.fullname = self.firstname + ' ' + self.lastname
+
     def __repr__(self):
         return 'Name(' + self.fullname.encode('utf-8') + ')'
+
     def nofirst_fulllast(self):
         '''Change firstname to an empty string and assign fullname to lastname.
 
@@ -70,8 +72,8 @@ Use this method for corporate authors.
 '''
         self.lastname = self.fullname
         self.firstname = ''
-        
-    
+
+
 def firstname_lastname(fullname, seperator):
     '''Return firstname and lastname as a tuple.
 
@@ -114,7 +116,7 @@ Example:
                       )
     return firstname, lastname
 
-  
+
 def fanum2en(string):
     """Convert Persian numerical string to equivalent English one."""
     string = string.replace(u'۰', '0')
@@ -186,3 +188,25 @@ If there is no matching date, return None.
     m = re.search(Ymd, string)
     if m:
         return datetime.strptime(m.group(), '%Y%m%d')
+
+
+def chdateformat(string, format_):
+    """Find a date in string and return it in specified format_.
+
+The date in string can be in any format defined in finddate().
+Format_ should be a string containing standard formatting directives.
+Return the original string if unsuccessful.
+
+Examples:
+
+>>> chdateformat('date: 2014-06-21 time:02:09', '%B %d, %Y')
+'June 21, 2014'
+
+>>> chdateformat('date: 2914-06-21 time:02:09', '%B %d, %Y')
+'date: 2914-06-21 time:02:09'
+"""
+    date = finddate(string)
+    if date:
+        return date.strftime(format_)
+    return string
+
