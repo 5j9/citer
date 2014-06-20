@@ -6,11 +6,12 @@
 
 from datetime import date
 
+import conv
 import wikiref_en as wikiref
 
 
-def create(d):
-    """Create citation based on the given dictionary."""   
+def create(d, date_format):
+    """Create citation based on the given dictionary."""
     if d['type'] == 'book':
         s = '* {{cite book'
     elif d['type'] in ['article', 'jour']:
@@ -57,7 +58,7 @@ def create(d):
     if 'issue' in d:
         s += '|issue=' + d['issue']
     if 'date' in d:
-        s += '|date=' + d['date']
+        s += '|date=' + conv.chdateformat(d['date'], date_format)
     if 'year' in d:
         s += '|year=' + d['year']
     if 'isbn' in d:
@@ -93,11 +94,11 @@ def create(d):
             s += '|' + d['year']
         s += '}}'
     if 'url' in d:
-        s += '|accessdate=' + date.isoformat(date.today())
+        s += '|accessdate=' + date.strftime(date.today(), date_format)
     s += '}}'
     return s
 
-    
+
 def names2para(names, fn_parameter, ln_parameter):
     """Take list of names. Return the string to be appended to citation."""
     c = 0
@@ -114,7 +115,7 @@ def names2para(names, fn_parameter, ln_parameter):
                  name.firstname
     return s
 
-            
+
 def names1para(translators, para):
     """Take list of names. Return the string to be appended to citation."""
     s = '|' + para + '='
@@ -128,4 +129,3 @@ def names1para(translators, para):
         else:
             s += ', ' + name.fullname
     return s
-        

@@ -28,11 +28,11 @@ class Citation():
 
     """Create citation object."""
 
-    def __init__(self, url):
+    def __init__(self, url, date_format='%Y-%m-%d'):
         self.url = url
         self.dictionary = url2dictionary(url)
         self.ref = wikiref.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary, date_format)
         self.error = 0
 
 
@@ -222,8 +222,6 @@ Examples:
         return (None, title_string, None)
     #detecting intitle_sitename
     netloc = urlparse(url)[1].lower().replace('www.', '')
-    print title_parts
-    print netloc
     close_matches = difflib.get_close_matches(netloc, title_parts, n = 2,
                                               cutoff = .35)
     if close_matches:

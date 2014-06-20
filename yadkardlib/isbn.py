@@ -46,7 +46,8 @@ class Citation():
     
     """Create isbn citation object."""
 
-    def __init__(self, isbn_container_string, pure=False):
+    def __init__(self, isbn_container_string, pure=False,
+                 date_format='%Y-%m-%d'):
         """Get an ISBN-containing string and return an ISBN object."""
         if pure:
             self.isbn = isbn_container_string
@@ -73,7 +74,7 @@ class Citation():
                                      langid.classify(self.dictionary['title'])
             self.error = round((1 - self.dictionary['error']) * 100, 2)
         self.ref = wikiref.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary, date_format)
 
 
 def choose_dict(adinebook, ottobib):

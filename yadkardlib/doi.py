@@ -24,7 +24,7 @@ class Citation():
     
     """Create a DOI citation object."""
     
-    def __init__(self, doi_or_url, pure=False):
+    def __init__(self, doi_or_url, pure=False, date_format='%Y-%m-%d'):
         if pure:
             self.doi = doi_or_url
         else:
@@ -43,7 +43,7 @@ class Citation():
                                      langid.classify(self.dictionary['title'])
             self.error = round((1 - self.dictionary['error']) * 100, 2)
         self.ref = wikiref.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary, date_format)
 
 
 def get_bibtex(doi_url):

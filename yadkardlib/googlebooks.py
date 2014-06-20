@@ -26,7 +26,7 @@ class Citation():
     
     """Create google book citation object."""
     
-    def __init__(self, googlebook_url):
+    def __init__(self, googlebook_url, date_format='%Y-%m-%d'):
         self.url = googlebook_url
         #self.bibtex = get_bibtex(googlebook_url) [1]
         #self.dictionary = bibtex.parse(self.bibtex) [1]
@@ -49,7 +49,7 @@ class Citation():
                                      langid.classify(self.dictionary['title'])
             self.error = round((1 - self.dictionary['error']) * 100, 2)
         self.ref = wikiref.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary, date_format)
 
 
 def get_bibtex(googlebook_url):

@@ -23,7 +23,7 @@ else:
 class Citation():
     """Create Adinebook citation object."""
     
-    def __init__(self, adinebook_url):
+    def __init__(self, adinebook_url, date_format='%Y-%m-%d'):
         self.url = adinebook_url
         self.dictionary = url2dictionary(adinebook_url)
         #manually adding page nubmer to dictionary:
@@ -37,7 +37,7 @@ class Citation():
                                      langid.classify(self.dictionary['title'])
             self.error = round((1 - confidence) * 100, 2)
         self.ref = wikiref.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary, date_format)
 
 
 def isbn2url(isbn):

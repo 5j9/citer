@@ -21,7 +21,7 @@ class Citation():
     
     """Create noormags citation object."""
     
-    def __init__(self, noormags_url):
+    def __init__(self, noormags_url, date_format='%Y-%m-%d'):
         self.url = noormags_url
         self.bibtex = get_bibtex(noormags_url)
         self.dictionary = bibtex.parse(self.bibtex)
@@ -33,7 +33,7 @@ class Citation():
         if 'LA' in self.ris:
             self.dictionary['language'] = ris.parse(self.ris)['language']
         self.ref = wikiref.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary)
+        self.cite = wikicite.create(self.dictionary, date_format)
         self.error = 0
 
         
