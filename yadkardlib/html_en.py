@@ -61,11 +61,11 @@ skeleton = u"""<!DOCTYPE html>
                     <input type="submit" value="Submit">
                 </p>
                 <p>Date format:</p>
-                <input type="radio" value="%%%%Y-%%%%m-%%%%d" name="dateformat" checked>%(Ymd)s
-                <input type="radio" value="%%%%B %%%%d, %%%%Y" name="dateformat">%(BdY)s
-                <input type="radio" value="%%%%b %%%%d, %%%%Y" name="dateformat">%(bdY)s
-                <input type="radio" value="%%%%d %%%%B %%%%Y" name="dateformat">%(dBY)s
-                <input type="radio" value="%%%%d %%%%b %%%%Y" name="dateformat">%(dbY)s
+                <input type="radio" value="%%%%Y-%%%%m-%%%%d" name="dateformat" id="Ymd" onclick="setCookie('datefmt', 'Ymd', 365)" checked>%(Ymd)s
+                <input type="radio" value="%%%%B %%%%d, %%%%Y" name="dateformat" id="BdY" onclick="setCookie('datefmt', 'BdY', 365)">%(BdY)s
+                <input type="radio" value="%%%%b %%%%d, %%%%Y" name="dateformat" id="bdY" onclick="setCookie('datefmt', 'bdY', 365)">%(bdY)s
+                <input type="radio" value="%%%%d %%%%B %%%%Y" name="dateformat" id="dBY" onclick="setCookie('datefmt', 'dBY', 365)">%(dBY)s
+                <input type="radio" value="%%%%d %%%%b %%%%Y" name="dateformat" id="dbY" onclick="setCookie('datefmt', 'dbY', 365)">%(dbY)s
             </form>
             <p>
                 <a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:<br>
@@ -86,6 +86,32 @@ skeleton = u"""<!DOCTYPE html>
                         Found a bug or have a suggestion? Contact me on my talk page. (User:Dalba).</p>
             </div>
         </div>
+        <script>        
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                var expires = "expires="+d.toGMTString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            }
+
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for(var i=0; i<ca.length; i++) {
+                    var c = ca[i].trim();
+                    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+                }
+                return "";
+            }
+
+            function checkCookie() {
+                var datefmt = getCookie('datefmt');
+                if (datefmt != '') {
+                  document.getElementById(datefmt).checked = true;
+                }
+            }
+            checkCookie()
+        </script>
     </body>
 </html>""" %{'Ymd': today.strftime('%Y-%m-%d'),
              'BdY': today.strftime('%B %d, %Y'),
