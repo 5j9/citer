@@ -366,12 +366,17 @@ def find_authors(bs):
     """Get a BeautifulSoup object and return byline names as a list."""
     try:
         #http://socialhistory.ihcs.ac.ir/article_571_84.html
+        #http://jn.physiology.org/content/81/1/319
         m = bs.find_all(attrs={'name':'citation_author'})
         authors = []
         for a in m:
             ss = a['content'].split(' and ')
             for s in ss:
-                name = conv.Name(s, ',')
+                if ',' in s:
+                    sep = ','
+                else:
+                    sep = None
+                name = conv.Name(s, sep)
                 authors.append(name)
         if not authors:
             raise Exception('"authors" remained an empty list.')
