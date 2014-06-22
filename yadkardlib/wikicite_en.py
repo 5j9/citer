@@ -45,12 +45,12 @@ def create(d, date_format):
             s += '|title=' +  d['title']
     if 'journal' in d:
         s += '|journal=' + d['journal']
+    elif 'website' in d:
+        s += '|website=' + d['website']
     if 'publisher' in d:
         s += '|publisher=' + d['publisher']
     if 'address' in d:
         s += '|location=' + d['address']
-    if 'website' in d:
-        s += '|website=' + d['website']
     if 'series' in d:
         s += '|series=' + d['series']
     if 'volume' in d:
@@ -65,7 +65,9 @@ def create(d, date_format):
         s += '|isbn=' + d['isbn']
     if 'issn' in d:
         s += '|issn=' + d['issn']
-    if d['type'] == 'article' or d['type'] == 'jour':
+    if 'pmid' in d:
+        s += '|pmid=' + d['pmid']
+    if d['type'] in ['article', 'jour']:
         if 'pages' in d:
             if u'–' in d['pages']:
                 s += '|pages=' + d['pages']
