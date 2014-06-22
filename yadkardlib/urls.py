@@ -103,6 +103,16 @@ does not check that.
         pass
 
 
+def find_pmid(bs):
+    """Get the BS object of a page. Return pmid as a string."""
+    try:
+        #http://jn.physiology.org/content/81/1/319
+        m = bs.find(attrs={'name':'citation_pmid'})
+        return m['content']
+    except Exception:
+        pass
+
+
 def find_volume(bs):
     """Return citatoin volume number as a string."""
     try:
@@ -254,6 +264,12 @@ def find_date(bs):
     try:
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
         m = bs.find(attrs={'name':'citation_date'})
+        return conv.finddate(m['content']).strftime('%Y-%m-%d')
+    except Exception:
+        pass
+    try:
+        #http://jn.physiology.org/content/81/1/319
+        m = bs.find(attrs={'name':'citation_publication_date'})
         return conv.finddate(m['content']).strftime('%Y-%m-%d')
     except Exception:
         pass
@@ -562,6 +578,7 @@ def url2dictionary(url):
     if authors:
         d['authors'] = authors
     d['issn'] = find_issn(bs)
+    d['pmid'] = find_pmid(bs)
     d['volume'] = find_volume(bs)
     d['issue'] = find_issue(bs)
     d['pages'] = find_pages(bs)
