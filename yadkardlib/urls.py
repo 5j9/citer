@@ -532,19 +532,14 @@ Examples:
     byline = byline.strip()
     if re.match('by ', byline, re.I):
         byline = byline[3:]
-    slist = re.split(', | and ', byline, re.I)
-##    #splitting names:
-##    t = byline.split(' and ')
-##    slist = [t[-1].split(', ')[0]]
-##    for i in range(len(t)-1):
-##        slist.extend(t[i].split(', '))
+    fullnames = re.split(', | and |;', byline, re.I)
     names = []
     stopwords = ('Reporter',
                  'People',
                  'Editor',
                  'Correspondent',
                  )
-    for fullname in slist:
+    for fullname in fullnames:
         if ' in ' in fullname:
             fullname = fullname.split(' in ')[0]
         name = conv.Name(fullname)
