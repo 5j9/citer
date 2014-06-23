@@ -63,12 +63,12 @@ class DilyTelegraphTest(unittest.TestCase):
 
 class DilyMirrorTest(unittest.TestCase):
 
-    def test_dm1(self):
+    def test_dmr1(self):
         """no authors"""
         i = 'http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471'
         o = urls.Citation(i)
         e1 = u'{{sfn|Mirror.co.uk|2005}}'
-        e2 = u'* {{cite web|last=Mirror.co.uk|first=|title=WHALE DOOMED TO DIE|website=mirror|date=15 Sep 2005|year=2005|url=http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471|ref=harv|accessdate='
+        e2 = u'* {{cite web|last=Mirror.co.uk|first=|title=WHALE DOOMED TO DIE|website=mirror|date=2005-09-15|year=2005|url=http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471|ref=harv|accessdate='
         self.assertIn(e1, o.ref)
         self.assertIn(e2, o.cite)
 
