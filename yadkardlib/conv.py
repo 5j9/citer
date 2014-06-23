@@ -80,10 +80,16 @@ def firstname_lastname(fullname, seperator):
 Add Jr.|Sr. suffix to first name.
 Usually not used directly, called from Name() class.
 
-Example:
+Examples:
 
 >>> firstname_lastname('JAMES C. MCKINLEY Jr.', None)
 ('James C. Jr.', 'McKinley')
+
+>>> firstname_lastname('DeBolt, V.', ',')
+('V.', 'DeBolt')
+
+>>> firstname_lastname('BBC', None)
+('', 'BBC')
 '''
     fullname = fullname.strip()
     m = re.search(' (Jr\.|Sr\.)$', fullname, re.I)
@@ -102,18 +108,16 @@ Example:
         lastname = sname.pop()
         firstname = ' '.join(sname)
     firstname = firstname.strip()
-    if suffix:
-        firstname += suffix
-    if firstname:
-        #if there is no firstname, it's probably an orgnization name
-        #e.g. CBC, or AP. (no word-captalization should be done)
+    if (firstname.isupper() and lastname.isupper()) or \
+       (firstname.islower() and lastname.islower()):
         firstname = firstname.title()
         lastname = lastname.title()
-    lastname = re.sub('MC(\w)',
-                      lambda m: 'Mc' + m.group(1).upper(),
-                      lastname,
-                      flags =re.I
-                      )
+        lastname = re.sub('MC(\w)',
+              lambda m: 'Mc' + m.group(1).upper(),
+              lastname,
+              flags =re.I)
+    if suffix:
+        firstname += suffix.title()
     return firstname, lastname
 
 
