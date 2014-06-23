@@ -5,7 +5,7 @@
 
 import re
 from urlparse import urlparse
-import warnings
+import logging
 import difflib
 
 import requests
@@ -73,7 +73,7 @@ Get page's bs object, it's title, and authors. Return site's name as a string.
     except Exception:
         pass
     try:
-        warnings.warn('Searching for site_name through bs.title.')
+        logger.info('Searching for site_name through bs.title.\r\n' + url)
         return parse_title(bs.title.text, url, authors)[2]
     except Exception:
         pass
@@ -210,32 +210,44 @@ def parse_title(title_string, url, authors):
 
 Examples:
 
->>> title_string = "Rockhopper raises Falklands oil estimate - FT.com"
->>> url = "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0"
->>> authors_list = None
->>> parse_title(title_string, url, authors_list)
+>>> parse_title("Rockhopper raises Falklands oil estimate - FT.com",
+	    "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
+	    None)
 (None, 'Rockhopper raises Falklands oil estimate', 'FT.com')
 
->>> title_string = "some title - FT.com - something unknown"
->>> parse_title(title_string, url, authors_list)
+>>> parse_title('some title - FT.com - something unknown',
+	    "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
+	    None)
 (None, 'some title - something unknown', 'FT.com')
 
->>> title_string = "Alpha decay - Wikipedia, the free encyclopedia"
->>> url = "https://en.wikipedia.org/wiki/Alpha_decay"
->>> parse_title(title_string, url, authors_list)
+>>> parse_title("Alpha decay - Wikipedia, the free encyclopedia",
+	    "https://en.wikipedia.org/wiki/Alpha_decay",
+	    None)
 (None, 'Alpha decay', 'Wikipedia, the free encyclopedia')
+
+>>> parse_title("	BBC NEWS | Health | New teeth 'could soon be grown'",
+	    'http://news.bbc.co.uk/2/hi/health/3679313.stm',
+	    None)
+(None, "Health - New teeth 'could soon be grown'", 'BBC NEWS')
 '''
     intitle_author = intitle_sitename = None
     sep_regex = u'( - | — | \| )'
     title_parts = re.split(sep_regex, title_string.strip())
     if len(title_parts) == 1:
         return (None, title_string, None)
-    #detecting intitle_sitename
     netloc = urlparse(url)[1].lower().replace('www.', '')
-    close_matches = difflib.get_close_matches(netloc, title_parts, n = 2,
-                                              cutoff = .35)
-    if close_matches:
-        intitle_sitename = close_matches[0]
+    #detecting intitle_sitename
+    netlocset = set(netloc.split('.'))
+    for p in title_parts:
+        if (p in netloc) or not set(p.lower().split()) - netlocset:
+            intitle_sitename = p
+            break
+    if not intitle_sitename:
+        #using difflib
+        close_matches = difflib.get_close_matches(netloc, title_parts, n = 2,
+                                                  cutoff = .35)
+        if close_matches:
+            intitle_sitename = close_matches[0]
     #detecting intitle_author
     if authors:
         for author in authors:
@@ -253,9 +265,11 @@ Examples:
     if re.match(sep_regex, title_parts[-1]):
         title_parts.pop()
     pure_title = ''.join(title_parts)
-    pure_title = re.sub(sep_regex + sep_regex, '\1', pure_title)
-    # '|' is not allowed in wiki templates
-    pure_title = pure_title.replace('|', '-').strip()
+    pure_title = re.sub(sep_regex + sep_regex, r'\1', pure_title)
+    # Replacing special characters with their respective HTML entities
+    pure_title = pure_title.replace('|', '&#124;').strip()
+    pure_title = pure_title.replace('[', '&#91;').strip()
+    pure_title = pure_title.replace(']', '&#93;').strip()
     return intitle_author, pure_title, intitle_sitename
 
 
@@ -372,7 +386,7 @@ def find_date(bs):
         pass
     try:
         #https://www.bbc.com/news/uk-england-25462900
-        warnings.warn('Searching for date in bs.text.')
+        logger.info(u'Searching for date in bs.text.\r\n' + url)
         return conv.finddate(bs.text).strftime('%Y-%m-%d')
     except Exception:
         pass
@@ -397,12 +411,6 @@ def find_authors(bs):
         if not authors:
             raise Exception('"authors" remained an empty list.')
         return authors
-    except Exception:
-        pass
-    try:
-        #http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
-        m = bs.find(attrs={'name':'author'})
-        return byline_to_names(m['content'])
     except Exception:
         pass
     try:
@@ -436,12 +444,20 @@ def find_authors(bs):
         pass
     try:
         #http://www.dailymail.co.uk/news/article-2633025/
+        #http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471
+        #try before {'name':'author'}
         names = []
         for m in bs.find_all(class_='author'):
             names.extend(byline_to_names(m.text))
         if not names:
             raise Exception('"names" remained an empty list.')
         return names
+    except Exception:
+        pass
+    try:
+        #http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
+        m = bs.find(attrs={'name':'author'})
+        return byline_to_names(m['content'])
     except Exception:
         pass
     try:
@@ -512,6 +528,7 @@ stopwords = ('Reporter',
              'People',
              'Editor',
              'Correspondent',
+             'Administrator',
              )
 
 If any of the stopwords is found in a name. Then it will be omitted from the
@@ -538,6 +555,7 @@ Examples:
                  'People',
                  'Editor',
                  'Correspondent',
+                 'Administrator',
                  )
     for fullname in fullnames:
         if ' in ' in fullname:
@@ -595,3 +613,5 @@ def url2dictionary(url):
         if d[key]:
             dictionary[key] = d[key]
     return dictionary
+
+logger = logging.getLogger(__name__)
