@@ -1,7 +1,8 @@
 #!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
-import logging, logging.handlers
+import logging
+import logging.handlers
 import urllib2
 from cgi import escape
 import urlparse
@@ -83,15 +84,15 @@ def application(environ, start_response):
             #All the above cases have been unsuccessful
             obj = html.ResposeObj(*html.undefined_url_response)
             logger.info(u'There was an undefined_url_response\r\n' + url)
-        response_body = html.skeleton %(obj.ref,
+        response_body = html.skeleton % (obj.ref,
                                         obj.cite,
                                         obj.error)
     except (urllib2.HTTPError, requests.ConnectionError):
         logger.exception(url)
-        response_body = html.skeleton %html.httperror_response
+        response_body = html.skeleton % html.httperror_response
     except:
         logger.exception(url)
-        response_body = html.skeleton %html.other_exception_response
+        response_body = html.skeleton % html.other_exception_response
     status = '200 OK'
 
     response_headers = [('Content-Type', 'text/html; charset=UTF-8'),

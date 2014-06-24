@@ -10,7 +10,6 @@ import difflib
 
 import requests
 from bs4 import BeautifulSoup as BS
-import langid
 
 
 import conv
@@ -47,7 +46,7 @@ def find_journal(bs):
     """Return journal title as a string."""
     try:
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
-        m = bs.find(attrs={'name':'citation_journal_title'})
+        m = bs.find(attrs={'name': 'citation_journal_title'})
         return m['content'].strip()
     except Exception:
         pass
@@ -57,18 +56,18 @@ def find_url(bs, url):
     """Get a BeautifulSoup object it's url. Return og:url or url as a string."""
     try:
         #http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
-        return bs.find(attrs={'property':'og:url'})['content']
+        return bs.find(attrs={'property': 'og:url'})['content']
     except Exception:
         pass
     return url
-    
+
 
 def find_authors(bs):
     """Get a BeautifulSoup object. Return (Names, where)."""
     try:
         #http://socialhistory.ihcs.ac.ir/article_571_84.html
         #http://jn.physiology.org/content/81/1/319
-        attrs={'name':'citation_author'}
+        attrs = {'name': 'citation_author'}
         m = bs.find_all(attrs=attrs)
         authors = []
         for a in m:
@@ -87,7 +86,7 @@ def find_authors(bs):
         pass
     try:
         #http://www.telegraph.co.uk/science/8323909/The-sperm-whale-works-in-extraordinary-ways.html
-        attrs={'name':'DCSext.author'}
+        attrs={'name': 'DCSext.author'}
         m = bs.find(attrs=attrs)
         return byline_to_names(m['content']), attrs
     except Exception:
@@ -129,14 +128,14 @@ def find_authors(bs):
         pass
     try:
         #http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
-        attrs={'name':'author'}
-        m = bs.find(attrs = attrs)
+        attrs = {'name': 'author'}
+        m = bs.find(attrs=attrs)
         return byline_to_names(m['content']), attrs
     except Exception:
         pass
     try:
         #http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
-        attrs={'rel':'author'}
+        attrs = {'rel': 'author'}
         m = bs.find(attrs=attrs).text
         return byline_to_names(m), attrs
     except Exception:
@@ -160,7 +159,7 @@ def find_authors(bs):
         pass
     try:
         #http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html
-        attrs={'name':'byl'}
+        attrs = {'name': 'byl'}
         m = bs.find(attrs=attrs)
         return byline_to_names(m['content']), attrs
     except Exception:
@@ -178,7 +177,7 @@ def find_authors(bs):
         pass
     try:
         #http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-        m = re.search('[\n>"\']\s*By\s*(.*)[<\n"\']',bs.text,re.I).group(1)
+        m = re.search('[\n>"\']\s*By\s*(.*)[<\n"\']', bs.text, re.I).group(1)
         return byline_to_names(m), 'bs.text'
     except Exception:
         pass
@@ -206,7 +205,8 @@ Examples:
 >>> byline_to_names('\n By Roger Highfield, Science Editor \n')
 [Name(Roger Highfield)]
 
->>> byline_to_names(' By Erika Solomon in Beirut and Borzou Daragahi, Middle East correspondent')
+>>> byline_to_names(' By Erika Solomon in Beirut and Borzou Daragahi,\
+ Middle East correspondent')
 [Name(Erika Solomon), Name(Borzou Daragahi)]
 '''
     if '|' in byline:
@@ -231,13 +231,13 @@ Examples:
         if re.search('|'.join(stopwords), name.lastname, re.I):
             name.nofirst_fulllast()
         names.append(name)
-    if len(names)>1:
+    if len(names) > 1:
         for name in names:
             if re.search('|'.join(stopwords), name.lastname, re.I):
                 names.remove(name)
     return names
 
-    
+
 def find_issn(bs):
     """Return International Standard Serial Number as a string.
 
@@ -246,7 +246,7 @@ does not check that.
 """
     try:
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
-        m = bs.find(attrs={'name':'citation_issn'})
+        m = bs.find(attrs={'name': 'citation_issn'})
         return m['content'].strip()
     except Exception:
         pass
@@ -256,7 +256,7 @@ def find_pmid(bs):
     """Get the BS object of a page. Return pmid as a string."""
     try:
         #http://jn.physiology.org/content/81/1/319
-        m = bs.find(attrs={'name':'citation_pmid'})
+        m = bs.find(attrs={'name': 'citation_pmid'})
         return m['content']
     except Exception:
         pass
@@ -266,17 +266,17 @@ def find_volume(bs):
     """Return citatoin volume number as a string."""
     try:
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
-        m = bs.find(attrs={'name':'citation_volume'})
+        m = bs.find(attrs={'name': 'citation_volume'})
         return m['content'].strip()
     except Exception:
         pass
-    
+
 
 def find_issue(bs):
     """Return citatoin issue number as a string."""
     try:
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
-        m = bs.find(attrs={'name':'citation_issue'})
+        m = bs.find(attrs={'name': 'citation_issue'})
         return m['content'].strip()
     except Exception:
         pass
@@ -286,8 +286,8 @@ def find_pages(bs):
     """Return citatoin pages as a string."""
     try:
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
-        fp = bs.find(attrs={'name':'citation_firstpage'})['content'].strip()
-        lp = bs.find(attrs={'name':'citation_lastpage'})['content'].strip()
+        fp = bs.find(attrs={'name': 'citation_firstpage'})['content'].strip()
+        lp = bs.find(attrs={'name': 'citation_lastpage'})['content'].strip()
         return fp + u'–' + lp
     except Exception:
         pass
@@ -299,31 +299,31 @@ def find_sitename(bs, url, authors):
 Get page's bs object, it's title, and authors. Return site's name as a string.
 '''
     try:
-        attrs = {'name':'og:site_name'}
+        attrs = {'name': 'og:site_name'}
         return bs.find(attrs=attrs)['content'].strip(), attrs
     except Exception:
         pass
     try:
         #https://www.bbc.com/news/science-environment-26878529
-        attrs={'property':'og:site_name'}
+        attrs={'property': 'og:site_name'}
         return bs.find(attrs=attrs)['content'].strip(), attrs
     except Exception:
         pass
     try:
         #http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-        attrs={'name':'PublisherName'}
+        attrs={'name': 'PublisherName'}
         return bs.find(attrs=attrs)['value'].strip(), attrs
     except Exception:
         pass
     try:
         #http://www.bbc.com/news/science-environment-26878529 (Optional)
-        attrs={'name':'CPS_SITE_NAME'}
+        attrs={'name': 'CPS_SITE_NAME'}
         return bs.find(attrs=attrs)['content'].strip(), attrs
     except Exception:
         pass
     try:
         #http://www.nytimes.com/2013/10/01/science/a-wealth-of-data-in-whale-breath.html
-        attrs={'name':'cre'}
+        attrs={'name': 'cre'}
         return bs.find(attrs=attrs)['content'].strip(), attrs
     except Exception:
         pass
@@ -333,7 +333,7 @@ Get page's bs object, it's title, and authors. Return site's name as a string.
     except Exception:
         pass
 
-    
+
 def find_title(bs):
     """Get a BeautifulSoup object. Return (title_string, where)."""
     try:
@@ -411,23 +411,23 @@ def parse_title(title_string, url, authors):
 Examples:
 
 >>> parse_title("Rockhopper raises Falklands oil estimate - FT.com",
-	    "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
-	    None)
+        "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
+        None)
 (None, 'Rockhopper raises Falklands oil estimate', 'FT.com')
 
 >>> parse_title('some title - FT.com - something unknown',
-	    "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
-	    None)
+        "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
+        None)
 (None, 'some title - something unknown', 'FT.com')
 
 >>> parse_title("Alpha decay - Wikipedia, the free encyclopedia",
-	    "https://en.wikipedia.org/wiki/Alpha_decay",
-	    None)
+        "https://en.wikipedia.org/wiki/Alpha_decay",
+        None)
 (None, 'Alpha decay', 'Wikipedia, the free encyclopedia')
 
 >>> parse_title("	BBC NEWS | Health | New teeth 'could soon be grown'",
-	    'http://news.bbc.co.uk/2/hi/health/3679313.stm',
-	    None)
+        'http://news.bbc.co.uk/2/hi/health/3679313.stm',
+        None)
 (None, "Health - New teeth 'could soon be grown'", 'BBC NEWS')
 '''
     intitle_author = intitle_sitename = None
@@ -444,8 +444,8 @@ Examples:
             break
     if not intitle_sitename:
         #using difflib
-        close_matches = difflib.get_close_matches(netloc, title_parts, n = 2,
-                                                  cutoff = .35)
+        close_matches = difflib.get_close_matches(netloc, title_parts, n=2,
+                                                  cutoff=.35)
         if close_matches:
             intitle_sitename = close_matches[0]
     #detecting intitle_author
@@ -477,21 +477,21 @@ def find_date(bs, url):
     """Get the BS object and url of a page. Return (date_obj, where)."""
     try:
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
-        attrs={'name':'citation_date'}
+        attrs = {'name': 'citation_date'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
         #http://jn.physiology.org/content/81/1/319
-        attrs={'name':'citation_publication_date'}
+        attrs = {'name': 'citation_publication_date'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
         #http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
-        attrs={'name':'last-modified'}
+        attrs = {'name': 'last-modified'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
@@ -499,7 +499,7 @@ def find_date(bs, url):
     try:
         #http://www.mirror.co.uk/news/weird-news/amazing-rescue-drowning-diver-saved-409479
         #should be placed before article:modified_time
-        attrs={'itemprop':'datePublished'}
+        attrs = {'itemprop': 'datePublished'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['datetime']).strftime('%Y-%m-%d'), attrs
     except Exception:
@@ -507,92 +507,92 @@ def find_date(bs, url):
     try:
         #http://www.mirror.co.uk/news/uk-news/how-reid-will-get-it-all-off-pat--535323
         #should be placed before article:modified_time
-        attrs={'data-type':'pub-date'}
+        attrs = {'data-type': 'pub-date'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m.text).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
-        attrs={'property':'article:modified_time'}
+        attrs = {'property': 'article:modified_time'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
-        attrs={'property':'article:published_time'}
+        attrs = {'property': 'article:published_time'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
-        attrs={'name':'OriginalPublicationDate'}
+        attrs = {'name': 'OriginalPublicationDate'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
-        attrs={'name':'publish-date'}
+        attrs = {'name': 'publish-date'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
-        attrs={'name':'pub_date'}
+        attrs = {'name': 'pub_date'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
         #http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2Fea29ffb6-c759-11e0-9cac-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=#axzz31G5ZgwCH
-        attrs={'id':'publicationDate'}
+        attrs = {'id': 'publicationDate'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m.text).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
         #http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-        attrs={'class':'dateline'}
+        attrs = {'class': 'dateline'}
         m = bs.find(attrs=attrs).text
         return conv.finddate(m).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
         #http://www.nytimes.com/2003/12/14/us/willy-whale-dies-in-norway.html
-        attrs={'name':'DISPLAYDATE'}
+        attrs = {'name': 'DISPLAYDATE'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
         #http://www.washingtonpost.com/wp-dyn/content/article/2006/01/19/AR2006011902990.html
-        attrs={'name':'DC.date.issued'}
+        attrs = {'name': 'DC.date.issued'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
         #http://www.huffingtonpost.ca/arti-patel/nina-davuluri_b_3936174.html
-        attrs={'name':'sailthru.date'}
+        attrs = {'name': 'sailthru.date'}
         m = bs.find(attrs=attrs)
         return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
         #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-        attrs={'class':'entry-date'}
+        attrs = {'class': 'entry-date'}
         m = bs.find(attrs=attrs).text
         return conv.finddate(m).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
-        attrs={'class':'updated'}
+        attrs = {'class': 'updated'}
         m = unicode(bs.find(attrs=attrs))
         return conv.finddate(m).strftime('%Y-%m-%d'), attrs
     except Exception:
         pass
     try:
         #http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
-        attrs={'class':'byline'}
+        attrs = {'class': 'byline'}
         m = bs.find(attrs=attrs).text
         return conv.finddate(m).strftime('%Y-%m-%d'), attrs
     except Exception:
@@ -608,7 +608,7 @@ def find_date(bs, url):
         return conv.finddate(bs.text).strftime('%Y-%m-%d'), 'bs.text'
     except Exception:
         pass
-    
+
 
 def url2dictionary(url):
     """Get url and return the result as a dictionary."""
@@ -616,7 +616,7 @@ def url2dictionary(url):
                ' Gecko/20100101 Firefox/29.0'}
     r = requests.get(url, headers=headers)
     if r.status_code != 200:
-        raise StatusCodeError, r.status_code
+        raise StatusCodeError(r.status_code)
     bs = BS(r.content)
     d = {}
     d['journal'] = find_journal(bs)
@@ -634,7 +634,7 @@ def url2dictionary(url):
     d['issue'] = find_issue(bs)
     d['pages'] = find_pages(bs)
     d['website'] = find_sitename(bs, url, authors)[0]
-    if d['type']=='web' and not d['website']:
+    if d['type'] == 'web' and not d['website']:
         if urlparse(url)[1].startswith('www.'):
             d['website'] = urlparse(url)[1][4:]
         else:
