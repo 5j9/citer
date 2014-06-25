@@ -31,7 +31,7 @@ expected output
 
     def test_doi3(self):
         """Title of this DOI could not be detected in an older version."""
-        i = '10.1086/677379'
+        i = 'http://www.jstor.org/stable/info/10.1086/677379'
         o = doi.Citation(i)
         e = u'* {{cite journal|title=Books of Critical Interest|journal=Critical Inquiry|publisher=University of Chicago Press|volume=40|issue=3|pages=272–281|url=http://dx.doi.org/10.1086/677379|doi=10.1086/677379|ref={{sfnref|University of Chicago Press}}|accessdate='
         self.assertIn(e, o.cite)
