@@ -4,6 +4,7 @@
 """All things that are specifically related to adinebook website"""
 
 import re
+import logging
 
 import langid
 import requests
@@ -61,8 +62,8 @@ def url2dictionary(adinebook_url):
                    ' Gecko/20100101 Firefox/29.0'}
         r = requests.get(adinebook_url, headers=headers)
         adinebook_html = r.content.decode('utf-8')
-    except:
-        #todo: log
+    except Exception:
+        logger.exception(adinebook_url)
         return
     if u'صفحه مورد نظر پبدا نشد.' in adinebook_html:
         return
@@ -120,3 +121,5 @@ def url2dictionary(adinebook_url):
         if m:
             d['isbn'] = m.group(1)       
     return d
+
+logger = logging.getLogger(__name__)
