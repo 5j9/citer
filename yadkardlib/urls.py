@@ -73,11 +73,7 @@ def find_authors(bs):
         for a in m:
             ss = a['content'].split(' and ')
             for s in ss:
-                if ',' in s:
-                    sep = ','
-                else:
-                    sep = None
-                name = conv.Name(s, sep)
+                name = conv.Name(s)
                 authors.append(name)
         if not authors:
             raise Exception('"authors" remained an empty list.')

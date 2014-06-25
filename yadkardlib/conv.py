@@ -51,9 +51,12 @@ class NumberInNameError(Exception):
 
 class Name():
 
-    """Take a fullname and its' seperator; convert it to a Name object."""
+    """Take a fullname and its' seperator. Convert it to a Name object.
+
+If no seperator is provided, ',' or ' ' will be used."""
 
     def __init__(self, fullname, seperator=None):
+        """Create appropriate firstname, lastname and fullname properties."""
         if len(fullname)>40:
             raise LongNameError('Lastname was longer than 40 chars.')
         if re.search('\d\d', fullname, re.U):
@@ -98,13 +101,15 @@ Examples:
         fullname = fullname[:-4]
     else:
         suffix = None
+    if not seperator and ',' in fullname:
+        seperator = ','
     if seperator:
         if seperator in fullname:
             lastname, firstname = fullname.split(seperator)
         else:
             lastname, firstname = fullname, ''
     else:
-        sname = fullname.split(seperator)
+        sname = fullname.split()
         lastname = sname.pop()
         firstname = ' '.join(sname)
     firstname = firstname.strip()

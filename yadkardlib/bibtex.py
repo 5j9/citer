@@ -52,7 +52,7 @@ def parse(bibtex_text):
         d['authors'] = []
         authors = m.group(1).split(' and ')
         for author in authors:
-            name = conv.Name(author, ',')
+            name = conv.Name(author)
             d['authors'].append(name)
         
     m = re.search('title\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
