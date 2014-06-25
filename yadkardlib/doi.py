@@ -20,6 +20,11 @@ else:
     import wikicite_fa as wikicite
 
 
+#regex from:
+#http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
+doi_regex = re.compile(r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'])\S)+)\b')
+
+
 class Citation():
     
     """Create a DOI citation object."""
@@ -39,22 +44,21 @@ class Citation():
         if 'language' in self.dictionary:
             self.error = 0
         else:
-            self.dictionary['language'], self.dictionary['error'] =\
-                                     langid.classify(self.dictionary['title'])
-            self.error = round((1 - self.dictionary['error']) * 100, 2)
+            if 'title' in self.dictionary:
+                self.dictionary['language'], self.dictionary['error'] =\
+                                             langid.classify(
+                                                 self.dictionary['title'])
+                self.error = round((1 - self.dictionary['error']) * 100, 2)
+            else:
+                self.error = 100
         self.ref = wikiref.create(self.dictionary)
         self.cite = wikicite.create(self.dictionary, date_format)
 
 
 def get_bibtex(doi_url):
-    """Get bibtex file content from a doi url. Return as string."""
+    """Get BibTex file content from a DOI URL. Return as string."""
     req = urllib2.Request(doi_url)
-    req.add_header('Accept', 'text/bibliography; style=bibtex')
+    req.add_header('Accept', 'application/x-bibtex')
     bibtex = urllib2.urlopen(req).read().decode('utf8')
     return bibtex
 
-#regex from:
-#http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
-doi_regex = re.compile(
-                    r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'])\S)+)\b'
-                    )
