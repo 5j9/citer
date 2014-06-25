@@ -88,22 +88,14 @@ def url2dictionary(adinebook_url):
         #building lists:
         for name in names:
             if u'(ويراستار)' in name:
-                d['editors'].append(conv.Name(
-                                name.split(u'(ويراستار)')[0]
-                                ))
+                d['editors'].append(conv.Name(name.split(u'(ويراستار)')[0]))
             elif u'(مترجم)' in name:
-                d['translators'].append(conv.Name(
-                                    name.split(u'(مترجم)')[0]
-                                    ))
+                d['translators'].append(conv.Name(name.split(u'(مترجم)')[0]))
             elif '(' in name:
-                d['others'].append(conv.Name(
-                                        re.split('\(.*\)', name)[0]
-                                        ))
+                d['others'].append(conv.Name(re.split('\(.*\)', name)[0]))
                 d['others'][-1].fullname = name
             else:
-                d['authors'].append(conv.Name(
-                                name
-                                ))
+                d['authors'].append(conv.Name(name))
         if not d['authors']:
             del d['authors']
         if not d['others']:
