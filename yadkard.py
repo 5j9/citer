@@ -90,7 +90,7 @@ def application(environ, start_response):
     except (urllib2.HTTPError, requests.ConnectionError):
         logger.exception(url)
         response_body = html.skeleton % html.httperror_response
-    except:
+    except Exception:
         logger.exception(url)
         response_body = html.skeleton % html.other_exception_response
     status = '200 OK'
