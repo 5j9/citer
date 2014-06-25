@@ -7,6 +7,10 @@ import urllib2
 from cgi import escape
 import urlparse
 import requests
+try:
+    from flup.server.fcgi import WSGIServer
+except ImportError:
+    from wsgiref.simple_server import make_server
 
 from yadkardlib import noormags, googlebooks, noorlib, adinebook, urls
 from yadkardlib import doi, isbn, conv, config
@@ -105,11 +109,10 @@ def application(environ, start_response):
 logger = mylogger()
 
 try:
-    from flup.server.fcgi import WSGIServer
-    #on toolserver:
+    # on remote server
     WSGIServer(application).run()
-except ImportError:
-    #on local computer:
+except NameError:
+    # on local computer:
     from wsgiref.simple_server import make_server
     httpd = make_server('localhost', 8051, application)
     httpd.serve_forever()
