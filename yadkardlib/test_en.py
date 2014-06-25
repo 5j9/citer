@@ -8,6 +8,6 @@ import unittest
 
 
 if __name__ == '__main__':
-    tests = unittest.defaultTestLoader.discover('.', '*test.py')
+    tests = unittest.defaultTestLoader.discover('.', '*_test.py')
     runner = unittest.runner.TextTestRunner()
     runner.run(tests)
