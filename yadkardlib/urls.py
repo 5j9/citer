@@ -3,10 +3,12 @@
 
 """Codes used for parsing contents of an arbitrary URL."""
 
+
 import re
 from urlparse import urlparse
 import logging
 import difflib
+from threading import Thread
 
 import requests
 from bs4 import BeautifulSoup as BS
@@ -42,6 +44,13 @@ class StatusCodeError(Exception):
     pass
 
 
+class InvalidByLineError(Exception):
+
+    """Raise in for errors in byline_to_names()."""
+
+    pass
+
+
 def find_journal(bs):
     """Return journal title as a string."""
     try:
@@ -73,8 +82,11 @@ def find_authors(bs):
         for a in m:
             ss = a['content'].split(' and ')
             for s in ss:
-                name = conv.Name(s)
-                authors.append(name)
+                try:
+                    name = conv.Name(s)
+                    authors.append(name)
+                except conv.InvalidNameError:
+                    continue
         if not authors:
             raise Exception('"authors" remained an empty list.')
         return authors, attrs
@@ -111,12 +123,28 @@ def find_authors(bs):
     except Exception:
         pass
     try:
+        #http://www.ensani.ir/fa/content/326173/default.aspx
+        names = []
+        for m in bs.find_all(class_='authorInline'):
+            try:
+                names.extend(byline_to_names(m.text))
+            except InvalidByLineError:
+                continue
+        if not names:
+            raise Exception('"names" remained an empty list.')
+        return names, "class_='authorInline'"
+    except Exception:
+        pass
+    try:
         #http://www.dailymail.co.uk/news/article-2633025/
         #http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471
         #try before {'name':'author'}
         names = []
         for m in bs.find_all(class_='author'):
-            names.extend(byline_to_names(m.text))
+            try:
+                names.extend(byline_to_names(m.text))
+            except InvalidByLineError:
+                continue
         if not names:
             raise Exception('"names" remained an empty list.')
         return names, "class_='author'"
@@ -205,10 +233,12 @@ Examples:
  Middle East correspondent')
 [Name(Erika Solomon), Name(Borzou Daragahi)]
 '''
-    if '|' in byline:
-        raise Exception('Invalid character ("|") in byline.')
+    for c in '|:':
+        if c in byline:
+            raise InvalidByLineError('Invalid character ("%s") in byline.' %c)
     if re.search('\d\d\d\d', byline):
-        raise Exception('Found \d\d\d\d in byline. (byline needs to be pure)')
+        raise InvalidByLineError('Found \d\d\d\d in byline. '+
+                                 '(byline needs to be pure)')
     byline = byline.strip()
     if re.match('by ', byline, re.I):
         byline = byline[3:]
@@ -289,10 +319,16 @@ def find_pages(bs):
         pass
 
 
-def find_sitename(bs, url, authors):
+def find_sitename(bs, url, authors, hometitle_list, thread):
     '''Return (site's name as a string, where).
 
-Get page's bs object, it's title, and authors. Return site's name as a string.
+Parameters:
+    bs: BS object of the page being processed.
+    url: URL of the page.
+    authors: Authors list returned from find_authors function.
+    hometitle_list: A list containing hometitle string.
+    thread: The thread that should be joined before using hometitle_list.
+Returns site's name as a string.
 '''
     try:
         attrs = {'name': 'og:site_name'}
@@ -324,10 +360,28 @@ Get page's bs object, it's title, and authors. Return site's name as a string.
     except Exception:
         pass
     try:
-        logger.info('Searching for site_name through bs.title.\r\n' + url)
-        return parse_title(bs.title.text, url, authors)[2], 'bs.title.text'
+        #search the title
+        sitename = parse_title(bs.title.text, url, authors, hometitle_list,
+                           thread)[2]
+        if sitename:
+            return sitename, 'parse_title'
     except Exception:
         pass
+    try:
+        #using hometitle
+        thread.join()
+        sep_regex = u' - | — | \| |:'
+        sitename = re.split(sep_regex, hometitle_list[0])[0]
+        if sitename:
+            return sitename, 'hometitle'
+    except Exception:
+        pass
+    #return hostname
+    if urlparse(url).hostname.startswith('www.'):
+        return urlparse(url).hostname[4:], 'hostname'
+    else:
+        return urlparse(url).hostname, 'hostname'
+   
 
 
 def find_title(bs):
@@ -384,8 +438,14 @@ def find_title(bs):
     except Exception:
         pass
     try:
-        #ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+        #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
         attrs = {'class': 'entry-title'}
+        return bs.find(attrs=attrs).text.strip(), attrs
+    except Exception:
+        pass
+    try:
+        #http://www.ensani.ir/fa/content/326173/default.aspx
+        attrs = {'class': 'title'}
         return bs.find(attrs=attrs).text.strip(), attrs
     except Exception:
         pass
@@ -396,12 +456,13 @@ def find_title(bs):
     except Exception:
         pass
     try:
-        return bs.title.text.strip(), 'bs.title.text.strip()'
+        return bs.title.text.strip(), 'bs.title.text'
     except Exception:
         pass
+    return None, None
 
 
-def parse_title(title_string, url, authors):
+def parse_title(title, url, authors, hometitle_list=None, thread=None):
     '''Return (intitle_author, pure_title, intitle_sitename).
 
 Examples:
@@ -427,42 +488,56 @@ Examples:
 (None, "Health - New teeth 'could soon be grown'", 'BBC NEWS')
 '''
     intitle_author = intitle_sitename = None
-    sep_regex = u'( - | — | \| )'
-    title_parts = re.split(sep_regex, title_string.strip())
+    sep_regex = u' - | — | \| '
+    title_parts = re.split(sep_regex, title.strip())
     if len(title_parts) == 1:
-        return (None, title_string, None)
-    netloc = urlparse(url)[1].lower().replace('www.', '')
-    #detecting intitle_sitename
-    netlocset = set(netloc.split('.'))
-    for p in title_parts:
-        if (p in netloc) or not set(p.lower().split()) - netlocset:
-            intitle_sitename = p
+        return (None, title, None)
+    hostname = urlparse(url).hostname.replace('www.', '')
+    #Searching for intitle_sitename
+    #1. In hostname
+    hnset = set(hostname.split('.'))
+    for part in title_parts:
+        if (part in hostname) or not set(part.lower().split()) - hnset:
+            intitle_sitename = part
             break
     if not intitle_sitename:
-        #using difflib
-        close_matches = difflib.get_close_matches(netloc, title_parts, n=2,
-                                                  cutoff=.35)
+        #2. Using difflib on hostname
+        #Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
+        close_matches = difflib.get_close_matches(hostname, title_parts, n=1,
+                                                  cutoff=.3)
         if close_matches:
             intitle_sitename = close_matches[0]
-    #detecting intitle_author
+    if not intitle_sitename:
+        if thread:
+            thread.join()
+        if hometitle_list:
+            hometitle = hometitle_list[0]
+        #3. In homepage title
+        for part in title_parts:
+            if (part in hometitle):
+                intitle_sitename = part
+                break
+    if not intitle_sitename:
+        #4. Using difflib on hometitle
+        close_matches = difflib.get_close_matches(hometitle, title_parts, n=1,
+                                                  cutoff=.3)
+        if close_matches:
+            intitle_sitename = close_matches[0]
+    #Searching for intitle_author
     if authors:
         for author in authors:
             for part in title_parts:
                 if author.lastname.lower() in part.lower():
                     intitle_author = part
+    #Title purification
     if intitle_sitename:
         title_parts.remove(intitle_sitename)
         intitle_sitename = intitle_sitename.strip()
     if intitle_author:
         title_parts.remove(intitle_author)
         intitle_author = intitle_author.strip()
-    if re.match(sep_regex, title_parts[0]):
-        title_parts.pop(0)
-    if re.match(sep_regex, title_parts[-1]):
-        title_parts.pop()
-    pure_title = ''.join(title_parts)
-    pure_title = re.sub(sep_regex + sep_regex, r'\1', pure_title)
-    # Replacing special characters with their respective HTML entities
+    pure_title = ' - '.join(title_parts)
+    #Replacing special characters with their respective HTML entities
     pure_title = pure_title.replace('|', '&#124;').strip()
     pure_title = pure_title.replace('[', '&#91;').strip()
     pure_title = pure_title.replace(']', '&#93;').strip()
@@ -604,22 +679,37 @@ def find_date(bs, url):
         return conv.finddate(bs.text).strftime('%Y-%m-%d'), 'bs.text'
     except Exception:
         pass
+    return None, None
+
+
+def get_hometitle(url, headers, hometitle_list):
+    """Get homepage of the url and return it's title.
+
+hometitle_list will be used to return the thread result.
+This function is invoked through a thread."""
+    homeurl = '://'.join(urlparse(url)[:2])
+    try:
+        homecontent = requests.get(homeurl, headers=headers).content
+        hometitle_list.append(BS(homecontent).title.text.strip())
+    except Exception:
+        hometitle_list.append(None)
 
 
 def url2dictionary(url):
     """Get url and return the result as a dictionary."""
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:29.0)' +
-               ' Gecko/20100101 Firefox/29.0'}
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)' +
+               ' Gecko/20100101 Firefox/30.0'}
+
+    #Creating a thread to fetch homepage title in background
+    hometitle_list = [] #A mutable variable used to get the thread result
+    thread = Thread(target=get_hometitle, args=(url, headers, hometitle_list))
+    thread.start()
+    
     r = requests.get(url, headers=headers)
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
     bs = BS(r.content)
     d = {}
-    d['journal'] = find_journal(bs)
-    if d['journal']:
-        d['type'] = 'jour'
-    else:
-        d['type'] = 'web'
     d['url'] = find_url(bs, url)
     authors = find_authors(bs)[0]
     if authors:
@@ -629,14 +719,15 @@ def url2dictionary(url):
     d['volume'] = find_volume(bs)
     d['issue'] = find_issue(bs)
     d['pages'] = find_pages(bs)
-    d['website'] = find_sitename(bs, url, authors)[0]
-    if d['type'] == 'web' and not d['website']:
-        if urlparse(url)[1].startswith('www.'):
-            d['website'] = urlparse(url)[1][4:]
-        else:
-            d['website'] = urlparse(url)[1]
+    d['journal'] = find_journal(bs)
+    if d['journal']:
+        d['type'] = 'jour'
+    else:
+        d['type'] = 'web'
+        d['website'] = find_sitename(bs, url, authors, hometitle_list,
+                                     thread)[0]
     title = find_title(bs)[0]
-    d['title'] = parse_title(title, url, authors)[1]
+    d['title'] = parse_title(title, url, authors, hometitle_list, thread)[1]
     m = find_date(bs, url)[0]
     if m:
         d['date'] = m
