@@ -83,7 +83,7 @@ def create(d, date_format):
     if 'authors' in d:
         s += '|ref=harv'
     else:
-        #order should be matched with wikiref
+        #order should match wikiref
         s += '|ref={{sfnref|' +\
              (
                  d['publisher'] if 'publisher' in d else \
