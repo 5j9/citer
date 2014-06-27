@@ -35,14 +35,20 @@ Ymd_slashed = r'(19|20)\d\d/(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])'
 Ymd = r'(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])'
 
 
-class LongNameError(Exception):
+class InvalidNameError(Exception):
+    
+    """Base class for Name exceptions."""
+
+    pass
+
+class LongNameError(InvalidNameError):
 
     """Raise when a Name() is too long to be a name."""
 
     pass
 
 
-class NumberInNameError(Exception):
+class NumberInNameError(InvalidNameError):
 
     """Raise when a Name() contains digits.."""
 
