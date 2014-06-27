@@ -3,6 +3,7 @@
 
 """Test urls.py module."""
 
+
 import unittest
 
 import urls
@@ -153,6 +154,16 @@ class NytTest(unittest.TestCase):
         e = u'* {{cite web|title=19th-century harpoon gives clue on whales|website=The New York Times|date=2007-06-13|year=2007|url=http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html|ref={{sfnref|The New York Times|2007}}|accessdate='
         self.assertIn(e, o.cite)
 
+        
+class Ensani(unittest.TestCase):
+
+    def test_ens(self):
+        """Get title by hometitle comparison."""
+        i = 'http://www.ensani.ir/fa/content/326173/default.aspx'
+        o = urls.Citation(i)
+        e = u'* {{cite web|last=جلیلیان|first=شهرام|last2=نیا|first2=امیر علی|title=ورود کاسی ها به میان رودان و پیامدهای آن|website=پرتال جامع علوم انسانی|date=2014-05-20|year=2014|url=http://www.ensani.ir/fa/content/326173/default.aspx|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+        
 
 if __name__ == '__main__':
     unittest.main()
