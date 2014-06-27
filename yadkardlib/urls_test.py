@@ -33,7 +33,7 @@ class WashingtonpostTest(unittest.TestCase):
         i = 'http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html'
         o = urls.Citation(i)
         e1 = u'{{sfn|Sachs|2005}}'
-        e2 = u'* {{cite web|last=Sachs|first=Andrea|title=March of the Migration|website=washingtonpost.com|date=2005-09-04|year=2005|url=http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html|ref=harv|accessdate='
+        e2 = u'* {{cite web|last=Sachs|first=Andrea|title=March of the Migration|website=Washington Post|date=2005-09-04|year=2005|url=http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html|ref=harv|accessdate='
         self.assertIn(e1, o.ref)
         self.assertIn(e2, o.cite)
 
