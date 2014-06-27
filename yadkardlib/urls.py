@@ -201,8 +201,7 @@ def find_authors(soup):
         pass
     try:
         #http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-        m = re.search('[\n>"\']\s*By\s*(.*?)[<\n"\']', unicode(soup),
-                      re.I).group(1)
+        m = re.search('>\s*By\s*(.*?)<', unicode(soup)).group(1)
         return byline_to_names(m), 'soup.text'
     except Exception:
         pass
@@ -215,14 +214,14 @@ def byline_to_names(byline):
 The "By " prefix will be omitted.
 Names will be seperated either with " and " or ", ".
 
-stopwords = ('Reporter',
+specialwords = ('Reporter',
              'People',
              'Editor',
              'Correspondent',
              'Administrator',
              )
 
-If any of the stopwords is found in a name. Then it will be omitted from the
+If any of the specialwords is found in a name. Then it will be omitted from the
 result, unless it is the only name available.
 
 Examples:
@@ -245,7 +244,7 @@ Examples:
         byline = byline[3:]
     fullnames = re.split(', | and |;', byline, re.I)
     names = []
-    stopwords = ('Reporter',
+    specialwords = ('Reporter',
                  'People',
                  'Editor',
                  'Correspondent',
@@ -255,12 +254,12 @@ Examples:
         if ' in ' in fullname:
             fullname = fullname.split(' in ')[0]
         name = conv.Name(fullname)
-        if re.search('|'.join(stopwords), name.lastname, re.I):
+        if re.search('|'.join(specialwords), name.lastname, re.I):
             name.nofirst_fulllast()
         names.append(name)
     if len(names) > 1:
         for name in names:
-            if re.search('|'.join(stopwords), name.lastname, re.I):
+            if re.search('|'.join(specialwords), name.lastname, re.I):
                 names.remove(name)
     return names
 
