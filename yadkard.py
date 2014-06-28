@@ -22,7 +22,7 @@ else:
 
 
 def mylogger():
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
     handler = logging.handlers.RotatingFileHandler(
                                     filename='./yadkardlib/yadkard.log',
@@ -107,6 +107,7 @@ def application(environ, start_response):
     return [response_body.encode('utf-8')]
 
 logger = mylogger()
+logging.getLogger("requests").setLevel(logging.WARNING)
 
 try:
     # on remote server
