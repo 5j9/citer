@@ -30,11 +30,17 @@ class Citation():
     """Create citation object."""
 
     def __init__(self, url, date_format='%Y-%m-%d'):
-        self.url = url
-        self.dictionary = url2dictionary(url)
-        self.ref = wikiref.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary, date_format)
-        self.error = 0
+        try:
+            self.url = url
+            self.dictionary = url2dictionary(url)
+            self.ref = wikiref.create(self.dictionary)
+            self.cite = wikicite.create(self.dictionary, date_format)
+            self.error = 0
+        except (ContentTypeError, ContentLengthError) as e:
+            self.ref = 'Could not process the request.'
+            self.cite = e.message
+            self.error = 100
+            logger.exception(url)
 
 
 class ContentTypeError(Exception):
@@ -720,15 +726,18 @@ Return True if content-type is text/* and content-length is less than 1MB.
 Also return True if no information is available. Else return False."""
     response_headers = requests.head(url, headers=request_headers).headers
     if 'content-length' in response_headers:
-        if int(response_headers['content-length'])>1000000:
-            raise ContentLengthError('Content-length was ' +
-                                     response_headers['content-length'])
+        megabytes = int(response_headers['content-length'])/1000000.
+        if megabytes>1:
+            raise ContentLengthError('Content-length was too long. (' +
+                                     format(megabytes, '.2f') +
+                                     ' MB)')
     if 'content-type' in response_headers:
         if response_headers['content-type'].startswith('text/'):
             return True
         else:
-            raise ContentTypeError('Content-type was ' +
-                                   response_headers['content-type'])
+            raise ContentTypeError('Invalid content-type: ' +
+                                   response_headers['content-type'] + 
+                                   ' (URL-content is supposed to be text/html)')
     return True
 
 
