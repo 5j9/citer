@@ -37,6 +37,20 @@ class Citation():
         self.error = 0
 
 
+class ContentTypeError(Exception):
+
+    """Raise when content-type header does not start with 'text/'."""
+
+    pass
+
+
+class ContentLengthError(Exception):
+
+    """Raise when content-length header indicates a very long content."""
+
+    pass
+
+
 class StatusCodeError(Exception):
 
     """Raise when requests.get.status_code != 200."""
@@ -690,12 +704,32 @@ hometitle_list will be used to return the thread result.
 This function is invoked through a thread."""
     homeurl = '://'.join(urlparse(url)[:2])
     try:
+        requests_visa(homeurl, headers)
         homecontent = requests.get(homeurl, headers=headers).content
         strainer = bs4.SoupStrainer('title')
         soup = bs4.BeautifulSoup(homecontent, parse_only=strainer)
         hometitle_list.append(soup.title.text.strip())
     except Exception:
         hometitle_list.append(None)
+
+
+def requests_visa(url, request_headers=None):
+    """Check content-type and content-length of the response.
+
+Return True if content-type is text/* and content-length is less than 1MB.
+Also return True if no information is available. Else return False."""
+    response_headers = requests.head(url, headers=request_headers).headers
+    if 'content-length' in response_headers:
+        if int(response_headers['content-length'])>1000000:
+            raise ContentLengthError('Content-length was ' +
+                                     response_headers['content-length'])
+    if 'content-type' in response_headers:
+        if response_headers['content-type'].startswith('text/'):
+            return True
+        else:
+            raise ContentTypeError('Content-type was ' +
+                                   response_headers['content-type'])
+    return True
 
 
 def url2dictionary(url):
@@ -707,7 +741,8 @@ def url2dictionary(url):
     hometitle_list = [] #A mutable variable used to get the thread result
     thread = Thread(target=get_hometitle, args=(url, headers, hometitle_list))
     thread.start()
-    
+
+    requests_visa(url, headers)
     r = requests.get(url, headers=headers)
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
