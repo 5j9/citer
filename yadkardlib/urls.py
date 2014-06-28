@@ -201,7 +201,8 @@ def find_authors(soup):
         pass
     try:
         #http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-        m = re.search('>\s*By\s+(.*?)<', unicode(soup)).group(1)
+        #https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act
+        m = re.search('[\n\|]\s*[Bb]y\s+(.*?)[\n]', soup.text).group(1)
         return byline_to_names(m), 'soup.text'
     except Exception:
         pass
