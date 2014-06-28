@@ -24,5 +24,7 @@ def create(d):
             s += '|pp=' + d['pages']
         else:
             s += '|p=' + d['pages']
+    elif not 'url' in d:
+        s += '|p='
     s += '}}'
     return s
