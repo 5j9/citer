@@ -155,13 +155,20 @@ class NytTest(unittest.TestCase):
         self.assertIn(e, o.cite)
 
         
-class Ensani(unittest.TestCase):
+class Others(unittest.TestCase):
 
-    def test_ens(self):
+    def test_oth1(self):
         """Get title by hometitle comparison."""
         i = 'http://www.ensani.ir/fa/content/326173/default.aspx'
         o = urls.Citation(i)
         e = u'* {{cite web|last=جلیلیان|first=شهرام|last2=نیا|first2=امیر علی|title=ورود کاسی ها به میان رودان و پیامدهای آن|website=پرتال جامع علوم انسانی|date=2014-05-20|year=2014|url=http://www.ensani.ir/fa/content/326173/default.aspx|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+
+    def test_oth2(self):
+        """Byline through body search."""
+        i = 'https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act'
+        o = urls.Citation(i)
+        e = u'* {{cite web|last=Carlson|first=Kimberly|last2=York|first2=Jillian|title=Sudan Tech Sanctions Harm Innovation and Development: US Government and Corporations Must Act|website=Electronic Frontier Foundation|date=2014-06-26|year=2014|url=https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act|ref=harv|accessdate='
         self.assertIn(e, o.cite)
         
 
