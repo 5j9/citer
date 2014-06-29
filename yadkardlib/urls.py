@@ -711,12 +711,12 @@ This function is invoked through a thread."""
     homeurl = '://'.join(urlparse(url)[:2])
     try:
         requests_visa(homeurl, headers)
-        homecontent = requests.get(homeurl, headers=headers).content
+        homecontent = requests.get(homeurl, headers=headers, timeout=15).content
         strainer = bs4.SoupStrainer('title')
         soup = bs4.BeautifulSoup(homecontent, parse_only=strainer)
         hometitle_list.append(soup.title.text.strip())
     except Exception:
-        hometitle_list.append(None)
+        pass
 
 
 def requests_visa(url, request_headers=None):
@@ -752,7 +752,7 @@ def url2dictionary(url):
     thread.start()
 
     requests_visa(url, headers)
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, timeout=15)
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
     soup = bs4.BeautifulSoup(r.content)
