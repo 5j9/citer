@@ -4,7 +4,6 @@
 import logging
 import logging.handlers
 import urllib2
-from cgi import escape
 import urlparse
 
 try:
