@@ -5,6 +5,7 @@ import logging
 import logging.handlers
 import urllib2
 import urlparse
+from cgi import escape
 
 try:
     from flup.server.fcgi import WSGIServer
