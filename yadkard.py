@@ -4,7 +4,6 @@
 import logging
 import logging.handlers
 import urllib2
-from cgi import escape
 import urlparse
 import requests
 try:
@@ -42,7 +41,7 @@ def mylogger():
 def application(environ, start_response):
     qdict = urlparse.parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0].decode('utf8')
-    url = escape(url).strip()
+    url = url.strip() #cgi.escape() was causing unexpected behaviour
     date_format = qdict.get('dateformat', [''])[0].decode('utf8')
     date_format = escape(date_format).strip()
     if not url.startswith('http'):
