@@ -6,15 +6,15 @@ import logging.handlers
 import urllib2
 from cgi import escape
 import urlparse
-import requests
+
 try:
     from flup.server.fcgi import WSGIServer
 except ImportError:
     from wsgiref.simple_server import make_server
+import requests
 
 from yadkardlib import noormags, googlebooks, noorlib, adinebook, urls
 from yadkardlib import doi, isbn, conv, config
-
 if config.lang == 'en':
     from yadkardlib import html_en as html
 else:
@@ -42,7 +42,7 @@ def mylogger():
 def application(environ, start_response):
     qdict = urlparse.parse_qs(environ['QUERY_STRING'])
     url = qdict.get('url', [''])[0].decode('utf8')
-    url = escape(url).strip()
+    url = url.strip() #cgi.escape() was causing unexpected behaviour
     date_format = qdict.get('dateformat', [''])[0].decode('utf8')
     date_format = escape(date_format).strip()
     if not url.startswith('http'):
