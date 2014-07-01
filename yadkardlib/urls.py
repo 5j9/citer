@@ -558,149 +558,86 @@ Examples:
     return intitle_author, pure_title, intitle_sitename
 
 
+def try_find_date(soup, find_parameters):
+    """Similar to try_find(), but for finding dates.
+
+    Return a string in '%Y-%m-%d' format.
+    """
+    for fp in find_parameters:
+        try:
+            attrs = fp[0]
+            m = bs.find(attrs=attrs)
+            if fp[1] == 'getitem':
+                string = m[fp[2]].strip()
+                return conv.finddate(string).strftime('%Y-%m-%d'), attrs
+            elif fp[1] == 'getattr':
+                string = getattr(m, fp[2]).strip()
+                return conv.finddate(string).strftime('%Y-%m-%d'), attrs
+        except Exception:
+            pass
+    return None, None
+
+
 def find_date(soup, url):
     """Get the BS object and url of a page. Return (date_obj, where)."""
-    try:
+    find_parameters = (
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
-        attrs = {'name': 'citation_date'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'citation_date'}, 'getitem', 'content'),
         #http://jn.physiology.org/content/81/1/319
-        attrs = {'name': 'citation_publication_date'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'citation_publication_date'}, 'getitem', 'content'),
         #http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
-        attrs = {'name': 'last-modified'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'last-modified'}, 'getitem', 'content'),
         #http://www.mirror.co.uk/news/weird-news/amazing-rescue-drowning-diver-saved-409479
         #should be placed before article:modified_time
-        attrs = {'itemprop': 'datePublished'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['datetime']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'itemprop': 'datePublished'}, 'getitem', 'datetime'),
         #http://www.mirror.co.uk/news/uk-news/how-reid-will-get-it-all-off-pat--535323
         #should be placed before article:modified_time
-        attrs = {'data-type': 'pub-date'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m.text).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
-        attrs = {'property': 'article:modified_time'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
-        attrs = {'property': 'article:published_time'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
-        attrs = {'name': 'OriginalPublicationDate'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
-        attrs = {'name': 'publish-date'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
-        attrs = {'name': 'pub_date'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'data-type': 'pub-date'}, 'getattr', 'text'),
+        #http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
+        ({'property': 'article:modified_time'}, 'getitem', 'content'),
+        #http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
+        ({'property': 'article:published_time'}, 'getitem', 'content'),
+        #http://www.bbc.co.uk/news/science-environment-20890389
+        ({'name': 'OriginalPublicationDate'}, 'getitem', 'content'),
+        ({'name': 'publish-date'}, 'getitem', 'content'),
+        #http://www.washingtonpost.com/wp-srv/style/movies/reviews/godsandmonsterskempley.htm
+        ({'name': 'pub_date'}, 'getitem', 'content'),
         #http://www.economist.com/node/1271090?zid=313&ah=fe2aac0b11adef572d67aed9273b6e55
-        attrs = {'name': 'pubdate'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'pubdate'}, 'getitem', 'content'),
         #http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2Fea29ffb6-c759-11e0-9cac-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=#axzz31G5ZgwCH
-        attrs = {'id': 'publicationDate'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m.text).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'id': 'publicationDate'}, 'getattr', 'text'),
         #http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-        attrs = {'class': 'dateline'}
-        m = soup.find(attrs=attrs).text
-        return conv.finddate(m).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'class': 'dateline'}, 'getattr', 'text'),
         #http://www.nytimes.com/2003/12/14/us/willy-whale-dies-in-norway.html
-        attrs = {'name': 'DISPLAYDATE'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'DISPLAYDATE'}, 'getitem', 'content'),
         #http://www.washingtonpost.com/wp-dyn/content/article/2006/01/19/AR2006011902990.html
-        attrs = {'name': 'DC.date.issued'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'DC.date.issued'}, 'getitem', 'content'),
         #http://www.huffingtonpost.ca/arti-patel/nina-davuluri_b_3936174.html
-        attrs = {'name': 'sailthru.date'}
-        m = soup.find(attrs=attrs)
-        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'sailthru.date'}, 'getitem', 'content'),
         #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-        attrs = {'class': 'entry-date'}
-        m = soup.find(attrs=attrs).text
-        return conv.finddate(m).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
-        attrs = {'class': 'updated'}
-        m = unicode(soup.find(attrs=attrs))
-        return conv.finddate(m).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
+        ({'class': 'entry-date'}, 'getattr', 'text'),
+        #http://www.huffingtonpost.com/huff-wires/20121203/us-sci-nasa-voyager/
+        ({'class': 'updated'}, 'getattr', 'text'),
         #http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
-        attrs = {'class': 'byline'}
-        m = soup.find(attrs=attrs).text
-        return conv.finddate(m).strftime('%Y-%m-%d'), attrs
-    except Exception:
-        pass
-    try:
-        #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-        return conv.finddate(url).strftime('%Y-%m-%d'), 'url'
-    except Exception:
-        pass
-    try:
-        #https://www.bbc.com/news/uk-england-25462900
-        logger.info(u'Searching for date in soup.text.\r\n' + url)
-        return conv.finddate(soup.text).strftime('%Y-%m-%d'), 'soup.text'
-    except Exception:
-        pass
-    return None, None
+        ({'class': 'byline'}, 'getattr', 'text'),
+        #wikipedia
+        ({'id': 'footer-info-lastmod'}, 'getattr', 'text'),
+        )
+    date, tag = try_find_date(soup, find_parameters)
+    if not date:
+        try:
+            #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+            date, tag = conv.finddate(url).strftime('%Y-%m-%d'), 'url'
+        except Exception:
+            pass
+    if not date:
+        try:
+            #https://www.bbc.com/news/uk-england-25462900
+            logger.info(u'Searching for date in soup.text.\r\n' + url)
+            return conv.finddate(soup.text).strftime('%Y-%m-%d'), 'soup.text'
+        except Exception:
+            pass
+    return date, tag
 
 
 def get_hometitle(url, headers, hometitle_list):
