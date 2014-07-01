@@ -25,7 +25,7 @@ def mylogger():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     handler = logging.handlers.RotatingFileHandler(
-                                    filename='./yadkardlib/yadkard.log',
+                                    filename='yadkard.log',
                                     mode='a',
                                     maxBytes=20000,
                                     backupCount=0,
@@ -41,17 +41,20 @@ def mylogger():
 
 def application(environ, start_response):
     qdict = urlparse.parse_qs(environ['QUERY_STRING'])
-    url = qdict.get('url', [''])[0].decode('utf8')
-    url = url.strip() #cgi.escape() was causing unexpected behaviour
+    user_input = qdict.get('user_input', [''])[0].decode('utf8')
+    #cgi.escape() was causing unexpected behaviour
+    user_input = user_input.strip()
     date_format = qdict.get('dateformat', [''])[0].decode('utf8')
     date_format = escape(date_format).strip()
-    if not url.startswith('http'):
-        url = 'http://' + url
+    if not user_input.startswith('http'):
+        url = 'http://' + user_input
+    else:
+        url = user_input
     netloc = urlparse.urlparse(url)[1]
     try:
         obj = None
-        if url == 'http://':
-            #on first run url is ''
+        if not user_input:
+            #on first run user_input is ''
             obj = html.ResposeObj(*html.default_response)
         elif '.google.com/books' in url:
             obj = googlebooks.Citation(url, date_format)
