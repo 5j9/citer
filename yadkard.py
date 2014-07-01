@@ -23,7 +23,7 @@ else:
 
 def mylogger():
     logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.INFO)
     handler = logging.handlers.RotatingFileHandler(
                                     filename='./yadkardlib/yadkard.log',
                                     mode='a',
@@ -31,7 +31,7 @@ def mylogger():
                                     backupCount=0,
                                     encoding='utf-8',
                                     delay=0)
-    handler.setLevel(logging.DEBUG)
+    handler.setLevel(logging.INFO)
     fmt = '\r\n%(asctime)s\r\n%(levelname)s\r\n%(message)s\r\n'
     formatter = logging.Formatter(fmt)
     handler.setFormatter(formatter)
