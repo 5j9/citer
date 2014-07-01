@@ -419,7 +419,7 @@ def try_find(soup, find_parameters):
     for fp in find_parameters:
         try:
             attrs = fp[0]
-            m = bs.find(attrs=attrs)
+            m = soup.find(attrs=attrs)
             if fp[1] == 'getitem':
                 string = m[fp[2]].strip()
                 return string, attrs
@@ -566,7 +566,7 @@ def try_find_date(soup, find_parameters):
     for fp in find_parameters:
         try:
             attrs = fp[0]
-            m = bs.find(attrs=attrs)
+            m = soup.find(attrs=attrs)
             if fp[1] == 'getitem':
                 string = m[fp[2]].strip()
                 return conv.finddate(string).strftime('%Y-%m-%d'), attrs
