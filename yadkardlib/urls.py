@@ -232,28 +232,28 @@ def find_authors(soup):
 def byline_to_names(byline):
     '''Find authors in byline sting. Return name objects as a list.
 
-The "By " prefix will be omitted.
-Names will be seperated either with " and " or ", ".
+    The "By " prefix will be omitted.
+    Names will be seperated either with " and " or ", ".
 
-specialwords = ('Reporter',
-             'People',
-             'Editor',
-             'Correspondent',
-             'Administrator',
-             )
+    specialwords = ('Reporter',
+                 'People',
+                 'Editor',
+                 'Correspondent',
+                 'Administrator',
+                 )
 
-If any of the specialwords is found in a name. Then it will be omitted from the
-result, unless it is the only name available.
+    If any of the specialwords is found in a name. Then it will be omitted from
+    the result, unless it is the only name available.
 
-Examples:
+    Examples:
 
->>> byline_to_names('\n By Roger Highfield, Science Editor \n')
-[Name(Roger Highfield)]
+    >>> byline_to_names('\n By Roger Highfield, Science Editor \n')
+    [Name(Roger Highfield)]
 
->>> byline_to_names(' By Erika Solomon in Beirut and Borzou Daragahi,\
- Middle East correspondent')
-[Name(Erika Solomon), Name(Borzou Daragahi)]
-'''
+    >>> byline_to_names(' By Erika Solomon in Beirut and Borzou Daragahi,\
+     Middle East correspondent')
+    [Name(Erika Solomon), Name(Borzou Daragahi)]
+    '''
     for c in '|:':
         if c in byline:
             raise InvalidByLineError('Invalid character ("%s") in byline.' %c)
@@ -263,7 +263,7 @@ Examples:
     byline = byline.strip()
     if re.match('by ', byline, re.I):
         byline = byline[3:]
-    fullnames = re.split(', | and |;', byline, re.I)
+    fullnames = re.split(', and | and |, |;', byline, flags=re.I)
     names = []
     specialwords = ('Reporter',
                  'People',
@@ -404,83 +404,76 @@ Returns site's name as a string.
         return urlparse(url).hostname, 'hostname'
    
 
+def try_find(soup, find_parameters):
+    """Return the first matching item in find_paras as (string, used_attrs).
 
-def find_title(soup):
-    """Get a BeautifulSoup object. Return (title_string, where)."""
-    try:
+    args:
+        soup: The beautiful soup object.
+        find_parameters: List of parameters to try on soup in the following
+            format:
+                ({atrr_name, value}, 'getitem|getattr', 'content|text|...')
+                where {atrrn, value} will be used in
+                bs.find(attrs={atrrn, value}).
+    Return (None, None) if none of the parameters match bs.
+    """
+    for fp in find_parameters:
+        try:
+            attrs = fp[0]
+            m = bs.find(attrs=attrs)
+            if fp[1] == 'getitem':
+                string = m[fp[2]].strip()
+                return string, attrs
+            elif fp[1] == 'getattr':
+                string = getattr(m, fp[2]).strip()
+                return string, attrs
+        except Exception:
+            pass
+    return None, None
+
+
+def find_title(soup, url, authors, hometitle_list, thread):
+    """Return (title_string, where_info)."""
+    find_parameters = (
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
-        attrs = {'name': 'citation_title'}
-        return soup.find(attrs=attrs)['content'].strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'citation_title'}, 'getitem', 'content'),
         #http://www.telegraph.co.uk/earth/earthnews/6190335/Whale-found-dead-in-Thames.html
         #Should be tried before og:title
-        attrs = {'name': 'title'}
-        return soup.find(attrs=attrs)['content'].strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'title'}, 'getitem', 'content'),
         #http://www.bostonglobe.com/ideas/2014/04/28/new-study-reveals-how-honky-tonk-hits-respond-changing-american-fortunes/9ep0iPknDBl9EFFaoXfbmL/comments.html
         #Should be tried before og:title
-        attrs = {'class': 'main-hed'}
-        return soup.find(attrs=attrs).text.strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'class': 'main-hed'}, 'getattr', 'text'),
         #http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
         #Should be tried before og:title
-        attrs = {'class': 'arttle'}
-        return soup.find(attrs=attrs).text.strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'class': 'arttle'}, 'getattr', 'text'),
         #http://www.bbc.com/news/science-environment-26878529
-        attrs = {'property': 'og:title'}
-        return soup.find(attrs=attrs)['content'].strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'property': 'og:title'}, 'getitem', 'content'),
         #http://www.bbc.com/news/science-environment-26267918
-        attrs = {'name': 'Headline'}
-        return soup.find(attrs=attrs)['content'].strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'Headline'}, 'getitem', 'content'),
         #http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-        attrs = {'class': 'articleHeadline'}
-        return soup.find(attrs=attrs).text.strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'class': 'articleHeadline'}, 'getattr', 'text'),
         #http://www.nytimes.com/2007/09/11/us/11whale.html
-        attrs = {'name': 'hdl'}
-        return soup.find(attrs=attrs)['content'].strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'hdl'}, 'getitem', 'content'),
         #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-        attrs = {'class': 'entry-title'}
-        return soup.find(attrs=attrs).text.strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'class': 'entry-title'}, 'getattr', 'text'),
         #http://www.ensani.ir/fa/content/326173/default.aspx
-        attrs = {'class': 'title'}
-        return soup.find(attrs=attrs).text.strip(), attrs
-    except Exception:
-        pass
-    try:
+        ({'class': 'title'}, 'getattr', 'text'),
         #http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-        attrs = {'id': 'entryhead'}
-        return soup.find(attrs=attrs).text.strip(), attrs
-    except Exception:
-        pass
-    try:
-        return soup.title.text.strip(), 'soup.title.text'
-    except Exception:
-        pass
-    return None, None
+        ({'id': 'entryhead'}, 'getattr', 'text'),
+        )
+    raw_title, tag = try_find(soup, find_parameters)
+    if not raw_title:
+        try:
+            raw_title, tag = soup.title.text.strip(), 'soup.title.text'
+        except Exception:
+            pass
+    if raw_title:
+        logger.debug('Unparsed title tag: ' + str(tag))
+        parsed_title = parse_title(raw_title, url, authors, hometitle_list,
+                                   thread)
+        logger.debug('Parsed title: ' + str(parsed_title))
+        return parsed_title[1], tag
+    else:
+        return None, None
 
 
 def parse_title(title, url, authors, hometitle_list=None, thread=None):
@@ -635,6 +628,13 @@ def find_date(soup, url):
     except Exception:
         pass
     try:
+        #http://www.economist.com/node/1271090?zid=313&ah=fe2aac0b11adef572d67aed9273b6e55
+        attrs = {'name': 'pubdate'}
+        m = soup.find(attrs=attrs)
+        return conv.finddate(m['content']).strftime('%Y-%m-%d'), attrs
+    except Exception:
+        pass
+    try:
         #http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2Fea29ffb6-c759-11e0-9cac-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=#axzz31G5ZgwCH
         attrs = {'id': 'publicationDate'}
         m = soup.find(attrs=attrs)
@@ -758,8 +758,9 @@ def url2dictionary(url):
     soup = bs4.BeautifulSoup(r.content)
     d = {}
     d['url'] = find_url(soup, url)
-    authors = find_authors(soup)[0]
+    authors, tag = find_authors(soup)
     if authors:
+        logger.debug('Authors tag: ' + str(tag))
         d['authors'] = authors
     d['issn'] = find_issn(soup)
     d['pmid'] = find_pmid(soup)
@@ -771,13 +772,14 @@ def url2dictionary(url):
         d['type'] = 'jour'
     else:
         d['type'] = 'web'
-        d['website'] = find_sitename(soup, url, authors, hometitle_list,
-                                     thread)[0]
-    title = find_title(soup)[0]
-    d['title'] = parse_title(title, url, authors, hometitle_list, thread)[1]
-    m = find_date(soup, url)[0]
-    if m:
-        d['date'] = m
+        d['website'], tag = find_sitename(soup, url, authors, hometitle_list,
+                                     thread)
+        logger.debug('Website tag: ' + str(tag))
+    d['title'], tag = find_title(soup, url, authors, hometitle_list, thread)
+    date, tag = find_date(soup, url)
+    if date:
+        logger.debug('Date tag: ' + str(tag))
+        d['date'] = date
         d['year'] = d['date'][:4]
     #Remove all empty keys
     dictionary = {}
@@ -787,4 +789,9 @@ def url2dictionary(url):
     return dictionary
 
 
-logger = logging.getLogger(__name__)
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG)
+    logging.getLogger("requests").setLevel(logging.WARNING)
+    logger = logging.getLogger()
+else:
+    logger = logging.getLogger(__name__)
