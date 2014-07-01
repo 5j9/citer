@@ -170,6 +170,13 @@ class Others(unittest.TestCase):
         o = urls.Citation(i)
         e = u'* {{cite web|last=Carlson|first=Kimberly|last2=York|first2=Jillian|title=Sudan Tech Sanctions Harm Innovation and Development: US Government and Corporations Must Act|website=Electronic Frontier Foundation|date=2014-06-26|year=2014|url=https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act|ref=harv|accessdate='
         self.assertIn(e, o.cite)
+
+    def test_oth3(self):
+        """3 authors."""
+        i = 'http://arstechnica.com/science/2007/09/the-pseudoscience-behind-homeopathy/'
+        o = urls.Citation(i)
+        e = u'* {{cite web|last=Timmer|first=John|last2=Ford|first2=Matt|last3=Lee|first3=Chris|last4=Gitlin|first4=Jonathan|title=Diluting the scientific method:  Ars looks at homeopathy|website=Ars Technica|date=2007-09-12|year=2007|url=http://arstechnica.com/science/2007/09/the-pseudoscience-behind-homeopathy/|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
         
 
 if __name__ == '__main__':
