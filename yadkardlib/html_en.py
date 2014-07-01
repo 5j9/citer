@@ -57,7 +57,7 @@ skeleton = u"""<!DOCTYPE html>
         <div style="margin-left:auto; margin-right:auto; width:62%%%%;">
             <form method="get" action="yadkard.fcgi">
                 <p>
-                    URL/DOI/ISBN:<br><input type="text" name="url">
+                    URL/DOI/ISBN:<br><input type="text" name="user_input">
                     <input type="submit" value="Submit">
                 </p>
                 <p>Date format:</p>
