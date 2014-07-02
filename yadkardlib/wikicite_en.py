@@ -23,13 +23,15 @@ def create(d, date_format):
 
     if 'authors' in d:
         s += names2para(d['authors'],
-                          'first',
-                          'last'
-                          )
+                        'first',
+                        'last',
+                        'author',
+                        )
     if 'editors' in d:
         s += names2para(d['editors'],
-                          'editor-first',
-                          'editor-last'
+                        'editor-first',
+                        'editor-last',
+                        'editor',
                           )
     if 'translators' in d:
         for translator in d['translators']:
@@ -101,20 +103,24 @@ def create(d, date_format):
     return s
 
 
-def names2para(names, fn_parameter, ln_parameter):
+def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
     """Take list of names. Return the string to be appended to citation."""
     c = 0
     s = ''
     for name in names:
         c += 1
         if c == 1:
-            s += '|' + ln_parameter + '=' + name.lastname
-            s += '|' + fn_parameter + '=' + name.firstname
+            if name.firstname or not nofn_parameter:
+                s += '|' + ln_parameter + '=' + name.lastname
+                s += '|' + fn_parameter + '=' + name.firstname
+            else:
+                s += '|' + nofn_parameter + '=' + name.fullname
         else:
-            s += '|' + ln_parameter + str(c) + '=' +\
-                 name.lastname
-            s += '|' + fn_parameter + str(c) + '=' +\
-                 name.firstname
+            if name.firstname or not nofn_parameter:
+                s += '|' + ln_parameter + str(c) + '=' + name.lastname
+                s += '|' + fn_parameter + str(c) + '=' + name.firstname
+            else:
+                s += '|' + nofn_parameter + str(c) + '=' + name.fullname
     return s
 
 
