@@ -155,6 +155,31 @@ class NytTest(unittest.TestCase):
         self.assertIn(e, o.cite)
 
         
+
+class TGDaily(unittest.TestCase):
+
+    def test_tgd1(self):
+        """Apparently two authors, but only one of them is valid."""
+        i = 'http://www.tgdaily.com/sustainability-features/79712-are-more-wind-turbines-the-answer'
+        o = urls.Citation(i)
+        e = u'* {{cite web|last=Danko|first=Pete|title=Are more wind turbines the answer?|website=TG Daily|date=2013-09-16|year=2013|url=http://www.tgdaily.com/sustainability-features/79712-are-more-wind-turbines-the-answer|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+
+    def test_tgd2(self):
+        """Hard to find author and date."""
+        i = 'http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion'
+        o = urls.Citation(i)
+        e = u'* {{cite web|last=Wright|first=Guy|title=Apple might buy Beats for $3.2 billion|website=TG Daily|date=2014-05-09|year=2014|url=http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+
+    def test_tgd3(self):
+        """"Staff" in author name."""
+        i = 'http://www.tgdaily.com/space-features/82906-sma-reveals-giant-star-cluster-in-the-making'
+        o = urls.Citation(i)
+        e = u'* {{cite web|author=TG Daily Staff|title=SMA reveals giant star cluster in the making|website=TG Daily|date=2013-12-17|year=2013|url=http://www.tgdaily.com/space-features/82906-sma-reveals-giant-star-cluster-in-the-making|ref=harv|accessdate='
+        self.assertIn(e, o.cite)
+        
+
 class Others(unittest.TestCase):
 
     def test_oth1(self):
@@ -177,7 +202,7 @@ class Others(unittest.TestCase):
         o = urls.Citation(i)
         e = u'* {{cite web|last=Timmer|first=John|last2=Ford|first2=Matt|last3=Lee|first3=Chris|last4=Gitlin|first4=Jonathan|title=Diluting the scientific method:  Ars looks at homeopathy|website=Ars Technica|date=2007-09-12|year=2007|url=http://arstechnica.com/science/2007/09/the-pseudoscience-behind-homeopathy/|ref=harv|accessdate='
         self.assertIn(e, o.cite)
-        
 
+        
 if __name__ == '__main__':
     unittest.main()
