@@ -13,9 +13,9 @@ class BostonTest(unittest.TestCase):
 
     def test_bg1(self):
         """boston.com"""
-        i = 'http://www.boston.com/health/2014/06/02/companies-offer-health-plans-new-hampshire/GmmhqI6s4GmTlMWN3HBLnM/story.html'
+        i = 'http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html'
         o = urls.Citation(i)
-        e = u'* {{cite web|last=Ramer|first=Holly|title=5 companies to offer health plans in New Hampshire|website=Boston.com|date=2014-06-02|year=2014|url=http://www.boston.com/health/2014/06/02/companies-offer-health-plans-new-hampshire/GmmhqI6s4GmTlMWN3HBLnM/story.html|ref=harv|accessdate='
+        e = u'* {{cite web|last=Griffith|first=Bill|title=Hot Rod Stamps; Google on Road; A GM Prospectus|website=Boston.com|date=2014-06-29|year=2014|url=http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
     def test_bg2(self):
@@ -69,7 +69,7 @@ class DilyMirrorTest(unittest.TestCase):
         i = 'http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471'
         o = urls.Citation(i)
         e1 = u'{{sfn|Mirror.co.uk|2005}}'
-        e2 = u'* {{cite web|last=Mirror.co.uk|first=|title=WHALE DOOMED TO DIE|website=mirror|date=2005-09-15|year=2005|url=http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471|ref=harv|accessdate='
+        e2 = u'* {{cite web|author= Mirror.co.uk|title=WHALE DOOMED TO DIE|website=mirror|date=2005-09-15|year=2005|url=http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471|ref=harv|accessdate='
         self.assertIn(e1, o.ref)
         self.assertIn(e2, o.cite)
 
