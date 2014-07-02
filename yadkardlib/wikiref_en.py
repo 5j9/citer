@@ -20,7 +20,7 @@ def create(d):
     if 'year' in d:
         s += '|' + d['year']
     if 'pages' in d:
-        if u'–' in d['pages']:
+        if '–' in d['pages']:
             s += '|pp=' + d['pages']
         else:
             s += '|p=' + d['pages']

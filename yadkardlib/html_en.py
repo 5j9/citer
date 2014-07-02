@@ -8,7 +8,7 @@ from datetime import date
 
 
 today = date.today()
-skeleton = u"""<!DOCTYPE html>
+skeleton = """<!DOCTYPE html>
 <html>
     <head>
         <title>Yadkard</title>
@@ -121,9 +121,9 @@ skeleton = u"""<!DOCTYPE html>
              's': '%s'}
 
 default_response = (
-    u'Generated citation will appear here...',
+    'Generated citation will appear here...',
     '',
-    u'??')
+    '??')
 
 undefined_url_response = ('Undefined input.',
                       'Sorry, the input was not recognized. \
@@ -133,11 +133,11 @@ The error was logged.',
 httperror_response = ('HTTP error:',
                       'One or more of the web resources required to create \
 this citation are not accessible at this moment.',
-                      u'100')
+                      '100')
 
-other_exception_response = (u'An unknown error occurred.',
-                            u'The error was logged.',
-                            u'100')
+other_exception_response = ('An unknown error occurred.',
+                            'The error was logged.',
+                            '100')
 
 class ResposeObj():
 

@@ -19,7 +19,7 @@ def create(d, date_format):
     elif d['type'] == 'web':
         s = '* {{cite web'
     else:
-        raise KeyError, d['type'] + " is not a defined condition for d['type']"
+        raise KeyError(d['type'] + " is not a defined condition for d['type']")
 
     if 'authors' in d:
         s += names2para(d['authors'],
@@ -35,7 +35,7 @@ def create(d, date_format):
                           )
     if 'translators' in d:
         for translator in d['translators']:
-            translator.fullname += u' (مترجم)'
+            translator.fullname += ' (مترجم)'
         #todo: add a 'Translated by ' before name of translators
         if 'others' in d:
             d['others'].extend(d['translators'])
@@ -71,7 +71,7 @@ def create(d, date_format):
         s += '|pmid=' + d['pmid']
     if d['type'] in ['article', 'jour']:
         if 'pages' in d:
-            if u'–' in d['pages']:
+            if '–' in d['pages']:
                 s += '|pages=' + d['pages']
             else:
                 s += '|page=' + d['pages']

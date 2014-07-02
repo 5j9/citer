@@ -65,32 +65,32 @@ def url2dictionary(adinebook_url):
     except Exception:
         logger.exception(adinebook_url)
         return
-    if u'صفحه مورد نظر پبدا نشد.' in adinebook_html:
+    if 'صفحه مورد نظر پبدا نشد.' in adinebook_html:
         return
     else:
         d = {}
         d['type'] = 'book'
         bs = BS(adinebook_html)
         if bs.title:
-            pattern = u'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$'
+            pattern = 'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$'
             m = re.search(pattern, bs.title.text)
             if m:
                 d['title'] = m.group('title')
-        names = m.group('names').split(u'،')
+        names = m.group('names').split('،')
         #initiating name lists:
         if m.group('names'):
             d['authors'] = []
             d['others'] = []
-        if u'(ويراستار)' in m.group('names'):
+        if '(ويراستار)' in m.group('names'):
             d['editors'] = []
-        if u'(مترجم)' in m.group('names'):
+        if '(مترجم)' in m.group('names'):
             d['translators'] = []
         #building lists:
         for name in names:
-            if u'(ويراستار)' in name:
-                d['editors'].append(conv.Name(name.split(u'(ويراستار)')[0]))
-            elif u'(مترجم)' in name:
-                d['translators'].append(conv.Name(name.split(u'(مترجم)')[0]))
+            if '(ويراستار)' in name:
+                d['editors'].append(conv.Name(name.split('(ويراستار)')[0]))
+            elif '(مترجم)' in name:
+                d['translators'].append(conv.Name(name.split('(مترجم)')[0]))
             elif '(' in name:
                 d['others'].append(conv.Name(re.split('\(.*\)', name)[0]))
                 d['others'][-1].fullname = name
@@ -100,16 +100,16 @@ def url2dictionary(adinebook_url):
             del d['authors']
         if not d['others']:
             del d['others']
-        m = re.search(u'نشر:</b>\s*(.*?)\s*\(.*</li>', adinebook_html)
+        m = re.search('نشر:</b>\s*(.*?)\s*\(.*</li>', adinebook_html)
         if m:
             d['publisher'] = m.group(1)
-        m = re.search(u'نشر:</b>.*\([\d\s]*(.*?)،.*', adinebook_html)
+        m = re.search('نشر:</b>.*\([\d\s]*(.*?)،.*', adinebook_html)
         if m:
             d['month'] = m.group(1)
-        m = re.search(u'نشر:</b>.*?\(.*?(\d\d\d\d)\)</li>', adinebook_html)
+        m = re.search('نشر:</b>.*?\(.*?(\d\d\d\d)\)</li>', adinebook_html)
         if m:
             d['year'] = m.group(1)
-        m = re.search(u'شابک:.*?([\d-]*)</span></li>', adinebook_html)
+        m = re.search('شابک:.*?([\d-]*)</span></li>', adinebook_html)
         if m:
             d['isbn'] = m.group(1)       
     return d
