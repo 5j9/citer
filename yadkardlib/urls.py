@@ -143,6 +143,12 @@ def find_authors(soup):
     except Exception:
         pass
     try:
+        #http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
+        m = soup.find(class_='meta-author').text
+        return byline_to_names(m), 'class="meta-author"'
+    except Exception:
+        pass
+    try:
         #http://www.ensani.ir/fa/content/326173/default.aspx
         names = []
         for m in soup.find_all(class_='authorInline'):
@@ -236,11 +242,12 @@ def byline_to_names(byline):
     Names will be seperated either with " and " or ", ".
 
     specialwords = ('Reporter',
-                 'People',
-                 'Editor',
-                 'Correspondent',
-                 'Administrator',
-                 )
+                    'People',
+                    'Editor',
+                    'Correspondent',
+                    'Administrator',
+                    'Staff',
+                    )
 
     If any of the specialwords is found in a name. Then it will be omitted from
     the result, unless it is the only name available.
@@ -266,11 +273,12 @@ def byline_to_names(byline):
     fullnames = re.split(', and | and |, |;', byline, flags=re.I)
     names = []
     specialwords = ('Reporter',
-                 'People',
-                 'Editor',
-                 'Correspondent',
-                 'Administrator',
-                 )
+                    'People',
+                    'Editor',
+                    'Correspondent',
+                    'Administrator',
+                    'Staff',
+                    )
     for fullname in fullnames:
         if ' in ' in fullname:
             fullname = fullname.split(' in ')[0]
@@ -278,10 +286,12 @@ def byline_to_names(byline):
         if re.search('|'.join(specialwords), name.lastname, re.I):
             name.nofirst_fulllast()
         names.append(name)
-    if len(names) > 1:
-        for name in names:
-            if re.search('|'.join(specialwords), name.lastname, re.I):
-                names.remove(name)
+    #remove names containing special words or not having firstname (orgs)
+    for name in names:
+        if len(names) > 1 and \
+           (re.search('|'.join(specialwords), name.lastname, re.I) or \
+           not name.firstname):
+            names.remove(name)
     return names
 
 
@@ -597,6 +607,8 @@ def find_date(soup, url):
         ({'property': 'article:modified_time'}, 'getitem', 'content'),
         #http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
         ({'property': 'article:published_time'}, 'getitem', 'content'),
+        #http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
+        ({'property': 'dc:date dc:created'}, 'getitem', 'content'),
         #http://www.bbc.co.uk/news/science-environment-20890389
         ({'name': 'OriginalPublicationDate'}, 'getitem', 'content'),
         ({'name': 'publish-date'}, 'getitem', 'content'),
@@ -633,8 +645,13 @@ def find_date(soup, url):
     if not date:
         try:
             #https://www.bbc.com/news/uk-england-25462900
-            logger.info(u'Searching for date in soup.text.\r\n' + url)
             return conv.finddate(soup.text).strftime('%Y-%m-%d'), 'soup.text'
+        except Exception:
+            pass
+    if not date:
+        try:
+            logger.info(u'Searching for date in page content.\r\n' + url)
+            return conv.finddate(unicode(soup)).strftime('%Y-%m-%d'), 'soup.text'
         except Exception:
             pass
     return date, tag
