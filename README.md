@@ -1,9 +1,18 @@
 Yadkard
 =======
-
 A citation generator tool for Wikipedia. Currently accessible on:
 http://tools.wmflabs.org/yadkard/ (English version)
 
+Dependencies
+============
+Tested on 
+The following libraries are required:
+* requests (2.3.0)
+* beautifulsoup4 (4.3.2)
+* langid (1.1.4dev) (You can install Python 3 version using: pip install -e git+https://github.com/saffsd/langid.py.git@python3#egg=langid-dev-py3)
+
+Usage
+=====
 If running on local computer, the tool will be accessible on:
 http://127.0.0.1:8051/
 
