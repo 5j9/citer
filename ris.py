@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from .doi import doi_regex
+from doi import doi_regex
 
 import conv
 

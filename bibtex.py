@@ -3,7 +3,7 @@
 
 import re
 
-from . import conv
+import conv
 
 #Known issues: currently it does not detect special symbols and escapes
 #more information: http://www.bibtex.org/SpecialSymbols/

@@ -9,15 +9,15 @@ import xml.sax.saxutils as sax
 
 import langid
 
-from . import bibtex
-from . import config
+import bibtex
+import config
 
 if config.lang == 'en':
-    from . import wikiref_en as wikiref
-    from . import wikicite_en as wikicite
+    import wikiref_en as wikiref
+    import wikicite_en as wikicite
 else:
-    from . import wikiref_fa as wikiref
-    from . import wikicite_fa as wikicite
+    import wikiref_fa as wikiref
+    import wikicite_fa as wikicite
 
 
 #regex from:

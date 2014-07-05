@@ -7,9 +7,9 @@ import re
 
 import requests
 
-from . import bibtex
-from . import ris
-from . import config
+import bibtex
+import ris
+import config
 
 if config.lang == 'en':
     import wikiref_en  as wikiref
