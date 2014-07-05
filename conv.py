@@ -72,7 +72,7 @@ If no seperator is provided, ',' or ' ' will be used."""
         self.fullname = self.firstname + ' ' + self.lastname
 
     def __repr__(self):
-        return 'Name(' + self.fullname.encode('utf-8') + ')'
+        return 'Name(' + self.fullname + ')'
 
     def nofirst_fulllast(self):
         '''Change firstname to an empty string and assign fullname to lastname.
