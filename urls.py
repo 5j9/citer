@@ -184,13 +184,6 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        #http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
-        attrs = {'rel': 'author'}
-        m = soup.find(attrs=attrs).text
-        return byline_to_names(m), attrs
-    except Exception:
-        pass
-    try:
         m = soup.find(class_='byline').text
         return byline_to_names(m), "class_='byline'"
     except Exception:
@@ -223,6 +216,20 @@ def find_authors(soup):
     try:
         m = soup.find(class_='name').text
         return byline_to_names(m), "class_='name'"
+    except Exception:
+        pass
+    try:
+        #http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936
+        #try before {'rel': 'author'}
+        m = re.search('"author": "(.*?)"', str(soup)).group(1)
+        return byline_to_names(m), '"author": "(.*?)"'
+    except Exception:
+        pass
+    try:
+        #http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
+        attrs = {'rel': 'author'}
+        m = soup.find(attrs=attrs).text
+        return byline_to_names(m), attrs
     except Exception:
         pass
     try:
@@ -261,7 +268,7 @@ def byline_to_names(byline):
      Middle East correspondent')
     [Name(Erika Solomon), Name(Borzou Daragahi)]
     '''
-    for c in '|:':
+    for c in '|:+':
         if c in byline:
             raise InvalidByLineError('Invalid character ("%s") in byline.' %c)
     if re.search('\d\d\d\d', byline):
