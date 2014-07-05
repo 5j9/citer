@@ -1,4 +1,4 @@
-#!/data/project/yadkard/venv/bin/python3.2
+#!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
 """Discover all tests and run them."""

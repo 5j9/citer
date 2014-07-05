@@ -1,4 +1,4 @@
-#!/data/project/yadkard/venv/bin/python3.2
+#!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
 """Codes used for parsing contents of an arbitrary URL."""
