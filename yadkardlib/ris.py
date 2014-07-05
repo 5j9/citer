@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from doi import doi_regex
+from .doi import doi_regex
 
 import conv
 
@@ -64,7 +64,7 @@ def parse(ris_text):
     m = re.search('EP  - (.*)', ris_text)
     if m:
         d['endpage'] = m.group(1).strip()
-        d['pages'] = d['startpage'] + u'–' + d['endpage']
+        d['pages'] = d['startpage'] + '–' + d['endpage']
     m = re.search('UR  - (.*)', ris_text)
     if m:
         #in IRS, url can be seprated using a ";"

@@ -4,20 +4,20 @@
 """Codes specifically related to DOI inputs."""
 
 import re
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import xml.sax.saxutils as sax
 
 import langid
 
-import bibtex
-import config
+from . import bibtex
+from . import config
 
 if config.lang == 'en':
-    import wikiref_en as wikiref
-    import wikicite_en as wikicite
+    from . import wikiref_en as wikiref
+    from . import wikicite_en as wikicite
 else:
-    import wikiref_fa as wikiref
-    import wikicite_fa as wikicite
+    from . import wikiref_fa as wikiref
+    from . import wikicite_fa as wikicite
 
 
 #regex from:
@@ -57,8 +57,8 @@ class Citation():
 
 def get_bibtex(doi_url):
     """Get BibTex file content from a DOI URL. Return as string."""
-    req = urllib2.Request(doi_url)
+    req = urllib.request.Request(doi_url)
     req.add_header('Accept', 'application/x-bibtex')
-    bibtex = urllib2.urlopen(req).read().decode('utf8')
+    bibtex = urllib.request.urlopen(req).read().decode('utf8')
     return bibtex
 

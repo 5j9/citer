@@ -3,8 +3,8 @@
 
 import logging
 import logging.handlers
-import urllib2
-import urlparse
+import urllib.request, urllib.error, urllib.parse
+import urllib.parse
 from cgi import escape
 
 try:
@@ -40,7 +40,7 @@ def mylogger():
 
 
 def application(environ, start_response):
-    qdict = urlparse.parse_qs(environ['QUERY_STRING'])
+    qdict = urllib.parse.parse_qs(environ['QUERY_STRING'])
     user_input = qdict.get('user_input', [''])[0].decode('utf8')
     #cgi.escape() was causing unexpected behaviour
     user_input = user_input.strip()
@@ -50,7 +50,7 @@ def application(environ, start_response):
         url = 'http://' + user_input
     else:
         url = user_input
-    netloc = urlparse.urlparse(url)[1]
+    netloc = urllib.parse.urlparse(url)[1]
     try:
         obj = None
         if not user_input:
@@ -90,11 +90,11 @@ def application(environ, start_response):
         if not obj:
             #All the above cases have been unsuccessful
             obj = html.ResposeObj(*html.undefined_url_response)
-            logger.info(u'There was an undefined_url_response\r\n' + url)
+            logger.info('There was an undefined_url_response\r\n' + url)
         response_body = html.skeleton % (obj.ref,
                                         obj.cite,
                                         obj.error)
-    except (urllib2.HTTPError, requests.ConnectionError):
+    except (urllib.error.HTTPError, requests.ConnectionError):
         logger.exception(url)
         response_body = html.skeleton % html.httperror_response
     except Exception:

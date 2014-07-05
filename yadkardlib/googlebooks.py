@@ -4,9 +4,9 @@
 """All things specifically related to the Google Books website."""
 
 import re
-import urllib2
-from urlparse import parse_qs
-from urlparse import urlparse
+import urllib.request, urllib.error, urllib.parse
+from urllib.parse import parse_qs
+from urllib.parse import urlparse
 
 import langid
 
@@ -61,7 +61,7 @@ def get_bibtex(googlebook_url):
     url = 'http://books.google.com/books/download/?id=' +\
       bookid + '&output=bibtex'
     #Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    opener = urllib2.build_opener()
+    opener = urllib.request.build_opener()
     opener.addheaders = [('User-agent',
                           'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
                           ' Gecko/20100101 Firefox/24.0')]
@@ -77,7 +77,7 @@ def get_ris(googlebook_url):
     url = 'http://books.google.com/books/download/?id=' +\
       bookid + '&output=ris'
     #Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    opener = urllib2.build_opener()
+    opener = urllib.request.build_opener()
     opener.addheaders = [('User-agent',
                           'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
                           ' Gecko/20100101 Firefox/24.0')]

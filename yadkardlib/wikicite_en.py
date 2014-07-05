@@ -6,8 +6,8 @@
 
 from datetime import date
 
-import conv
-import wikiref_en as wikiref
+from . import conv
+from . import wikiref_en as wikiref
 
 
 def create(d, date_format):

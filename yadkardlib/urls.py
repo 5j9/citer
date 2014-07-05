@@ -5,7 +5,7 @@
 
 
 import re
-from urlparse import urlparse
+from urllib.parse import urlparse
 import logging
 import difflib
 from threading import Thread
@@ -345,7 +345,7 @@ def find_pages(soup):
         #http://socialhistory.ihcs.ac.ir/article_319_84.html
         fp = soup.find(attrs={'name': 'citation_firstpage'})['content'].strip()
         lp = soup.find(attrs={'name': 'citation_lastpage'})['content'].strip()
-        return fp + u'–' + lp
+        return fp + '–' + lp
     except Exception:
         pass
 
@@ -401,7 +401,7 @@ Returns site's name as a string.
     try:
         #using hometitle
         thread.join()
-        sep_regex = u' - | — | \| |:'
+        sep_regex = ' - | — | \| |:'
         sitename = re.split(sep_regex, hometitle_list[0])[0]
         if sitename:
             return sitename, 'hometitle'
@@ -512,7 +512,7 @@ Examples:
 (None, "Health - New teeth 'could soon be grown'", 'BBC NEWS')
 '''
     intitle_author = intitle_sitename = None
-    sep_regex = u' - | — | \| '
+    sep_regex = ' - | — | \| '
     title_parts = re.split(sep_regex, title.strip())
     if len(title_parts) == 1:
         return (None, title, None)
@@ -650,8 +650,8 @@ def find_date(soup, url):
             pass
     if not date:
         try:
-            logger.info(u'Searching for date in page content.\r\n' + url)
-            return conv.finddate(unicode(soup)).strftime('%Y-%m-%d'), 'soup.text'
+            logger.info('Searching for date in page content.\r\n' + url)
+            return conv.finddate(str(soup)).strftime('%Y-%m-%d'), 'soup.text'
         except Exception:
             pass
     return date, tag
