@@ -13,12 +13,12 @@ except ImportError:
     from wsgiref.simple_server import make_server
 import requests
 
-from yadkardlib import noormags, googlebooks, noorlib, adinebook, urls
-from yadkardlib import doi, isbn, conv, config
+import noormags, googlebooks, noorlib, adinebook, urls
+import doi, isbn, conv, config
 if config.lang == 'en':
-    from yadkardlib import html_en as html
+    import html_en as html
 else:
-    from yadkardlib import html_fa as html
+    import html_fa as html
 
 
 def mylogger():
@@ -41,10 +41,10 @@ def mylogger():
 
 def application(environ, start_response):
     qdict = urllib.parse.parse_qs(environ['QUERY_STRING'])
-    user_input = qdict.get('user_input', [''])[0].decode('utf8')
+    user_input = qdict.get('user_input', [''])[0]
     #cgi.escape() was causing unexpected behaviour
     user_input = user_input.strip()
-    date_format = qdict.get('dateformat', [''])[0].decode('utf8')
+    date_format = qdict.get('dateformat', [''])[0]
     date_format = escape(date_format).strip()
     if not user_input.startswith('http'):
         url = 'http://' + user_input
@@ -107,7 +107,7 @@ def application(environ, start_response):
                         ]
     start_response(status, response_headers)
 
-    return [response_body.encode('utf-8')]
+    return [response_body.encode()]
 
 logger = mylogger()
 logging.getLogger("requests").setLevel(logging.WARNING)
