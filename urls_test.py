@@ -203,6 +203,13 @@ class Others(unittest.TestCase):
         e = '* {{cite web|last=Timmer|first=John|last2=Ford|first2=Matt|last3=Lee|first3=Chris|last4=Gitlin|first4=Jonathan|title=Diluting the scientific method:  Ars looks at homeopathy|website=Ars Technica|date=2007-09-12|year=2007|url=http://arstechnica.com/science/2007/09/the-pseudoscience-behind-homeopathy/|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
+    def test_oth4(self):
+        """rel="author" tag contains invalid information."""
+        i = 'http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936'
+        o = urls.Citation(i)
+        e = "* {{cite web|last=Ghose|first=Tia|title='Revolutionary' Physics: Do Sterile Neutrinos Lurk in the Universe?|website=LiveScience.com|date=2014-07-02|year=2014|url=http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html|ref=harv|accessdate="
+        self.assertIn(e, o.cite)
+
         
 if __name__ == '__main__':
     unittest.main()
