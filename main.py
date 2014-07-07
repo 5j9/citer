@@ -3,7 +3,6 @@
 
 import logging
 import logging.handlers
-import urllib.request, urllib.error, urllib.parse
 import urllib.parse
 from cgi import escape
 
@@ -94,7 +93,7 @@ def application(environ, start_response):
         response_body = html.skeleton % (obj.ref,
                                         obj.cite,
                                         obj.error)
-    except (urllib.error.HTTPError, requests.ConnectionError):
+    except (requests.ConnectionError):
         logger.exception(url)
         response_body = html.skeleton % html.httperror_response
     except Exception:
