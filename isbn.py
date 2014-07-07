@@ -4,7 +4,8 @@
 """Codes specifically related to ISBNs."""
 
 import re
-import urllib.request, urllib.error, urllib.parse
+
+import requests
 
 import commons
 import bibtex
@@ -69,7 +70,7 @@ class Citation():
         if 'language' in self.dictionary:
             self.error = 0
         else:
-            lang, err = commons.lang_detect(self.dictionary['title'])
+            lang, err = commons.detect_lang(self.dictionary['title'])
             self.dictionary['language'] = lang
             self.dictionary['error'] = self.error = err
         self.ref = wikiref.create(self.dictionary)
@@ -109,7 +110,7 @@ def isbn2int(isbn):
 def ottobib(isbn):
     """Convert ISBN to bibtex using ottobib.com."""
     ottobib_url = 'http://www.ottobib.com/isbn/' + isbn + '/bibtex'
-    ottobib_html = urllib.request.urlopen(ottobib_url).read().decode('utf8')
+    ottobib_html = requests.get(ottobib_url).text
     m = re.search('<textarea.*>(.*)</textarea>', ottobib_html, re.DOTALL)
     bibtex = m.group(1)
     return bibtex
