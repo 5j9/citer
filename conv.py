@@ -1,9 +1,7 @@
 #!/data/project/yadkard/venv/bin/python
 # -*- coding: utf-8 -*-
 
-'''
-Common variables, functions, and classes used in string conversions.
-'''
+"""Common variables, functions, and classes used in string conversions, etc."""
 
 from datetime import datetime
 import re
@@ -16,23 +14,36 @@ B = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
     'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
 #Month abbreviations:
 b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
+#Month numbers 0?1-12
+m = r'(0?[1-9]|1[012])'
+#Zero padded month numbers 01-12
+zm = r'(0?[1-9]|1[012])'
+#Day (0?1-31)
+d = r'(0?[1-9]|[12][0-9]|3[01])'
+#Zero-padded day (01-31)
+zd = r'(0?[1-9]|[12][0-9]|3[01])'
+#Gregorian year pattern 1900-2099
+Y = r'(19|20)\d\d'
+
+#common date seperators
+sep = '[ -/]'
 
 #July 3, 2001
-BdY = B + ' \d\d?, \d\d\d\d'
+BdY = re.compile(B + ' ' + d + ', ' + Y)
 #Aug 22, 2001
-bdY = b + ' \d\d?, \d\d\d\d'
+bdY = re.compile(b + ' ' + d + ', ' + Y)
 
 #22 August 2001
-dBY = '\d\d? ' + B + ' \d\d\d\d'
+dBY = re.compile(d + sep + B + sep + Y)
 #22 Aug 2001
-dbY = '\d\d? ' + b + ' \d\d\d\d'
+dbY = re.compile(d + sep + b + sep + Y)
 
 #1900-01-01,2099-12-31
-Ymd_dashed = r'(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])'
-#1900/01/01, 2099/12/31
-Ymd_slashed = r'(19|20)\d\d/(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])'
+Ymd_dashed = re.compile(Y + '-'  + zm + '-' + zd)
+#1900/01/01, 2099/12/31, 2099 12 31
+Ymd_slashed = re.compile(Y + sep + zm + sep + zd)
 #19000101, 20991231
-Ymd = r'(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])'
+Ymd = re.compile(Y + m + d)
 
 
 class InvalidNameError(Exception):
