@@ -225,3 +225,11 @@ Examples:
         return date.strftime(format_)
     return string
 
+
+def dict_cleanup(dictionary):
+    """Remove all empty values from the given dict. Return another dict."""
+    d = {}
+    for key in dictionary:
+        if dictionary[key]:
+            d[key] = dictionary[key]
+    return d
