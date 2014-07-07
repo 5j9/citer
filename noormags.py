@@ -40,18 +40,18 @@ class Citation():
         
 def get_bibtex(noormags_url):
     """Get bibtex file content from a noormags_url. Return as string."""
-    pagetext = requests.get(noormags_url).content
+    pagetext = requests.get(noormags_url).text
     article_id = re.search('BibTex&id=(\d+)', pagetext).group(1)
     url = 'http://www.noormags.com/view/CitationHandler.ashx?' +\
           'format=BibTex&id=' + article_id
-    bibtex = requests.get(url).content.decode('utf-8')
+    bibtex = requests.get(url).text
     return bibtex
 
 def get_ris(noormags_url):
     """Get ris file content from a noormags url. Return as string."""
-    pagetext = requests.get(noormags_url).content
+    pagetext = requests.get(noormags_url).text
     article_id = re.search('RIS&id=(\d+)', pagetext).group(1)
     url = 'http://www.noormags.com/view/CitationHandler.ashx?' +\
           'format=RIS&id=' + article_id
-    ris = requests.get(url).content.decode('utf-8')
+    ris = requests.get(url).text
     return ris
