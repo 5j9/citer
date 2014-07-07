@@ -17,16 +17,14 @@ b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
 #Month numbers 0?1-12
 m = r'(0?[1-9]|1[012])'
 #Zero padded month numbers 01-12
-zm = r'(0?[1-9]|1[012])'
+zm = r'(0[1-9]|1[012])'
 #Day (0?1-31)
 d = r'(0?[1-9]|[12][0-9]|3[01])'
 #Zero-padded day (01-31)
-zd = r'(0?[1-9]|[12][0-9]|3[01])'
+zd = r'(0[1-9]|[12][0-9]|3[01])'
 #Gregorian year pattern 1900-2099
 Y = r'(19|20)\d\d'
 
-#common date seperators
-sep = '[ -/]'
 
 #July 3, 2001
 BdY = re.compile(B + ' ' + d + ', ' + Y)
@@ -34,16 +32,16 @@ BdY = re.compile(B + ' ' + d + ', ' + Y)
 bdY = re.compile(b + ' ' + d + ', ' + Y)
 
 #22 August 2001
-dBY = re.compile(d + sep + B + sep + Y)
+dBY = re.compile(d + ' ' + B + ' ' + Y)
 #22 Aug 2001
-dbY = re.compile(d + sep + b + sep + Y)
+dbY = re.compile(d + ' ' + b + ' ' + Y)
 
 #1900-01-01,2099-12-31
 Ymd_dashed = re.compile(Y + '-'  + zm + '-' + zd)
 #1900/01/01, 2099/12/31, 2099 12 31
-Ymd_slashed = re.compile(Y + sep + zm + sep + zd)
+Ymd_slashed = re.compile(Y + '/' + zm + '/' + zd)
 #19000101, 20991231
-Ymd = re.compile(Y + m + d)
+Ymd = re.compile(Y + zm + zd)
 
 
 class InvalidNameError(Exception):
