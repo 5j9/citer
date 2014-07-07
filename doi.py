@@ -4,8 +4,9 @@
 """Codes specifically related to DOI inputs."""
 
 import re
-import urllib.request, urllib.error, urllib.parse
 import xml.sax.saxutils as sax
+
+import requests
 
 import commons
 import bibtex
@@ -54,8 +55,7 @@ class Citation():
 
 def get_bibtex(doi_url):
     """Get BibTex file content from a DOI URL. Return as string."""
-    req = urllib.request.Request(doi_url)
-    req.add_header('Accept', 'application/x-bibtex')
-    bibtex = urllib.request.urlopen(req).read().decode('utf8')
+    r = requests.get(doi_url, headers = {'Accept': 'application/x-bibtex'})
+    bibtex = r.text
     return bibtex
 
