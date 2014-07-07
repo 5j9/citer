@@ -20,10 +20,10 @@ class DoiTest(unittest.TestCase):
     def test_doi2(self):
         '''DOI with unsafe characters (<>)
 
-Warning: this test fials a lot due to "HTTPError: HTTP Error 500: Internal
-Server Error". Also be aware that there was an &amp; entity which was manually substitute in
-expected output
-'''
+        Warning: this test fials a lot due to "HTTPError: HTTP Error 500:
+        Internal Server Error". Also be aware that there was an &amp; entity
+        which was manually substituted in the expected output.
+        '''
         i = '10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5'
         o = doi.Citation(i, pure = True)
         e = "* {{cite journal|last=Dian|first=Noor Lida Habi Mat|last2=Sudin|first2=Nor'aini|last3=Yusoff|first3=Mohd Suria Affandi|title=Characteristics of Microencapsulated Palm-Based Oil as Affected by Type of Wall Material|journal=Journal of the Science of Food and Agriculture|publisher=Wiley-Blackwell|volume=70|issue=4|pages=422\u2013426|url=http://dx.doi.org/10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|doi=10.1002/(sici)1097-0010(199604)70:4<422::aid-jsfa514>3.0.co;2-5|ref=harv|accessdate="
