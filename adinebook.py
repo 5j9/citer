@@ -10,7 +10,7 @@ import langid
 import requests
 from bs4 import BeautifulSoup as BS
 
-import conv
+import commons
 import isbn
 import config
 
@@ -88,14 +88,14 @@ def url2dictionary(adinebook_url):
         #building lists:
         for name in names:
             if '(ويراستار)' in name:
-                d['editors'].append(conv.Name(name.split('(ويراستار)')[0]))
+                d['editors'].append(commons.Name(name.split('(ويراستار)')[0]))
             elif '(مترجم)' in name:
-                d['translators'].append(conv.Name(name.split('(مترجم)')[0]))
+                d['translators'].append(commons.Name(name.split('(مترجم)')[0]))
             elif '(' in name:
-                d['others'].append(conv.Name(re.split('\(.*\)', name)[0]))
+                d['others'].append(commons.Name(re.split('\(.*\)', name)[0]))
                 d['others'][-1].fullname = name
             else:
-                d['authors'].append(conv.Name(name))
+                d['authors'].append(commons.Name(name))
         if not d['authors']:
             del d['authors']
         if not d['others']:

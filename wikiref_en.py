@@ -4,12 +4,12 @@
 """Create the {{sfn}} using the create() in this module."""
 
 
-import conv
+import commons
 
 
 def create(d):
     """Creates citation based on the given dictionary"""
-    d = conv.dict_cleanup(d)
+    d = commons.dict_cleanup(d)
     s = '{{sfn'
     if 'authors' in d:
         c = 0

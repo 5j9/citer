@@ -14,7 +14,7 @@ import requests
 import bs4
 
 
-import conv
+import commons
 import config
 
 if config.lang == 'en':
@@ -103,9 +103,9 @@ def find_authors(soup):
             ss = a['content'].split(' and ')
             for s in ss:
                 try:
-                    name = conv.Name(s)
+                    name = commons.Name(s)
                     authors.append(name)
-                except conv.InvalidNameError:
+                except commons.InvalidNameError:
                     continue
         if not authors:
             raise Exception('"authors" remained an empty list.')
@@ -289,7 +289,7 @@ def byline_to_names(byline):
     for fullname in fullnames:
         if ' in ' in fullname:
             fullname = fullname.split(' in ')[0]
-        name = conv.Name(fullname)
+        name = commons.Name(fullname)
         if re.search('|'.join(specialwords), name.lastname, re.I):
             name.nofirst_fulllast()
         names.append(name)
@@ -586,10 +586,10 @@ def try_find_date(soup, find_parameters):
             m = soup.find(attrs=attrs)
             if fp[1] == 'getitem':
                 string = m[fp[2]].strip()
-                return conv.finddate(string).strftime('%Y-%m-%d'), attrs
+                return commons.finddate(string).strftime('%Y-%m-%d'), attrs
             elif fp[1] == 'getattr':
                 string = getattr(m, fp[2]).strip()
-                return conv.finddate(string).strftime('%Y-%m-%d'), attrs
+                return commons.finddate(string).strftime('%Y-%m-%d'), attrs
         except Exception:
             pass
     return None, None
@@ -646,19 +646,19 @@ def find_date(soup, url):
     if not date:
         try:
             #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-            date, tag = conv.finddate(url).strftime('%Y-%m-%d'), 'url'
+            date, tag = commons.finddate(url).strftime('%Y-%m-%d'), 'url'
         except Exception:
             pass
     if not date:
         try:
             #https://www.bbc.com/news/uk-england-25462900
-            return conv.finddate(soup.text).strftime('%Y-%m-%d'), 'soup.text'
+            return commons.finddate(soup.text).strftime('%Y-%m-%d'), 'soup.text'
         except Exception:
             pass
     if not date:
         try:
             logger.info('Searching for date in page content.\r\n' + url)
-            return conv.finddate(str(soup)).strftime('%Y-%m-%d'), 'soup.text'
+            return commons.finddate(str(soup)).strftime('%Y-%m-%d'), 'soup.text'
         except Exception:
             pass
     return date, tag

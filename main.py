@@ -14,7 +14,7 @@ except ImportError:
 import requests
 
 import noormags, googlebooks, noorlib, adinebook, urls
-import doi, isbn, conv, config
+import doi, isbn, commons, config
 if config.lang == 'en':
     import html_en as html
 else:
@@ -66,7 +66,7 @@ def application(environ, start_response):
             obj = adinebook.Citation(url, date_format)
         if not obj:
             #DOI and ISBN check
-            en_url = conv.fanum2en(url)
+            en_url = commons.fanum2en(url)
             try:
                 m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
                 if m:

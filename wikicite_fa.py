@@ -5,7 +5,7 @@
 
 from datetime import date
 
-import conv
+import commons
 
 def create(d):
     """Creates citation based on the given dictionary"""   
@@ -75,9 +75,9 @@ appended to citation string'''
             s += '|' + ln_parameter + '=' + name.lastname
             s += '|' + fn_parameter + '=' + name.firstname
         else:
-            s += '|' + ln_parameter + conv.ennum2fa(c) + '=' +\
+            s += '|' + ln_parameter + commons.ennum2fa(c) + '=' +\
                  name.lastname
-            s += '|' + fn_parameter + conv.ennum2fa(c) + '=' +\
+            s += '|' + fn_parameter + commons.ennum2fa(c) + '=' +\
                  name.firstname
     return s
             

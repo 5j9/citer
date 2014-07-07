@@ -6,13 +6,13 @@
 
 from datetime import date
 
-import conv
+import commons
 import wikiref_en as wikiref
 
 
 def create(d, date_format):
     """Create citation based on the given dictionary."""
-    d = conv.dict_cleanup(d)
+    d = commons.dict_cleanup(d)
     if d['type'] == 'book':
         s = '* {{cite book'
     elif d['type'] in ['article', 'jour']:
@@ -61,7 +61,7 @@ def create(d, date_format):
     if 'issue' in d:
         s += '|issue=' + d['issue']
     if 'date' in d:
-        s += '|date=' + conv.chdateformat(d['date'], date_format)
+        s += '|date=' + commons.chdateformat(d['date'], date_format)
     if 'year' in d:
         s += '|year=' + d['year']
     if 'isbn' in d:

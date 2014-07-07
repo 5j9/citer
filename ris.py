@@ -4,7 +4,7 @@
 import re
 from doi import doi_regex
 
-import conv
+import commons
 
 def parse(ris_text):
     """Parse RIS_text data and return the result as a dictionary."""
@@ -19,7 +19,7 @@ def parse(ris_text):
     if m:
         d['authors'] = []
         for match in m:
-            name = conv.Name(match[1])
+            name = commons.Name(match[1])
             d['authors'].append(name)
             
     m = re.search('(T1|TI)  - (.*)', ris_text)
