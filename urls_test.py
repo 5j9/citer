@@ -69,7 +69,7 @@ class DilyMirrorTest(unittest.TestCase):
         i = 'http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471'
         o = urls.Citation(i)
         e1 = '{{sfn|Mirror.co.uk|2005}}'
-        e2 = '* {{cite web|author= Mirror.co.uk|title=WHALE DOOMED TO DIE|website=mirror|date=2005-09-15|year=2005|url=http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471|ref=harv|accessdate='
+        e2 = '* {{cite web|author=Mirror.co.uk|title=WHALE DOOMED TO DIE|website=mirror|date=2005-09-15|year=2005|url=http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471|ref=harv|accessdate='
         self.assertIn(e1, o.ref)
         self.assertIn(e2, o.cite)
 
@@ -186,7 +186,7 @@ class Others(unittest.TestCase):
         """Get title by hometitle comparison."""
         i = 'http://www.ensani.ir/fa/content/326173/default.aspx'
         o = urls.Citation(i)
-        e = '* {{cite web|last=جلیلیان|first=شهرام|last2=نیا|first2=امیر علی|title=ورود کاسی ها به میان رودان و پیامدهای آن|website=پرتال جامع علوم انسانی|date=2014-05-20|year=2014|url=http://www.ensani.ir/fa/content/326173/default.aspx|ref=harv|accessdate='
+        e = '* {{cite web|last=جلیلیان|first=شهرام|last2=نیا|first2=امیر علی|title=ورود کاسی ها به میان رودان و پیامدهای آن|website=پرتال جامع علوم انسانی|date=2014-05-20|year=2014|url=http://www.ensani.ir/fa/content/326173/default.aspx|language=fa|ref=harv|accessdate='
         self.assertIn(e, o.cite)
 
     def test_oth2(self):
