@@ -85,7 +85,9 @@ def find_url(soup, url):
     """Get a BeautifulSoup object it's url. Return og:url or url as a string."""
     try:
         #http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
-        return soup.find(attrs={'property': 'og:url'})['content']
+        ogurl = soup.find(attrs={'property': 'og:url'})['content']
+        if urlparse(ogurl).path:
+            return ogurl
     except Exception:
         pass
     return url
