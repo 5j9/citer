@@ -4,14 +4,14 @@
 """All things specifically related to the Google Books website."""
 
 import re
-import urllib.request, urllib.error, urllib.parse
 from urllib.parse import parse_qs
 from urllib.parse import urlparse
+
+import requests
 
 #import bibtex [1]
 import ris
 import config
-
 import commons
 if config.lang == 'en':
     import wikiref_en as wikiref
@@ -60,11 +60,9 @@ def get_bibtex(googlebook_url):
     url = 'http://books.google.com/books/download/?id=' +\
       bookid + '&output=bibtex'
     #Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    opener = urllib.request.build_opener()
-    opener.addheaders = [('User-agent',
-                          'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
-                          ' Gecko/20100101 Firefox/24.0')]
-    bibtex = opener.open(url).read().decode('utf8')
+    headers = {'User-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
+               ' Gecko/20100101 Firefox/24.0'}
+    bibtex = requests.get(url, headers=headers).text
     return bibtex
 
 def get_ris(googlebook_url):
@@ -76,9 +74,7 @@ def get_ris(googlebook_url):
     url = 'http://books.google.com/books/download/?id=' +\
       bookid + '&output=ris'
     #Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    opener = urllib.request.build_opener()
-    opener.addheaders = [('User-agent',
-                          'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
-                          ' Gecko/20100101 Firefox/24.0')]
-    ris = opener.open(url).read().decode('utf8')
+    headers = {'User-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
+           ' Gecko/20100101 Firefox/24.0'}
+    ris = requests.get(url, headers=headers).text
     return ris
