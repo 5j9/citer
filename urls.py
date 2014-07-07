@@ -742,12 +742,7 @@ def url2dictionary(url):
         logger.debug('Date tag: ' + str(tag))
         d['date'] = date
         d['year'] = d['date'][:4]
-    #Remove all empty keys
-    dictionary = {}
-    for key in d:
-        if d[key]:
-            dictionary[key] = d[key]
-    return dictionary
+    return d
 
 
 if __name__ == '__main__':
