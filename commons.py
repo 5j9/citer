@@ -78,7 +78,10 @@ If no seperator is provided, ',' or ' ' will be used."""
             #Remember "Jennifer 8. Lee"
             raise NumberInNameError('The name contains a two-digit number.')
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
-        self.fullname = self.firstname + ' ' + self.lastname
+        if self.firstname:
+            self.fullname = self.firstname + ' ' + self.lastname
+        else:
+            self.fullname = self.lastname
 
     def __repr__(self):
         return 'Name(' + self.fullname + ')'
