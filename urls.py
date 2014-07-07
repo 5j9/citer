@@ -744,6 +744,7 @@ def url2dictionary(url):
         logger.debug('Date tag: ' + str(tag))
         d['date'] = date
         d['year'] = d['date'][:4]
+    d['language'], d['error'] = commons.detect_lang(soup.text)
     return d
 
 

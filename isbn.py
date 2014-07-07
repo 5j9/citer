@@ -6,8 +6,7 @@
 import re
 import urllib.request, urllib.error, urllib.parse
 
-import langid
-
+import commons
 import bibtex
 import adinebook
 import config
@@ -70,9 +69,9 @@ class Citation():
         if 'language' in self.dictionary:
             self.error = 0
         else:
-            self.dictionary['language'], self.dictionary['error'] =\
-                                     langid.classify(self.dictionary['title'])
-            self.error = round((1 - self.dictionary['error']) * 100, 2)
+            lang, err = commons.lang_detect(self.dictionary['title'])
+            self.dictionary['language'] = lang
+            self.dictionary['error'] = self.error = err
         self.ref = wikiref.create(self.dictionary)
         self.cite = wikicite.create(self.dictionary, date_format)
 

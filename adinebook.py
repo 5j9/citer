@@ -6,7 +6,6 @@
 import re
 import logging
 
-import langid
 import requests
 from bs4 import BeautifulSoup as BS
 
@@ -32,11 +31,11 @@ class Citation():
             self.error = 0
         else:
             #assume that language is either fa or en
-            #todo: give warning about this
-            langid.set_languages(['en','fa'])
-            self.dictionary['language'], confidence =\
-                                     langid.classify(self.dictionary['title'])
-            self.error = round((1 - confidence) * 100, 2)
+            #todo: give warning about this assumption
+            lang, err = commons.detect_lang(self.dictionary['title'],
+                                            ['en','fa'])
+            self.dictionary['language'] = lang
+            self.error = self.dictionary['error'] = err
         self.ref = wikiref.create(self.dictionary)
         self.cite = wikicite.create(self.dictionary, date_format)
 

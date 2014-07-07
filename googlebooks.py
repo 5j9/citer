@@ -8,12 +8,11 @@ import urllib.request, urllib.error, urllib.parse
 from urllib.parse import parse_qs
 from urllib.parse import urlparse
 
-import langid
-
 #import bibtex [1]
 import ris
 import config
 
+import commons
 if config.lang == 'en':
     import wikiref_en as wikiref
     import wikicite_en as wikicite
@@ -45,9 +44,9 @@ class Citation():
         if 'language' in self.dictionary:
             self.error = 0
         else:
-            self.dictionary['language'], self.dictionary['error'] =\
-                                     langid.classify(self.dictionary['title'])
-            self.error = round((1 - self.dictionary['error']) * 100, 2)
+            lang, err = commons.detect_lang(self.dictionary['title'])
+            self.dictionary['language'] = lang
+            self.dictionary['error'] = self.error = err
         self.ref = wikiref.create(self.dictionary)
         self.cite = wikicite.create(self.dictionary, date_format)
 

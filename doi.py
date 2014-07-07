@@ -7,11 +7,9 @@ import re
 import urllib.request, urllib.error, urllib.parse
 import xml.sax.saxutils as sax
 
-import langid
-
+import commons
 import bibtex
 import config
-
 if config.lang == 'en':
     import wikiref_en as wikiref
     import wikicite_en as wikicite
@@ -45,10 +43,9 @@ class Citation():
             self.error = 0
         else:
             if 'title' in self.dictionary:
-                self.dictionary['language'], self.dictionary['error'] =\
-                                             langid.classify(
-                                                 self.dictionary['title'])
-                self.error = round((1 - self.dictionary['error']) * 100, 2)
+                lang, err = commons.detect_lang(self.dictionary['title'])
+                self.dictionary['language'] = lang
+                self.error = self.dictionary['error'] = err
             else:
                 self.error = 100
         self.ref = wikiref.create(self.dictionary)

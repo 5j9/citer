@@ -6,6 +6,8 @@
 from datetime import datetime
 import re
 
+import langid
+
 
 #Date patterns:
 
@@ -68,7 +70,8 @@ class Name():
 
     """Take a fullname and its' seperator. Convert it to a Name object.
 
-If no seperator is provided, ',' or ' ' will be used."""
+    If no seperator is provided, ',' or ' ' will be used.
+    """
 
     def __init__(self, fullname, seperator=None):
         """Create appropriate firstname, lastname and fullname properties."""
@@ -89,8 +92,8 @@ If no seperator is provided, ',' or ' ' will be used."""
     def nofirst_fulllast(self):
         '''Change firstname to an empty string and assign fullname to lastname.
 
-Use this method for corporate authors.
-'''
+        Use this method for corporate authors.
+        '''
         self.lastname = self.fullname
         self.firstname = ''
 
@@ -98,20 +101,20 @@ Use this method for corporate authors.
 def firstname_lastname(fullname, seperator):
     '''Return firstname and lastname as a tuple.
 
-Add Jr.|Sr. suffix to first name.
-Usually not used directly, called from Name() class.
+    Add Jr.|Sr. suffix to first name.
+    Usually not used directly, called from Name() class.
 
-Examples:
+    Examples:
 
->>> firstname_lastname('JAMES C. MCKINLEY Jr.', None)
-('James C. Jr.', 'McKinley')
+    >>> firstname_lastname('JAMES C. MCKINLEY Jr.', None)
+    ('James C. Jr.', 'McKinley')
 
->>> firstname_lastname('DeBolt, V.', ',')
-('V.', 'DeBolt')
+    >>> firstname_lastname('DeBolt, V.', ',')
+    ('V.', 'DeBolt')
 
->>> firstname_lastname('BBC', None)
-('', 'BBC')
-'''
+    >>> firstname_lastname('BBC', None)
+    ('', 'BBC')
+    '''
     fullname = fullname.strip()
     m = re.search(' (Jr\.|Sr\.)$', fullname, re.I)
     if m:
@@ -190,10 +193,10 @@ def famonth2num(string):
     return string
 
 def finddate(string):
-    '''Try to find a date in input string and return it as a datetime object.
+    """Try to find a date in input string and return it as a datetime object.
 
-If there is no matching date, return None.
-'''
+    If there is no matching date, return None.
+    """
     m = re.search(BdY, string)
     if m:
         return datetime.strptime(m.group(), '%B %d, %Y')
@@ -220,18 +223,18 @@ If there is no matching date, return None.
 def chdateformat(string, format_):
     """Find a date in string and return it in specified format_.
 
-The date in string can be in any format defined in finddate().
-Format_ should be a string containing standard formatting directives.
-Return the original string if unsuccessful.
+    The date in string can be in any format defined in finddate().
+    Format_ should be a string containing standard formatting directives.
+    Return the original string if unsuccessful.
 
-Examples:
+    Examples:
 
->>> chdateformat('date: 2014-06-21 time:02:09', '%B %d, %Y')
-'June 21, 2014'
+    >>> chdateformat('date: 2014-06-21 time:02:09', '%B %d, %Y')
+    'June 21, 2014'
 
->>> chdateformat('date: 2914-06-21 time:02:09', '%B %d, %Y')
-'date: 2914-06-21 time:02:09'
-"""
+    >>> chdateformat('date: 2914-06-21 time:02:09', '%B %d, %Y')
+    'date: 2914-06-21 time:02:09'
+    """
     date = finddate(string)
     if date:
         return date.strftime(format_)
@@ -245,3 +248,18 @@ def dict_cleanup(dictionary):
         if dictionary[key]:
             d[key] = dictionary[key]
     return d
+
+
+def detect_lang(text, langset=[]):
+    """Detect the language of the text. Return (lang, error).
+
+    "langset" is the set of languages that the result should be limited to.
+    
+    "lang" will be a string containing an ISO 639-1 code.
+    "error" will be an integer indicating a percentage. (Rounded to 2 digits)
+    """
+    if langset:
+        langid.set_languages(langset)
+    lang, confidence = langid.classify(text)
+    error = round((1 - confidence) * 100, 2)
+    return lang, error
