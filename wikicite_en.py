@@ -12,6 +12,7 @@ import wikiref_en as wikiref
 
 def create(d, date_format):
     """Create citation based on the given dictionary."""
+    d = conv.dict_cleanup(d)
     if d['type'] == 'book':
         s = '* {{cite book'
     elif d['type'] in ['article', 'jour']:
