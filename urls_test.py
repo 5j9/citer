@@ -210,6 +210,14 @@ class Others(unittest.TestCase):
         e = "* {{cite web|last=Ghose|first=Tia|title='Revolutionary' Physics: Do Sterile Neutrinos Lurk in the Universe?|website=LiveScience.com|date=2014-07-02|year=2014|url=http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html|ref=harv|accessdate="
         self.assertIn(e, o.cite)
 
+    def test_oth4(self):
+        """Getting the date is tricky here."""
+        i = 'http://www.magiran.com/npview.asp?ID=1410487'
+        o = urls.Citation(i)
+        er = "{{sfn|نوري|2007}}"
+        ec = "* {{cite web|last=نوري|first=آزاده شهمير|title=روزنامه سرمايه86/3/1: دكتر طاهر صباحي، محقق و مجموعه دار فرش: بازار جهاني با توليد فرش هنري نصيب ايران مي شود|website=magiran.com|date=2007-05-22|year=2007|url=http://www.magiran.com/npview.asp?ID=1410487|language=fa|ref=harv|accessdate="
+        self.assertIn(er, o.cite)
+        self.assertIn(ec, o.cite)
         
 if __name__ == '__main__':
     unittest.main()
