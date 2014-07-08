@@ -1,4 +1,4 @@
-#!/data/project/yadkard/venv/bin/python
+#! /usr/bin/python
 # -*- coding: utf-8 -*-
 
 """Create the {{sfn}} using the create() in this module."""

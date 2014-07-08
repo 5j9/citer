@@ -1,4 +1,4 @@
-#!/data/project/yadkard/venv/bin/python
+#! /usr/bin/python
 # -*- coding: utf-8 -*-
 
 """Common variables, functions, and classes used in string conversions, etc."""

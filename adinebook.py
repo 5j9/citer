@@ -1,4 +1,4 @@
-#!/data/project/yadkard/venv/bin/python
+#! /usr/bin/python
 # -*- coding: utf-8 -*-
 
 """All things that are specifically related to adinebook website"""
