@@ -72,10 +72,10 @@ setup(
     # project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/technical.html#install-requires-vs-requirements-files
-    install_requires=['requests>2.3.0',
-                      'beautifulsoup4>4.3.2',
-                      'langid>1.1.4dev',
-                      'flup>1.0.3.dev-20140705'
+    install_requires=['requests>=2.3.0',
+                      'beautifulsoup4>=4.3.2',
+                      'langid>=1.1.4dev',
+                      'flup>=1.0.3.dev-20140705'
                       ],
 
     # If there are data files included in your packages that need to be
