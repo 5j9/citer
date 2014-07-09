@@ -117,6 +117,5 @@ try:
     WSGIServer(application).run()
 except NameError:
     # on local computer:
-    from wsgiref.simple_server import make_server
     httpd = make_server('localhost', 8051, application)
     httpd.serve_forever()
