@@ -246,7 +246,7 @@ def dict_cleanup(dictionary):
     d = {}
     for key in dictionary:
         if dictionary[key]:
-            d[key] = dictionary[key].strip()
+            d[key] = dictionary[key]
     return d
 
 
