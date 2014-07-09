@@ -75,7 +75,7 @@ setup(
     install_requires=['requests>=2.3.0',
                       'beautifulsoup4>=4.3.2',
                       'langid>=1.1.4dev',
-                      'flup>=1.0.3.dev-20140705'
+                      #'flup>=1.0.3.dev-20140705'
                       ],
 
     # If there are data files included in your packages that need to be
