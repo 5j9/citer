@@ -23,8 +23,8 @@ setup(
     url='https://github.com/irdb/yadkard/',
 
     # Author details
-    author='The Python Packaging Authority',
-    author_email='pypa-dev@googlegroups.com',
+    author='Dalba',
+    author_email='dalba.wiki@gmail.com',
 
     # Choose your license
     license='GPLv3+',
