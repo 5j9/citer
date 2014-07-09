@@ -15,7 +15,7 @@ They can be install using `pip install -r`.
 
 * flup (1.0.3.dev-20140705)
 By the default the setup won't install flup library and will use wsgiref.simple_server instead. This is what you want if you are running the script from your personal computer. But if you want to run the script on a server you will need to manually install flup using this command:
-	```pip install git+https://github.com/a1tus/flup-py3.git```
+	`pip install git+https://github.com/a1tus/flup-py3.git`
 
 ## Usage
 
