@@ -47,7 +47,7 @@ Ymd = re.compile(Y + zm + zd)
 
 
 class InvalidNameError(Exception):
-    
+
     """Base class for Name exceptions."""
 
     pass
@@ -246,15 +246,17 @@ def dict_cleanup(dictionary):
     d = {}
     for key in dictionary:
         if dictionary[key]:
-            d[key] = dictionary[key]
+            d[key] = dictionary[key].strip()
     return d
 
 
 def detect_lang(text, langset=[]):
     """Detect the language of the text. Return (lang, error).
 
+    args:
     "langset" is the set of languages that the result should be limited to.
-    
+
+    return:
     "lang" will be a string containing an ISO 639-1 code.
     "error" will be an integer indicating a percentage. (Rounded to 2 digits)
     """
@@ -263,3 +265,15 @@ def detect_lang(text, langset=[]):
     lang, confidence = langid.classify(text)
     error = round((1 - confidence) * 100, 2)
     return lang, error
+
+
+def encode_for_template(dictionary):
+    """Replace special characters with their respective HTML entities."""
+    d = {}
+    for k in dictionary:
+        v = dictionary[k]
+        v = v.replace('|', '&amp;#124;')
+        v = v.replace('[', '&amp;#91;')
+        v = v.replace(']', '&amp;#93;')
+        d[k] = v
+    return d
