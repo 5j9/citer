@@ -409,8 +409,11 @@ Returns site's name as a string.
     try:
         #using hometitle
         thread.join()
-        sep_regex = ' - | — | \| |:'
-        sitename = re.split(sep_regex, hometitle_list[0])[0]
+        sep_regex = ' - | — |\||:'
+        htp = re.split(sep_regex, hometitle_list[0])
+        if len(htp)==1:
+            return htp[0]
+        sitename = parse_title(hometitle_list[0], url, None)[2]
         if sitename:
             return sitename, 'hometitle'
     except Exception:
@@ -520,7 +523,7 @@ Examples:
 (None, "Health - New teeth 'could soon be grown'", 'BBC NEWS')
 '''
     intitle_author = intitle_sitename = None
-    sep_regex = ' - | — | \| '
+    sep_regex = ' - | — |\|'
     title_parts = re.split(sep_regex, title.strip())
     if len(title_parts) == 1:
         return (None, title, None)
@@ -748,6 +751,7 @@ def url2dictionary(url):
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
     logging.getLogger("requests").setLevel(logging.WARNING)
+    logging.getLogger("langid").setLevel(logging.WARNING)
     logger = logging.getLogger()
 else:
     logger = logging.getLogger(__name__)
