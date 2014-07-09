@@ -1,0 +1,4 @@
+beautifulsoup4==4.3.2
+git+https://github.com/saffsd/langid.py.git@python3#egg=langid-dev-py3
+numpy==1.8.1
+requests==2.3.0
