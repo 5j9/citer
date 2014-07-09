@@ -110,6 +110,7 @@ def application(environ, start_response):
 
 logger = mylogger()
 logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("langid").setLevel(logging.WARNING)
 
 try:
     # on remote server
