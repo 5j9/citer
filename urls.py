@@ -13,7 +13,6 @@ from threading import Thread
 import requests
 import bs4
 
-
 import commons
 import config
 
@@ -570,10 +569,6 @@ Examples:
         title_parts.remove(intitle_author)
         intitle_author = intitle_author.strip()
     pure_title = ' - '.join(title_parts)
-    #Replacing special characters with their respective HTML entities
-    pure_title = pure_title.replace('|', '&#124;').strip()
-    pure_title = pure_title.replace('[', '&#91;').strip()
-    pure_title = pure_title.replace(']', '&#93;').strip()
     return intitle_author, pure_title, intitle_sitename
 
 
@@ -633,6 +628,8 @@ def find_date(soup, url):
         ({'name': 'DISPLAYDATE'}, 'getitem', 'content'),
         #http://www.washingtonpost.com/wp-dyn/content/article/2006/01/19/AR2006011902990.html
         ({'name': 'DC.date.issued'}, 'getitem', 'content'),
+        #http://www.farsnews.com/newstext.php?nn=13930418000036
+        ({'name': 'dc.Date'}, 'getitem', 'content'),
         #http://www.huffingtonpost.ca/arti-patel/nina-davuluri_b_3936174.html
         ({'name': 'sailthru.date'}, 'getitem', 'content'),
         #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
