@@ -210,7 +210,7 @@ class Others(unittest.TestCase):
         e = "* {{cite web|last=Ghose|first=Tia|title='Revolutionary' Physics: Do Sterile Neutrinos Lurk in the Universe?|website=LiveScience.com|date=2014-07-02|year=2014|url=http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html|ref=harv|accessdate="
         self.assertIn(e, o.cite)
 
-    def test_oth4(self):
+    def test_oth5(self):
         """Getting the date is tricky here."""
         i = 'http://www.magiran.com/npview.asp?ID=1410487'
         o = urls.Citation(i)
@@ -218,6 +218,16 @@ class Others(unittest.TestCase):
         ec = "* {{cite web|last=نوري|first=آزاده شهمير|title=روزنامه سرمايه86/3/1: دكتر طاهر صباحي، محقق و مجموعه دار فرش: بازار جهاني با توليد فرش هنري نصيب ايران مي شود|website=magiran.com|date=2007-05-22|year=2007|url=http://www.magiran.com/npview.asp?ID=1410487|language=fa|ref=harv|accessdate="
         self.assertIn(er, o.cite)
         self.assertIn(ec, o.cite)
+
+    def test_oth6(self):
+        """Detection of website name."""
+        i = 'http://www.farsnews.com/newstext.php?nn=13930418000036'
+        o = urls.Citation(i)
+        er = "{{sfn|Fars News Agency|2014}}"
+        ec = "* {{cite web|title=آیت‌الله محمدی گیلانی دارفانی را وداع گفت|website=Fars News Agency|date=2014-07-09|year=2014|url=http://www.farsnews.com/newstext.php?nn=13930418000036|language=fa|ref={{sfnref|Fars News Agency|2014}}|accessdate="
+        self.assertIn(er, o.cite)
+        self.assertIn(ec, o.cite)
+
         
 if __name__ == '__main__':
     unittest.main()
