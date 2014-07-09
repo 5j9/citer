@@ -659,7 +659,7 @@ def find_date(soup, url):
             pass
     if not date:
         try:
-            logger.info('Searching for date in page content.\r\n' + url)
+            logger.info('Searching for date in page content.\n' + url)
             return commons.finddate(str(soup)).strftime('%Y-%m-%d'), 'soup.text'
         except Exception:
             pass

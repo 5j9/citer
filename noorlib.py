@@ -7,8 +7,8 @@ import re
 import requests
 
 import bibtex
-#import ris[1]
 import config
+#import ris[1]
 
 if config.lang == 'en':
     import wikiref_en  as wikiref
@@ -18,9 +18,9 @@ else:
     import wikicite_fa as wikicite
 
 class Citation():
-    
+
     """Create NoorLib citation object."""
-    
+
     def __init__(self, noormags_url, date_format='%Y-%m-%d'):
         self.url = noormags_url
         self.bibtex = get_bibtex(noormags_url)
@@ -31,7 +31,7 @@ class Citation():
         self.cite = wikicite.create(self.dictionary, date_format)
         self.error = 0
 
-        
+
 def get_bibtex(noormags_url):
     """Get bibtex file content from a noormags url. Return as string."""
     pagetext = requests.get(noormags_url).text
