@@ -31,7 +31,7 @@ def mylogger():
                                     encoding='utf-8',
                                     delay=0)
     handler.setLevel(logging.INFO)
-    fmt = '\r\n%(asctime)s\r\n%(levelname)s\r\n%(message)s\r\n'
+    fmt = '\n%(asctime)s\n%(levelname)s\n%(message)s\n'
     formatter = logging.Formatter(fmt)
     handler.setFormatter(formatter)
     logger.addHandler(handler)
@@ -89,7 +89,7 @@ def application(environ, start_response):
         if not obj:
             #All the above cases have been unsuccessful
             obj = html.ResposeObj(*html.undefined_url_response)
-            logger.info('There was an undefined_url_response\r\n' + url)
+            logger.info('There was an undefined_url_response\n' + url)
         response_body = html.skeleton % (obj.ref,
                                         obj.cite,
                                         obj.error)
