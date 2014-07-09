@@ -412,7 +412,7 @@ Returns site's name as a string.
         sep_regex = ' - | — |\||:'
         htp = re.split(sep_regex, hometitle_list[0])
         if len(htp)==1:
-            return htp[0]
+            return htp[0].strip()
         sitename = parse_title(hometitle_list[0], url, None)[2]
         if sitename:
             return sitename, 'hometitle'
