@@ -5,6 +5,7 @@
 
 
 from datetime import date
+import commons
 
 
 today = date.today()
@@ -139,7 +140,7 @@ other_exception_response = ('An unknown error occurred.',
                             'The error was logged.',
                             '100')
 
-class ResposeObj():
+class Respose(commons.BaseResponse):
 
     """Create the responce object used by the main application."""
     

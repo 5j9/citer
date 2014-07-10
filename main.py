@@ -54,7 +54,7 @@ def application(environ, start_response):
         obj = None
         if not user_input:
             #on first run user_input is ''
-            obj = html.ResposeObj(*html.default_response)
+            obj = html.Respose(*html.default_response)
         elif '.google.com/books' in url:
             obj = googlebooks.Response(url, date_format)
         elif 'noormags.' in netloc:
@@ -88,11 +88,12 @@ def application(environ, start_response):
             obj = urls.Response(url, date_format)
         if not obj:
             #All the above cases have been unsuccessful
-            obj = html.ResposeObj(*html.undefined_url_response)
+            obj = html.Respose(*html.undefined_url_response)
             logger.info('There was an undefined_url_response\n' + url)
         response_body = html.skeleton % (obj.sfnt,
-                                        obj.ctnt,
-                                        obj.error)
+                                         obj.ctnt,
+                                         obj.error
+                                         )
     except (requests.ConnectionError):
         logger.exception(url)
         response_body = html.skeleton % html.httperror_response
