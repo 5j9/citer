@@ -125,13 +125,13 @@ class BaseResponse:
 
         self.dictionary should be ready before calling this function."""
         self.sfnt = sfn.create(self.dictionary)
-        self.ctnt = ctn.create(self.dictionary, date_format)
+        self.ctnt = ctn.create(self.dictionary, self.date_format)
         self.create_reftag()
         
     def create_reftag(self):
         """Create a named reference tag using ctnt and sfnt properties."""
-        name = sfnt[6:-2].replace('|', ' ')
-        self.reftag = '<ref name="' + name + '">' + slef.ctnt[2:] + '</ref>'
+        name = self.sfnt[6:-2].replace('|', ' ')
+        self.reftag = '<ref name="' + name + '">' + self.ctnt[2:] + '</ref>'
 
 
 def detect_language(text, langset={}):
@@ -307,10 +307,11 @@ def encode_for_template(dictionary):
     """Replace special characters with their respective HTML entities."""
     d = {}
     for k in dictionary:
-        if isinstance(dictionary[k], str):
+        v = dictionary[k]
+        if isinstance(v, str):
             v = dictionary[k]
             v = v.replace('|', '&amp;#124;')
             v = v.replace('[', '&amp;#91;')
             v = v.replace(']', '&amp;#93;')
-            d[k] = v
+        d[k] = v
     return d
