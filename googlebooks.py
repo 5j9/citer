@@ -11,21 +11,16 @@ import requests
 
 #import bibtex [1]
 import ris
-import config
 import commons
-if config.lang == 'en':
-    import sfn_en as sfn
-    import ctn_en as ctn
-else:
-    import sfn_fa as sfn
-    import ctn_fa as ctn
 
 
-class Citation():
+class Response(commons.BaseResponse):
     
-    """Create google book citation object."""
+    """Create googlebooks' response object."""
     
     def __init__(self, googlebook_url, date_format='%Y-%m-%d'):
+        """Make the dictionary and run self.generate()."""
+        self.date_format = date_format
         self.url = googlebook_url
         #self.bibtex = get_bibtex(googlebook_url) [1]
         #self.dictionary = bibtex.parse(self.bibtex) [1]
@@ -44,11 +39,8 @@ class Citation():
         if 'language' in self.dictionary:
             self.error = 0
         else:
-            lang, err = commons.detect_lang(self.dictionary['title'])
-            self.dictionary['language'] = lang
-            self.dictionary['error'] = self.error = err
-        self.sfnt = sfn.create(self.dictionary)
-        self.ctnt = ctn.create(self.dictionary, date_format)
+            self.detect_language(self.dictionary['title'])
+        self.generate()
 
 
 def get_bibtex(googlebook_url):
