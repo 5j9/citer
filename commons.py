@@ -110,7 +110,10 @@ class BaseResponse:
     
     """The base class for response objects."""
 
-    error = 0 # default value
+    # defaults
+    error = 0
+    reftag = ''
+    
     def detect_language(self, text, langset={}):
         """Detect language of text. Add the result to self.dictionary and error.
 
@@ -132,7 +135,10 @@ class BaseResponse:
     def create_reftag(self):
         """Create a named reference tag using ctnt and sfnt properties."""
         name = self.sfnt[6:-2].replace('|', ' ')
-        self.reftag = '<ref name="' + name + '">' + self.ctnt[2:] + '</ref>'
+        text = re.sub('(\|ref=({{.*?}}|harv))(?P<repl>\||}})',
+                      '\g<repl>',
+                      self.ctnt[2:])
+        self.reftag = '<ref name="' + name + '">' + text + '</ref>'
 
 
 def detect_language(text, langset={}):
