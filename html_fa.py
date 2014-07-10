@@ -9,7 +9,7 @@ class ResposeObj():
     """Create the response object used in the main application."""
     
     def __init__(self, ref, cite, error):
-        self.ref = ref
+        self.sfnt = ref
         self.cite = cite
         self.error = error
 

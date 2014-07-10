@@ -12,10 +12,10 @@ import commons
 import bibtex
 import config
 if config.lang == 'en':
-    import wikiref_en as wikiref
+    import sfn_en as sfn
     import wikicite_en as wikicite
 else:
-    import wikiref_fa as wikiref
+    import sfn_fa as sfn
     import wikicite_fa as wikicite
 
 
@@ -49,7 +49,7 @@ class Citation():
                 self.error = self.dictionary['error'] = err
             else:
                 self.error = 100
-        self.ref = wikiref.create(self.dictionary)
+        self.sfnt = sfn.create(self.dictionary)
         self.cite = wikicite.create(self.dictionary, date_format)
 
 

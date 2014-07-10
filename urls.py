@@ -17,10 +17,10 @@ import commons
 import config
 
 if config.lang == 'en':
-    import wikiref_en as wikiref
+    import sfn_en as sfn
     import wikicite_en as wikicite
 else:
-    import wikiref_fa as wikiref
+    import sfn_fa as sfn
     import wikicite_fa  as wikicite
 
 
@@ -32,11 +32,11 @@ class Citation():
         try:
             self.url = url
             self.dictionary = url2dictionary(url)
-            self.ref = wikiref.create(self.dictionary)
+            self.sfnt = sfn.create(self.dictionary)
             self.cite = wikicite.create(self.dictionary, date_format)
             self.error = 0
         except (ContentTypeError, ContentLengthError) as e:
-            self.ref = 'Could not process the request.'
+            self.sfnt = 'Could not process the request.'
             self.cite = e.message
             self.error = 100
             logger.exception(url)

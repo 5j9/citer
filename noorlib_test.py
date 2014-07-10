@@ -24,7 +24,7 @@ class NoorlibTest(unittest.TestCase):
         o = noorlib.Citation(i)
         er = '{{sfn|کورانی}}'
         ec = '* {{cite book|last=کورانی|first=علی|title=المعجم الموضوعی لاحادیث الامام المهدی عجل الله تعالی فرجه الشریف|publisher=دار المرتضی|location=بيروت|series=المعجم الموضوعی لاحادیث الامام المهدی عجل الله تعالی فرجه الشریف|volume=1|url=http://www.noorlib.ir/View/fa/Book/BookView/Image/18454|language=عربی|ref=harv|accessdate='
-        self.assertIn(er, o.ref)
+        self.assertIn(er, o.sfnt)
         self.assertIn(ec, o.cite)
         
 

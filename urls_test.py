@@ -34,7 +34,7 @@ class WashingtonpostTest(unittest.TestCase):
         o = urls.Citation(i)
         e1 = '{{sfn|Sachs|2005}}'
         e2 = '* {{cite web|last=Sachs|first=Andrea|title=March of the Migration|website=Washington Post|date=2005-09-04|year=2005|url=http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html|ref=harv|accessdate='
-        self.assertIn(e1, o.ref)
+        self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.cite)
 
 
@@ -46,7 +46,7 @@ class HuffingtonpostTest(unittest.TestCase):
         o = urls.Citation(i)
         e1 = '{{sfn|Sorg|2013}}'
         e2 = '* {{cite web|last=Sorg|first=Annelise|title=When Killer Whales Kill: Why the movie "Blackfish" Should Sink Captive Whale Programs|website=The Huffington Post|date=2013-08-01|year=2013|url=http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html|ref=harv|accessdate='
-        self.assertIn(e1, o.ref)
+        self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.cite)
 
 
@@ -58,7 +58,7 @@ class DilyTelegraphTest(unittest.TestCase):
         o = urls.Citation(i)
         e1 = '{{sfn|Fogle|2005}}'
         e2 = "* {{cite web|last=Fogle|first=Ben|title=We could see the whale's eyes, mouth... the barnacles on its back|website=Telegraph.co.uk|date=2005-12-22|year=2005|url=http://www.telegraph.co.uk/health/3334755/We-could-see-the-whales-eyes-mouth...-the-barnacles-on-its-back.html|ref=harv|accessdate="
-        self.assertIn(e1, o.ref)
+        self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.cite)
 
 
@@ -70,7 +70,7 @@ class DilyMirrorTest(unittest.TestCase):
         o = urls.Citation(i)
         e1 = '{{sfn|Mirror.co.uk|2005}}'
         e2 = '* {{cite web|author=Mirror.co.uk|title=WHALE DOOMED TO DIE|website=mirror|date=2005-09-15|year=2005|url=http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471|ref=harv|accessdate='
-        self.assertIn(e1, o.ref)
+        self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.cite)
 
 
@@ -82,7 +82,7 @@ class DilyMailTest(unittest.TestCase):
         o = urls.Citation(i)
         e1 = '{{sfn|Malm|Witheridge|Drury|Bates|2014}}'
         e2 = '* {{cite web|last=Malm|first=Sara|last2=Witheridge|first2=Annette|last3=Drury|first3=Ian|last4=Bates|first4=Daniel|title=Hate preacher Abu Hamza GUILTY of setting up US terror training camps|website=Mail Online|date=2014-05-20|year=2014|url=http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html|ref=harv|accessdate='
-        self.assertIn(e1, o.ref)
+        self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.cite)
         
 

@@ -11,10 +11,10 @@ import config
 #import ris[1]
 
 if config.lang == 'en':
-    import wikiref_en  as wikiref
+    import sfn_en  as sfn
     import wikicite_en as wikicite
 else:
-    import wikiref_fa as wikiref
+    import sfn_fa as sfn
     import wikicite_fa as wikicite
 
 class Citation():
@@ -27,7 +27,7 @@ class Citation():
         self.dictionary = bibtex.parse(self.bibtex)
         #self.ris = get_ris(noormags_url)[1]
         #self.dictionary = ris.parse(self.ris)[1]
-        self.ref = wikiref.create(self.dictionary)
+        self.sfnt = sfn.create(self.dictionary)
         self.cite = wikicite.create(self.dictionary, date_format)
         self.error = 0
 

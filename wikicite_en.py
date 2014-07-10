@@ -7,7 +7,7 @@
 from datetime import date
 
 import commons
-import wikiref_en as wikiref
+import sfn_en as sfn
 
 
 def create(d, date_format):
@@ -87,7 +87,7 @@ def create(d, date_format):
     if 'authors' in d:
         s += '|ref=harv'
     else:
-        #order should match wikiref
+        #order should match sfn
         s += '|ref={{sfnref|' +\
              (
                  d['publisher'] if 'publisher' in d else \

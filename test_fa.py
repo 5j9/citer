@@ -73,7 +73,7 @@ class GooglebookTest(unittest.TestCase):
         o = googlebooks.GoogleBook(i)
         e1 = '<ref>{{پک|Anderson|DeBolt|Featherstone|Gunther|2010|ک=InterACT with Web Standards: A holistic approach to web design|زبان=en|ص=57}}</ref>'
         e2 = '* {{یادکرد کتاب|نام خانوادگی=Anderson|نام=E.|نام خانوادگی۲=DeBolt|نام۲=V.|نام خانوادگی۳=Featherstone|نام۳=D.|نام خانوادگی۴=Gunther|نام۴=L.|نام خانوادگی۵=Jacobs|نام۵=D.R.|نام خانوادگی۶=Mills|نام۶=C.|نام خانوادگی۷=Schmitt|نام۷=C.|نام خانوادگی۸=Sims|نام۸=G.|نام خانوادگی۹=Walter|نام۹=A.|نام خانوادگی۱۰=Jensen-Inman|نام۱۰=L.|کتاب=InterACT with Web Standards: A holistic approach to web design|ناشر=Pearson Education|سال=2010|شابک=9780132704908|پیوند=http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57|زبان=en|تاریخ بازبینی='
-        self.assertIn(e1, o.ref)
+        self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.cite)
 
     def test_gb3(self):
@@ -82,7 +82,7 @@ class GooglebookTest(unittest.TestCase):
         o = googlebooks.GoogleBook(i)
         e1 = '<ref>{{پک|Farrell|ک=Microsoft® Visual C# 2008 Comprehensive: An Introduction to Object-Oriented Programming|زبان=en|ص=588}}</ref>'
         e2 = '* {{یادکرد کتاب|نام خانوادگی=Farrell|نام=J.|کتاب=Microsoft® Visual C# 2008 Comprehensive: An Introduction to Object-Oriented Programming|ناشر=Cengage Learning|شابک=9781111786199|پیوند=http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588|زبان=en|تاریخ بازبینی='
-        self.assertIn(e1, o.ref)
+        self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.cite)
 
     def test_gb4(self):
@@ -91,7 +91,7 @@ class GooglebookTest(unittest.TestCase):
         o = googlebooks.GoogleBook(i)
         e1 = '<ref>{{پک|Šarčević|1997|ک=New Approach to Legal Translation|زبان=en|ص=229}}</ref>'
         e2 = '* {{یادکرد کتاب|نام خانوادگی=Šarčević|نام=S.|کتاب=New Approach to Legal Translation|ناشر=Kluwer Law International|سال=1997|شابک=9789041104014|پیوند=http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229|زبان=en|تاریخ بازبینی='
-        self.assertIn(e1, o.ref)
+        self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.cite)
 
         
