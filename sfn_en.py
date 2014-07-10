@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Create the {{sfn}} using the create() in this module."""
+"""Create the {{sfn}} template using the create() function in this module."""
 
 
 import commons
