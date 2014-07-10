@@ -4,12 +4,13 @@
 """HTML skeleton of the application and its predefined responses."""
 
 
+from string import Template
 from datetime import date
+
 import commons
 
 
-today = date.today()
-skeleton = """<!DOCTYPE html>
+template = Template("""<!DOCTYPE html>
 <html>
     <head>
         <title>Yadkard</title>
@@ -30,8 +31,8 @@ skeleton = """<!DOCTYPE html>
             textarea{
                 display:block;
                 margin-left: auto;
-                margin-right: auto;  
-                width:100%%%%;
+                margin-right: auto;
+                width:100%;
                 word-break: break-all;
                 }
             body {
@@ -39,13 +40,13 @@ skeleton = """<!DOCTYPE html>
                 font-size:0.8em
                 }
             input[type=text]{
-                width:50%%%%;
+                width:50%;
                 }
             input[type=submit]{
                 float:right;
                 }
             #info{
-                font-size:90%%%%;
+                font-size:90%;
                 color:#666666;
                 }
             input[type=submit]:hover{
@@ -55,25 +56,26 @@ skeleton = """<!DOCTYPE html>
         </style>
     </head>
     <body>
-        <div style="margin-left:auto; margin-right:auto; width:62%%%%;">
+        <div style="margin-left:auto; margin-right:auto; width:62%;">
             <form method="get" action="yadkard.fcgi">
                 <p>
                     URL/DOI/ISBN:<br><input type="text" name="user_input">
                     <input type="submit" value="Submit">
                 </p>
                 <p>Date format:</p>
-                <input type="radio" value="%%%%Y-%%%%m-%%%%d" name="dateformat" id="Ymd" onclick="setCookie('datefmt', 'Ymd', 365)" checked>%(Ymd)s
-                <input type="radio" value="%%%%B %%%%d, %%%%Y" name="dateformat" id="BdY" onclick="setCookie('datefmt', 'BdY', 365)">%(BdY)s
-                <input type="radio" value="%%%%b %%%%d, %%%%Y" name="dateformat" id="bdY" onclick="setCookie('datefmt', 'bdY', 365)">%(bdY)s
-                <input type="radio" value="%%%%d %%%%B %%%%Y" name="dateformat" id="dBY" onclick="setCookie('datefmt', 'dBY', 365)">%(dBY)s
-                <input type="radio" value="%%%%d %%%%b %%%%Y" name="dateformat" id="dbY" onclick="setCookie('datefmt', 'dbY', 365)">%(dbY)s
+                <input type="radio" value="%Y-%m-%d" name="dateformat" id="Ymd" onclick="setCookie('datefmt', 'Ymd', 365)" checked>$Ymd
+                <input type="radio" value="%B %d, %Y" name="dateformat" id="BdY" onclick="setCookie('datefmt', 'BdY', 365)">$BdY
+                <input type="radio" value="%b %d, %Y" name="dateformat" id="bdY" onclick="setCookie('datefmt', 'bdY', 365)">$bdY
+                <input type="radio" value="%d %B %Y" name="dateformat" id="dBY" onclick="setCookie('datefmt', 'dBY', 365)">$dBY
+                <input type="radio" value="%d %b %Y" name="dateformat" id="dbY" onclick="setCookie('datefmt', 'dbY', 365)">$dbY
             </form>
             <p>
                 <a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:<br>
-                <textarea rows="8" readonly>%(s)s\n\n%(s)s</textarea>
+                <textarea rows="8" readonly>%s\n\n%s</textarea>
+                <textarea rows="4" readonly>%s\n\n%s</textarea>
             </p>
             <p>
-                <!-- There may be error in language detection. %(s)s %%%% -->
+                <!-- There may be error in language detection. %s % -->
             </p>
             <div id="info">
                 <p>
@@ -87,7 +89,7 @@ skeleton = """<!DOCTYPE html>
                         Found a bug or have a suggestion? Contact me on my talk page. (<a href="https://wikitech.wikimedia.org/wiki/User_talk:Dalba">User:Dalba</a>).</p>
             </div>
         </div>
-        <script>        
+        <script>
             function setCookie(cname, cvalue, exdays) {
                 var d = new Date();
                 d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -114,26 +116,28 @@ skeleton = """<!DOCTYPE html>
             checkCookie()
         </script>
     </body>
-</html>""" %{'Ymd': today.strftime('%Y-%m-%d'),
-             'BdY': today.strftime('%B %d, %Y'),
-             'bdY': today.strftime('%b %d, %Y'),
-             'dBY': today.strftime('%d %B %Y'),
-             'dbY': today.strftime('%d %b %Y'),
-             's': '%s'}
+</html>""")
 
-default_response = (
-    'Generated citation will appear here...',
-    '',
-    '??')
+today = date.today()
+template = template.substitute({'Ymd': today.strftime('%Y-%m-%d'),
+                                  'BdY': today.strftime('%B %d, %Y'),
+                                  'bdY': today.strftime('%b %d, %Y'),
+                                  'dBY': today.strftime('%d %B %Y'),
+                                  'dbY': today.strftime('%d %b %Y'),
+                                  })
+
+default_response = ('Generated citation will appear here...',
+                    '',
+                    '??')
 
 undefined_url_response = ('Undefined input.',
-                      'Sorry, the input was not recognized. \
-The error was logged.',
-                      '100')
+                          'Sorry, the input was not recognized. ' +
+                          'The error was logged.',
+                          '100')
 
 httperror_response = ('HTTP error:',
-                      'One or more of the web resources required to create \
-this citation are not accessible at this moment.',
+                      'One or more of the web resources required to create ' +
+                      'this citation are not accessible at this moment.',
                       '100')
 
 other_exception_response = ('An unknown error occurred.',
@@ -143,9 +147,9 @@ other_exception_response = ('An unknown error occurred.',
 class Respose(commons.BaseResponse):
 
     """Create the responce object used by the main application."""
-    
+
     def __init__(self, sfnt, ctnt, error):
         self.sfnt = sfnt
         self.ctnt = ctnt
         self.error = error
-        
+
