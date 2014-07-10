@@ -90,16 +90,17 @@ def application(environ, start_response):
             #All the above cases have been unsuccessful
             obj = html.Respose(*html.undefined_url_response)
             logger.info('There was an undefined_url_response\n' + url)
-        response_body = html.skeleton % (obj.sfnt,
+        response_body = html.template % (obj.sfnt,
                                          obj.ctnt,
+                                         obj.reftag,
                                          obj.error
                                          )
     except (requests.ConnectionError):
         logger.exception(url)
-        response_body = html.skeleton % html.httperror_response
+        response_body = html.template % html.httperror_response
     except Exception:
         logger.exception(url)
-        response_body = html.skeleton % html.other_exception_response
+        response_body = html.template % html.other_exception_response
     status = '200 OK'
 
     response_headers = [('Content-Type', 'text/html; charset=UTF-8'),
