@@ -24,7 +24,7 @@ else:
     import ctn_fa  as ctn
 
 
-class Citation():
+class Response():
 
     """Create citation object."""
 

@@ -20,7 +20,7 @@ else:
     import sfn_fa as sfn
     import ctn_fa  as ctn
 
-class Citation():
+class Response():
     """Create Adinebook citation object."""
     
     def __init__(self, adinebook_url, date_format='%Y-%m-%d'):

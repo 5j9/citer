@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-#todo: editor and author and ... article link
+"""Functions to create Wikipedia citation template."""
 
 
 from datetime import date

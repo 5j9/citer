@@ -18,7 +18,7 @@ else:
     import sfn_fa as sfn
     import ctn_fa as ctn
 
-class Citation():
+class Response():
     
     """Create noormags citation object."""
     

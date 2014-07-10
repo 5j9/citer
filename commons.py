@@ -8,6 +8,13 @@ import re
 
 import langid
 
+import config
+if config.lang == 'en':
+    import sfn_en as sfn
+    import ctn_en as ctn
+else:
+    import sfn_fa as sfn
+    import ctn_fa as ctn
 
 #Date patterns:
 
@@ -52,6 +59,7 @@ class InvalidNameError(Exception):
 
     pass
 
+
 class LongNameError(InvalidNameError):
 
     """Raise when a Name() is too long to be a name."""
@@ -66,7 +74,7 @@ class NumberInNameError(InvalidNameError):
     pass
 
 
-class Name():
+class Name:
 
     """Take a fullname and its' seperator. Convert it to a Name object.
 
@@ -96,6 +104,51 @@ class Name():
         '''
         self.lastname = self.fullname
         self.firstname = ''
+
+
+class BaseResponse:
+    
+    """The base class for response objects."""
+
+    def detect_language(self, text, langset={}):
+        """Detect language of text. Add the result to self.dictionary and error.
+
+        'language' and 'error' keys will be added to dictionary.
+        self.error will be created to.
+        """
+        lang, err = detect_language(text, langset)
+        self.dictionary['language'] = lang
+        self.dictionary['error'] = self.error = err
+
+    def generate(self):
+        """Generate self.sfnt, self.ctnt and self.reftag.
+
+        self.dictionary should be ready before calling this function."""
+        self.sfnt = sfn.create(self.dictionary)
+        self.ctnt = ctn.create(self.dictionary, date_format)
+        self.create_reftag()
+        
+    def create_reftag(self):
+        """Create a named reference tag using ctnt and sfnt properties."""
+        name = sfnt[6:-2].replace('|', ' ')
+        self.reftag = '<ref name="' + name + '">' + slef.ctnt[2:] + '</ref>'
+
+
+def detect_language(text, langset={}):
+    """Detect the language of the text. Return (lang, error).
+
+    args:
+    "langset" is the set of languages that the result should be limited to.
+
+    return:
+    "lang" will be a string containing an ISO 639-1 code.
+    "error" will be an integer indicating a percentage. (Rounded to 2 digits)
+    """
+    if langset:
+        langid.set_languages(langset)
+    lang, confidence = langid.classify(text)
+    error = round((1 - confidence) * 100, 2)
+    return lang, error
 
 
 def firstname_lastname(fullname, seperator):
@@ -250,30 +303,14 @@ def dict_cleanup(dictionary):
     return d
 
 
-def detect_lang(text, langset=[]):
-    """Detect the language of the text. Return (lang, error).
-
-    args:
-    "langset" is the set of languages that the result should be limited to.
-
-    return:
-    "lang" will be a string containing an ISO 639-1 code.
-    "error" will be an integer indicating a percentage. (Rounded to 2 digits)
-    """
-    if langset:
-        langid.set_languages(langset)
-    lang, confidence = langid.classify(text)
-    error = round((1 - confidence) * 100, 2)
-    return lang, error
-
-
 def encode_for_template(dictionary):
     """Replace special characters with their respective HTML entities."""
     d = {}
     for k in dictionary:
-        v = dictionary[k]
-        v = v.replace('|', '&amp;#124;')
-        v = v.replace('[', '&amp;#91;')
-        v = v.replace(']', '&amp;#93;')
-        d[k] = v
+        if isinstance(dictionary[k], str):
+            v = dictionary[k]
+            v = v.replace('|', '&amp;#124;')
+            v = v.replace('[', '&amp;#91;')
+            v = v.replace(']', '&amp;#93;')
+            d[k] = v
     return d

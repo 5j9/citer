@@ -42,7 +42,7 @@ class IsbnError(Exception):
     pass
 
 
-class Citation():
+class Response():
     
     """Create isbn citation object."""
 

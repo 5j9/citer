@@ -24,7 +24,7 @@ else:
 doi_regex = re.compile(r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'])\S)+)\b')
 
 
-class Citation():
+class Response():
     
     """Create a DOI citation object."""
     

@@ -56,36 +56,36 @@ def application(environ, start_response):
             #on first run user_input is ''
             obj = html.ResposeObj(*html.default_response)
         elif '.google.com/books' in url:
-            obj = googlebooks.Citation(url, date_format)
+            obj = googlebooks.Response(url, date_format)
         elif 'noormags.' in netloc:
-            obj = noormags.Citation(url, date_format)
+            obj = noormags.Response(url, date_format)
         elif 'noorlib.ir' in netloc:
-            obj = noorlib.Citation(url, date_format)
+            obj = noorlib.Response(url, date_format)
         elif ('adinebook' in netloc) or ('adinehbook' in netloc):
-            obj = adinebook.Citation(url, date_format)
+            obj = adinebook.Response(url, date_format)
         if not obj:
             #DOI and ISBN check
             en_url = commons.fanum2en(url)
             try:
                 m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
                 if m:
-                    obj = doi.Citation(m.group(1),
+                    obj = doi.Response(m.group(1),
                                        pure=True,
                                        date_format=date_format)
                 elif isbn.re.search(isbn.isbn13_regex, en_url):
-                    obj = isbn.Citation(
+                    obj = isbn.Response(
                         isbn.re.search(isbn.isbn13_regex, en_url).group(0),
                         pure=True,
                         date_format=date_format,)
                 elif isbn.re.search(isbn.isbn10_regex, en_url):
-                    obj = isbn.Citation(
+                    obj = isbn.Response(
                         isbn.re.search(isbn.isbn10_regex, en_url).group(0),
                         pure=True,
                         date_format=date_format,)
             except isbn.IsbnError:
                 pass
         if not obj:
-            obj = urls.Citation(url, date_format)
+            obj = urls.Response(url, date_format)
         if not obj:
             #All the above cases have been unsuccessful
             obj = html.ResposeObj(*html.undefined_url_response)

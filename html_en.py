@@ -143,8 +143,8 @@ class ResposeObj():
 
     """Create the responce object used by the main application."""
     
-    def __init__(self, ref, cite, error):
-        self.sfnt = ref
-        self.ctnt = cite
+    def __init__(self, sfnt, ctnt, error):
+        self.sfnt = sfnt
+        self.ctnt = ctnt
         self.error = error
         
