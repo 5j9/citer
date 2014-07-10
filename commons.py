@@ -110,6 +110,7 @@ class BaseResponse:
     
     """The base class for response objects."""
 
+    self.error = 0 # default value
     def detect_language(self, text, langset={}):
         """Detect language of text. Add the result to self.dictionary and error.
 

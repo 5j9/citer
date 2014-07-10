@@ -11,33 +11,21 @@ from bs4 import BeautifulSoup as BS
 
 import commons
 import isbn
-import config
 
-if config.lang == 'en':
-    import sfn_en as sfn
-    import ctn_en as ctn
-else:
-    import sfn_fa as sfn
-    import ctn_fa  as ctn
-
-class Response():
-    """Create Adinebook citation object."""
+class Response(commons.BaseResponse):
+    
+    """Create Adinebook's response object."""
     
     def __init__(self, adinebook_url, date_format='%Y-%m-%d'):
+        """Make the dictionary and run self.generate()."""
+        self.date_format = date_format
         self.url = adinebook_url
         self.dictionary = url2dictionary(adinebook_url)
-        #manually adding page nubmer to dictionary:
-        if 'language' in self.dictionary:
-            self.error = 0
-        else:
+        if 'language' not in self.dictionary:
             #assume that language is either fa or en
             #todo: give warning about this assumption
-            lang, err = commons.detect_lang(self.dictionary['title'],
-                                            ['en','fa'])
-            self.dictionary['language'] = lang
-            self.error = self.dictionary['error'] = err
-        self.sfnt = sfn.create(self.dictionary)
-        self.ctnt = ctn.create(self.dictionary, date_format)
+            self.detect_language(self.dictionary['title'], {'en','fa'})
+        self.generate()
 
 
 def isbn2url(isbn):

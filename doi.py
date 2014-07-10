@@ -3,6 +3,7 @@
 
 """Codes specifically related to DOI inputs."""
 
+
 import re
 import xml.sax.saxutils as sax
 
@@ -10,13 +11,6 @@ import requests
 
 import commons
 import bibtex
-import config
-if config.lang == 'en':
-    import sfn_en as sfn
-    import ctn_en as ctn
-else:
-    import sfn_fa as sfn
-    import ctn_fa as ctn
 
 
 #regex from:
@@ -24,11 +18,13 @@ else:
 doi_regex = re.compile(r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'])\S)+)\b')
 
 
-class Response():
+class Response(commons.BaseResponse):
     
-    """Create a DOI citation object."""
+    """Create a DOI's response object."""
     
     def __init__(self, doi_or_url, pure=False, date_format='%Y-%m-%d'):
+        """Make the dictionary and run self.generate()."""
+        self.date_format = date_format
         if pure:
             self.doi = doi_or_url
         else:
@@ -40,17 +36,12 @@ class Response():
         self.url = 'http://dx.doi.org/' + self.doi
         self.bibtex = get_bibtex(self.url)
         self.dictionary = bibtex.parse(self.bibtex)
-        if 'language' in self.dictionary:
-            self.error = 0
-        else:
+        if 'language' not in self.dictionary:
             if 'title' in self.dictionary:
-                lang, err = commons.detect_lang(self.dictionary['title'])
-                self.dictionary['language'] = lang
-                self.error = self.dictionary['error'] = err
+                self.detect_language(self.dictionary['title'])
             else:
                 self.error = 100
-        self.sfnt = sfn.create(self.dictionary)
-        self.ctnt = ctn.create(self.dictionary, date_format)
+        self.generate()
 
 
 def get_bibtex(doi_url):

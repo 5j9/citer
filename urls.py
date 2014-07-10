@@ -14,27 +14,19 @@ import requests
 import bs4
 
 import commons
-import config
-
-if config.lang == 'en':
-    import sfn_en as sfn
-    import ctn_en as ctn
-else:
-    import sfn_fa as sfn
-    import ctn_fa  as ctn
 
 
-class Response():
+class Response(commons.BaseResponse):
 
-    """Create citation object."""
+    """Create URL's response object."""
 
     def __init__(self, url, date_format='%Y-%m-%d'):
+        """Make the dictionary and run self.generate()."""
+        self.date_format = date_format
         try:
             self.url = url
             self.dictionary = url2dictionary(url)
-            self.sfnt = sfn.create(self.dictionary)
-            self.ctnt = ctn.create(self.dictionary, date_format)
-            self.error = 0
+            self.generate()
         except (ContentTypeError, ContentLengthError) as e:
             self.sfnt = 'Could not process the request.'
             self.ctnt = e.message
@@ -744,7 +736,7 @@ def url2dictionary(url):
         logger.debug('Date tag: ' + str(tag))
         d['date'] = date
         d['year'] = d['date'][:4]
-    d['language'], d['error'] = commons.detect_lang(soup.text)
+    d['language'], d['error'] = commons.detect_language(soup.text)
     return d
 
 

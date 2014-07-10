@@ -36,9 +36,7 @@ class Response(commons.BaseResponse):
             self.dictionary['pages'] = pq['pg'][0][2:]
             self.dictionary['url'] += '&pg=' + pq['pg'][0]
         #although google does not provide a language field:
-        if 'language' in self.dictionary:
-            self.error = 0
-        else:
+        if 'language' not in self.dictionary:
             self.detect_language(self.dictionary['title'])
         self.generate()
 

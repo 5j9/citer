@@ -10,14 +10,6 @@ import requests
 import commons
 import bibtex
 import adinebook
-import config
-
-if config.lang == 'en':
-    import sfn_en as sfn
-    import ctn_en as ctn
-else:
-    import sfn_fa as sfn
-    import ctn_fa as ctn
 
 
 #original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
@@ -42,13 +34,14 @@ class IsbnError(Exception):
     pass
 
 
-class Response():
+class Response(commons.BaseResponse):
     
-    """Create isbn citation object."""
+    """Create isbn's response object."""
 
     def __init__(self, isbn_container_string, pure=False,
                  date_format='%Y-%m-%d'):
-        """Get an ISBN-containing string and return an ISBN object."""
+        """Make the dictionary and run self.generate()."""
+        self.date_format = date_format
         if pure:
             self.isbn = isbn_container_string
         else:
@@ -67,14 +60,9 @@ class Response():
         self.dictionary = choose_dict(a, o)
         if not a and not o:
             raise IsbnError('Bibliographic information not found.')
-        if 'language' in self.dictionary:
-            self.error = 0
-        else:
-            lang, err = commons.detect_lang(self.dictionary['title'])
-            self.dictionary['language'] = lang
-            self.dictionary['error'] = self.error = err
-        self.sfnt = sfn.create(self.dictionary)
-        self.ctnt = ctn.create(self.dictionary, date_format)
+        if 'language' not in self.dictionary:
+            self.detect_language(self.dictionary['title'])
+        self.generate()
 
 
 def choose_dict(adinebook, ottobib):

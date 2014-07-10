@@ -6,30 +6,24 @@
 import re
 import requests
 
+import commons
 import bibtex
-import config
 #import ris[1]
 
-if config.lang == 'en':
-    import sfn_en  as sfn
-    import ctn_en as ctn
-else:
-    import sfn_fa as sfn
-    import ctn_fa as ctn
 
-class Response():
+class Response(commons.BaseResponse):
 
-    """Create NoorLib citation object."""
+    """Create NoorLib response object."""
 
     def __init__(self, noormags_url, date_format='%Y-%m-%d'):
+        """Make the dictionary and run self.generate()."""
+        self.date_format = date_format
         self.url = noormags_url
         self.bibtex = get_bibtex(noormags_url)
         self.dictionary = bibtex.parse(self.bibtex)
         #self.ris = get_ris(noormags_url)[1]
         #self.dictionary = ris.parse(self.ris)[1]
-        self.sfnt = sfn.create(self.dictionary)
-        self.ctnt = ctn.create(self.dictionary, date_format)
-        self.error = 0
+        self.generate()
 
 
 def get_bibtex(noormags_url):
