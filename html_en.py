@@ -71,19 +71,20 @@ template = Template("""<!DOCTYPE html>
             </form>
             <p>
                 <a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:<br>
-                <textarea rows="8" readonly>%s\n\n%s</textarea>
-                <textarea rows="4" readonly>%s\n\n%s</textarea>
+                <textarea rows="8" readonly>$s\n\n$s</textarea>
+                <a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:<br>
+                <textarea rows="4" readonly>$s</textarea>
             </p>
             <p>
-                <!-- There may be error in language detection. %s % -->
+                <!-- There may be error in language detection. $s % -->
             </p>
             <div id="info">
                 <p>
-                        You can use this tool to create shortened footnotes. Currently the following inputs are supported:</p>
+                        You can use this tool to create shortened footnote/named reference for a given:</p>
                 <p>
-                        <a href="http://books.google.com/">Google Books URLs</a>, <a href="https://en.wikipedia.org/wiki/Digital_object_identifier">DOI</a> (Any Digital object Identifier) and <a href="https://en.wikipedia.org/wiki/International_Standard_Book_Number">ISBN</a> (International Standard Book Number).</p>
+                        <a href="http://books.google.com/">Google Books URL</a>, <a href="https://en.wikipedia.org/wiki/Digital_object_identifier">DOI</a> (Any Digital object Identifier) or <a href="https://en.wikipedia.org/wiki/International_Standard_Book_Number">ISBN</a> (International Standard Book Number).</p>
                 <p>
-                        + URL of many major news websites, including:<br />
+                        Additionaly, URL of many major news websites are supported. That includes:<br />
                         <a href="http://www.nytimes.com/">The New York Times</a>, <a href="http://www.bbc.com/">BBC</a>, <a href="http://www.dailymail.co.uk/">Daily Mail</a>, <a href="http://www.mirror.co.uk/">Daily Mirror</a>, <a href="http://www.telegraph.co.uk/">The Daily Telegraph</a>, <a href="http://www.huffingtonpost.com/">The Huffington Post</a>, <a href="http://www.washingtonpost.com/">The Washington Post</a>, The <a href="http://www.boston.com/">Boston</a> <a href="http://www.bostonglobe.com/">Globe</a>, <a href="http://www.businessweek.com/">Bloomberg Businessweek</a>, <a href="http://www.ft.com/">Financial Times</a>, and <a href="http://timesofindia.indiatimes.com/">The Times of India</a>.</p>
                 <p>
                         Found a bug or have a suggestion? Contact me on my talk page. (<a href="https://wikitech.wikimedia.org/wiki/User_talk:Dalba">User:Dalba</a>).</p>
@@ -119,12 +120,12 @@ template = Template("""<!DOCTYPE html>
 </html>""")
 
 today = date.today()
-template = template.substitute({'Ymd': today.strftime('%Y-%m-%d'),
-                                  'BdY': today.strftime('%B %d, %Y'),
-                                  'bdY': today.strftime('%b %d, %Y'),
-                                  'dBY': today.strftime('%d %B %Y'),
-                                  'dbY': today.strftime('%d %b %Y'),
-                                  })
+template = template.safe_substitute({'Ymd': today.strftime('%Y-%m-%d'),
+                                     'BdY': today.strftime('%B %d, %Y'),
+                                     'bdY': today.strftime('%b %d, %Y'),
+                                     'dBY': today.strftime('%d %B %Y'),
+                                     'dbY': today.strftime('%d %b %Y'),
+                                     }).replace('%', '%%').replace('$', '%')
 
 default_response = ('Generated citation will appear here...',
                     '',
