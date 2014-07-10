@@ -13,10 +13,10 @@ import config
 
 if config.lang == 'en':
     import sfn_en  as sfn
-    import wikicite_en  as wikicite
+    import ctn_en  as ctn
 else:
     import sfn_fa as sfn
-    import wikicite_fa as wikicite
+    import ctn_fa as ctn
 
 class Citation():
     
@@ -34,7 +34,7 @@ class Citation():
         if 'LA' in self.ris:
             self.dictionary['language'] = ris.parse(self.ris)['language']
         self.sfnt = sfn.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary, date_format)
+        self.ctnt = ctn.create(self.dictionary, date_format)
         self.error = 0
 
         

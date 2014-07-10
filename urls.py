@@ -18,10 +18,10 @@ import config
 
 if config.lang == 'en':
     import sfn_en as sfn
-    import wikicite_en as wikicite
+    import ctn_en as ctn
 else:
     import sfn_fa as sfn
-    import wikicite_fa  as wikicite
+    import ctn_fa  as ctn
 
 
 class Citation():
@@ -33,11 +33,11 @@ class Citation():
             self.url = url
             self.dictionary = url2dictionary(url)
             self.sfnt = sfn.create(self.dictionary)
-            self.cite = wikicite.create(self.dictionary, date_format)
+            self.ctnt = ctn.create(self.dictionary, date_format)
             self.error = 0
         except (ContentTypeError, ContentLengthError) as e:
             self.sfnt = 'Could not process the request.'
-            self.cite = e.message
+            self.ctnt = e.message
             self.error = 100
             logger.exception(url)
 

@@ -12,10 +12,10 @@ import config
 
 if config.lang == 'en':
     import sfn_en  as sfn
-    import wikicite_en as wikicite
+    import ctn_en as ctn
 else:
     import sfn_fa as sfn
-    import wikicite_fa as wikicite
+    import ctn_fa as ctn
 
 class Citation():
 
@@ -28,7 +28,7 @@ class Citation():
         #self.ris = get_ris(noormags_url)[1]
         #self.dictionary = ris.parse(self.ris)[1]
         self.sfnt = sfn.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary, date_format)
+        self.ctnt = ctn.create(self.dictionary, date_format)
         self.error = 0
 
 

@@ -14,10 +14,10 @@ import config
 
 if config.lang == 'en':
     import sfn_en as sfn
-    import wikicite_en as wikicite
+    import ctn_en as ctn
 else:
     import sfn_fa as sfn
-    import wikicite_fa as wikicite
+    import ctn_fa as ctn
 
 
 #original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
@@ -74,7 +74,7 @@ class Citation():
             self.dictionary['language'] = lang
             self.dictionary['error'] = self.error = err
         self.sfnt = sfn.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary, date_format)
+        self.ctnt = ctn.create(self.dictionary, date_format)
 
 
 def choose_dict(adinebook, ottobib):

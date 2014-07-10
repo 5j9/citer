@@ -15,10 +15,10 @@ import config
 
 if config.lang == 'en':
     import sfn_en as sfn
-    import wikicite_en as wikicite
+    import ctn_en as ctn
 else:
     import sfn_fa as sfn
-    import wikicite_fa  as wikicite
+    import ctn_fa  as ctn
 
 class Citation():
     """Create Adinebook citation object."""
@@ -37,7 +37,7 @@ class Citation():
             self.dictionary['language'] = lang
             self.error = self.dictionary['error'] = err
         self.sfnt = sfn.create(self.dictionary)
-        self.cite = wikicite.create(self.dictionary, date_format)
+        self.ctnt = ctn.create(self.dictionary, date_format)
 
 
 def isbn2url(isbn):

@@ -91,7 +91,7 @@ def application(environ, start_response):
             obj = html.ResposeObj(*html.undefined_url_response)
             logger.info('There was an undefined_url_response\n' + url)
         response_body = html.skeleton % (obj.sfnt,
-                                        obj.cite,
+                                        obj.ctnt,
                                         obj.error)
     except (requests.ConnectionError):
         logger.exception(url)

@@ -10,7 +10,7 @@ class ResposeObj():
     
     def __init__(self, ref, cite, error):
         self.sfnt = ref
-        self.cite = cite
+        self.ctnt = cite
         self.error = error
 
 

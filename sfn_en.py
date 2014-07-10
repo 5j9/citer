@@ -19,7 +19,7 @@ def create(d):
             if c < 5: #{{sfn}} only supports a maximum of four authors
                 s += '|' + name.lastname
     else:
-        #the same order should be used in wikicite:
+        #the same order should be used in ctn:
         s += '|' + (d['publisher'] if 'publisher' in d else \
                     d['journal'] if 'journal' in d else \
                     d['website'] if 'website' in d else \
