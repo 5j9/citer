@@ -401,10 +401,11 @@ Returns site's name as a string.
     try:
         #using hometitle
         thread.join()
-        sep_regex = ' - | — |\||:'
-        htp = re.split(sep_regex, hometitle_list[0])
-        if len(htp)==1:
-            return htp[0].strip(), 'hometitle'
+        if ':' in hometitle_list[0]:
+            #http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html
+            sitename = hometitle_list[0].split(':')[0].strip()
+            if sitename:
+                return sitename, 'hometitle.split(":")[0]'
         sitename = parse_title(hometitle_list[0], url, None)[2]
         if sitename:
             return sitename, 'parsed hometitle'
@@ -602,10 +603,11 @@ def find_date(soup, url):
         #http://www.mirror.co.uk/news/uk-news/how-reid-will-get-it-all-off-pat--535323
         #should be placed before article:modified_time
         ({'data-type': 'pub-date'}, 'getattr', 'text'),
+        #http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/
+        #place before {'property': 'article:modified_time'}
+        ({'property': 'article:published_time'}, 'getitem', 'content'),
         #http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
         ({'property': 'article:modified_time'}, 'getitem', 'content'),
-        #http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
-        ({'property': 'article:published_time'}, 'getitem', 'content'),
         #http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
         ({'property': 'dc:date dc:created'}, 'getitem', 'content'),
         #http://www.bbc.co.uk/news/science-environment-20890389
