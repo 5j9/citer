@@ -261,6 +261,20 @@ def byline_to_names(byline):
      Middle East correspondent')
     [Name(Erika Solomon), Name(Borzou Daragahi)]
     '''
+    specialwords = ('Reporter',
+                    'People',
+                    'Editor',
+                    'Correspondent',
+                    'Administrator',
+                    'Staff',
+                    'Writer',
+                    )
+    def isspecial(string):
+        """Return True if the string contains one of the special words."""
+        for sp in specialwords:
+            if sp.lower() in string.lower():
+                return True
+        return False
     for c in '|:+':
         if c in byline:
             raise InvalidByLineError('Invalid character ("%s") in byline.' %c)
@@ -268,30 +282,22 @@ def byline_to_names(byline):
         raise InvalidByLineError('Found \d\d\d\d in byline. '+
                                  '(byline needs to be pure)')
     byline = byline.strip()
-    if re.match('by ', byline, re.I):
+    if byline.lower().startswith('by '):
         byline = byline[3:]
     fullnames = re.split(', and | and |, |;', byline, flags=re.I)
     names = []
-    specialwords = ('Reporter',
-                    'People',
-                    'Editor',
-                    'Correspondent',
-                    'Administrator',
-                    'Staff',
-                    )
     for fullname in fullnames:
         if ' in ' in fullname:
             fullname = fullname.split(' in ')[0]
         name = commons.Name(fullname)
-        if re.search('|'.join(specialwords), name.lastname, re.I):
+        if isspecial(name.lastname):
             name.nofirst_fulllast()
         names.append(name)
-    #remove names containing special words or not having firstname (orgs)
-    for name in names:
-        if len(names) > 1 and \
-           (re.search('|'.join(specialwords), name.lastname, re.I) or \
-           not name.firstname):
-            names.remove(name)
+    # Remove names containing special words or not having firstname (orgs)
+    name0 = names[0] # In case nothing remains of names
+    names = [n for n in names if n.firstname and not isspecial(n.lastname)]
+    if not names:
+        names.append(name0)
     return names
 
 
