@@ -5,7 +5,10 @@
 
 
 import unittest
+import sys
 
+import dummy_requests
+sys.path.append('..')
 import urls
 
 
@@ -155,7 +158,6 @@ class NytTest(unittest.TestCase):
         self.assertIn(ct, o.ctnt)
 
         
-
 class TGDaily(unittest.TestCase):
 
     def test_tgd1(self):
@@ -228,6 +230,6 @@ class Others(unittest.TestCase):
         self.assertIn(sf, o.sfnt)
         self.assertIn(ct, o.ctnt)
 
-        
+urls.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
     unittest.main()

@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from pprint import pprint as p
+import sys
 
+sys.path.append('..')
 import adinebook, googlebooks, noormags, noorlib
 import doi, isbn
 
