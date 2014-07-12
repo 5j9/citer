@@ -106,8 +106,15 @@ def find_authors(soup):
     except Exception:
         pass
     try:
+        #http://newsoffice.mit.edu/2014/traffic-lights-theres-a-better-way-0707
+        attrs = {'property': 'og:author'}
+        m = soup.find(attrs=attrs)
+        return byline_to_names(m['content']), attrs
+    except Exception:
+        pass
+    try:
         #http://www.telegraph.co.uk/science/8323909/The-sperm-whale-works-in-extraordinary-ways.html
-        attrs={'name': 'DCSext.author'}
+        attrs = {'name': 'DCSext.author'}
         m = soup.find(attrs=attrs)
         return byline_to_names(m['content']), attrs
     except Exception:
@@ -247,6 +254,8 @@ def byline_to_names(byline):
                     'Correspondent',
                     'Administrator',
                     'Staff',
+                    'Writer',
+                    'Office',
                     )
 
     If any of the specialwords is found in a name. Then it will be omitted from
@@ -268,6 +277,7 @@ def byline_to_names(byline):
                     'Administrator',
                     'Staff',
                     'Writer',
+                    'Office',
                     )
     def isspecial(string):
         """Return True if the string contains one of the special words."""
@@ -275,7 +285,7 @@ def byline_to_names(byline):
             if sp.lower() in string.lower():
                 return True
         return False
-    for c in '|:+':
+    for c in ':+':
         if c in byline:
             raise InvalidByLineError('Invalid character ("%s") in byline.' %c)
     if re.search('\d\d\d\d', byline):
@@ -284,7 +294,7 @@ def byline_to_names(byline):
     byline = byline.strip()
     if byline.lower().startswith('by '):
         byline = byline[3:]
-    fullnames = re.split(', and | and |, |;', byline, flags=re.I)
+    fullnames = re.split(', and | and |, |;|\|', byline, flags=re.I)
     names = []
     for fullname in fullnames:
         if ' in ' in fullname:
