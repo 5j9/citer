@@ -668,9 +668,9 @@ This function is invoked through a thread."""
     homeurl = '://'.join(urlparse(url)[:2])
     try:
         requests_visa(homeurl, headers)
-        homecontent = requests.get(homeurl, headers=headers, timeout=15).content
+        content = requests.get(homeurl, headers=headers, timeout=15).content
         strainer = bs4.SoupStrainer('title')
-        soup = bs4.BeautifulSoup(homecontent, parse_only=strainer)
+        soup = bs4.BeautifulSoup(content, parse_only=strainer)
         hometitle_list.append(soup.title.text.strip())
     except Exception:
         pass
