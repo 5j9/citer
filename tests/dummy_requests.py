@@ -13,20 +13,19 @@ class DummyRequests:
 
     class Response:
         
-        """Used for emulating requests response."""
+        """Use for emulating requests response."""
         
         status_code = 200
+
     
     def get(self, url, *args, **kwargs):
-        file = '/'.join(urlparse(url))
-        file = re.sub('/+', '/', file)
-        file = './offline_resources/' + file
-        if file.endswith('/'):
-            file = file[:-1]
+        pu = urlparse(url)
+        file = './offline_resources/' +\
+               re.sub('/+', '/', '/'.join(pu)).rstrip('/') + '.html'
         try:
             with open(file, 'rb') as f:
                 content = f.read()
-        except FileNotFoundError:
+        except (FileNotFoundError):
             path = '/'.join(file.split('/')[:-1]) + '/'
             os.makedirs(path, exist_ok=True)
             print('* Downloading ' + url)
@@ -37,7 +36,7 @@ class DummyRequests:
         return self.Response
 
     def head(self, url, *args, **kwargs):
-        response_headers = {'content-type': 'text/html'}
-        response_headers['content-length'] = str(len(self.get(url).content))
-        self.Response.headers = response_headers
+        headers = {'content-type': 'text/html'}
+        headers['content-length'] = str(len(self.get(url).content))
+        self.Response.headers = headers
         return self.Response
