@@ -230,6 +230,14 @@ class Others(unittest.TestCase):
         self.assertIn(sf, o.sfnt)
         self.assertIn(ct, o.ctnt)
 
+    def test_oth7(self):
+        """Contains a By Topic line and also the byline contains '|'."""
+        i = 'http://newsoffice.mit.edu/2014/traffic-lights-theres-a-better-way-0707'
+        o = urls.Response(i)
+        ct = "* {{cite web|last=Chandler|first=David L.|title=Traffic lights: There’s a better way|website=MIT News Office|date=2014-07-07|year=2014|url=http://newsoffice.mit.edu/2014/traffic-lights-theres-a-better-way-0707|ref=harv|accessdate="
+        self.assertIn(ct, o.ctnt)
+
+
 urls.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
     unittest.main()
