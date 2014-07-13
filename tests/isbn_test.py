@@ -18,7 +18,7 @@ class IsbnTest(unittest.TestCase):
         """not found in adinebook"""
         i = '9780349119168'
         o = isbn.Response(i, pure=True)
-        e = '* {{cite book|last=Adkins|first=Roy|title=The war for all the oceans : from Nelson at the Nile to Napoleon at Waterloo|publisher=Abacus|location=London|year=2007|isbn=9780349119168|ref=harv}}'
+        e = '* {{cite book|last=Adkins|first=Roy|title=The war for all the oceans : from Nelson at the Nile to Napoleon at Waterloo|publisher=Abacus|location=London|year=2007|isbn=978-0-349-11916-8|ref=harv}}'
         self.assertIn(e, o.ctnt)
 
     def test_is2(self):
