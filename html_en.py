@@ -71,7 +71,7 @@ template = Template("""<!DOCTYPE html>
             </form>
             <p>
                 <a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:<br>
-                <textarea rows="8" readonly>$s\n\n$s</textarea>
+                <textarea rows="6" readonly>$s\n\n$s</textarea>
                 <a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:<br>
                 <textarea rows="4" readonly>$s</textarea>
             </p>
@@ -129,20 +129,24 @@ template = template.safe_substitute({'Ymd': today.strftime('%Y-%m-%d'),
 
 default_response = ('Generated citation will appear here...',
                     '',
+                    '',
                     '??')
 
 undefined_url_response = ('Undefined input.',
                           'Sorry, the input was not recognized. ' +
                           'The error was logged.',
+                          '',
                           '100')
 
 httperror_response = ('HTTP error:',
                       'One or more of the web resources required to create ' +
                       'this citation are not accessible at this moment.',
+                      '',
                       '100')
 
 other_exception_response = ('An unknown error occurred.',
                             'The error was logged.',
+                            '',
                             '100')
 
 
