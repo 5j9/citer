@@ -65,7 +65,7 @@ class InvalidByLineError(Exception):
 def find_journal(soup):
     """Return journal title as a string."""
     try:
-        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        # http://socialhistory.ihcs.ac.ir/article_319_84.html
         m = soup.find(attrs={'name': 'citation_journal_title'})
         return m['content'].strip()
     except Exception:
@@ -75,7 +75,7 @@ def find_journal(soup):
 def find_url(soup, url):
     """Get a BeautifulSoup object it's url. Return og:url or url as a string."""
     try:
-        #http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
+        # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
         ogurl = soup.find(attrs={'property': 'og:url'})['content']
         if urlparse(ogurl).path:
             return ogurl
@@ -87,8 +87,8 @@ def find_url(soup, url):
 def find_authors(soup):
     """Get a BeautifulSoup object. Return (Names, where)."""
     try:
-        #http://socialhistory.ihcs.ac.ir/article_571_84.html
-        #http://jn.physiology.org/content/81/1/319
+        # http://socialhistory.ihcs.ac.ir/article_571_84.html
+        # http://jn.physiology.org/content/81/1/319
         attrs = {'name': 'citation_author'}
         m = soup.find_all(attrs=attrs)
         authors = []
@@ -106,33 +106,33 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        #http://newsoffice.mit.edu/2014/traffic-lights-theres-a-better-way-0707
+        # http://newsoffice.mit.edu/2014/traffic-lights-theres-a-better-way-0707
         attrs = {'property': 'og:author'}
         m = soup.find(attrs=attrs)
         return byline_to_names(m['content']), attrs
     except Exception:
         pass
     try:
-        #http://www.telegraph.co.uk/science/8323909/The-sperm-whale-works-in-extraordinary-ways.html
+        # http://www.telegraph.co.uk/science/8323909/The-sperm-whale-works-in-extraordinary-ways.html
         attrs = {'name': 'DCSext.author'}
         m = soup.find(attrs=attrs)
         return byline_to_names(m['content']), attrs
     except Exception:
         pass
     try:
-        #http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
+        # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
         m = soup.find(class_='author_byline').text
         return byline_to_names(m), "class_='author_byline'"
     except Exception:
         pass
     try:
-        #http://news.bbc.co.uk/2/hi/business/2570109.stm
+        # http://news.bbc.co.uk/2/hi/business/2570109.stm
         m = soup.find(class_='bylineAuthor').text
         return byline_to_names(m), "class_='bylineAuthor'"
     except Exception:
         pass
     try:
-        #http://www.bbc.com/news/science-environment-26267918
+        # http://www.bbc.com/news/science-environment-26267918
         m = soup.find(class_='byline-name').text
         return byline_to_names(m), "class_='byline-name'"
     except Exception:
@@ -143,13 +143,13 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        #http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
+        # http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
         m = soup.find(class_='meta-author').text
         return byline_to_names(m), 'class="meta-author"'
     except Exception:
         pass
     try:
-        #http://www.ensani.ir/fa/content/326173/default.aspx
+        # http://www.ensani.ir/fa/content/326173/default.aspx
         names = []
         for m in soup.find_all(class_='authorInline'):
             try:
@@ -162,9 +162,9 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        #http://www.dailymail.co.uk/news/article-2633025/
-        #http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471
-        #try before {'name':'author'}
+        # http://www.dailymail.co.uk/news/article-2633025/
+        # http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471
+        # try before {'name':'author'}
         names = []
         for m in soup.find_all(class_='author'):
             try:
@@ -177,7 +177,7 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        #http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
+        # http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
         attrs = {'name': 'author'}
         m = soup.find(attrs=attrs)
         return byline_to_names(m['content']), attrs
@@ -189,26 +189,26 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        #http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
+        # http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
         m = soup.find(id='byline').text
         return byline_to_names(m), "id='byline'"
     except Exception:
         pass
     try:
-        #http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm
+        # http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm
         m = soup.find(class_='byl').text
         return byline_to_names(m), "class_='byl'"
     except Exception:
         pass
     try:
-        #http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html
+        # http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html
         attrs = {'name': 'byl'}
         m = soup.find(attrs=attrs)
         return byline_to_names(m['content']), attrs
     except Exception:
         pass
     try:
-        #http://timesofindia.indiatimes.com/city/pune/UK-allows-working-visas-for-Indian-students/articleshow/1163528927.cms?
+        # http://timesofindia.indiatimes.com/city/pune/UK-allows-working-visas-for-Indian-students/articleshow/1163528927.cms?
         m = soup.find(id='authortext').text
         return byline_to_names(m), "id='authortext'"
     except Exception:
@@ -219,22 +219,22 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        #http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936
-        #try before {'rel': 'author'}
+        # http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936
+        # try before {'rel': 'author'}
         m = re.search('"author": "(.*?)"', str(soup)).group(1)
         return byline_to_names(m), '"author": "(.*?)"'
     except Exception:
         pass
     try:
-        #http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
+        # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
         attrs = {'rel': 'author'}
         m = soup.find(attrs=attrs).text
         return byline_to_names(m), attrs
     except Exception:
         pass
     try:
-        #http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-        #https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act
+        # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
+        # https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act
         m = re.search('[\n\|]\s*[Bb]y\s+(.*?)[\n]', soup.text).group(1)
         return byline_to_names(m), 'soup.text'
     except Exception:
@@ -279,6 +279,7 @@ def byline_to_names(byline):
                     'Writer',
                     'Office',
                     )
+
     def isspecial(string):
         """Return True if the string contains one of the special words."""
         for sp in specialwords:
@@ -287,9 +288,9 @@ def byline_to_names(byline):
         return False
     for c in ':+':
         if c in byline:
-            raise InvalidByLineError('Invalid character ("%s") in byline.' %c)
+            raise InvalidByLineError('Invalid character ("%s") in byline.' % c)
     if re.search('\d\d\d\d', byline):
-        raise InvalidByLineError('Found \d\d\d\d in byline. '+
+        raise InvalidByLineError('Found \d\d\d\d in byline. ' +
                                  '(byline needs to be pure)')
     byline = byline.strip()
     if byline.lower().startswith('by '):
@@ -304,7 +305,7 @@ def byline_to_names(byline):
             name.nofirst_fulllast()
         names.append(name)
     # Remove names containing special words or not having firstname (orgs)
-    name0 = names[0] # In case nothing remains of names
+    name0 = names[0]  # In case nothing remains of names
     names = [n for n in names if n.firstname and not isspecial(n.lastname)]
     if not names:
         names.append(name0)
@@ -318,7 +319,7 @@ Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this function
 does not check that.
 """
     try:
-        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        # http://socialhistory.ihcs.ac.ir/article_319_84.html
         m = soup.find(attrs={'name': 'citation_issn'})
         return m['content'].strip()
     except Exception:
@@ -328,7 +329,7 @@ does not check that.
 def find_pmid(soup):
     """Get the BS object of a page. Return pmid as a string."""
     try:
-        #http://jn.physiology.org/content/81/1/319
+        # http://jn.physiology.org/content/81/1/319
         m = soup.find(attrs={'name': 'citation_pmid'})
         return m['content']
     except Exception:
@@ -338,7 +339,7 @@ def find_pmid(soup):
 def find_volume(soup):
     """Return citatoin volume number as a string."""
     try:
-        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        # http://socialhistory.ihcs.ac.ir/article_319_84.html
         m = soup.find(attrs={'name': 'citation_volume'})
         return m['content'].strip()
     except Exception:
@@ -348,7 +349,7 @@ def find_volume(soup):
 def find_issue(soup):
     """Return citatoin issue number as a string."""
     try:
-        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        # http://socialhistory.ihcs.ac.ir/article_319_84.html
         m = soup.find(attrs={'name': 'citation_issue'})
         return m['content'].strip()
     except Exception:
@@ -358,7 +359,7 @@ def find_issue(soup):
 def find_pages(soup):
     """Return citatoin pages as a string."""
     try:
-        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        # http://socialhistory.ihcs.ac.ir/article_319_84.html
         fp = soup.find(attrs={'name': 'citation_firstpage'})['content'].strip()
         lp = soup.find(attrs={'name': 'citation_lastpage'})['content'].strip()
         return fp + '–' + lp
@@ -383,42 +384,42 @@ Returns site's name as a string.
     except Exception:
         pass
     try:
-        #https://www.bbc.com/news/science-environment-26878529
-        attrs={'property': 'og:site_name'}
+        # https://www.bbc.com/news/science-environment-26878529
+        attrs = {'property': 'og:site_name'}
         return soup.find(attrs=attrs)['content'].strip(), attrs
     except Exception:
         pass
     try:
-        #http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-        attrs={'name': 'PublisherName'}
+        # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
+        attrs = {'name': 'PublisherName'}
         return soup.find(attrs=attrs)['value'].strip(), attrs
     except Exception:
         pass
     try:
-        #http://www.bbc.com/news/science-environment-26878529 (Optional)
-        attrs={'name': 'CPS_SITE_NAME'}
+        # http://www.bbc.com/news/science-environment-26878529 (Optional)
+        attrs = {'name': 'CPS_SITE_NAME'}
         return soup.find(attrs=attrs)['content'].strip(), attrs
     except Exception:
         pass
     try:
-        #http://www.nytimes.com/2013/10/01/science/a-wealth-of-data-in-whale-breath.html
-        attrs={'name': 'cre'}
+        # http://www.nytimes.com/2013/10/01/science/a-wealth-of-data-in-whale-breath.html
+        attrs = {'name': 'cre'}
         return soup.find(attrs=attrs)['content'].strip(), attrs
     except Exception:
         pass
     try:
-        #search the title
+        # search the title
         sitename = parse_title(soup.title.text, url, authors, hometitle_list,
-                           thread)[2]
+                               thread)[2]
         if sitename:
             return sitename, 'parse_title'
     except Exception:
         pass
     try:
-        #using hometitle
+        # using hometitle
         thread.join()
         if ':' in hometitle_list[0]:
-            #http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html
+            # http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html
             sitename = hometitle_list[0].split(':')[0].strip()
             if sitename:
                 return sitename, 'hometitle.split(":")[0]'
@@ -427,12 +428,12 @@ Returns site's name as a string.
             return sitename, 'parsed hometitle'
     except Exception:
         pass
-    #return hostname
+    # return hostname
     if urlparse(url).hostname.startswith('www.'):
         return urlparse(url).hostname[4:], 'hostname'
     else:
         return urlparse(url).hostname, 'hostname'
-   
+
 
 def try_find(soup, find_parameters):
     """Return the first matching item in find_paras as (string, used_attrs).
@@ -464,32 +465,32 @@ def try_find(soup, find_parameters):
 def find_title(soup, url, authors, hometitle_list, thread):
     """Return (title_string, where_info)."""
     find_parameters = (
-        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        # http://socialhistory.ihcs.ac.ir/article_319_84.html
         ({'name': 'citation_title'}, 'getitem', 'content'),
-        #http://www.telegraph.co.uk/earth/earthnews/6190335/Whale-found-dead-in-Thames.html
-        #Should be tried before og:title
+        # http://www.telegraph.co.uk/earth/earthnews/6190335/Whale-found-dead-in-Thames.html
+        # Should be tried before og:title
         ({'name': 'title'}, 'getitem', 'content'),
-        #http://www.bostonglobe.com/ideas/2014/04/28/new-study-reveals-how-honky-tonk-hits-respond-changing-american-fortunes/9ep0iPknDBl9EFFaoXfbmL/comments.html
-        #Should be tried before og:title
+        # http://www.bostonglobe.com/ideas/2014/04/28/new-study-reveals-how-honky-tonk-hits-respond-changing-american-fortunes/9ep0iPknDBl9EFFaoXfbmL/comments.html
+        # Should be tried before og:title
         ({'class': 'main-hed'}, 'getattr', 'text'),
-        #http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
-        #Should be tried before og:title
+        # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
+        # Should be tried before og:title
         ({'class': 'arttle'}, 'getattr', 'text'),
-        #http://www.bbc.com/news/science-environment-26878529
+        # http://www.bbc.com/news/science-environment-26878529
         ({'property': 'og:title'}, 'getitem', 'content'),
-        #http://www.bbc.com/news/science-environment-26267918
+        # http://www.bbc.com/news/science-environment-26267918
         ({'name': 'Headline'}, 'getitem', 'content'),
-        #http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
+        # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
         ({'class': 'articleHeadline'}, 'getattr', 'text'),
-        #http://www.nytimes.com/2007/09/11/us/11whale.html
+        # http://www.nytimes.com/2007/09/11/us/11whale.html
         ({'name': 'hdl'}, 'getitem', 'content'),
-        #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+        # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
         ({'class': 'entry-title'}, 'getattr', 'text'),
-        #http://www.ensani.ir/fa/content/326173/default.aspx
+        # http://www.ensani.ir/fa/content/326173/default.aspx
         ({'class': 'title'}, 'getattr', 'text'),
-        #http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
+        # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
         ({'id': 'entryhead'}, 'getattr', 'text'),
-        )
+    )
     raw_title, tag = try_find(soup, find_parameters)
     if not raw_title:
         try:
@@ -537,16 +538,16 @@ Examples:
     if len(title_parts) == 1:
         return (None, title, None)
     hostname = urlparse(url).hostname.replace('www.', '')
-    #Searching for intitle_sitename
-    #1. In hostname
+    # Searching for intitle_sitename
+    # 1. In hostname
     hnset = set(hostname.split('.'))
     for part in title_parts:
         if (part in hostname) or not set(part.lower().split()) - hnset:
             intitle_sitename = part
             break
     if not intitle_sitename:
-        #2. Using difflib on hostname
-        #Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
+        # 2. Using difflib on hostname
+        # Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
         close_matches = difflib.get_close_matches(hostname, title_parts, n=1,
                                                   cutoff=.3)
         if close_matches:
@@ -556,24 +557,24 @@ Examples:
             thread.join()
         if hometitle_list:
             hometitle = hometitle_list[0]
-        #3. In homepage title
+        # 3. In homepage title
         for part in title_parts:
             if (part in hometitle):
                 intitle_sitename = part
                 break
     if not intitle_sitename:
-        #4. Using difflib on hometitle
+        # 4. Using difflib on hometitle
         close_matches = difflib.get_close_matches(hometitle, title_parts, n=1,
                                                   cutoff=.3)
         if close_matches:
             intitle_sitename = close_matches[0]
-    #Searching for intitle_author
+    # Searching for intitle_author
     if authors:
         for author in authors:
             for part in title_parts:
                 if author.lastname.lower() in part.lower():
                     intitle_author = part
-    #Title purification
+    # Title purification
     if intitle_sitename:
         title_parts.remove(intitle_sitename)
         intitle_sitename = intitle_sitename.strip()
@@ -607,70 +608,72 @@ def try_find_date(soup, find_parameters):
 def find_date(soup, url):
     """Get the BS object and url of a page. Return (date_obj, where)."""
     find_parameters = (
-        #http://socialhistory.ihcs.ac.ir/article_319_84.html
+        # http://socialhistory.ihcs.ac.ir/article_319_84.html
         ({'name': 'citation_date'}, 'getitem', 'content'),
-        #http://jn.physiology.org/content/81/1/319
+        # http://jn.physiology.org/content/81/1/319
         ({'name': 'citation_publication_date'}, 'getitem', 'content'),
-        #http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
+        # http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
         ({'name': 'last-modified'}, 'getitem', 'content'),
-        #http://www.mirror.co.uk/news/weird-news/amazing-rescue-drowning-diver-saved-409479
-        #should be placed before article:modified_time
+        # http://www.mirror.co.uk/news/weird-news/amazing-rescue-drowning-diver-saved-409479
+        # should be placed before article:modified_time
         ({'itemprop': 'datePublished'}, 'getitem', 'datetime'),
-        #http://www.mirror.co.uk/news/uk-news/how-reid-will-get-it-all-off-pat--535323
-        #should be placed before article:modified_time
+        # http://www.mirror.co.uk/news/uk-news/how-reid-will-get-it-all-off-pat--535323
+        # should be placed before article:modified_time
         ({'data-type': 'pub-date'}, 'getattr', 'text'),
-        #http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/
-        #place before {'property': 'article:modified_time'}
+        # http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/
+        # place before {'property': 'article:modified_time'}
         ({'property': 'article:published_time'}, 'getitem', 'content'),
-        #http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
+        # http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
         ({'property': 'article:modified_time'}, 'getitem', 'content'),
-        #http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
+        # http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
         ({'property': 'dc:date dc:created'}, 'getitem', 'content'),
-        #http://www.bbc.co.uk/news/science-environment-20890389
+        # http://www.bbc.co.uk/news/science-environment-20890389
         ({'name': 'OriginalPublicationDate'}, 'getitem', 'content'),
         ({'name': 'publish-date'}, 'getitem', 'content'),
-        #http://www.washingtonpost.com/wp-srv/style/movies/reviews/godsandmonsterskempley.htm
+        # http://www.washingtonpost.com/wp-srv/style/movies/reviews/godsandmonsterskempley.htm
         ({'name': 'pub_date'}, 'getitem', 'content'),
-        #http://www.economist.com/node/1271090?zid=313&ah=fe2aac0b11adef572d67aed9273b6e55
+        # http://www.economist.com/node/1271090?zid=313&ah=fe2aac0b11adef572d67aed9273b6e55
         ({'name': 'pubdate'}, 'getitem', 'content'),
-        #http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2Fea29ffb6-c759-11e0-9cac-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=#axzz31G5ZgwCH
+        # http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2Fea29ffb6-c759-11e0-9cac-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=#axzz31G5ZgwCH
         ({'id': 'publicationDate'}, 'getattr', 'text'),
-        #http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
+        # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
         ({'class': 'dateline'}, 'getattr', 'text'),
-        #http://www.nytimes.com/2003/12/14/us/willy-whale-dies-in-norway.html
+        # http://www.nytimes.com/2003/12/14/us/willy-whale-dies-in-norway.html
         ({'name': 'DISPLAYDATE'}, 'getitem', 'content'),
-        #http://www.washingtonpost.com/wp-dyn/content/article/2006/01/19/AR2006011902990.html
+        # http://www.washingtonpost.com/wp-dyn/content/article/2006/01/19/AR2006011902990.html
         ({'name': 'DC.date.issued'}, 'getitem', 'content'),
-        #http://www.farsnews.com/newstext.php?nn=13930418000036
+        # http://www.farsnews.com/newstext.php?nn=13930418000036
         ({'name': 'dc.Date'}, 'getitem', 'content'),
-        #http://www.huffingtonpost.ca/arti-patel/nina-davuluri_b_3936174.html
+        # http://www.huffingtonpost.ca/arti-patel/nina-davuluri_b_3936174.html
         ({'name': 'sailthru.date'}, 'getitem', 'content'),
-        #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+        # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
         ({'class': 'entry-date'}, 'getattr', 'text'),
-        #http://www.huffingtonpost.com/huff-wires/20121203/us-sci-nasa-voyager/
+        # http://www.huffingtonpost.com/huff-wires/20121203/us-sci-nasa-voyager/
         ({'class': 'updated'}, 'getattr', 'text'),
-        #http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
+        # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
         ({'class': 'byline'}, 'getattr', 'text'),
-        #wikipedia
+        # wikipedia
         ({'id': 'footer-info-lastmod'}, 'getattr', 'text'),
-        )
+    )
     date, tag = try_find_date(soup, find_parameters)
     if not date:
         try:
-            #http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+            # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
             date, tag = commons.finddate(url).strftime('%Y-%m-%d'), 'url'
         except Exception:
             pass
     if not date:
         try:
-            #https://www.bbc.com/news/uk-england-25462900
-            return commons.finddate(soup.text).strftime('%Y-%m-%d'), 'soup.text'
+            # https://www.bbc.com/news/uk-england-25462900
+            return commons.finddate(
+                soup.text).strftime('%Y-%m-%d'), 'soup.text'
         except Exception:
             pass
     if not date:
         try:
             logger.info('Searching for date in page content.\n' + url)
-            return commons.finddate(str(soup)).strftime('%Y-%m-%d'), 'soup.text'
+            return commons.finddate(
+                str(soup)).strftime('%Y-%m-%d'), 'soup.text'
         except Exception:
             pass
     return date, tag
@@ -699,8 +702,8 @@ Return True if content-type is text/* and content-length is less than 1MB.
 Also return True if no information is available. Else return False."""
     response_headers = requests.head(url, headers=request_headers).headers
     if 'content-length' in response_headers:
-        megabytes = int(response_headers['content-length'])/1000000.
-        if megabytes>1:
+        megabytes = int(response_headers['content-length']) / 1000000.
+        if megabytes > 1:
             raise ContentLengthError('Content-length was too long. (' +
                                      format(megabytes, '.2f') +
                                      ' MB)')
@@ -708,9 +711,10 @@ Also return True if no information is available. Else return False."""
         if response_headers['content-type'].startswith('text/'):
             return True
         else:
-            raise ContentTypeError('Invalid content-type: ' +
-                                   response_headers['content-type'] + 
-                                   ' (URL-content is supposed to be text/html)')
+            raise ContentTypeError(
+                'Invalid content-type: ' +
+                response_headers['content-type'] +
+                ' (URL-content is supposed to be text/html)')
     return True
 
 
@@ -719,8 +723,8 @@ def url2dictionary(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)' +
                ' Gecko/20100101 Firefox/30.0'}
 
-    #Creating a thread to fetch homepage title in background
-    hometitle_list = [] #A mutable variable used to get the thread result
+    # Creating a thread to fetch homepage title in background
+    hometitle_list = []  # A mutable variable used to get the thread result
     thread = Thread(target=get_hometitle, args=(url, headers, hometitle_list))
     thread.start()
 
@@ -746,7 +750,7 @@ def url2dictionary(url):
     else:
         d['type'] = 'web'
         d['website'], tag = find_sitename(soup, url, authors, hometitle_list,
-                                     thread)
+                                          thread)
         logger.debug('Website tag: ' + str(tag))
     d['title'], tag = find_title(soup, url, authors, hometitle_list, thread)
     date, tag = find_date(soup, url)
