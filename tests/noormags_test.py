@@ -7,6 +7,7 @@
 import unittest
 import sys
 
+import dummy_requests
 sys.path.append('..')
 import noormags
 
@@ -27,5 +28,6 @@ class NoormagsTest(unittest.TestCase):
         self.assertIn(e, o.ctnt)
 
 
+noormags.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
     unittest.main()

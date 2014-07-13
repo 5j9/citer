@@ -7,6 +7,7 @@
 import unittest
 import sys
 
+import dummy_requests
 sys.path.append('..')
 import adinebook
 
@@ -62,6 +63,6 @@ class AdinebookTest(unittest.TestCase):
         e = '* {{cite book|last=دیماتیو|first=ام.رابین|editor-last=جباری|editor-first=کریم|others= کیانوش هاشمیان (زيرنظر), and محمد کاویانی (مترجم)|title=روانشناسی سلامت به ضمیمه نگرشی بر منابع اسلامی|publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها|year=1389|isbn=978-964-459-398-7|language=fa|ref=harv'
         self.assertIn(e, o.ctnt)
 
-
+adinebook.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
     unittest.main()

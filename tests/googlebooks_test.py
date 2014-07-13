@@ -7,6 +7,7 @@
 import unittest
 import sys
 
+import dummy_requests
 sys.path.append('..')
 import googlebooks
 
@@ -47,5 +48,6 @@ class GooglebooksTest(unittest.TestCase):
         self.assertIn(e2, o.ctnt)
 
 
+googlebooks.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
     unittest.main()

@@ -7,6 +7,7 @@
 import unittest
 import sys
 
+import dummy_requests
 sys.path.append('..')
 import noorlib
 
@@ -29,5 +30,6 @@ class NoorlibTest(unittest.TestCase):
         self.assertIn(ec, o.ctnt)
 
 
+noorlib.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
     unittest.main()
