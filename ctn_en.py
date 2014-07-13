@@ -12,8 +12,6 @@ import sfn_en as sfn
 
 def create(d, date_format):
     """Create citation based on the given dictionary."""
-    d = commons.dict_cleanup(d)
-    d = commons.encode_for_template(d)
     if d['type'] == 'book':
         s = '* {{cite book'
     elif d['type'] in ['article', 'jour']:

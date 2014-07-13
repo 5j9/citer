@@ -8,9 +8,7 @@ import commons
 
 
 def create(d):
-    """Creates citation based on the given dictionary"""
-    d = commons.dict_cleanup(d)
-    d = commons.encode_for_template(d)
+    """Creates citation based on the given dictionary."""
     s = '{{sfn'
     if 'authors' in d:
         c = 0
