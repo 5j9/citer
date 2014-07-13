@@ -17,25 +17,33 @@ class DummyRequests:
 
         status_code = 200
 
-    def get(self, url, *args, **kwargs):
+    def get(self, url, headers=None, *args, **kwargs):
         pu = urlparse(url)
         file = './offline_resources/' +\
                re.sub('/+', '/', '/'.join(pu)).rstrip('/') + '.html'
         try:
             with open(file, 'rb') as f:
                 content = f.read()
+            try:
+                text = content.decode('utf-8')
+            except UnicodeDecodeError:
+                text = None
         except (FileNotFoundError):
             path = '/'.join(file.split('/')[:-1]) + '/'
             os.makedirs(path, exist_ok=True)
             print('* Downloading ' + url)
-            content = requests.get(url).content
+            r = requests.get(url, headers=headers)
+            content = r.content
+            text = r.text
             with open(file, 'wb') as f:
                 f.write(content)
         self.Response.content = content
+        self.Response.text = text
         return self.Response
 
-    def head(self, url, *args, **kwargs):
-        headers = {'content-type': 'text/html'}
-        headers['content-length'] = str(len(self.get(url).content))
-        self.Response.headers = headers
+    def head(self, url, headers=None, *args, **kwargs):
+        rheaders = {'content-type': 'text/html'}
+        rheaders['content-length'] = str(len(self.get(url,
+                                                      headers=headers).content))
+        self.Response.headers = rheaders
         return self.Response
