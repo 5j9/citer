@@ -136,9 +136,9 @@ class BaseResponse:
         self.dictionary = dict_cleanup(self.dictionary)
         self.dictionary = encode_for_template(self.dictionary)
         if 'isbn' in self.dictionary:
-            masked = isbnlib.mask(dictionary['isbn'])
+            masked = isbnlib.mask(self.dictionary['isbn'])
             if masked:
-                dictionary['isbn'] = masked
+                self.dictionary['isbn'] = masked
         self.sfnt = sfn.create(self.dictionary)
         self.ctnt = ctn.create(self.dictionary, self.date_format)
         self.create_reftag()
