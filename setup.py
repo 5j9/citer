@@ -74,6 +74,7 @@ setup(
     # https://packaging.python.org/en/latest/technical.html#install-requires-vs-requirements-files
     install_requires=['requests>=2.3.0',
                       'beautifulsoup4>=4.3.2',
+                      'isbnlib>=3.3.8',
                       'langid>=1.1.4dev',
                       #'flup>=1.0.3.dev-20140705'
                       ],

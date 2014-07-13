@@ -1,5 +1,6 @@
 beautifulsoup4==4.3.2
 numpy==1.8.1
 requests==2.3.0
+isbnlib==3.3.8
 git+https://github.com/a1tus/flup-py3.git
 git+https://github.com/saffsd/langid.py.git@python3#egg=langid-dev-py3
