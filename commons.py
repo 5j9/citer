@@ -7,6 +7,7 @@ from datetime import datetime
 import re
 
 import langid
+import isbnlib
 
 import config
 if config.lang == 'en':
@@ -118,7 +119,7 @@ class BaseResponse:
         """Detect language of text. Add the result to self.dictionary and error.
 
         'language' and 'error' keys will be added to dictionary.
-        self.error will be created to.
+        self.error property will be created.
         """
         lang, err = detect_language(text, langset)
         self.dictionary['language'] = lang
@@ -127,7 +128,17 @@ class BaseResponse:
     def generate(self):
         """Generate self.sfnt, self.ctnt and self.reftag.
 
-        self.dictionary should be ready before calling this function."""
+        self.dictionary should be ready before calling this function.
+        The dictionary will be cleaned up (empty values will be removed) and
+        all values will be encoded using encode_for_template() function.
+        ISBN (if exist) will be hyphenated.
+        """
+        self.dictionary = dict_cleanup(self.dictionary)
+        self.dictionary = encode_for_template(self.dictionary)
+        if 'isbn' in self.dictionary:
+            masked = isbnlib.mask(dictionary['isbn'])
+            if masked:
+                dictionary['isbn'] = masked
         self.sfnt = sfn.create(self.dictionary)
         self.ctnt = ctn.create(self.dictionary, self.date_format)
         self.create_reftag()
