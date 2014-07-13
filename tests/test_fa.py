@@ -5,8 +5,13 @@ import unittest
 import sys
 
 sys.path.append('..')
-import adinebook, googlebooks, noormags, noorlib
-import doi, isbn
+import adinebook
+import googlebooks
+import noormags
+import noorlib
+import doi
+import isbn
+
 
 class AdinebookTest(unittest.TestCase):
 
@@ -95,7 +100,7 @@ class GooglebookTest(unittest.TestCase):
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
 
-        
+
 class NoormagsTest(unittest.TestCase):
 
     def test_nm1(self):
@@ -141,7 +146,7 @@ Also be aware that there was an &amp; entity which was manually substitute in
 expected output'''
 
         i = '10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5'
-        o = doi.Doi(i, pure = True)
+        o = doi.Doi(i, pure=True)
         e = '* {{یادکرد ژورنال|نام خانوادگی=Dian|نام=Noor Lida Habi Mat|نام خانوادگی۲=Sudin|نام۲=Nor’aini|نام خانوادگی۳=Yusoff|نام۳=Mohd Suria Affandi|عنوان=Characteristics of Microencapsulated Palm-Based Oil as Affected by Type of Wall Material|ژورنال=Journal of the Science of Food and Agriculture|ناشر=Wiley Blackwell (John Wiley &amp; Sons)|جلد=70|شماره=4|سال=1996|ماه=Apr|صفحه=422–426|پیوند=http://dx.doi.org/10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|doi=10.1002/(SICI)1097-0010(199604)70:4<422::AID-JSFA514>3.0.CO;2-5|زبان=en|تاریخ بازبینی='
         self.assertIn(e, o.ctnt)
 
@@ -151,14 +156,14 @@ class IsbnTest(unittest.TestCase):
     def test_is1(self):
         """not found in adinebook"""
         i = '9780349119168'
-        o = isbn.Isbn(i, pure = True)
+        o = isbn.Isbn(i, pure=True)
         e = '* {{یادکرد کتاب|نام خانوادگی=Adkins|نام=Roy|کتاب=The war for all the oceans : from Nelson at the Nile to Napoleon at Waterloo|ناشر=Abacus|سال=2007|شابک=9780349119168|زبان=en|تاریخ بازبینی='
         self.assertIn(e, o.ctnt)
 
     def test_is2(self):
         """not found in ottobib"""
         i = '978-964-6736-71-9'
-        o = isbn.Isbn(i, pure = True)
+        o = isbn.Isbn(i, pure=True)
         e = '* {{یادکرد کتاب|دیگران=بدیل بن علی خاقانی (شاعر)،  جهانگیر منصور (به اهتمام) و  بدیع الزمان فروزانفر (مقدمه)|کتاب=دیوان خاقانی شروانی|ناشر=نگاه|سال=1389|ماه=مرداد|شابک=978-964-6736-71-9|زبان=fa|تاریخ بازبینی='
         self.assertIn(e, o.ctnt)
 
@@ -167,7 +172,7 @@ class IsbnTest(unittest.TestCase):
         i = '964-6736-34-3 '
         o = isbn.Isbn(i)
         e = '* {{یادکرد کتاب|دیگران=سحر معصومی (به اهتمام)|کتاب=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری|ناشر=نگاه|سال=1386|ماه=بهمن|شابک=964-6736-34-3|زبان=fa|تاریخ بازبینی='
-        self.assertIn(e, o.ctnt) 
+        self.assertIn(e, o.ctnt)
 
     def test_is4(self):
         """unpure isbn10"""

@@ -8,16 +8,15 @@ import os
 
 
 class DummyRequests:
-    
+
     """This class will be used to override the requests mudule in tests."""
 
     class Response:
-        
+
         """Use for emulating requests response."""
-        
+
         status_code = 200
 
-    
     def get(self, url, *args, **kwargs):
         pu = urlparse(url)
         file = './offline_resources/' +\

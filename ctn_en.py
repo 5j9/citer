@@ -34,11 +34,11 @@ def create(d, date_format):
                         'editor-first',
                         'editor-last',
                         'editor',
-                          )
+                        )
     if 'translators' in d:
         for translator in d['translators']:
             translator.fullname += ' (مترجم)'
-        #todo: add a 'Translated by ' before name of translators
+        # todo: add a 'Translated by ' before name of translators
         if 'others' in d:
             d['others'].extend(d['translators'])
         else:
@@ -46,7 +46,7 @@ def create(d, date_format):
     if 'others' in d:
         s += names1para(d['others'], 'others')
     if 'title' in d:
-            s += '|title=' +  d['title']
+        s += '|title=' + d['title']
     if 'journal' in d:
         s += '|journal=' + d['journal']
     elif 'website' in d:
@@ -82,20 +82,20 @@ def create(d, date_format):
     if 'doi' in d:
         s += '|doi=' + d['doi']
     if 'language' in d:
-        if d['language'].lower() not in ['english','en']:
+        if d['language'].lower() not in ['english', 'en']:
             s += '|language=' + d['language']
     if 'authors' in d:
         s += '|ref=harv'
     else:
-        #order should match sfn
+        # order should match sfn
         s += '|ref={{sfnref|' +\
              (
-                 d['publisher'] if 'publisher' in d else \
-                 d['journal'] if 'journal' in d else \
-                 d['website'] if 'website' in d else \
-                 d['title'] if 'title' in d else \
+                 d['publisher'] if 'publisher' in d else
+                 d['journal'] if 'journal' in d else
+                 d['website'] if 'website' in d else
+                 d['title'] if 'title' in d else
                  'Anon.'
-                 )
+             )
         if 'year' in d:
             s += '|' + d['year']
         s += '}}'

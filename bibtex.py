@@ -5,13 +5,14 @@ import re
 
 import commons
 
-#Known issues: currently it does not detect special symbols and escapes
-#more information: http://www.bibtex.org/SpecialSymbols/
-#cases: '\_' in urls and '\&' in titles
+# Known issues: currently it does not detect special symbols and escapes
+# more information: http://www.bibtex.org/SpecialSymbols/
+# cases: '\_' in urls and '\&' in titles
+
 
 def parse(bibtex_text):
     """Parse bibtex_text data and return a dictionary of information."""
-    #replacing common latex special commonds:
+    # replacing common latex special commonds:
     bibtex_text = bibtex_text.replace(r'{\textregistered}', '®')
     bibtex_text = bibtex_text.replace(r'\%', '%')
     bibtex_text = bibtex_text.replace(r'\$', '$')
@@ -42,11 +43,11 @@ def parse(bibtex_text):
     bibtex_text = bibtex_text.replace(r'{\={U}}', 'Ū')
     bibtex_text = bibtex_text.replace(r'{\v{Z}}', 'Ž')
     d = {}
-    #type: (book, journal, . . . )
+    # type: (book, journal, . . . )
     m = re.search('@(.*?)\s*\{', bibtex_text, re.I)
     if m:
         d['type'] = m.group(1).strip().lower()
-    #author:
+    # author:
     m = re.search('author\s*=\s*\{\s*(.*?)\\s*}', bibtex_text, re.I)
     if m:
         d['authors'] = []
@@ -54,7 +55,7 @@ def parse(bibtex_text):
         for author in authors:
             name = commons.Name(author)
             d['authors'].append(name)
-        
+
     m = re.search('title\s*=\s*\{\s*(.*?)\s*\}', bibtex_text, re.I)
     if m:
         d['title'] = m.group(1).strip()

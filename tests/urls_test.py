@@ -27,7 +27,7 @@ class BostonTest(unittest.TestCase):
         o = urls.Response(i)
         ct = '* {{cite web|last=Saltzman|first=Jonathan|last2=Farragher|first2=Thomas|title=Walsh meets with college leaders on off-campus housing|website=BostonGlobe.com|date=2014-06-03|year=2014|url=https://www.bostonglobe.com/metro/2014/06/03/walsh-meets-with-college-leaders-off-campus-housing/lsxtLSGJMD86Gbkjay3D6J/story.html|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
-        
+
 
 class WashingtonpostTest(unittest.TestCase):
 
@@ -87,7 +87,7 @@ class DilyMailTest(unittest.TestCase):
         e2 = '* {{cite web|last=Malm|first=Sara|last2=Witheridge|first2=Annette|last3=Drury|first3=Ian|last4=Bates|first4=Daniel|title=Hate preacher Abu Hamza GUILTY of setting up US terror training camps|website=Mail Online|date=2014-05-19|year=2014|url=http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html|ref=harv|accessdate='
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
-        
+
 
 class BbcTest(unittest.TestCase):
 
@@ -111,7 +111,7 @@ class BbcTest(unittest.TestCase):
         o = urls.Response(i)
         ct = '* {{cite web|last=Gage|first=Suzi|title=Sea otter return boosts ailing seagrass in California|website=BBC News|date=2013-08-26|year=2013|url=http://www.bbc.com/news/science-environment-23814524|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
-        
+
     def test_bbc4(self):
         """news.bbc.co.uk, 1 author"""
         i = 'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm'
@@ -119,7 +119,7 @@ class BbcTest(unittest.TestCase):
         ct = "* {{cite web|last=Jones|first=Meirion|title=Malaria advice 'risks lives'|website=BBC NEWS|date=2006-07-13|year=2006|url=http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
 
-        
+
 class NytTest(unittest.TestCase):
 
     def test_nyt1(self):
@@ -157,7 +157,7 @@ class NytTest(unittest.TestCase):
         ct = '* {{cite web|title=19th-century harpoon gives clue on whales|website=The New York Times|date=2007-06-13|year=2007|url=http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html|ref={{sfnref|The New York Times|2007}}|accessdate='
         self.assertIn(ct, o.ctnt)
 
-        
+
 class TGDaily(unittest.TestCase):
 
     def test_tgd1(self):
@@ -180,7 +180,7 @@ class TGDaily(unittest.TestCase):
         o = urls.Response(i)
         ct = '* {{cite web|author=TG Daily Staff|title=SMA reveals giant star cluster in the making|website=TG Daily|date=2013-12-17|year=2013|url=http://www.tgdaily.com/space-features/82906-sma-reveals-giant-star-cluster-in-the-making|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
-        
+
 
 class Others(unittest.TestCase):
 

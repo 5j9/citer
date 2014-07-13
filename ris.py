@@ -6,22 +6,23 @@ from doi import doi_regex
 
 import commons
 
+
 def parse(ris_text):
     """Parse RIS_text data and return the result as a dictionary."""
     d = {}
-    #type: (book, journal, . . . )
+    # type: (book, journal, . . . )
     m = re.search('TY  - (.*)', ris_text)
     if m:
         d['type'] = m.group(1).strip().lower()
-    #author:
+    # author:
     m = re.findall('(:?AU|A\d)  - (.*)', ris_text)
-    #d['authors'] should not be created unless there are some authors
+    # d['authors'] should not be created unless there are some authors
     if m:
         d['authors'] = []
         for match in m:
             name = commons.Name(match[1])
             d['authors'].append(name)
-            
+
     m = re.search('(T1|TI)  - (.*)', ris_text)
     if m:
         if m.group(2):
@@ -53,7 +54,7 @@ def parse(ris_text):
     m = re.search('SN  - (.*)', ris_text)
     if m:
         d['isbn'] = m.group(1).strip()
-    #DOIs may be in N1 (notes) tag, search for it in any tag
+    # DOIs may be in N1 (notes) tag, search for it in any tag
     m = re.search(doi_regex, ris_text)
     if m:
         d['doi'] = m.group(0).strip()
@@ -67,9 +68,9 @@ def parse(ris_text):
         d['pages'] = d['startpage'] + '–' + d['endpage']
     m = re.search('UR  - (.*)', ris_text)
     if m:
-        #in IRS, url can be seprated using a ";"
+        # in IRS, url can be seprated using a ";"
         d['url'] = m.group(1).split(';')[0].strip()
     m = re.search('LA  - (.*)', ris_text)
     if m:
-        d['language'] =  m.group(1).strip()
+        d['language'] = m.group(1).strip()
     return d

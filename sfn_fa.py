@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
+
 def create(d):
     """Creates citation based on the given dictionary"""
     if 'authors' in d:
@@ -8,7 +9,7 @@ def create(d):
         c = 0
         for name in d['authors']:
             c += 1
-            if c < 5: #{{پک}} only accepts a maximum of four authors
+            if c < 5:  # {{پک}} only accepts a maximum of four authors
                 s += '|' + name.lastname
     else:
         s = '<ref>{{پک/بن'

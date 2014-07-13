@@ -16,38 +16,38 @@ else:
     import sfn_fa as sfn
     import ctn_fa as ctn
 
-#Date patterns:
+# Date patterns:
 
-#January|February...
+# January|February...
 B = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
     'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
-#Month abbreviations:
+# Month abbreviations:
 b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
-#Month numbers 0?1-12
+# Month numbers 0?1-12
 m = r'(0?[1-9]|1[012])'
-#Zero padded month numbers 01-12
+# Zero padded month numbers 01-12
 zm = r'(0[1-9]|1[012])'
-#Day (0?1-31)
+# Day (0?1-31)
 d = r'(0?[1-9]|[12][0-9]|3[01])'
-#Zero-padded day (01-31)
+# Zero-padded day (01-31)
 zd = r'(0[1-9]|[12][0-9]|3[01])'
-#Gregorian year pattern 1900-2099
+# Gregorian year pattern 1900-2099
 Y = r'(19|20)\d\d'
 
 
-#July 3, 2001
+# July 3, 2001
 BdY = re.compile(B + ' ' + d + ', ' + Y)
-#Aug 22, 2001
+# Aug 22, 2001
 bdY = re.compile(b + ' ' + d + ', ' + Y)
 
-#22 August 2001
+# 22 August 2001
 dBY = re.compile(d + ' ' + B + ' ' + Y)
-#22 Aug 2001
+# 22 Aug 2001
 dbY = re.compile(d + ' ' + b + ' ' + Y)
 
-#1900-01-01,2099-12-31
-Ymd_dashed = re.compile(Y + '-'  + zm + '-' + zd)
-#1900/01/01, 2099/12/31, 2099 12 31
+# 1900-01-01,2099-12-31
+Ymd_dashed = re.compile(Y + '-' + zm + '-' + zd)
+# 1900/01/01, 2099/12/31, 2099 12 31
 Ymd_slashed = re.compile(Y + '/' + zm + '/' + zd)
 #19000101, 20991231
 Ymd = re.compile(Y + zm + zd)
@@ -83,10 +83,10 @@ class Name:
 
     def __init__(self, fullname, seperator=None):
         """Create appropriate firstname, lastname and fullname properties."""
-        if len(fullname)>40:
+        if len(fullname) > 40:
             raise LongNameError('Lastname was longer than 40 chars.')
         if re.search('\d\d', fullname, re.U):
-            #Remember "Jennifer 8. Lee"
+            # Remember "Jennifer 8. Lee"
             raise NumberInNameError('The name contains a two-digit number.')
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
         if self.firstname:
@@ -107,13 +107,13 @@ class Name:
 
 
 class BaseResponse:
-    
+
     """The base class for response objects."""
 
     # defaults
     error = 0
     reftag = ''
-    
+
     def detect_language(self, text, langset={}):
         """Detect language of text. Add the result to self.dictionary and error.
 
@@ -131,7 +131,7 @@ class BaseResponse:
         self.sfnt = sfn.create(self.dictionary)
         self.ctnt = ctn.create(self.dictionary, self.date_format)
         self.create_reftag()
-        
+
     def create_reftag(self):
         """Create a named reference tag using ctnt and sfnt properties."""
         name = self.sfnt[6:-2].replace('|', ' ')
@@ -199,9 +199,9 @@ def firstname_lastname(fullname, seperator):
         firstname = firstname.title()
         lastname = lastname.title()
         lastname = re.sub('MC(\w)',
-              lambda m: 'Mc' + m.group(1).upper(),
-              lastname,
-              flags =re.I)
+                          lambda m: 'Mc' + m.group(1).upper(),
+                          lastname,
+                          flags=re.I)
     if suffix:
         firstname += suffix.title()
     return firstname, lastname
@@ -221,6 +221,7 @@ def fanum2en(string):
     string = string.replace('۹', '9')
     return string
 
+
 def ennum2fa(string_or_num):
     """Convert English numerical string to equivalent Persian one."""
     string = str(string_or_num)
@@ -235,6 +236,7 @@ def ennum2fa(string_or_num):
     string = string.replace('8', '۸')
     string = string.replace('9', '۹')
     return string
+
 
 def famonth2num(string):
     """Convert English month number to Persian string."""
@@ -251,6 +253,7 @@ def famonth2num(string):
     string = string.replace('نوامبر', '11')
     string = string.replace('دسامبر', '12')
     return string
+
 
 def finddate(string):
     """Try to find a date in input string and return it as a datetime object.

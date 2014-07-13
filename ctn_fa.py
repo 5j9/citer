@@ -1,14 +1,15 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-#todo: editor and author and ... article link
+# todo: editor and author and ... article link
 
 from datetime import date
 
 import commons
 
+
 def create(d):
-    """Creates citation based on the given dictionary"""   
+    """Creates citation based on the given dictionary"""
     if d['type'] == 'book':
         s = '* {{یادکرد کتاب'
     elif d['type'] == 'article' or d['type'] == 'jour':
@@ -18,23 +19,23 @@ def create(d):
 
     if 'authors' in d:
         s += names2para(d['authors'],
-                          'نام',
-                          'نام خانوادگی'
-                          )             
+                        'نام',
+                        'نام خانوادگی'
+                        )
     if 'editors' in d:
         s += names2para(d['editors'],
-                          'نام ویراستار',
-                          'نام خانوادگی ویراستار'
-                          )
+                        'نام ویراستار',
+                        'نام خانوادگی ویراستار'
+                        )
     if 'translators' in d:
         s += names1para(d['translators'], 'ترجمه')
     if 'others' in d:
         s += names1para(d['others'], 'دیگران')
     if 'title' in d:
         if d['type'] == 'book':
-            s += '|کتاب=' +  d['title']
+            s += '|کتاب=' + d['title']
         else:
-            s += '|عنوان=' +  d['title']
+            s += '|عنوان=' + d['title']
     if 'journal' in d:
         s += '|ژورنال=' + d['journal']
     if 'publisher' in d:
@@ -63,7 +64,8 @@ def create(d):
     s += '|تاریخ بازبینی=' + date.isoformat(date.today())
     s += '}}'
     return s
-    
+
+
 def names2para(names, fn_parameter, ln_parameter):
     '''takes lists of firstnames and lastnames and returns the string to be
 appended to citation string'''
@@ -80,7 +82,8 @@ appended to citation string'''
             s += '|' + fn_parameter + commons.ennum2fa(c) + '=' +\
                  name.firstname
     return s
-            
+
+
 def names1para(translators, para):
     s = '|' + para + '='
     c = 0
@@ -93,4 +96,3 @@ def names1para(translators, para):
         else:
             s += '، ' + name.fullname
     return s
-        

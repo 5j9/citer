@@ -12,30 +12,30 @@ import bibtex
 import adinebook
 
 
-#original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
+# original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
 isbn13_regex = re.compile(
     r'97(?:8|9)([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
-    )
-#original regex from: https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
+)
+# original regex from: https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
 isbn10_regex = re.compile(
     r'(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
-    )
-#original regex from: http://stackoverflow.com/a/14260708/2705757
+)
+# original regex from: http://stackoverflow.com/a/14260708/2705757
 isbn_regex = re.compile(
     r'(?=[-0-9 ]{17}|[-0-9X ]{13}|[0-9X]{10})(?:97[89][- ]?)\
 ?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
-    )
+)
 
 
 class IsbnError(Exception):
-    
+
     """Raise when bibliographic information is not available."""
-    
+
     pass
 
 
 class Response(commons.BaseResponse):
-    
+
     """Create isbn's response object."""
 
     def __init__(self, isbn_container_string, pure=False,
@@ -45,12 +45,12 @@ class Response(commons.BaseResponse):
         if pure:
             self.isbn = isbn_container_string
         else:
-            #search for isbn13
+            # search for isbn13
             m = re.search(isbn13_regex, isbn_container_string)
             if m:
                 self.isbn = m.group(0)
             else:
-                #search for isbn10
+                # search for isbn10
                 m = re.search(isbn10_regex, isbn_container_string)
                 self.isbn = m.group(0)
         adinebook_url = adinebook.isbn2url(self.isbn)
@@ -73,20 +73,20 @@ Background: adinebook.com ommits 3 digits from it's isbn when converting them to
 urls. This may make them volnarable to resolving into wrong ISBN.
 '''
     if adinebook and ottobib:
-        #both exist
+        # both exist
         if isbn2int(adinebook['isbn']) == isbn2int(ottobib['isbn']):
-            #both isbns are equal
+            # both isbns are equal
             return adinebook
         else:
-            #isbns are not equal
+            # isbns are not equal
             return ottobib
     elif adinebook:
-        #only adinebook exists
+        # only adinebook exists
         return adinebook
     else:
-        #only ottobib exists
+        # only ottobib exists
         return ottobib
-    
+
 
 def isbn2int(isbn):
     """Get ISBN string and return it as in integer."""

@@ -12,8 +12,15 @@ except ImportError:
     from wsgiref.simple_server import make_server
 import requests
 
-import noormags, googlebooks, noorlib, adinebook, urls
-import doi, isbn, commons, config
+import noormags
+import googlebooks
+import noorlib
+import adinebook
+import urls
+import doi
+import isbn
+import commons
+import config
 if config.lang == 'en':
     import html_en as html
 else:
@@ -24,12 +31,12 @@ def mylogger():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     handler = logging.handlers.RotatingFileHandler(
-                                    filename='yadkard.log',
-                                    mode='a',
-                                    maxBytes=20000,
-                                    backupCount=0,
-                                    encoding='utf-8',
-                                    delay=0)
+        filename='yadkard.log',
+        mode='a',
+        maxBytes=20000,
+        backupCount=0,
+        encoding='utf-8',
+        delay=0)
     handler.setLevel(logging.INFO)
     fmt = '\n%(asctime)s\n%(levelname)s\n%(message)s\n'
     formatter = logging.Formatter(fmt)
@@ -41,7 +48,7 @@ def mylogger():
 def application(environ, start_response):
     qdict = urllib.parse.parse_qs(environ['QUERY_STRING'])
     user_input = qdict.get('user_input', [''])[0]
-    #cgi.escape() was causing unexpected behaviour
+    # cgi.escape() was causing unexpected behaviour
     user_input = user_input.strip()
     date_format = qdict.get('dateformat', [''])[0]
     date_format = escape(date_format).strip()
@@ -53,7 +60,7 @@ def application(environ, start_response):
     try:
         obj = None
         if not user_input:
-            #on first run user_input is ''
+            # on first run user_input is ''
             obj = html.Respose(*html.default_response)
         elif '.google.com/books' in url:
             obj = googlebooks.Response(url, date_format)
@@ -64,7 +71,7 @@ def application(environ, start_response):
         elif ('adinebook' in netloc) or ('adinehbook' in netloc):
             obj = adinebook.Response(url, date_format)
         if not obj:
-            #DOI and ISBN check
+            # DOI and ISBN check
             en_url = commons.fanum2en(url)
             try:
                 m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
@@ -87,7 +94,7 @@ def application(environ, start_response):
         if not obj:
             obj = urls.Response(url, date_format)
         if not obj:
-            #All the above cases have been unsuccessful
+            # All the above cases have been unsuccessful
             obj = html.Respose(*html.undefined_url_response)
             logger.info('There was an undefined_url_response\n' + url)
         response_body = html.template % (obj.sfnt,

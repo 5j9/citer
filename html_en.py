@@ -145,6 +145,7 @@ other_exception_response = ('An unknown error occurred.',
                             'The error was logged.',
                             '100')
 
+
 class Respose(commons.BaseResponse):
 
     """Create the responce object used by the main application."""
@@ -153,4 +154,3 @@ class Respose(commons.BaseResponse):
         self.sfnt = sfnt
         self.ctnt = ctnt
         self.error = error
-
