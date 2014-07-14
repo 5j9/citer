@@ -237,6 +237,13 @@ class Others(unittest.TestCase):
         ct = "* {{cite web|last=Chandler|first=David L.|title=Traffic lights: There’s a better way|website=MIT News Office|date=2014-07-07|year=2014|url=http://newsoffice.mit.edu/2014/traffic-lights-theres-a-better-way-0707|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
 
+    def test_oth8(self):
+        """Two authors from guardian that are mentions in other tags, too."""
+        i = 'http://www.theguardian.com/world/2014/jul/14/israel-drone-launched-gaza-ashdod'
+        o = urls.Response(i)
+        ct = '* {{cite web|last=Beaumont|first=Peter|last2=Crowcroft|first2=Orlando|title=Israel says it has shot down drone launched from Gaza|website=the Guardian|date=2014-07-14|year=2014|url=http://www.theguardian.com/world/2014/jul/14/israel-drone-launched-gaza-ashdod|ref=harv|accessdate='
+        self.assertIn(ct, o.ctnt)
+
 
 urls.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
