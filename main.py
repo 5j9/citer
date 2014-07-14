@@ -4,7 +4,6 @@
 import logging
 import logging.handlers
 import urllib.parse
-from cgi import escape
 
 try:
     from flup.server.fcgi import WSGIServer
@@ -48,10 +47,10 @@ def mylogger():
 def application(environ, start_response):
     qdict = urllib.parse.parse_qs(environ['QUERY_STRING'])
     user_input = qdict.get('user_input', [''])[0]
-    # cgi.escape() was causing unexpected behaviour
-    user_input = user_input.strip()
+    # Warning: input is not escaped!
+    user_input = urllib.parse.unquote(user_input.strip())
     date_format = qdict.get('dateformat', [''])[0]
-    date_format = escape(date_format).strip()
+    date_format = date_format.strip()
     if not user_input.startswith('http'):
         url = 'http://' + user_input
     else:
@@ -74,7 +73,7 @@ def application(environ, start_response):
             # DOI and ISBN check
             en_url = commons.fanum2en(url)
             try:
-                m = doi.re.search(doi.doi_regex, doi.sax.unescape(en_url))
+                m = doi.re.search(doi.doi_regex, doi.html.unescape(en_url))
                 if m:
                     obj = doi.Response(m.group(1),
                                        pure=True,
