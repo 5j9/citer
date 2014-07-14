@@ -14,11 +14,10 @@ Some of the known issues:
     * String concatinatins are not recognized. ("str1" # "str2")
 """
 
+
 import re
 
 import commons
-
-
 
 
 def parse(bibtex):
