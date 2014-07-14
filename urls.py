@@ -158,7 +158,7 @@ def find_authors(soup):
                 continue
         if not names:
             raise Exception('"names" remained an empty list.')
-        return names, "class_='authorInline'"
+        return names, "class_='authorInline's"
     except Exception:
         pass
     try:
@@ -173,14 +173,18 @@ def find_authors(soup):
                 continue
         if not names:
             raise Exception('"names" remained an empty list.')
-        return names, "class_='author'"
+        return names, "class_='author's"
     except Exception:
         pass
     try:
         # http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
-        attrs = {'name': 'author'}
-        m = soup.find(attrs=attrs)
-        return byline_to_names(m['content']), attrs
+        # http://www.theguardian.com/world/2014/jul/14/israel-drone-launched-gaza-ashdod
+        names = []
+        for m in soup.find_all(attrs={'name': 'author'}):
+            names.extend(byline_to_names(m['content']))
+        if not names:
+            raise Exception('"names" remained an empty list.')
+        return names, "{'name': 'author'}s"
     except Exception:
         pass
     try:
