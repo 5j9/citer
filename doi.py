@@ -5,7 +5,8 @@
 
 
 import re
-import xml.sax.saxutils as sax
+import html
+import urllib.parse
 
 import requests
 
@@ -29,8 +30,9 @@ class Response(commons.BaseResponse):
             self.doi = doi_or_url
         else:
             # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
-            unescaped_url = sax.unescape(doi_or_url)
-            m = re.search(doi_regex, unescaped_url)
+            # decode percent encodings
+            decoded_url = urllib.parse.unquote(html.unescape(doi_or_url))
+            m = re.search(doi_regex, decoded_url)
             if m:
                 self.doi = m.group(1)
         self.url = 'http://dx.doi.org/' + self.doi
