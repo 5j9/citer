@@ -18,14 +18,21 @@ class DoiTest(unittest.TestCase):
     def test_doi1(self):
         i = 'http://dx.doi.org/10.1038/nrd842'
         o = doi.Response(i)
-        e = "* {{cite journal|last=Atkins|first=Joshua H.|last2=Gershell|first2=Leland J.|title=From the analyst's couch: Selective anticancer drugs|journal=Nature Reviews Drug Discovery|publisher=Nature Publishing Group|volume=1|issue=7|pages=491\u2013492|url=http://dx.doi.org/10.1038/nrd842|doi=10.1038/nrd842|ref=harv|accessdate="
+        e = "* {{cite journal|last=Atkins|first=Joshua H.|last2=Gershell|first2=Leland J.|title=From the analyst's couch: Selective anticancer drugs|journal=Nature Reviews Drug Discovery|publisher=Nature Publishing Group|volume=1|issue=7|year=2002|pages=491–492|url=http://dx.doi.org/10.1038/nrd842|doi=10.1038/nrd842|ref=harv|accessdate="
         self.assertIn(e, o.ctnt)
 
     def test_doi2(self):
         """Title of this DOI could not be detected in an older version."""
         i = 'http://www.jstor.org/stable/info/10.1086/677379'
         o = doi.Response(i)
-        e = '* {{cite journal|title=Books of Critical Interest|journal=Critical Inquiry|publisher=University of Chicago Press|volume=40|issue=3|pages=272–281|url=http://dx.doi.org/10.1086/677379|doi=10.1086/677379|ref={{sfnref|University of Chicago Press}}|accessdate='
+        e = '* {{cite journal|title=Books of Critical Interest|journal=Critical Inquiry|publisher=University of Chicago Press|volume=40|issue=3|year=2014|pages=272–281|url=http://dx.doi.org/10.1086/677379|doi=10.1086/677379|ref={{sfnref|University of Chicago Press|2014}}|accessdate='
+        self.assertIn(e, o.ctnt)
+
+    def test_doi3(self):
+        """No author. URL contains %2F."""
+        i = 'http://dx.doi.org/10.1037%2Fh0063404'
+        o = doi.Response(i)
+        e = '* {{cite journal|title=Studies in retention.|journal=Journal of Educational Psychology|volume=30|issue=9|issn=1939-2176 (Electronic)|url=http://dx.doi.org/10.1037%2Fh0063404|ref={{sfnref|Journal of Educational Psychology}}|accessdate='
         self.assertIn(e, o.ctnt)
 
 
