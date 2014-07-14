@@ -154,7 +154,8 @@ class Respose(commons.BaseResponse):
 
     """Create the responce object used by the main application."""
 
-    def __init__(self, sfnt, ctnt, error):
+    def __init__(self, sfnt, ctnt, reftag, error):
         self.sfnt = sfnt
         self.ctnt = ctnt
+        self.reftag = reftag
         self.error = error
