@@ -328,12 +328,14 @@ def dict_cleanup(dictionary):
 
 
 def encode_for_template(dictionary):
-    """Replace special characters with their respective HTML entities."""
+    """Replace special characters with their respective HTML entities.
+
+    Also .strip()s all values."""
     d = {}
     for k in dictionary:
         v = dictionary[k]
         if isinstance(v, str):
-            v = dictionary[k]
+            v = dictionary[k].strip()
             v = v.replace('|', '&amp;#124;')
             v = v.replace('[', '&amp;#91;')
             v = v.replace(']', '&amp;#93;')
