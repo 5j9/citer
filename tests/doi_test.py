@@ -7,7 +7,6 @@
 import unittest
 import sys
 
-
 sys.path.append('..')
 import doi
 import dummy_requests
@@ -32,7 +31,7 @@ class DoiTest(unittest.TestCase):
         """No author. URL contains %2F."""
         i = 'http://dx.doi.org/10.1037%2Fh0063404'
         o = doi.Response(i)
-        e = '* {{cite journal|title=Studies in retention.|journal=Journal of Educational Psychology|volume=30|issue=9|issn=1939-2176 (Electronic)|url=http://dx.doi.org/10.1037%2Fh0063404|ref={{sfnref|Journal of Educational Psychology}}|accessdate='
+        e = '* {{cite journal|last=Spitzer|first=H. F.|title=Studies in retention.|journal=Journal of Educational Psychology|publisher=American Psychological Association (APA)|volume=30|issue=9|year=1939|pages=641–656|url=http://dx.doi.org/10.1037/h0063404|doi=10.1037/h0063404|language=de|ref=harv|accessdate='
         self.assertIn(e, o.ctnt)
 
 
