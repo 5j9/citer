@@ -89,7 +89,7 @@ def find_authors(soup):
     try:
         # http://socialhistory.ihcs.ac.ir/article_571_84.html
         # http://jn.physiology.org/content/81/1/319
-        attrs = {'name': 'citation_author'}
+        attrs = {'name': re.compile('citation_authors?')}
         m = soup.find_all(attrs=attrs)
         authors = []
         for a in m:
@@ -320,6 +320,7 @@ does not check that.
 """
     try:
         # http://socialhistory.ihcs.ac.ir/article_319_84.html
+        # http://psycnet.apa.org/journals/edu/30/9/641/
         m = soup.find(attrs={'name': 'citation_issn'})
         return m['content'].strip()
     except Exception:
