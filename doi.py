@@ -38,11 +38,6 @@ class Response(commons.BaseResponse):
         self.url = 'http://dx.doi.org/' + self.doi
         self.bibtex = get_bibtex(self.url)
         self.dictionary = bibtex.parse(self.bibtex)
-        if 'language' not in self.dictionary:
-            if 'title' in self.dictionary:
-                self.detect_language(self.dictionary['title'])
-            else:
-                self.error = 100
         self.generate()
 
 
