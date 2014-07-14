@@ -1,18 +1,23 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
+"""This module is used for parsing BibTeX entries.
+
+Known issues:
+    * Currently it does not detect special symbols and many TeX escape
+        sequences (more information: http://www.bibtex.org/SpecialSymbols/)
+"""
+
 import re
 
 import commons
 
-# Known issues: currently it does not detect special symbols and escapes
-# more information: http://www.bibtex.org/SpecialSymbols/
-# cases: '\_' in urls and '\&' in titles
+
 
 
 def parse(bibtex_text):
     """Parse bibtex_text data and return a dictionary of information."""
-    # replacing common latex special commonds:
+    # replacing common latex special symbols commonds
     bibtex_text = bibtex_text.replace(r'{\textregistered}', '®')
     bibtex_text = bibtex_text.replace(r'\%', '%')
     bibtex_text = bibtex_text.replace(r'\$', '$')
@@ -47,7 +52,7 @@ def parse(bibtex_text):
     m = re.search('@(.*?)\s*\{', bibtex_text, re.I)
     if m:
         d['type'] = m.group(1).strip().lower()
-    # author:
+    # author
     m = re.search('author\s*=\s*\{\s*(.*?)\\s*}', bibtex_text, re.I)
     if m:
         d['authors'] = []
