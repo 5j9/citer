@@ -31,7 +31,7 @@ class DoiTest(unittest.TestCase):
         """No author. URL contains %2F."""
         i = 'http://dx.doi.org/10.1037%2Fh0063404'
         o = doi.Response(i)
-        e = '* {{cite journal|last=Spitzer|first=H. F.|title=Studies in retention.|journal=Journal of Educational Psychology|publisher=American Psychological Association (APA)|volume=30|issue=9|year=1939|pages=641–656|url=http://dx.doi.org/10.1037/h0063404|doi=10.1037/h0063404|language=de|ref=harv|accessdate='
+        e = '* {{cite journal|last=Spitzer|first=H. F.|title=Studies in retention.|journal=Journal of Educational Psychology|publisher=American Psychological Association (APA)|volume=30|issue=9|year=1939|pages=641–656|url=http://dx.doi.org/10.1037/h0063404|doi=10.1037/h0063404|ref=harv|accessdate='
         self.assertIn(e, o.ctnt)
 
 
