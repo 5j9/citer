@@ -7,6 +7,7 @@
 import re
 import html
 import urllib.parse
+import logging
 
 import requests
 
@@ -38,6 +39,7 @@ class Response(commons.BaseResponse):
         self.url = 'http://dx.doi.org/' + self.doi
         self.bibtex = get_bibtex(self.url)
         if self.bibtex == 'Resource not found.':
+            logger.info('DOI could not be resolved.\n' + self.url)
             self.error = 100
             self.sfnt = 'DOI could not be resolved.'
             self.ctnt = self.bibtex
@@ -51,3 +53,6 @@ def get_bibtex(doi_url):
     r = requests.get(doi_url, headers={'Accept': 'application/x-bibtex'})
     bibtex = r.text
     return bibtex
+
+logger = logging.getLogger(__name__)
+
