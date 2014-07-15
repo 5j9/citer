@@ -7,7 +7,23 @@
 from string import Template
 from datetime import date
 
-import commons
+class Respose:
+
+    """Create the responce object used by the main application."""
+
+    def __init__(self, sfnt, ctnt='', reftag='', error='100'):
+        self.sfnt = sfnt
+        self.ctnt = ctnt
+        self.reftag = reftag
+        self.error = error
+
+
+def response_to_template(response):
+    """Insert the response into the template and return response_body."""
+    return template % (response.sfnt,
+                       response.ctnt,
+                       response.reftag,
+                       response.error)
 
 
 template = Template("""<!DOCTYPE html>
@@ -119,6 +135,24 @@ template = Template("""<!DOCTYPE html>
     </body>
 </html>""")
 
+# Predefined responses
+default_response = Respose('Generated citation will appear here...',
+                           '',
+                           '',
+                           '??')
+
+undefined_url_response = Respose('Undefined input.',
+                                 'Sorry, the input was not recognized. ' +
+                                 'The error was logged.')
+
+httperror_response = Respose('HTTP error:',
+                             'One or more of the web resources required to ' +
+                             'create this citation are not accessible at ' +
+                             'this moment.')
+
+other_exception_response = Respose('An unknown error occurred.',
+                                   'The error was logged.')
+
 today = date.today()
 template = template.safe_substitute({'Ymd': today.strftime('%Y-%m-%d'),
                                      'BdY': today.strftime('%B %d, %Y'),
@@ -127,35 +161,3 @@ template = template.safe_substitute({'Ymd': today.strftime('%Y-%m-%d'),
                                      'dbY': today.strftime('%d %b %Y'),
                                      }).replace('%', '%%').replace('$', '%')
 
-default_response = ('Generated citation will appear here...',
-                    '',
-                    '',
-                    '??')
-
-undefined_url_response = ('Undefined input.',
-                          'Sorry, the input was not recognized. ' +
-                          'The error was logged.',
-                          '',
-                          '100')
-
-httperror_response = ('HTTP error:',
-                      'One or more of the web resources required to create ' +
-                      'this citation are not accessible at this moment.',
-                      '',
-                      '100')
-
-other_exception_response = ('An unknown error occurred.',
-                            'The error was logged.',
-                            '',
-                            '100')
-
-
-class Respose(commons.BaseResponse):
-
-    """Create the responce object used by the main application."""
-
-    def __init__(self, sfnt, ctnt, reftag, error):
-        self.sfnt = sfnt
-        self.ctnt = ctnt
-        self.reftag = reftag
-        self.error = error
