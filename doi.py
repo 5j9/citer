@@ -37,8 +37,13 @@ class Response(commons.BaseResponse):
                 self.doi = m.group(1)
         self.url = 'http://dx.doi.org/' + self.doi
         self.bibtex = get_bibtex(self.url)
-        self.dictionary = bibtex.parse(self.bibtex)
-        self.generate()
+        if self.bibtex == 'Resource not found.':
+            self.error = 100
+            self.sfnt = 'DOI could not be resolved.'
+            self.ctnt = self.bibtex
+        else:
+            self.dictionary = bibtex.parse(self.bibtex)
+            self.generate()
 
 
 def get_bibtex(doi_url):
