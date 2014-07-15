@@ -48,7 +48,7 @@ def application(environ, start_response):
     qdict = urllib.parse.parse_qs(environ['QUERY_STRING'])
     user_input = qdict.get('user_input', [''])[0]
     # Warning: input is not escaped!
-    user_input = urllib.parse.unquote(user_input.strip())
+    user_input = user_input.strip()
     date_format = qdict.get('dateformat', [''])[0]
     date_format = date_format.strip()
     if not user_input.startswith('http'):
@@ -57,56 +57,52 @@ def application(environ, start_response):
         url = user_input
     netloc = urllib.parse.urlparse(url)[1]
     try:
-        obj = None
+        response = None
         if not user_input:
             # on first run user_input is ''
-            obj = html.Respose(*html.default_response)
+            response = html.default_response
         elif '.google.com/books' in url:
-            obj = googlebooks.Response(url, date_format)
+            response = googlebooks.Response(url, date_format)
         elif 'noormags.' in netloc:
-            obj = noormags.Response(url, date_format)
+            response = noormags.Response(url, date_format)
         elif 'noorlib.ir' in netloc:
-            obj = noorlib.Response(url, date_format)
+            response = noorlib.Response(url, date_format)
         elif ('adinebook' in netloc) or ('adinehbook' in netloc):
-            obj = adinebook.Response(url, date_format)
-        if not obj:
+            response = adinebook.Response(url, date_format)
+        if not response:
             # DOI and ISBN check
-            en_url = commons.fanum2en(url)
+            en_url = urllib.parse.unquote(commons.fanum2en(url))
             try:
                 m = doi.re.search(doi.doi_regex, doi.html.unescape(en_url))
                 if m:
-                    obj = doi.Response(m.group(1),
+                    response = doi.Response(m.group(1),
                                        pure=True,
                                        date_format=date_format)
                 elif isbn.re.search(isbn.isbn13_regex, en_url):
-                    obj = isbn.Response(
+                    response = isbn.Response(
                         isbn.re.search(isbn.isbn13_regex, en_url).group(0),
                         pure=True,
                         date_format=date_format,)
                 elif isbn.re.search(isbn.isbn10_regex, en_url):
-                    obj = isbn.Response(
+                    response = isbn.Response(
                         isbn.re.search(isbn.isbn10_regex, en_url).group(0),
                         pure=True,
                         date_format=date_format,)
             except isbn.IsbnError:
                 pass
-        if not obj:
-            obj = urls.Response(url, date_format)
-        if not obj:
+        if not response:
+            response = urls.Response(url, date_format)
+        if not response:
             # All the above cases have been unsuccessful
-            obj = html.Respose(*html.undefined_url_response)
+            response = html.undefined_url_response
             logger.info('There was an undefined_url_response\n' + url)
-        response_body = html.template % (obj.sfnt,
-                                         obj.ctnt,
-                                         obj.reftag,
-                                         obj.error
-                                         )
+        response_body = html.response_to_template(response)
     except (requests.ConnectionError):
         logger.exception(url)
-        response_body = html.template % html.httperror_response
-    except Exception:
+        response_body = html.response_to_template(html.httperror_response)
+    except Exception as e:
         logger.exception(url)
-        response_body = html.template % html.other_exception_response
+        response_body = html.response_to_template(html.other_exception_response)
     status = '200 OK'
 
     response_headers = [('Content-Type', 'text/html; charset=UTF-8'),
