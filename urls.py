@@ -601,10 +601,10 @@ def try_find_date(soup, find_parameters):
             m = soup.find(attrs=attrs)
             if fp[1] == 'getitem':
                 string = m[fp[2]].strip()
-                return commons.finddate(string).strftime('%Y-%m-%d'), attrs
+                return commons.finddate(string), attrs
             elif fp[1] == 'getattr':
                 string = getattr(m, fp[2]).strip()
-                return commons.finddate(string).strftime('%Y-%m-%d'), attrs
+                return commons.finddate(string), attrs
         except Exception:
             pass
     return None, None
@@ -664,21 +664,20 @@ def find_date(soup, url):
     if not date:
         try:
             # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-            date, tag = commons.finddate(url).strftime('%Y-%m-%d'), 'url'
+            date, tag = commons.finddate(url), 'url'
         except Exception:
             pass
     if not date:
         try:
             # https://www.bbc.com/news/uk-england-25462900
-            return commons.finddate(
-                soup.text).strftime('%Y-%m-%d'), 'soup.text'
+            return commons.finddate(soup.text), 'soup.text'
         except Exception:
             pass
     if not date:
         try:
             logger.info('Searching for date in page content.\n' + url)
             return commons.finddate(
-                str(soup)).strftime('%Y-%m-%d'), 'soup.text'
+                str(soup), 'soup.text'
         except Exception:
             pass
     return date, tag
