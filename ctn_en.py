@@ -7,7 +7,6 @@
 from datetime import date
 
 import commons
-import sfn_en as sfn
 
 
 def create(d, date_format):
@@ -19,7 +18,7 @@ def create(d, date_format):
     elif d['type'] == 'web':
         s = '* {{cite web'
     else:
-        raise KeyError(d['type'] + " is not a defined condition for d['type']")
+        raise KeyError(d['type'] + " is not a valid value for d['type']")
 
     if 'authors' in d:
         s += names2para(d['authors'],
