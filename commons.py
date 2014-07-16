@@ -270,52 +270,31 @@ def famonth2num(string):
 
 
 def finddate(string):
-    """Try to find a date in input string and return it as a datetime object.
+    """Try to find a date in input string and return it as a date object.
 
     If there is no matching date, return None.
     """
     m = re.search(BdY, string)
     if m:
-        return datetime.strptime(m.group(), '%B %d, %Y')
+        return datetime.strptime(m.group(), '%B %d, %Y').date()
     m = re.search(bdY, string)
     if m:
-        return datetime.strptime(m.group(), '%b %d, %Y')
+        return datetime.strptime(m.group(), '%b %d, %Y').date()
     m = re.search(dBY, string)
     if m:
-        return datetime.strptime(m.group(), '%d %B %Y')
+        return datetime.strptime(m.group(), '%d %B %Y').date()
     m = re.search(dbY, string)
     if m:
-        return datetime.strptime(m.group(), '%d %b %Y')
+        return datetime.strptime(m.group(), '%d %b %Y').date()
     m = re.search(Ymd_dashed, string)
     if m:
-        return datetime.strptime(m.group(), '%Y-%m-%d')
+        return datetime.strptime(m.group(), '%Y-%m-%d').date()
     m = re.search(Ymd_slashed, string)
     if m:
-        return datetime.strptime(m.group(), '%Y/%m/%d')
+        return datetime.strptime(m.group(), '%Y/%m/%d').date()
     m = re.search(Ymd, string)
     if m:
-        return datetime.strptime(m.group(), '%Y%m%d')
-
-
-def chdateformat(string, format_):
-    """Find a date in string and return it in specified format_.
-
-    The date in string can be in any format defined in finddate().
-    Format_ should be a string containing standard formatting directives.
-    Return the original string if unsuccessful.
-
-    Examples:
-
-    >>> chdateformat('date: 2014-06-21 time:02:09', '%B %d, %Y')
-    'June 21, 2014'
-
-    >>> chdateformat('date: 2914-06-21 time:02:09', '%B %d, %Y')
-    'date: 2914-06-21 time:02:09'
-    """
-    date = finddate(string)
-    if date:
-        return date.strftime(format_)
-    return string
+        return datetime.strptime(m.group(), '%Y%m%d').date()
 
 
 def dict_cleanup(dictionary):
