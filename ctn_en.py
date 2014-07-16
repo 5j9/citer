@@ -60,7 +60,10 @@ def create(d, date_format):
     if 'issue' in d:
         s += '|issue=' + d['issue']
     if 'date' in d:
-        s += '|date=' + commons.chdateformat(d['date'], date_format)
+        if isinstance(d['date'], date):
+            s += '|date=' + d['date'].strftime(date_format)
+        else:
+            s += '|date=' + d['date']
     if 'year' in d:
         s += '|year=' + d['year']
     if 'isbn' in d:
