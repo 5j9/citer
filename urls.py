@@ -247,7 +247,7 @@ def find_authors(soup):
 
 
 def byline_to_names(byline):
-    '''Find authors in byline sting. Return name objects as a list.
+    """Find authors in byline sting. Return name objects as a list.
 
     The "By " prefix will be omitted.
     Names will be seperated either with " and " or ", ".
@@ -273,7 +273,7 @@ def byline_to_names(byline):
     >>> byline_to_names(' By Erika Solomon in Beirut and Borzou Daragahi,\
      Middle East correspondent')
     [Name(Erika Solomon), Name(Borzou Daragahi)]
-    '''
+    """
     specialwords = ('Reporter',
                     'People',
                     'Editor',
@@ -319,9 +319,9 @@ def byline_to_names(byline):
 def find_issn(soup):
     """Return International Standard Serial Number as a string.
 
-Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this function
-does not check that.
-"""
+    Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this function
+    does not check that.
+    """
     try:
         # http://socialhistory.ihcs.ac.ir/article_319_84.html
         # http://psycnet.apa.org/journals/edu/30/9/641/
@@ -373,16 +373,16 @@ def find_pages(soup):
 
 
 def find_sitename(soup, url, authors, hometitle_list, thread):
-    '''Return (site's name as a string, where).
+    """Return (site's name as a string, where).
 
-Parameters:
-    soup: BS object of the page being processed.
-    url: URL of the page.
-    authors: Authors list returned from find_authors function.
-    hometitle_list: A list containing hometitle string.
-    thread: The thread that should be joined before using hometitle_list.
-Returns site's name as a string.
-'''
+    Parameters:
+        soup: BS object of the page being processed.
+        url: URL of the page.
+        authors: Authors list returned from find_authors function.
+        hometitle_list: A list containing hometitle string.
+        thread: The thread that should be joined before using hometitle_list.
+    Returns site's name as a string.
+    """
     try:
         attrs = {'name': 'og:site_name'}
         return soup.find(attrs=attrs)['content'].strip(), attrs
@@ -513,30 +513,30 @@ def find_title(soup, url, authors, hometitle_list, thread):
 
 
 def parse_title(title, url, authors, hometitle_list=None, thread=None):
-    '''Return (intitle_author, pure_title, intitle_sitename).
+    """Return (intitle_author, pure_title, intitle_sitename).
 
-Examples:
+    Examples:
 
->>> parse_title("Rockhopper raises Falklands oil estimate - FT.com",
-        "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
-        None)
-(None, 'Rockhopper raises Falklands oil estimate', 'FT.com')
+    >>> parse_title("Rockhopper raises Falklands oil estimate - FT.com",
+            "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
+            None)
+    (None, 'Rockhopper raises Falklands oil estimate', 'FT.com')
 
->>> parse_title('some title - FT.com - something unknown',
-        "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
-        None)
-(None, 'some title - something unknown', 'FT.com')
+    >>> parse_title('some title - FT.com - something unknown',
+            "http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0",
+            None)
+    (None, 'some title - something unknown', 'FT.com')
 
->>> parse_title("Alpha decay - Wikipedia, the free encyclopedia",
-        "https://en.wikipedia.org/wiki/Alpha_decay",
-        None)
-(None, 'Alpha decay', 'Wikipedia, the free encyclopedia')
+    >>> parse_title("Alpha decay - Wikipedia, the free encyclopedia",
+            "https://en.wikipedia.org/wiki/Alpha_decay",
+            None)
+    (None, 'Alpha decay', 'Wikipedia, the free encyclopedia')
 
->>> parse_title("	BBC NEWS | Health | New teeth 'could soon be grown'",
-        'http://news.bbc.co.uk/2/hi/health/3679313.stm',
-        None)
-(None, "Health - New teeth 'could soon be grown'", 'BBC NEWS')
-'''
+    >>> parse_title("	BBC NEWS | Health | New teeth 'could soon be grown'",
+            'http://news.bbc.co.uk/2/hi/health/3679313.stm',
+            None)
+    (None, "Health - New teeth 'could soon be grown'", 'BBC NEWS')
+    """
     intitle_author = intitle_sitename = None
     sep_regex = ' - | — |\|'
     title_parts = re.split(sep_regex, title.strip())
@@ -703,8 +703,9 @@ def get_hometitle(url, headers, hometitle_list):
 def requests_visa(url, request_headers=None):
     """Check content-type and content-length of the response.
 
-Return True if content-type is text/* and content-length is less than 1MB.
-Also return True if no information is available. Else return False."""
+    Return True if content-type is text/* and content-length is less than 1MB.
+    Also return True if no information is available. Else return False.
+    """
     response_headers = requests.head(url, headers=request_headers).headers
     if 'content-length' in response_headers:
         megabytes = int(response_headers['content-length']) / 1000000.
