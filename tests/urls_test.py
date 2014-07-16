@@ -15,10 +15,10 @@ import urls
 class BostonTest(unittest.TestCase):
 
     def test_bg1(self):
-        """boston.com"""
+        """boston.com, dateformat '%B %d, %Y'"""
         i = 'http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html'
-        o = urls.Response(i)
-        ct = '* {{cite web|last=Griffith|first=Bill|title=Hot Rod Stamps; Google on Road; A GM Prospectus|website=Boston.com|date=2014-06-29|year=2014|url=http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html|ref=harv|accessdate='
+        o = urls.Response(i, '%B %d, %Y')
+        ct = '* {{cite web|last=Griffith|first=Bill|title=Hot Rod Stamps; Google on Road; A GM Prospectus|website=Boston.com|date=June 29, 2014|year=2014|url=http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
 
     def test_bg2(self):
