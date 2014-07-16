@@ -15,7 +15,7 @@ import commons
 import bibtex
 
 
-# regex from:
+# the regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 doi_regex = re.compile(r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'])\S)+)\b')
 
