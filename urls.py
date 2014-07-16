@@ -600,11 +600,15 @@ def try_find_date(soup, find_parameters):
             attrs = fp[0]
             m = soup.find(attrs=attrs)
             if fp[1] == 'getitem':
-                string = m[fp[2]].strip()
-                return commons.finddate(string), attrs
+                string = m[fp[2]]
+                date = commons.finddate(string)
+                if date:
+                    return date, attrs
             elif fp[1] == 'getattr':
-                string = getattr(m, fp[2]).strip()
-                return commons.finddate(string), attrs
+                string = getattr(m, fp[2])
+                date = commons.finddate(string)
+                if date:
+                    return date, attrs
         except Exception:
             pass
     return None, None
@@ -661,33 +665,30 @@ def find_date(soup, url):
         ({'id': 'footer-info-lastmod'}, 'getattr', 'text'),
     )
     date, tag = try_find_date(soup, find_parameters)
-    if not date:
-        try:
-            # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-            date, tag = commons.finddate(url), 'url'
-        except Exception:
-            pass
-    if not date:
-        try:
-            # https://www.bbc.com/news/uk-england-25462900
-            return commons.finddate(soup.text), 'soup.text'
-        except Exception:
-            pass
-    if not date:
-        try:
-            logger.info('Searching for date in page content.\n' + url)
-            return commons.finddate(
-                str(soup), 'soup.text'
-        except Exception:
-            pass
-    return date, tag
+    if date:
+        return date, tag
+    else:
+        # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+        date = commons.finddate(url)
+    if date:
+        return date, 'url'
+    else:
+        # https://www.bbc.com/news/uk-england-25462900
+        date = commons.finddate(soup.text)
+    if date:
+        return date, 'soup.text'
+    else:
+        logger.info('Searching for date in page content.\n' + url)
+        return commons.finddate(str(soup)), 'str(soup)'
+    return None, None
 
 
 def get_hometitle(url, headers, hometitle_list):
     """Get homepage of the url and return it's title.
 
-hometitle_list will be used to return the thread result.
-This function is invoked through a thread."""
+    hometitle_list will be used to return the thread result.
+    This function is invoked through a thread.
+    """
     homeurl = '://'.join(urlparse(url)[:2])
     try:
         requests_visa(homeurl, headers)
@@ -761,7 +762,7 @@ def url2dictionary(url):
     if date:
         logger.debug('Date tag: ' + str(tag))
         d['date'] = date
-        d['year'] = d['date'][:4]
+        d['year'] = str(date.year)
     d['language'], d['error'] = commons.detect_language(soup.text)
     return d
 
