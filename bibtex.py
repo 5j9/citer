@@ -4,14 +4,15 @@
 """This module is used for parsing BibTeX entries.
 
 The goal of this code is to parse BibTeX entries from a number of known sites
-with known BibTeX formats; therefore many other BiBteX entries may parse
+with known BibTeX formats; therefore many other BiBteX entries may be parsed
 incorrectly or incompletely as TeX system is very complex and this module is
 not intended to parse TeX.
 
 Some of the known issues:
     * Currently it does not detect special symbols and many TeX escape
         sequences (more information: http://www.bibtex.org/SpecialSymbols/)
-    * String concatinatins are not recognized. ("str1" # "str2")
+    * String concatinatins are not recognized. (e.g. "str1" # "str2")
+    * Abbreviations are not supported (e.g. @string { foo = "Mrs. Foo" })
 """
 
 
