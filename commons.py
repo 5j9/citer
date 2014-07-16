@@ -252,23 +252,6 @@ def ennum2fa(string_or_num):
     return string
 
 
-def famonth2num(string):
-    """Convert English month number to Persian string."""
-    string = string.replace('ژانویهٔ', '01')
-    string = string.replace('فوریهٔ', '02')
-    string = string.replace('مارس', '03')
-    string = string.replace('آوریل', '04')
-    string = string.replace('مهٔ', '05')
-    string = string.replace('ژوئن', '06')
-    string = string.replace('ژوئیهٔ', '07')
-    string = string.replace('اوت', '08')
-    string = string.replace('سپتامبر', '09')
-    string = string.replace('اکتبر', '10')
-    string = string.replace('نوامبر', '11')
-    string = string.replace('دسامبر', '12')
-    return string
-
-
 def finddate(string):
     """Try to find a date in input string and return it as a date object.
 
