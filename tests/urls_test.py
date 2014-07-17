@@ -52,6 +52,15 @@ class HuffingtonpostTest(unittest.TestCase):
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
 
+    def test_hp2(self):
+        """`class:author` returns wrong result. Disallow `\n` in fullnames."""
+        i = 'http://www.huffingtonpost.com/jeremy-rifkin/obamas-climate-change-plan_b_5427656.html'
+        o = urls.Response(i)
+        e1 = '{{sfn|Rifkin|2014}}'
+        e2 = "* {{cite web|last=Rifkin|first=Jeremy|title=Beyond Obama's Plan: A New Economic Vision for Addressing Climate Change|website=The Huffington Post|date=2014-06-02|year=2014|url=http://www.huffingtonpost.com/jeremy-rifkin/obamas-climate-change-plan_b_5427656.html|ref=harv|accessdate="
+        self.assertIn(e1, o.sfnt)
+        self.assertIn(e2, o.ctnt)
+
 
 class DilyTelegraphTest(unittest.TestCase):
 
