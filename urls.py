@@ -237,6 +237,12 @@ def find_authors(soup):
     except Exception:
         pass
     try:
+        # http://www.defense.gov/News/NewsArticle.aspx?ID=18509
+        m = re.search('>[Bb]y\s+(.*?)<', str(soup)).group(1)
+        return byline_to_names(m), 'str(soup)'
+    except Exception:
+        pass
+    try:
         # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
         # https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act
         m = re.search('[\n\|]\s*[Bb]y\s+(.*?)[\n]', soup.text).group(1)
@@ -260,6 +266,7 @@ def byline_to_names(byline):
                     'Staff',
                     'Writer',
                     'Office',
+                    'News',
                     )
 
     If any of the specialwords is found in a name. Then it will be omitted from
@@ -282,6 +289,7 @@ def byline_to_names(byline):
                     'Staff',
                     'Writer',
                     'Office',
+                    'News',
                     )
 
     def isspecial(string):
@@ -431,6 +439,7 @@ def find_sitename(soup, url, authors, hometitle_list, thread):
         sitename = parse_title(hometitle_list[0], url, None)[2]
         if sitename:
             return sitename, 'parsed hometitle'
+        return hometitle_list[0], 'hometitle_list[0]'
     except Exception:
         pass
     # return hostname
