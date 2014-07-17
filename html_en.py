@@ -67,7 +67,7 @@ template = Template("""<!DOCTYPE html>
                 }
             input[type=submit]:hover{
                 transition: background-color 1s ease-in;
-                background-color:#EB551A;
+                background-color:#33CC33;
                 }
         </style>
     </head>
@@ -100,8 +100,10 @@ template = Template("""<!DOCTYPE html>
                 <p>
                         <a href="http://books.google.com/">Google Books URL</a>, <a href="https://en.wikipedia.org/wiki/Digital_object_identifier">DOI</a> (Any Digital object Identifier) or <a href="https://en.wikipedia.org/wiki/International_Standard_Book_Number">ISBN</a> (International Standard Book Number).</p>
                 <p>
-                        Additionaly, URL of many major news websites are supported. That includes:<br />
+                        Additionaly, URL of many major news websites are supported. That includes (but is not limited to):<br />
                         <a href="http://www.nytimes.com/">The New York Times</a>, <a href="http://www.bbc.com/">BBC</a>, <a href="http://www.dailymail.co.uk/">Daily Mail</a>, <a href="http://www.mirror.co.uk/">Daily Mirror</a>, <a href="http://www.telegraph.co.uk/">The Daily Telegraph</a>, <a href="http://www.huffingtonpost.com/">The Huffington Post</a>, <a href="http://www.washingtonpost.com/">The Washington Post</a>, The <a href="http://www.boston.com/">Boston</a> <a href="http://www.bostonglobe.com/">Globe</a>, <a href="http://www.businessweek.com/">Bloomberg Businessweek</a>, <a href="http://www.ft.com/">Financial Times</a>, and <a href="http://timesofindia.indiatimes.com/">The Times of India</a>.</p>
+                <p>
+                        Note that there is always a chance of error in the generated output. <b>Please check the results before using them on Wiki</b>.</p>
                 <p>
                         Found a bug or have a suggestion? Contact me on my talk page. (<a href="https://wikitech.wikimedia.org/wiki/User_talk:Dalba">User:Dalba</a>).</p>
             </div>
