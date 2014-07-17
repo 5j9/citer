@@ -191,6 +191,16 @@ class TGDaily(unittest.TestCase):
         self.assertIn(ct, o.ctnt)
 
 
+class ABCNews(unittest.TestCase):
+    @unittest.expectedFailure
+    def test_tgd1(self):
+        """Wrong author: |last=News|first=ABC."""
+        i = 'http://abcnews.go.com/blogs/headlines/2006/12/saddam_executed/'
+        o = urls.Response(i)
+        ct = '* {{cite web|last=Ross|first=Brian|title=Saddam Executed; An Era Comes to an End|website=ABC News Blogs|date=2006-12-30|year=2006|url=http://abcnews.go.com/blogs/headlines/2006/12/saddam_executed/|ref=harv|accessdate='
+        self.assertIn(ct, o.ctnt)
+
+        
 class Others(unittest.TestCase):
 
     def test_oth1(self):
@@ -251,6 +261,13 @@ class Others(unittest.TestCase):
         i = 'http://www.theguardian.com/world/2014/jul/14/israel-drone-launched-gaza-ashdod'
         o = urls.Response(i)
         ct = '* {{cite web|last=Beaumont|first=Peter|last2=Crowcroft|first2=Orlando|title=Israel says it has shot down drone launched from Gaza|website=the Guardian|date=2014-07-14|year=2014|url=http://www.theguardian.com/world/2014/jul/14/israel-drone-launched-gaza-ashdod|ref=harv|accessdate='
+        self.assertIn(ct, o.ctnt)
+        
+    def test_oth9(self):
+        """Author in str(soup)."""
+        i = 'http://www.defense.gov/News/NewsArticle.aspx?ID=18509'
+        o = urls.Response(i)
+        ct = "* {{cite web|last=Garamone|first=Jim|title=Defense.gov News Article: Prison Stands as Testament to Saddam's Evil|website=United States Department of Defense (defense.gov)|date=2005-12-17|year=2005|url=http://www.defense.gov/News/NewsArticle.aspx?ID=18509|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
 
 
