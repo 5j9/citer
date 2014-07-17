@@ -84,11 +84,6 @@ class Name:
 
     def __init__(self, fullname, seperator=None):
         """Create appropriate firstname, lastname and fullname properties."""
-        if len(fullname) > 40:
-            raise LongNameError('Lastname was longer than 40 chars.')
-        if re.search('\d\d', fullname, re.U):
-            # Remember "Jennifer 8. Lee"
-            raise NumberInNameError('The name contains a two-digit number.')
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
         if self.firstname:
             self.fullname = self.firstname + ' ' + self.lastname
@@ -173,7 +168,7 @@ def detect_language(text, langset={}):
 
 
 def firstname_lastname(fullname, seperator):
-    '''Return firstname and lastname as a tuple.
+    """Return firstname and lastname as a tuple.
 
     Add Jr.|Sr. suffix to first name.
     Usually not used directly, called from Name() class.
@@ -188,8 +183,15 @@ def firstname_lastname(fullname, seperator):
 
     >>> firstname_lastname('BBC', None)
     ('', 'BBC')
-    '''
+    """
     fullname = fullname.strip()
+    if '\n' in fullname:
+        raise InvalidNameError('There was a newline in fullname.')
+    if len(fullname) > 40:
+        raise LongNameError('Lastname was longer than 40 chars.')
+    if re.search('\d\d', fullname, re.U):
+        # Remember "Jennifer 8. Lee"
+        raise NumberInNameError('The name contains a two-digit number.')
     m = re.search(' (Jr\.|Sr\.)$', fullname, re.I)
     if m:
         suffix = m.group()
