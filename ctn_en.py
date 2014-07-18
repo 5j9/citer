@@ -24,14 +24,12 @@ def create(d, date_format):
         s += names2para(d['authors'],
                         'first',
                         'last',
-                        'author',
-                        )
+                        'author')
     if 'editors' in d:
         s += names2para(d['editors'],
                         'editor-first',
                         'editor-last',
-                        'editor',
-                        )
+                        'editor')
     if 'translators' in d:
         for translator in d['translators']:
             translator.fullname += ' (مترجم)'
