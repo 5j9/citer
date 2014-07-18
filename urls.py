@@ -157,12 +157,31 @@ def find_authors(soup):
             except InvalidByLineError:
                 continue
         if not names:
-            raise Exception('"names" remained an empty list.')
+            raise Exception('`names` remained an empty list.')
         return names, "class_='authorInline's"
     except Exception:
         pass
     try:
-        # try before {'name':'author'}
+        # try before class_='byline'
+        names = []
+        for m in soup.find_all(class_='byline-author'):
+            try:
+                names.extend(byline_to_names(m.text))
+            except InvalidByLineError:
+                continue
+        if not names:
+            raise Exception('`names` remained an empty list.')
+        return names, "class_='byline-author's"
+    except Exception:
+        pass
+    try:
+        # try before class_='author'
+        m = soup.find(class_='byline').text
+        return byline_to_names(m), "class_='byline'"
+    except Exception:
+        pass
+    try:
+        # try before {'name': 'author'}
         names = []
         for m in soup.find_all(class_='author'):
             try:
@@ -170,7 +189,7 @@ def find_authors(soup):
             except InvalidByLineError:
                 continue
         if not names:
-            raise Exception('"names" remained an empty list.')
+            raise Exception('`names` remained an empty list.')
         return names, "class_='author's"
     except Exception:
         pass
@@ -181,11 +200,6 @@ def find_authors(soup):
         if not names:
             raise Exception('"names" remained an empty list.')
         return names, "{'name': 'author'}s"
-    except Exception:
-        pass
-    try:
-        m = soup.find(class_='byline').text
-        return byline_to_names(m), "class_='byline'"
     except Exception:
         pass
     try:
