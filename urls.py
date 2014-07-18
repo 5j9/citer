@@ -106,7 +106,6 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        # http://newsoffice.mit.edu/2014/traffic-lights-theres-a-better-way-0707
         attrs = {'property': 'og:author'}
         m = soup.find(attrs=attrs)
         return byline_to_names(m['content']), attrs
@@ -143,13 +142,11 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        # http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
         m = soup.find(class_='meta-author').text
         return byline_to_names(m), 'class="meta-author"'
     except Exception:
         pass
     try:
-        # http://www.ensani.ir/fa/content/326173/default.aspx
         names = []
         for m in soup.find_all(class_='authorInline'):
             try:
@@ -209,7 +206,6 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        # http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm
         m = soup.find(class_='byl').text
         return byline_to_names(m), "class_='byl'"
     except Exception:
@@ -246,14 +242,12 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        # http://www.defense.gov/News/NewsArticle.aspx?ID=18509
         m = re.search('>[Bb]y\s+(.*?)<', str(soup)).group(1)
         return byline_to_names(m), 'str(soup)'
     except Exception:
         pass
     try:
         # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-        # https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act
         m = re.search('[\n\|]\s*[Bb]y\s+(.*?)[\n]', soup.text).group(1)
         return byline_to_names(m), 'soup.text'
     except Exception:
