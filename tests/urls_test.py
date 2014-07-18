@@ -32,7 +32,7 @@ class BostonTest(unittest.TestCase):
         """bostonmagazine.com. Author tags return unrelated authors."""
         i = 'http://www.bostonmagazine.com/news/blog/2013/08/21/juliette-kayyem-jumps-in-for-guv/'
         o = urls.Response(i)
-        ct = '* {{cite web|last=Bernstein|first=David S.|title=Juliette Kayyem Is Running for Governor of Massachusetts|website=Boston Magazine|date=2013-08-21|year=2013|url=http://www.bostonmagazine.com/news/blog/2013/08/21/juliette-kayyem-jumps-in-for-guv/|ref=harv|accessdate=2014-07-18}}'
+        ct = '* {{cite web|last=Bernstein|first=David S.|title=Juliette Kayyem Is Running for Governor of Massachusetts|website=Boston Magazine|date=2013-08-21|year=2013|url=http://www.bostonmagazine.com/news/blog/2013/08/21/juliette-kayyem-jumps-in-for-guv/|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
 
 
@@ -125,13 +125,13 @@ class BbcTest(unittest.TestCase):
 
     def test_bbc2(self):
         """1 author"""
-        i = 'https://www.bbc.com/news/science-environment-23814524'
+        i = 'http://www.bbc.com/news/science-environment-23814524'
         o = urls.Response(i)
-        ct = '* {{cite web|last=Gage|first=Suzi|title=Sea otter return boosts ailing seagrass in California|website=BBC News|date=2013-08-26|year=2013|url=http://www.bbc.com/news/science-environment-23814524|ref=harv|accessdate='
+        ct = '* {{cite web|last=Gage|first=Suzi|title=Sea otter return boosts seagrass|website=BBC News|date=2013-08-26|year=2013|url=http://www.bbc.co.uk/news/science-environment-23814524|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
 
-    def test_bbc3(self):
-        """1 author"""
+    def test_bbc2(self):
+        """https version of bbc2 (differs a lot!)"""
         i = 'https://www.bbc.com/news/science-environment-23814524'
         o = urls.Response(i)
         ct = '* {{cite web|last=Gage|first=Suzi|title=Sea otter return boosts ailing seagrass in California|website=BBC News|date=2013-08-26|year=2013|url=http://www.bbc.com/news/science-environment-23814524|ref=harv|accessdate='
