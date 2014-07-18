@@ -108,7 +108,7 @@ class BaseResponse:
 
     # defaults
     error = 0
-    reftag = ''
+    reft = ''
 
     def detect_language(self, text, langset={}):
         """Detect language of text. Add the result to self.dictionary and error.
@@ -121,7 +121,7 @@ class BaseResponse:
         self.dictionary['error'] = self.error = err
 
     def generate(self):
-        """Generate self.sfnt, self.ctnt and self.reftag.
+        """Generate self.sfnt, self.ctnt and self.reft.
 
         self.dictionary should be ready before calling this function.
         The dictionary will be cleaned up (empty values will be removed) and
@@ -136,26 +136,25 @@ class BaseResponse:
                 self.dictionary['isbn'] = masked
         self.sfnt = sfn.create(self.dictionary)
         self.ctnt = ctn.create(self.dictionary, self.date_format)
-        self.create_reftag()
+        self.create_reft()
 
-    def create_reftag(self):
+    def create_reft(self):
         """Create a named reference tag using ctnt and sfnt properties."""
         name = self.sfnt[6:-2].replace('|', ' ')
         text = re.sub('(\|ref=({{.*?}}|harv))(?P<repl>\||}})',
                       '\g<repl>',
                       self.ctnt[2:])
-        if 'p=' in name:
-            name = name.replace('p=', ' p. ')
+        if ' p=' in name:
+            name = name.replace(' p=', ' p. ')
             if 'pages' in self.dictionary:
-                if '–' in self.dictionary['pages']:
-                    text = text[:-2] + '|pages=' +\
-                           self.dictionary['pages'] + '}}'
-                else:
-                    text = text[:-2] + '|page=' +\
-                           self.dictionary['pages'] + '}}'
+                text = text[:-2] + '|page=' + self.dictionary['pages'] + '}}'
             else:
                 text = text[:-2] + '|page=}}'
-        self.reftag = '<ref name="' + name + '">' + text + '</ref>'
+        elif ' pp=' in name:
+            name = name.replace(' pp=', ' pp. ')
+            if 'pages' in self.dictionary:
+                text = text[:-2] + '|pages=' + self.dictionary['pages'] + '}}'
+        self.reft = '<ref name="' + name + '">' + text + '</ref>'
 
 
 def detect_language(text, langset={}):
