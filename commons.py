@@ -144,9 +144,17 @@ class BaseResponse:
         text = re.sub('(\|ref=({{.*?}}|harv))(?P<repl>\||}})',
                       '\g<repl>',
                       self.ctnt[2:])
-        if name.endswith('p='):
+        if 'p=' in name:
             name = name.replace('p=', ' p. ')
-            text = text[:-2] + '|page=}}'
+            if 'pages' in self.dictionary:
+                if '–' in self.dictionary['pages']:
+                    text = text[:-2] + '|pages=' +\
+                           self.dictionary['pages'] + '}}'
+                else:
+                    text = text[:-2] + '|page=' +\
+                           self.dictionary['pages'] + '}}'
+            else:
+                text = text[:-2] + '|page=}}'
         self.reftag = '<ref name="' + name + '">' + text + '</ref>'
 
 
