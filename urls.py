@@ -84,175 +84,101 @@ def find_url(soup, url):
     return url
 
 
+def try_find_authors(soup, find_parameters):
+    """Try to find authors in soup using the provided parameters."""
+    for fp in find_parameters:
+        try: #can this try be removed safely?
+            attrs = fp[0]
+            f = soup.find(attrs=attrs)
+            fs = f.find_next_siblings(attrs=attrs)
+            fs.insert(0, f)
+            names = []
+            
+            if fp[1] == 'getitem':
+                for f in fs:
+                    try:
+                        string = f[fp[2]]
+                        name = byline_to_names(string)
+                        names.extend(name)
+                    except Exception:
+                        pass
+            elif fp[1] == 'getattr':
+                for f in fs:
+                    try:
+                        string = getattr(f, fp[2])
+                        name = byline_to_names(string)
+                        names.extend(name)
+                    except Exception:
+                        pass
+     
+            if names:
+                return names, attrs
+        except Exception:
+            pass
+    return None, None
+
+
 def find_authors(soup):
     """Get a BeautifulSoup object. Return (Names, where)."""
-    try:
+    find_parameters = (
         # http://socialhistory.ihcs.ac.ir/article_571_84.html
         # http://jn.physiology.org/content/81/1/319
-        attrs = {'name': re.compile('citation_authors?')}
-        m = soup.find_all(attrs=attrs)
-        authors = []
-        for a in m:
-            ss = a['content'].split(' and ')
-            for s in ss:
-                try:
-                    name = commons.Name(s)
-                    authors.append(name)
-                except commons.InvalidNameError:
-                    continue
-        if not authors:
-            raise Exception('"authors" remained an empty list.')
-        return authors, attrs
-    except Exception:
-        pass
-    try:
-        attrs = {'property': 'og:author'}
-        m = soup.find(attrs=attrs)
-        return byline_to_names(m['content']), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': re.compile('citation_authors?')}, 'getitem', 'content'),
+        ({'property': 'og:author'}, 'getitem', 'content'),
         # http://www.telegraph.co.uk/science/8323909/The-sperm-whale-works-in-extraordinary-ways.html
-        attrs = {'name': 'DCSext.author'}
-        m = soup.find(attrs=attrs)
-        return byline_to_names(m['content']), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'DCSext.author'}, 'getitem', 'content'),
         # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
-        m = soup.find(class_='author_byline').text
-        return byline_to_names(m), "class_='author_byline'"
-    except Exception:
-        pass
-    try:
+        ({'class': 'author_byline'}, 'getattr', 'text'),
         # http://news.bbc.co.uk/2/hi/business/2570109.stm
-        m = soup.find(class_='bylineAuthor').text
-        return byline_to_names(m), "class_='bylineAuthor'"
-    except Exception:
-        pass
-    try:
+        ({'class': 'bylineAuthor'}, 'getattr', 'text'),
         # http://www.bbc.com/news/science-environment-26267918
-        m = soup.find(class_='byline-name').text
-        return byline_to_names(m), "class_='byline-name'"
-    except Exception:
-        pass
-    try:
-        m = soup.find(class_='story-byline').text
-        return byline_to_names(m), "class_='story-byline'"
-    except Exception:
-        pass
-    try:
-        m = soup.find(class_='meta-author').text
-        return byline_to_names(m), 'class="meta-author"'
-    except Exception:
-        pass
-    try:
-        names = []
-        for m in soup.find_all(class_='authorInline'):
-            try:
-                names.extend(byline_to_names(m.text))
-            except InvalidByLineError:
-                continue
-        if not names:
-            raise Exception('`names` remained an empty list.')
-        return names, "class_='authorInline's"
-    except Exception:
-        pass
-    try:
-        # try before class_='byline'
-        names = []
-        for m in soup.find_all(class_='byline-author'):
-            try:
-                names.extend(byline_to_names(m.text))
-            except InvalidByLineError:
-                continue
-        if not names:
-            raise Exception('`names` remained an empty list.')
-        return names, "class_='byline-author's"
-    except Exception:
-        pass
-    try:
+        ({'class': 'byline-name'}, 'getattr', 'text'),
+        ({'class': 'story-byline'}, 'getattr', 'text'),
+        ({'class': 'meta-author'}, 'getattr', 'text'),
+        ({'class': 'authorInline'}, 'getattr', 'text'),
         # try before class_='author'
-        m = soup.find(class_='byline').text
-        return byline_to_names(m), "class_='byline'"
-    except Exception:
-        pass
-    try:
+        ({'class': 'byline'}, 'getattr', 'text'),
         # try before {'name': 'author'}
-        names = []
-        for m in soup.find_all(class_='author'):
-            try:
-                names.extend(byline_to_names(m.text))
-            except InvalidByLineError:
-                continue
-        if not names:
-            raise Exception('`names` remained an empty list.')
-        return names, "class_='author's"
-    except Exception:
-        pass
-    try:
-        names = []
-        for m in soup.find_all(attrs={'name': 'author'}):
-            names.extend(byline_to_names(m['content']))
-        if not names:
-            raise Exception('"names" remained an empty list.')
-        return names, "{'name': 'author'}s"
-    except Exception:
-        pass
-    try:
+        ({'class': 'author'}, 'getattr', 'text'),
+        ({'name': 'author'}, 'getitem', 'content'),
         # http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
-        m = soup.find(id='byline').text
-        return byline_to_names(m), "id='byline'"
-    except Exception:
-        pass
-    try:
-        m = soup.find(class_='byl').text
-        return byline_to_names(m), "class_='byl'"
-    except Exception:
-        pass
-    try:
+        ({'id': 'byline'}, 'getattr', 'text'),
+        ({'class': 'byline'}, 'getattr', 'text'),
         # http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html
-        attrs = {'name': 'byl'}
-        m = soup.find(attrs=attrs)
-        return byline_to_names(m['content']), attrs
-    except Exception:
-        pass
-    try:
+        ({'name': 'byl'}, 'getitem', 'content'),
         # http://timesofindia.indiatimes.com/city/pune/UK-allows-working-visas-for-Indian-students/articleshow/1163528927.cms?
-        m = soup.find(id='authortext').text
-        return byline_to_names(m), "id='authortext'"
-    except Exception:
-        pass
-    try:
-        m = soup.find(class_='name').text
-        return byline_to_names(m), "class_='name'"
-    except Exception:
-        pass
-    try:
-        # try before {'rel': 'author'}
-        m = re.search('"author": "(.*?)"', str(soup)).group(1)
-        return byline_to_names(m), '"author": "(.*?)"'
-    except Exception:
-        pass
-    try:
-        # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
-        attrs = {'rel': 'author'}
-        m = soup.find(attrs=attrs).text
-        return byline_to_names(m), attrs
-    except Exception:
-        pass
-    try:
-        m = re.search('>[Bb]y\s+(.*?)<', str(soup)).group(1)
-        return byline_to_names(m), 'str(soup)'
-    except Exception:
-        pass
-    try:
-        # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-        m = re.search('[\n\|]\s*[Bb]y\s+(.*?)[\n]', soup.text).group(1)
-        return byline_to_names(m), 'soup.text'
-    except Exception:
-        pass
-    return None, None
+        ({'id': 'authortext'}, 'getattr', 'text'),
+        ({'class': 'name'}, 'getattr', 'text'),
+        )
+    names, attrs = try_find_authors(soup, find_parameters)
+    if names:
+        return names, attrs
+    else:
+        try:
+            # try before {'rel': 'author'}
+            m = re.search('"author": "(.*?)"', str(soup)).group(1)
+            return byline_to_names(m), '"author": "(.*?)"'
+        except Exception:
+            pass
+        try:
+            # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
+            attrs = {'rel': 'author'}
+            m = soup.find(attrs=attrs).text
+            return byline_to_names(m), attrs
+        except Exception:
+            pass
+        try:
+            m = re.search('>[Bb]y\s+(.*?)<', str(soup)).group(1)
+            return byline_to_names(m), 'str(soup)'
+        except Exception:
+            pass
+        try:
+            # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
+            m = re.search('[\n\|]\s*[Bb]y\s+(.*?)[\n]', soup.text).group(1)
+            return byline_to_names(m), 'soup.text'
+        except Exception:
+            pass
+        return None, None
 
 
 def byline_to_names(byline):
@@ -310,6 +236,8 @@ def byline_to_names(byline):
     byline = byline.strip()
     if byline.lower().startswith('by '):
         byline = byline[3:]
+    if byline.lower().endswith(' and'):
+        byline = byline[:-4]
     byline = byline.partition('|')[0]
     fullnames = re.split(', and | and |, |;', byline, flags=re.I)
     names = []
