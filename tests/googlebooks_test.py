@@ -47,6 +47,17 @@ class GooglebooksTest(unittest.TestCase):
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
 
+    def test_gb4(self):
+        """reft checking"""
+        i = 'https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378&dq=density+of+granite&hl=en&sa=X&ei=YBHIU-qCBIyX0QXusoDgAg&ved=0CEIQ6AEwBjgK#v=onepage&q=density%20of%20granite&f=false'
+        o = googlebooks.Response(i)
+        sfnt = '{{sfn|Serway|Jewett|2009|p=378}}'
+        ctnt = '* {{cite book|last=Serway|first=R.|last2=Jewett|first2=J.|title=Physics for Scientists and Engineers, Volume 1, Chapters 1-22|publisher=Cengage Learning|series=Physics for Scientists and Engineers|year=2009|isbn=978-1-4390-4838-2|url=http://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378|ref=harv|accessdate='
+        reft = '<ref name="Serway Jewett 2009 p. 378">{{cite book|last=Serway|first=R.|last2=Jewett|first2=J.|title=Physics for Scientists and Engineers, Volume 1, Chapters 1-22|publisher=Cengage Learning|series=Physics for Scientists and Engineers|year=2009|isbn=978-1-4390-4838-2|url=http://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378|accessdate='
+        self.assertIn(ctnt, o.ctnt)
+        self.assertIn(reft, o.reft)
+        self.assertIn('|page=378}}</ref>', o.reft)
+
 
 googlebooks.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
