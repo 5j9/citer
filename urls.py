@@ -162,8 +162,6 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        # http://www.dailymail.co.uk/news/article-2633025/
-        # http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471
         # try before {'name':'author'}
         names = []
         for m in soup.find_all(class_='author'):
@@ -177,8 +175,6 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        # http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html
-        # http://www.theguardian.com/world/2014/jul/14/israel-drone-launched-gaza-ashdod
         names = []
         for m in soup.find_all(attrs={'name': 'author'}):
             names.extend(byline_to_names(m['content']))
@@ -223,7 +219,6 @@ def find_authors(soup):
     except Exception:
         pass
     try:
-        # http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936
         # try before {'rel': 'author'}
         m = re.search('"author": "(.*?)"', str(soup)).group(1)
         return byline_to_names(m), '"author": "(.*?)"'
@@ -307,11 +302,11 @@ def byline_to_names(byline):
     byline = byline.strip()
     if byline.lower().startswith('by '):
         byline = byline[3:]
-    fullnames = re.split(', and | and |, |;|\|', byline, flags=re.I)
+    byline = byline.partition('|')[0]
+    fullnames = re.split(', and | and |, |;', byline, flags=re.I)
     names = []
     for fullname in fullnames:
-        if ' in ' in fullname:
-            fullname = fullname.split(' in ')[0]
+        fullname = fullname.partition(' in ')[0]
         name = commons.Name(fullname)
         if isspecial(name.lastname):
             name.nofirst_fulllast()
