@@ -11,10 +11,10 @@ class Respose:
 
     """Create the responce object used by the main application."""
 
-    def __init__(self, sfnt, ctnt='', reftag='', error='100'):
+    def __init__(self, sfnt, ctnt='', reft='', error='100'):
         self.sfnt = sfnt
         self.ctnt = ctnt
-        self.reftag = reftag
+        self.reft = reft
         self.error = error
 
 
@@ -22,7 +22,7 @@ def response_to_template(response):
     """Insert the response into the template and return response_body."""
     return template % (response.sfnt,
                        response.ctnt,
-                       response.reftag,
+                       response.reft,
                        response.error)
 
 
