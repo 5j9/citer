@@ -28,6 +28,13 @@ class BostonTest(unittest.TestCase):
         ct = '* {{cite web|last=Saltzman|first=Jonathan|last2=Farragher|first2=Thomas|title=Walsh meets with college leaders on off-campus housing|website=BostonGlobe.com|date=2014-06-03|year=2014|url=https://www.bostonglobe.com/metro/2014/06/03/walsh-meets-with-college-leaders-off-campus-housing/lsxtLSGJMD86Gbkjay3D6J/story.html|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
 
+    def test_bg3(self):
+        """bostonmagazine.com. Author tags return unrelated authors."""
+        i = 'http://www.bostonmagazine.com/news/blog/2013/08/21/juliette-kayyem-jumps-in-for-guv/'
+        o = urls.Response(i)
+        ct = '* {{cite web|last=Bernstein|first=David S.|title=Juliette Kayyem Is Running for Governor of Massachusetts|website=Boston Magazine|date=2013-08-21|year=2013|url=http://www.bostonmagazine.com/news/blog/2013/08/21/juliette-kayyem-jumps-in-for-guv/|ref=harv|accessdate=2014-07-18}}'
+        self.assertIn(ct, o.ctnt)
+
 
 class WashingtonpostTest(unittest.TestCase):
 
@@ -70,6 +77,15 @@ class DilyTelegraphTest(unittest.TestCase):
         o = urls.Response(i)
         e1 = '{{sfn|Fogle|2005}}'
         e2 = "* {{cite web|last=Fogle|first=Ben|title=We could see the whale's eyes, mouth... the barnacles on its back|website=Telegraph.co.uk|date=2005-12-22|year=2005|url=http://www.telegraph.co.uk/health/3334755/We-could-see-the-whales-eyes-mouth...-the-barnacles-on-its-back.html|ref=harv|accessdate="
+        self.assertIn(e1, o.sfnt)
+        self.assertIn(e2, o.ctnt)
+
+    def test_dt2(self):
+        """1 author, 2003"""
+        i = 'http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html'
+        o = urls.Response(i)
+        e1 = '{{sfn|Highfield|2003}}'
+        e2 = "* {{cite web|last=Highfield|first=Roger|title=Marine 'collapse' linked to whale decline|website=Telegraph.co.uk|date=2003-09-29|year=2003|url=http://www.telegraph.co.uk/science/science-news/3313298/Marine-collapse-linked-to-whale-decline.html|ref=harv|accessdate="
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
 
@@ -192,7 +208,7 @@ class TGDaily(unittest.TestCase):
 
 
 class ABCNews(unittest.TestCase):
-    @unittest.expectedFailure
+    @unittest.skip
     def test_tgd1(self):
         """Wrong author: |last=News|first=ABC."""
         i = 'http://abcnews.go.com/blogs/headlines/2006/12/saddam_executed/'
@@ -200,7 +216,7 @@ class ABCNews(unittest.TestCase):
         ct = '* {{cite web|last=Ross|first=Brian|title=Saddam Executed; An Era Comes to an End|website=ABC News Blogs|date=2006-12-30|year=2006|url=http://abcnews.go.com/blogs/headlines/2006/12/saddam_executed/|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
 
-        
+
 class Others(unittest.TestCase):
 
     def test_oth1(self):
@@ -262,7 +278,7 @@ class Others(unittest.TestCase):
         o = urls.Response(i)
         ct = '* {{cite web|last=Beaumont|first=Peter|last2=Crowcroft|first2=Orlando|title=Israel says it has shot down drone launched from Gaza|website=the Guardian|date=2014-07-14|year=2014|url=http://www.theguardian.com/world/2014/jul/14/israel-drone-launched-gaza-ashdod|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
-        
+
     def test_oth9(self):
         """Author in str(soup)."""
         i = 'http://www.defense.gov/News/NewsArticle.aspx?ID=18509'
