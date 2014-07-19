@@ -286,6 +286,13 @@ class Others(unittest.TestCase):
         ct = "* {{cite web|last=Garamone|first=Jim|title=Defense.gov News Article: Prison Stands as Testament to Saddam's Evil|website=United States Department of Defense (defense.gov)|date=2005-12-17|year=2005|url=http://www.defense.gov/News/NewsArticle.aspx?ID=18509|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
 
+    def test_oth10(self):
+        """The Times. (Authors found by "byline" css selector)"""
+        i = 'http://www.thetimes.co.uk/tto/news/world/australia-newzealand/article4151214.ece'
+        o = urls.Response(i)
+        ct = "* {{cite web|last=Lagan|first=Bernard|last2=Charter|first2=David|title=Woman who lost brother on MH370 mourns relatives on board MH17|website=The Times|date=2014-07-17|year=2014|url=http://www.thetimes.co.uk/tto/news/world/australia-newzealand/article4151214.ece|ref=harv|accessdate="
+        self.assertIn(ct, o.ctnt)
+
 
 urls.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
