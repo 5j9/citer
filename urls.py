@@ -227,6 +227,8 @@ def byline_to_names(byline):
             if sp.lower() in string.lower():
                 return True
         return False
+    
+    byline = byline.partition('|')[0]
     for c in ':+':
         if c in byline:
             raise InvalidByLineError('Invalid character ("%s") in byline.' % c)
@@ -238,7 +240,6 @@ def byline_to_names(byline):
         byline = byline[3:]
     if byline.lower().endswith(' and'):
         byline = byline[:-4]
-    byline = byline.partition('|')[0]
     fullnames = re.split(', and | and |, |;', byline, flags=re.I)
     names = []
     for fullname in fullnames:
@@ -664,6 +665,15 @@ def requests_visa(url, request_headers=None):
     return True
 
 
+def get_soup(url, headers=None):
+    """Return the soup object for the given url."""
+    requests_visa(url, headers)
+    r = requests.get(url, headers=headers, timeout=15)
+    if r.status_code != 200:
+        raise StatusCodeError(r.status_code)
+    return bs4.BeautifulSoup(r.content)
+
+
 def url2dictionary(url):
     """Get url and return the result as a dictionary."""
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)' +
@@ -674,11 +684,7 @@ def url2dictionary(url):
     thread = Thread(target=get_hometitle, args=(url, headers, hometitle_list))
     thread.start()
 
-    requests_visa(url, headers)
-    r = requests.get(url, headers=headers, timeout=15)
-    if r.status_code != 200:
-        raise StatusCodeError(r.status_code)
-    soup = bs4.BeautifulSoup(r.content)
+    soup = get_soup(url, headers)
     d = {}
     d['url'] = find_url(soup, url)
     authors, tag = find_authors(soup)
