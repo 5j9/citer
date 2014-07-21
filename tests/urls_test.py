@@ -293,6 +293,13 @@ class Others(unittest.TestCase):
         ct = "* {{cite web|last=Lagan|first=Bernard|last2=Charter|first2=David|title=Woman who lost brother on MH370 mourns relatives on board MH17|website=The Times|date=2014-07-17|year=2014|url=http://www.thetimes.co.uk/tto/news/world/australia-newzealand/article4151214.ece|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
 
+    def test_oth11(self):
+        """businessnewsdaily."""
+        i = 'http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876'
+        o = urls.Response(i)
+        ct = "* {{cite web|last=Helmrich|first=Brittney|title=Male vs. Female Entrepreneurs: How Are They Different?|website=BusinessNewsDaily.com|date=2014-07-15|year=2014|url=http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html|ref=harv|accessdate="
+        self.assertIn(ct, o.ctnt)
+
 
 urls.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
