@@ -125,13 +125,11 @@ def find_authors(soup):
         # http://jn.physiology.org/content/81/1/319
         ({'name': re.compile('citation_authors?')}, 'getitem', 'content'),
         ({'property': 'og:author'}, 'getitem', 'content'),
-        # http://www.telegraph.co.uk/science/8323909/The-sperm-whale-works-in-extraordinary-ways.html
         ({'name': 'DCSext.author'}, 'getitem', 'content'),
+        ({'class': "author-title"}, 'getattr', 'text'),
         # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
         ({'class': 'author_byline'}, 'getattr', 'text'),
-        # http://news.bbc.co.uk/2/hi/business/2570109.stm
         ({'class': 'bylineAuthor'}, 'getattr', 'text'),
-        # http://www.bbc.com/news/science-environment-26267918
         ({'class': 'byline-name'}, 'getattr', 'text'),
         ({'class': 'story-byline'}, 'getattr', 'text'),
         ({'class': 'meta-author'}, 'getattr', 'text'),
@@ -144,9 +142,7 @@ def find_authors(soup):
         # http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
         ({'id': 'byline'}, 'getattr', 'text'),
         ({'class': 'byline'}, 'getattr', 'text'),
-        # http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html
         ({'name': 'byl'}, 'getitem', 'content'),
-        # http://timesofindia.indiatimes.com/city/pune/UK-allows-working-visas-for-Indian-students/articleshow/1163528927.cms?
         ({'id': 'authortext'}, 'getattr', 'text'),
         ({'class': 'name'}, 'getattr', 'text'),
         )
