@@ -89,6 +89,15 @@ class DilyTelegraphTest(unittest.TestCase):
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
 
+    def test_dt3(self):
+        """1 author, 2011"""
+        i = 'http://www.telegraph.co.uk/science/8323909/The-sperm-whale-works-in-extraordinary-ways.html'
+        o = urls.Response(i)
+        e1 = '{{sfn|Whitehead|2011}}'
+        e2 = "* {{cite web|last=Whitehead|first=Hal|title=The sperm whale works in extraordinary ways|website=Telegraph.co.uk|date=2011-02-15|year=2011|url=http://www.telegraph.co.uk/science/8323909/The-sperm-whale-works-in-extraordinary-ways.html|ref=harv|accessdate="
+        self.assertIn(e1, o.sfnt)
+        self.assertIn(e2, o.ctnt)
+
 
 class DilyMirrorTest(unittest.TestCase):
 
@@ -144,7 +153,21 @@ class BbcTest(unittest.TestCase):
         ct = "* {{cite web|last=Jones|first=Meirion|title=Malaria advice 'risks lives'|website=BBC NEWS|date=2006-07-13|year=2006|url=http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
 
+    def test_bbc5(self):
+        """news.bbc.co.uk, 1 author"""
+        i = 'http://news.bbc.co.uk/2/hi/business/2570109.stm'
+        o = urls.Response(i)
+        ct = "* {{cite web|last=Madslien|first=Jorn|title=Inside the Bentley factory|website=BBC NEWS|date=2002-12-24|year=2002|url=http://news.bbc.co.uk/2/hi/business/2570109.stm|ref=harv|accessdate="
+        self.assertIn(ct, o.ctnt)
 
+    def test_bbc6(self):
+        """bbc.com, 1 author"""
+        i = 'http://www.bbc.com/news/science-environment-26267918'
+        o = urls.Response(i)
+        ct = "* {{cite web|last=Amos|first=Jonathan|title=Europe picks Plato planet-hunter|website=BBC News|date=2014-02-20|year=2014|url=http://www.bbc.com/news/science-environment-26267918|ref=harv|accessdate="
+        self.assertIn(ct, o.ctnt)
+
+        
 class NytTest(unittest.TestCase):
 
     def test_nyt1(self):
@@ -182,6 +205,13 @@ class NytTest(unittest.TestCase):
         ct = '* {{cite web|title=19th-century harpoon gives clue on whales|website=The New York Times|date=2007-06-13|year=2007|url=http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html|ref={{sfnref|The New York Times|2007}}|accessdate='
         self.assertIn(ct, o.ctnt)
 
+    def test_nyt5(self):
+        """lastname=O'Connor"""
+        i = 'http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html'
+        o = urls.Response(i)
+        ct = "* {{cite web|last=O'Connor|first=Anahad|title=Adding Weight to Suspicion, Sonar Is Linked to Whale Deaths|website=The New York Times|date=2003-10-09|year=2003|url=http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html|ref=harv|accessdate=2014-07-22}}"
+        self.assertIn(ct, o.ctnt)
+        
 
 class TGDaily(unittest.TestCase):
 
@@ -207,14 +237,21 @@ class TGDaily(unittest.TestCase):
         self.assertIn(ct, o.ctnt)
 
 
-class ABCNews(unittest.TestCase):
-    @unittest.skip
+@unittest.skip
+class NotWorking(unittest.TestCase):
     def test_tgd1(self):
-        """Wrong author: |last=News|first=ABC."""
+        """ABCNews. Wrong author: |last=News|first=ABC."""
         i = 'http://abcnews.go.com/blogs/headlines/2006/12/saddam_executed/'
         o = urls.Response(i)
         ct = '* {{cite web|last=Ross|first=Brian|title=Saddam Executed; An Era Comes to an End|website=ABC News Blogs|date=2006-12-30|year=2006|url=http://abcnews.go.com/blogs/headlines/2006/12/saddam_executed/|ref=harv|accessdate='
         self.assertIn(ct, o.ctnt)
+
+    def test_oth12(self):
+        """Times of India, author could not be detected."""
+        i = 'http://timesofindia.indiatimes.com/city/pune/UK-allows-working-visas-for-Indian-students/articleshow/1163528927.cms?'
+        o = urls.Response(i)
+        sfnt = "{{sfn|Kashyap|2001}}"
+        self.assertIn(sfnt, o.sfnt)
 
 
 class Others(unittest.TestCase):
@@ -300,7 +337,14 @@ class Others(unittest.TestCase):
         ct = "* {{cite web|last=Helmrich|first=Brittney|title=Male vs. Female Entrepreneurs: How Are They Different?|website=BusinessNewsDaily.com|date=2014-07-15|year=2014|url=http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
 
+    def test_oth12(self):
+        """thebulletin.org"""
+        i = 'http://thebulletin.org/evidence-shows-iron-dome-not-working7318'
+        o = urls.Response(i)
+        ct = "* {{cite web|last=Postol|first=Theodore A.|title=The evidence that shows Iron Dome is not working|website=Bulletin of the Atomic Scientists|date=2014-01-14|year=2014|url=http://thebulletin.org/evidence-shows-iron-dome-not-working7318|ref=harv|accessdate="
+        self.assertIn(ct, o.ctnt)
 
+        
 urls.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
     unittest.main()
