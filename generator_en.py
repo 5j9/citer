@@ -1,15 +1,43 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Functions to create Wikipedia citation template."""
+"""Codes required to create English Wikipedia citation templates."""
 
 
 from datetime import date
+import re
 
-import commons
 
+def sfn_template(d):
+    """Creates citation based on the given dictionary."""
+    s = '{{sfn'
+    if 'authors' in d:
+        c = 0
+        for name in d['authors']:
+            c += 1
+            if c < 5:  # {{sfn}} only supports a maximum of four authors
+                s += '|' + name.lastname
+    else:
+        # the same order should be used in citation_template:
+        s += '|' + (d['publisher'] if 'publisher' in d else
+                    "''" + d['journal'] + "''" if 'journal' in d else
+                    "''" + d['website'] + "''" if 'website' in d else
+                    d['title'] if 'title' in d else
+                    'Anon.')
+    if 'year' in d:
+        s += '|' + d['year']
+    if 'pages' in d:
+        if '–' in d['pages']:
+            s += '|pp=' + d['pages']
+        else:
+            s += '|p=' + d['pages']
+    elif not 'url' in d:
+        s += '|p='
+    s += '}}'
+    return s   
 
-def create(d, date_format):
+    
+def citation_template(d, date_format):
     """Create citation based on the given dictionary."""
     if d['type'] == 'book':
         s = '* {{cite book'
@@ -85,7 +113,7 @@ def create(d, date_format):
     if 'authors' in d:
         s += '|ref=harv'
     else:
-        # order should match sfn
+        # order should match sfn_template
         s += '|ref={{sfnref|' +\
              (
                  d['publisher'] if 'publisher' in d else
@@ -101,6 +129,25 @@ def create(d, date_format):
         s += '|accessdate=' + date.strftime(date.today(), date_format)
     s += '}}'
     return s
+
+
+def reference_tag(dictionary, sfn_template, citation_template):
+    """Create named <ref> tag."""
+    name = sfn_template[6:-2].replace('|', ' ')
+    text = re.sub('(\|ref=({{.*?}}|harv))(?P<repl>\||}})',
+                  '\g<repl>',
+                  citation_template[2:])
+    if ' p=' in name:
+        name = name.replace(' p=', ' p. ')
+        if 'pages' in dictionary:
+            text = text[:-2] + '|page=' + dictionary['pages'] + '}}'
+        else:
+            text = text[:-2] + '|page=}}'
+    elif ' pp=' in name:
+        name = name.replace(' pp=', ' pp. ')
+        if 'pages' in dictionary:
+            text = text[:-2] + '|pages=' + dictionary['pages'] + '}}'
+    return  '<ref name="' + name + '">' + text + '</ref>'
 
 
 def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
