@@ -89,7 +89,7 @@ template = Template("""<!DOCTYPE html>
                 <a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:<br>
                 <textarea rows="6" readonly>$s\n\n$s</textarea>
                 <a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:<br>
-                <textarea rows="4" readonly>$s</textarea>
+                <textarea rows="5" readonly>$s</textarea>
             </p>
             <p>
                 <!-- There may be error in language detection. $s % -->
