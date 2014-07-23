@@ -209,7 +209,7 @@ class NytTest(unittest.TestCase):
         """lastname=O'Connor"""
         i = 'http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html'
         o = urls.Response(i)
-        ct = "* {{cite web|last=O'Connor|first=Anahad|title=Adding Weight to Suspicion, Sonar Is Linked to Whale Deaths|website=The New York Times|date=2003-10-09|year=2003|url=http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html|ref=harv|accessdate=2014-07-22}}"
+        ct = "* {{cite web|last=O'Connor|first=Anahad|title=Adding Weight to Suspicion, Sonar Is Linked to Whale Deaths|website=The New York Times|date=2003-10-09|year=2003|url=http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
         
 
@@ -297,7 +297,7 @@ class Others(unittest.TestCase):
         """Detection of website name."""
         i = 'http://www.farsnews.com/newstext.php?nn=13930418000036'
         o = urls.Response(i)
-        sf = "{{sfn|Fars News Agency|2014}}"
+        sf = "{{sfn|''Fars News Agency''|2014}}"
         ct = "* {{cite web|title=آیت‌الله محمدی گیلانی دارفانی را وداع گفت|website=Fars News Agency|date=2014-07-09|year=2014|url=http://www.farsnews.com/newstext.php?nn=13930418000036|language=fa|ref={{sfnref|Fars News Agency|2014}}|accessdate="
         self.assertIn(sf, o.sfnt)
         self.assertIn(ct, o.ctnt)
