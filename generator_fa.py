@@ -49,7 +49,7 @@ def citation_template(d, date_format):
     if 'authors' in d:
         s += names2para(d['authors'],
                         'نام',
-                        'نام خانوادگی'
+                        'نام خانوادگی',
                         'نویسنده')
     if 'editors' in d:
         s += names2para(d['editors'],
