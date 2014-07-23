@@ -7,6 +7,9 @@
 from datetime import date
 import re
 
+import commons
+
+
 def sfn_template(d):
     """Create sfn template using the given dictionary."""
     if 'authors' in d:
