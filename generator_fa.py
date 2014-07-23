@@ -7,7 +7,6 @@
 from datetime import date
 import re
 
-
 def sfn_template(d):
     """Create sfn template using the given dictionary."""
     if 'authors' in d:
@@ -25,9 +24,10 @@ def sfn_template(d):
         s += '|ک=' + d['title']
     if 'language' in d:
         s += '|زبان=' + d['language']
-    s += '|ص='
     if 'pages' in d:
-        s += d['pages']
+        s += '|ص=' + d['pages']
+    elif 'url' not in d:
+        s += '|ص='
     s += '}}</ref>'
     return s
 
@@ -73,6 +73,11 @@ def citation_template(d, date_format):
         s += '|جلد=' + d['volume']
     if 'issue' in d:
         s += '|شماره=' + d['issue']
+    if 'date' in d:
+        if isinstance(d['date'], date):
+            s += '|تاریخ=' + date.isoformat(d['date'])
+        else:
+            s += '|تاریخ=' + d['date']
     if 'year' in d:
         s += '|سال=' + d['year']
     if 'month' in d:
@@ -87,11 +92,21 @@ def citation_template(d, date_format):
     if 'doi' in d:
         s += '|doi=' + d['doi']
     if 'language' in d:
-        s += '|زبان=' + d['language']
+        s += '|کد زبان=' + d['language']
     if 'url' in d:
         s += '|تاریخ بازبینی=' + date.isoformat(date.today())
     s += '}}'
     return s
+
+
+def reference_tag(dictionary, sfn_template, citation_template):
+    """Create named <ref> tag."""
+    text = citation_template[2:]
+    if 'pages' in dictionary:
+        text = text[:-2] + '|صفحه=' + dictionary['pages'] + '}}'
+    elif 'url' not in dictionary:
+        text = text[:-2] + '|صفحه=}}'
+    return  '<ref>' + text + '</ref>'
 
 
 def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
