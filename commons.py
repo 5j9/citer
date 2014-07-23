@@ -11,11 +11,10 @@ import isbnlib
 
 import config
 if config.lang == 'en':
-    import sfn_en as sfn
-    import ctn_en as ctn
+    import generator_en as generator
 else:
-    import sfn_fa as sfn
-    import ctn_fa as ctn
+    import generator_fa as generator
+
 
 # Date patterns:
 
@@ -134,28 +133,12 @@ class BaseResponse:
             masked = isbnlib.mask(self.dictionary['isbn'])
             if masked:
                 self.dictionary['isbn'] = masked
-        self.sfnt = sfn.create(self.dictionary)
-        self.ctnt = ctn.create(self.dictionary, self.date_format)
-        self.create_reft()
-
-    def create_reft(self):
-        """Create a named reference tag using ctnt and sfnt properties."""
-        name = self.sfnt[6:-2].replace('|', ' ')
-        text = re.sub('(\|ref=({{.*?}}|harv))(?P<repl>\||}})',
-                      '\g<repl>',
-                      self.ctnt[2:])
-        if ' p=' in name:
-            name = name.replace(' p=', ' p. ')
-            if 'pages' in self.dictionary:
-                text = text[:-2] + '|page=' + self.dictionary['pages'] + '}}'
-            else:
-                text = text[:-2] + '|page=}}'
-        elif ' pp=' in name:
-            name = name.replace(' pp=', ' pp. ')
-            if 'pages' in self.dictionary:
-                text = text[:-2] + '|pages=' + self.dictionary['pages'] + '}}'
-        self.reft = '<ref name="' + name + '">' + text + '</ref>'
-
+        self.sfnt = generator.sfn_template(self.dictionary)
+        self.ctnt = generator.citation_template(self.dictionary,
+                                                self.date_format)
+        self.reft = generator.reference_tag(self.dictionary,
+                                            self.sfnt,
+                                            self.ctnt)
 
 def detect_language(text, langset={}):
     """Detect the language of the text. Return (lang, error).
