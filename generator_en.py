@@ -31,7 +31,7 @@ def sfn_template(d):
             s += '|pp=' + d['pages']
         else:
             s += '|p=' + d['pages']
-    elif not 'url' in d:
+    elif 'url' not in d:
         s += '|p='
     s += '}}'
     return s   
