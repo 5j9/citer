@@ -95,7 +95,10 @@ def citation_template(d, date_format):
     if 'doi' in d:
         s += '|doi=' + d['doi']
     if 'language' in d:
-        s += '|کد زبان=' + d['language']
+        if d['type'] == 'web':
+            s += '|کد زبان=' + d['language']
+        else:
+            s += '|زبان=' + d['language']
     if 'url' in d:
         s += '|تاریخ بازبینی=' + date.isoformat(date.today())
     s += '}}'
