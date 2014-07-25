@@ -7,14 +7,16 @@
 from string import Template
 from datetime import date
 
-class Respose:
+import commons
+
+
+class Respose(commons.BaseResponse):
 
     """Create the responce object used by the main application."""
 
     def __init__(self, sfnt, ctnt='', reft='', error='100'):
         self.sfnt = sfnt
         self.ctnt = ctnt
-        self.reft = reft
         self.error = error
 
 
