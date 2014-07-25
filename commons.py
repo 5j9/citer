@@ -5,6 +5,7 @@
 
 from datetime import datetime
 import re
+import json
 
 import langid
 import isbnlib
@@ -139,6 +140,13 @@ class BaseResponse:
         self.reft = generator.reference_tag(self.dictionary,
                                             self.sfnt,
                                             self.ctnt)
+
+    def api_json(self):
+        """Generate api JSON response containing sfnt, ctnt and reft."""
+        return json.dumps({'reference_tag': self.reft,
+                           'citation_template': self.ctnt,
+                           'shortened_footnote': self.sfnt})
+
 
 def detect_language(text, langset={}):
     """Detect the language of the text. Return (lang, error).
