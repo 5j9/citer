@@ -45,7 +45,9 @@ def mylogger():
 
 
 def application(environ, start_response):
+    print(environ)
     qdict = urllib.parse.parse_qs(environ['QUERY_STRING'])
+    action = qdict.get('action', [''])[0] # apiquery
     user_input = qdict.get('user_input', [''])[0]
     # Warning: input is not escaped!
     user_input = user_input.strip()
@@ -96,13 +98,23 @@ def application(environ, start_response):
             # All the above cases have been unsuccessful
             response = html.undefined_url_response
             logger.info('There was an undefined_url_response\n' + url)
-        response_body = html.response_to_template(response)
+        if action == 'apiquery':
+            response_body = response.api_json()
+        else:
+            response_body = html.response_to_template(response) 
     except (requests.ConnectionError):
         logger.exception(url)
-        response_body = html.response_to_template(html.httperror_response)
+        if action == 'apiquery':
+            response_body = html.httperror_response.api_json()
+        else:
+            response_body = html.response_to_template(html.httperror_response)
     except Exception as e:
         logger.exception(url)
-        response_body = html.response_to_template(html.other_exception_response)
+        if action == 'apiquery':
+            response_body = html.other_exception_response.api_json()
+        else:
+            response_body = html.response_to_template(
+                html.other_exception_response)
     status = '200 OK'
 
     response_headers = [('Content-Type', 'text/html; charset=UTF-8'),
