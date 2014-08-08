@@ -45,7 +45,6 @@ def mylogger():
 
 
 def application(environ, start_response):
-    print(environ)
     qdict = urllib.parse.parse_qs(environ['QUERY_STRING'])
     action = qdict.get('action', [''])[0] # apiquery
     user_input = qdict.get('user_input', [''])[0]
