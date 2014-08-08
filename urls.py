@@ -277,6 +277,16 @@ def find_pmid(soup):
         pass
 
 
+def find_doi(soup):
+    """Get the BS object of a page. Return DOI as a string."""
+    try:
+        # http://jn.physiology.org/content/81/1/319
+        m = soup.find(attrs={'name': 'citation_doi'})
+        return m['content']
+    except Exception:
+        pass
+
+
 def find_volume(soup):
     """Return citatoin volume number as a string."""
     try:
@@ -687,6 +697,7 @@ def url2dictionary(url):
     if authors:
         logger.debug('Authors tag: ' + str(tag))
         d['authors'] = authors
+    d['doi'] = find_doi(soup)
     d['issn'] = find_issn(soup)
     d['pmid'] = find_pmid(soup)
     d['volume'] = find_volume(soup)
