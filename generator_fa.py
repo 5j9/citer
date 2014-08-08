@@ -83,10 +83,12 @@ def citation_template(d, date_format):
             s += '|تاریخ=' + d['date']
     if 'year' in d:
         s += '|سال=' + d['year']
-    if 'month' in d:
-        s += '|ماه=' + d['month']
     if 'isbn' in d:
         s += '|شابک=' + d['isbn']
+    if 'issn' in d:
+        s += '|issn=' + d['issn']
+    if 'pmid' in d:
+        s += '|pmid=' + d['pmid']
     if d['type'] == 'article' or d['type'] == 'jour':
         if 'pages' in d:
             s += '|صفحه=' + d['pages']
