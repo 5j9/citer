@@ -133,7 +133,7 @@ def citation_template(d, date_format):
 
 def reference_tag(dictionary, sfn_template, citation_template):
     """Create named <ref> tag."""
-    name = sfn_template[6:-2].replace('|', ' ')
+    name = sfn_template[6:-2].replace('|', ' ').replace("'", '')
     text = re.sub('(\|ref=({{.*?}}|harv))(?P<repl>\||}})',
                   '\g<repl>',
                   citation_template[2:])
