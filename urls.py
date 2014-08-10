@@ -500,7 +500,9 @@ def parse_title(title, url, authors, hometitle_list=None, thread=None):
     if not intitle_sitename:
         # 2. Using difflib on hostname
         # Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
-        close_matches = difflib.get_close_matches(hostname, title_parts, n=1,
+        close_matches = difflib.get_close_matches(hostname,
+                                                  title_parts,
+                                                  n=1,
                                                   cutoff=.3)
         if close_matches:
             intitle_sitename = close_matches[0]
@@ -509,6 +511,8 @@ def parse_title(title, url, authors, hometitle_list=None, thread=None):
             thread.join()
         if hometitle_list:
             hometitle = hometitle_list[0]
+        else:
+            hometitle = ''
         # 3. In homepage title
         for part in title_parts:
             if (part in hometitle):
@@ -516,7 +520,9 @@ def parse_title(title, url, authors, hometitle_list=None, thread=None):
                 break
     if not intitle_sitename:
         # 4. Using difflib on hometitle
-        close_matches = difflib.get_close_matches(hometitle, title_parts, n=1,
+        close_matches = difflib.get_close_matches(hometitle,
+                                                  title_parts,
+                                                  n=1,
                                                   cutoff=.3)
         if close_matches:
             intitle_sitename = close_matches[0]
