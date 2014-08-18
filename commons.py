@@ -6,22 +6,30 @@
 from datetime import datetime
 import re
 import json
+import unicodedata
 
 import langid
 import isbnlib
 
 import config
+import jalali
 if config.lang == 'en':
     import generator_en as generator
 else:
     import generator_fa as generator
 
 
+fa_months = ('فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر',
+             'آبان', 'آذر', 'دی', 'بهمن', 'اسفند')
+
 # Date patterns:
 
 # January|February...
 B = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
-    'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
+    r'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
+# فروردین|اردیبهشت|خرداد...
+fa_B = '|'.join(fa_months).replace('ی', '[یي]')
+
 # Month abbreviations:
 b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
 # Month numbers 0?1-12
@@ -40,9 +48,11 @@ Y = r'(19|20)\d\d'
 BdY = re.compile(B + ' ' + d + ', ' + Y)
 # Aug 22, 2001
 bdY = re.compile(b + ' ' + d + ', ' + Y)
-
 # 22 August 2001
 dBY = re.compile(d + ' ' + B + ' ' + Y)
+# ۲۷ مرداد ۱۳۹۳
+fa_dBY = re.compile('(\d\d?)' + ' (' + fa_B + ') ' + '(\d\d\d\d)')
+
 # 22 Aug 2001
 dbY = re.compile(d + ' ' + b + ' ' + Y)
 
@@ -221,23 +231,21 @@ def firstname_lastname(fullname, seperator):
     return firstname, lastname
 
 
-def fanum2en(string):
-    """Convert Persian numerical string to equivalent English one."""
-    string = string.replace('۰', '0')
-    string = string.replace('۱', '1')
-    string = string.replace('۲', '2')
-    string = string.replace('۳', '3')
-    string = string.replace('۴', '4')
-    string = string.replace('۵', '5')
-    string = string.replace('۶', '6')
-    string = string.replace('۷', '7')
-    string = string.replace('۸', '8')
-    string = string.replace('۹', '9')
+def uninum2en(string):
+    """Convert non-ascii unicode digits to equivalent English one (0-9).
+
+    Example:
+    >>> uninum2en('٤۴৪౪')
+    '4444'
+    """
+    digits = set(re.findall(r'\d', string))
+    for d in digits:
+        string = string.replace(d, str(unicodedata.digit(d)))
     return string
 
 
 def ennum2fa(string_or_num):
-    """Convert English numerical string to equivalent Persian one."""
+    """Convert English numerical string to equivalent Persian one (‍۰-۹)."""
     string = str(string_or_num)
     string = string.replace('0', '۰')
     string = string.replace('1', '۱')
@@ -278,7 +286,14 @@ def finddate(string):
     m = re.search(Ymd, string)
     if m:
         return datetime.strptime(m.group(), '%Y%m%d').date()
-
+    m = re.search(fa_dBY, string)
+    if m:
+        date = jalali.Persian(uninum2en(m.group(1)),
+                              fa_months.index(m.group(2).replace('ي', 'ی')) + 1,
+                              uninum2en(m.group(3))).gregorian_datetime().date()
+        
+            
+        return 
 
 def dict_cleanup(dictionary):
     """Remove all empty values from the given dict. Return another dict."""
