@@ -287,13 +287,11 @@ def finddate(string):
     if m:
         return datetime.strptime(m.group(), '%Y%m%d').date()
     m = re.search(fa_dBY, string)
-    if m:
-        date = jalali.Persian(uninum2en(m.group(1)),
+    if m:    
+        return jalali.Persian(int(uninum2en(m.group(3))),
                               fa_months.index(m.group(2).replace('ي', 'ی')) + 1,
-                              uninum2en(m.group(3))).gregorian_datetime().date()
-        
-            
-        return 
+                              int(uninum2en(m.group(1))),
+                              ).gregorian_datetime()
 
 def dict_cleanup(dictionary):
     """Remove all empty values from the given dict. Return another dict."""
