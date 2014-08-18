@@ -215,6 +215,7 @@ def byline_to_names(byline):
                     'Writer',
                     'Office',
                     'News',
+                    '.com',
                     )
 
     def isspecial(string):
@@ -245,7 +246,7 @@ def byline_to_names(byline):
             name.nofirst_fulllast()
         names.append(name)
     # Remove names containing special words or not having firstname (orgs)
-    name0 = names[0]  # In case nothing remains of names
+    name0 = names[0]  # In case no name remains at the end
     names = [n for n in names if n.firstname and not isspecial(n.lastname)]
     if not names:
         names.append(name0)
