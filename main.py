@@ -72,7 +72,7 @@ def application(environ, start_response):
             response = adinebook.Response(url, date_format)
         if not response:
             # DOI and ISBN check
-            en_url = urllib.parse.unquote(commons.fanum2en(url))
+            en_url = urllib.parse.unquote(commons.uninum2en(url))
             try:
                 m = doi.re.search(doi.doi_regex, doi.html.unescape(en_url))
                 if m:
