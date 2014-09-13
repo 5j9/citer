@@ -34,11 +34,9 @@ class NoormagsTest(unittest.TestCase):
         sfnt = '{{sfn|سلیمانی میمند|1389|pp=103–124}}'
         ctnt = '* {{cite journal|last=سلیمانی میمند|first=مریم|title=بررسی فضایل قرآنی در دعای ابوحمزه ثمالی|journal=بینات|issue=68|year=1389|pages=103–124|url=http://www.noormags.com/view/fa/articlepage/692447|language=fa|ref=harv|accessdate='
         rftg = '<ref name="سلیمانی میمند 1389 pp. 103–124">{{cite journal|last=سلیمانی میمند|first=مریم|title=بررسی فضایل قرآنی در دعای ابوحمزه ثمالی|journal=بینات|issue=68|year=1389|pages=103–124|url=http://www.noormags.com/view/fa/articlepage/692447|language=fa|accessdate='
-        rend = '|pages=103–124}}</ref>'
         self.assertIn(sfnt, o.sfnt)
         self.assertIn(ctnt, o.ctnt)
         self.assertIn(rftg, o.reft)
-        self.assertIn(rend, o.reft)
 
 
 noormags.requests = dummy_requests.DummyRequests()
