@@ -83,6 +83,8 @@ def citation_template(d, date_format):
             s += '|تاریخ=' + d['date']
     if 'year' in d:
         s += '|سال=' + d['year']
+    if 'month' in d:
+        s += '|ماه=' + d['month']
     if 'isbn' in d:
         s += '|شابک=' + d['isbn']
     if 'issn' in d:
@@ -110,7 +112,7 @@ def citation_template(d, date_format):
 def reference_tag(dictionary, sfn_template, citation_template):
     """Create named <ref> tag."""
     text = citation_template[2:]
-    if 'pages' in dictionary:
+    if 'pages' in dictionary and '|صفحه=' not in text:
         text = text[:-2] + '|صفحه=' + dictionary['pages'] + '}}'
     elif 'url' not in dictionary:
         text = text[:-2] + '|صفحه=}}'
