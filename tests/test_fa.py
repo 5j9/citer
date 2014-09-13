@@ -137,7 +137,7 @@ class DoiTest(unittest.TestCase):
     def test_di1(self):
         i = 'http://dx.doi.org/10.1038/nrd842'
         o = doi.Response(i)
-        e = "* {{یادکرد ژورنال|نام خانوادگی=Atkins|نام=Joshua H.|نام خانوادگی۲=Gershell|نام۲=Leland J.|عنوان=From the analyst's couch: Selective anticancer drugs|ژورنال=Nature Reviews Drug Discovery|ناشر=Nature Publishing Group|جلد=1|شماره=7|سال=2002|ماه=Jul|صفحه=491–492|پیوند=http://dx.doi.org/10.1038/nrd842|doi=10.1038/nrd842|تاریخ بازبینی="
+        e = "* {{یادکرد ژورنال|نام خانوادگی=Atkins|نام=Joshua H.|نام خانوادگی۲=Gershell|نام۲=Leland J.|عنوان=From the analyst's couch: Selective anticancer drugs|ژورنال=Nature Reviews Drug Discovery|ناشر=Nature Publishing Group|جلد=1|شماره=7|سال=2002|ماه=Jul|صفحه=491–492|پیوند=http://dx.doi.org/10.1038/nrd842|doi=10.1038/nrd842|زبان=en|تاریخ بازبینی="
         self.assertIn(e, o.ctnt)
 
 

@@ -45,6 +45,8 @@ class Response(commons.BaseResponse):
             self.ctnt = self.bibtex
         else:
             self.dictionary = bibtex.parse(self.bibtex)
+            if commons.config.lang == 'fa':
+                self.detect_language(self.dictionary['title'])
             self.generate()
 
 
