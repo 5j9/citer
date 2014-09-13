@@ -137,7 +137,7 @@ def reference_tag(dictionary, sfn_template, citation_template):
     text = re.sub('(\|ref=({{.*?}}|harv))(?P<repl>\||}})',
                   '\g<repl>',
                   citation_template[2:])
-    if ' p=' in name:
+    if ' p=' in name  and '|page=' not in text:
         name = name.replace(' p=', ' p. ')
         if 'pages' in dictionary:
             text = text[:-2] + '|page=' + dictionary['pages'] + '}}'
@@ -145,7 +145,7 @@ def reference_tag(dictionary, sfn_template, citation_template):
             text = text[:-2] + '|page=}}'
     elif ' pp=' in name:
         name = name.replace(' pp=', ' pp. ')
-        if 'pages' in dictionary:
+        if 'pages' in dictionary and '|pages=' not in text:
             text = text[:-2] + '|pages=' + dictionary['pages'] + '}}'
     return  '<ref name="' + name + '">' + text + '</ref>'
 
