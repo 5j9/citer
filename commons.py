@@ -19,8 +19,10 @@ else:
     import generator_fa as generator
 
 
-fa_months = ('فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر',
-             'آبان', 'آذر', 'دی', 'بهمن', 'اسفند')
+fa_months = (
+    'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر',
+    'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+)
 
 # Date patterns:
 
@@ -222,10 +224,12 @@ def firstname_lastname(fullname, seperator):
        (firstname.islower() and lastname.islower()):
         firstname = firstname.title()
         lastname = lastname.title()
-        lastname = re.sub('MC(\w)',
-                          lambda m: 'Mc' + m.group(1).upper(),
-                          lastname,
-                          flags=re.I)
+        lastname = re.sub(
+            'MC(\w)',
+            lambda m: 'Mc' + m.group(1).upper(),
+            lastname,
+            flags=re.I
+        )
     if suffix:
         firstname += suffix.title()
     return firstname, lastname
@@ -288,10 +292,11 @@ def finddate(string):
         return datetime.strptime(m.group(), '%Y%m%d').date()
     m = re.search(fa_dBY, string)
     if m:    
-        return jalali.Persian(int(uninum2en(m.group(3))),
-                              fa_months.index(m.group(2).replace('ي', 'ی')) + 1,
-                              int(uninum2en(m.group(1))),
-                              ).gregorian_datetime()
+        return jalali.Persian(
+            int(uninum2en(m.group(3))),
+            fa_months.index(m.group(2).replace('ي', 'ی')) + 1,
+            int(uninum2en(m.group(1))),
+        ).gregorian_datetime()
 
 def dict_cleanup(dictionary):
     """Remove all empty values from the given dict. Return another dict."""
@@ -314,5 +319,7 @@ def encode_for_template(dictionary):
             v = v.replace('|', '&amp;#124;')
             v = v.replace('[', '&amp;#91;')
             v = v.replace(']', '&amp;#93;')
+            v = v.replace('\r\n', ' ')
+            v = v.replace('\n', ' ')
         d[k] = v
     return d
