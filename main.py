@@ -35,7 +35,8 @@ def mylogger():
         maxBytes=20000,
         backupCount=0,
         encoding='utf-8',
-        delay=0)
+        delay=0
+    )
     handler.setLevel(logging.INFO)
     fmt = '\n%(asctime)s\n%(levelname)s\n%(message)s\n'
     formatter = logging.Formatter(fmt)
@@ -76,19 +77,23 @@ def application(environ, start_response):
             try:
                 m = doi.re.search(doi.doi_regex, doi.html.unescape(en_url))
                 if m:
-                    response = doi.Response(m.group(1),
-                                       pure=True,
-                                       date_format=date_format)
+                    response = doi.Response(
+                        m.group(1),
+                        pure=True,
+                        date_format=date_format
+                    )
                 elif isbn.re.search(isbn.isbn13_regex, en_url):
                     response = isbn.Response(
                         isbn.re.search(isbn.isbn13_regex, en_url).group(0),
                         pure=True,
-                        date_format=date_format,)
+                        date_format=date_format,
+                    )
                 elif isbn.re.search(isbn.isbn10_regex, en_url):
                     response = isbn.Response(
                         isbn.re.search(isbn.isbn10_regex, en_url).group(0),
                         pure=True,
-                        date_format=date_format,)
+                        date_format=date_format,
+                    )
             except isbn.IsbnError:
                 pass
         if not response:
@@ -116,9 +121,10 @@ def application(environ, start_response):
                 html.other_exception_response)
     status = '200 OK'
 
-    response_headers = [('Content-Type', 'text/html; charset=UTF-8'),
-                        ('Content-Length', '')
-                        ]
+    response_headers = [
+        ('Content-Type', 'text/html; charset=UTF-8'),
+        ('Content-Length', '')
+    ]
     start_response(status, response_headers)
 
     return [response_body.encode()]

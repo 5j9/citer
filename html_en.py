@@ -22,10 +22,12 @@ class Respose(commons.BaseResponse):
 
 def response_to_template(response):
     """Insert the response into the template and return response_body."""
-    return template % (response.sfnt,
-                       response.ctnt,
-                       response.reft,
-                       response.error)
+    return template % (
+        response.sfnt,
+        response.ctnt,
+        response.reft,
+        response.error
+    )
 
 
 template = Template("""<!DOCTYPE html>
@@ -137,31 +139,42 @@ template = Template("""<!DOCTYPE html>
             checkCookie()
         </script>
     </body>
-</html>""")
+</html>"""
+)
 
 # Predefined responses
-default_response = Respose('Generated citation will appear here...',
-                           '',
-                           '',
-                           '??')
+default_response = Respose(
+    'Generated citation will appear here...',
+    '',
+    '',
+    '??'
+)
+undefined_url_response = Respose(
+    'Undefined input.',
+    'Sorry, the input was not recognized. ' +
+    'The error was logged.'
+)
 
-undefined_url_response = Respose('Undefined input.',
-                                 'Sorry, the input was not recognized. ' +
-                                 'The error was logged.')
+httperror_response = Respose(
+    'HTTP error:',
+    'One or more of the web resources required to ' +
+    'create this citation are not accessible at ' +
+    'this moment.'
+)
 
-httperror_response = Respose('HTTP error:',
-                             'One or more of the web resources required to ' +
-                             'create this citation are not accessible at ' +
-                             'this moment.')
-
-other_exception_response = Respose('An unknown error occurred.',
-                                   'The error was logged.')
+other_exception_response = Respose(
+    'An unknown error occurred.',
+    'The error was logged.'
+)
 
 today = date.today()
-template = template.safe_substitute({'Ymd': today.strftime('%Y-%m-%d'),
-                                     'BdY': today.strftime('%B %d, %Y'),
-                                     'bdY': today.strftime('%b %d, %Y'),
-                                     'dBY': today.strftime('%d %B %Y'),
-                                     'dbY': today.strftime('%d %b %Y'),
-                                     }).replace('%', '%%').replace('$', '%')
+template = template.safe_substitute(
+    {
+        'Ymd': today.strftime('%Y-%m-%d'),
+        'BdY': today.strftime('%B %d, %Y'),
+        'bdY': today.strftime('%b %d, %Y'),
+         'dBY': today.strftime('%d %B %Y'),
+         'dbY': today.strftime('%d %b %Y'),
+    }
+).replace('%', '%%').replace('$', '%')
 
