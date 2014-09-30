@@ -183,19 +183,20 @@ def byline_to_names(byline):
     The "By " prefix will be omitted.
     Names will be seperated either with " and " or ", ".
 
-    specialwords = ('Reporter',
-                    'People',
-                    'Editor',
-                    'Correspondent',
-                    'Administrator',
-                    'Staff',
-                    'Writer',
-                    'Office',
-                    'News',
-                    )
+    stopwords = (
+        'Reporter',
+        'People',
+        'Editor',
+        'Correspondent',
+        'Administrator',
+        'Staff',
+        'Writer',
+        'Office',
+        'News',
+    )
 
-    If any of the specialwords is found in a name. Then it will be omitted from
-    the result, unless it is the only name available.
+    If any of the stopwords is found in a name then it will be omitted from
+    the result.
 
     Examples:
 
@@ -206,23 +207,24 @@ def byline_to_names(byline):
      Middle East correspondent')
     [Name(Erika Solomon), Name(Borzou Daragahi)]
     """
-    specialwords = ('Reporter',
-                    'People',
-                    'Editor',
-                    'Correspondent',
-                    'Administrator',
-                    'Staff',
-                    'Writer',
-                    'Office',
-                    'News',
-                    '.com',
-                    )
+    stopwords = '|'.join((
+        r'\bReporter\b',
+        r'\bPeople\b',
+        r'\bEditor\b',
+        r'\bCorrespondent\b',
+        r'\bAdministrator\b',
+        r'\bStaff\b',
+        r'\bWriter\b',
+        r'\bOffice\b',
+        r'\bNews\b',
+        r'\.com\b',
+        r'www\.',
+    ))
 
-    def isspecial(string):
-        """Return True if the string contains one of the special words."""
-        for sp in specialwords:
-            if sp.lower() in string.lower():
-                return True
+    def isstopword(string):
+        """Return True if the string contains one of the stopwords."""
+        if re.search(stopwords, string, re.IGNORECASE):
+            return True
         return False
     
     byline = byline.partition('|')[0]
@@ -230,8 +232,10 @@ def byline_to_names(byline):
         if c in byline:
             raise InvalidByLineError('Invalid character ("%s") in byline.' % c)
     if re.search('\d\d\d\d', byline):
-        raise InvalidByLineError('Found \d\d\d\d in byline. ' +
-                                 '(byline needs to be pure)')
+        raise InvalidByLineError(
+            'Found \d\d\d\d in byline. ' +
+            '(byline needs to be pure)'
+        )
     byline = byline.strip()
     if byline.lower().startswith('by '):
         byline = byline[3:]
@@ -242,12 +246,12 @@ def byline_to_names(byline):
     for fullname in fullnames:
         fullname = fullname.partition(' in ')[0]
         name = commons.Name(fullname)
-        if isspecial(name.lastname):
-            name.nofirst_fulllast()
+        if isstopword(name.lastname):
+            continue
         names.append(name)
-    # Remove names containing special words or not having firstname (orgs)
+    # Remove names not having firstname (orgs)
     name0 = names[0]  # In case no name remains at the end
-    names = [n for n in names if n.firstname and not isspecial(n.lastname)]
+    names = [n for n in names if n.firstname]
     if not names:
         names.append(name0)
     return names
@@ -689,8 +693,10 @@ def get_soup(url, headers=None):
 
 def url2dictionary(url):
     """Get url and return the result as a dictionary."""
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)' +
-               ' Gecko/20100101 Firefox/30.0'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)' +
+        ' Gecko/20100101 Firefox/30.0'
+    }
 
     # Creating a thread to fetch homepage title in background
     hometitle_list = []  # A mutable variable used to get the thread result
