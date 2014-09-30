@@ -233,7 +233,7 @@ class TGDaily(unittest.TestCase):
         """"Staff" in author name."""
         i = 'http://www.tgdaily.com/space-features/82906-sma-reveals-giant-star-cluster-in-the-making'
         o = urls.Response(i)
-        ct = '* {{cite web|author=TG Daily Staff|title=SMA reveals giant star cluster in the making|website=TG Daily|date=2013-12-17|year=2013|url=http://www.tgdaily.com/space-features/82906-sma-reveals-giant-star-cluster-in-the-making|ref=harv|accessdate='
+        ct = '* {{cite web|title=SMA reveals giant star cluster in the making|website=TG Daily|date=2013-12-17|year=2013|url=http://www.tgdaily.com/space-features/82906-sma-reveals-giant-star-cluster-in-the-making|ref={{sfnref|TG Daily|2013}}|accessdate='
         self.assertIn(ct, o.ctnt)
 
 
