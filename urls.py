@@ -145,7 +145,7 @@ def find_authors(soup):
         ({'name': 'byl'}, 'getitem', 'content'),
         ({'id': 'authortext'}, 'getattr', 'text'),
         ({'class': 'name'}, 'getattr', 'text'),
-        )
+    )
     names, attrs = try_find_authors(soup, find_parameters)
     if names:
         return names, attrs
@@ -249,6 +249,8 @@ def byline_to_names(byline):
         if isstopword(name.lastname):
             continue
         names.append(name)
+    if not names:
+        raise InvalidByLineError('No valid name remained after parsing byline.')
     # Remove names not having firstname (orgs)
     name0 = names[0]  # In case no name remains at the end
     names = [n for n in names if n.firstname]
