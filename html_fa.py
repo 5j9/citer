@@ -32,101 +32,81 @@ def response_to_template(response):
 
 template = Template("""<!DOCTYPE html>
 <html dir="rtl">
-    <head>
-        <title>یادفا</title>
-        <style type="text/css">
 
-            textarea, input {
-                transition: background-color 5s ease-in;
-                background-color: rgb(255, 255, 255);
-                border: 1px solid rgb(204, 204, 204);
-                padding: 2px 2px;
-                margin-bottom: 10px;
-                font-size: 14px;
-                line-height: 16px;
-                color: rgb(85, 85, 85);
-                vertical-align: middle;
-                border-radius: 5px 5px 5px 5px;
-                }
-            textarea{
-                display:block;
-                margin-left: auto;
-                margin-right: auto;
-                width:100%;
-                word-break: break-all;
-                }
-            body {
-                font-family: tahoma;
-                font-size:0.8em
-                }
-            input[type=text]{
-                width:50%;
-                }
-            input[type=submit]{
-                float:left;
-                }
-            #info{
-                font-size:90%;
-                color:#666666;
-                }
-            input[type=submit]:hover{
-                transition: background-color 1s ease-in;
-                background-color:#33CC33;
-                }
-        </style>
-    </head>
-    <body>
-        <div style="margin-left:auto; margin-right:auto; width:62%;">
-            <form method="get" action="yadkard.fcgi">
-                <p>
-                    نشانی وب/شابک/شناسهٔ برنمود رقمی:<br><input type="text" name="user_input">
-                    <input type="submit" value="ثبت درخواست">
-                </p>
-            </form>
+<head>
+    <title>یادفا</title>
+    <style type="text/css">
+        textarea,
+        input {
+            transition: background-color 5s ease-in;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(204, 204, 204);
+            padding: 2px 2px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 16px;
+            color: rgb(85, 85, 85);
+            vertical-align: middle;
+            border-radius: 5px 5px 5px 5px;
+        }
+        textarea {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            word-break: break-all;
+        }
+        body {
+            font-family: tahoma;
+            font-size: 0.8em
+        }
+        input[type=text] {
+            width: 50%;
+        }
+        input[type=submit] {
+            float: left;
+        }
+        #info {
+            font-size: 90%;
+            color: #666666;
+        }
+        input[type=submit]:hover {
+            transition: background-color 1s ease-in;
+            background-color: #33CC33;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="margin-left:auto; margin-right:auto; width:62%;">
+        <form method="get" action="yadkard.fcgi">
             <p>
-                <a href="https://fa.wikipedia.org/wiki/%D8%A7%D9%84%DA%AF%D9%88:%D9%BE%D8%A7%D9%86%D9%88%DB%8C%D8%B3_%DA%A9%D9%88%D8%AA%D8%A7%D9%87%E2%80%8C%D8%B4%D8%AF%D9%87">پانویس کوتاه‌شده</a> و یادکرد:<br>
-                <textarea rows="8" readonly>$s\n\n$s</textarea>
-                <a href="https://fa.wikipedia.org/wiki/%D8%B1%D8%A7%D9%87%D9%86%D9%85%D8%A7:%D9%BE%D8%A7%D9%86%D9%88%DB%8C%D8%B3%E2%80%8C%D9%87%D8%A7">برچسب ارجاع درون‌خطی</a>:<br>
-                <textarea rows="5" readonly>$s</textarea>
+                نشانی وب/شابک/شناسهٔ برنمود رقمی:
+                <br>
+                <input type="text" name="user_input">
+                <input type="submit" value="ثبت درخواست">
             </p>
+        </form>
+        <p>
+            <a href="https://fa.wikipedia.org/wiki/%D8%A7%D9%84%DA%AF%D9%88:%D9%BE%D8%A7%D9%86%D9%88%DB%8C%D8%B3_%DA%A9%D9%88%D8%AA%D8%A7%D9%87%E2%80%8C%D8%B4%D8%AF%D9%87">پانویس کوتاه‌شده</a> و یادکرد:
+            <br>
+            <textarea id="shortened" rows="8">$s\n\n$s</textarea>
+            <a href="https://fa.wikipedia.org/wiki/%D8%B1%D8%A7%D9%87%D9%86%D9%85%D8%A7:%D9%BE%D8%A7%D9%86%D9%88%DB%8C%D8%B3%E2%80%8C%D9%87%D8%A7">برچسب ارجاع درون‌خطی</a>:
+            <br>
+            <textarea id="named_ref" rows="5">$s</textarea>
+        </p>
+        <p>
+            <!-- There may be error in language detection. $s % -->
+        </p>
+        <div id="info">
             <p>
-                <!-- There may be error in language detection. $s % -->
-            </p>
-            <div id="info">
-                <p>
-                        <i>یادفا</i> ابزاریست برای ساخت الگوهای یادکرد ویکی‌پدیای فارسی. این ابزار کمک می‌کند برچسب ارجاع (تگ &lt;ref&gt;) و/یا پانویس کوتاه‌شده و یادکرد مورد استفاده در ویکی‌پدیای فارسی را برای خود بسازید. ابزار موارد زیر را به عنوان ورودی می‌پذیرد:</p>
-                <p>
-                        نشانی وب <a href="http://books.google.com/">کتاب‌های گوگل</a>، <a href="https://fa.wikipedia.org/wiki/%D9%86%D8%B4%D8%A7%D9%86%DA%AF%D8%B1_%D8%AF%DB%8C%D8%AC%DB%8C%D8%AA%D8%A7%D9%84%DB%8C_%D8%B4%DB%8C%D8%A1">شناسانۀ برنمود رقمی</a>، یا <a href="https://fa.wikipedia.org/wiki/%D8%B4%D8%A7%D8%A8%DA%A9">شابک</a> (حتی برای بسیاری از کتاب‌های فارسی).</p>
-                <p>
-                        افزون بر این‌ها می‌توانید نشانی وب بسیاری از خبرگزاری‌ها را نیز در آن آزمایش کنید. توجه داشته باشید که همواره احتمال خطا در خروجی ابزار وجود دارد و خروجی آن نیازمند بازبینی خواهد بود. <b>با مسئولیت خودتان از آن استفاده کنید.<b></p>
+                <i>یادفا</i> ابزاریست برای ساخت الگوهای یادکرد ویکی‌پدیای فارسی. این ابزار کمک می‌کند برچسب ارجاع (تگ &lt;ref&gt;) و/یا پانویس کوتاه‌شده و یادکرد مورد استفاده در ویکی‌پدیای فارسی را برای خود بسازید. ابزار موارد زیر را به عنوان ورودی می‌پذیرد:</p>
+            <p>
+                نشانی وب <a href="http://books.google.com/">کتاب‌های گوگل</a>، <a href="https://fa.wikipedia.org/wiki/%D9%86%D8%B4%D8%A7%D9%86%DA%AF%D8%B1_%D8%AF%DB%8C%D8%AC%DB%8C%D8%AA%D8%A7%D9%84%DB%8C_%D8%B4%DB%8C%D8%A1">شناسانۀ برنمود رقمی</a>، یا <a href="https://fa.wikipedia.org/wiki/%D8%B4%D8%A7%D8%A8%DA%A9">شابک</a> (حتی برای بسیاری از کتاب‌های فارسی).</p>
+            <p>
+                افزون بر این‌ها می‌توانید نشانی وب بسیاری از خبرگزاری‌ها را نیز در آن آزمایش کنید. توجه داشته باشید که همواره احتمال خطا در خروجی ابزار وجود دارد و خروجی آن نیازمند بازبینی خواهد بود. <b>با مسئولیت خودتان از آن استفاده کنید.<b></p>
             </div>
         </div>
-        <script>
-            function setCookie(cname, cvalue, exdays) {
-                var d = new Date();
-                d.setTime(d.getTime() + (exdays*24*60*60*1000));
-                var expires = "expires="+d.toGMTString();
-                document.cookie = cname + "=" + cvalue + "; " + expires;
-            }
-
-            function getCookie(cname) {
-                var name = cname + "=";
-                var ca = document.cookie.split(';');
-                for(var i=0; i<ca.length; i++) {
-                    var c = ca[i].trim();
-                    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-                }
-                return "";
-            }
-
-            function checkCookie() {
-                var datefmt = getCookie('datefmt');
-                if (datefmt != '') {
-                  document.getElementById(datefmt).checked = true;
-                }
-            }
-            checkCookie()
-        </script>
     </body>
 </html>"""
 )
