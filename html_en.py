@@ -117,100 +117,88 @@ template = Template("""<!DOCTYPE html>
 				Note that there is always a chance of error in the generated output. <b>Please check the results before using them on Wiki</b>.</p>
 			<p>
 				Found a bug or have a suggestion? Contact me on my talk page. (<a href="https://wikitech.wikimedia.org/wiki/User_talk:Dalba">User:Dalba</a>).</p>
-			<p>
-				<a href="javascript:void(window.open('https://tools.wmflabs.org/yadkard/yadkard.fcgi?user_input='+encodeURIComponent(location.href)+'&dateformat=%25B+%25d%2C+%25Y'))">Bookmarklet</a></p>
 		</div>
 	</div>
 	<script>
-		function getCheckedRadio() {
-			radio_group = document.getElementsByName('dateformat')
-			for (var i = 0; i < radio_group.length; i++) {
-				var button = radio_group[i];
-				if (button.checked) {
-					return button;
-				}
-			}
-		}
-
-		function Ymd(date) {
-			return date.toISOString().slice(0, 10)
-		}
-
-		function BdY(date) {
-			return months[date.getMonth()] + ' ' + date.toISOString().slice(8, 10) + ', ' + date.getFullYear()
-		}
-
-		function bdY(date) {
-			return months[date.getMonth()].slice(0, 3) + ' ' + date.toISOString().slice(8, 10) + ', ' + date.getFullYear()
-		}
-
-		function dBY(date) {
-			return date.toISOString().slice(8, 10) + ' ' + months[date.getMonth()] + ' ' + date.getFullYear()
-		}
-
-		function dbY(date) {
-			return date.toISOString().slice(8, 10) + ' ' + months[date.getMonth()].slice(0, 3) + ' ' + date.getFullYear()
-		}
-		var months = [
-			'January',
-			'February',
-			'March',
-			'April',
-			'May',
-			'June',
-			'July',
-			'August',
-			'September',
-			'October',
-			'November',
-			'December'
-		]
-
-		function changeDates(id) {
-			text1 = document.getElementById('shortened').textContent
-			text2 = document.getElementById('named_ref').textContent
-			dates = text1.match(/date=.*?(?=\}\}|\|)/g)
-			for (var i = 0; i < dates.length; i++) {
-				date = dates[i].slice(5)
-				newdate = eval(id + '(new Date(date))')
-				text1 = text1.replace(/(\|(?:access)?date=)(.*?)(?=\}\}|\|)/g, '$1' + newdate)
-				text2 = text2.replace(/(\|(?:access)?date=)(.*?)(?=\}\}|\|)/g, '$1' + newdate)
-				document.getElementById('shortened').value = text1
-				document.getElementById('named_ref').value = text2
-			}
-		}
-
-		function setCookie(cname, cvalue, exdays) {
-			var d = new Date();
-			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-			var expires = 'expires=' + d.toGMTString();
-			document.cookie = cname + '=' + cvalue + '; ' + expires;
-		}
-
-		function getCookie(cname) {
-			var name = cname + '=';
-			var ca = document.cookie.split(';');
-			for (var i = 0; i < ca.length; i++) {
-				var c = ca[i].trim();
-				if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-			}
-			return '';
-		}
-
-		function checkCookie() {
-			var datefmt = getCookie('datefmt');
-			if (datefmt != '') {
-				document.getElementById(datefmt).checked = true;
-			}
-		}
-
-		function onDateChange() {
-			id = getCheckedRadio()['id']
-			changeDates(id)
-			setCookie('datefmt', id, 365)
-
-		}
-		checkCookie()
+function getCheckedRadio() {
+  radio_group = document.getElementsByName('dateformat')
+  for (var i = 0; i < radio_group.length; i++) {
+    var button = radio_group[i];
+    if (button.checked) {
+      return button;
+    }
+  }
+}
+function Ymd(date) {
+  return date.toISOString().slice(0, 10)
+}
+function BdY(date) {
+  return months[date.getMonth()] + ' ' + date.toISOString().slice(8, 10) + ', ' + date.getFullYear()
+}
+function bdY(date) {
+  return months[date.getMonth()].slice(0, 3) + ' ' + date.toISOString().slice(8, 10) + ', ' + date.getFullYear()
+}
+function dBY(date) {
+  return date.toISOString().slice(8, 10) + ' ' + months[date.getMonth()] + ' ' + date.getFullYear()
+}
+function dbY(date) {
+  return date.toISOString().slice(8, 10) + ' ' + months[date.getMonth()].slice(0, 3) + ' ' + date.getFullYear()
+}
+var months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
+function changeDates(id) {
+  text1 = document.getElementById('shortened').textContent
+  text2 = document.getElementById('named_ref').textContent
+  dates = text1.match(/date=.*?(?=\}\}|\|)/g)
+  for (var i = 0; i < dates.length; i++) {
+    date = dates[i].slice(5)
+    newdate = eval(id + '(new Date(date))')
+    text1 = text1.replace(/(\|(?:access)?date=)(.*?)(?=\}\}|\|)/g, '$1' + newdate)
+    text2 = text2.replace(/(\|(?:access)?date=)(.*?)(?=\}\}|\|)/g, '$1' + newdate)
+    document.getElementById('shortened').value = text1
+    document.getElementById('named_ref').value = text2
+  }
+}
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = 'expires=' + d.toGMTString();
+  document.cookie = cname + '=' + cvalue + '; ' + expires;
+}
+function getCookie(cname) {
+  var name = cname + '=';
+  var ca = document.cookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i].trim();
+    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+  }
+  return '';
+}
+function checkCookie() {
+  var datefmt = getCookie('datefmt');
+  if (datefmt != '') {
+    document.getElementById(datefmt).checked = true;
+    changeDates(datefmt)
+  }
+}
+function onDateChange() {
+  id = getCheckedRadio() ['id']
+  changeDates(id)
+  setCookie('datefmt', id, 365)
+}
+checkCookie()
 	</script>
 </body>
 
