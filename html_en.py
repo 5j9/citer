@@ -117,6 +117,8 @@ template = Template("""<!DOCTYPE html>
 				Note that there is always a chance of error in the generated output. <b>Please check the results before using them on Wiki</b>.</p>
 			<p>
 				Found a bug or have a suggestion? Contact me on my talk page. (<a href="https://wikitech.wikimedia.org/wiki/User_talk:Dalba">User:Dalba</a>).</p>
+			<p>
+				<a href="javascript:void(window.open('https://tools.wmflabs.org/yadkard/yadkard.fcgi?user_input='+encodeURIComponent(location.href)+'&dateformat=%25B+%25d%2C+%25Y'))">Bookmarklet</a></p>
 		</div>
 	</div>
 	<script>
