@@ -445,8 +445,6 @@ def find_title(soup, url, authors, hometitle_list, thread):
         ({'name': 'hdl'}, 'getitem', 'content'),
         # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
         ({'class': 'entry-title'}, 'getattr', 'text'),
-        # http://www.ensani.ir/fa/content/326173/default.aspx
-        ({'class': 'title'}, 'getattr', 'text'),
         # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
         ({'id': 'entryhead'}, 'getattr', 'text'),
     )
