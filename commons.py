@@ -307,6 +307,30 @@ def dict_cleanup(dictionary):
     return d
 
 
+def bidi_pop(string):
+    """Makes sure all  LRE, RLE, LRO, or RLO chars are terminated with PDF."""
+    isolates = [
+        '\u2066', # LRI
+        '\u2067', # RLI
+        '\u2068', # FSI
+    ]
+    diff = sum(
+        [string.count(c) for c in isolates]
+    ) - string.count('\u2069') # PDI
+    string = string + '\u2069' * diff
+    embeddings_and_overrides = [
+        '\u202A', # LRE
+        '\u202B', # RLE
+        '\u202D', # LRO
+        '\u202E', # RLO
+    ]
+    diff = sum(
+        [string.count(c) for c in embeddings_and_overrides]
+    ) - string.count('\u202C') # PDF
+    string = string + '\u202C' * diff
+    return string
+    
+
 def encode_for_template(dictionary):
     """Replace special characters with their respective HTML entities.
 
@@ -316,6 +340,7 @@ def encode_for_template(dictionary):
         v = dictionary[k]
         if isinstance(v, str):
             v = dictionary[k].strip()
+            v = bidi_pop(v)
             v = v.replace('|', '&amp;#124;')
             v = v.replace('[', '&amp;#91;')
             v = v.replace(']', '&amp;#93;')
