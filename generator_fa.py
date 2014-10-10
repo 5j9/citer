@@ -31,7 +31,7 @@ def sfn_template(d):
         s += '|ص=' + d['pages']
     elif 'url' not in d:
         s += '|ص='
-    s += '}}</ref>'
+    s += '}}\u200F</ref>'
     return s
 
 
@@ -105,7 +105,7 @@ def citation_template(d, date_format):
             s += '|زبان=' + d['language']
     if 'url' in d:
         s += '|تاریخ بازبینی=' + date.isoformat(date.today())
-    s += '}}'
+    s += '}}\u200F'
     return s
 
 
@@ -116,7 +116,7 @@ def reference_tag(dictionary, sfn_template, citation_template):
         text = text[:-2] + '|صفحه=' + dictionary['pages'] + '}}'
     elif 'url' not in dictionary:
         text = text[:-2] + '|صفحه=}}'
-    return  '<ref>' + text + '</ref>'
+    return  '<ref>' + text + '\u200F</ref>'
 
 
 def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):

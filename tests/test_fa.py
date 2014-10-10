@@ -78,7 +78,7 @@ class GooglebookTest(unittest.TestCase):
         """a book with more than 4 authors (10 authors)"""
         i = 'http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
         o = googlebooks.Response(i)
-        e1 = '<ref>{{پک|Anderson|DeBolt|Featherstone|Gunther|2010|ک=InterACT with Web Standards: A holistic approach to web design|زبان=en|ص=57}}</ref>'
+        e1 = '<ref>{{پک|Anderson|DeBolt|Featherstone|Gunther|2010|ک=InterACT with Web Standards: A holistic approach to web design|زبان=en|ص=57}}\u200f</ref>'
         e2 = '* {{یادکرد کتاب|نام خانوادگی=Anderson|نام=E.|نام خانوادگی۲=DeBolt|نام۲=V.|نام خانوادگی۳=Featherstone|نام۳=D.|نام خانوادگی۴=Gunther|نام۴=L.|نام خانوادگی۵=Jacobs|نام۵=D.R.|نام خانوادگی۶=Mills|نام۶=C.|نام خانوادگی۷=Schmitt|نام۷=C.|نام خانوادگی۸=Sims|نام۸=G.|نام خانوادگی۹=Walter|نام۹=A.|نام خانوادگی۱۰=Jensen-Inman|نام۱۰=L.|عنوان=InterACT with Web Standards: A holistic approach to web design|ناشر=Pearson Education|سال=2010|شابک=978-0-13-270490-8|پیوند=http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57|زبان=en|تاریخ بازبینی='
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
@@ -87,7 +87,7 @@ class GooglebookTest(unittest.TestCase):
         """Non-ascii characters in title"""
         i = 'http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588&dq=%22a+Delimiter+is%22&hl=en&sa=X&ei=oNKSUrKeDovItAbO_4CoBA&ved=0CC4Q6AEwAA#v=onepage&q=%22a%20Delimiter%20is%22&f=false'
         o = googlebooks.Response(i)
-        e1 = '<ref>{{پک|Farrell|2009|ک=Microsoft Visual C# 2008 Comprehensive: An Introduction to Object-Oriented Programming|زبان=en|ص=588}}</ref>'
+        e1 = '<ref>{{پک|Farrell|2009|ک=Microsoft Visual C# 2008 Comprehensive: An Introduction to Object-Oriented Programming|زبان=en|ص=588}}\u200f</ref>'
         e2 = '* {{یادکرد کتاب|نام خانوادگی=Farrell|نام=J.|عنوان=Microsoft Visual C# 2008 Comprehensive: An Introduction to Object-Oriented Programming|ناشر=Cengage Learning|سال=2009|شابک=978-1-111-78619-9|پیوند=http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588|زبان=en|تاریخ بازبینی='
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
@@ -96,7 +96,7 @@ class GooglebookTest(unittest.TestCase):
         """Non-ascii characters in author's name."""
         i = 'http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa=X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q=%22legal%20translation%20is%22&f=false'
         o = googlebooks.Response(i)
-        e1 = '<ref>{{پک|Šarčević|1997|ک=New Approach to Legal Translation|زبان=en|ص=229}}</ref>'
+        e1 = '<ref>{{پک|Šarčević|1997|ک=New Approach to Legal Translation|زبان=en|ص=229}}\u200f</ref>'
         e2 = '* {{یادکرد کتاب|نام خانوادگی=Šarčević|نام=S.|عنوان=New Approach to Legal Translation|ناشر=Kluwer Law International|سال=1997|شابک=978-90-411-0401-4|پیوند=http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229|زبان=en|تاریخ بازبینی='
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
