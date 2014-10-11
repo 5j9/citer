@@ -167,8 +167,8 @@ function changeDates(id) {
   for (var i = 0; i < dates.length; i++) {
     date = dates[i].slice(5)
     newdate = eval(id + '(new Date(date))')
-    text1 = text1.replace(/(\|(?:access)?date=)(.*?)(?=\}\}|\|)/g, '$1' + newdate)
-    text2 = text2.replace(/(\|(?:access)?date=)(.*?)(?=\}\}|\|)/g, '$1' + newdate)
+    text1 = text1.replace(RegExp('(\\|(?:access)?date=)' + date + '(?=\\}\\}|\\|)'), '$1' + newdate)
+    text2 = text2.replace(RegExp('(\\|(?:access)?date=)' + date + '(?=\\}\\}|\\|)'), '$1' + newdate)
     document.getElementById('shortened').value = text1
     document.getElementById('named_ref').value = text2
   }
