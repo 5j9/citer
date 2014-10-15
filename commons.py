@@ -269,34 +269,65 @@ def finddate(string):
 
     If there is no matching date, return None.
     """
-    m = re.search(BdY, string)
-    if m:
-        return datetime.strptime(m.group(), '%B %d, %Y').date()
-    m = re.search(bdY, string)
-    if m:
-        return datetime.strptime(m.group(), '%b %d, %Y').date()
-    m = re.search(dBY, string)
-    if m:
-        return datetime.strptime(m.group(), '%d %B %Y').date()
-    m = re.search(dbY, string)
-    if m:
-        return datetime.strptime(m.group(), '%d %b %Y').date()
-    m = re.search(Ymd_dashed, string)
-    if m:
-        return datetime.strptime(m.group(), '%Y-%m-%d').date()
-    m = re.search(Ymd_slashed, string)
-    if m:
-        return datetime.strptime(m.group(), '%Y/%m/%d').date()
-    m = re.search(Ymd, string)
-    if m:
-        return datetime.strptime(m.group(), '%Y%m%d').date()
-    m = re.search(fa_dBY, string)
-    if m:    
+    try:
+        return datetime.strptime(
+            re.search(BdY, string).group(),
+            '%B %d, %Y',
+        ).date()
+    except Exception:
+        pass
+    try:
+        return datetime.strptime(
+            re.search(bdY, string).group(),
+            '%b %d, %Y',
+        ).date()
+    except Exception:
+        pass
+    try:
+        return datetime.strptime(
+            re.search(dBY, string).group(),
+            '%d %B %Y',
+        ).date()
+    except Exception:
+        pass
+    try:
+        return datetime.strptime(
+            re.search(dbY, string).group(),
+            '%d %b %Y',
+        ).date()
+    except Exception:
+        pass
+    try:
+        return datetime.strptime(
+            re.search(Ymd_dashed, string).group(),
+            '%Y-%m-%d',
+        ).date()
+    except Exception:
+        pass
+    try:
+        return datetime.strptime(
+            re.search(Ymd_slashed, string).group(),
+            '%Y/%m/%d',
+        ).date()
+    except Exception:
+        pass
+    try:
+        return datetime.strptime(
+            re.search(Ymd, string).group(),
+            '%Y%m%d',
+        ).date()
+    except Exception:
+        pass
+    try:
+        m = re.search(fa_dBY, string)
         return jalali.Persian(
             int(uninum2en(m.group(3))),
             fa_months.index(m.group(2).replace('ي', 'ی')) + 1,
             int(uninum2en(m.group(1))),
         ).gregorian_datetime()
+    except Exception:
+        pass
+
 
 def dict_cleanup(dictionary):
     """Remove all empty values from the given dict. Return another dict."""
@@ -329,7 +360,7 @@ def bidi_pop(string):
     ) - string.count('\u202C') # PDF
     string = string + '\u202C' * diff
     return string
-    
+
 
 def encode_for_template(dictionary):
     """Replace special characters with their respective HTML entities.
