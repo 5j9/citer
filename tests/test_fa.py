@@ -107,19 +107,19 @@ class NoormagsTest(unittest.TestCase):
     def test_nm1(self):
         i = 'http://www.noormags.com/view/fa/articlepage/5798/102/Text'
         o = noormags.Response(i)
-        e = '* {{یادکرد ژورنال|نام خانوادگی=موسوی|نام=زهرا|عنوان=مقرنس در معماری|ژورنال=کتاب ماه هنر|شماره=45|سال=1381|صفحه=102–106|پیوند=http://www.noormags.com/view/fa/articlepage/104040|زبان=fa|تاریخ بازبینی='
+        e = '* {{یادکرد ژورنال|نام خانوادگی=موسوی|نام=زهرا|عنوان=مقرنس در معماری|ژورنال=کتاب ماه هنر|شماره=45|سال=1381|صفحه=102–106|پیوند=http://www.noormags.ir/view/fa/articlepage/104040|زبان=fa|تاریخ بازبینی='
         self.assertIn(e, o.ctnt)
 
     def test_nm2(self):
         i = 'http://www.noormags.com/view/fa/ArticlePage/454096'
         o = noormags.Response(i)
-        e = '* {{یادکرد ژورنال|عنوان=زندگی نامه علمی دکتر کاووس حسن لی|ژورنال=شعر|شماره=62|سال=1387|صفحه=17–19|پیوند=http://www.noormags.com/view/fa/articlepage/454096|زبان=fa|تاریخ بازبینی='
+        e = '* {{یادکرد ژورنال|عنوان=زندگی نامه علمی دکتر کاووس حسن لی|ژورنال=شعر|شماره=62|سال=1387|صفحه=17–19|پیوند=http://www.noormags.ir/view/fa/articlepage/454096|زبان=fa|تاریخ بازبینی='
         self.assertIn(e, o.ctnt)
 
     def test_nm3(self):
         i = 'http://www.noormags.com/view/fa/articlepage/261461'
         o = noormags.Response(i)
-        e = '* {{یادکرد ژورنال|نام خانوادگی=ایرانی|نام=هوشنگ|نویسنده۲=آ. ولف|عنوان=لوژیستیک|ژورنال=دانش|شماره=6|سال=1328|صفحه=316–324|پیوند=http://www.noormags.com/view/fa/articlepage/261461|زبان=fa|تاریخ بازبینی='
+        e = '* {{یادکرد ژورنال|نام خانوادگی=ایرانی|نام=هوشنگ|نویسنده۲=آ. ولف|عنوان=لوژیستیک|ژورنال=دانش|شماره=6|سال=1328|صفحه=316–324|پیوند=http://www.noormags.ir/view/fa/articlepage/261461|زبان=fa|تاریخ بازبینی='
         self.assertIn(e, o.ctnt)
 
 
