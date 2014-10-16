@@ -29,7 +29,7 @@ class Response(commons.BaseResponse):
             self.generate()
         except (ContentTypeError, ContentLengthError) as e:
             self.sfnt = 'Could not process the request.'
-            self.ctnt = e.message
+            self.ctnt = e
             self.error = 100
             logger.exception(url)
 
@@ -218,6 +218,7 @@ def byline_to_names(byline):
         r'\bOffice\b',
         r'\bNews\b',
         r'\.com\b',
+        r'\.ir\b',
         r'www\.',
     ))
 
@@ -531,16 +532,18 @@ def parse_title(title, url, authors, hometitle_list=None, thread=None):
                                                   cutoff=.3)
         if close_matches:
             intitle_sitename = close_matches[0]
+    # Remove sitename from title_parts
+    if intitle_sitename:
+        title_parts.remove(intitle_sitename)
+        intitle_sitename = intitle_sitename.strip()
     # Searching for intitle_author
     if authors:
         for author in authors:
             for part in title_parts:
                 if author.lastname.lower() in part.lower():
                     intitle_author = part
-    # Title purification
-    if intitle_sitename:
-        title_parts.remove(intitle_sitename)
-        intitle_sitename = intitle_sitename.strip()
+                    break
+    # Remove intitle_author from title_parts
     if intitle_author:
         title_parts.remove(intitle_author)
         intitle_author = intitle_author.strip()
