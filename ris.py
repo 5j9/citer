@@ -20,7 +20,10 @@ def parse(ris_text):
     if m:
         d['authors'] = []
         for match in m:
-            name = commons.Name(match[1])
+            try:
+                name = commons.Name(match[1])
+            except commons.InvalidNameError:
+                continue
             d['authors'].append(name)
 
     m = re.search('(T1|TI)  - (.*)', ris_text)
