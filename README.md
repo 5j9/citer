@@ -1,6 +1,6 @@
 # Yadkard
 
-A citation generator tool for Wikipedia. Currently accessible on:
+A citation generator tool for Wikipedia. Currently accessible from:
 http://tools.wmflabs.org/yadkard/ (English version)
 
 ## Dependencies
