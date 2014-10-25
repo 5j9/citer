@@ -86,7 +86,8 @@ def citation_template(d, date_format):
         s += '|issue=' + d['issue']
     if 'date' in d:
         if isinstance(d['date'], date):
-            s += '|date=' + d['date'].strftime(date_format)
+            s += '|date=' + d['date'].strftime(date_format).\
+                 lstrip("0").replace(" 0", " ")
         else:
             s += '|date=' + d['date']
     if 'year' in d:
@@ -126,7 +127,8 @@ def citation_template(d, date_format):
             s += '|' + d['year']
         s += '}}'
     if 'url' in d:
-        s += '|accessdate=' + date.strftime(date.today(), date_format)
+        s += '|accessdate=' + date.strftime(date.today(), date_format).\
+             lstrip("0").replace(" 0", " ")
     s += '}}'
     return s
 
