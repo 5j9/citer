@@ -340,6 +340,7 @@ def dict_cleanup(dictionary):
 
 def bidi_pop(string):
     """Makes sure all  LRE, RLE, LRO, or RLO chars are terminated with PDF."""
+    # Pop isolations
     isolates = [
         '\u2066', # LRI
         '\u2067', # RLI
@@ -349,6 +350,7 @@ def bidi_pop(string):
         [string.count(c) for c in isolates]
     ) - string.count('\u2069') # PDI
     string = string + '\u2069' * diff
+    # Pop embeddings and overrides
     embeddings_and_overrides = [
         '\u202A', # LRE
         '\u202B', # RLE
