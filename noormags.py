@@ -35,9 +35,8 @@ class Response(commons.BaseResponse):
 def get_bibtex(noormags_url):
     """Get bibtex file content from a noormags_url. Return as string."""
     pagetext = requests.get(noormags_url).text
-    article_id = re.search('BibTex&id=(\d+)', pagetext).group(1)
-    url = 'http://www.noormags.ir/view/CitationHandler.ashx?' +\
-          'format=BibTex&id=' + article_id
+    article_id = re.search('/citation/bibtex/(\d+)', pagetext).group(1)
+    url = 'http://www.noormags.ir/view/fa/citation/bibtex/' + article_id
     bibtex = requests.get(url).text
     return bibtex
 
@@ -45,8 +44,7 @@ def get_bibtex(noormags_url):
 def get_ris(noormags_url):
     """Get ris file content from a noormags url. Return as string."""
     pagetext = requests.get(noormags_url).text
-    article_id = re.search('RIS&id=(\d+)', pagetext).group(1)
-    url = 'http://www.noormags.ir/view/CitationHandler.ashx?' +\
-          'format=RIS&id=' + article_id
+    article_id = re.search('/citation/ris/(\d+)', pagetext).group(1)
+    url = 'http://www.noormags.ir/view/fa/citation/ris/' + article_id
     ris = requests.get(url).text
     return ris
