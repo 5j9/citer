@@ -208,8 +208,11 @@ def firstname_lastname(fullname, seperator):
         fullname = fullname[:-4]
     else:
         suffix = None
-    if not seperator and ',' in fullname:
-        seperator = ','
+    if not seperator:
+        if ',' in fullname:
+            seperator = ','
+        elif '،' in fullname:
+            seperator = '،'
     if seperator:
         if seperator in fullname:
             lastname, firstname = fullname.split(seperator)
