@@ -21,6 +21,15 @@ import re
 import commons
 
 
+def search_for_tag(bibtex):
+    """Find all tags in the bibtex and return result as a dictionary."""
+    d = {}
+    fs = re.findall('(\w+)\s*=\s*(?:[{"]\s*(.*?)\s*["}]|(\d+))', bibtex)
+    for f in fs:
+        d[f[0].lower()] = f[1] if f[1] else f[2]
+    return d
+
+
 def parse(bibtex):
     """Parse bibtex string and return a dictionary of information."""
     bibtex = replace_specials(bibtex)
@@ -33,6 +42,10 @@ def parse(bibtex):
     if 'author' in d:
         d['authors'] = []
         for author in d['author'].split(' and '):
+            if author.endswith(' and'):
+                author = author[:-4]
+            if not author:
+                continue
             name = commons.Name(author)
             d['authors'].append(name)
         del d['author']
@@ -40,20 +53,17 @@ def parse(bibtex):
         d['issue'] = d['number']
         del d['number']
     if 'pages' in d:
-        d['pages'] = d['pages'].replace('--', '–')
-        d['pages'] = d['pages'].replace('-', '–')
+        d['pages'] = d['pages'].replace(
+            ' ', ''
+        ).replace(
+            '--', '–'
+        ).replace(
+            '-', '–'
+        )
         if '–' in d['pages']:
             d['startpage'], d['endpage'] = d['pages'].split('–')
     return d
 
-
-def search_for_tag(bibtex):
-    """Find all tags in the bibtex and return result as a dictionary."""
-    d = {}
-    fs = re.findall('(\w+)\s*=\s*(?:[{"]\s*(.*?)\s*["}]|(\d+))', bibtex)
-    for f in fs:
-        d[f[0].lower()] = f[1] if f[1] else f[2]
-    return d
 
 def replace_specials(bibtex):
     """Replace common TeX special symbol commonds with their unicode value."""
