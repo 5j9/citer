@@ -166,7 +166,13 @@ function changeDates(id) {
   dates = text1.match(/date=.*?(?=\}\}|\|)/g)
   for (var i = 0; i < dates.length; i++) {
     date = dates[i].slice(5)
-    newdate = eval(id + '(new Date(date + " UTC"))').replace(/^[0]+/g, "").replace(" 0", " ")
+    if (date.contains('-')) {
+      utcdate = date
+    }
+    else {
+      utcdate = date + " UTC"
+    };
+    newdate = eval(id + '(new Date(utcdate))').replace(/^[0]+/g, "").replace(" 0", " ")
     text1 = text1.replace(RegExp('((?:access)?date=)' + date + '(?=}}|\\|)'), '$1' + newdate)
     text2 = text2.replace(RegExp('((?:access)?date=)' + date + '(?=}}|\\|)'), '$1' + newdate)
     document.getElementById('shortened').value = text1
