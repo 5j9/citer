@@ -344,6 +344,13 @@ class Others(unittest.TestCase):
         ct = "* {{cite web|last=Postol|first=Theodore A.|title=The evidence that shows Iron Dome is not working|website=Bulletin of the Atomic Scientists|date=2014-01-14|year=2014|url=http://thebulletin.org/evidence-shows-iron-dome-not-working7318|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
 
+    def test_oth13(self):
+        """thebulletin.org"""
+        i = 'http://www.highbeam.com/doc/1P3-3372742961.html'
+        o = urls.Response(i)
+        ct = "* {{cite web|last=Martin|first=Tracy|title=Dynamometers Explained|website=HighBeam Research|date=10 Nov 2014|year=2014|url=http://www.highbeam.com/doc/1P3-3372742961.html|ref=harv|accessdate="
+        self.assertIn(ct, o.ctnt)
+
         
 urls.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':
