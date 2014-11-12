@@ -348,7 +348,7 @@ class Others(unittest.TestCase):
         """thebulletin.org"""
         i = 'http://www.highbeam.com/doc/1P3-3372742961.html'
         o = urls.Response(i)
-        ct = "* {{cite web|last=Martin|first=Tracy|title=Dynamometers Explained|website=HighBeam Research|date=10 Nov 2014|year=2014|url=http://www.highbeam.com/doc/1P3-3372742961.html|ref=harv|accessdate="
+        ct = "* {{cite web|last=Martin|first=Tracy|title=Dynamometers Explained|website=HighBeam Research|date=2014-07-01|year=2014|url=http://www.highbeam.com/doc/1P3-3372742961.html|ref=harv|accessdate="
         self.assertIn(ct, o.ctnt)
 
         
