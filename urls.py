@@ -242,7 +242,10 @@ def byline_to_names(byline):
         byline = byline[3:]
     if byline.lower().endswith(' and'):
         byline = byline[:-4]
-    fullnames = re.split(', and | and |, |;', byline, flags=re.I)
+    if ' and ' in byline or ' ' in byline.replace(', ', ''):
+        fullnames = re.split(', and | and |, |;', byline, flags=re.I)
+    else:
+        fullnames = re.split(', and | and |;', byline, flags=re.I)
     names = []
     for fullname in fullnames:
         fullname = fullname.partition(' in ')[0]
@@ -622,6 +625,8 @@ def find_date(soup, url):
         ({'class': 'updated'}, 'getattr', 'text'),
         # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
         ({'class': 'byline'}, 'getattr', 'text'),
+        # http://www.highbeam.com/doc/1P3-3372742961.html
+        ({'id': 'docByLine'}, 'getattr', 'text'),
         # wikipedia
         ({'id': 'footer-info-lastmod'}, 'getattr', 'text'),
     )
