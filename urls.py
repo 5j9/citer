@@ -14,6 +14,7 @@ import requests
 import bs4
 
 import commons
+from urls_authors import find_authors
 
 
 class Response(commons.BaseResponse):
@@ -55,13 +56,6 @@ class StatusCodeError(Exception):
     pass
 
 
-class InvalidByLineError(Exception):
-
-    """Raise in for errors in byline_to_names()."""
-
-    pass
-
-
 def find_journal(soup):
     """Return journal title as a string."""
     try:
@@ -82,185 +76,6 @@ def find_url(soup, url):
     except Exception:
         pass
     return url
-
-
-def try_find_authors(soup, find_parameters):
-    """Try to find authors in soup using the provided parameters."""
-    for fp in find_parameters:
-        try: #can this try be removed safely?
-            attrs = fp[0]
-            f = soup.find(attrs=attrs)
-            fs = f.find_next_siblings(attrs=attrs)
-            fs.insert(0, f)
-            names = []
-            
-            if fp[1] == 'getitem':
-                for f in fs:
-                    try:
-                        string = f[fp[2]]
-                        name = byline_to_names(string)
-                        names.extend(name)
-                    except Exception:
-                        pass
-            elif fp[1] == 'getattr':
-                for f in fs:
-                    try:
-                        string = getattr(f, fp[2])
-                        name = byline_to_names(string)
-                        names.extend(name)
-                    except Exception:
-                        pass
-     
-            if names:
-                return names, attrs
-        except Exception:
-            pass
-    return None, None
-
-
-def find_authors(soup):
-    """Get a BeautifulSoup object. Return (Names, where)."""
-    find_parameters = (
-        # http://socialhistory.ihcs.ac.ir/article_571_84.html
-        # http://jn.physiology.org/content/81/1/319
-        ({'name': re.compile('citation_authors?')}, 'getitem', 'content'),
-        ({'property': 'og:author'}, 'getitem', 'content'),
-        ({'name': 'DCSext.author'}, 'getitem', 'content'),
-        ({'class': "author-title"}, 'getattr', 'text'),
-        # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
-        ({'class': 'author_byline'}, 'getattr', 'text'),
-        ({'class': 'bylineAuthor'}, 'getattr', 'text'),
-        ({'class': 'byline-name'}, 'getattr', 'text'),
-        ({'class': 'story-byline'}, 'getattr', 'text'),
-        ({'class': 'meta-author'}, 'getattr', 'text'),
-        ({'class': 'authorInline'}, 'getattr', 'text'),
-        # try before class_='author'
-        ({'class': 'byline'}, 'getattr', 'text'),
-        # try before {'name': 'author'}
-        ({'class': 'author'}, 'getattr', 'text'),
-        ({'name': 'author'}, 'getitem', 'content'),
-        # http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
-        ({'id': 'byline'}, 'getattr', 'text'),
-        ({'class': 'byline'}, 'getattr', 'text'),
-        ({'name': 'byl'}, 'getitem', 'content'),
-        ({'id': 'authortext'}, 'getattr', 'text'),
-        ({'class': 'name'}, 'getattr', 'text'),
-    )
-    names, attrs = try_find_authors(soup, find_parameters)
-    if names:
-        return names, attrs
-    else:
-        try:
-            # try before {'rel': 'author'}
-            m = re.search('"author": "(.*?)"', str(soup)).group(1)
-            return byline_to_names(m), '"author": "(.*?)"'
-        except Exception:
-            pass
-        try:
-            # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
-            attrs = {'rel': 'author'}
-            m = soup.find(attrs=attrs).text
-            return byline_to_names(m), attrs
-        except Exception:
-            pass
-        try:
-            m = re.search('>[Bb]y\s+(.*?)<', str(soup)).group(1)
-            return byline_to_names(m), 'str(soup)'
-        except Exception:
-            pass
-        try:
-            # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-            m = re.search('[\n\|]\s*[Bb]y\s+(.*?)[\n]', soup.text).group(1)
-            return byline_to_names(m), 'soup.text'
-        except Exception:
-            pass
-        return None, None
-
-
-def byline_to_names(byline):
-    """Find authors in byline sting. Return name objects as a list.
-
-    The "By " prefix will be omitted.
-    Names will be seperated either with " and " or ", ".
-
-    stopwords = (
-        'Reporter',
-        'People',
-        'Editor',
-        'Correspondent',
-        'Administrator',
-        'Staff',
-        'Writer',
-        'Office',
-        'News',
-    )
-
-    If any of the stopwords is found in a name then it will be omitted from
-    the result.
-
-    Examples:
-
-    >>> byline_to_names('\n By Roger Highfield, Science Editor \n')
-    [Name(Roger Highfield)]
-
-    >>> byline_to_names(' By Erika Solomon in Beirut and Borzou Daragahi,\
-     Middle East correspondent')
-    [Name(Erika Solomon), Name(Borzou Daragahi)]
-    """
-    stopwords = '|'.join((
-        r'\bReporter\b',
-        r'\bPeople\b',
-        r'\bEditor\b',
-        r'\bCorrespondent\b',
-        r'\bAdministrator\b',
-        r'\bStaff\b',
-        r'\bWriter\b',
-        r'\bOffice\b',
-        r'\bNews\b',
-        r'\.com\b',
-        r'\.ir\b',
-        r'www\.',
-    ))
-
-    def isstopword(string):
-        """Return True if the string contains one of the stopwords."""
-        if re.search(stopwords, string, re.IGNORECASE):
-            return True
-        return False
-    
-    byline = byline.partition('|')[0]
-    for c in ':+':
-        if c in byline:
-            raise InvalidByLineError('Invalid character ("%s") in byline.' % c)
-    if re.search('\d\d\d\d', byline):
-        raise InvalidByLineError(
-            'Found \d\d\d\d in byline. ' +
-            '(byline needs to be pure)'
-        )
-    byline = byline.strip()
-    if byline.lower().startswith('by '):
-        byline = byline[3:]
-    if byline.lower().endswith(' and'):
-        byline = byline[:-4]
-    if ' and ' in byline or ' ' in byline.replace(', ', ''):
-        fullnames = re.split(', and | and |, |;', byline, flags=re.I)
-    else:
-        fullnames = re.split(', and | and |;', byline, flags=re.I)
-    names = []
-    for fullname in fullnames:
-        fullname = fullname.partition(' in ')[0]
-        name = commons.Name(fullname)
-        if isstopword(name.lastname):
-            continue
-        names.append(name)
-    if not names:
-        raise InvalidByLineError('No valid name remained after parsing byline.')
-    # Remove names not having firstname (orgs)
-    name0 = names[0]  # In case no name remains at the end
-    names = [n for n in names if n.firstname]
-    if not names:
-        names.append(name0)
-    return names
 
 
 def find_issn(soup):
@@ -676,9 +491,10 @@ def requests_visa(url, request_headers=None):
     if 'content-length' in response_headers:
         megabytes = int(response_headers['content-length']) / 1000000.
         if megabytes > 1:
-            raise ContentLengthError('Content-length was too long. (' +
-                                     format(megabytes, '.2f') +
-                                     ' MB)')
+            raise ContentLengthError(
+                'Content-length was too long. (' +
+                format(megabytes, '.2f') + ' MB)'
+            )
     if 'content-type' in response_headers:
         if response_headers['content-type'].startswith('text/'):
             return True
@@ -686,7 +502,8 @@ def requests_visa(url, request_headers=None):
             raise ContentTypeError(
                 'Invalid content-type: ' +
                 response_headers['content-type'] +
-                ' (URL-content is supposed to be text/html)')
+                ' (URL-content is supposed to be text/html)'
+            )
     return True
 
 
@@ -702,7 +519,7 @@ def get_soup(url, headers=None):
 def url2dictionary(url):
     """Get url and return the result as a dictionary."""
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)' +
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)'
         ' Gecko/20100101 Firefox/30.0'
     }
 
