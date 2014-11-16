@@ -99,18 +99,6 @@ class DilyTelegraphTest(unittest.TestCase):
         self.assertIn(e2, o.ctnt)
 
 
-class DilyMirrorTest(unittest.TestCase):
-
-    def test_dmr1(self):
-        """no authors"""
-        i = 'http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471'
-        o = urls.Response(i)
-        e1 = '{{sfn|Mirror.co.uk|2005}}'
-        e2 = '* {{cite web|author=Mirror.co.uk|title=WHALE DOOMED TO DIE|website=mirror|date=2005-09-15|year=2005|url=http://www.mirror.co.uk/news/uk-news/whale-doomed-to-die-557471|ref=harv|accessdate='
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
-
-
 class DilyMailTest(unittest.TestCase):
 
     def test_dm1(self):
@@ -121,6 +109,13 @@ class DilyMailTest(unittest.TestCase):
         e2 = '* {{cite web|last=Malm|first=Sara|last2=Witheridge|first2=Annette|last3=Drury|first3=Ian|last4=Bates|first4=Daniel|title=Hate preacher Abu Hamza GUILTY of setting up US terror training camps|website=Mail Online|date=2014-05-19|year=2014|url=http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html|ref=harv|accessdate='
         self.assertIn(e1, o.sfnt)
         self.assertIn(e2, o.ctnt)
+
+    def test_dm2(self):
+        """`for` in byline."""
+        i = 'http://www.dailymail.co.uk/tvshowbiz/article-2834145/I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html'
+        o = urls.Response(i)
+        e = '* {{cite web|last=Gower|first=Eleanor|title=2011 video shows Kim Kardashian meltdown at nude magazine cover|website=Mail Online|date=2014-11-14|year=2014|url=http://www.dailymail.co.uk/tvshowbiz/article-2834145/I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html|ref=harv|accessdate='
+        self.assertIn(e, o.ctnt)
 
 
 class BbcTest(unittest.TestCase):
@@ -349,6 +344,13 @@ class Others(unittest.TestCase):
         i = 'http://www.highbeam.com/doc/1P3-3372742961.html'
         o = urls.Response(i)
         ct = "* {{cite web|last=Martin|first=Tracy|title=Dynamometers Explained|website=HighBeam Research|date=2014-07-01|year=2014|url=http://www.highbeam.com/doc/1P3-3372742961.html|ref=harv|accessdate="
+        self.assertIn(ct, o.ctnt)
+
+    def test_oth13(self):
+        """thebulletin.org"""
+        i = 'http://www.independent.co.uk/news/business/the-investment-column-tt-group-1103208.html'
+        o = urls.Response(i)
+        ct = "* {{cite web|title=The Investment column: TT Group|website=The Independent|date=1999-06-29|year=1999|url=http://www.independent.co.uk/news/business/the-investment-column-tt-group-1103208.html|ref={{sfnref|The Independent|1999}}|accessdate="
         self.assertIn(ct, o.ctnt)
 
         
