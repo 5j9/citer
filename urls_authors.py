@@ -109,12 +109,12 @@ FIND_PARAMETERS = (
     ),
     # disabled due to high error rate
     # try before {'name': 'author'}
-##        (
-##            'soup',
-##            {'class': 'author'},
-##            'getattr',
-##            'text',
-##        ),
+    ##        (
+    ##            'soup',
+    ##            {'class': 'author'},
+    ##            'getattr',
+    ##            'text',
+    ##        ),
     (
         'soup',
         {'name': 'author'},
