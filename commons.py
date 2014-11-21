@@ -74,7 +74,7 @@ ANYDATE_REGEX = re.compile(
     d + ' ' + b + ' ' + Y + '|' +
     Y + '-' + zm + '-' + zd + '|' +
     Y + '/' + zm + '/' + zd + '|' +
-    '(\d\d?) (' + fa_B + ') (\d\d\d\d))|' +
+    '(\d\d?) (' + fa_B + ') (\d\d\d\d)|' +
     Y + zm + zd + ')'
 )
 
