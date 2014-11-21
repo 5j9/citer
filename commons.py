@@ -27,13 +27,15 @@ fa_months = (
 # Date patterns:
 
 # January|February...
-B = r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|' +\
+B = (
+    r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|'
     r'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
+)
 # فروردین|اردیبهشت|خرداد...
 fa_B = '|'.join(fa_months).replace('ی', '[یي]')
 
 # Month abbreviations:
-b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
+b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec).?'
 # Month numbers 0?1-12
 m = r'(0?[1-9]|1[012])'
 # Zero padded month numbers 01-12
@@ -65,6 +67,16 @@ Ymd_slashed = re.compile(Y + '/' + zm + '/' + zd)
 #19000101, 20991231
 Ymd = re.compile(Y + zm + zd)
 
+ANYDATE_REGEX = re.compile(
+    '((?P<BdY>' + B + ' ' + d + ', ' + Y + ')|'
+    '(?P<bdY>' + b + ' ' + d + ', ' + Y + ')|'
+    '(?P<dBY>' + d + ' ' + B + ' ' + Y + ')|'
+    '(?P<dbY>' + d + ' ' + b + ' ' + Y + ')|'
+    '(?P<Ymd_dashed>' + Y + '-' + zm + '-' + zd + ')|'
+    '(?P<Ymd_slashed>' + Y + '/' + zm + '/' + zd + ')|'
+    '(?P<fa>(\d\d?)' + ' (' + fa_B + ') ' + '(\d\d\d\d))|'
+    '(?P<Ymd>' + Y + zm + zd + '))'
+)
 
 class InvalidNameError(Exception):
 
@@ -267,69 +279,61 @@ def ennum2fa(string_or_num):
     return string
 
 
+def jalali_string_to_date(string):
+    """Return the date object for given Jalali string."""
+    return jalali.Persian(
+        int(uninum2en(m.group(3))),
+        fa_months.index(m.group(2).replace('ي', 'ی')) + 1,
+        int(uninum2en(m.group(1))),
+    ).gregorian_datetime()
+
+
 def finddate(string):
     """Try to find a date in input string and return it as a date object.
 
     If there is no matching date, return None.
     """
-    try:
-        return datetime.strptime(
-            re.search(BdY, string).group(),
-            '%B %d, %Y',
-        ).date()
-    except Exception:
-        pass
-    try:
-        return datetime.strptime(
-            re.search(bdY, string).group(),
-            '%b %d, %Y',
-        ).date()
-    except Exception:
-        pass
-    try:
-        return datetime.strptime(
-            re.search(dBY, string).group(),
-            '%d %B %Y',
-        ).date()
-    except Exception:
-        pass
-    try:
-        return datetime.strptime(
-            re.search(dbY, string).group(),
-            '%d %b %Y',
-        ).date()
-    except Exception:
-        pass
-    try:
-        return datetime.strptime(
-            re.search(Ymd_dashed, string).group(),
-            '%Y-%m-%d',
-        ).date()
-    except Exception:
-        pass
-    try:
-        return datetime.strptime(
-            re.search(Ymd_slashed, string).group(),
-            '%Y/%m/%d',
-        ).date()
-    except Exception:
-        pass
-    try:
-        return datetime.strptime(
-            re.search(Ymd, string).group(),
-            '%Y%m%d',
-        ).date()
-    except Exception:
-        pass
-    try:
-        m = re.search(fa_dBY, string)
-        return jalali.Persian(
-            int(uninum2en(m.group(3))),
-            fa_months.index(m.group(2).replace('ي', 'ی')) + 1,
-            int(uninum2en(m.group(1))),
-        ).gregorian_datetime()
-    except Exception:
-        pass
+    m = re.search(ANYDATE_REGEX, string)
+    if m:
+        date_string = m.group(0)
+        try:
+            return datetime.strptime(date_string, '%B %d, %Y').date()
+        except Exception:
+            pass
+        try:
+            return datetime.strptime(
+                date_string.replace('.', ''),
+                '%b %d, %Y'
+            ).date()
+        except Exception:
+            pass
+        try:
+            return datetime.strptime(date_string, '%d %B %Y').date()
+        except Exception:
+            pass
+        try:
+            return datetime.strptime(
+                date_string.replace('.', ''),
+                '%d %b %Y'
+            ).date()
+        except Exception:
+            pass
+        try:
+            return datetime.strptime(date_string, '%Y-%m-%d').date()
+        except Exception:
+            pass
+        try:
+            return datetime.strptime(date_string, '%Y/%m/%d').date()
+        except Exception:
+            pass
+        try:
+            return jalali_string_to_date(date_string)
+        except Exception:
+            pass
+        try:
+            return datetime.strptime(date_string, '%Y%m%d').date()
+        except Exception:
+            pass
 
 
 def dict_cleanup(dictionary):
@@ -384,3 +388,4 @@ def encode_for_template(dictionary):
             v = v.replace('\n', ' ')
         d[k] = v
     return d
+
