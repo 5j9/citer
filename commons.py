@@ -55,7 +55,7 @@ bdY = re.compile(b + ' ' + d + ', ' + Y)
 # 22 August 2001
 dBY = re.compile(d + ' ' + B + ' ' + Y)
 # ۲۷ مرداد ۱۳۹۳
-fa_dBY = re.compile('(\d\d?)' + ' (' + fa_B + ') ' + '(\d\d\d\d)')
+fa_dBY = re.compile('(\d\d?) (' + fa_B + ') (\d\d\d\d)')
 
 # 22 Aug 2001
 dbY = re.compile(d + ' ' + b + ' ' + Y)
@@ -68,14 +68,14 @@ Ymd_slashed = re.compile(Y + '/' + zm + '/' + zd)
 Ymd = re.compile(Y + zm + zd)
 
 ANYDATE_REGEX = re.compile(
-    '((?P<BdY>' + B + ' ' + d + ', ' + Y + ')|'
-    '(?P<bdY>' + b + ' ' + d + ', ' + Y + ')|'
-    '(?P<dBY>' + d + ' ' + B + ' ' + Y + ')|'
-    '(?P<dbY>' + d + ' ' + b + ' ' + Y + ')|'
-    '(?P<Ymd_dashed>' + Y + '-' + zm + '-' + zd + ')|'
-    '(?P<Ymd_slashed>' + Y + '/' + zm + '/' + zd + ')|'
-    '(?P<fa>(\d\d?)' + ' (' + fa_B + ') ' + '(\d\d\d\d))|'
-    '(?P<Ymd>' + Y + zm + zd + '))'
+    '(' + B + ' ' + d + ', ' + Y + '|' +
+    b + ' ' + d + ', ' + Y + '|' +
+    d + ' ' + B + ' ' + Y + '|' +
+    d + ' ' + b + ' ' + Y + '|' +
+    Y + '-' + zm + '-' + zd + '|' +
+    Y + '/' + zm + '/' + zd + '|' +
+    '(\d\d?) (' + fa_B + ') (\d\d\d\d))|' +
+    Y + zm + zd + ')'
 )
 
 class InvalidNameError(Exception):
