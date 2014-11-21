@@ -309,6 +309,10 @@ def byline_to_names(byline):
             raise InvalidByLineError(
                 'Invalid character ("%s") in byline.' % c
             )
+    m = re.search(commons.ANYDATE_REGEX, byline)
+    if m:
+        # Removing the date part
+        byline = byline[:m.start()]
     if re.search('\d\d\d\d', byline):
         raise InvalidByLineError(
             'Found \d\d\d\d in byline. (byline needs to be pure)'
