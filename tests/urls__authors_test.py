@@ -71,6 +71,22 @@ class BylineToNames(unittest.TestCase):
         self.assertEqual(len(names), 1)
         self.assertEqual(names[0].firstname, 'Tony')
 
+    def test_semicolon_seperated_names_and_for(self):
+        byline = (
+            'Sara Malm;Annette Witheridge;Ian Drury for the Daily Mail;'
+            'Daniel Bates'
+        )
+        names = urls_authors.byline_to_names(byline)
+        self.assertEqual(len(names), 4)
+        self.assertEqual(names[2].firstname, 'Ian')
+        self.assertEqual(names[2].lastname, 'Drury')
+
+    def test_newline_after_and(self):
+        byline = '\nIan Sample and \nStuart Clark in Darmstadt'
+        names = urls_authors.byline_to_names(byline)
+        self.assertEqual(len(names), 2)
+        self.assertEqual(names[1].lastname, 'Clark')
+        
 
 if __name__ == '__main__':
     unittest.main()
