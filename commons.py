@@ -115,7 +115,7 @@ class Name:
             self.fullname = self.lastname
 
     def __repr__(self):
-        return 'Name(' + self.fullname + ')'
+        return 'Name("' + self.fullname + '")'
 
     def nofirst_fulllast(self):
         '''Change firstname to an empty string and assign fullname to lastname.
