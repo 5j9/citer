@@ -317,12 +317,11 @@ def byline_to_names(byline):
         raise InvalidByLineError(
             'Found \d\d\d\d in byline. (byline needs to be pure)'
         )
-    byline = byline.strip()
-    if byline.lower().startswith('by '):
-        byline = byline[3:]
-    if byline.lower().endswith(' and'):
-        byline = byline[:-4]
-    if ' and ' in byline or ' ' in byline.replace(', ', ''):
+    # Remove the starting "by", cut at the first newline and lstrip
+    byline = re.search(r'^\s*(by\s+)?(.*)', byline, re.IGNORECASE).group(2)
+    # Removing ending " and" or ',' and rstrip
+    byline = re.sub(r'(\s+and|\s*,)?\s*$', '', byline, 1, re.IGNORECASE)
+    if ' and ' in byline.lower() or ' ' in byline.replace(', ', ''):
         fullnames = re.split(', and | and |, |;', byline, flags=re.I)
     else:
         fullnames = re.split(', and | and |;', byline, flags=re.I)
