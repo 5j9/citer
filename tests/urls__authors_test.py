@@ -13,7 +13,7 @@ import urls_authors
 
 
 class RegexTest(unittest.TestCase):
-    
+
     """BYLINE_REGEX should pass the following tests."""
 
     regex = re.compile('^' + urls_authors.BYLINE_REGEX + '$', re.IGNORECASE)
@@ -22,7 +22,7 @@ class RegexTest(unittest.TestCase):
         """http://www.defense.gov/News/NewsArticle.aspx?ID=18509"""
         text = 'By Jim Garamone'
         self.assertRegex(text, self.regex)
-        
+
     def test_cap_names_joined_by_and(self):
         """https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act
 
@@ -35,7 +35,7 @@ class RegexTest(unittest.TestCase):
         text = 'by John Timmer, Matt Ford, Chris Lee, and Jonathan Gitlin Sept'
         self.assertRegex(text, self.regex)
 
-    @unittest.expectedFailure 
+    @unittest.expectedFailure
     def test_four_authors_with_for(self):
         """http://arstechnica.com/science/2007/09/the-pseudoscience-behind-homeopathy/"""
         text = (
@@ -45,5 +45,33 @@ class RegexTest(unittest.TestCase):
         self.assertRegex(text, self.regex)
 
 
+class BylineToNames(unittest.TestCase):
+
+    """Test byline_to_names function."""
+
+    def test_two_author_seperated_by_comma(self):
+        byline = '\n By Roger Highfield, Science Editor \n'
+        names = urls_authors.byline_to_names(byline)
+        self.assertEqual(len(names), 1)
+        self.assertEqual(names[0].firstname, 'Roger')
+
+    def test_in_in_byline(self):
+        byline = (
+            ' By Erika Solomon in Beirut and Borzou Daragahi,'
+            ' Middle East correspondent'
+        )
+        names = urls_authors.byline_to_names(byline)
+        self.assertEqual(len(names), 2)
+        self.assertEqual(names[0].firstname, 'Erika')
+        self.assertEqual(names[1].firstname, 'Borzou')
+
+    def test_byline_ends_with_comma(self):
+        byline = 'by \n Tony Smith, \n'
+        names = urls_authors.byline_to_names(byline)
+        self.assertEqual(len(names), 1)
+        self.assertEqual(names[0].firstname, 'Tony')
+
+
 if __name__ == '__main__':
     unittest.main()
+
