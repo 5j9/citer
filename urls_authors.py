@@ -96,13 +96,6 @@ FIND_PARAMETERS = (
     # try before class_='author'
     (
         'soup',
-        {'class': 'author-section'},
-        'getattr',
-        'text',
-    ),
-    # try before class_='author'
-    (
-        'soup',
         {'class': 'byline'},
         'getattr',
         'text',
@@ -317,10 +310,14 @@ def byline_to_names(byline):
         raise InvalidByLineError(
             'Found \d\d\d\d in byline. (byline needs to be pure)'
         )
-    # Remove the starting "by", cut at the first newline and lstrip
+    # Replace 'and\n' (and similar expressions) with 'and '
+    # This should be done before cutting the byline at the first newline
+    byline = re.sub(r'\s+and\s+', ' and ', byline, 1, re.IGNORECASE)
+    byline = re.sub(r'\s*,\s+', ', ', byline, 1, re.IGNORECASE)
+    # Remove starting "by", cut at the first newline and lstrip
     byline = re.search(r'^\s*(by\s+)?(.*)', byline, re.IGNORECASE).group(2)
     # Removing ending " and" or ',' and rstrip
-    byline = re.sub(r'(\s+and|\s*,)?\s*$', '', byline, 1, re.IGNORECASE)
+    byline = re.sub(r'( and|,)?\s*$', '', byline, 1, re.IGNORECASE)
     if ' and ' in byline.lower() or ' ' in byline.replace(', ', ''):
         fullnames = re.split(', and | and |, |;', byline, flags=re.I)
     else:
