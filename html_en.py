@@ -264,14 +264,14 @@ default_response = Respose(
 )
 undefined_url_response = Respose(
     'Undefined input.',
-    'Sorry, the input was not recognized. ' +
+    'Sorry, the input was not recognized. '
     'The error was logged.'
 )
 
 httperror_response = Respose(
     'HTTP error:',
-    'One or more of the web resources required to ' +
-    'create this citation are not accessible at ' +
+    'One or more of the web resources required to '
+    'create this citation are not accessible at '
     'this moment.'
 )
 
