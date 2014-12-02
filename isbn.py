@@ -61,7 +61,10 @@ class Response(commons.BaseResponse):
             args=(self.isbn, adinebook_dict_list),
         )
         thread.start()
-        otto_dict = bibtex.parse(self.bibtex)
+        if self.bibtex:
+            otto_dict = bibtex.parse(self.bibtex)
+        else:
+            otto_dict = None
         thread.join()
         if adinebook_dict_list:
             adine_dict = adinebook_dict_list.pop()
