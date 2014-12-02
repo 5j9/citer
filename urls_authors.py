@@ -154,12 +154,12 @@ FIND_PARAMETERS = (
     # try before {'rel': 'author'}
     (
         'html',
-        r'"author": "(.*?)"',
+        r'"author": "(.+?)"',
     ),
     # http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html
     (
         'html',
-        r"authorName:\s*'(.*?)'",
+        r"authorName:\s*'(.+?)'",
     ),
     # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
     (
