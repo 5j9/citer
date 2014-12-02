@@ -47,8 +47,8 @@ def url2dictionary(adinebook_url):
         # this try statement is needed because if adinebook is not available then
         #    ottobib should continoue its' work in isbn.py
         headers = {'User-agent':
-                   'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:29.0)' +
-                   ' Gecko/20100101 Firefox/29.0'}
+                   'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) '
+                   'Gecko/20100101 Firefox/33.0'}
         r = requests.get(adinebook_url, headers=headers)
         adinebook_html = r.content.decode('utf-8')
     except Exception:

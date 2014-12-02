@@ -48,10 +48,13 @@ def get_bibtex(googlebook_url):
     pq = parse_qs(pu.query)
     bookid = pq['id'][0]
     url = 'http://books.google.com/books/download/?id=' +\
-        bookid + '&output=bibtex'
+          bookid + '&output=bibtex'
     # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    headers = {'User-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
-               ' Gecko/20100101 Firefox/24.0'}
+    headers = {
+        'User-agent':
+        'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
+        'Firefox/33.0'
+    }
     bibtex = requests.get(url, headers=headers).text
     return bibtex
 
@@ -65,7 +68,8 @@ def get_ris(googlebook_url):
     url = 'http://books.google.com/books/download/?id=' +\
         bookid + '&output=ris'
     # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    headers = {'User-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0)' +
-               ' Gecko/20100101 Firefox/24.0'}
+    headers = {'User-agent':
+               'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
+               'Firefox/33.0'}
     ris = requests.get(url, headers=headers).text
     return ris
