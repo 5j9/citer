@@ -123,7 +123,7 @@ def application(environ, start_response):
 
     response_headers = [
         ('Content-Type', 'text/html; charset=UTF-8'),
-        ('Content-Length', '')
+        ('Content-Length', ''),
     ]
     start_response(status, response_headers)
 

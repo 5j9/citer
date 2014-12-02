@@ -374,7 +374,8 @@ def bidi_pop(string):
 def encode_for_template(dictionary):
     """Replace special characters with their respective HTML entities.
 
-    Also .strip()s all values."""
+    Also .strip()s all values.
+    """
     d = {}
     for k in dictionary:
         v = dictionary[k]
