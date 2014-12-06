@@ -6,7 +6,6 @@
 from datetime import datetime
 import re
 import json
-import unicodedata
 
 import langid
 import isbnlib
@@ -74,7 +73,7 @@ ANYDATE_REGEX = re.compile(
     d + ' ' + b + ' ' + Y + '|' +
     Y + '-' + zm + '-' + zd + '|' +
     Y + '/' + zm + '/' + zd + '|' +
-    '(\d\d?) (' + fa_B + ') (\d\d\d\d)|' +
+    '(?P<fa_d>\d\d?) (?P<fa_B>' + fa_B + ') (?P<fa_Y>\d\d\d\d)|' +
     Y + zm + zd + ')'
 )
 
@@ -259,7 +258,7 @@ def uninum2en(string):
     """
     digits = set(re.findall(r'\d', string))
     for d in digits:
-        string = string.replace(d, str(unicodedata.digit(d)))
+        string = string.replace(d, str(int(d)))
     return string
 
 
@@ -279,12 +278,12 @@ def ennum2fa(string_or_num):
     return string
 
 
-def jalali_string_to_date(string):
+def jalali_string_to_date(match):
     """Return the date object for given Jalali string."""
     return jalali.Persian(
-        int(uninum2en(m.group(3))),
-        fa_months.index(m.group(2).replace('ي', 'ی')) + 1,
-        int(uninum2en(m.group(1))),
+        int(uninum2en(match.group('fa_Y'))),
+        fa_months.index(match.group('fa_B').replace('ي', 'ی')) + 1,
+        int(uninum2en(match.group('fa_d'))),
     ).gregorian_datetime()
 
 
@@ -327,7 +326,7 @@ def finddate(string):
         except Exception:
             pass
         try:
-            return jalali_string_to_date(date_string)
+            return jalali_string_to_date(m)
         except Exception:
             pass
         try:
