@@ -187,7 +187,7 @@ function changeDates(id) {
 		.textContent;
 	text2 = document.getElementById('named_ref')
 		.textContent;
-	dates = text1.match(/date=.*?(?=\}\}|\|)/g);
+	dates = text1.match(/date=.*?(?=\}\}| \| )/g);
 	for (i = 0; i < dates.length; i = i + 1) {
 		date = dates[i].slice(5);
 		if (date.contains('-')) {
@@ -199,8 +199,8 @@ function changeDates(id) {
 		newdate = formatter(new Date(utcdate))
 			.replace(/^[0]+/g, "")
 			.replace(" 0", " ");
-		text1 = text1.replace(new RegExp('((?:access)?date=)' + date + '(?=}}|\\|)'), '$1' + newdate);
-		text2 = text2.replace(new RegExp('((?:access)?date=)' + date + '(?=}}|\\|)'), '$1' + newdate);
+		text1 = text1.replace(new RegExp('((?:access)?date=)' + date + '(?=}}| \\| )'), '$1' + newdate);
+		text2 = text2.replace(new RegExp('((?:access)?date=)' + date + '(?=}}| \\| )'), '$1' + newdate);
 		document.getElementById('shortened')
 			.value = text1;
 		document.getElementById('named_ref')

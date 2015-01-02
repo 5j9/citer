@@ -18,19 +18,19 @@ def sfn_template(d):
         for name in d['authors']:
             c += 1
             if c < 5:  # {{پک}} only accepts a maximum of four authors
-                s += '|' + name.lastname
+                s += ' | ' + name.lastname
     else:
         s = '<ref>{{پک/بن'
     if 'year' in d:
-        s += '|' + d['year']
+        s += ' | ' + d['year']
     if 'title' in d:
-        s += '|ک=' + d['title']
+        s += ' | ک=' + d['title']
     if 'language' in d:
-        s += '|زبان=' + d['language']
+        s += ' | زبان=' + d['language']
     if 'pages' in d:
-        s += '|ص=' + d['pages']
+        s += ' | ص=' + d['pages']
     elif 'url' not in d:
-        s += '|ص='
+        s += ' | ص='
     s += '}}\u200F</ref>'
     return s
 
@@ -61,50 +61,50 @@ def citation_template(d, date_format):
     if 'others' in d:
         s += names1para(d['others'], 'دیگران')
     if 'title' in d:
-        s += '|عنوان=' + d['title']
+        s += ' | عنوان=' + d['title']
     if 'journal' in d:
-        s += '|ژورنال=' + d['journal']
+        s += ' | ژورنال=' + d['journal']
     elif 'website' in d:
-        s += '|وب‌گاه=' + d['website']
+        s += ' | وب‌گاه=' + d['website']
     if 'publisher' in d:
-        s += '|ناشر=' + d['publisher']
+        s += ' | ناشر=' + d['publisher']
     if 'address' in d:
-        s += '|مکان=' + d['address']
+        s += ' | مکان=' + d['address']
     if 'series' in d:
-        s += '|سری=' + d['series']
+        s += ' | سری=' + d['series']
     if 'volume' in d:
-        s += '|جلد=' + d['volume']
+        s += ' | جلد=' + d['volume']
     if 'issue' in d:
-        s += '|شماره=' + d['issue']
+        s += ' | شماره=' + d['issue']
     if 'date' in d:
         if isinstance(d['date'], date):
-            s += '|تاریخ=' + date.isoformat(d['date'])
+            s += ' | تاریخ=' + date.isoformat(d['date'])
         else:
-            s += '|تاریخ=' + d['date']
+            s += ' | تاریخ=' + d['date']
     if 'year' in d:
-        s += '|سال=' + d['year']
+        s += ' | سال=' + d['year']
     if 'month' in d:
-        s += '|ماه=' + d['month']
+        s += ' | ماه=' + d['month']
     if 'isbn' in d:
-        s += '|شابک=' + d['isbn']
+        s += ' | شابک=' + d['isbn']
     if 'issn' in d:
-        s += '|issn=' + d['issn']
+        s += ' | issn=' + d['issn']
     if 'pmid' in d:
-        s += '|pmid=' + d['pmid']
+        s += ' | pmid=' + d['pmid']
     if d['type'] == 'article' or d['type'] == 'jour':
         if 'pages' in d:
-            s += '|صفحه=' + d['pages']
+            s += ' | صفحه=' + d['pages']
     if 'url' in d:
-        s += '|پیوند=' + d['url']
+        s += ' | پیوند=' + d['url']
     if 'doi' in d:
-        s += '|doi=' + d['doi']
+        s += ' | doi=' + d['doi']
     if 'language' in d:
         if d['type'] == 'web':
-            s += '|کد زبان=' + d['language']
+            s += ' | کد زبان=' + d['language']
         else:
-            s += '|زبان=' + d['language']
+            s += ' | زبان=' + d['language']
     if 'url' in d:
-        s += '|تاریخ بازبینی=' + date.isoformat(date.today())
+        s += ' | تاریخ بازبینی=' + date.isoformat(date.today())
     s += '}}'
     return s
 
@@ -112,10 +112,10 @@ def citation_template(d, date_format):
 def reference_tag(dictionary, sfn_template, citation_template):
     """Create named <ref> tag."""
     text = citation_template[2:]
-    if 'pages' in dictionary and '|صفحه=' not in text:
-        text = text[:-2] + '|صفحه=' + dictionary['pages'] + '}}'
+    if 'pages' in dictionary and ' | صفحه=' not in text:
+        text = text[:-2] + ' | صفحه=' + dictionary['pages'] + '}}'
     elif 'url' not in dictionary:
-        text = text[:-2] + '|صفحه=}}'
+        text = text[:-2] + ' | صفحه=}}'
     return  '<ref>' + text + '\u200F</ref>'
 
 
@@ -127,25 +127,25 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
         c += 1
         if c == 1:
             if name.firstname or not nofn_parameter:
-                s += '|' + ln_parameter + '=' + name.lastname
-                s += '|' + fn_parameter + '=' + name.firstname
+                s += ' | ' + ln_parameter + '=' + name.lastname
+                s += ' | ' + fn_parameter + '=' + name.firstname
             else:
-                s += '|' + nofn_parameter + '=' + name.fullname
+                s += ' | ' + nofn_parameter + '=' + name.fullname
         else:
             if name.firstname or not nofn_parameter:
-                s += '|' + ln_parameter + commons.ennum2fa(c) + '=' +\
+                s += ' | ' + ln_parameter + commons.ennum2fa(c) + '=' +\
                      name.lastname
-                s += '|' + fn_parameter + commons.ennum2fa(c) + '=' +\
+                s += ' | ' + fn_parameter + commons.ennum2fa(c) + '=' +\
                      name.firstname
             else:
-                s += '|' + nofn_parameter + commons.ennum2fa(c) +\
+                s += ' | ' + nofn_parameter + commons.ennum2fa(c) +\
                      '=' + name.fullname
     return s
 
 
 def names1para(translators, para):
     """Take list of names. Return the string to be appended to citation."""
-    s = '|' + para + '='
+    s = ' | ' + para + '='
     c = 0
     for name in translators:
         c += 1
