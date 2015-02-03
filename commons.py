@@ -291,48 +291,68 @@ def finddate(string):
     """Try to find a date in input string and return it as a date object.
 
     If there is no matching date, return None.
+    The returned date can't be from the future.
     """
-    m = re.search(ANYDATE_REGEX, string)
-    if m:
+    m = ANYDATE_REGEX.search(string)
+    today = datetime.today().date()
+    while m:
         date_string = m.group(0)
         try:
-            return datetime.strptime(date_string, '%B %d, %Y').date()
+            date = datetime.strptime(date_string, '%B %d, %Y').date()
+            if date <= today:
+                return date
         except Exception:
             pass
         try:
-            return datetime.strptime(
+            date = datetime.strptime(
                 date_string.replace('.', ''),
                 '%b %d, %Y'
             ).date()
+            if date <= today:
+                return date
         except Exception:
             pass
         try:
-            return datetime.strptime(date_string, '%d %B %Y').date()
+            date = datetime.strptime(date_string, '%d %B %Y').date()
+            if date <= today:
+                return date
         except Exception:
             pass
         try:
-            return datetime.strptime(
+            date = datetime.strptime(
                 date_string.replace('.', ''),
                 '%d %b %Y'
             ).date()
+            if date <= today:
+                return date
         except Exception:
             pass
         try:
-            return datetime.strptime(date_string, '%Y-%m-%d').date()
+            date = datetime.strptime(date_string, '%Y-%m-%d').date()
+            if date <= today:
+                return date
         except Exception:
             pass
         try:
-            return datetime.strptime(date_string, '%Y/%m/%d').date()
+            date = datetime.strptime(date_string, '%Y/%m/%d').date()
+            if date <= today:
+                return date
         except Exception:
             pass
         try:
-            return jalali_string_to_date(m)
+            date = jalali_string_to_date(m)
+            if date <= today:
+                return date
         except Exception:
             pass
         try:
-            return datetime.strptime(date_string, '%Y%m%d').date()
+            date = datetime.strptime(date_string, '%Y%m%d').date()
+            if date <= today:
+                return date
         except Exception:
             pass
+        pos = m.end()
+        m = ANYDATE_REGEX.search(string, pos)
 
 
 def dict_cleanup(dictionary):
