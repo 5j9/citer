@@ -14,15 +14,15 @@ import adinebook
 
 
 # original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
-isbn13_regex = re.compile(
+ISBN13_REGEX = re.compile(
     r'97(?:8|9)([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
 )
 # original regex from: https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
-isbn10_regex = re.compile(
+ISBN10_REGEX = re.compile(
     r'(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
 )
 # original regex from: http://stackoverflow.com/a/14260708/2705757
-isbn_regex = re.compile(
+ISBN_REGEX = re.compile(
     r'(?=[-0-9 ]{17}|[-0-9X ]{13}|[0-9X]{10})(?:97[89][- ]?)'
     r'?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
 )
@@ -47,12 +47,12 @@ class Response(commons.BaseResponse):
             self.isbn = isbn_container_string
         else:
             # search for isbn13
-            m = re.search(isbn13_regex, isbn_container_string)
+            m = ISBN13_REGEX.search(isbn_container_string)
             if m:
                 self.isbn = m.group(0)
             else:
                 # search for isbn10
-                m = re.search(isbn10_regex, isbn_container_string)
+                m = ISBN10_REGEX.search(isbn_container_string)
                 self.isbn = m.group(0)
         self.bibtex = ottobib(self.isbn)
         adinebook_dict_list = []
