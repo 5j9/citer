@@ -61,8 +61,10 @@ def url2dictionary(adinebook_url):
         d['type'] = 'book'
         bs = BS(adinebook_html)
         if bs.title:
-            pattern = 'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$'
-            m = re.search(pattern, bs.title.text)
+            m = re.search(
+                'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$',
+                bs.title.text
+            )
             if m:
                 d['title'] = m.group('title')
         names = m.group('names').split('،')
