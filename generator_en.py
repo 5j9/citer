@@ -136,9 +136,11 @@ def citation_template(d, date_format):
 def reference_tag(dictionary, sfn_template, citation_template):
     """Create named <ref> tag."""
     name = sfn_template[8:-2].replace(' | ', ' ').replace("'", '')
-    text = re.sub('( \| ref=({{.*?}}|harv))(?P<repl> \| |}})',
-                  '\g<repl>',
-                  citation_template[2:])
+    text = re.sub(
+        '( \| ref=({{.*?}}|harv))(?P<repl> \| |}})',
+        '\g<repl>',
+        citation_template[2:],
+    )
     if ' p=' in name  and ' | page=' not in text:
         name = name.replace(' p=', ' p. ')
         if 'pages' in dictionary:
