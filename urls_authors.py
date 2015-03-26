@@ -13,19 +13,19 @@ import commons
 
 
 # Names in byline are required to be two or three parts
-NAME_REGEX = r'[\w.-]+ [\w.-]+( [\w.-]+)?'
+NAME_PATTERN = r'[\w.-]+ [\w.-]+( [\w.-]+)?'
 
 # This regex supports up to for names in a byline
 # names may be seperated with "and", a "comma" or "comma and"
 
-BYLINE_REGEX = (
-    r"\s*By\s+(" + NAME_REGEX + r"(, " + NAME_REGEX + r"(, " + NAME_REGEX +
-    r"(, " + NAME_REGEX + r"|,? +and " + NAME_REGEX + r")?|,? +and " +
-    NAME_REGEX + r"(, " + NAME_REGEX + r"|,? +and " + NAME_REGEX +
-    r")?)?|,? +and " + NAME_REGEX + r"(, " + NAME_REGEX + r"(, " +
-    NAME_REGEX + r"|,? +and " + NAME_REGEX +
-    r")?|,? +and " + NAME_REGEX + r"(, " + NAME_REGEX +
-    r"|,? +and " + NAME_REGEX + r")?)?)?)\s*"
+BYLINE_PATTERN = (
+    r"\s*By\s+(" + NAME_PATTERN + r"(, " + NAME_PATTERN + r"(, " + NAME_PATTERN +
+    r"(, " + NAME_PATTERN + r"|,? +and " + NAME_PATTERN + r")?|,? +and " +
+    NAME_PATTERN + r"(, " + NAME_PATTERN + r"|,? +and " + NAME_PATTERN +
+    r")?)?|,? +and " + NAME_PATTERN + r"(, " + NAME_PATTERN + r"(, " +
+    NAME_PATTERN + r"|,? +and " + NAME_PATTERN +
+    r")?|,? +and " + NAME_PATTERN + r"(, " + NAME_PATTERN +
+    r"|,? +and " + NAME_PATTERN + r")?)?)?)\s*"
 )
 
 # FIND_PARAMETERS are used in find_authors(soup)
@@ -171,7 +171,7 @@ FIND_PARAMETERS = (
     (
         'html',
         re.compile(
-            r'>' + BYLINE_REGEX + r'<',
+            r'>' + BYLINE_PATTERN + r'<',
             re.IGNORECASE,
         ),
     ),
@@ -179,7 +179,7 @@ FIND_PARAMETERS = (
     (
         'text',
         re.compile(
-            r'[\n\|]' + BYLINE_REGEX + r'\n',
+            r'[\n\|]' + BYLINE_PATTERN + r'\n',
             re.IGNORECASE,
         ),
     ),
@@ -302,7 +302,7 @@ def byline_to_names(byline):
             raise InvalidByLineError(
                 'Invalid character ("%s") in byline.' % c
             )
-    m = re.search(commons.ANYDATE_REGEX, byline)
+    m = commons.ANYDATE_REGEX.search(byline)
     if m:
         # Removing the date part
         byline = byline[:m.start()]

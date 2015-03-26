@@ -14,9 +14,9 @@ import urls_authors
 
 class RegexTest(unittest.TestCase):
 
-    """BYLINE_REGEX should pass the following tests."""
+    """BYLINE_PATTERN should pass the following tests."""
 
-    regex = re.compile('^' + urls_authors.BYLINE_REGEX + '$', re.IGNORECASE)
+    regex = re.compile('^' + urls_authors.BYLINE_PATTERN + '$', re.IGNORECASE)
 
     def test_one_author(self):
         """http://www.defense.gov/News/NewsArticle.aspx?ID=18509"""
