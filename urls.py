@@ -81,8 +81,8 @@ def find_url(soup, url):
 def find_issn(soup):
     """Return International Standard Serial Number as a string.
 
-    Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this function
-    does not check that.
+    Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this
+    function does not check that.
     """
     try:
         # http://socialhistory.ihcs.ac.ir/article_319_84.html
