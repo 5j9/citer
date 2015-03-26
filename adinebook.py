@@ -31,8 +31,8 @@ class Response(commons.BaseResponse):
 
 def isbn2url(isbn):
     """Convert isbn string to AdinebookURL. Return the url as string."""
-    # apparently adinebook uses 10 digit codes (without hyphens) for its books
-    # if it's an isbn13 then the first 3 digits are excluded:
+    # Apparently adinebook uses 10 digit codes (without hyphens) for its
+    # book-urls. If it's an isbn13 then the first 3 digits are excluded
     isbn = isbn.replace('-', '')
     isbn = isbn.replace(' ', '')
     if len(isbn) == 13:
@@ -98,7 +98,7 @@ def url2dictionary(adinebook_url):
         m = re.search('نشر:</b>.*?\(.*?(\d\d\d\d)\)</li>', adinebook_html)
         if m:
             d['year'] = m.group(1)
-        m = re.search('شابک:.*?([\d-]*)</span></li>', adinebook_html)
+        m = re.search('شابک:.*?([\d-]*X?)</span></li>', adinebook_html)
         if m:
             d['isbn'] = m.group(1)
     return d
