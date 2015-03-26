@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-from doi import doi_regex
+from doi import DOI_REGEX
 
 import commons
 
@@ -58,7 +58,7 @@ def parse(ris_text):
     if m:
         d['isbn'] = m.group(1).strip()
     # DOIs may be in N1 (notes) tag, search for it in any tag
-    m = re.search(doi_regex, ris_text)
+    m = DOI_REGEX.search(ris_text)
     if m:
         d['doi'] = m.group(0).strip()
     m = re.search('SP  - (.*)', ris_text)
