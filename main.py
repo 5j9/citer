@@ -75,7 +75,7 @@ def application(environ, start_response):
             # DOI and ISBN check
             en_url = urllib.parse.unquote(commons.uninum2en(url))
             try:
-                m = doi.re.search(doi.doi_regex, doi.html.unescape(en_url))
+                m = doi.DOI_REGEX(doi.html.unescape(en_url))
                 if m:
                     response = doi.Response(
                         m.group(1),
