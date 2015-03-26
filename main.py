@@ -82,15 +82,15 @@ def application(environ, start_response):
                         pure=True,
                         date_format=date_format
                     )
-                elif isbn.re.search(isbn.isbn13_regex, en_url):
+                elif isbn.ISBN13_REGEX(en_url):
                     response = isbn.Response(
-                        isbn.re.search(isbn.isbn13_regex, en_url).group(0),
+                        isbn.ISBN13_REGEX(en_url).group(0),
                         pure=True,
                         date_format=date_format,
                     )
-                elif isbn.re.search(isbn.isbn10_regex, en_url):
+                elif isbn.ISBN10_REGEX(en_url):
                     response = isbn.Response(
-                        isbn.re.search(isbn.isbn10_regex, en_url).group(0),
+                        isbn.ISBN10_REGEX(en_url).group(0),
                         pure=True,
                         date_format=date_format,
                     )
