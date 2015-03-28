@@ -75,22 +75,22 @@ def application(environ, start_response):
             # DOI and ISBN check
             en_url = urllib.parse.unquote(commons.uninum2en(url))
             try:
-                m = doi.DOI_REGEX(doi.html.unescape(en_url))
+                m = doi.DOI_REGEX.search(doi.html.unescape(en_url))
                 if m:
                     response = doi.Response(
                         m.group(1),
                         pure=True,
                         date_format=date_format
                     )
-                elif isbn.ISBN13_REGEX(en_url):
+                elif isbn.ISBN13_REGEX.search(en_url):
                     response = isbn.Response(
-                        isbn.ISBN13_REGEX(en_url).group(0),
+                        isbn.ISBN13_REGEX.search(en_url).group(0),
                         pure=True,
                         date_format=date_format,
                     )
-                elif isbn.ISBN10_REGEX(en_url):
+                elif isbn.ISBN10_REGEX.search(en_url):
                     response = isbn.Response(
-                        isbn.ISBN10_REGEX(en_url).group(0),
+                        isbn.ISBN10_REGEX.search(en_url).group(0),
                         pure=True,
                         date_format=date_format,
                     )
