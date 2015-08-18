@@ -151,6 +151,12 @@ def reference_tag(dictionary, sfn_template, citation_template):
         name = name.replace(' pp=', ' pp. ')
         if 'pages' in dictionary and ' | pages=' not in text:
             text = text[:-2] + ' | pages=' + dictionary['pages'] + '}}'
+    # Remove unnecessary |year= if there exist a |date=.
+    # See Category:CS1_maint:_Date_and_year for more information.
+    if 'year' in dictionary:
+        year = dictionary['year']
+        if  ' | date=' + year in text:
+            text = text.replace(' | year=' + year, '')
     return  '<ref name="' + name + '">' + text + '</ref>'
 
 
