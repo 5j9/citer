@@ -13,7 +13,8 @@ The following libraries are required:
 * langid (1.1.4dev)
 * flup (1.0.3.dev-20140705)
 
-They can be install using `pip install -r requirements.txt`.
+These can be install using `pip install -r requirements.txt`.
+You may also want to install lxml to benefit from its higher speeds.
 
 If flup is not found, wsgiref.simple_server will be used instead. Usually this is what you want if you are running the script on your personal computer.
 
