@@ -11,7 +11,7 @@ import difflib
 from threading import Thread
 
 import requests
-import bs4
+from bs4 import SoupStrainer, BeautifulSoup
 
 import commons
 from urls_authors import find_authors
@@ -474,8 +474,8 @@ def get_hometitle(url, headers, hometitle_list):
     try:
         requests_visa(homeurl, headers)
         content = requests.get(homeurl, headers=headers, timeout=15).content
-        strainer = bs4.SoupStrainer('title')
-        soup = bs4.BeautifulSoup(content, parse_only=strainer)
+        strainer = SoupStrainer('title')
+        soup = BeautifulSoup(content, parse_only=strainer)
         hometitle_list.append(soup.title.text.strip())
     except Exception:
         pass
@@ -513,7 +513,7 @@ def get_soup(url, headers=None):
     r = requests.get(url, headers=headers, timeout=15)
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
-    return bs4.BeautifulSoup(r.content)
+    return BeautifulSoup(r.content)
 
 
 def url2dictionary(url):
