@@ -15,14 +15,14 @@ The following libraries are required:
 
 They can be install using `pip install -r requirements.txt`.
 
-If flup is not found, wsgiref.simple_server will be used instead. Usually this is what you want if you are running the script from your personal computer.
+If flup is not found, wsgiref.simple_server will be used instead. Usually this is what you want if you are running the script on your personal computer.
 
 ## Usage
 
 If running on local computer, the tool will be accessible from:
-http://127.0.0.1:8051/
+http://127.0.0.1:5000/
 
-The tools is specially useful for generating citations from Google Books URLs, DOIs (Any Digital object Identifiers) and ISBNs (International Standard Book Numbers).
+The tool is specially useful for generating citations from Google Books URLs, DOIs (Any Digital object Identifiers) and ISBNs (International Standard Book Numbers).
 Additionally URL of many major news websites are supported, including:
 The New York Times, BBC, Daily Mail, Daily Mirror, The Daily Telegraph, The Huffington Post, The Washington Post, The Boston Globe, Bloomberg Businessweek, Financial Times, and The Times of India.
 

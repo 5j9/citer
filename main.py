@@ -138,5 +138,5 @@ try:
     WSGIServer(application).run()
 except NameError:
     # on local computer:
-    httpd = make_server('localhost', 8051, application)
+    httpd = make_server('localhost', 5000, application)
     httpd.serve_forever()
