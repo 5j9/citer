@@ -4,7 +4,7 @@
 """Codes required to create English Wikipedia citation templates."""
 
 
-from datetime import date
+import datetime
 import re
 
 
@@ -85,13 +85,19 @@ def citation_template(d, date_format):
     if 'issue' in d:
         s += ' | issue=' + d['issue']
     if 'date' in d:
-        if isinstance(d['date'], date):
-            s += ' | date=' + d['date'].strftime(date_format).\
-                 lstrip("0").replace(" 0", " ")
+        if isinstance(d['date'], datetime.date):
+            date = (
+                d['date'].strftime(date_format).lstrip("0").replace(" 0", " ")
+            )
         else:
-            s += ' | date=' + d['date']
+            date = d['date']
+        s += ' | date=' + date
+    else:
+        date = None
     if 'year' in d:
-        s += ' | year=' + d['year']
+        year = d['year']
+        if not date or year not in date:
+            s += ' | year=' + year
     if 'isbn' in d:
         s += ' | isbn=' + d['isbn']
     if 'issn' in d:
@@ -127,8 +133,11 @@ def citation_template(d, date_format):
             s += ' | ' + d['year']
         s += '}}'
     if 'url' in d:
-        s += ' | accessdate=' + date.strftime(date.today(), date_format).\
-             lstrip("0").replace(" 0", " ")
+        s += (
+            ' | accessdate=' +
+            datetime.date.strftime(datetime.date.today(), date_format).
+            lstrip("0").replace(" 0", " ")
+        )
     s += '}}'
     return s
 
@@ -151,12 +160,6 @@ def reference_tag(dictionary, sfn_template, citation_template):
         name = name.replace(' pp=', ' pp. ')
         if 'pages' in dictionary and ' | pages=' not in text:
             text = text[:-2] + ' | pages=' + dictionary['pages'] + '}}'
-    # Remove unnecessary |year= if there exist a |date=.
-    # See Category:CS1_maint:_Date_and_year for more information.
-    if 'year' in dictionary:
-        year = dictionary['year']
-        if  ' | date=' + year in text:
-            text = text.replace(' | year=' + year, '')
     return  '<ref name="' + name + '">' + text + '</ref>'
 
 
