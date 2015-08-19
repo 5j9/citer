@@ -15,7 +15,7 @@ import commons
 # Names in byline are required to be two or three parts
 NAME_PATTERN = r'[\w.-]+ [\w.-]+( [\w.-]+)?'
 
-# This regex supports up to for names in a byline
+# This regex supports up to four names in a byline
 # names may be seperated with "and", a "comma" or "comma and"
 
 BYLINE_PATTERN = (
@@ -190,7 +190,7 @@ STOPWORDS = '|'.join(
     (
         r'\bReporter\b',
         r'\bPeople\b',
-        r'\bEditor\b',
+        r'\bEditors?\b',
         r'\bCorrespondent\b',
         r'\bAdministrator\b',
         r'\bStaff\b',
