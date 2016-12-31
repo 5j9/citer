@@ -190,7 +190,7 @@ function changeDates(id) {
 	dates = text1.match(/date=.*?(?=\}\}| \| )/g);
 	for (i = 0; i < dates.length; i = i + 1) {
 		date = dates[i].slice(5);
-		if (date.contains('-')) {
+		if (date.indexOf('-') !== -1) {
 			utcdate = date;
 		} else {
 			utcdate = date + " UTC";
