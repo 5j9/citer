@@ -137,23 +137,20 @@ class StatusCodeError(Exception):
 
 def find_journal(soup: BeautifulSoup):
     """Return journal title as a string."""
-    try:
-        # http://socialhistory.ihcs.ac.ir/article_319_84.html
-        m = soup.find(attrs={'name': 'citation_journal_title'})
+    # http://socialhistory.ihcs.ac.ir/article_319_84.html
+    m = soup.find(attrs={'name': 'citation_journal_title'})
+    if m:
         return m['content'].strip()
-    except Exception:
-        pass
 
 
 def find_url(soup: BeautifulSoup, url: str):
     """Return og:url or url as a string."""
-    try:
-        # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
-        ogurl = soup.find(attrs={'property': 'og:url'})['content']
+    # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
+    f = soup.find(attrs={'property': 'og:url'})
+    if f:
+        ogurl = f['content']
         if urlparse(ogurl).path:
             return ogurl
-    except Exception:
-        pass
     return url
 
 
@@ -163,64 +160,52 @@ def find_issn(soup: BeautifulSoup):
     Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this
     function does not check that.
     """
-    try:
-        # http://socialhistory.ihcs.ac.ir/article_319_84.html
-        # http://psycnet.apa.org/journals/edu/30/9/641/
-        m = soup.find(attrs={'name': 'citation_issn'})
-        return m['content'].strip()
-    except Exception:
-        pass
+    # http://socialhistory.ihcs.ac.ir/article_319_84.html
+    # http://psycnet.apa.org/journals/edu/30/9/641/
+    f = soup.find(attrs={'name': 'citation_issn'})
+    if f:
+        return f['content'].strip()
 
 
 def find_pmid(soup: BeautifulSoup):
     """Return pmid as a string."""
-    try:
-        # http://jn.physiology.org/content/81/1/319
-        m = soup.find(attrs={'name': 'citation_pmid'})
+    # http://jn.physiology.org/content/81/1/319
+    m = soup.find(attrs={'name': 'citation_pmid'})
+    if m:
         return m['content']
-    except Exception:
-        pass
 
 
 def find_doi(soup: BeautifulSoup):
     """Get the BeautifulSoup object of a page. Return DOI as a string."""
-    try:
-        # http://jn.physiology.org/content/81/1/319
-        m = soup.find(attrs={'name': 'citation_doi'})
+    # http://jn.physiology.org/content/81/1/319
+    m = soup.find(attrs={'name': 'citation_doi'})
+    if m:
         return m['content']
-    except Exception:
-        pass
 
 
 def find_volume(soup: BeautifulSoup):
     """Return citatoin volume number as a string."""
-    try:
-        # http://socialhistory.ihcs.ac.ir/article_319_84.html
-        m = soup.find(attrs={'name': 'citation_volume'})
+    # http://socialhistory.ihcs.ac.ir/article_319_84.html
+    m = soup.find(attrs={'name': 'citation_volume'})
+    if m:
         return m['content'].strip()
-    except Exception:
-        pass
 
 
 def find_issue(soup: BeautifulSoup):
     """Return citatoin issue number as a string."""
-    try:
-        # http://socialhistory.ihcs.ac.ir/article_319_84.html
-        m = soup.find(attrs={'name': 'citation_issue'})
+    # http://socialhistory.ihcs.ac.ir/article_319_84.html
+    m = soup.find(attrs={'name': 'citation_issue'})
+    if m:
         return m['content'].strip()
-    except Exception:
-        pass
 
 
 def find_pages(soup: BeautifulSoup):
     """Return citatoin pages as a string."""
-    try:
-        # http://socialhistory.ihcs.ac.ir/article_319_84.html
-        fp = soup.find(attrs={'name': 'citation_firstpage'})['content'].strip()
-        lp = soup.find(attrs={'name': 'citation_lastpage'})['content'].strip()
-        return fp + '–' + lp
-    except Exception:
-        pass
+    # http://socialhistory.ihcs.ac.ir/article_319_84.html
+    fp = soup.find(attrs={'name': 'citation_firstpage'})
+    lp = soup.find(attrs={'name': 'citation_lastpage'})
+    if fp and lp:
+        return fp['content'].strip() + '–' + lp['content'].strip()
 
 
 def find_sitename(soup, url, authors, hometitle_list, thread):
@@ -234,43 +219,36 @@ def find_sitename(soup, url, authors, hometitle_list, thread):
         thread: The thread that should be joined before using hometitle_list.
     Returns site's name as a string.
     """
-    try:
-        attrs = {'name': 'og:site_name'}
-        return soup.find(attrs=attrs)['content'].strip(), attrs
-    except Exception:
-        pass
-    try:
-        # https://www.bbc.com/news/science-environment-26878529
-        attrs = {'property': 'og:site_name'}
-        return soup.find(attrs=attrs)['content'].strip(), attrs
-    except Exception:
-        pass
-    try:
-        # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-        attrs = {'name': 'PublisherName'}
-        return soup.find(attrs=attrs)['value'].strip(), attrs
-    except Exception:
-        pass
-    try:
-        # http://www.bbc.com/news/science-environment-26878529 (Optional)
-        attrs = {'name': 'CPS_SITE_NAME'}
-        return soup.find(attrs=attrs)['content'].strip(), attrs
-    except Exception:
-        pass
-    try:
-        # http://www.nytimes.com/2013/10/01/science/a-wealth-of-data-in-whale-breath.html
-        attrs = {'name': 'cre'}
-        return soup.find(attrs=attrs)['content'].strip(), attrs
-    except Exception:
-        pass
-    try:
-        # search the title
-        sitename = parse_title(soup.title.text, url, authors, hometitle_list,
-                               thread)[2]
-        if sitename:
-            return sitename, 'parse_title'
-    except Exception:
-        pass
+    attrs = {'name': 'og:site_name'}
+    f = soup.find(attrs=attrs)
+    if f:
+        return f.get('content').strip(), attrs
+    # https://www.bbc.com/news/science-environment-26878529
+    attrs = {'property': 'og:site_name'}
+    f = soup.find(attrs=attrs)
+    if f:
+        return f['content'].strip(), attrs
+    # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
+    attrs = {'name': 'PublisherName'}
+    f = soup.find(attrs=attrs)
+    if f:
+        return f['value'].strip(), attrs
+    # http://www.bbc.com/news/science-environment-26878529 (Optional)
+    attrs = {'name': 'CPS_SITE_NAME'}
+    f = soup.find(attrs=attrs)
+    if f:
+        return f['content'].strip(), attrs
+    # http://www.nytimes.com/2013/10/01/science/a-wealth-of-data-in-whale-breath.html
+    attrs = {'name': 'cre'}
+    f = soup.find(attrs=attrs)
+    if f:
+        return f['content'].strip(), attrs
+    # search the title
+    sitename = parse_title(
+        soup.title.text, url, authors, hometitle_list, thread
+    )[2]
+    if sitename:
+        return sitename, 'parse_title'
     try:
         # using hometitle
         thread.join()
@@ -305,16 +283,16 @@ def try_find(soup: BeautifulSoup, find_parameters: tuple):
     Return (None, None) if none of the parameters match bs.
     """
     for attrs, get, value in find_parameters:
-        try:
-            m = soup.find(attrs=attrs)
-            if get == 'getitem':
-                string = m[value].strip()
-                return string, attrs
-            elif get == 'getattr':
-                string = getattr(m, value).strip()
-                return string, attrs
-        except Exception:
-            pass
+        m = soup.find(attrs=attrs)
+        if not m:
+            continue
+        if get == 'getitem':
+            result = m.get(value, None)
+        else:
+            #  get == 'getattr'
+            result = getattr(m, value, None)
+        if result:
+            return result.strip(), attrs
     return None, None
 
 
@@ -343,7 +321,7 @@ def find_title(
 
 
 def parse_title(
-    title, url: str, authors: list, hometitle_list=None, thread=None
+    title, url: str, authors: list or None, hometitle_list=None, thread=None
 ):
     """Return (intitle_author, pure_title, intitle_sitename).
 
