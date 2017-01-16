@@ -9,14 +9,14 @@ import unittest
 import sys
 
 sys.path.append('..')
-import urls_authors
+from urls_authors import byline_to_names, BYLINE_PATTERN
 
 
 class RegexTest(unittest.TestCase):
 
     """BYLINE_PATTERN should pass the following tests."""
 
-    regex = re.compile('^' + urls_authors.BYLINE_PATTERN + '$', re.IGNORECASE)
+    regex = re.compile('^' + BYLINE_PATTERN + '$', re.IGNORECASE)
 
     def test_one_author(self):
         """http://www.defense.gov/News/NewsArticle.aspx?ID=18509"""
@@ -68,7 +68,7 @@ class BylineToNames(unittest.TestCase):
 
     def test_two_author_seperated_by_comma(self):
         byline = '\n By Roger Highfield, Science Editor \n'
-        names = urls_authors.byline_to_names(byline)
+        names = byline_to_names(byline)
         self.assertEqual(len(names), 1)
         self.assertEqual(names[0].firstname, 'Roger')
 
@@ -77,14 +77,14 @@ class BylineToNames(unittest.TestCase):
             ' By Erika Solomon in Beirut and Borzou Daragahi,'
             ' Middle East correspondent'
         )
-        names = urls_authors.byline_to_names(byline)
+        names = byline_to_names(byline)
         self.assertEqual(len(names), 2)
         self.assertEqual(names[0].firstname, 'Erika')
         self.assertEqual(names[1].firstname, 'Borzou')
 
     def test_byline_ends_with_comma(self):
         byline = 'by \n Tony Smith, \n'
-        names = urls_authors.byline_to_names(byline)
+        names = byline_to_names(byline)
         self.assertEqual(len(names), 1)
         self.assertEqual(names[0].firstname, 'Tony')
 
@@ -93,16 +93,23 @@ class BylineToNames(unittest.TestCase):
             'Sara Malm;Annette Witheridge;Ian Drury for the Daily Mail;'
             'Daniel Bates'
         )
-        names = urls_authors.byline_to_names(byline)
+        names = byline_to_names(byline)
         self.assertEqual(len(names), 4)
         self.assertEqual(names[2].firstname, 'Ian')
         self.assertEqual(names[2].lastname, 'Drury')
 
     def test_newline_after_and(self):
         byline = '\nIan Sample and \nStuart Clark in Darmstadt'
-        names = urls_authors.byline_to_names(byline)
+        names = byline_to_names(byline)
         self.assertEqual(len(names), 2)
         self.assertEqual(names[1].lastname, 'Clark')
+
+    def test_the_triggers_nofirst_fulllast(self):
+        # https://www.nytimes.com/2016/01/08/opinion/a-shameful-round-up-of-refugees.html?_r=0
+        name = byline_to_names('THE EDITORIAL BOARD')[0]
+        self.assertEqual(name.firstname, '')
+        self.assertEqual(name.lastname, 'The Editorial Board')
+        self.assertEqual(name.fullname, 'The Editorial Board')
         
 
 if __name__ == '__main__':

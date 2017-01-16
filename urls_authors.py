@@ -9,7 +9,7 @@ It is in urls.py.
 
 import re
 
-import commons
+from commons import ANYDATE_SEARCH, Name
 
 
 # Names in byline are required to be two or three parts
@@ -184,22 +184,20 @@ FIND_PARAMETERS = (
 )
 
 
-STOPWORDS = '|'.join(
-    (
-        r'\bReporter\b',
-        r'\bPeople\b',
-        r'\bEditors?\b',
-        r'\bCorrespondent\b',
-        r'\bAdministrator\b',
-        r'\bStaff\b',
-        r'\bWriter\b',
-        r'\bOffice\b',
-        r'\bNews\b',
-        r'\.com\b',
-        r'\.ir\b',
-        r'www\.',
-    )
-)
+STOPWORDS_SEARCH = re.compile('|'.join((
+    r'\bReporter\b',
+    r'\bPeople\b',
+    r'\bEditors?\b',
+    r'\bCorrespondent\b',
+    r'\bAdministrator\b',
+    r'\bStaff\b',
+    r'\bWriter\b',
+    r'\bOffice\b',
+    r'\bNews\b',
+    r'\.com\b',
+    r'\.ir\b',
+    r'www\.',
+)), re.IGNORECASE).search
 
 
 class InvalidByLineError(Exception):
@@ -268,15 +266,8 @@ def find_authors(soup):
     return None, None
 
 
-def isstopword(string):
-        """Return True if the string contains one of the STOPWORDS."""
-        if re.search(STOPWORDS, string, re.IGNORECASE):
-            return True
-        return False
-
-
 def byline_to_names(byline):
-    """Find authors in byline sting. Return name objects as a list.
+    r"""Find authors in byline sting. Return name objects as a list.
 
     The "By " prefix will be omitted.
     Names will be seperated either with " and " or ", ".
@@ -287,13 +278,13 @@ def byline_to_names(byline):
     Examples:
 
     >>> byline_to_names('\n By Roger Highfield, Science Editor \n')
-    [Name(Roger Highfield)]
+    [Name("Roger Highfield")]
 
     >>> byline_to_names(
-        ' By Erika Solomon in Beirut and Borzou Daragahi,'
-        'Middle East correspondent'
-    )
-    [Name(Erika Solomon), Name(Borzou Daragahi)]
+    ...    ' By Erika Solomon in Beirut and Borzou Daragahi, '
+    ...    'Middle East correspondent'
+    ... )
+    [Name("Erika Solomon"), Name("Borzou Daragahi")]
     """
 
     byline = byline.partition('|')[0]
@@ -302,7 +293,7 @@ def byline_to_names(byline):
             raise InvalidByLineError(
                 'Invalid character ("%s") in byline.' % c
             )
-    m = commons.ANYDATE_REGEX.search(byline)
+    m = ANYDATE_SEARCH(byline)
     if m:
         # Removing the date part
         byline = byline[:m.start()]
@@ -326,8 +317,10 @@ def byline_to_names(byline):
     for fullname in fullnames:
         fullname = fullname.partition(' in ')[0]
         fullname = fullname.partition(' for ')[0]
-        name = commons.Name(fullname)
-        if isstopword(name.lastname):
+        name = Name(fullname)
+        if name.firstname.startswith('The '):
+            name.nofirst_fulllast()
+        if STOPWORDS_SEARCH(name.lastname):
             continue
         names.append(name)
     if not names:

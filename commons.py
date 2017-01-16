@@ -66,7 +66,7 @@ Ymd_slashed = re.compile(Y + '/' + zm + '/' + zd)
 # 19000101, 20991231
 Ymd = re.compile(Y + zm + zd)
 
-ANYDATE_REGEX = re.compile(
+ANYDATE_SEARCH = re.compile(
     '(' + B + ' ' + d + ', ' + Y + '|' +
     b + ' ' + d + ', ' + Y + '|' +
     d + ' ' + B + ' ' + Y + '|' +
@@ -75,7 +75,7 @@ ANYDATE_REGEX = re.compile(
     Y + '/' + zm + '/' + zd + '|' +
     '(?P<fa_d>\d\d?) (?P<fa_B>' + fa_B + ') (?P<fa_Y>\d\d\d\d)|' +
     Y + zm + zd + ')'
-)
+).search
 
 
 class InvalidNameError(Exception):
@@ -297,7 +297,7 @@ def finddate(string):
     If there is no matching date, return None.
     The returned date can't be from the future.
     """
-    match = ANYDATE_REGEX.search(string)
+    match = ANYDATE_SEARCH(string)
     today = datetime.today().date()
     while match:
         date_string = match.group(0)
@@ -356,7 +356,7 @@ def finddate(string):
         except ValueError:
             pass
         pos = match.end()
-        match = ANYDATE_REGEX.search(string, pos)
+        match = ANYDATE_SEARCH(string, pos)
 
 
 def bidi_pop(string):
