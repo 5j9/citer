@@ -7,10 +7,9 @@ import re
 import logging
 
 import requests
-from bs4 import BeautifulSoup as BS
+from bs4 import BeautifulSoup
 
 import commons
-import isbn
 
 
 class Response(commons.BaseResponse):
@@ -44,11 +43,13 @@ def isbn2url(isbn):
 def url2dictionary(adinebook_url):
     """Get adinebook_url and return the result as a dict."""
     try:
-        # this try statement is needed because if adinebook is not available then
-        #    ottobib should continoue its' work in isbn.py
-        headers = {'User-agent':
-                   'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) '
-                   'Gecko/20100101 Firefox/33.0'}
+        # If adinebook is not available then
+        # ottobib should continoue its work in isbn.py
+        headers = {
+            'User-agent':
+            'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) '
+            'Gecko/20100101 Firefox/33.0'
+        }
         r = requests.get(adinebook_url, headers=headers)
         adinebook_html = r.content.decode('utf-8')
     except Exception:
@@ -57,9 +58,8 @@ def url2dictionary(adinebook_url):
     if 'صفحه مورد نظر پبدا نشد.' in adinebook_html:
         return
     else:
-        d = {}
-        d['type'] = 'book'
-        bs = BS(adinebook_html)
+        d = {'type': 'book'}
+        bs = BeautifulSoup(adinebook_html)
         if bs.title:
             m = re.search(
                 'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$',
