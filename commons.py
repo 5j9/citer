@@ -133,7 +133,7 @@ class BaseResponse:
 
     # defaults
     error = 0
-    ref = ''
+    ref = dictionary = cite = sfn = date_format = None
 
     def detect_language(self, text, langset=None):
         """Detect language of text.
@@ -154,8 +154,7 @@ class BaseResponse:
         all values will be encoded using encode_for_template() function.
         ISBN (if exist) will be hyphenated.
         """
-        dictionary = dict_cleanup(self.dictionary)
-        self.dictionary = encode_for_template(dictionary)
+        dict_cleanup_encode(self.dictionary)
         if 'isbn' in self.dictionary:
             masked = isbnlib.mask(self.dictionary['isbn'])
             if masked:
@@ -215,9 +214,9 @@ def firstname_lastname(fullname, seperator):
     if re.search('\d\d', fullname, re.U):
         # Remember "Jennifer 8. Lee"
         raise NumberInNameError('The name contains a two-digit number.')
-    m = re.search(' (Jr\.|Sr\.)$', fullname, re.I)
-    if m:
-        suffix = m.group()
+    match = re.search(' (Jr\.|Sr\.)$', fullname, re.I)
+    if match:
+        suffix = match.group()
         fullname = fullname[:-4]
     else:
         suffix = None
@@ -261,8 +260,8 @@ def uninum2en(string):
     if not string:
         raise ValueError
     digits = set(re.findall(r'\d', string))
-    for d in digits:
-        string = string.replace(d, str(int(d)))
+    for digit in digits:
+        string = string.replace(digit, str(int(digit)))
     return string
 
 
@@ -298,10 +297,10 @@ def finddate(string):
     If there is no matching date, return None.
     The returned date can't be from the future.
     """
-    m = ANYDATE_REGEX.search(string)
+    match = ANYDATE_REGEX.search(string)
     today = datetime.today().date()
-    while m:
-        date_string = m.group(0)
+    while match:
+        date_string = match.group(0)
         try:
             date = datetime.strptime(date_string, '%B %d, %Y').date()
             if date <= today:
@@ -345,7 +344,7 @@ def finddate(string):
         except ValueError:
             pass
         try:
-            date = jalali_string_to_date(m)
+            date = jalali_string_to_date(match)
             if date <= today:
                 return date
         except ValueError:
@@ -356,17 +355,8 @@ def finddate(string):
                 return date
         except ValueError:
             pass
-        pos = m.end()
-        m = ANYDATE_REGEX.search(string, pos)
-
-
-def dict_cleanup(dictionary):
-    """Remove all empty values from the given dict. Return another dict."""
-    d = {}
-    for key in dictionary:
-        if dictionary[key]:
-            d[key] = dictionary[key]
-    return d
+        pos = match.end()
+        match = ANYDATE_REGEX.search(string, pos)
 
 
 def bidi_pop(string):
@@ -378,7 +368,7 @@ def bidi_pop(string):
         '\u2068',  # FSI
     ]
     diff = sum(string.count(c) for c in isolates) - \
-           string.count('\u2069')  # PDI
+        string.count('\u2069')  # PDI
     string += '\u2069' * diff
     # Pop embeddings and overrides
     diff = sum(
@@ -392,14 +382,19 @@ def bidi_pop(string):
     return string + '\u202C' * diff
 
 
-def encode_for_template(dictionary):
-    """Replace special characters with their respective HTML entities.
+def dict_cleanup_encode(dictionary):
+    """Cleanup dictionary values.
 
-    Also .strip()s all values.
+    * Remove any key with False bool value.
+    * Replace special characters in dictionay values with their respective
+        HTML entities.
+    * Strip all values.
+
     """
-    d = {}
-    for k in dictionary:
-        v = dictionary[k]
+    for k, v in dictionary.items():
+        if not k:
+            del dictionary[k]
+            continue
         if isinstance(v, str):
             v = (
                 bidi_pop(dictionary[k].strip())
@@ -409,5 +404,5 @@ def encode_for_template(dictionary):
                 .replace('\r\n', ' ')
                 .replace('\n', ' ')
             )
-        d[k] = v
-    return d
+            dictionary[k] = v
+    return dictionary

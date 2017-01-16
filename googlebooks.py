@@ -22,8 +22,8 @@ class Response(commons.BaseResponse):
         """Make the dictionary and run self.generate()."""
         self.date_format = date_format
         self.url = googlebook_url
-        #self.bibtex = get_bibtex(googlebook_url) [1]
-        #self.dictionary = bibtex.parse(self.bibtex) [1]
+        # self.bibtex = get_bibtex(googlebook_url) [1]
+        # self.dictionary = bibtex.parse(self.bibtex) [1]
         self.bibtex = get_ris(googlebook_url)
         self.dictionary = ris.parse(self.bibtex)
         pu = urlparse(googlebook_url)
@@ -68,8 +68,9 @@ def get_ris(googlebook_url):
     url = 'http://books.google.com/books/download/?id=' +\
         bookid + '&output=ris'
     # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    headers = {'User-agent':
-               'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
-               'Firefox/33.0'}
-    ris = requests.get(url, headers=headers).text
-    return ris
+    headers = {
+        'User-agent':
+        'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
+        'Firefox/33.0'
+    }
+    return requests.get(url, headers=headers).text
