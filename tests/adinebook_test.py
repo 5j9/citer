@@ -34,7 +34,7 @@ class AdinebookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab2(self):
         """authors = 3, translators = 2, otheo = 0, isbn13"""
@@ -57,7 +57,7 @@ class AdinebookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab3(self):
         """authors = 2, translators = 0, otheo = 4, isbn13"""
@@ -79,7 +79,7 @@ class AdinebookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab4(self):
         """authors = 3, translators = 0, otheo = 0, isbn13"""
@@ -103,7 +103,7 @@ class AdinebookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab5(self):
         """Year is interesting here."""
@@ -120,7 +120,7 @@ class AdinebookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab6(self):
         """Month and year detection."""
@@ -141,7 +141,7 @@ class AdinebookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab7(self):
         """1 Editor."""
@@ -164,7 +164,7 @@ class AdinebookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
 adinebook.requests = dummy_requests.DummyRequests()
 if __name__ == '__main__':

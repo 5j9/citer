@@ -33,7 +33,7 @@ class GooglebooksTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_gb2(self):
         """a book with more than 4 authors (10 authors)"""
@@ -82,8 +82,8 @@ class GooglebooksTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
     def test_gb3(self):
         """Non-ascii characters in title (Some of them where removed later)"""
@@ -107,8 +107,8 @@ class GooglebooksTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
     def test_gb4(self):
         """Non-ascii characters in author's name."""
@@ -132,11 +132,11 @@ class GooglebooksTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
     def test_gb5(self):
-        """reft checking"""
+        """ref checking"""
         i = (
             'https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378&'
             'dq=density+of+granite&hl=en&sa=X&ei=YBHIU-qCBIyX0QXusoDgAg&ved='
@@ -173,9 +173,9 @@ class GooglebooksTest(unittest.TestCase):
             '| url=http://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378 '
             '| accessdate='
         )
-        self.assertIn(ctnt, o.ctnt)
-        self.assertIn(reft, o.reft)
-        self.assertIn(' | page=378}}</ref>', o.reft)
+        self.assertIn(ctnt, o.cite)
+        self.assertIn(reft, o.ref)
+        self.assertIn(' | page=378}}</ref>', o.ref)
 
 
 googlebooks.requests = dummy_requests.DummyRequests()

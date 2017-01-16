@@ -133,7 +133,7 @@ class BaseResponse:
 
     # defaults
     error = 0
-    reft = ''
+    ref = ''
 
     def detect_language(self, text, langset=None):
         """Detect language of text.
@@ -147,7 +147,7 @@ class BaseResponse:
         self.dictionary['error'] = self.error = err
 
     def generate(self):
-        """Generate self.sfnt, self.ctnt and self.reft.
+        """Generate self.sfn, self.cite and self.ref.
 
         self.dictionary should be ready before calling this function.
         The dictionary will be cleaned up (empty values will be removed) and
@@ -160,19 +160,16 @@ class BaseResponse:
             masked = isbnlib.mask(self.dictionary['isbn'])
             if masked:
                 self.dictionary['isbn'] = masked
-        self.ctnt, self.sfnt = generator.citation_templates(
+        self.cite, self.sfn, self.ref = generator.citations(
             self.dictionary, self.date_format
-        )
-        self.reft = generator.reference_tag(
-            self.dictionary, self.sfnt, self.ctnt
         )
 
     def api_json(self):
-        """Generate api JSON response containing sfnt, ctnt and reft."""
+        """Generate api JSON response containing sfn, cite and ref."""
         return json.dumps({
-            'reference_tag': self.reft,
-            'citation_template': self.ctnt,
-            'shortened_footnote': self.sfnt,
+            'reference_tag': self.ref,
+            'citation_template': self.cite,
+            'shortened_footnote': self.sfn,
         })
 
 

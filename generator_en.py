@@ -8,7 +8,7 @@ import datetime
 import re
 
     
-def citation_templates(d, date_format) -> tuple:
+def citations(d, date_format) -> tuple:
     """Create citation templates according to the given dictionary."""
     type_ = d['type']
     if type_ == 'book':
@@ -141,28 +141,25 @@ def citation_templates(d, date_format) -> tuple:
         )
     cite += '}}'
     sfn += '}}'
-    return cite, sfn
-
-
-def reference_tag(dictionary, sfn_template, citation_template):
-    """Create named <ref> tag."""
-    name = sfn_template[8:-2].replace(' | ', ' ').replace("'", '')
+    # Finally create the ref tag.
+    name = sfn[8:-2].replace(' | ', ' ').replace("'", '')
     text = re.sub(
         '( \| ref=({{.*?}}|harv))(?P<repl> \| |}})',
         '\g<repl>',
-        citation_template[2:],
+        cite[2:],
     )
     if ' p=' in name and ' | page=' not in text:
         name = name.replace(' p=', ' p. ')
-        if 'pages' in dictionary:
-            text = text[:-2] + ' | page=' + dictionary['pages'] + '}}'
+        if pages:
+            text = text[:-2] + ' | page=' + pages + '}}'
         else:
             text = text[:-2] + ' | page=}}'
     elif ' pp=' in name:
         name = name.replace(' pp=', ' pp. ')
-        if 'pages' in dictionary and ' | pages=' not in text:
-            text = text[:-2] + ' | pages=' + dictionary['pages'] + '}}'
-    return '<ref name="' + name + '">' + text + '</ref>'
+        if pages and ' | pages=' not in text:
+            text = text[:-2] + ' | pages=' + pages + '}}'
+    ref = '<ref name="' + name + '">' + text + '</ref>'
+    return cite, sfn, ref
 
 
 def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):

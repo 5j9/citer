@@ -30,7 +30,7 @@ class IsbnTest(unittest.TestCase):
             '| isbn=978-0-349-11916-8 '
             '| ref=harv}}'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_is2(self):
         """not found in ottobib"""
@@ -47,7 +47,7 @@ class IsbnTest(unittest.TestCase):
             '| language=fa '
             '| ref={{sfnref | نگاه | 1389}}'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_is3(self):
         """exists in both"""
@@ -63,7 +63,7 @@ class IsbnTest(unittest.TestCase):
             '| language=fa '
             '| ref={{sfnref | نگاه | 1386}}'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_is4(self):
         """unpure isbn10 not found in ottobib"""
@@ -81,7 +81,7 @@ class IsbnTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
 
 isbn.requests = dummy_requests.DummyRequests()

@@ -29,7 +29,7 @@ class AdinebookTest(unittest.TestCase):
             ' عنوان=101 راه برای اینکه پدر بهتری باشید |' \
             ' ناشر=پیک ادبیات | سال=1386 |' \
             ' ماه=شهریور | شابک=978-964-8165-81-4 | زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab2(self):
         """authors = 3, translators = 2, otheo = 0, isbn13"""
@@ -41,7 +41,7 @@ class AdinebookTest(unittest.TestCase):
             ' نام۲=ویکی پلانو | ترجمه=محسن نیازی و عباس زارعی |' \
             ' عنوان=روش های تحقیق تلفیقی | ناشر=علم و دانش | سال=1387 |' \
             ' ماه=خرداد | شابک=978-964-2823-35-2 | زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab3(self):
         """authors = 2, translators = 0, otheo = 4, isbn13"""
@@ -56,7 +56,7 @@ class AdinebookTest(unittest.TestCase):
             ' آمادگی آزمون MTCNA |' \
             ' ناشر=نشرگستر | سال=1391 |' \
             ' ماه=خرداد | شابک=978-600-5883-43-5 | زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab4(self):
         """authors = 3, translators = 0, otheo = 0, isbn13"""
@@ -68,7 +68,7 @@ class AdinebookTest(unittest.TestCase):
             ' نام۳=صفورا | عنوان=11 سپتامبر ... آرماگدون |' \
             ' ناشر=حدیث راه عشق | سال=1386 | ماه=شهریور |' \
             ' شابک=978-964-95633-4-3 | زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab5(self):
         """Year is interesting here."""
@@ -77,7 +77,7 @@ class AdinebookTest(unittest.TestCase):
         e = '* {{یادکرد کتاب | نام خانوادگی=نژاد | نام=یوسف علی یوسف |' \
             ' عنوان=فراهنجاری در مثنوی سرایی | ناشر=اردیبهشت | سال=1388 |' \
             ' شابک=978-964-2656-34-9 | زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab6(self):
         """Month and year detection."""
@@ -89,7 +89,7 @@ class AdinebookTest(unittest.TestCase):
             ' ناشر=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها |' \
             ' سال=1392 |' \
             ' ماه=شهریور | شابک=978-964-530-036-2 | زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_ab7(self):
         """1 Editor."""
@@ -103,7 +103,7 @@ class AdinebookTest(unittest.TestCase):
             ' ناشر=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها |' \
             ' سال=1389 |' \
             ' ماه=دی | شابک=978-964-459-398-7 | زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
 
 class GooglebookTest(unittest.TestCase):
@@ -118,7 +118,7 @@ class GooglebookTest(unittest.TestCase):
             ' سال=2000 | شابک=978-0-262-26134-0 |' \
             ' پیوند=http://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 |' \
             ' زبان=en | تاریخ بازبینی='
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_gb2(self):
         """a book with more than 4 authors (10 authors)"""
@@ -139,8 +139,8 @@ class GooglebookTest(unittest.TestCase):
              'ucation | سال=2010 | شابک' \
              '=978-0-13-270490-8 | پیوند=http://books.google.com/books?id=U4' \
              '6IzqYLZvAC&pg=PT57 | زبان=en | تاریخ بازبینی='
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
     def test_gb3(self):
         """Non-ascii characters in title"""
@@ -159,8 +159,8 @@ class GooglebookTest(unittest.TestCase):
              ' ناشر=Cengage Learning | سال=2009 | شابک=978-1-111-78619-9 |' \
              ' پیوند=http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588 |'\
              ' زبان=en | تاریخ بازبینی='
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
     def test_gb4(self):
         """Non-ascii characters in author's name."""
@@ -178,8 +178,8 @@ class GooglebookTest(unittest.TestCase):
              ' سال=1997 | شابک=978-90-411-0401-4 |' \
              ' پیوند=http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 |'\
              ' زبان=en | تاریخ بازبینی='
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
 
 class NoormagsTest(unittest.TestCase):
@@ -192,7 +192,7 @@ class NoormagsTest(unittest.TestCase):
             ' ژورنال=کتاب ماه هنر | شماره=45 | سال=2002 | صفحه=102–106 |' \
             ' پیوند=http://www.noormags.ir/view/fa/articlepage/104040 |' \
             ' زبان=fa | تاریخ بازبینی='
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_nm2(self):
         i = 'http://www.noormags.com/view/fa/ArticlePage/454096'
@@ -201,7 +201,7 @@ class NoormagsTest(unittest.TestCase):
             ' ژورنال=شعر | شماره=62 | سال=2008 | صفحه=17–19 |' \
             ' پیوند=http://www.noormags.ir/view/fa/articlepage/454096 |' \
             ' زبان=fa | تاریخ بازبینی='
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_nm3(self):
         i = 'http://www.noormags.com/view/fa/articlepage/261461'
@@ -211,7 +211,7 @@ class NoormagsTest(unittest.TestCase):
             ' ژورنال=دانش | شماره=6 | سال=1949 | صفحه=316–324 |' \
             ' پیوند=http://www.noormags.ir/view/fa/articlepage/261461 |' \
             ' زبان=fa | تاریخ بازبینی='
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
 
 class NoorlibTest(unittest.TestCase):
@@ -225,7 +225,7 @@ class NoorlibTest(unittest.TestCase):
             ' مکان=بيروت | سری=تاج العروس من جواهر القاموس | جلد=10 |' \
             ' پیوند=http://www.noorlib.ir/View/fa/Book/BookView/Image/18879 |'\
             ' زبان=عربی | تاریخ بازبینی='
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
 
 class DoiTest(unittest.TestCase):
@@ -242,7 +242,7 @@ class DoiTest(unittest.TestCase):
             " پیوند=http://dx.doi.org/10.1038/nrd842 " \
             "| doi=10.1038/nrd842 |" \
             " زبان=en | تاریخ بازبینی="
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
 
 class IsbnTest(unittest.TestCase):
@@ -256,7 +256,7 @@ class IsbnTest(unittest.TestCase):
             'from Nelson at the Nile to Napoleon at Waterloo |' \
             ' ناشر=Abacus | مکان=London | سال=2007 |' \
             ' شابک=978-0-349-11916-8 | زبان=en}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_is2(self):
         """not found in ottobib"""
@@ -269,7 +269,7 @@ class IsbnTest(unittest.TestCase):
             ' سال=1389 | ماه=مرداد |' \
             ' شابک=978-964-6736-71-9 |' \
             ' زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_is3(self):
         """exists in both"""
@@ -279,7 +279,7 @@ class IsbnTest(unittest.TestCase):
             ' عنوان=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری |' \
             ' ناشر=نگاه | سال=1386 | ماه=بهمن |' \
             ' شابک=964-6736-34-3 | زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_is4(self):
         """unpure isbn10"""
@@ -290,7 +290,7 @@ class IsbnTest(unittest.TestCase):
             ' عنوان=دیوان کامل حافظ همراه با فالنامه |' \
             ' ناشر=دیوان | سال=1385 |' \
             ' ماه=آذر | شابک=964-92962-6-3 | زبان=fa}}'
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
 
 adinebook.requests = dummy_requests.DummyRequests()

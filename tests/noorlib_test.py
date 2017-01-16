@@ -33,7 +33,7 @@ class NoorlibTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_nl2(self):
         """The year parameter is not present."""
@@ -56,8 +56,8 @@ class NoorlibTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(er, o.sfnt)
-        self.assertIn(ec, o.ctnt)
+        self.assertIn(er, o.sfn)
+        self.assertIn(ec, o.cite)
 
 
 noorlib.requests = dummy_requests.DummyRequests()

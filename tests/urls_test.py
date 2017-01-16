@@ -34,7 +34,7 @@ class BostonTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_bg2(self):
         """bostonglobe.com"""
@@ -59,7 +59,7 @@ class BostonTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_bg3(self):
         """bostonmagazine.com. Author tags return unrelated authors."""
@@ -80,7 +80,7 @@ class BostonTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
 
 class WashingtonpostTest(unittest.TestCase):
@@ -105,8 +105,8 @@ class WashingtonpostTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
 
 class HuffingtonpostTest(unittest.TestCase):
@@ -132,8 +132,8 @@ class HuffingtonpostTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
     def test_hp2(self):
         """`class:author` returns wrong result. Disallow `\n` in fullnames."""
@@ -156,8 +156,8 @@ class HuffingtonpostTest(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
 
 class DilyTelegraphTest(unittest.TestCase):
@@ -185,8 +185,8 @@ class DilyTelegraphTest(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
     def test_dt2(self):
         """1 author, 2003"""
@@ -208,8 +208,8 @@ class DilyTelegraphTest(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
     def test_dt3(self):
         """1 author, 2011"""
@@ -231,8 +231,8 @@ class DilyTelegraphTest(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
 
 class DilyMailTest(unittest.TestCase):
@@ -264,8 +264,8 @@ class DilyMailTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e1, o.sfnt)
-        self.assertIn(e2, o.ctnt)
+        self.assertIn(e1, o.sfn)
+        self.assertIn(e2, o.cite)
 
     def test_dm2(self):
         """`for` in byline."""
@@ -289,7 +289,7 @@ class DilyMailTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
 
 class BbcTest(unittest.TestCase):
@@ -307,7 +307,7 @@ class BbcTest(unittest.TestCase):
             "| ref={{sfnref | BBC News | 2014}} "
             "| accessdate="
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_bbc2(self):
         """1 author"""
@@ -324,7 +324,7 @@ class BbcTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_bbc3(self):
         """https version of bbc2 (differs a lot!)"""
@@ -341,7 +341,7 @@ class BbcTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_bbc4(self):
         """news.bbc.co.uk, 1 author"""
@@ -359,7 +359,7 @@ class BbcTest(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_bbc5(self):
         """news.bbc.co.uk, 1 author"""
@@ -376,7 +376,7 @@ class BbcTest(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_bbc6(self):
         """bbc.com, 1 author"""
@@ -393,7 +393,7 @@ class BbcTest(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
         
 class NytTest(unittest.TestCase):
@@ -418,7 +418,7 @@ class NytTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_nyt2(self):
         """newstylct, 2 authors"""
@@ -444,7 +444,7 @@ class NytTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_nyt3(self):
         """oldstylct, 1 author"""
@@ -462,7 +462,7 @@ class NytTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_nyt4(self):
         """newstylct, 2 authors, only byline"""
@@ -487,7 +487,7 @@ class NytTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_nyt5(self):
         """special case for date format (not in usual meta tags)"""
@@ -506,7 +506,7 @@ class NytTest(unittest.TestCase):
             '| ref={{sfnref | The New York Times | 2007}} '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_nyt6(self):
         """lastname=O'Connor"""
@@ -528,7 +528,7 @@ class NytTest(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
         
 
 class TGDaily(unittest.TestCase):
@@ -552,7 +552,7 @@ class TGDaily(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_tgd2(self):
         """Hard to find author and date."""
@@ -573,7 +573,7 @@ class TGDaily(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_tgd3(self):
         """"Staff" in author name."""
@@ -592,7 +592,7 @@ class TGDaily(unittest.TestCase):
             '| ref={{sfnref | TG Daily | 2013}} '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
 
 @unittest.skip
@@ -613,7 +613,7 @@ class NotWorking(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth12(self):
         """Times of India, author could not be detected."""
@@ -623,8 +623,8 @@ class NotWorking(unittest.TestCase):
             'articleshow/1163528927.cms?'
         )
         o = urls.Response(i)
-        sfnt = "{{sfn | Kashyap | 2001}}"
-        self.assertIn(sfnt, o.sfnt)
+        sfn = "{{sfn | Kashyap | 2001}}"
+        self.assertIn(sfn, o.sfn)
 
 
 class Others(unittest.TestCase):
@@ -647,7 +647,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth2(self):
         """Byline through body search."""
@@ -673,7 +673,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth3(self):
         """3 authors."""
@@ -700,7 +700,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth4(self):
         """rel="author" tag contains invalid information."""
@@ -723,7 +723,7 @@ class Others(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth5(self):
         """Getting the date is tricky here."""
@@ -743,8 +743,8 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(sf, o.sfnt)
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(sf, o.sfn)
+        self.assertIn(ct, o.cite)
 
     def test_oth6(self):
         """Detection of website name."""
@@ -761,8 +761,8 @@ class Others(unittest.TestCase):
             '| ref={{sfnref | Fars News Agency | 2014}} '
             '| accessdate='
         )
-        self.assertIn(sf, o.sfnt)
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(sf, o.sfn)
+        self.assertIn(ct, o.cite)
 
     def test_oth7(self):
         """Contains a By Topic line and also the byline contains ' | '."""
@@ -783,7 +783,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth8(self):
         """Two authors from guardian that are mentions in other tags, too."""
@@ -806,7 +806,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth9(self):
         """Author in str(soup)."""
@@ -824,7 +824,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth10(self):
         """The Times. (Authors found by "byline" css selector)"""
@@ -848,7 +848,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth11(self):
         """businessnewsdaily."""
@@ -869,7 +869,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth12(self):
         """thebulletin.org"""
@@ -887,7 +887,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth13(self):
         """thebulletin.org"""
@@ -904,7 +904,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
     def test_oth14(self):
         """thebulletin.org"""
@@ -923,7 +923,7 @@ class Others(unittest.TestCase):
             '| ref={{sfnref | The Independent | 1999}} '
             '| accessdate='
         )
-        self.assertIn(ct, o.ctnt)
+        self.assertIn(ct, o.cite)
 
         
 urls.requests = dummy_requests.DummyRequests()

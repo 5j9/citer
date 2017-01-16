@@ -31,7 +31,7 @@ class NoormagsTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_nm2(self):
         """The second author does not have a last name. (Bibtex file error)"""
@@ -53,7 +53,7 @@ class NoormagsTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_nm3(self):
         """Reftag check."""
@@ -92,9 +92,9 @@ class NoormagsTest(unittest.TestCase):
             '| language=fa '
             '| accessdate='
         )
-        self.assertIn(sfnt, o.sfnt)
-        self.assertIn(ctnt, o.ctnt)
-        self.assertIn(rftg, o.reft)
+        self.assertIn(sfnt, o.sfn)
+        self.assertIn(ctnt, o.cite)
+        self.assertIn(rftg, o.ref)
 
 
 noormags.requests = dummy_requests.DummyRequests()

@@ -35,7 +35,7 @@ class DoiTest(unittest.TestCase):
             "| ref=harv "
             "| accessdate="
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_doi2(self):
         """Title of this DOI could not be detected in an older version."""
@@ -56,7 +56,7 @@ class DoiTest(unittest.TestCase):
             '| University of Chicago Press | 2014}} '
             '| accessdate='
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
     def test_doi3(self):
         """No author. URL contains %2F."""
@@ -78,7 +78,7 @@ class DoiTest(unittest.TestCase):
             '| ref=harv '
             '| accessdate='
         )
-        self.assertIn(e, o.ctnt)
+        self.assertIn(e, o.cite)
 
 
 doi.requests = dummy_requests.DummyRequests()
