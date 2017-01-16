@@ -28,7 +28,7 @@ class DummyRequests:
                 text = content.decode('utf-8')
             except UnicodeDecodeError:
                 text = None
-        except (FileNotFoundError):
+        except FileNotFoundError:
             path = '/'.join(file.split('/')[:-1]) + '/'
             os.makedirs(path, exist_ok=True)
             print('* Downloading ' + url)
@@ -42,8 +42,9 @@ class DummyRequests:
         return self.Response
 
     def head(self, url, headers=None, *args, **kwargs):
-        rheaders = {'content-type': 'text/html'}
-        rheaders['content-length'] = str(len(self.get(url,
-                                                      headers=headers).content))
+        rheaders = {
+            'content-type': 'text/html',
+            'content-length': str(len(self.get(url, headers=headers).content))
+        }
         self.Response.headers = rheaders
         return self.Response
