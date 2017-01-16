@@ -18,16 +18,13 @@ Some of the known issues:
 
 import re
 
-import commons
+from commons import Name
 
 
 def search_for_tag(bibtex):
     """Find all tags in the bibtex and return result as a dictionary."""
-    d = {}
     fs = re.findall('(\w+)\s*=\s*(?:[{"]\s*(.*?)\s*["}]|(\d+))', bibtex)
-    for f in fs:
-        d[f[0].lower()] = f[1] if f[1] else f[2]
-    return d
+    return {f[0].lower(): f[1] if f[1] else f[2] for f in fs}
 
 
 def parse(bibtex):
@@ -39,61 +36,64 @@ def parse(bibtex):
     if m:
         d['type'] = m.group(1).strip().lower()
     # author
-    if 'author' in d:
-        d['authors'] = []
-        for author in d['author'].split(' and '):
+    author = d.get('author')
+    if author:
+        names = []
+        d['authors'] = names
+        for author in author.split(' and '):
             if author.endswith(' and'):
                 author = author[:-4]
             if not author:
                 continue
-            name = commons.Name(author)
-            d['authors'].append(name)
+            name = Name(author)
+            names.append(name)
         del d['author']
-    if 'number' in d:
-        d['issue'] = d['number']
+    number = d.get('number')
+    if number:
+        d['issue'] = number
         del d['number']
-    if 'pages' in d:
-        d['pages'] = d['pages'].replace(
-            ' ', ''
-        ).replace(
-            '--', '–'
-        ).replace(
-            '-', '–'
+    pages = d.get('pages')
+    if pages:
+        pages = d['pages'] = (
+            pages.replace(' ', '').replace('--', '–').replace('-', '–')
         )
-        if '–' in d['pages']:
-            d['startpage'], d['endpage'] = d['pages'].split('–')
+        startpage, sep, endpage = pages.partition('–')
+        if sep:
+            d['startpage'], d['endpage'] = startpage, endpage
     return d
 
 
 def replace_specials(bibtex):
     """Replace common TeX special symbol commonds with their unicode value."""
-    bibtex = bibtex.replace(r'{\textregistered}', '®')
-    bibtex = bibtex.replace(r'\%', '%')
-    bibtex = bibtex.replace(r'\$', '$')
-    bibtex = bibtex.replace(r'\{', '{')
-    bibtex = bibtex.replace(r'\}', '}')
-    bibtex = bibtex.replace(r'\#', '#')
-    bibtex = bibtex.replace(r'\&', '&')
-    bibtex = bibtex.replace(r'{\={a}}', 'ā')
-    bibtex = bibtex.replace(r'{\v{c}}', 'č')
-    bibtex = bibtex.replace(r'{\={e}}', 'ē')
-    bibtex = bibtex.replace(r'{\v{g}}', 'ģ')
-    bibtex = bibtex.replace(r'{\={\i}}', 'ī')
-    bibtex = bibtex.replace(r'{\c{k}}', 'ķ')
-    bibtex = bibtex.replace(r'{\c{l}}', 'ļ')
-    bibtex = bibtex.replace(r'{\c{n}}', 'ņ')
-    bibtex = bibtex.replace(r'{\v{s}}', 'š')
-    bibtex = bibtex.replace(r'{\={u}}', 'ū')
-    bibtex = bibtex.replace(r'{\v{z}}', 'ž')
-    bibtex = bibtex.replace(r'{\={A}}', 'Ā')
-    bibtex = bibtex.replace(r'{\v{C}}', 'Č')
-    bibtex = bibtex.replace(r'{\={E}}', 'Ē')
-    bibtex = bibtex.replace(r'{\c{G}}', 'Ģ')
-    bibtex = bibtex.replace(r'{\={I}}', 'Ī')
-    bibtex = bibtex.replace(r'{\c{K}}', 'Ķ')
-    bibtex = bibtex.replace(r'{\c{L}}', 'Ļ')
-    bibtex = bibtex.replace(r'{\c{N}}', 'Ņ')
-    bibtex = bibtex.replace(r'{\v{S}}', 'Š')
-    bibtex = bibtex.replace(r'{\={U}}', 'Ū')
-    bibtex = bibtex.replace(r'{\v{Z}}', 'Ž')
-    return bibtex
+    return (
+        bibtex
+        .replace(r'{\textregistered}', '®')
+        .replace(r'\%', '%')
+        .replace(r'\$', '$')
+        .replace(r'\{', '{')
+        .replace(r'\}', '}')
+        .replace(r'\#', '#')
+        .replace(r'\&', '&')
+        .replace(r'{\={a}}', 'ā')
+        .replace(r'{\v{c}}', 'č')
+        .replace(r'{\={e}}', 'ē')
+        .replace(r'{\v{g}}', 'ģ')
+        .replace(r'{\={\i}}', 'ī')
+        .replace(r'{\c{k}}', 'ķ')
+        .replace(r'{\c{l}}', 'ļ')
+        .replace(r'{\c{n}}', 'ņ')
+        .replace(r'{\v{s}}', 'š')
+        .replace(r'{\={u}}', 'ū')
+        .replace(r'{\v{z}}', 'ž')
+        .replace(r'{\={A}}', 'Ā')
+        .replace(r'{\v{C}}', 'Č')
+        .replace(r'{\={E}}', 'Ē')
+        .replace(r'{\c{G}}', 'Ģ')
+        .replace(r'{\={I}}', 'Ī')
+        .replace(r'{\c{K}}', 'Ķ')
+        .replace(r'{\c{L}}', 'Ļ')
+        .replace(r'{\c{N}}', 'Ņ')
+        .replace(r'{\v{S}}', 'Š')
+        .replace(r'{\={U}}', 'Ū')
+        .replace(r'{\v{Z}}', 'Ž')
+    )
