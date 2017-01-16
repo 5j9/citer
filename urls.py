@@ -347,15 +347,14 @@ def parse_title(
             hometitle = ''
         # 3. In homepage title
         for part in title_parts:
-            if (part in hometitle):
+            if part in hometitle:
                 intitle_sitename = part
                 break
     if not intitle_sitename:
         # 4. Using difflib on hometitle
-        close_matches = difflib.get_close_matches(hometitle,
-                                                  title_parts,
-                                                  n=1,
-                                                  cutoff=.3)
+        close_matches = difflib.get_close_matches(
+            hometitle, title_parts, n=1, cutoff=.3
+        )
         if close_matches:
             intitle_sitename = close_matches[0]
     # Remove sitename from title_parts
@@ -396,7 +395,7 @@ def try_find_date(soup: BeautifulSoup, find_parameters: tuple):
                 date = commons.finddate(string)
                 if date:
                     return date, attrs
-        except Exception:
+        except (TypeError, AttributeError, KeyError):
             pass
     return None, None
 
@@ -471,7 +470,7 @@ def find_date(soup: BeautifulSoup, url: str):
         return commons.finddate(str(soup)), 'str(soup)'
 
 
-def get_hometitle(url, headers, hometitle_list):
+def get_hometitle(url: str, headers: dict, hometitle_list: list):
     """Get homepage of the url and return it's title.
 
     hometitle_list will be used to return the thread result.
