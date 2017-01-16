@@ -23,8 +23,8 @@ setup(
     url='https://github.com/irdb/yadkard/',
 
     # Author details
-    author='Dalba',
-    author_email='dalba.wiki@gmail.com',
+    author='5j9',
+    author_email='5j9@users.noreply.github.com',
 
     # Choose your license
     license='GPLv3+',
@@ -50,7 +50,8 @@ setup(
         'Natural Language :: Persian',
 
         # Pick your license as you wish (should match "license" above)
-        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+        'License :: OSI Approved :: '
+        'GNU General Public License v3 or later (GPLv3+)',
 
         # Operating system
         'Operating System :: Microsoft',
@@ -72,12 +73,14 @@ setup(
     # project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/technical.html#install-requires-vs-requirements-files
-    install_requires=['requests>=2.3.0',
-                      'beautifulsoup4>=4.3.2',
-                      'isbnlib>=3.3.8',
-                      'langid>=1.1.4dev',
-                      #'flup>=1.0.3.dev-20140705'
-                      ],
+    install_requires=[
+        'requests>=2.3.0',
+        'beautifulsoup4>=4.3.2',
+        'isbnlib>=3.3.8',
+        'langid>=1.1.6',
+        'lxml>=3.7.2',
+        'flup6>=1.1',
+    ],
 
     # If there are data files included in your packages that need to be
     # installed, specify them here. If using Python 2.6 or less, then these
@@ -87,10 +90,10 @@ setup(
     # },
 
     # Although 'package_data' is the preferred approach, in some case you may
-    # need to place data files outside of your packages.
-    # see http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files
+    # need to place data files outside of your packages. See:
+    # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files
     # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    ##data_files=[('my_data', ['data/data_file'])],
+    # data_files=[('my_data', ['data/data_file'])],
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
