@@ -16,7 +16,7 @@ class Response(commons.BaseResponse):
 
     """Create Adinebook's response object."""
 
-    def __init__(self, adinebook_url, date_format='%Y-%m-%d'):
+    def __init__(self, adinebook_url: str, date_format: str='%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
         self.date_format = date_format
         self.url = adinebook_url
@@ -28,8 +28,8 @@ class Response(commons.BaseResponse):
         self.generate()
 
 
-def isbn2url(isbn):
-    """Convert isbn string to AdinebookURL. Return the url as string."""
+def isbn2url(isbn: str):
+    """Convert isbn to AdinebookURL. Return the url as string."""
     # Apparently adinebook uses 10 digit codes (without hyphens) for its
     # book-urls. If it's an isbn13 then the first 3 digits are excluded
     isbn = isbn.replace('-', '')
@@ -40,11 +40,11 @@ def isbn2url(isbn):
     return url
 
 
-def url2dictionary(adinebook_url):
+def url2dictionary(adinebook_url: str):
     """Get adinebook_url and return the result as a dict."""
     try:
-        # If adinebook is not available then
-        # ottobib should continoue its work in isbn.py
+        # Try to see if adinebook is available,
+        # ottobib should continoue its work in isbn.py if it is not.
         headers = {
             'User-agent':
             'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) '
@@ -58,8 +58,8 @@ def url2dictionary(adinebook_url):
     if 'صفحه مورد نظر پبدا نشد.' in adinebook_html:
         return
     else:
-        d = {'type': 'book'}
-        bs = BeautifulSoup(adinebook_html)
+        d = {'type': 'book'}  # type: Dict[str: Any]
+        bs = BeautifulSoup(adinebook_html, 'lxml')
         if bs.title:
             m = re.search(
                 'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$',
