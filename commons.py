@@ -9,9 +9,9 @@ import json
 
 import langid
 import isbnlib
+from jdatetime import date as jdate
 
 import config
-import jalali
 if config.lang == 'en':
     import generator_en as generator
 else:
@@ -73,7 +73,7 @@ ANYDATE_SEARCH = re.compile(
     d + ' ' + b + ' ' + Y + '|' +
     Y + '-' + zm + '-' + zd + '|' +
     Y + '/' + zm + '/' + zd + '|' +
-    '(?P<fa_d>\d\d?) (?P<fa_B>' + fa_B + ') (?P<fa_Y>\d\d\d\d)|' +
+    '(?P<jd>\d\d?) (?P<jB>' + fa_B + ') (?P<jY>\d\d\d\d)|' +
     Y + zm + zd + ')'
 ).search
 
@@ -284,11 +284,11 @@ def ennum2fa(string_or_num):
 
 def jalali_string_to_date(match):
     """Return the date object for given Jalali string."""
-    return jalali.Persian(
-        int(uninum2en(match.group('fa_Y'))),
-        fa_months.index(match.group('fa_B').replace('ي', 'ی')) + 1,
-        int(uninum2en(match.group('fa_d'))),
-    ).gregorian_datetime()
+    return jdate(
+        int(uninum2en(match.group('jY'))),
+        fa_months.index(match.group('jB').replace('ي', 'ی')) + 1,
+        int(uninum2en(match.group('jd'))),
+    ).togregorian()
 
 
 def finddate(string):

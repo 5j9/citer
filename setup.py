@@ -80,6 +80,7 @@ setup(
         'langid>=1.1.6',
         'lxml>=3.7.2',
         'flup6>=1.1',
+        'jdatetime>=1.8.1',
     ],
 
     # If there are data files included in your packages that need to be

@@ -5,3 +5,4 @@ isbnlib>=3.3.8
 flup6>=1.1
 langid>=1.1.6
 lxml>=3.7.2
+jdatetime>=1.8.1,
