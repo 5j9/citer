@@ -47,7 +47,7 @@ def mylogger():
 
 def application(environ, start_response):
     qdict = urllib.parse.parse_qs(environ['QUERY_STRING'])
-    action = qdict.get('action', [''])[0] # apiquery
+    action = qdict.get('action', [''])[0]  # apiquery
     user_input = qdict.get('user_input', [''])[0]
     # Warning: input is not escaped!
     user_input = user_input.strip()
@@ -106,13 +106,13 @@ def application(environ, start_response):
             response_body = response.api_json()
         else:
             response_body = html.response_to_template(response) 
-    except (requests.ConnectionError):
+    except requests.ConnectionError:
         logger.exception(url)
         if action == 'apiquery':
             response_body = html.httperror_response.api_json()
         else:
             response_body = html.response_to_template(html.httperror_response)
-    except Exception as e:
+    except Exception:
         logger.exception(url)
         if action == 'apiquery':
             response_body = html.other_exception_response.api_json()
