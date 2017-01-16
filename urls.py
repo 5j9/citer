@@ -21,7 +21,7 @@ class Response(commons.BaseResponse):
 
     """Create URL's response object."""
 
-    def __init__(self, url, date_format='%Y-%m-%d'):
+    def __init__(self, url: str, date_format: str='%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
         self.date_format = date_format
         try:
@@ -56,7 +56,7 @@ class StatusCodeError(Exception):
     pass
 
 
-def find_journal(soup):
+def find_journal(soup: BeautifulSoup):
     """Return journal title as a string."""
     try:
         # http://socialhistory.ihcs.ac.ir/article_319_84.html
@@ -66,8 +66,8 @@ def find_journal(soup):
         pass
 
 
-def find_url(soup, url):
-    """Get a BeautifulSoup object it's url. Return og:url or url as a string."""
+def find_url(soup: BeautifulSoup, url: str):
+    """Return og:url or url as a string."""
     try:
         # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
         ogurl = soup.find(attrs={'property': 'og:url'})['content']
@@ -78,7 +78,7 @@ def find_url(soup, url):
     return url
 
 
-def find_issn(soup):
+def find_issn(soup: BeautifulSoup):
     """Return International Standard Serial Number as a string.
 
     Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this
@@ -93,8 +93,8 @@ def find_issn(soup):
         pass
 
 
-def find_pmid(soup):
-    """Get the BS object of a page. Return pmid as a string."""
+def find_pmid(soup: BeautifulSoup):
+    """Return pmid as a string."""
     try:
         # http://jn.physiology.org/content/81/1/319
         m = soup.find(attrs={'name': 'citation_pmid'})
@@ -103,8 +103,8 @@ def find_pmid(soup):
         pass
 
 
-def find_doi(soup):
-    """Get the BS object of a page. Return DOI as a string."""
+def find_doi(soup: BeautifulSoup):
+    """Get the BeautifulSoup object of a page. Return DOI as a string."""
     try:
         # http://jn.physiology.org/content/81/1/319
         m = soup.find(attrs={'name': 'citation_doi'})
@@ -113,7 +113,7 @@ def find_doi(soup):
         pass
 
 
-def find_volume(soup):
+def find_volume(soup: BeautifulSoup):
     """Return citatoin volume number as a string."""
     try:
         # http://socialhistory.ihcs.ac.ir/article_319_84.html
@@ -123,7 +123,7 @@ def find_volume(soup):
         pass
 
 
-def find_issue(soup):
+def find_issue(soup: BeautifulSoup):
     """Return citatoin issue number as a string."""
     try:
         # http://socialhistory.ihcs.ac.ir/article_319_84.html
@@ -133,7 +133,7 @@ def find_issue(soup):
         pass
 
 
-def find_pages(soup):
+def find_pages(soup: BeautifulSoup):
     """Return citatoin pages as a string."""
     try:
         # http://socialhistory.ihcs.ac.ir/article_319_84.html
@@ -148,7 +148,7 @@ def find_sitename(soup, url, authors, hometitle_list, thread):
     """Return (site's name as a string, where).
 
     Parameters:
-        soup: BS object of the page being processed.
+        soup: BeautifulSoup object of the page being processed.
         url: URL of the page.
         authors: Authors list returned from find_authors function.
         hometitle_list: A list containing hometitle string.
@@ -213,7 +213,7 @@ def find_sitename(soup, url, authors, hometitle_list, thread):
         return urlparse(url).hostname, 'hostname'
 
 
-def try_find(soup, find_parameters):
+def try_find(soup: BeautifulSoup, find_parameters: tuple):
     """Return the first matching item in find_paras as (string, used_attrs).
 
     args:
@@ -240,7 +240,13 @@ def try_find(soup, find_parameters):
     return None, None
 
 
-def find_title(soup, url, authors, hometitle_list, thread):
+def find_title(
+    soup: BeautifulSoup,
+    url: str,
+    authors: list,
+    hometitle_list,
+    thread
+):
     """Return (title_string, where_info)."""
     find_parameters = (
         # http://socialhistory.ihcs.ac.ir/article_319_84.html
@@ -283,7 +289,9 @@ def find_title(soup, url, authors, hometitle_list, thread):
         return None, None
 
 
-def parse_title(title, url, authors, hometitle_list=None, thread=None):
+def parse_title(
+    title, url: str, authors: list, hometitle_list=None, thread=None
+):
     """Return (intitle_author, pure_title, intitle_sitename).
 
     Examples:
@@ -312,7 +320,7 @@ def parse_title(title, url, authors, hometitle_list=None, thread=None):
     sep_regex = ' - | — |\|'
     title_parts = re.split(sep_regex, title.strip())
     if len(title_parts) == 1:
-        return (None, title, None)
+        return None, title, None
     hostname = urlparse(url).hostname.replace('www.', '')
     # Searching for intitle_sitename
     # 1. In hostname
@@ -369,7 +377,7 @@ def parse_title(title, url, authors, hometitle_list=None, thread=None):
     return intitle_author, pure_title, intitle_sitename
 
 
-def try_find_date(soup, find_parameters):
+def try_find_date(soup: BeautifulSoup, find_parameters: tuple):
     """Similar to try_find(), but for finding dates.
 
     Return a string in '%Y-%m-%d' format.
@@ -393,8 +401,8 @@ def try_find_date(soup, find_parameters):
     return None, None
 
 
-def find_date(soup, url):
-    """Get the BS object and url of a page. Return (date_obj, where)."""
+def find_date(soup: BeautifulSoup, url: str):
+    """Get the BeautifulSoup object and url. Return (date_obj, where)."""
     find_parameters = (
         # http://socialhistory.ihcs.ac.ir/article_319_84.html
         ({'name': 'citation_date'}, 'getitem', 'content'),
@@ -461,7 +469,6 @@ def find_date(soup, url):
     else:
         logger.info('Searching for date in page content.\n' + url)
         return commons.finddate(str(soup)), 'str(soup)'
-    return None, None
 
 
 def get_hometitle(url, headers, hometitle_list):
