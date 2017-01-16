@@ -536,8 +536,7 @@ def url2dictionary(url):
     thread.start()
 
     soup = get_soup(url, headers)
-    d = {}
-    d['url'] = find_url(soup, url)
+    d = {'url': find_url(soup, url)}
     authors, tag = find_authors(soup)
     if authors:
         logger.debug('Authors tag: ' + str(tag))
