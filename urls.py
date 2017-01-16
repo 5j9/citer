@@ -304,15 +304,14 @@ def try_find(soup: BeautifulSoup, find_parameters: tuple):
                 bs.find(attrs={atrrn, value}).
     Return (None, None) if none of the parameters match bs.
     """
-    for fp in find_parameters:
+    for attrs, get, value in find_parameters:
         try:
-            attrs = fp[0]
             m = soup.find(attrs=attrs)
-            if fp[1] == 'getitem':
-                string = m[fp[2]].strip()
+            if get == 'getitem':
+                string = m[value].strip()
                 return string, attrs
-            elif fp[1] == 'getattr':
-                string = getattr(m, fp[2]).strip()
+            elif get == 'getattr':
+                string = getattr(m, value).strip()
                 return string, attrs
         except Exception:
             pass
