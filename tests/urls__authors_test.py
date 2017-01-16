@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Test urls.py module."""
+"""Test urls_authors.BYLINE_PATTERN."""
 
 
 import re
@@ -24,20 +24,37 @@ class RegexTest(unittest.TestCase):
         self.assertRegex(text, self.regex)
 
     def test_cap_names_joined_by_and(self):
-        """https://www.eff.org/deeplinks/2014/06/sudan-tech-sanctions-harm-innovation-development-us-government-and-corporations-must-act
+        """Test two authors with and.
 
-        Note the two consecutive spaces."""
+        Example:
+        https://www.eff.org/deeplinks/2014/06/
+        sudan-tech-sanctions-harm-innovation-development-us-government-and-
+        corporations-must-act
+
+        Note the two consecutive spaces.
+
+        """
         text = 'By Kimberly Carlson  and Jillian York'
         self.assertRegex(text, self.regex)
 
     def test_four_authors(self):
-        """http://arstechnica.com/science/2007/09/the-pseudoscience-behind-homeopathy/"""
+        """Test four authors, last one with and.
+
+        http://arstechnica.com/science/2007/09/
+        the-pseudoscience-behind-homeopathy/
+
+        """
         text = 'by John Timmer, Matt Ford, Chris Lee, and Jonathan Gitlin Sept'
         self.assertRegex(text, self.regex)
 
     @unittest.expectedFailure
     def test_four_authors_with_for(self):
-        """http://arstechnica.com/science/2007/09/the-pseudoscience-behind-homeopathy/"""
+        """Test four authors, having a "for" at the end.
+
+        http://arstechnica.com/science/2007/09/
+        the-pseudoscience-behind-homeopathy/
+
+        """
         text = (
             'By Sara Malm and Annette Witheridge and '
             'Ian Drury for the Daily Mail and Daniel Bates'
@@ -90,4 +107,3 @@ class BylineToNames(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
