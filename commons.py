@@ -133,7 +133,7 @@ class BaseResponse:
 
     # defaults
     error = 0
-    ref = dictionary = cite = sfn = date_format = None
+    ref = dictionary = cite = sfn = date_format = ''
 
     def detect_language(self, text, langset=None):
         """Detect language of text.
