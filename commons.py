@@ -397,7 +397,7 @@ def dict_cleanup_encode(dictionary):
             continue
         if isinstance(v, str):
             v = (
-                bidi_pop(dictionary[k].strip())
+                bidi_pop(v.strip())
                 .replace('|', '&amp;#124;')
                 .replace('[', '&amp;#91;')
                 .replace(']', '&amp;#93;')

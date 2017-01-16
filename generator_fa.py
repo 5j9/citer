@@ -5,7 +5,6 @@
 
 
 from datetime import date
-import re
 
 import commons
 
@@ -26,7 +25,6 @@ def citations(d, date_format) -> tuple:
     if authors:
         cite += names2para(authors, 'نام', 'نام خانوادگی', 'نویسنده')
         sfn = '<ref>{{پک'
-        c = 0
         for author in authors[:4]:
             sfn += ' | ' + author.lastname
     else:

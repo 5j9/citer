@@ -39,7 +39,7 @@ def citations(d, date_format) -> tuple:
             publisher or
             "''" + journal + "''" if journal else
             "''" + website + "''" if website else
-            title or  'Anon.'
+            title or 'Anon.'
         )
 
     editors = d.get('editors')
