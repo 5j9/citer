@@ -22,8 +22,22 @@ import commons
 import config
 if config.lang == 'en':
     import html_en as html
+    from html_en import (
+        DEFAULT_RESPONSE,
+        UNDEFINED_URL_RESPONSE,
+        HTTPERROR_RESPONSE,
+        OTHER_EXCEPTION_RESPONSE,
+        to_html,
+    )
 else:
     import html_fa as html
+    from html_fa import (
+        DEFAULT_RESPONSE,
+        UNDEFINED_URL_RESPONSE,
+        HTTPERROR_RESPONSE,
+        OTHER_EXCEPTION_RESPONSE,
+        to_html,
+    )
 
 
 def mylogger():
@@ -62,7 +76,9 @@ def application(environ, start_response):
         response = None
         if not user_input:
             # on first run user_input is ''
-            response = html.default_response
+            response = DEFAULT_RESPONSE
+            print(repr(DEFAULT_RESPONSE.ref))
+            print(repr(DEFAULT_RESPONSE.sfn))
         elif '.google.com/books' in url:
             response = googlebooks.Response(url, date_format)
         elif 'noormags.' in netloc:
@@ -100,25 +116,24 @@ def application(environ, start_response):
             response = urls.Response(url, date_format)
         if not response:
             # All the above cases have been unsuccessful
-            response = html.undefined_url_response
-            logger.info('There was an undefined_url_response\n' + url)
+            response = UNDEFINED_URL_RESPONSE
+            logger.info('There was an UNDEFINED_URL_RESPONSE\n' + url)
         if action == 'apiquery':
             response_body = response.api_json()
         else:
-            response_body = html.response_to_template(response) 
+            response_body = to_html(response)
     except requests.ConnectionError:
         logger.exception(url)
         if action == 'apiquery':
-            response_body = html.httperror_response.api_json()
+            response_body = HTTPERROR_RESPONSE.api_json()
         else:
-            response_body = html.response_to_template(html.httperror_response)
+            response_body = to_html(HTTPERROR_RESPONSE)
     except Exception:
         logger.exception(url)
         if action == 'apiquery':
-            response_body = html.other_exception_response.api_json()
+            response_body = OTHER_EXCEPTION_RESPONSE.api_json()
         else:
-            response_body = html.response_to_template(
-                html.other_exception_response)
+            response_body = to_html(OTHER_EXCEPTION_RESPONSE)
     status = '200 OK'
 
     response_headers = [

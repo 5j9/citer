@@ -10,138 +10,51 @@ from datetime import date
 import commons
 
 
-class Respose(commons.BaseResponse):
+class Response(commons.BaseResponse):
 
     """Create the responce object used by the main application."""
 
-    def __init__(self, sfnt, ctnt='', reft='', error='100'):
-        self.sfnt = sfnt
-        self.ctnt = ctnt
+    def __init__(self, sfn, cite, error='100'):
+        self.sfn = sfn
+        self.cite = cite
         self.error = error
 
 
-def response_to_template(response):
-    """Insert the response into the template and return response_body."""
-    return template % (
-        response.sfnt,
-        response.ctnt,
-        response.reft,
-        response.error
+def to_html(response):
+    """Insert the response into the HTML_TEMPLATE and return response_body."""
+    return HTML_TEMPLATE % (
+        response.sfn,
+        response.cite,
+        response.ref,
+        response.error,
     )
 
 
-template = Template("""<!DOCTYPE html>
-<html dir="rtl">
-
-<head>
-    <title>یادفا</title>
-    <style type="text/css">
-        textarea,
-        input {
-            transition: background-color 5s ease-in;
-            background-color: rgb(255, 255, 255);
-            border: 1px solid rgb(204, 204, 204);
-            padding: 2px 2px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            line-height: 16px;
-            color: rgb(85, 85, 85);
-            vertical-align: middle;
-            border-radius: 5px 5px 5px 5px;
-        }
-        textarea {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-            word-break: break-all;
-        }
-        body {
-            font-family: tahoma;
-            font-size: 0.8em
-        }
-        input[type=text] {
-            width: 50%;
-        }
-        input[type=submit] {
-            float: left;
-        }
-        #info {
-            font-size: 90%;
-            color: #666666;
-        }
-        input[type=submit]:hover {
-            transition: background-color 1s ease-in;
-            background-color: #33CC33;
-        }
-    </style>
-</head>
-
-<body>
-    <div style="margin-left:auto; margin-right:auto; width:62%;">
-        <form method="get" action="yadkard.fcgi">
-            <p>
-                نشانی وب/شابک/شناسهٔ برنمود رقمی:
-                <br>
-                <input type="text" name="user_input">
-                <input type="submit" value="ثبت درخواست">
-            </p>
-        </form>
-        <p>
-            <a href="https://fa.wikipedia.org/wiki/%D8%A7%D9%84%DA%AF%D9%88:%D9%BE%D8%A7%D9%86%D9%88%DB%8C%D8%B3_%DA%A9%D9%88%D8%AA%D8%A7%D9%87%E2%80%8C%D8%B4%D8%AF%D9%87">پانویس کوتاه‌شده</a> و یادکرد:
-            <br>
-            <textarea id="shortened" rows="8">$s\n\n$s</textarea>
-            <a href="https://fa.wikipedia.org/wiki/%D8%B1%D8%A7%D9%87%D9%86%D9%85%D8%A7:%D9%BE%D8%A7%D9%86%D9%88%DB%8C%D8%B3%E2%80%8C%D9%87%D8%A7">برچسب ارجاع درون‌خطی</a>:
-            <br>
-            <textarea id="named_ref" rows="5">$s</textarea>
-        </p>
-        <p>
-            <!-- There may be error in language detection. $s % -->
-        </p>
-        <div id="info">
-            <p>
-                <i>یادفا</i> ابزاریست برای ساخت الگوهای یادکرد ویکی‌پدیای فارسی. این ابزار کمک می‌کند برچسب ارجاع (تگ &lt;ref&gt;) و/یا پانویس کوتاه‌شده و یادکرد مورد استفاده در ویکی‌پدیای فارسی را برای خود بسازید. ابزار موارد زیر را به عنوان ورودی می‌پذیرد:</p>
-            <p>
-                نشانی وب <a href="http://books.google.com/">کتاب‌های گوگل</a>، <a href="https://fa.wikipedia.org/wiki/%D9%86%D8%B4%D8%A7%D9%86%DA%AF%D8%B1_%D8%AF%DB%8C%D8%AC%DB%8C%D8%AA%D8%A7%D9%84%DB%8C_%D8%B4%DB%8C%D8%A1">شناسانۀ برنمود رقمی</a>، یا <a href="https://fa.wikipedia.org/wiki/%D8%B4%D8%A7%D8%A8%DA%A9">شابک</a> (حتی برای بسیاری از کتاب‌های فارسی).</p>
-            <p>
-                افزون بر این‌ها می‌توانید نشانی وب بسیاری از خبرگزاری‌ها را نیز در آن آزمایش کنید. توجه داشته باشید که همواره احتمال خطا در خروجی ابزار وجود دارد و خروجی آن نیازمند بازبینی خواهد بود. <b>با مسئولیت خودتان از آن استفاده کنید.</b></p>
-				<p>برای استفادهٔ راحت‌تر می‌توانید از این <a href="javascript:void(window.open('http://tools.wmflabs.org/yadfa/yadkard.fcgi?user_input='+encodeURIComponent(location.href)))">بوکمارکلت</a> استفاده کنید.</p>
-            </div>
-        </div>
-    </body>
-</html>"""
-)
+HTML_TEMPLATE = Template(open('html_fa.html', encoding='utf8').read())
 
 # Predefined responses
-default_response = Respose(
-    'یادکرد ساخته‌شده اینجا نمایان خواهد شد...',
-    '',
-    '',
-    '??'
+DEFAULT_RESPONSE = Response(
+    'یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '??'
 )
-undefined_url_response = Respose(
+UNDEFINED_URL_RESPONSE = Response(
     'ورودی شناخته نشد.',
     'خطا در سیاههٔ خطاها ثبت شد.'
 )
-httperror_response = Respose(
+HTTPERROR_RESPONSE = Response(
     'خطای اچ‌تی‌تی‌پی:',
     'یک یا چند مورد از منابع اینترنتی مورد '
     'نیاز برای ساخت این یادکرد در این لحظه '
-    'در دسترس نیستند. (و یا ورودی نامعتبر است)'
+    'در دسترس نیستند. (و یا ورودی نامعتبر است)',
 )
-other_exception_response = Respose(
-    'خطای ناشناخته‌ای رخ داد..',
-    'اطلاعات خطا در سیاهه ثبت شد.'
+OTHER_EXCEPTION_RESPONSE = Response(
+    'خطای ناشناخته‌ای رخ داد..', 'اطلاعات خطا در سیاهه ثبت شد.'
 )
 
-today = date.today()
-template = template.safe_substitute(
-    {
-        'Ymd': today.strftime('%Y-%m-%d'),
-         'BdY': today.strftime('%B %d, %Y'),
-         'bdY': today.strftime('%b %d, %Y'),
-         'dBY': today.strftime('%d %B %Y'),
-         'dbY': today.strftime('%d %b %Y'),
-    }
-).replace('%', '%%').replace('$', '%')
-
+TODAY = date.today()
+HTML_TEMPLATE = HTML_TEMPLATE.safe_substitute({
+    'Ymd': TODAY.strftime('%Y-%m-%d'),
+    'BdY': TODAY.strftime('%B %d, %Y'),
+    'bdY': TODAY.strftime('%b %d, %Y'),
+    'dBY': TODAY.strftime('%d %B %Y'),
+    'dbY': TODAY.strftime('%d %b %Y'),
+}).replace('%', '%%').replace('$s', '%s')
