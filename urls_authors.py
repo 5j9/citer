@@ -19,14 +19,12 @@ NAME_PATTERN = r'[\w.-]+ [\w.-]+( [\w.-]+)?'
 # names may be seperated with "and", a "comma" or "comma and"
 
 BYLINE_PATTERN = (
-    r"\s*By\s+(" + NAME_PATTERN + r"(, " + NAME_PATTERN + r"(, " + NAME_PATTERN +
-    r"(, " + NAME_PATTERN + r"|,? +and " + NAME_PATTERN + r")?|,? +and " +
-    NAME_PATTERN + r"(, " + NAME_PATTERN + r"|,? +and " + NAME_PATTERN +
-    r")?)?|,? +and " + NAME_PATTERN + r"(, " + NAME_PATTERN + r"(, " +
-    NAME_PATTERN + r"|,? +and " + NAME_PATTERN +
-    r")?|,? +and " + NAME_PATTERN + r"(, " + NAME_PATTERN +
-    r"|,? +and " + NAME_PATTERN + r")?)?)?)\s*"
-)
+    r"\s*By\s+({NAME_PATTERN}(, {NAME_PATTERN}(, {NAME_PATTERN}(, "
+    r"{NAME_PATTERN}|,? +and {NAME_PATTERN})?|,? +and {NAME_PATTERN}"
+    r"(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?)?|,? +and {NAME_PATTERN}"
+    r"(, {NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?|,? +and "
+    r"{NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?)?)?)\s*"
+).format(NAME_PATTERN=NAME_PATTERN)
 
 # FIND_PARAMETERS are used in find_authors(soup)
 FIND_PARAMETERS = (
@@ -102,12 +100,12 @@ FIND_PARAMETERS = (
     ),
     # disabled due to high error rate
     # try before {'name': 'author'}
-    ##        (
-    ##            'soup',
-    ##            {'class': 'author'},
-    ##            'getattr',
-    ##            'text',
-    ##        ),
+    #        (
+    #            'soup',
+    #            {'class': 'author'},
+    #            'getattr',
+    #            'text',
+    #        ),
     (
         'soup',
         {'name': 'author'},
@@ -179,7 +177,7 @@ FIND_PARAMETERS = (
     (
         'text',
         re.compile(
-            r'[\n\|]' + BYLINE_PATTERN + r'\n',
+            r'[\n|]' + BYLINE_PATTERN + r'\n',
             re.IGNORECASE,
         ),
     ),
@@ -217,20 +215,20 @@ def try_find_authors(soup):
     text = soup.text
     for fp in FIND_PARAMETERS:
         if fp[0] == 'soup':
-            try: #can this try be removed safely?
+            try:  # Todo: can this try be removed safely?
                 attrs = fp[1]
                 f = soup.find(attrs=attrs)
                 fs = f.find_next_siblings(attrs=attrs)
                 fs.insert(0, f)
                 names = []
-                
+
                 if fp[2] == 'getitem':
                     for f in fs:
                         try:
                             string = f[fp[3]]
                             name = byline_to_names(string)
                             names.extend(name)
-                        except Exception:
+                        except (AttributeError, InvalidByLineError):
                             pass
                 else:
                     # fp[2] == 'getattr':
@@ -239,25 +237,25 @@ def try_find_authors(soup):
                             string = getattr(f, fp[3])
                             name = byline_to_names(string)
                             names.extend(name)
-                        except Exception:
+                        except (AttributeError, InvalidByLineError):
                             pass
-         
+
                 if names:
                     return names, attrs
-            except Exception:
+            except AttributeError:
                 pass
         elif fp[0] == 'html':
             try:
                 m = re.search(fp[1], html).group(1)
                 return byline_to_names(m), fp[1]
-            except Exception:
+            except (AttributeError, InvalidByLineError):
                 pass
         else:
             # fp[0] == 'text'
             try:
                 m = re.search(fp[1], text).group(1)
                 return byline_to_names(m), fp[1]
-            except Exception:
+            except (AttributeError, InvalidByLineError):
                 pass
     return None, None
     
@@ -291,8 +289,10 @@ def byline_to_names(byline):
     >>> byline_to_names('\n By Roger Highfield, Science Editor \n')
     [Name(Roger Highfield)]
 
-    >>> byline_to_names(' By Erika Solomon in Beirut and Borzou Daragahi,\
-     Middle East correspondent')
+    >>> byline_to_names(
+        ' By Erika Solomon in Beirut and Borzou Daragahi,'
+        'Middle East correspondent'
+    )
     [Name(Erika Solomon), Name(Borzou Daragahi)]
     """
 
