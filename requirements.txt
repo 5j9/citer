@@ -3,4 +3,4 @@ numpy>=1.8.1
 requests>=2.3.0
 isbnlib>=3.3.8
 flup6>=1.1
-git+https://github.com/saffsd/langid.py.git@python3#egg=langid-dev-py3
+langid>=1.1.6
