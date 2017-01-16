@@ -154,7 +154,7 @@ class BaseResponse:
         all values will be encoded using encode_for_template() function.
         ISBN (if exist) will be hyphenated.
         """
-        dict_cleanup_encode(self.dictionary)
+        value_encode(self.dictionary)
         if 'isbn' in self.dictionary:
             masked = isbnlib.mask(self.dictionary['isbn'])
             if masked:
@@ -382,7 +382,7 @@ def bidi_pop(string):
     return string + '\u202C' * diff
 
 
-def dict_cleanup_encode(dictionary):
+def value_encode(dictionary):
     """Cleanup dictionary values.
 
     * Remove any key with False bool value.
@@ -392,9 +392,6 @@ def dict_cleanup_encode(dictionary):
 
     """
     for k, v in dictionary.items():
-        if not k:
-            del dictionary[k]
-            continue
         if isinstance(v, str):
             v = (
                 bidi_pop(v.strip())
