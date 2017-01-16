@@ -52,9 +52,9 @@ class Response(commons.BaseResponse):
 
 def get_bibtex(doi_url):
     """Get BibTex file content from a DOI URL. Return as string."""
-    r = requests.get(doi_url, headers={'Accept': 'application/x-bibtex'})
-    bibtex = r.text
-    return bibtex
+    return requests.get(
+        doi_url, headers={'Accept': 'application/x-bibtex'}
+    ).text
 
 logger = logging.getLogger(__name__)
 

@@ -3,7 +3,7 @@
 
 """All things specifically related to the Google Books website."""
 
-import re
+
 from urllib.parse import parse_qs
 from urllib.parse import urlparse
 

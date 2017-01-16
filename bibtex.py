@@ -97,4 +97,3 @@ def replace_specials(bibtex):
     bibtex = bibtex.replace(r'{\={U}}', 'Ū')
     bibtex = bibtex.replace(r'{\v{Z}}', 'Ž')
     return bibtex
-    
