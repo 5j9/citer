@@ -482,7 +482,7 @@ def get_hometitle(url, headers, hometitle_list):
         requests_visa(homeurl, headers)
         content = requests.get(homeurl, headers=headers, timeout=15).content
         strainer = SoupStrainer('title')
-        soup = BeautifulSoup(content, parse_only=strainer)
+        soup = BeautifulSoup(content, 'lxml', parse_only=strainer)
         hometitle_list.append(soup.title.text.strip())
     except Exception:
         pass
@@ -520,7 +520,7 @@ def get_soup(url, headers=None):
     r = requests.get(url, headers=headers, timeout=15)
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
-    return BeautifulSoup(r.content)
+    return BeautifulSoup(r.content, 'lxml')
 
 
 def url2dictionary(url):
