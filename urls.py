@@ -17,6 +17,85 @@ import commons
 from urls_authors import find_authors
 
 
+TITLE_FIND_PARAMETERS = (
+    # http://socialhistory.ihcs.ac.ir/article_319_84.html
+    ({'name': 'citation_title'}, 'getitem', 'content'),
+    # http://www.telegraph.co.uk/earth/earthnews/6190335/Whale-found-dead-in-Thames.html
+    # Should be tried before og:title
+    ({'name': 'title'}, 'getitem', 'content'),
+    # http://www.bostonglobe.com/ideas/2014/04/28/new-study-reveals-how-honky-tonk-hits-respond-changing-american-fortunes/9ep0iPknDBl9EFFaoXfbmL/comments.html
+    # Should be tried before og:title
+    ({'class': 'main-hed'}, 'getattr', 'text'),
+    # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
+    # Should be tried before og:title
+    ({'class': 'arttle'}, 'getattr', 'text'),
+    # http://www.bbc.com/news/science-environment-26878529
+    ({'property': 'og:title'}, 'getitem', 'content'),
+    # http://www.bbc.com/news/science-environment-26267918
+    ({'name': 'Headline'}, 'getitem', 'content'),
+    # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
+    ({'class': 'articleHeadline'}, 'getattr', 'text'),
+    # http://www.nytimes.com/2007/09/11/us/11whale.html
+    ({'name': 'hdl'}, 'getitem', 'content'),
+    # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+    ({'class': 'entry-title'}, 'getattr', 'text'),
+    # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
+    ({'id': 'entryhead'}, 'getattr', 'text'),
+)
+
+
+DATE_FIND_PARAMETERS = (
+    # http://socialhistory.ihcs.ac.ir/article_319_84.html
+    ({'name': 'citation_date'}, 'getitem', 'content'),
+    # http://jn.physiology.org/content/81/1/319
+    ({'name': 'citation_publication_date'}, 'getitem', 'content'),
+    # http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
+    ({'name': 'last-modified'}, 'getitem', 'content'),
+    # http://www.mirror.co.uk/news/weird-news/amazing-rescue-drowning-diver-saved-409479
+    # should be placed before article:modified_time
+    ({'itemprop': 'datePublished'}, 'getitem', 'datetime'),
+    # http://www.mirror.co.uk/news/uk-news/how-reid-will-get-it-all-off-pat--535323
+    # should be placed before article:modified_time
+    ({'data-type': 'pub-date'}, 'getattr', 'text'),
+    # http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/
+    # place before {'property': 'article:modified_time'}
+    ({'property': 'article:published_time'}, 'getitem', 'content'),
+    # http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
+    ({'property': 'article:modified_time'}, 'getitem', 'content'),
+    # http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
+    ({'property': 'dc:date dc:created'}, 'getitem', 'content'),
+    # http://www.bbc.co.uk/news/science-environment-20890389
+    ({'name': 'OriginalPublicationDate'}, 'getitem', 'content'),
+    ({'name': 'publish-date'}, 'getitem', 'content'),
+    # http://www.washingtonpost.com/wp-srv/style/movies/reviews/godsandmonsterskempley.htm
+    ({'name': 'pub_date'}, 'getitem', 'content'),
+    # http://www.economist.com/node/1271090?zid=313&ah=fe2aac0b11adef572d67aed9273b6e55
+    ({'name': 'pubdate'}, 'getitem', 'content'),
+    # http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2Fea29ffb6-c759-11e0-9cac-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=#axzz31G5ZgwCH
+    ({'id': 'publicationDate'}, 'getattr', 'text'),
+    # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
+    ({'class': 'dateline'}, 'getattr', 'text'),
+    # http://www.nytimes.com/2003/12/14/us/willy-whale-dies-in-norway.html
+    ({'name': 'DISPLAYDATE'}, 'getitem', 'content'),
+    # http://www.washingtonpost.com/wp-dyn/content/article/2006/01/19/AR2006011902990.html
+    ({'name': 'DC.date.issued'}, 'getitem', 'content'),
+    # http://www.farsnews.com/newstext.php?nn=13930418000036
+    ({'name': 'dc.Date'}, 'getitem', 'content'),
+    # http://www.huffingtonpost.ca/arti-patel/nina-davuluri_b_3936174.html
+    ({'name': 'sailthru.date'}, 'getitem', 'content'),
+    # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+    ({'class': 'entry-date'}, 'getattr', 'text'),
+    # http://www.huffingtonpost.com/huff-wires/20121203/us-sci-nasa-voyager/
+    ({'class': 'updated'}, 'getattr', 'text'),
+    # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
+    ({'class': 'byline'}, 'getattr', 'text'),
+    # http://www.highbeam.com/doc/1P3-3372742961.html
+    ({'id': 'docByLine'}, 'getattr', 'text'),
+    # wikipedia
+    ({'id': 'footer-info-lastmod'}, 'getattr', 'text'),
+)
+
+
 class Response(commons.BaseResponse):
 
     """Create URL's response object."""
@@ -248,32 +327,7 @@ def find_title(
     thread
 ):
     """Return (title_string, where_info)."""
-    find_parameters = (
-        # http://socialhistory.ihcs.ac.ir/article_319_84.html
-        ({'name': 'citation_title'}, 'getitem', 'content'),
-        # http://www.telegraph.co.uk/earth/earthnews/6190335/Whale-found-dead-in-Thames.html
-        # Should be tried before og:title
-        ({'name': 'title'}, 'getitem', 'content'),
-        # http://www.bostonglobe.com/ideas/2014/04/28/new-study-reveals-how-honky-tonk-hits-respond-changing-american-fortunes/9ep0iPknDBl9EFFaoXfbmL/comments.html
-        # Should be tried before og:title
-        ({'class': 'main-hed'}, 'getattr', 'text'),
-        # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
-        # Should be tried before og:title
-        ({'class': 'arttle'}, 'getattr', 'text'),
-        # http://www.bbc.com/news/science-environment-26878529
-        ({'property': 'og:title'}, 'getitem', 'content'),
-        # http://www.bbc.com/news/science-environment-26267918
-        ({'name': 'Headline'}, 'getitem', 'content'),
-        # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-        ({'class': 'articleHeadline'}, 'getattr', 'text'),
-        # http://www.nytimes.com/2007/09/11/us/11whale.html
-        ({'name': 'hdl'}, 'getitem', 'content'),
-        # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-        ({'class': 'entry-title'}, 'getattr', 'text'),
-        # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-        ({'id': 'entryhead'}, 'getattr', 'text'),
-    )
-    raw_title, tag = try_find(soup, find_parameters)
+    raw_title, tag = try_find(soup, TITLE_FIND_PARAMETERS)
     if not raw_title:
         try:
             raw_title, tag = soup.title.text.strip(), 'soup.title.text'
@@ -376,12 +430,12 @@ def parse_title(
     return intitle_author, pure_title, intitle_sitename
 
 
-def try_find_date(soup: BeautifulSoup, find_parameters: tuple):
+def try_find_date(soup: BeautifulSoup):
     """Similar to try_find(), but for finding dates.
 
     Return a string in '%Y-%m-%d' format.
     """
-    for fp in find_parameters:
+    for fp in DATE_FIND_PARAMETERS:
         try:
             attrs = fp[0]
             m = soup.find(attrs=attrs)
@@ -402,57 +456,7 @@ def try_find_date(soup: BeautifulSoup, find_parameters: tuple):
 
 def find_date(soup: BeautifulSoup, url: str):
     """Get the BeautifulSoup object and url. Return (date_obj, where)."""
-    find_parameters = (
-        # http://socialhistory.ihcs.ac.ir/article_319_84.html
-        ({'name': 'citation_date'}, 'getitem', 'content'),
-        # http://jn.physiology.org/content/81/1/319
-        ({'name': 'citation_publication_date'}, 'getitem', 'content'),
-        # http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
-        ({'name': 'last-modified'}, 'getitem', 'content'),
-        # http://www.mirror.co.uk/news/weird-news/amazing-rescue-drowning-diver-saved-409479
-        # should be placed before article:modified_time
-        ({'itemprop': 'datePublished'}, 'getitem', 'datetime'),
-        # http://www.mirror.co.uk/news/uk-news/how-reid-will-get-it-all-off-pat--535323
-        # should be placed before article:modified_time
-        ({'data-type': 'pub-date'}, 'getattr', 'text'),
-        # http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/
-        # place before {'property': 'article:modified_time'}
-        ({'property': 'article:published_time'}, 'getitem', 'content'),
-        # http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
-        ({'property': 'article:modified_time'}, 'getitem', 'content'),
-        # http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
-        ({'property': 'dc:date dc:created'}, 'getitem', 'content'),
-        # http://www.bbc.co.uk/news/science-environment-20890389
-        ({'name': 'OriginalPublicationDate'}, 'getitem', 'content'),
-        ({'name': 'publish-date'}, 'getitem', 'content'),
-        # http://www.washingtonpost.com/wp-srv/style/movies/reviews/godsandmonsterskempley.htm
-        ({'name': 'pub_date'}, 'getitem', 'content'),
-        # http://www.economist.com/node/1271090?zid=313&ah=fe2aac0b11adef572d67aed9273b6e55
-        ({'name': 'pubdate'}, 'getitem', 'content'),
-        # http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2Fea29ffb6-c759-11e0-9cac-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=#axzz31G5ZgwCH
-        ({'id': 'publicationDate'}, 'getattr', 'text'),
-        # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-        ({'class': 'dateline'}, 'getattr', 'text'),
-        # http://www.nytimes.com/2003/12/14/us/willy-whale-dies-in-norway.html
-        ({'name': 'DISPLAYDATE'}, 'getitem', 'content'),
-        # http://www.washingtonpost.com/wp-dyn/content/article/2006/01/19/AR2006011902990.html
-        ({'name': 'DC.date.issued'}, 'getitem', 'content'),
-        # http://www.farsnews.com/newstext.php?nn=13930418000036
-        ({'name': 'dc.Date'}, 'getitem', 'content'),
-        # http://www.huffingtonpost.ca/arti-patel/nina-davuluri_b_3936174.html
-        ({'name': 'sailthru.date'}, 'getitem', 'content'),
-        # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-        ({'class': 'entry-date'}, 'getattr', 'text'),
-        # http://www.huffingtonpost.com/huff-wires/20121203/us-sci-nasa-voyager/
-        ({'class': 'updated'}, 'getattr', 'text'),
-        # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
-        ({'class': 'byline'}, 'getattr', 'text'),
-        # http://www.highbeam.com/doc/1P3-3372742961.html
-        ({'id': 'docByLine'}, 'getattr', 'text'),
-        # wikipedia
-        ({'id': 'footer-info-lastmod'}, 'getattr', 'text'),
-    )
-    date, tag = try_find_date(soup, find_parameters)
+    date, tag = try_find_date(soup)
     if date:
         return date, tag
     else:
