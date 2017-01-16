@@ -15,7 +15,7 @@ setup(
     # Versions should comply with PEP440. For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='1.2.0',
+    version='1.3.0',
     description='An application used to generate Wikipedia citation templats.',
     long_description=long_description,
 
