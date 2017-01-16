@@ -7,139 +7,141 @@
 import datetime
 import re
 
+    
+def citation_templates(d, date_format) -> tuple:
+    """Create citation templates according to the given dictionary."""
+    type_ = d['type']
+    if type_ == 'book':
+        cite = '* {{cite book'
+    elif type_ in ('article', 'jour'):
+        cite = '* {{cite journal'
+    elif type_ == 'web':
+        cite = '* {{cite web'
+    else:
+        raise KeyError(type_ + " is not a valid value for d['type']")
 
-def sfn_template(d):
-    """Creates citation based on the given dictionary."""
-    s = '{{sfn'
-    if 'authors' in d:
-        c = 0
-        for name in d['authors']:
-            c += 1
-            if c < 5:  # {{sfn}} only supports a maximum of four authors
-                s += ' | ' + name.lastname
+    sfn = '{{sfn'
+
+    authors = d.get('authors')
+    publisher = d.get('publisher')
+    journal = d.get('journal')
+    website = d.get('website')
+    title = d.get('title')
+
+    if authors:
+        cite += names2para(authors, 'first', 'last', 'author')
+        # {{sfn}} only supports a maximum of four authors
+        for author in authors[:4]:
+            sfn += ' | ' + author.lastname
     else:
         # the same order should be used in citation_template:
-        s += ' | ' + (d['publisher'] if 'publisher' in d else
-                    "''" + d['journal'] + "''" if 'journal' in d else
-                    "''" + d['website'] + "''" if 'website' in d else
-                    d['title'] if 'title' in d else
-                    'Anon.')
-    if 'year' in d:
-        s += ' | ' + d['year']
-    if 'pages' in d:
-        if '–' in d['pages']:
-            s += ' | pp=' + d['pages']
-        else:
-            s += ' | p=' + d['pages']
-    elif 'url' not in d:
-        s += ' | p='
-    s += '}}'
-    return s   
+        sfn += ' | ' + (
+            publisher or
+            "''" + journal + "''" if journal else
+            "''" + website + "''" if website else
+            title or  'Anon.'
+        )
 
-    
-def citation_template(d, date_format):
-    """Create citation based on the given dictionary."""
-    if d['type'] == 'book':
-        s = '* {{cite book'
-    elif d['type'] in ['article', 'jour']:
-        s = '* {{cite journal'
-    elif d['type'] == 'web':
-        s = '* {{cite web'
-    else:
-        raise KeyError(d['type'] + " is not a valid value for d['type']")
-
-    if 'authors' in d:
-        s += names2para(d['authors'],
-                        'first',
-                        'last',
-                        'author')
-    if 'editors' in d:
-        s += names2para(d['editors'],
-                        'editor-first',
-                        'editor-last',
-                        'editor')
-    if 'translators' in d:
-        for translator in d['translators']:
+    editors = d.get('editors')
+    if editors:
+        cite += names2para(editors, 'editor-first', 'editor-last', 'editor')
+    translators = d.get('translators')
+    if translators:
+        for translator in translators:
             translator.fullname += ' (مترجم)'
         # todo: add a 'Translated by ' before name of translators
-        if 'others' in d:
-            d['others'].extend(d['translators'])
+        others = d.get('others')
+        if others:
+            others.extend(d['translators'])
         else:
             d['others'] = d['translators']
-    if 'others' in d:
-        s += names1para(d['others'], 'others')
-    if 'title' in d:
-        s += ' | title=' + d['title']
-    if 'journal' in d:
-        s += ' | journal=' + d['journal']
-    elif 'website' in d:
-        s += ' | website=' + d['website']
-    if 'publisher' in d:
-        s += ' | publisher=' + d['publisher']
-    if 'address' in d:
-        s += ' | location=' + d['address']
-    if 'series' in d:
-        s += ' | series=' + d['series']
-    if 'volume' in d:
-        s += ' | volume=' + d['volume']
-    if 'issue' in d:
-        s += ' | issue=' + d['issue']
-    if 'date' in d:
-        if isinstance(d['date'], datetime.date):
+    others = d.get('others')
+    if others:
+        cite += names1para(others, 'others')
+    if title:
+        cite += ' | title=' + title
+    if journal:
+        cite += ' | journal=' + journal
+    elif website:
+        cite += ' | website=' + website
+    publisher = d.get('publisher')
+    if publisher:
+        cite += ' | publisher=' + publisher
+    address = d.get('address')
+    if address:
+        cite += ' | location=' + address
+    series = d.get('series')
+    if series:
+        cite += ' | series=' + series
+    volume = d.get('volume')
+    if volume:
+        cite += ' | volume=' + volume
+    issue = d.get('issue')
+    if issue:
+        cite += ' | issue=' + issue
+    date = d.get('date')
+    if date:
+        if isinstance(date, datetime.date):
             date = (
-                d['date'].strftime(date_format).lstrip("0").replace(" 0", " ")
+                date.strftime(date_format).lstrip("0").replace(" 0", " ")
             )
-        else:
-            date = d['date']
-        s += ' | date=' + date
-    else:
-        date = None
-    if 'year' in d:
-        year = d['year']
+        cite += ' | date=' + date
+    year = d.get('year')
+    if year:
         if not date or year not in date:
-            s += ' | year=' + year
-    if 'isbn' in d:
-        s += ' | isbn=' + d['isbn']
-    if 'issn' in d:
-        s += ' | issn=' + d['issn']
-    if 'pmid' in d:
-        s += '| pmid=' + d['pmid']
-    if d['type'] in ['article', 'jour']:
-        if 'pages' in d:
-            if '–' in d['pages']:
-                s += ' | pages=' + d['pages']
+            cite += ' | year=' + year
+        sfn += ' | ' + year
+    isbn = d.get('isbn')
+    if isbn:
+        cite += ' | isbn=' + isbn
+    issn = d.get('issn')
+    if issn:
+        cite += ' | issn=' + issn
+    pmid = d.get('pmid')
+    if pmid:
+        cite += '| pmid=' + pmid
+    pages = d.get('pages')
+    if pages:
+        if '–' in pages:
+            sfn += ' | pp=' + pages
+        else:
+            sfn += ' | p=' + pages
+    if type_ in ('article', 'jour'):
+        if pages:
+            if '–' in pages:
+                cite += ' | pages=' + pages
             else:
-                s += ' | page=' + d['pages']
-    if 'url' in d:
-        s += ' | url=' + d['url']
-    if 'doi' in d:
-        s += ' | doi=' + d['doi']
-    if 'language' in d:
-        if d['language'].lower() not in ['english', 'en']:
-            s += ' | language=' + d['language']
-    if 'authors' in d:
-        s += ' | ref=harv'
+                cite += ' | page=' + pages
+    url = d.get('url')
+    if url:
+        cite += ' | url=' + url
+    else:
+        sfn += ' | p='
+    doi = d.get('doi')
+    if doi:
+        cite += ' | doi=' + doi
+    language = d.get('language')
+    if language:
+        if language.lower() not in ('english', 'en'):
+            cite += ' | language=' + language
+    if authors:
+        cite += ' | ref=harv'
     else:
         # order should match sfn_template
-        s += ' | ref={{sfnref | ' +\
-             (
-                 d['publisher'] if 'publisher' in d else
-                 d['journal'] if 'journal' in d else
-                 d['website'] if 'website' in d else
-                 d['title'] if 'title' in d else
-                 'Anon.'
-             )
-        if 'year' in d:
-            s += ' | ' + d['year']
-        s += '}}'
-    if 'url' in d:
-        s += (
+        cite += ' | ref={{sfnref | ' +\
+             (publisher or journal or website or title or 'Anon.')
+        if year:
+            cite += ' | ' + year
+        cite += '}}'
+    if url:
+        cite += (
             ' | accessdate=' +
             datetime.date.strftime(datetime.date.today(), date_format).
             lstrip("0").replace(" 0", " ")
         )
-    s += '}}'
-    return s
+    cite += '}}'
+    sfn += '}}'
+    return cite, sfn
 
 
 def reference_tag(dictionary, sfn_template, citation_template):
@@ -150,7 +152,7 @@ def reference_tag(dictionary, sfn_template, citation_template):
         '\g<repl>',
         citation_template[2:],
     )
-    if ' p=' in name  and ' | page=' not in text:
+    if ' p=' in name and ' | page=' not in text:
         name = name.replace(' p=', ' p. ')
         if 'pages' in dictionary:
             text = text[:-2] + ' | page=' + dictionary['pages'] + '}}'
@@ -160,7 +162,7 @@ def reference_tag(dictionary, sfn_template, citation_template):
         name = name.replace(' pp=', ' pp. ')
         if 'pages' in dictionary and ' | pages=' not in text:
             text = text[:-2] + ' | pages=' + dictionary['pages'] + '}}'
-    return  '<ref name="' + name + '">' + text + '</ref>'
+    return '<ref name="' + name + '">' + text + '</ref>'
 
 
 def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):

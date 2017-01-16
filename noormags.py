@@ -25,7 +25,7 @@ class Response(commons.BaseResponse):
         # language parameter needs to be taken from RIS
         # other information are more accurate in bibtex
         # for example: http://www.noormags.com/view/fa/articlepage/104040
-        #"IS  - 1" is wrong in RIS but "number = { 45 }," is correct in bibtex
+        # "IS  - 1" is wrong in RIS but "number = { 45 }," is correct in bibtex
         self.ris = get_ris(noormags_url)
         if 'LA' in self.ris:
             self.dictionary['language'] = ris.parse(self.ris)['language']
@@ -37,8 +37,7 @@ def get_bibtex(noormags_url):
     pagetext = requests.get(noormags_url).text
     article_id = re.search('/citation/bibtex/(\d+)', pagetext).group(1)
     url = 'http://www.noormags.ir/view/fa/citation/bibtex/' + article_id
-    bibtex = requests.get(url).text
-    return bibtex
+    return requests.get(url).text
 
 
 def get_ris(noormags_url):
@@ -46,5 +45,4 @@ def get_ris(noormags_url):
     pagetext = requests.get(noormags_url).text
     article_id = re.search('/citation/ris/(\d+)', pagetext).group(1)
     url = 'http://www.noormags.ir/view/fa/citation/ris/' + article_id
-    ris = requests.get(url).text
-    return ris
+    return requests.get(url).text

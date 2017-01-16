@@ -63,7 +63,7 @@ dbY = re.compile(d + ' ' + b + ' ' + Y)
 Ymd_dashed = re.compile(Y + '-' + zm + '-' + zd)
 # 1900/01/01, 2099/12/31, 2099 12 31
 Ymd_slashed = re.compile(Y + '/' + zm + '/' + zd)
-#19000101, 20991231
+# 19000101, 20991231
 Ymd = re.compile(Y + zm + zd)
 
 ANYDATE_REGEX = re.compile(
@@ -76,6 +76,7 @@ ANYDATE_REGEX = re.compile(
     '(?P<fa_d>\d\d?) (?P<fa_B>' + fa_B + ') (?P<fa_Y>\d\d\d\d)|' +
     Y + zm + zd + ')'
 )
+
 
 class InvalidNameError(Exception):
 
@@ -117,10 +118,11 @@ class Name:
         return 'Name("' + self.fullname + '")'
 
     def nofirst_fulllast(self):
-        '''Change firstname to an empty string and assign fullname to lastname.
+        """Change firstname to an empty string and assign fullname to lastname.
 
         Use this method for corporate authors.
-        '''
+
+        """
         self.lastname = self.fullname
         self.firstname = ''
 
@@ -133,13 +135,14 @@ class BaseResponse:
     error = 0
     reft = ''
 
-    def detect_language(self, text, langset={}):
-        """Detect language of text. Add the result to self.dictionary and error.
+    def detect_language(self, text, langset=None):
+        """Detect language of text.
 
-        'language' and 'error' keys will be added to dictionary.
-        self.error property will be created.
+        Store the result in self.dictionary and self.error.
+        Add 'language' and 'error' keys to self.dictionary.
+        Create self.error property.
         """
-        lang, err = detect_language(text, langset)
+        lang, err = detect_language(text, langset or ())
         self.dictionary['language'] = lang
         self.dictionary['error'] = self.error = err
 
@@ -151,27 +154,29 @@ class BaseResponse:
         all values will be encoded using encode_for_template() function.
         ISBN (if exist) will be hyphenated.
         """
-        self.dictionary = dict_cleanup(self.dictionary)
-        self.dictionary = encode_for_template(self.dictionary)
+        dictionary = dict_cleanup(self.dictionary)
+        self.dictionary = encode_for_template(dictionary)
         if 'isbn' in self.dictionary:
             masked = isbnlib.mask(self.dictionary['isbn'])
             if masked:
                 self.dictionary['isbn'] = masked
-        self.sfnt = generator.sfn_template(self.dictionary)
-        self.ctnt = generator.citation_template(self.dictionary,
-                                                self.date_format)
-        self.reft = generator.reference_tag(self.dictionary,
-                                            self.sfnt,
-                                            self.ctnt)
+        self.ctnt, self.sfnt = generator.citation_templates(
+            self.dictionary, self.date_format
+        )
+        self.reft = generator.reference_tag(
+            self.dictionary, self.sfnt, self.ctnt
+        )
 
     def api_json(self):
         """Generate api JSON response containing sfnt, ctnt and reft."""
-        return json.dumps({'reference_tag': self.reft,
-                           'citation_template': self.ctnt,
-                           'shortened_footnote': self.sfnt})
+        return json.dumps({
+            'reference_tag': self.reft,
+            'citation_template': self.ctnt,
+            'shortened_footnote': self.sfnt,
+        })
 
 
-def detect_language(text, langset={}):
+def detect_language(text, langset=None):
     """Detect the language of the text. Return (lang, error).
 
     args:
@@ -256,6 +261,8 @@ def uninum2en(string):
     >>> uninum2en('٤۴৪౪')
     '4444'
     """
+    if not string:
+        raise ValueError
     digits = set(re.findall(r'\d', string))
     for d in digits:
         string = string.replace(d, str(int(d)))
@@ -264,18 +271,19 @@ def uninum2en(string):
 
 def ennum2fa(string_or_num):
     """Convert English numerical string to equivalent Persian one (‍۰-۹)."""
-    string = str(string_or_num)
-    string = string.replace('0', '۰')
-    string = string.replace('1', '۱')
-    string = string.replace('2', '۲')
-    string = string.replace('3', '۳')
-    string = string.replace('4', '۴')
-    string = string.replace('5', '۵')
-    string = string.replace('6', '۶')
-    string = string.replace('7', '۷')
-    string = string.replace('8', '۸')
-    string = string.replace('9', '۹')
-    return string
+    return (
+        str(string_or_num)
+        .replace('0', '۰')
+        .replace('1', '۱')
+        .replace('2', '۲')
+        .replace('3', '۳')
+        .replace('4', '۴')
+        .replace('5', '۵')
+        .replace('6', '۶')
+        .replace('7', '۷')
+        .replace('8', '۸')
+        .replace('9', '۹')
+    )
 
 
 def jalali_string_to_date(match):
@@ -301,7 +309,7 @@ def finddate(string):
             date = datetime.strptime(date_string, '%B %d, %Y').date()
             if date <= today:
                 return date
-        except Exception:
+        except ValueError:
             pass
         try:
             date = datetime.strptime(
@@ -310,13 +318,13 @@ def finddate(string):
             ).date()
             if date <= today:
                 return date
-        except Exception:
+        except ValueError:
             pass
         try:
             date = datetime.strptime(date_string, '%d %B %Y').date()
             if date <= today:
                 return date
-        except Exception:
+        except ValueError:
             pass
         try:
             date = datetime.strptime(
@@ -325,31 +333,31 @@ def finddate(string):
             ).date()
             if date <= today:
                 return date
-        except Exception:
+        except ValueError:
             pass
         try:
             date = datetime.strptime(date_string, '%Y-%m-%d').date()
             if date <= today:
                 return date
-        except Exception:
+        except ValueError:
             pass
         try:
             date = datetime.strptime(date_string, '%Y/%m/%d').date()
             if date <= today:
                 return date
-        except Exception:
+        except ValueError:
             pass
         try:
             date = jalali_string_to_date(m)
             if date <= today:
                 return date
-        except Exception:
+        except ValueError:
             pass
         try:
             date = datetime.strptime(date_string, '%Y%m%d').date()
             if date <= today:
                 return date
-        except Exception:
+        except ValueError:
             pass
         pos = m.end()
         m = ANYDATE_REGEX.search(string, pos)
@@ -368,26 +376,23 @@ def bidi_pop(string):
     """Makes sure all  LRE, RLE, LRO, or RLO chars are terminated with PDF."""
     # Pop isolations
     isolates = [
-        '\u2066', # LRI
-        '\u2067', # RLI
-        '\u2068', # FSI
+        '\u2066',  # LRI
+        '\u2067',  # RLI
+        '\u2068',  # FSI
     ]
-    diff = sum(
-        [string.count(c) for c in isolates]
-    ) - string.count('\u2069') # PDI
-    string = string + '\u2069' * diff
+    diff = sum(string.count(c) for c in isolates) - \
+           string.count('\u2069')  # PDI
+    string += '\u2069' * diff
     # Pop embeddings and overrides
-    embeddings_and_overrides = [
-        '\u202A', # LRE
-        '\u202B', # RLE
-        '\u202D', # LRO
-        '\u202E', # RLO
-    ]
     diff = sum(
-        [string.count(c) for c in embeddings_and_overrides]
-    ) - string.count('\u202C') # PDF
-    string = string + '\u202C' * diff
-    return string
+        string.count(c) for c in (
+            '\u202A',  # LRE
+            '\u202B',  # RLE
+            '\u202D',  # LRO
+            '\u202E',  # RLO
+        )
+    ) - string.count('\u202C')  # PDF
+    return string + '\u202C' * diff
 
 
 def encode_for_template(dictionary):
@@ -399,13 +404,13 @@ def encode_for_template(dictionary):
     for k in dictionary:
         v = dictionary[k]
         if isinstance(v, str):
-            v = dictionary[k].strip()
-            v = bidi_pop(v)
-            v = v.replace('|', '&amp;#124;')
-            v = v.replace('[', '&amp;#91;')
-            v = v.replace(']', '&amp;#93;')
-            v = v.replace('\r\n', ' ')
-            v = v.replace('\n', ' ')
+            v = (
+                bidi_pop(dictionary[k].strip())
+                .replace('|', '&amp;#124;')
+                .replace('[', '&amp;#91;')
+                .replace(']', '&amp;#93;')
+                .replace('\r\n', ' ')
+                .replace('\n', ' ')
+            )
         d[k] = v
     return d
-

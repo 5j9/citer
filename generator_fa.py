@@ -116,7 +116,7 @@ def reference_tag(dictionary, sfn_template, citation_template):
         text = text[:-2] + ' | صفحه=' + dictionary['pages'] + '}}'
     elif 'url' not in dictionary:
         text = text[:-2] + ' | صفحه=}}'
-    return  '<ref>' + text + '\u200F</ref>'
+    return '<ref>' + text + '\u200F</ref>'
 
 
 def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):

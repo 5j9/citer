@@ -11,6 +11,7 @@ import difflib
 from threading import Thread
 
 import requests
+from requests.exceptions import RequestException
 from bs4 import SoupStrainer, BeautifulSoup
 
 import commons
@@ -464,7 +465,7 @@ def get_hometitle(url: str, headers: dict, hometitle_list: list):
         strainer = SoupStrainer('title')
         soup = BeautifulSoup(content, 'lxml', parse_only=strainer)
         hometitle_list.append(soup.title.text.strip())
-    except Exception:
+    except RequestException:
         pass
 
 

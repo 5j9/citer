@@ -21,8 +21,8 @@ class Response(commons.BaseResponse):
         self.url = noorlib_url
         self.bibtex = get_bibtex(noorlib_url)
         self.dictionary = bibtex.parse(self.bibtex)
-        #self.ris = get_ris(noorlib_url)[1]
-        #self.dictionary = ris.parse(self.ris)[1]
+        # self.ris = get_ris(noorlib_url)[1]
+        # self.dictionary = ris.parse(self.ris)[1]
         self.generate()
 
 
@@ -35,8 +35,7 @@ def get_bibtex(noorlib_url):
     ).group(1)
     url = 'http://www.noorlib.ir/View/HttpHandler/CitationHandler.ashx?id=' +\
           article_id + '&format=BibTex'
-    bibtex = requests.get(url).text
-    return bibtex
+    return requests.get(url).text
 
 
 def get_ris(noorlib_url):
@@ -47,5 +46,4 @@ def get_ris(noorlib_url):
     article_id = re.search('RIS&id=(\d+)', pagetext).group(1)
     url = 'http://www.noormags.com/view/CitationHandler.ashx?format=RIS&id=' +\
           article_id
-    ris = requests.get(url).text
-    return ris
+    return requests.get(url).text
