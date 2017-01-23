@@ -12,7 +12,7 @@ import bibtex
 import ris
 
 
-class Response(commons.BaseResponse):
+class NoorMagsResponse(commons.BaseResponse):
 
     """Create noormags response object."""
 

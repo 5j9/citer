@@ -4,6 +4,7 @@
 import logging
 import logging.handlers
 from urllib.parse import parse_qs, urlparse, unquote
+from html import unescape
 
 try:
     from flup.server.fcgi import WSGIServer
@@ -11,18 +12,16 @@ except ImportError:
     from wsgiref.simple_server import make_server
 import requests
 
-import noormags
-import googlebooks
-import noorlib
-import adinebook
-import urls
-import doi
-import commons
-import config
-from isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError
-from isbn import Response as IsbnResponse
-if config.lang == 'en':
-    import html_en as html
+from noormags import NoorMagsResponse
+from googlebooks import GoogleBooksResponse
+from noorlib import NoorLibResponse
+from adinebook import AdineBookResponse
+from urls import UrlsResponse
+from doi import DoiResponse, DOI_SEARCH
+from commons import uninum2en
+from config import lang
+from isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError, IsbnResponse
+if lang == 'en':
     from html_en import (
         DEFAULT_RESPONSE,
         UNDEFINED_URL_RESPONSE,
@@ -31,7 +30,6 @@ if config.lang == 'en':
         to_html,
     )
 else:
-    import html_fa as html
     from html_fa import (
         DEFAULT_RESPONSE,
         UNDEFINED_URL_RESPONSE,
@@ -39,6 +37,7 @@ else:
         OTHER_EXCEPTION_RESPONSE,
         to_html,
     )
+
 
 def mylogger():
     custom_logger = logging.getLogger()
@@ -80,20 +79,20 @@ def application(environ, start_response):
             print(repr(DEFAULT_RESPONSE.ref))
             print(repr(DEFAULT_RESPONSE.sfn))
         elif '.google.com/books' in url:
-            response = googlebooks.Response(url, date_format)
+            response = GoogleBooksResponse(url, date_format)
         elif 'noormags.' in netloc:
-            response = noormags.Response(url, date_format)
+            response = NoorMagsResponse(url, date_format)
         elif 'noorlib.ir' in netloc:
-            response = noorlib.Response(url, date_format)
+            response = NoorLibResponse(url, date_format)
         elif ('adinebook' in netloc) or ('adinehbook' in netloc):
-            response = adinebook.Response(url, date_format)
+            response = AdineBookResponse(url, date_format)
         if not response:
             # DOI and ISBN check
-            en_url = unquote(commons.uninum2en(url))
+            en_url = unquote(uninum2en(url))
             try:
-                m = doi.DOI_REGEX.search(doi.html.unescape(en_url))
+                m = DOI_SEARCH(unescape(en_url))
                 if m:
-                    response = doi.Response(
+                    response = DoiResponse(
                         m.group(1),
                         pure=True,
                         date_format=date_format
@@ -113,7 +112,7 @@ def application(environ, start_response):
             except IsbnError:
                 pass
         if not response:
-            response = urls.Response(url, date_format)
+            response = UrlsResponse(url, date_format)
         if not response:
             # All the above cases have been unsuccessful
             response = UNDEFINED_URL_RESPONSE

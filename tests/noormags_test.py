@@ -10,13 +10,14 @@ import sys
 import dummy_requests
 sys.path.append('..')
 import noormags
+from noormags import NoorMagsResponse
 
 
 class NoormagsTest(unittest.TestCase):
 
     def test_nm1(self):
         i = 'http://www.noormags.com/view/fa/articlepage/5798/102/Text'
-        o = noormags.Response(i)
+        o = NoorMagsResponse(i)
         e = (
             '* {{cite journal '
             '| last=موسوی '
@@ -36,7 +37,7 @@ class NoormagsTest(unittest.TestCase):
     def test_nm2(self):
         """The second author does not have a last name. (Bibtex file error)"""
         i = 'http://www.noormags.ir/view/fa/articlepage/261461'
-        o = noormags.Response(i)
+        o = NoorMagsResponse(i)
         e = (
             '* {{cite journal '
             '| last=ایرانی '
@@ -62,7 +63,7 @@ class NoormagsTest(unittest.TestCase):
             '692447?sta=%D8%AF%D8%B9%D8%A7%DB%8C%20%D8%A7%D8%A8%D9%88%D8%AD%'
             'D9%85%D8%B2%D9%87%20%D8%AB%D9%85%D8%A7%D9%84%DB%8C'
         )
-        o = noormags.Response(i)
+        o = NoorMagsResponse(i)
         sfnt = '{{sfn | سلیمانی میمند | 2010 | pp=103–124}}'
         ctnt = (
             '* {{cite journal '

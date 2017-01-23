@@ -5,9 +5,9 @@
 
 
 import re
-import html
 import urllib.parse
 import logging
+from html import unescape
 
 import requests
 
@@ -17,10 +17,11 @@ import bibtex
 
 # The regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
-DOI_REGEX = re.compile(r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'])\S)+)\b')
+DOI_SEARCH = re.compile(
+    r'\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'])\S)+)\b').search
 
 
-class Response(commons.BaseResponse):
+class DoiResponse(commons.BaseResponse):
 
     """Create a DOI's response object."""
 
@@ -32,8 +33,8 @@ class Response(commons.BaseResponse):
         else:
             # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
             # decode percent encodings
-            decoded_url = urllib.parse.unquote(html.unescape(doi_or_url))
-            m = DOI_REGEX.search(decoded_url)
+            decoded_url = urllib.parse.unquote(unescape(doi_or_url))
+            m = DOI_SEARCH(decoded_url)
             if m:
                 self.doi = m.group(1)
         self.url = 'http://dx.doi.org/' + self.doi

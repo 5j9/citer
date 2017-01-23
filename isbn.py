@@ -35,7 +35,7 @@ class IsbnError(Exception):
     pass
 
 
-class Response(commons.BaseResponse):
+class IsbnResponse(commons.BaseResponse):
 
     """Create isbn's response object."""
 

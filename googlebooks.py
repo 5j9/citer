@@ -14,7 +14,7 @@ import ris
 import commons
 
 
-class Response(commons.BaseResponse):
+class GoogleBooksResponse(commons.BaseResponse):
 
     """Create googlebooks' response object."""
 

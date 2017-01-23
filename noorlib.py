@@ -11,7 +11,7 @@ import bibtex
 # import ris[1]
 
 
-class Response(commons.BaseResponse):
+class NoorLibResponse(commons.BaseResponse):
 
     """Create NoorLib response object."""
 

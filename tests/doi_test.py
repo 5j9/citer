@@ -10,13 +10,14 @@ import sys
 sys.path.append('..')
 import doi
 import dummy_requests
+from doi import DoiResponse
 
 
 class DoiTest(unittest.TestCase):
 
     def test_doi1(self):
         i = 'http://dx.doi.org/10.1038/nrd842'
-        o = doi.Response(i)
+        o = DoiResponse(i)
         e = (
             "* {{cite journal "
             "| last=Atkins "
@@ -40,7 +41,7 @@ class DoiTest(unittest.TestCase):
     def test_doi2(self):
         """Title of this DOI could not be detected in an older version."""
         i = 'http://www.jstor.org/stable/info/10.1086/677379'
-        o = doi.Response(i)
+        o = DoiResponse(i)
         e = (
             '* {{cite journal '
             '| title=Books of Critical Interest '
@@ -61,7 +62,7 @@ class DoiTest(unittest.TestCase):
     def test_doi3(self):
         """No author. URL contains %2F."""
         i = 'http://dx.doi.org/10.1037%2Fh0063404'
-        o = doi.Response(i)
+        o = DoiResponse(i)
         e = (
             '* {{cite journal '
             '| last=Spitzer '

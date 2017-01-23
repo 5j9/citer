@@ -10,6 +10,7 @@ import sys
 import dummy_requests
 sys.path.append('..')
 import urls
+from urls import UrlsResponse
 
 
 class BostonTest(unittest.TestCase):
@@ -20,7 +21,7 @@ class BostonTest(unittest.TestCase):
             'http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod'
             '-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html'
         )
-        o = urls.Response(i, '%B %d, %Y')
+        o = UrlsResponse(i, '%B %d, %Y')
         ct = (
             '* {{cite web '
             '| last=Griffith '
@@ -43,7 +44,7 @@ class BostonTest(unittest.TestCase):
             'walsh-meets-with-college-leaders-off-campus-housing/'
             'lsxtLSGJMD86Gbkjay3D6J/story.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Saltzman '
@@ -67,7 +68,7 @@ class BostonTest(unittest.TestCase):
             'http://www.bostonmagazine.com/news/blog/2013/08/21/'
             'juliette-kayyem-jumps-in-for-guv/'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Bernstein '
@@ -91,7 +92,7 @@ class WashingtonpostTest(unittest.TestCase):
             'http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/'
             'AR2005090200822.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         e1 = '{{sfn | Sachs | 2005}}'
         e2 = (
             '* {{cite web '
@@ -117,7 +118,7 @@ class HuffingtonpostTest(unittest.TestCase):
             'http://www.huffingtonpost.ca/annelise-sorg/'
             'blackfish-killer-whale-seaworld_b_3686306.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         e1 = '{{sfn | Sorg | 2013}}'
         e2 = (
             '* {{cite web '
@@ -141,7 +142,7 @@ class HuffingtonpostTest(unittest.TestCase):
             'http://www.huffingtonpost.com/jeremy-rifkin/'
             'obamas-climate-change-plan_b_5427656.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         e1 = '{{sfn | Rifkin | 2014}}'
         e2 = (
             "* {{cite web "
@@ -169,7 +170,7 @@ class DilyTelegraphTest(unittest.TestCase):
             'We-could-see-the-whales-eyes-mouth...-'
             'the-barnacles-on-its-back.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         e1 = '{{sfn | Fogle | 2005}}'
         e2 = (
             "* {{cite web "
@@ -194,7 +195,7 @@ class DilyTelegraphTest(unittest.TestCase):
             'http://www.telegraph.co.uk/science/science-news/3313298/'
             'Marine-collapse-linked-to-whale-decline.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         e1 = '{{sfn | Highfield | 2003}}'
         e2 = (
             "* {{cite web "
@@ -217,7 +218,7 @@ class DilyTelegraphTest(unittest.TestCase):
             'http://www.telegraph.co.uk/science/8323909/'
             'The-sperm-whale-works-in-extraordinary-ways.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         e1 = '{{sfn | Whitehead | 2011}}'
         e2 = (
             "* {{cite web "
@@ -243,7 +244,7 @@ class DilyMailTest(unittest.TestCase):
             'http://www.dailymail.co.uk/news/article-2633025/'
             'London-cleric-convicted-NYC-terrorism-trial.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         e1 = '{{sfn | Malm | Witheridge | Drury | Bates | 2014}}'
         e2 = (
             '* {{cite web '
@@ -274,7 +275,7 @@ class DilyMailTest(unittest.TestCase):
             'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-'
             'shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         e = (
             '* {{cite web '
             '| last=Gower '
@@ -297,7 +298,7 @@ class BbcTest(unittest.TestCase):
     def test_bbc1(self):
         """no authors"""
         i = 'https://www.bbc.com/news/world-asia-27653361'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             "* {{cite web "
             "| title=US 'received Qatar assurances' on Afghan prisoner deal "
@@ -312,7 +313,7 @@ class BbcTest(unittest.TestCase):
     def test_bbc2(self):
         """1 author"""
         i = 'http://www.bbc.com/news/science-environment-23814524'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Gage '
@@ -329,7 +330,7 @@ class BbcTest(unittest.TestCase):
     def test_bbc3(self):
         """https version of bbc2 (differs a lot!)"""
         i = 'https://www.bbc.com/news/science-environment-23814524'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Gage '
@@ -346,7 +347,7 @@ class BbcTest(unittest.TestCase):
     def test_bbc4(self):
         """news.bbc.co.uk, 1 author"""
         i = 'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             "* {{cite web "
             "| last=Jones "
@@ -364,7 +365,7 @@ class BbcTest(unittest.TestCase):
     def test_bbc5(self):
         """news.bbc.co.uk, 1 author"""
         i = 'http://news.bbc.co.uk/2/hi/business/2570109.stm'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             "* {{cite web "
             "| last=Madslien "
@@ -381,7 +382,7 @@ class BbcTest(unittest.TestCase):
     def test_bbc6(self):
         """bbc.com, 1 author"""
         i = 'http://www.bbc.com/news/science-environment-26267918'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             "* {{cite web "
             "| last=Amos "
@@ -405,7 +406,7 @@ class NytTest(unittest.TestCase):
             'on-the-internet-the-right-to-forget-vs-the-right-to-know.html?'
             'hp&_r=0'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Hakim '
@@ -427,7 +428,7 @@ class NytTest(unittest.TestCase):
             'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-'
             'the-nba.html?hp'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Belson '
@@ -449,7 +450,7 @@ class NytTest(unittest.TestCase):
     def test_nyt3(self):
         """oldstylct, 1 author"""
         i = 'http://www.nytimes.com/2007/12/25/world/africa/25kenya.html'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Gettleman '
@@ -470,7 +471,7 @@ class NytTest(unittest.TestCase):
             'http://dealbook.nytimes.com/2014/05/30/'
             'insider-trading-inquiry-includes-mickelson-and-icahn/'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Goldstein '
@@ -495,7 +496,7 @@ class NytTest(unittest.TestCase):
             'http://www.nytimes.com/2007/06/13/world/americas/'
             '13iht-whale.1.6123654.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| title=19th-century harpoon gives clue on whales '
@@ -514,7 +515,7 @@ class NytTest(unittest.TestCase):
             'http://www.nytimes.com/2003/10/09/us/'
             'adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             "* {{cite web "
             "| last=O'Connor "
@@ -539,7 +540,7 @@ class TGDaily(unittest.TestCase):
             'http://www.tgdaily.com/sustainability-features/'
             '79712-are-more-wind-turbines-the-answer'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Danko '
@@ -560,7 +561,7 @@ class TGDaily(unittest.TestCase):
             'http://www.tgdaily.com/web/'
             '100381-apple-might-buy-beats-for-32-billion'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Wright '
@@ -581,7 +582,7 @@ class TGDaily(unittest.TestCase):
             'http://www.tgdaily.com/space-features/'
             '82906-sma-reveals-giant-star-cluster-in-the-making'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| title=SMA reveals giant star cluster in the making '
@@ -600,7 +601,7 @@ class NotWorking(unittest.TestCase):
     def test_tgd1(self):
         """ABCNews. Wrong author:  | last=News | first=ABC."""
         i = 'http://abcnews.go.com/blogs/headlines/2006/12/saddam_executed/'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Ross '
@@ -622,7 +623,7 @@ class NotWorking(unittest.TestCase):
             'UK-allows-working-visas-for-Indian-students/'
             'articleshow/1163528927.cms?'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         sfn = "{{sfn | Kashyap | 2001}}"
         self.assertIn(sfn, o.sfn)
 
@@ -632,7 +633,7 @@ class Others(unittest.TestCase):
     def test_oth1(self):
         """Get title by hometitle comparison."""
         i = 'http://www.ensani.ir/fa/content/326173/default.aspx'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=جلیلیان '
@@ -656,7 +657,7 @@ class Others(unittest.TestCase):
             'sudan-tech-sanctions-harm-innovation-development-us-government-'
             'and-corporations-must-act'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Carlson '
@@ -681,7 +682,7 @@ class Others(unittest.TestCase):
             'http://arstechnica.com/science/2007/09/'
             'the-pseudoscience-behind-homeopathy/'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Timmer '
@@ -709,7 +710,7 @@ class Others(unittest.TestCase):
             '46619-sterile-neutrino-experiment-beginning.html?'
             'cmpid=514645_20140702_27078936'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             "* {{cite web "
             "| last=Ghose "
@@ -728,7 +729,7 @@ class Others(unittest.TestCase):
     def test_oth5(self):
         """Getting the date is tricky here."""
         i = 'http://www.magiran.com/npview.asp?ID=1410487'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         sf = '{{sfn | نوري | 2007}}'
         ct = (
             '* {{cite web '
@@ -749,7 +750,7 @@ class Others(unittest.TestCase):
     def test_oth6(self):
         """Detection of website name."""
         i = 'http://www.farsnews.com/newstext.php?nn=13930418000036'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         sf = "{{sfn | ''Fars News Agency'' | 2014}}"
         ct = (
             '* {{cite web '
@@ -770,7 +771,7 @@ class Others(unittest.TestCase):
             'http://newsoffice.mit.edu/2014/'
             'traffic-lights-theres-a-better-way-0707'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Chandler '
@@ -791,7 +792,7 @@ class Others(unittest.TestCase):
             'http://www.theguardian.com/world/2014/jul/14/'
             'israel-drone-launched-gaza-ashdod'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Beaumont '
@@ -811,7 +812,7 @@ class Others(unittest.TestCase):
     def test_oth9(self):
         """Author in str(soup)."""
         i = 'http://www.defense.gov/News/NewsArticle.aspx?ID=18509'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Garamone '
@@ -832,7 +833,7 @@ class Others(unittest.TestCase):
             'http://www.thetimes.co.uk/tto/news/world/australia-newzealand/'
             'article4151214.ece'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Lagan '
@@ -856,7 +857,7 @@ class Others(unittest.TestCase):
             'http://www.businessnewsdaily.com/6762-male-female-entrepreneurs'
             '.html?cmpid=514642_20140715_27858876'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Helmrich '
@@ -874,7 +875,7 @@ class Others(unittest.TestCase):
     def test_oth12(self):
         """thebulletin.org"""
         i = 'http://thebulletin.org/evidence-shows-iron-dome-not-working7318'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Postol '
@@ -892,7 +893,7 @@ class Others(unittest.TestCase):
     def test_oth13(self):
         """thebulletin.org"""
         i = 'http://www.highbeam.com/doc/1P3-3372742961.html'
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| last=Martin '
@@ -912,7 +913,7 @@ class Others(unittest.TestCase):
             'http://www.independent.co.uk/news/business/'
             'the-investment-column-tt-group-1103208.html'
         )
-        o = urls.Response(i)
+        o = UrlsResponse(i)
         ct = (
             '* {{cite web '
             '| title=The Investment column: TT Group '

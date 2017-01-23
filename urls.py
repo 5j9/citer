@@ -97,7 +97,7 @@ DATE_FIND_PARAMETERS = (
 )
 
 
-class Response(commons.BaseResponse):
+class UrlsResponse(commons.BaseResponse):
 
     """Create URL's response object."""
 

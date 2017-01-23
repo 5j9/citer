@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 from commons import Name, BaseResponse
 
 
-class Response(BaseResponse):
+class AdineBookResponse(BaseResponse):
 
     """Create Adinebook's response object."""
 
