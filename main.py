@@ -3,7 +3,7 @@
 
 import logging
 import logging.handlers
-import urllib.parse
+from urllib.parse import parse_qs, urlparse, unquote
 
 try:
     from flup.server.fcgi import WSGIServer
@@ -60,7 +60,7 @@ def mylogger():
 
 
 def application(environ, start_response):
-    qdict = urllib.parse.parse_qs(environ['QUERY_STRING'])
+    qdict = parse_qs(environ['QUERY_STRING'])
     action = qdict.get('action', [''])[0]  # apiquery
     user_input = qdict.get('user_input', [''])[0]
     # Warning: input is not escaped!
@@ -71,7 +71,7 @@ def application(environ, start_response):
         url = 'http://' + user_input
     else:
         url = user_input
-    netloc = urllib.parse.urlparse(url)[1]
+    netloc = urlparse(url)[1]
     try:
         response = None
         if not user_input:
@@ -89,7 +89,7 @@ def application(environ, start_response):
             response = adinebook.Response(url, date_format)
         if not response:
             # DOI and ISBN check
-            en_url = urllib.parse.unquote(commons.uninum2en(url))
+            en_url = unquote(commons.uninum2en(url))
             try:
                 m = doi.DOI_REGEX.search(doi.html.unescape(en_url))
                 if m:
