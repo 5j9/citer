@@ -5,11 +5,11 @@
 
 
 import re
-import urllib.parse
+from urllib.parse import unquote
 import logging
 from html import unescape
 
-import requests
+from requests import get as requests_get
 
 from commons import BaseResponse
 from config import lang
@@ -35,7 +35,7 @@ class DoiResponse(BaseResponse):
         else:
             # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
             # decode percent encodings
-            decoded_url = urllib.parse.unquote(unescape(doi_or_url))
+            decoded_url = unquote(unescape(doi_or_url))
             m = DOI_SEARCH(decoded_url)
             if m:
                 self.doi = m.group(1)
@@ -55,7 +55,7 @@ class DoiResponse(BaseResponse):
 
 def get_bibtex(doi_url):
     """Get BibTex file content from a DOI URL. Return as string."""
-    return requests.get(
+    return requests_get(
         doi_url, headers={'Accept': 'application/x-bibtex'}
     ).text
 
