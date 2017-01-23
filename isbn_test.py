@@ -5,10 +5,8 @@
 
 
 import unittest
-import sys
 
 import dummy_requests
-sys.path.append('..')
 import isbn
 from isbn import IsbnResponse
 

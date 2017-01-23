@@ -6,9 +6,7 @@
 
 import re
 import unittest
-import sys
 
-sys.path.append('..')
 from urls_authors import byline_to_names, BYLINE_PATTERN
 
 

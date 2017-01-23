@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Discover all tests and run them."""
+"""Discover all tests (except the ones inside test_fa.py) and run them."""
 
 
 import unittest

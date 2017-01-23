@@ -5,9 +5,7 @@
 
 
 import unittest
-import sys
 
-sys.path.append('..')
 import dummy_requests
 import doi
 from doi import DoiResponse

@@ -5,10 +5,8 @@
 
 
 import unittest
-import sys
 
 import dummy_requests
-sys.path.append('..')
 import noormags
 from noormags import NoorMagsResponse
 

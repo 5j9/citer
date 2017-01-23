@@ -2,20 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-import sys
-
-import requests
 
 from dummy_requests import DummyRequests
-sys.path.append('..')
+import config; config.lang = 'fa'
 import adinebook
 import googlebooks
 import noormags
 import noorlib
 import doi
 import isbn
-import config
-config.lang = 'fa'
 from adinebook import AdineBookResponse
 from googlebooks import GoogleBooksResponse
 from noormags import NoorMagsResponse
@@ -301,8 +296,8 @@ class IsbnTest(unittest.TestCase):
         self.assertIn(e, o.cite)
 
 
-adinebook.requests_get, googlebooks.requests_get, noormags.requests_get, \
-    noorlib.requests_get, doi.requests_get, isbn.requests_get = \
+adinebook.requests_get = googlebooks.requests_get = noormags.requests_get = \
+    noorlib.requests_get = doi.requests_get = isbn.requests_get = \
     DummyRequests().get
 if __name__ == '__main__':
     unittest.main()
