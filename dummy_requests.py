@@ -19,7 +19,7 @@ class DummyRequests:
 
     def get(self, url, headers=None, *args, **kwargs):
         pu = urlparse(url)
-        file = './offline_resources/' +\
+        file = './tests_cache/' +\
                re.sub('/+', '/', '/'.join(pu)).rstrip('/') + '.html'
         try:
             with open(file, 'rb') as f:

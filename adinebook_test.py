@@ -11,7 +11,7 @@ import adinebook
 from adinebook import AdineBookResponse
 
 
-class AdinebookTest(unittest.TestCase):
+class AdineBookTest(unittest.TestCase):
 
     def test_ab1(self):
         """authors = 1, translators = 2, otheo = 1, isbn13"""
@@ -133,7 +133,7 @@ class AdinebookTest(unittest.TestCase):
             '| last=مونس '
             '| first=حسین '
             '| others=حمیدرضا شیخی (مترجم) '
-            '| title=تاریخ و تمدن مغرب '
+            '| title=تاریخ و تمدن مغرب - جلد اول '
             '| publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها '
             '| year=1392 '
             '| isbn=978-964-530-036-2 '
@@ -156,9 +156,9 @@ class AdinebookTest(unittest.TestCase):
             '| editor-last=جباری '
             '| editor-first=کریم '
             '| others= کیانوش هاشمیان (زيرنظر), and محمد کاویانی (مترجم) '
-            '| title=روانشناسی سلامت به ضمیمه نگرشی بر منابع اسلامی '
+            '| title=روانشناسی سلامت به ضمیمه نگرشی بر منابع اسلامی - جلد اول '
             '| publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها '
-            '| year=1389 '
+            '| year=1392 '
             '| isbn=978-964-459-398-7 '
             '| language=fa '
             '| ref=harv'
