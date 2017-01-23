@@ -17,9 +17,10 @@ import noorlib
 import adinebook
 import urls
 import doi
-import isbn
 import commons
 import config
+from isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError
+from isbn import Response as IsbnResponse
 if config.lang == 'en':
     import html_en as html
     from html_en import (
@@ -38,7 +39,6 @@ else:
         OTHER_EXCEPTION_RESPONSE,
         to_html,
     )
-
 
 def mylogger():
     custom_logger = logging.getLogger()
@@ -98,19 +98,19 @@ def application(environ, start_response):
                         pure=True,
                         date_format=date_format
                     )
-                elif isbn.ISBN13_REGEX.search(en_url):
-                    response = isbn.Response(
-                        isbn.ISBN13_REGEX.search(en_url).group(0),
+                elif ISBN13_SEARCH(en_url):
+                    response = IsbnResponse(
+                        ISBN13_SEARCH(en_url).group(0),
                         pure=True,
                         date_format=date_format,
                     )
-                elif isbn.ISBN10_REGEX.search(en_url):
-                    response = isbn.Response(
-                        isbn.ISBN10_REGEX.search(en_url).group(0),
+                elif ISBN10_SEARCH(en_url):
+                    response = IsbnResponse(
+                        ISBN10_SEARCH(en_url).group(0),
                         pure=True,
                         date_format=date_format,
                     )
-            except isbn.IsbnError:
+            except IsbnError:
                 pass
         if not response:
             response = urls.Response(url, date_format)
