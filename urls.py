@@ -7,14 +7,16 @@
 import re
 from urllib.parse import urlparse
 import logging
-import difflib
+from difflib import get_close_matches
 from threading import Thread
 
-import requests
+from requests import get as requests_get
+from requests import get as requests_head
+
 from requests.exceptions import RequestException
 from bs4 import SoupStrainer, BeautifulSoup
 
-import commons
+from commons import finddate, detect_language, BaseResponse
 from urls_authors import find_authors
 
 
@@ -97,7 +99,7 @@ DATE_FIND_PARAMETERS = (
 )
 
 
-class UrlsResponse(commons.BaseResponse):
+class UrlsResponse(BaseResponse):
 
     """Create URL's response object."""
 
@@ -131,7 +133,7 @@ class ContentLengthError(Exception):
 
 class StatusCodeError(Exception):
 
-    """Raise when requests.get.status_code != 200."""
+    """Raise when requests_get.status_code != 200."""
 
     pass
 
@@ -364,10 +366,9 @@ def parse_title(
     if not intitle_sitename:
         # 2. Using difflib on hostname
         # Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
-        close_matches = difflib.get_close_matches(hostname,
-                                                  title_parts,
-                                                  n=1,
-                                                  cutoff=.3)
+        close_matches = get_close_matches(
+            hostname, title_parts, n=1, cutoff=.3
+        )
         if close_matches:
             intitle_sitename = close_matches[0]
     if not intitle_sitename:
@@ -419,12 +420,12 @@ def try_find_date(soup: BeautifulSoup):
             m = soup.find(attrs=attrs)
             if fp[1] == 'getitem':
                 string = m[fp[2]]
-                date = commons.finddate(string)
+                date = finddate(string)
                 if date:
                     return date, attrs
             elif fp[1] == 'getattr':
                 string = getattr(m, fp[2])
-                date = commons.finddate(string)
+                date = finddate(string)
                 if date:
                     return date, attrs
         except (TypeError, AttributeError, KeyError):
@@ -439,17 +440,17 @@ def find_date(soup: BeautifulSoup, url: str):
         return date, tag
     else:
         # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-        date = commons.finddate(url)
+        date = finddate(url)
     if date:
         return date, 'url'
     else:
         # https://www.bbc.com/news/uk-england-25462900
-        date = commons.finddate(soup.text)
+        date = finddate(soup.text)
     if date:
         return date, 'soup.text'
     else:
         logger.info('Searching for date in page content.\n' + url)
-        return commons.finddate(str(soup)), 'str(soup)'
+        return finddate(str(soup)), 'str(soup)'
 
 
 def get_hometitle(url: str, headers: dict, hometitle_list: list):
@@ -461,7 +462,7 @@ def get_hometitle(url: str, headers: dict, hometitle_list: list):
     homeurl = '://'.join(urlparse(url)[:2])
     try:
         requests_visa(homeurl, headers)
-        content = requests.get(homeurl, headers=headers, timeout=15).content
+        content = requests_get(homeurl, headers=headers, timeout=15).content
         strainer = SoupStrainer('title')
         soup = BeautifulSoup(content, 'lxml', parse_only=strainer)
         hometitle_list.append(soup.title.text.strip())
@@ -475,7 +476,7 @@ def requests_visa(url, request_headers=None):
     Return True if content-type is text/* and content-length is less than 1MB.
     Also return True if no information is available. Else return False.
     """
-    response_headers = requests.head(url, headers=request_headers).headers
+    response_headers = requests_head(url, headers=request_headers).headers
     if 'content-length' in response_headers:
         megabytes = int(response_headers['content-length']) / 1000000.
         if megabytes > 1:
@@ -498,7 +499,7 @@ def requests_visa(url, request_headers=None):
 def get_soup(url, headers=None):
     """Return the soup object for the given url."""
     requests_visa(url, headers)
-    r = requests.get(url, headers=headers, timeout=15)
+    r = requests_get(url, headers=headers, timeout=15)
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
     return BeautifulSoup(r.content, 'lxml')
@@ -542,7 +543,7 @@ def url2dictionary(url):
         logger.debug('Date tag: ' + str(tag))
         d['date'] = date
         d['year'] = str(date.year)
-    d['language'], d['error'] = commons.detect_language(soup.text)
+    d['language'], d['error'] = detect_language(soup.text)
     return d
 
 

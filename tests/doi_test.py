@@ -8,8 +8,8 @@ import unittest
 import sys
 
 sys.path.append('..')
-import doi
 import dummy_requests
+import doi
 from doi import DoiResponse
 
 
@@ -82,6 +82,6 @@ class DoiTest(unittest.TestCase):
         self.assertIn(e, o.cite)
 
 
-doi.requests = dummy_requests.DummyRequests()
+doi.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

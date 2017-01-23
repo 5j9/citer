@@ -4,9 +4,9 @@
 """Codes specifically related to ISBNs."""
 
 import re
+from threading import Thread
 
 from requests import get as requests_get
-from threading import Thread
 
 from adinebook import url2dictionary as adinebook_url2dictionary
 from adinebook import isbn2url as adinebook_isbn2url

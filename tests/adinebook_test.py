@@ -167,6 +167,7 @@ class AdinebookTest(unittest.TestCase):
         )
         self.assertIn(e, o.cite)
 
-adinebook.requests = dummy_requests.DummyRequests()
+
+adinebook.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

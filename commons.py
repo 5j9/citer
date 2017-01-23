@@ -8,14 +8,10 @@ import re
 import json
 
 import langid
-import isbnlib
+from isbnlib import mask as isbn_mask
 from jdatetime import date as jdate
 
-import config
-if config.lang == 'en':
-    import generator_en as generator
-else:
-    import generator_fa as generator
+from config import lang
 
 
 fa_months = (
@@ -156,10 +152,14 @@ class BaseResponse:
         """
         value_encode(self.dictionary)
         if 'isbn' in self.dictionary:
-            masked = isbnlib.mask(self.dictionary['isbn'])
+            masked = isbn_mask(self.dictionary['isbn'])
             if masked:
                 self.dictionary['isbn'] = masked
-        self.cite, self.sfn, self.ref = generator.citations(
+        if lang == 'en':
+            from generator_en import citations
+        else:
+            from generator_fa import citations
+        self.cite, self.sfn, self.ref = citations(
             self.dictionary, self.date_format
         )
 

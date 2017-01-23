@@ -926,7 +926,9 @@ class Others(unittest.TestCase):
         )
         self.assertIn(ct, o.cite)
 
-        
-urls.requests = dummy_requests.DummyRequests()
+
+dummy_requests = dummy_requests.DummyRequests()
+urls.requests_get = dummy_requests.get
+urls.requests_head = dummy_requests.head
 if __name__ == '__main__':
     unittest.main()

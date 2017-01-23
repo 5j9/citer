@@ -7,10 +7,10 @@
 from string import Template
 from datetime import date
 
-import commons
+from commons import BaseResponse
 
 
-class Response(commons.BaseResponse):
+class Response(BaseResponse):
 
     """Create the responce object used by the main application."""
 

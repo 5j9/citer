@@ -7,14 +7,14 @@
 from urllib.parse import parse_qs
 from urllib.parse import urlparse
 
-import requests
+from requests import get as requests_get
 
 # import bibtex [1]
-import ris
-import commons
+from ris import parse as ris_parse
+from commons import BaseResponse
 
 
-class GoogleBooksResponse(commons.BaseResponse):
+class GoogleBooksResponse(BaseResponse):
 
     """Create googlebooks' response object."""
 
@@ -25,7 +25,7 @@ class GoogleBooksResponse(commons.BaseResponse):
         # self.bibtex = get_bibtex(googlebook_url) [1]
         # self.dictionary = bibtex.parse(self.bibtex) [1]
         self.bibtex = get_ris(googlebook_url)
-        self.dictionary = ris.parse(self.bibtex)
+        self.dictionary = ris_parse(self.bibtex)
         pu = urlparse(googlebook_url)
         pq = parse_qs(pu.query)
         # default domain is prefered:
@@ -55,7 +55,7 @@ def get_bibtex(googlebook_url):
         'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
         'Firefox/33.0'
     }
-    bibtex = requests.get(url, headers=headers).text
+    bibtex = requests_get(url, headers=headers).text
     return bibtex
 
 
@@ -73,4 +73,4 @@ def get_ris(googlebook_url):
         'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
         'Firefox/33.0'
     }
-    return requests.get(url, headers=headers).text
+    return requests_get(url, headers=headers).text

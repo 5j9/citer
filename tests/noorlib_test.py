@@ -61,6 +61,6 @@ class NoorlibTest(unittest.TestCase):
         self.assertIn(ec, o.cite)
 
 
-noorlib.requests = dummy_requests.DummyRequests()
+noorlib.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

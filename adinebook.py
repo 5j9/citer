@@ -4,13 +4,21 @@
 """All things that are specifically related to adinebook website"""
 
 import logging
-from re import search, split
+import re
 
-import requests
+from requests import get as requests_get
 from requests import RequestException
 from bs4 import BeautifulSoup
-
 from commons import Name, BaseResponse
+
+
+ISBN_SEARCH = re.compile(r'شابک:.*?([\d-]*X?)</span></li>').search
+YEAR_SEARCH = re.compile(r'نشر:</b>.*?\(.*?(\d\d\d\d)\)</li>').search
+MONTH_SEARCH = re.compile(r'نشر:</b>.*\([\d\s]*(.*?)،.*').search
+PUBLISHER_SEARCH = re.compile(r'نشر:</b>\s*(.*?)\s*\(.*</li>').search
+TITLE_SEARCH = re.compile(
+    r'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$'
+).search
 
 
 class AdineBookResponse(BaseResponse):
@@ -50,7 +58,7 @@ def url2dictionary(adinebook_url: str):
             'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) '
             'Gecko/20100101 Firefox/33.0'
         }
-        r = requests.get(adinebook_url, headers=headers)
+        r = requests_get(adinebook_url, headers=headers)
         adinebook_html = r.content.decode('utf-8')
     except RequestException:
         logger.exception(adinebook_url)
@@ -60,10 +68,7 @@ def url2dictionary(adinebook_url: str):
     else:
         d = {'type': 'book'}
         bs = BeautifulSoup(adinebook_html, 'lxml')
-        m = search(
-            'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$',
-            bs.title.text,
-        )
+        m = TITLE_SEARCH(bs.title.text)
         if m:
             d['title'] = m.group('title')
         names = m.group('names').split('،')
@@ -75,11 +80,11 @@ def url2dictionary(adinebook_url: str):
         # building lists:
         for name in names:
             if '(ويراستار)' in name:
-                editors.append(Name(name.split('(ويراستار)')[0]))
+                editors.append(Name(name.partition('(ويراستار)')[0]))
             elif '(مترجم)' in name:
-                translators.append(Name(name.split('(مترجم)')[0]))
+                translators.append(Name(name.partition('(مترجم)')[0]))
             elif '(' in name:
-                other = Name(split('\(.*\)', name)[0])
+                other = Name(name.partition('(')[0])
                 others.append(other)
                 other.fullname = name
             else:
@@ -92,16 +97,16 @@ def url2dictionary(adinebook_url: str):
             d['editors'] = editors
         if translators:
             d['translators'] = translators
-        m = search('نشر:</b>\s*(.*?)\s*\(.*</li>', adinebook_html)
+        m = PUBLISHER_SEARCH(adinebook_html)
         if m:
             d['publisher'] = m.group(1)
-        m = search('نشر:</b>.*\([\d\s]*(.*?)،.*', adinebook_html)
+        m = MONTH_SEARCH(adinebook_html)
         if m:
             d['month'] = m.group(1)
-        m = search('نشر:</b>.*?\(.*?(\d\d\d\d)\)</li>', adinebook_html)
+        m = YEAR_SEARCH(adinebook_html)
         if m:
             d['year'] = m.group(1)
-        m = search('شابک:.*?([\d-]*X?)</span></li>', adinebook_html)
+        m = ISBN_SEARCH(adinebook_html)
         if m:
             d['isbn'] = m.group(1)
     return d

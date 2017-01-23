@@ -85,6 +85,6 @@ class IsbnTest(unittest.TestCase):
         self.assertIn(e, o.cite)
 
 
-isbn.requests = dummy_requests.DummyRequests()
+isbn.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

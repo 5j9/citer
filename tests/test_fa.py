@@ -4,16 +4,18 @@
 import unittest
 import sys
 
-import dummy_requests
+import requests
+
+from dummy_requests import DummyRequests
 sys.path.append('..')
-import config
-config.lang = 'fa'
 import adinebook
 import googlebooks
 import noormags
 import noorlib
 import doi
 import isbn
+import config
+config.lang = 'fa'
 from adinebook import AdineBookResponse
 from googlebooks import GoogleBooksResponse
 from noormags import NoorMagsResponse
@@ -299,11 +301,8 @@ class IsbnTest(unittest.TestCase):
         self.assertIn(e, o.cite)
 
 
-adinebook.requests = dummy_requests.DummyRequests()
-googlebooks.requests = dummy_requests.DummyRequests()
-noormags.requests = dummy_requests.DummyRequests()
-noorlib.requests = dummy_requests.DummyRequests()
-doi.requests = dummy_requests.DummyRequests()
-isbn.requests = dummy_requests.DummyRequests()
+adinebook.requests_get, googlebooks.requests_get, noormags.requests_get, \
+    noorlib.requests_get, doi.requests_get, isbn.requests_get = \
+    DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

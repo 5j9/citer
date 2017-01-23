@@ -179,6 +179,6 @@ class GooglebooksTest(unittest.TestCase):
         self.assertIn(' | page=378}}</ref>', o.ref)
 
 
-googlebooks.requests = dummy_requests.DummyRequests()
+googlebooks.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

@@ -4,7 +4,7 @@
 """Codes required to create English Wikipedia citation templates."""
 
 
-import datetime
+from datetime import date as datetime_date
 import re
 
     
@@ -81,7 +81,7 @@ def citations(d, date_format) -> tuple:
         cite += ' | issue=' + issue
     date = d.get('date')
     if date:
-        if isinstance(date, datetime.date):
+        if isinstance(date, datetime_date):
             date = (
                 date.strftime(date_format).lstrip("0").replace(" 0", " ")
             )
@@ -136,7 +136,7 @@ def citations(d, date_format) -> tuple:
     if url:
         cite += (
             ' | accessdate=' +
-            datetime.date.strftime(datetime.date.today(), date_format).
+            datetime_date.strftime(datetime_date.today(), date_format).
             lstrip("0").replace(" 0", " ")
         )
     cite += '}}'

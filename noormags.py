@@ -5,14 +5,14 @@
 
 import re
 
-import requests
+from requests import get as requests_get
 
-import commons
-import bibtex
-import ris
+from commons import BaseResponse
+from bibtex import parse as bibtex_parse
+from ris import parse as ris_parse
 
 
-class NoorMagsResponse(commons.BaseResponse):
+class NoorMagsResponse(BaseResponse):
 
     """Create noormags response object."""
 
@@ -21,28 +21,28 @@ class NoorMagsResponse(commons.BaseResponse):
         self.date_format = date_format
         self.url = noormags_url
         self.bibtex = get_bibtex(noormags_url)
-        self.dictionary = bibtex.parse(self.bibtex)
+        self.dictionary = bibtex_parse(self.bibtex)
         # language parameter needs to be taken from RIS
         # other information are more accurate in bibtex
         # for example: http://www.noormags.com/view/fa/articlepage/104040
         # "IS  - 1" is wrong in RIS but "number = { 45 }," is correct in bibtex
         self.ris = get_ris(noormags_url)
         if 'LA' in self.ris:
-            self.dictionary['language'] = ris.parse(self.ris)['language']
+            self.dictionary['language'] = ris_parse(self.ris)['language']
         self.generate()
 
 
 def get_bibtex(noormags_url):
     """Get bibtex file content from a noormags_url. Return as string."""
-    pagetext = requests.get(noormags_url).text
+    pagetext = requests_get(noormags_url).text
     article_id = re.search('/citation/bibtex/(\d+)', pagetext).group(1)
     url = 'http://www.noormags.ir/view/fa/citation/bibtex/' + article_id
-    return requests.get(url).text
+    return requests_get(url).text
 
 
 def get_ris(noormags_url):
     """Get ris file content from a noormags url. Return as string."""
-    pagetext = requests.get(noormags_url).text
+    pagetext = requests_get(noormags_url).text
     article_id = re.search('/citation/ris/(\d+)', pagetext).group(1)
     url = 'http://www.noormags.ir/view/fa/citation/ris/' + article_id
-    return requests.get(url).text
+    return requests_get(url).text

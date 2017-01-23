@@ -6,7 +6,7 @@
 
 from datetime import date
 
-import commons
+from commons import ennum2fa
 
 
 def citations(d, date_format) -> tuple:
@@ -138,13 +138,10 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
                 s += ' | ' + nofn_parameter + '=' + name.fullname
         else:
             if name.firstname or not nofn_parameter:
-                s += ' | ' + ln_parameter + commons.ennum2fa(c) + '=' +\
-                     name.lastname
-                s += ' | ' + fn_parameter + commons.ennum2fa(c) + '=' +\
-                     name.firstname
+                s += ' | ' + ln_parameter + ennum2fa(c) + '=' + name.lastname
+                s += ' | ' + fn_parameter + ennum2fa(c) + '=' + name.firstname
             else:
-                s += ' | ' + nofn_parameter + commons.ennum2fa(c) +\
-                     '=' + name.fullname
+                s += ' | ' + nofn_parameter + ennum2fa(c) + '=' + name.fullname
     return s
 
 

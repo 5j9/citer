@@ -98,6 +98,6 @@ class NoormagsTest(unittest.TestCase):
         self.assertIn(rftg, o.ref)
 
 
-noormags.requests = dummy_requests.DummyRequests()
+noormags.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

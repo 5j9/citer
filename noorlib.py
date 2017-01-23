@@ -4,14 +4,15 @@
 """Codes specifically related to Noormags website."""
 
 import re
-import requests
 
-import commons
-import bibtex
+from requests import get as requests_get
+
+from commons import BaseResponse
+from bibtex import parse as bibtex_parse
 # import ris[1]
 
 
-class NoorLibResponse(commons.BaseResponse):
+class NoorLibResponse(BaseResponse):
 
     """Create NoorLib response object."""
 
@@ -20,7 +21,7 @@ class NoorLibResponse(commons.BaseResponse):
         self.date_format = date_format
         self.url = noorlib_url
         self.bibtex = get_bibtex(noorlib_url)
-        self.dictionary = bibtex.parse(self.bibtex)
+        self.dictionary = bibtex_parse(self.bibtex)
         # self.ris = get_ris(noorlib_url)[1]
         # self.dictionary = ris.parse(self.ris)[1]
         self.generate()
@@ -28,22 +29,22 @@ class NoorLibResponse(commons.BaseResponse):
 
 def get_bibtex(noorlib_url):
     """Get bibtex file content from a noormags url. Return as string."""
-    pagetext = requests.get(noorlib_url).text
+    pagetext = requests_get(noorlib_url).text
     article_id = re.search(
         'CitationHandler\.ashx\?id=(\d+)',
         pagetext,
     ).group(1)
     url = 'http://www.noorlib.ir/View/HttpHandler/CitationHandler.ashx?id=' +\
           article_id + '&format=BibTex'
-    return requests.get(url).text
+    return requests_get(url).text
 
 
 def get_ris(noorlib_url):
     # This is copied from noormags module (currently not supported but may
     # be)[1]
     """Get ris file content from a noormags url. Return as string."""
-    pagetext = requests.get(noorlib_url).text
+    pagetext = requests_get(noorlib_url).text
     article_id = re.search('RIS&id=(\d+)', pagetext).group(1)
     url = 'http://www.noormags.com/view/CitationHandler.ashx?format=RIS&id=' +\
           article_id
-    return requests.get(url).text
+    return requests_get(url).text
