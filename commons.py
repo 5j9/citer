@@ -14,7 +14,7 @@ from jdatetime import date as jdate
 from config import lang
 
 
-fa_months = (
+FA_MONTHS = (
     'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر',
     'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
 )
@@ -27,7 +27,7 @@ B = (
     r'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
 )
 # فروردین|اردیبهشت|خرداد...
-fa_B = '|'.join(fa_months).replace('ی', '[یي]')
+fa_B = '|'.join(FA_MONTHS).replace('ی', '[یي]')
 
 # Month abbreviations:
 b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec).?'
@@ -287,7 +287,7 @@ def jalali_string_to_date(match):
     """Return the date object for given Jalali string."""
     return jdate(
         int(uninum2en(match.group('jY'))),
-        fa_months.index(match.group('jB').replace('ي', 'ی')) + 1,
+        FA_MONTHS.index(match.group('jB').replace('ي', 'ی')) + 1,
         int(uninum2en(match.group('jd'))),
     ).togregorian()
 
