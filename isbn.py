@@ -59,13 +59,13 @@ class IsbnResponse(BaseResponse):
                 # search for isbn10
                 m = ISBN10_SEARCH(isbn_container_string)
                 self.isbn = m.group(0)
-        self.bibtex = ottobib(self.isbn)
         adinebook_dict_list = []
         thread = Thread(
             target=adinebook_thread,
             args=(self.isbn, adinebook_dict_list),
         )
         thread.start()
+        self.bibtex = ottobib(self.isbn)
         if self.bibtex:
             otto_dict = bibtex_parse(self.bibtex)
         else:
