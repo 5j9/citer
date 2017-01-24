@@ -23,24 +23,24 @@ FA_MONTHS = (
 
 # January|February...
 B = (
-    r'(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|'
-    r'A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)'
+    r'(?:J(?:anuary|u(?:ne|ly))|February|Ma(?:rch|y)|'
+    r'A(?:pril|ugust)|(?:(?:(?:Sept|Nov|Dec)em)|Octo)ber)'
 )
 # فروردین|اردیبهشت|خرداد...
 fa_B = '|'.join(FA_MONTHS).replace('ی', '[یي]')
 
 # Month abbreviations:
-b = r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec).?'
+b = r'(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec).?'
 # Month numbers 0?1-12
-m = r'(0?[1-9]|1[012])'
+m = r'(?:0?[1-9]|1[012])'
 # Zero padded month numbers 01-12
-zm = r'(0[1-9]|1[012])'
+zm = r'(?:0[1-9]|1[012])'
 # Day (0?1-31)
-d = r'(0?[1-9]|[12][0-9]|3[01])'
+d = r'(?:0?[1-9]|[12][0-9]|3[01])'
 # Zero-padded day (01-31)
-zd = r'(0[1-9]|[12][0-9]|3[01])'
+zd = r'(?:0[1-9]|[12][0-9]|3[01])'
 # Gregorian year pattern 1900-2099
-Y = r'(19|20)\d\d'
+Y = r'(?:19|20)\d\d'
 
 
 # July 3, 2001
@@ -50,7 +50,7 @@ bdY = re.compile(b + ' ' + d + ', ' + Y)
 # 22 August 2001
 dBY = re.compile(d + ' ' + B + ' ' + Y)
 # ۲۷ مرداد ۱۳۹۳
-fa_dBY = re.compile('(\d\d?) (' + fa_B + ') (\d\d\d\d)')
+fa_dBY = re.compile('(?:\d\d?) (' + fa_B + ') (?:\d\d\d\d)')
 
 # 22 Aug 2001
 dbY = re.compile(d + ' ' + b + ' ' + Y)
@@ -63,7 +63,7 @@ Ymd_slashed = re.compile(Y + '/' + zm + '/' + zd)
 Ymd = re.compile(Y + zm + zd)
 
 ANYDATE_SEARCH = re.compile(
-    '(' + B + ' ' + d + ', ' + Y + '|' +
+    '(?:' + B + ' ' + d + ', ' + Y + '|' +
     b + ' ' + d + ', ' + Y + '|' +
     d + ' ' + B + ' ' + Y + '|' +
     d + ' ' + b + ' ' + Y + '|' +
