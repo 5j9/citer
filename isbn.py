@@ -64,9 +64,9 @@ class IsbnResponse(BaseResponse):
             args=(isbn, adinebook_dict_list),
         )
         thread.start()
-        self.bibtex = ottobib(isbn)
-        if self.bibtex:
-            otto_dict = bibtex_parse(self.bibtex)
+        ottobib_bibtex = ottobib(isbn)
+        if ottobib_bibtex:
+            otto_dict = bibtex_parse(ottobib_bibtex)
         else:
             otto_dict = None
         thread.join()

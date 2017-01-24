@@ -20,10 +20,9 @@ class GoogleBooksResponse(BaseResponse):
 
     def __init__(self, url, date_format='%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
-        # self.bibtex = get_bibtex(url) [1]
-        # self.dictionary = bibtex.parse(self.bibtex) [1]
-        self.bibtex = get_ris(url)
-        dictionary = ris_parse(self.bibtex)
+        # bibtex_result = get_bibtex(url) [1]
+        # self.dictionary = bibtex.parse(bibtex_result) [1]
+        dictionary = ris_parse(get_ris(url))
         dictionary['date_format'] = date_format
         self.dictionary = dictionary
         pu = urlparse(url)

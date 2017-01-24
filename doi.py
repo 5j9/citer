@@ -39,14 +39,14 @@ class DoiResponse(BaseResponse):
             if m:
                 doi = m.group(1)
         url = 'http://dx.doi.org/' + doi
-        self.bibtex = get_bibtex(url)
-        if self.bibtex == 'Resource not found.':
+        bibtex = get_bibtex(url)
+        if bibtex == 'Resource not found.':
             logger.info('DOI could not be resolved.\n' + url)
             self.error = 100
             self.sfnt = 'DOI could not be resolved.'
-            self.ctnt = self.bibtex
+            self.ctnt = bibtex
         else:
-            dictionary = bibtex_parse(self.bibtex)
+            dictionary = bibtex_parse(bibtex)
             dictionary['date_format'] = date_format
             self.dictionary = dictionary
             if lang == 'fa':
