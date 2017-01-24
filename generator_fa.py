@@ -9,7 +9,7 @@ from datetime import date
 from commons import ennum2fa
 
 
-def citations(d, date_format) -> tuple:
+def citations(d) -> tuple:
     """Create citation templates using the given dictionary."""
     type_ = d.get('type')
     if type_ == 'book':
