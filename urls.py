@@ -16,7 +16,7 @@ from requests import get as requests_head
 from requests.exceptions import RequestException
 from bs4 import SoupStrainer, BeautifulSoup
 
-from commons import finddate, detect_language, BaseResponse
+from commons import finddate, detect_language, BaseResponse, USER_AGENT_HEADER
 from urls_authors import find_authors
 
 
@@ -103,7 +103,7 @@ class UrlsResponse(BaseResponse):
 
     """Create URL's response object."""
 
-    def __init__(self, url: str, date_format: str='%Y-%m-%d'):
+    def __init__(self, url: str, date_format: str='%Y-%m-%d') -> None:
         """Make the dictionary and run self.generate()."""
         self.date_format = date_format
         try:
@@ -117,28 +117,28 @@ class UrlsResponse(BaseResponse):
             logger.exception(url)
 
 
-class ContentTypeError(Exception):
+class ContentTypeError(ValueError):
 
     """Raise when content-type header does not start with 'text/'."""
 
     pass
 
 
-class ContentLengthError(Exception):
+class ContentLengthError(ValueError):
 
     """Raise when content-length header indicates a very long content."""
 
     pass
 
 
-class StatusCodeError(Exception):
+class StatusCodeError(ValueError):
 
     """Raise when requests_get.status_code != 200."""
 
     pass
 
 
-def find_journal(soup: BeautifulSoup):
+def find_journal(soup: BeautifulSoup) -> str:
     """Return journal title as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = soup.find(attrs={'name': 'citation_journal_title'})
@@ -146,7 +146,7 @@ def find_journal(soup: BeautifulSoup):
         return m['content'].strip()
 
 
-def find_url(soup: BeautifulSoup, url: str):
+def find_url(soup: BeautifulSoup, url: str) -> str:
     """Return og:url or url as a string."""
     # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
     f = soup.find(attrs={'property': 'og:url'})
@@ -157,7 +157,7 @@ def find_url(soup: BeautifulSoup, url: str):
     return url
 
 
-def find_issn(soup: BeautifulSoup):
+def find_issn(soup: BeautifulSoup) -> str:
     """Return International Standard Serial Number as a string.
 
     Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this
@@ -170,7 +170,7 @@ def find_issn(soup: BeautifulSoup):
         return f['content'].strip()
 
 
-def find_pmid(soup: BeautifulSoup):
+def find_pmid(soup: BeautifulSoup) -> str:
     """Return pmid as a string."""
     # http://jn.physiology.org/content/81/1/319
     m = soup.find(attrs={'name': 'citation_pmid'})
@@ -178,7 +178,7 @@ def find_pmid(soup: BeautifulSoup):
         return m['content']
 
 
-def find_doi(soup: BeautifulSoup):
+def find_doi(soup: BeautifulSoup) -> str:
     """Get the BeautifulSoup object of a page. Return DOI as a string."""
     # http://jn.physiology.org/content/81/1/319
     m = soup.find(attrs={'name': 'citation_doi'})
@@ -186,7 +186,7 @@ def find_doi(soup: BeautifulSoup):
         return m['content']
 
 
-def find_volume(soup: BeautifulSoup):
+def find_volume(soup: BeautifulSoup) -> str:
     """Return citatoin volume number as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = soup.find(attrs={'name': 'citation_volume'})
@@ -194,7 +194,7 @@ def find_volume(soup: BeautifulSoup):
         return m['content'].strip()
 
 
-def find_issue(soup: BeautifulSoup):
+def find_issue(soup: BeautifulSoup) -> str:
     """Return citatoin issue number as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = soup.find(attrs={'name': 'citation_issue'})
@@ -202,8 +202,8 @@ def find_issue(soup: BeautifulSoup):
         return m['content'].strip()
 
 
-def find_pages(soup: BeautifulSoup):
-    """Return citatoin pages as a string."""
+def find_pages(soup: BeautifulSoup) -> str:
+    """Return citation pages as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     fp = soup.find(attrs={'name': 'citation_firstpage'})
     lp = soup.find(attrs={'name': 'citation_lastpage'})
@@ -211,14 +211,20 @@ def find_pages(soup: BeautifulSoup):
         return fp['content'].strip() + '–' + lp['content'].strip()
 
 
-def find_sitename(soup, url, authors, hometitle_list, thread):
+def find_sitename(
+    soup: BeautifulSoup,
+    url: str,
+    authors: list,
+    hometitle: list,
+    thread: Thread,
+) -> tuple:
     """Return (site's name as a string, where).
 
     Parameters:
         soup: BeautifulSoup object of the page being processed.
         url: URL of the page.
         authors: Authors list returned from find_authors function.
-        hometitle_list: A list containing hometitle string.
+        hometitle: A list containing hometitle string.
         thread: The thread that should be joined before using hometitle_list.
     Returns site's name as a string.
     """
@@ -248,22 +254,22 @@ def find_sitename(soup, url, authors, hometitle_list, thread):
         return f['content'].strip(), attrs
     # search the title
     sitename = parse_title(
-        soup.title.text, url, authors, hometitle_list, thread
+        soup.title.text, url, authors, hometitle, thread
     )[2]
     if sitename:
         return sitename, 'parse_title'
     try:
         # using hometitle
         thread.join()
-        if ':' in hometitle_list[0]:
+        if ':' in hometitle[0]:
             # http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html
-            sitename = hometitle_list[0].split(':')[0].strip()
+            sitename = hometitle[0].split(':')[0].strip()
             if sitename:
                 return sitename, 'hometitle.split(":")[0]'
-        sitename = parse_title(hometitle_list[0], url, None)[2]
+        sitename = parse_title(hometitle[0], url, None)[2]
         if sitename:
             return sitename, 'parsed hometitle'
-        return hometitle_list[0], 'hometitle_list[0]'
+        return hometitle[0], 'hometitle[0]'
     except Exception:
         pass
     # return hostname
@@ -273,7 +279,7 @@ def find_sitename(soup, url, authors, hometitle_list, thread):
         return urlparse(url).hostname, 'hostname'
 
 
-def try_find(soup: BeautifulSoup, find_parameters: tuple):
+def try_find(soup: BeautifulSoup, find_parameters: tuple) -> tuple:
     """Return the first matching item in find_paras as (string, used_attrs).
 
     args:
@@ -303,9 +309,9 @@ def find_title(
     soup: BeautifulSoup,
     url: str,
     authors: list,
-    hometitle_list,
-    thread
-):
+    hometitle: list,
+    thread: Thread,
+) -> tuple:
     """Return (title_string, where_info)."""
     raw_title, tag = try_find(soup, TITLE_FIND_PARAMETERS)
     if not raw_title:
@@ -315,7 +321,7 @@ def find_title(
             pass
     if raw_title:
         logger.debug('Unparsed title tag: ' + str(tag))
-        parsed_title = parse_title(raw_title, url, authors, hometitle_list,
+        parsed_title = parse_title(raw_title, url, authors, hometitle,
                                    thread)
         logger.debug('Parsed title: ' + str(parsed_title))
         return parsed_title[1], tag
@@ -324,8 +330,12 @@ def find_title(
 
 
 def parse_title(
-    title, url: str, authors: list or None, hometitle_list=None, thread=None
-):
+    title: str,
+    url: str,
+    authors: list or None,
+    hometitle_list=None,
+    thread=None,
+) -> tuple:
     """Return (intitle_author, pure_title, intitle_sitename).
 
     Examples:
@@ -385,7 +395,7 @@ def parse_title(
                 break
     if not intitle_sitename:
         # 4. Using difflib on hometitle
-        close_matches = difflib.get_close_matches(
+        close_matches = get_close_matches(
             hometitle, title_parts, n=1, cutoff=.3
         )
         if close_matches:
@@ -409,7 +419,7 @@ def parse_title(
     return intitle_author, pure_title, intitle_sitename
 
 
-def try_find_date(soup: BeautifulSoup):
+def try_find_date(soup: BeautifulSoup) -> tuple:
     """Similar to try_find(), but for finding dates.
 
     Return a string in '%Y-%m-%d' format.
@@ -433,7 +443,7 @@ def try_find_date(soup: BeautifulSoup):
     return None, None
 
 
-def find_date(soup: BeautifulSoup, url: str):
+def find_date(soup: BeautifulSoup, url: str) -> tuple:
     """Get the BeautifulSoup object and url. Return (date_obj, where)."""
     date, tag = try_find_date(soup)
     if date:
@@ -453,7 +463,7 @@ def find_date(soup: BeautifulSoup, url: str):
         return finddate(str(soup)), 'str(soup)'
 
 
-def get_hometitle(url: str, headers: dict, hometitle_list: list):
+def get_hometitle(url: str, headers: dict, hometitle_list: list) -> None:
     """Get homepage of the url and return it's title.
 
     hometitle_list will be used to return the thread result.
@@ -470,7 +480,7 @@ def get_hometitle(url: str, headers: dict, hometitle_list: list):
         pass
 
 
-def requests_visa(url, request_headers=None):
+def requests_visa(url: str, request_headers: dict=None) -> bool:
     """Check content-type and content-length of the response.
 
     Return True if content-type is text/* and content-length is less than 1MB.
@@ -496,7 +506,7 @@ def requests_visa(url, request_headers=None):
     return True
 
 
-def get_soup(url, headers=None):
+def get_soup(url: str, headers: dict=None) -> BeautifulSoup:
     """Return the soup object for the given url."""
     requests_visa(url, headers)
     r = requests_get(url, headers=headers, timeout=15)
@@ -505,19 +515,16 @@ def get_soup(url, headers=None):
     return BeautifulSoup(r.content, 'lxml')
 
 
-def url2dictionary(url):
+def url2dictionary(url: str) -> dict:
     """Get url and return the result as a dictionary."""
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)'
-        ' Gecko/20100101 Firefox/30.0'
-    }
-
     # Creating a thread to fetch homepage title in background
     hometitle_list = []  # A mutable variable used to get the thread result
-    thread = Thread(target=get_hometitle, args=(url, headers, hometitle_list))
-    thread.start()
+    home_title_thread = Thread(
+        target=get_hometitle, args=(url, USER_AGENT_HEADER, hometitle_list)
+    )
+    home_title_thread.start()
 
-    soup = get_soup(url, headers)
+    soup = get_soup(url, USER_AGENT_HEADER)
     d = {'url': find_url(soup, url)}
     authors, tag = find_authors(soup)
     if authors:
@@ -535,9 +542,11 @@ def url2dictionary(url):
     else:
         d['type'] = 'web'
         d['website'], tag = find_sitename(soup, url, authors, hometitle_list,
-                                          thread)
+                                          home_title_thread)
         logger.debug('Website tag: ' + str(tag))
-    d['title'], tag = find_title(soup, url, authors, hometitle_list, thread)
+    d['title'], tag = find_title(
+        soup, url, authors, hometitle_list, home_title_thread
+    )
     date, tag = find_date(soup, url)
     if date:
         logger.debug('Date tag: ' + str(tag))

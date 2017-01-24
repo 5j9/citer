@@ -73,6 +73,11 @@ ANYDATE_SEARCH = re.compile(
     Y + zm + zd + ')'
 ).search
 
+USER_AGENT_HEADER = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)'
+        ' Gecko/20100101 Firefox/30.0'
+}
+
 
 class InvalidNameError(Exception):
 
@@ -102,7 +107,7 @@ class Name:
     If no seperator is provided, ',' or ' ' will be used.
     """
 
-    def __init__(self, fullname, seperator=None):
+    def __init__(self, fullname: str, seperator: str=None) -> None:
         """Create appropriate firstname, lastname and fullname properties."""
         self.firstname, self.lastname = firstname_lastname(fullname, seperator)
         if self.firstname:
@@ -110,10 +115,10 @@ class Name:
         else:
             self.fullname = self.lastname
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return 'Name("' + self.fullname + '")'
 
-    def nofirst_fulllast(self):
+    def nofirst_fulllast(self) -> None:
         """Change firstname to an empty string and assign fullname to lastname.
 
         Use this method for corporate authors.
@@ -129,20 +134,21 @@ class BaseResponse:
 
     # defaults
     error = 0
-    ref = dictionary = cite = sfn = date_format = ''
+    ref = cite = sfn = date_format = ''
+    dictionary = {}
 
-    def detect_language(self, text, langset=None):
+    def detect_language(self, text: str, langset=None) -> None:
         """Detect language of text.
 
         Store the result in self.dictionary and self.error.
         Add 'language' and 'error' keys to self.dictionary.
         Create self.error property.
         """
-        lang, err = detect_language(text, langset or ())
-        self.dictionary['language'] = lang
+        language, err = detect_language(text, langset or ())
+        self.dictionary['language'] = language
         self.dictionary['error'] = self.error = err
 
-    def generate(self):
+    def generate(self) -> None:
         """Generate self.sfn, self.cite and self.ref.
 
         self.dictionary should be ready before calling this function.
@@ -164,7 +170,7 @@ class BaseResponse:
         )
 
 
-def response_to_json(response):
+def response_to_json(response) -> str:
     """Generate api JSON response containing sfn, cite and ref."""
     return json.dumps({
         'reference_tag': response.ref,
@@ -173,7 +179,7 @@ def response_to_json(response):
     })
 
 
-def detect_language(text, langset=None):
+def detect_language(text, langset=None) -> tuple:
     """Detect the language of the text. Return (lang, error).
 
     args:
@@ -185,12 +191,12 @@ def detect_language(text, langset=None):
     """
     if langset:
         langid.set_languages(langset)
-    lang, confidence = langid.classify(text)
+    language, confidence = langid.classify(text)
     error = round((1 - confidence) * 100, 2)
-    return lang, error
+    return language, error
 
 
-def firstname_lastname(fullname, seperator):
+def firstname_lastname(fullname, seperator) -> tuple:
     """Return firstname and lastname as a tuple.
 
     Add Jr.|Sr. suffix to first name.
@@ -242,7 +248,7 @@ def firstname_lastname(fullname, seperator):
         lastname = lastname.title()
         lastname = re.sub(
             'MC(\w)',
-            lambda m: 'Mc' + m.group(1).upper(),
+            lambda mtch: 'Mc' + mtch.group(1).upper(),
             lastname,
             flags=re.I
         )
@@ -251,8 +257,8 @@ def firstname_lastname(fullname, seperator):
     return firstname, lastname
 
 
-def uninum2en(string):
-    """Convert non-ascii unicode digits to equivalent English one (0-9).
+def uninum2en(string) -> str:
+    """Convert non-ascii unicode digits to equivalent English ones (0-9).
 
     Example:
     >>> uninum2en('٤۴৪౪')
@@ -266,7 +272,7 @@ def uninum2en(string):
     return string
 
 
-def ennum2fa(string_or_num):
+def ennum2fa(string_or_num) -> str:
     """Convert English numerical string to equivalent Persian one (‍۰-۹)."""
     return (
         str(string_or_num)
@@ -283,7 +289,7 @@ def ennum2fa(string_or_num):
     )
 
 
-def jalali_string_to_date(match):
+def jalali_string_to_date(match) -> jdate:
     """Return the date object for given Jalali string."""
     return jdate(
         int(uninum2en(match.group('jY'))),
@@ -292,11 +298,12 @@ def jalali_string_to_date(match):
     ).togregorian()
 
 
-def finddate(string):
+def finddate(string) -> datetime.date:
     """Try to find a date in input string and return it as a date object.
 
     If there is no matching date, return None.
     The returned date can't be from the future.
+
     """
     match = ANYDATE_SEARCH(string)
     today = datetime.today().date()
@@ -360,7 +367,7 @@ def finddate(string):
         match = ANYDATE_SEARCH(string, pos)
 
 
-def bidi_pop(string):
+def bidi_pop(string) -> str:
     """Makes sure all  LRE, RLE, LRO, or RLO chars are terminated with PDF."""
     # Pop isolations
     isolates = [
@@ -383,7 +390,7 @@ def bidi_pop(string):
     return string + '\u202C' * diff
 
 
-def value_encode(dictionary):
+def value_encode(dictionary) -> dict:
     """Cleanup dictionary values.
 
     * Remove any key with False bool value.
