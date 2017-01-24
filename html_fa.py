@@ -20,7 +20,7 @@ class Response(BaseResponse):
         self.error = error
 
 
-def to_html(response):
+def response_to_html(response):
     """Insert the response into the HTML_TEMPLATE and return response_body."""
     return HTML_TEMPLATE % (
         response.sfn,
@@ -35,10 +35,6 @@ HTML_TEMPLATE = Template(open('html_fa.html', encoding='utf8').read())
 # Predefined responses
 DEFAULT_RESPONSE = Response(
     'یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '??'
-)
-UNDEFINED_URL_RESPONSE = Response(
-    'ورودی شناخته نشد.',
-    'خطا در سیاههٔ خطاها ثبت شد.'
 )
 HTTPERROR_RESPONSE = Response(
     'خطای اچ‌تی‌تی‌پی:',

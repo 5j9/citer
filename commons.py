@@ -163,13 +163,14 @@ class BaseResponse:
             self.dictionary, self.date_format
         )
 
-    def api_json(self):
-        """Generate api JSON response containing sfn, cite and ref."""
-        return json.dumps({
-            'reference_tag': self.ref,
-            'citation_template': self.cite,
-            'shortened_footnote': self.sfn,
-        })
+
+def response_to_json(response):
+    """Generate api JSON response containing sfn, cite and ref."""
+    return json.dumps({
+        'reference_tag': response.ref,
+        'citation_template': response.cite,
+        'shortened_footnote': response.sfn,
+    })
 
 
 def detect_language(text, langset=None):
