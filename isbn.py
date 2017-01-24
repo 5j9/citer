@@ -48,23 +48,23 @@ class IsbnResponse(BaseResponse):
                  date_format='%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
         if pure:
-            self.isbn = isbn_container_string
+            isbn = isbn_container_string
         else:
             # search for isbn13
             m = ISBN13_SEARCH(isbn_container_string)
             if m:
-                self.isbn = m.group(0)
+                isbn = m.group(0)
             else:
                 # search for isbn10
                 m = ISBN10_SEARCH(isbn_container_string)
-                self.isbn = m.group(0)
+                isbn = m.group(0)
         adinebook_dict_list = []
         thread = Thread(
             target=adinebook_thread,
-            args=(self.isbn, adinebook_dict_list),
+            args=(isbn, adinebook_dict_list),
         )
         thread.start()
-        self.bibtex = ottobib(self.isbn)
+        self.bibtex = ottobib(isbn)
         if self.bibtex:
             otto_dict = bibtex_parse(self.bibtex)
         else:
