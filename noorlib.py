@@ -7,7 +7,7 @@ import re
 
 from requests import get as requests_get
 
-from commons import BaseResponse
+from commons import BaseResponse, dictionary_to_citations
 from bibtex import parse as bibtex_parse
 # import ris[1]
 
@@ -20,10 +20,9 @@ class NoorLibResponse(BaseResponse):
         """Make the dictionary and run self.generate()."""
         dictionary = bibtex_parse(get_bibtex(url))
         dictionary['date_format'] = date_format
-        self.dictionary = dictionary
-        # self.ris = get_ris(url)[1]
-        # self.dictionary = ris.parse(self.ris)[1]
-        self.generate()
+        # risr = get_ris(url)[1]
+        # dictionary = risr.parse(ris)[1]
+        self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
 
 
 def get_bibtex(noorlib_url):

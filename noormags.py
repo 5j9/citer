@@ -7,7 +7,7 @@ import re
 
 from requests import get as requests_get
 
-from commons import BaseResponse
+from commons import BaseResponse, dictionary_to_citations
 from bibtex import parse as bibtex_parse
 from ris import parse as ris_parse
 
@@ -20,15 +20,14 @@ class NoorMagsResponse(BaseResponse):
         """Make the dictionary and run self.generate()."""
         dictionary = bibtex_parse(get_bibtex(url))
         dictionary['date_format'] = date_format
-        self.dictionary = dictionary
         # language parameter needs to be taken from RIS
         # other information are more accurate in bibtex
         # for example: http://www.noormags.com/view/fa/articlepage/104040
         # "IS  - 1" is wrong in RIS but "number = { 45 }," is correct in bibtex
         self.ris = get_ris(url)
         if 'LA' in self.ris:
-            self.dictionary['language'] = ris_parse(self.ris)['language']
-        self.generate()
+            dictionary['language'] = ris_parse(self.ris)['language']
+        self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
 
 
 def get_bibtex(noormags_url):

@@ -11,7 +11,7 @@ from html import unescape
 
 from requests import get as requests_get
 
-from commons import BaseResponse
+from commons import BaseResponse, dictionary_to_citations, detect_language
 from config import lang
 from bibtex import parse as bibtex_parse
 
@@ -48,10 +48,10 @@ class DoiResponse(BaseResponse):
         else:
             dictionary = bibtex_parse(bibtex)
             dictionary['date_format'] = date_format
-            self.dictionary = dictionary
             if lang == 'fa':
-                self.detect_language(dictionary['title'])
-            self.generate()
+                dictionary['language'], dictionary['error'] = \
+                    detect_language(dictionary['title'])
+            self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
 
 
 def get_bibtex(doi_url):

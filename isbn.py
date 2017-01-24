@@ -11,7 +11,7 @@ from requests import get as requests_get
 from adinebook import url2dictionary as adinebook_url2dictionary
 from adinebook import isbn2url as adinebook_isbn2url
 from bibtex import parse as bibtex_parse
-from commons import BaseResponse
+from commons import BaseResponse, dictionary_to_citations, detect_language
 
 
 # original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
@@ -76,10 +76,10 @@ class IsbnResponse(BaseResponse):
             adine_dict = None
         dictionary = choose_dict(adine_dict, otto_dict)
         dictionary['date_format'] = date_format
-        self.dictionary = dictionary
         if 'language' not in dictionary:
-            self.detect_language(dictionary['title'])
-        self.generate()
+            dictionary['language'], dictionary['error'] = \
+                detect_language(dictionary['title'])
+        self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
 
 
 def adinebook_thread(isbn, result_list):

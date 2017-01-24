@@ -135,37 +135,26 @@ class BaseResponse:
     # defaults
     error = 0
     ref = cite = sfn = ''
-    dictionary = {}
 
-    def detect_language(self, text: str, langset=None) -> None:
-        """Detect language of text.
 
-        Store the result in self.dictionary and self.error.
-        Add 'language' and 'error' keys to self.dictionary.
-        Create self.error property.
-        """
-        dictionary = self.dictionary
-        dictionary['language'], err = detect_language(text, langset or ())
-        dictionary['error'] = self.error = err
+def dictionary_to_citations(dictionary) -> tuple:
+    """Return (sfn, cite, ref) strings..
 
-    def generate(self) -> None:
-        """Generate self.sfn, self.cite and self.ref.
+    dictionary should be ready before calling this function.
+    The dictionary will be cleaned up (empty values will be removed) and
+    all values will be encoded using encode_for_template() function.
+    ISBN (if exist) will be hyphenated.
 
-        self.dictionary should be ready before calling this function.
-        The dictionary will be cleaned up (empty values will be removed) and
-        all values will be encoded using encode_for_template() function.
-        ISBN (if exist) will be hyphenated.
-        """
-        dictionary = self.dictionary
-        value_encode(dictionary)
-        isbn = dictionary.get('isbn')
-        if isbn:
-            dictionary['isbn'] = isbn_mask(isbn) or isbn
-        if lang == 'en':
-            from generator_en import citations
-        else:
-            from generator_fa import citations
-        self.cite, self.sfn, self.ref = citations(dictionary)
+    """
+    value_encode(dictionary)
+    isbn = dictionary.get('isbn')
+    if isbn:
+        dictionary['isbn'] = isbn_mask(isbn) or isbn
+    if lang == 'en':
+        from generator_en import citations
+    else:
+        from generator_fa import citations
+    return citations(dictionary) # cite, sfn, ref
 
 
 def response_to_json(response) -> str:

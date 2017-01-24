@@ -16,7 +16,10 @@ from requests import get as requests_head
 from requests.exceptions import RequestException
 from bs4 import SoupStrainer, BeautifulSoup
 
-from commons import finddate, detect_language, BaseResponse, USER_AGENT_HEADER
+from commons import (
+    finddate, detect_language, BaseResponse, USER_AGENT_HEADER,
+    dictionary_to_citations,
+)
 from urls_authors import find_authors
 
 
@@ -108,8 +111,7 @@ class UrlsResponse(BaseResponse):
         try:
             dictionary = url2dictionary(url)
             dictionary['date_format'] = date_format
-            self.dictionary = dictionary
-            self.generate()
+            self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
         except (ContentTypeError, ContentLengthError) as e:
             self.sfnt = 'Could not process the request.'
             self.ctnt = e

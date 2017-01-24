@@ -11,7 +11,7 @@ from requests import get as requests_get
 
 # import bibtex [1]
 from ris import parse as ris_parse
-from commons import BaseResponse
+from commons import BaseResponse, dictionary_to_citations, detect_language
 
 
 class GoogleBooksResponse(BaseResponse):
@@ -21,23 +21,22 @@ class GoogleBooksResponse(BaseResponse):
     def __init__(self, url, date_format='%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
         # bibtex_result = get_bibtex(url) [1]
-        # self.dictionary = bibtex.parse(bibtex_result) [1]
+        # dictionary = bibtex.parse(bibtex_result) [1]
         dictionary = ris_parse(get_ris(url))
         dictionary['date_format'] = date_format
-        self.dictionary = dictionary
         pu = urlparse(url)
         pq = parse_qs(pu.query)
         # default domain is prefered:
-        dictionary['url'] = 'http://' + pu.netloc +\
-                                 '/books?id=' + pq['id'][0]
+        dictionary['url'] = 'http://' + pu.netloc + '/books?id=' + pq['id'][0]
         # manually adding page nubmer to dictionary:
         if 'pg' in pq:
             dictionary['pages'] = pq['pg'][0][2:]
             dictionary['url'] += '&pg=' + pq['pg'][0]
         # although google does not provide a language field:
         if 'language' not in dictionary:
-            self.detect_language(dictionary['title'])
-        self.generate()
+            dictionary['language'], dictionary['error'] = \
+                detect_language(dictionary['title'])
+        self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
 
 
 def get_bibtex(googlebook_url):
