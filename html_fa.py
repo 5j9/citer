@@ -5,7 +5,6 @@
 
 
 from string import Template
-from datetime import date
 
 from commons import BaseResponse
 
@@ -22,11 +21,11 @@ class Response(BaseResponse):
 
 def response_to_html(response):
     """Insert the response into the HTML_TEMPLATE and return response_body."""
-    return HTML_TEMPLATE % (
-        response.sfn,
-        response.cite,
-        response.ref,
-        response.error,
+    return HTML_TEMPLATE.safe_substitute(
+        sfn=response.sfn,
+        cite=response.cite,
+        ref=response.ref,
+        error=response.error,
     )
 
 
@@ -45,12 +44,7 @@ HTTPERROR_RESPONSE = Response(
 OTHER_EXCEPTION_RESPONSE = Response(
     'خطای ناشناخته‌ای رخ داد..', 'اطلاعات خطا در سیاهه ثبت شد.'
 )
-
-TODAY = date.today()
-HTML_TEMPLATE = HTML_TEMPLATE.safe_substitute({
-    'Ymd': TODAY.strftime('%Y-%m-%d'),
-    'BdY': TODAY.strftime('%B %d, %Y'),
-    'bdY': TODAY.strftime('%b %d, %Y'),
-    'dBY': TODAY.strftime('%d %B %Y'),
-    'dbY': TODAY.strftime('%d %b %Y'),
-}).replace('%', '%%').replace('$s', '%s')
+UNDEFINED_INPUT_RESPONSE = Response(
+    'Undefined input.',
+    'Sorry, the input was not recognized. The error was logged.',
+)

@@ -35,6 +35,11 @@ HTML_TEMPLATE = Template(open('html_en.html', encoding='utf8').read())
 # Predefined responses
 DEFAULT_RESPONSE = Response('Generated citation will appear here...', '', '0')
 
+UNDEFINED_INPUT_RESPONSE = Response(
+    'Undefined input.',
+    'Sorry, the input was not recognized. The error was logged.',
+)
+
 HTTPERROR_RESPONSE = Response(
     'HTTP error:',
     'One or more of the web resources required to '
