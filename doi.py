@@ -29,27 +29,28 @@ class DoiResponse(BaseResponse):
 
     def __init__(self, doi_or_url, pure=False, date_format='%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
-        self.date_format = date_format
         if pure:
-            self.doi = doi_or_url
+            doi = doi_or_url
         else:
             # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
             # decode percent encodings
             decoded_url = unquote(unescape(doi_or_url))
             m = DOI_SEARCH(decoded_url)
             if m:
-                self.doi = m.group(1)
-        self.url = 'http://dx.doi.org/' + self.doi
-        self.bibtex = get_bibtex(self.url)
+                doi = m.group(1)
+        url = 'http://dx.doi.org/' + doi
+        self.bibtex = get_bibtex(url)
         if self.bibtex == 'Resource not found.':
-            logger.info('DOI could not be resolved.\n' + self.url)
+            logger.info('DOI could not be resolved.\n' + url)
             self.error = 100
             self.sfnt = 'DOI could not be resolved.'
             self.ctnt = self.bibtex
         else:
-            self.dictionary = bibtex_parse(self.bibtex)
+            dictionary = bibtex_parse(self.bibtex)
+            dictionary['date_format'] = date_format
+            self.dictionary = dictionary
             if lang == 'fa':
-                self.detect_language(self.dictionary['title'])
+                self.detect_language(dictionary['title'])
             self.generate()
 
 

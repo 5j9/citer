@@ -134,7 +134,7 @@ class BaseResponse:
 
     # defaults
     error = 0
-    ref = cite = sfn = date_format = ''
+    ref = cite = sfn = ''
     dictionary = {}
 
     def detect_language(self, text: str, langset=None) -> None:
@@ -144,9 +144,9 @@ class BaseResponse:
         Add 'language' and 'error' keys to self.dictionary.
         Create self.error property.
         """
-        language, err = detect_language(text, langset or ())
-        self.dictionary['language'] = language
-        self.dictionary['error'] = self.error = err
+        dictionary = self.dictionary
+        dictionary['language'], err = detect_language(text, langset or ())
+        dictionary['error'] = self.error = err
 
     def generate(self) -> None:
         """Generate self.sfn, self.cite and self.ref.
@@ -156,18 +156,16 @@ class BaseResponse:
         all values will be encoded using encode_for_template() function.
         ISBN (if exist) will be hyphenated.
         """
-        value_encode(self.dictionary)
-        if 'isbn' in self.dictionary:
-            masked = isbn_mask(self.dictionary['isbn'])
-            if masked:
-                self.dictionary['isbn'] = masked
+        dictionary = self.dictionary
+        value_encode(dictionary)
+        isbn = dictionary.get('isbn')
+        if isbn:
+            dictionary['isbn'] = isbn_mask(isbn) or isbn
         if lang == 'en':
             from generator_en import citations
         else:
             from generator_fa import citations
-        self.cite, self.sfn, self.ref = citations(
-            self.dictionary, self.date_format
-        )
+        self.cite, self.sfn, self.ref = citations(dictionary)
 
 
 def response_to_json(response) -> str:
@@ -390,7 +388,7 @@ def bidi_pop(string) -> str:
     return string + '\u202C' * diff
 
 
-def value_encode(dictionary) -> dict:
+def value_encode(dictionary) -> None:
     """Cleanup dictionary values.
 
     * Remove any key with False bool value.
@@ -410,4 +408,3 @@ def value_encode(dictionary) -> dict:
                 .replace('\n', ' ')
             )
             dictionary[k] = v
-    return dictionary

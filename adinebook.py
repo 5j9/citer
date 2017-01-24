@@ -25,15 +25,15 @@ class AdineBookResponse(BaseResponse):
 
     """Create Adinebook's response object."""
 
-    def __init__(self, adinebook_url: str, date_format: str='%Y-%m-%d'):
+    def __init__(self, url: str, date_format: str= '%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
-        self.date_format = date_format
-        self.url = adinebook_url
-        self.dictionary = url2dictionary(adinebook_url)
-        if 'language' not in self.dictionary:
+        dictionary = url2dictionary(url)
+        dictionary['date_format'] = date_format
+        self.dictionary = dictionary
+        if 'language' not in dictionary:
             # Assume that language is either fa or en.
             # Todo: give warning about this assumption.
-            self.detect_language(self.dictionary['title'], {'en', 'fa'})
+            self.detect_language(dictionary['title'], {'en', 'fa'})
         self.generate()
 
 

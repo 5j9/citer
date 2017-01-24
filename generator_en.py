@@ -8,8 +8,9 @@ from datetime import date as datetime_date
 import re
 
     
-def citations(d, date_format) -> tuple:
+def citations(d: dict) -> tuple:
     """Create citation templates according to the given dictionary."""
+    date_format = d['date_format']
     type_ = d['type']
     if type_ == 'book':
         cite = '* {{cite book'

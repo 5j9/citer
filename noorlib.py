@@ -16,13 +16,13 @@ class NoorLibResponse(BaseResponse):
 
     """Create NoorLib response object."""
 
-    def __init__(self, noorlib_url, date_format='%Y-%m-%d'):
+    def __init__(self, url, date_format='%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
-        self.date_format = date_format
-        self.url = noorlib_url
-        self.bibtex = get_bibtex(noorlib_url)
-        self.dictionary = bibtex_parse(self.bibtex)
-        # self.ris = get_ris(noorlib_url)[1]
+        self.bibtex = get_bibtex(url)
+        dictionary = bibtex_parse(self.bibtex)
+        dictionary['date_format'] = date_format
+        self.dictionary = dictionary
+        # self.ris = get_ris(url)[1]
         # self.dictionary = ris.parse(self.ris)[1]
         self.generate()
 

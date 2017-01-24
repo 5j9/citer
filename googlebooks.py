@@ -18,26 +18,26 @@ class GoogleBooksResponse(BaseResponse):
 
     """Create googlebooks' response object."""
 
-    def __init__(self, googlebook_url, date_format='%Y-%m-%d'):
+    def __init__(self, url, date_format='%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
-        self.date_format = date_format
-        self.url = googlebook_url
-        # self.bibtex = get_bibtex(googlebook_url) [1]
+        # self.bibtex = get_bibtex(url) [1]
         # self.dictionary = bibtex.parse(self.bibtex) [1]
-        self.bibtex = get_ris(googlebook_url)
-        self.dictionary = ris_parse(self.bibtex)
-        pu = urlparse(googlebook_url)
+        self.bibtex = get_ris(url)
+        dictionary = ris_parse(self.bibtex)
+        dictionary['date_format'] = date_format
+        self.dictionary = dictionary
+        pu = urlparse(url)
         pq = parse_qs(pu.query)
         # default domain is prefered:
-        self.dictionary['url'] = 'http://' + pu.netloc +\
+        dictionary['url'] = 'http://' + pu.netloc +\
                                  '/books?id=' + pq['id'][0]
         # manually adding page nubmer to dictionary:
         if 'pg' in pq:
-            self.dictionary['pages'] = pq['pg'][0][2:]
-            self.dictionary['url'] += '&pg=' + pq['pg'][0]
+            dictionary['pages'] = pq['pg'][0][2:]
+            dictionary['url'] += '&pg=' + pq['pg'][0]
         # although google does not provide a language field:
-        if 'language' not in self.dictionary:
-            self.detect_language(self.dictionary['title'])
+        if 'language' not in dictionary:
+            self.detect_language(dictionary['title'])
         self.generate()
 
 

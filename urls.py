@@ -105,10 +105,10 @@ class UrlsResponse(BaseResponse):
 
     def __init__(self, url: str, date_format: str='%Y-%m-%d') -> None:
         """Make the dictionary and run self.generate()."""
-        self.date_format = date_format
         try:
-            self.url = url
-            self.dictionary = url2dictionary(url)
+            dictionary = url2dictionary(url)
+            dictionary['date_format'] = date_format
+            self.dictionary = dictionary
             self.generate()
         except (ContentTypeError, ContentLengthError) as e:
             self.sfnt = 'Could not process the request.'
@@ -515,7 +515,7 @@ def get_soup(url: str, headers: dict=None) -> BeautifulSoup:
     return BeautifulSoup(r.content, 'lxml')
 
 
-def url2dictionary(url: str) -> dict:
+def url2dictionary(url: str, detect_lang: bool=True) -> dict:
     """Get url and return the result as a dictionary."""
     # Creating a thread to fetch homepage title in background
     hometitle_list = []  # A mutable variable used to get the thread result
@@ -552,7 +552,8 @@ def url2dictionary(url: str) -> dict:
         logger.debug('Date tag: ' + str(tag))
         d['date'] = date
         d['year'] = str(date.year)
-    d['language'], d['error'] = detect_language(soup.text)
+    if detect_lang:
+        d['language'], d['error'] = detect_language(soup.text)
     return d
 
 

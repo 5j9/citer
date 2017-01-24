@@ -47,7 +47,6 @@ class IsbnResponse(BaseResponse):
     def __init__(self, isbn_container_string, pure=False,
                  date_format='%Y-%m-%d'):
         """Make the dictionary and run self.generate()."""
-        self.date_format = date_format
         if pure:
             self.isbn = isbn_container_string
         else:
@@ -75,9 +74,11 @@ class IsbnResponse(BaseResponse):
             adine_dict = adinebook_dict_list.pop()
         else:
             adine_dict = None
-        self.dictionary = choose_dict(adine_dict, otto_dict)
-        if 'language' not in self.dictionary:
-            self.detect_language(self.dictionary['title'])
+        dictionary = choose_dict(adine_dict, otto_dict)
+        dictionary['date_format'] = date_format
+        self.dictionary = dictionary
+        if 'language' not in dictionary:
+            self.detect_language(dictionary['title'])
         self.generate()
 
 
