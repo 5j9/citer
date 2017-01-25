@@ -20,6 +20,8 @@ FA_MONTHS = (
     'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
 )
 
+DOUBLE_DIGIT_SEARCH = re.compile(r'\d\d').search
+
 # Date patterns:
 
 # January|February...
@@ -42,7 +44,6 @@ d = r'(?:0?[1-9]|[12][0-9]|3[01])'
 zd = r'(?:0[1-9]|[12][0-9]|3[01])'
 # Gregorian year pattern 1900-2099
 Y = r'(?:19|20)\d\d'
-
 
 # July 3, 2001
 BdY = re.compile(B + ' ' + d + ', ' + Y)
@@ -75,10 +76,9 @@ ANYDATE_SEARCH = re.compile(
 ).search
 
 USER_AGENT_HEADER = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0)'
-        ' Gecko/20100101 Firefox/30.0'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) '
+    'Gecko/20100101 Firefox/50.0'
 }
-
 
 Response = namedtuple('Response', 'cite sfn ref error')
 
@@ -86,13 +86,6 @@ Response = namedtuple('Response', 'cite sfn ref error')
 class InvalidNameError(Exception):
 
     """Base class for Name exceptions."""
-
-    pass
-
-
-class LongNameError(InvalidNameError):
-
-    """Raise when a Name() is too long to be a name."""
 
     pass
 
@@ -197,16 +190,15 @@ def firstname_lastname(fullname, seperator) -> tuple:
     ('', 'BBC')
     """
     fullname = fullname.strip()
-    if '\n' in fullname:
-        raise InvalidNameError('There was a newline in fullname.')
-    if len(fullname) > 40:
-        raise LongNameError('Lastname was longer than 40 chars.')
-    if re.search('\d\d', fullname, re.U):
-        # Remember "Jennifer 8. Lee"
-        raise NumberInNameError('The name contains a two-digit number.')
-    match = re.search(' (Jr\.|Sr\.)$', fullname, re.I)
-    if match:
-        suffix = match.group()
+    if (
+        '\n' in fullname
+        or len(fullname) > 40
+        # "Jennifer 8. Lee"
+        or DOUBLE_DIGIT_SEARCH(fullname)
+    ):
+        raise InvalidNameError
+    if fullname.endswith(' Jr.') or fullname.endswith(' Sr.'):
+        suffix = fullname[-4:]
         fullname = fullname[:-4]
     else:
         suffix = None
