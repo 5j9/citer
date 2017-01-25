@@ -3,8 +3,8 @@
 
 import requests
 import re
-from urllib.parse import urlparse
 import os
+from urllib.parse import urlparse
 
 
 class DummyRequests:
@@ -19,8 +19,10 @@ class DummyRequests:
 
     def get(self, url, headers=None, *args, **kwargs):
         pu = urlparse(url)
-        file = './tests_cache/' +\
-               re.sub('/+', '/', '/'.join(pu)).rstrip('/') + '.html'
+        file = (
+            './tests_cache/'
+            + re.sub('/+', '/', '/'.join(pu)).rstrip('/') + '.html'
+        ).replace(':', '_')
         try:
             with open(file, 'rb') as f:
                 content = f.read()
