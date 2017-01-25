@@ -215,24 +215,24 @@ def try_find_authors(soup):
         if fp[0] == 'soup':
             try:  # Todo: can this try be removed safely?
                 attrs = fp[1]
-                f = soup.find(attrs=attrs)
-                fs = f.find_next_siblings(attrs=attrs)
-                fs.insert(0, f)
+                finding = soup.find(attrs=attrs)
+                next_siblings = finding.find_next_siblings(attrs=attrs)
+                next_siblings.insert(0, finding)
                 names = []
 
                 if fp[2] == 'getitem':
-                    for f in fs:
+                    for finding in next_siblings:
                         try:
-                            string = f[fp[3]]
+                            string = finding[fp[3]]
                             name = byline_to_names(string)
                             names.extend(name)
                         except (AttributeError, InvalidByLineError):
                             pass
                 else:
                     # fp[2] == 'getattr':
-                    for f in fs:
+                    for finding in next_siblings:
                         try:
-                            string = getattr(f, fp[3])
+                            string = getattr(finding, fp[3])
                             name = byline_to_names(string)
                             names.extend(name)
                         except (AttributeError, InvalidByLineError):
@@ -286,12 +286,13 @@ def byline_to_names(byline):
     ... )
     [Name("Erika Solomon"), Name("Borzou Daragahi")]
     """
-
+    if not byline:
+        raise InvalidByLineError('Empry byline')
     byline = byline.partition('|')[0]
     for c in ':+':
         if c in byline:
             raise InvalidByLineError(
-                'Invalid character ("%s") in byline.' % c
+                'Invalid character "%s" in byline' % c
             )
     m = ANYDATE_SEARCH(byline)
     if m:

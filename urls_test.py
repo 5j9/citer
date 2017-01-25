@@ -924,6 +924,29 @@ class Others(unittest.TestCase):
         )
         self.assertIn(ct, o.cite)
 
+    def test_oth15(self):
+        """Contains <link property="og:site_name" href="ایسنا" />"""
+        i = (
+            'http://www.isna.ir/news/95110603890/'
+            '%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7-'
+            '%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-'
+            '%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-'
+            '%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84-'
+            '%DA%A9%D8%B1%D8%AF'
+        )
+        o = urls_response(i)
+        ct = (
+            '* {{cite web '
+            '| title=برجام شرایط بین‌المللی ایران را کاملا متحول کرد '
+            '| website=ایسنا '
+            '| date=2017-01-25 '
+            '| url=http://www.isna.ir/news/95110603890/ '
+            '| language=fa '
+            '| ref={{sfnref | ایسنا | 2017}} '
+            '| accessdate='
+        )
+        self.assertIn(ct, o.cite)
+
 
 dummy_requests = dummy_requests.DummyRequests()
 urls.requests_get = dummy_requests.get
