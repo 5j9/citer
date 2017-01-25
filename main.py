@@ -21,7 +21,7 @@ from doi import doi_response, DOI_SEARCH
 from commons import uninum2en, response_to_json
 from config import lang
 from isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError, isbn_response
-# from waybackmachine import WaybackMachineResponse
+from waybackmachine import waybackmachine_response
 if lang == 'en':
     from html_en import (
         DEFAULT_RESPONSE,
@@ -52,7 +52,7 @@ NETLOC_TO_RESPONSE = {
     'www.noormags.ir': noormags_response,
     'www.noormags.com': noormags_response,
     'noormags.com': noormags_response,
-    # 'web.archive.org':WaybackMachineResponse,
+    'web.archive.org': waybackmachine_response,
 }
 
 RESPONSE_HEADERS = [

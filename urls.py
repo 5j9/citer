@@ -11,7 +11,7 @@ from difflib import get_close_matches
 from threading import Thread
 
 from requests import get as requests_get
-from requests import get as requests_head
+from requests import head as requests_head
 
 from requests.exceptions import RequestException
 from bs4 import SoupStrainer, BeautifulSoup
@@ -22,6 +22,8 @@ from commons import (
 )
 from urls_authors import find_authors
 
+
+TITLE_STRAINER = SoupStrainer('title')
 
 TITLE_FIND_PARAMETERS = (
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
@@ -48,7 +50,6 @@ TITLE_FIND_PARAMETERS = (
     # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
     ({'id': 'entryhead'}, 'getattr', 'text'),
 )
-
 
 DATE_FIND_PARAMETERS = (
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
@@ -105,14 +106,15 @@ DATE_FIND_PARAMETERS = (
 def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
     """Create the response namedtuple."""
     try:
-        dictionary = url2dictionary(url)
-        dictionary['date_format'] = date_format
-        return dictionary_to_response(dictionary)
+        dictionary = url2dict(url)
     except (ContentTypeError, ContentLengthError) as e:
         logger.exception(url)
         return Response(
             sfnt='Could not process the request.', ctnt=e, error=100
         )
+    dictionary['date_format'] = date_format
+    return dictionary_to_response(dictionary)
+
 
 class ContentTypeError(ValueError):
 
@@ -214,7 +216,7 @@ def find_sitename(
     authors: list,
     hometitle: list,
     thread: Thread,
-) -> tuple:
+) -> str:
     """Return (site's name as a string, where).
 
     Parameters:
@@ -225,36 +227,42 @@ def find_sitename(
         thread: The thread that should be joined before using hometitle_list.
     Returns site's name as a string.
     """
-    attrs = {'name': 'og:site_name'}
-    f = soup.find(attrs=attrs)
+    find = soup.find
+    f = find(attrs={'name': 'og:site_name'})
     if f:
-        return f.get('content').strip(), attrs
+        content = f.get('content')
+        if content:
+            return content.strip()
     # https://www.bbc.com/news/science-environment-26878529
-    attrs = {'property': 'og:site_name'}
-    f = soup.find(attrs=attrs)
+    f = find(attrs={'property': 'og:site_name'})
     if f:
-        return f['content'].strip(), attrs
+        content = f.get('content')
+        if content:
+            return content.strip()
     # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-    attrs = {'name': 'PublisherName'}
-    f = soup.find(attrs=attrs)
+    f = find(attrs={'name': 'PublisherName'})
     if f:
-        return f['value'].strip(), attrs
+        value = f.get('value')
+        if value:
+            return value.strip()
     # http://www.bbc.com/news/science-environment-26878529 (Optional)
-    attrs = {'name': 'CPS_SITE_NAME'}
-    f = soup.find(attrs=attrs)
+    f = find(attrs={'name': 'CPS_SITE_NAME'})
     if f:
-        return f['content'].strip(), attrs
+        content = f.get('content')
+        if content:
+            return content.strip()
     # http://www.nytimes.com/2013/10/01/science/a-wealth-of-data-in-whale-breath.html
-    attrs = {'name': 'cre'}
-    f = soup.find(attrs=attrs)
+    f = find(attrs={'name': 'cre'})
     if f:
-        return f['content'].strip(), attrs
+        content = f.get('content')
+        if content:
+            return content.strip()
     # search the title
     sitename = parse_title(
         soup.title.text, url, authors, hometitle, thread
     )[2]
     if sitename:
-        return sitename, 'parse_title'
+        return sitename
     try:
         # using hometitle
         thread.join()
@@ -262,18 +270,18 @@ def find_sitename(
             # http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html
             sitename = hometitle[0].split(':')[0].strip()
             if sitename:
-                return sitename, 'hometitle.split(":")[0]'
+                return sitename
         sitename = parse_title(hometitle[0], url, None)[2]
         if sitename:
-            return sitename, 'parsed hometitle'
-        return hometitle[0], 'hometitle[0]'
+            return sitename
+        return hometitle[0]
     except Exception:
         pass
     # return hostname
-    if urlparse(url).hostname.startswith('www.'):
-        return urlparse(url).hostname[4:], 'hostname'
-    else:
-        return urlparse(url).hostname, 'hostname'
+    hostname = urlparse(url).hostname
+    if hostname.startswith('www.'):
+        return hostname[4:]
+    return hostname
 
 
 def try_find(soup: BeautifulSoup, find_parameters: tuple) -> tuple:
@@ -460,7 +468,7 @@ def find_date(soup: BeautifulSoup, url: str) -> tuple:
         return finddate(str(soup)), 'str(soup)'
 
 
-def get_hometitle(url: str, headers: dict, hometitle_list: list) -> None:
+def get_hometitle(url: str, hometitle_list: list) -> None:
     """Get homepage of the url and return it's title.
 
     hometitle_list will be used to return the thread result.
@@ -468,61 +476,66 @@ def get_hometitle(url: str, headers: dict, hometitle_list: list) -> None:
     """
     homeurl = '://'.join(urlparse(url)[:2])
     try:
-        requests_visa(homeurl, headers)
-        content = requests_get(homeurl, headers=headers, timeout=15).content
-        strainer = SoupStrainer('title')
-        soup = BeautifulSoup(content, 'lxml', parse_only=strainer)
+        check_content_headers(homeurl)
+        content = requests_get(
+            homeurl, headers=USER_AGENT_HEADER, timeout=15
+        ).content
+        soup = BeautifulSoup(content, 'lxml', parse_only=TITLE_STRAINER)
         hometitle_list.append(soup.title.text.strip())
     except RequestException:
         pass
 
 
-def requests_visa(url: str, request_headers: dict=None) -> bool:
+def check_content_headers(url: str) -> bool:
     """Check content-type and content-length of the response.
 
     Return True if content-type is text/* and content-length is less than 1MB.
     Also return True if no information is available. Else return False.
     """
-    response_headers = requests_head(url, headers=request_headers).headers
+    response_headers = requests_head(url, headers=USER_AGENT_HEADER).headers
     if 'content-length' in response_headers:
-        megabytes = int(response_headers['content-length']) / 1000000.
+        megabytes = int(response_headers['content-length']) / 1000000
         if megabytes > 1:
             raise ContentLengthError(
                 'Content-length was too long. (' +
                 format(megabytes, '.2f') + ' MB)'
             )
-    if 'content-type' in response_headers:
-        if response_headers['content-type'].startswith('text/'):
+    content_type = response_headers.get('content-type')
+    if content_type:
+        if content_type.startswith('text/'):
             return True
-        else:
-            raise ContentTypeError(
-                'Invalid content-type: ' +
-                response_headers['content-type'] +
-                ' (URL-content is supposed to be text/html)'
-            )
+        raise ContentTypeError(
+            'Invalid content-type: ' +
+            content_type + ' (URL-content is supposed to be text/html)'
+        )
     return True
 
 
-def get_soup(url: str, headers: dict=None) -> BeautifulSoup:
+def get_soup(url: str) -> BeautifulSoup:
     """Return the soup object for the given url."""
-    requests_visa(url, headers)
-    r = requests_get(url, headers=headers, timeout=15)
+    check_content_headers(url)
+    r = requests_get(url, headers=USER_AGENT_HEADER, timeout=15)
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
     return BeautifulSoup(r.content, 'lxml')
 
 
-def url2dictionary(url: str, detect_lang: bool=True) -> dict:
+def url2dict(url: str) -> dict:
     """Get url and return the result as a dictionary."""
     # Creating a thread to fetch homepage title in background
     hometitle_list = []  # A mutable variable used to get the thread result
     home_title_thread = Thread(
-        target=get_hometitle, args=(url, USER_AGENT_HEADER, hometitle_list)
+        target=get_hometitle, args=(url, hometitle_list)
     )
     home_title_thread.start()
 
-    soup = get_soup(url, USER_AGENT_HEADER)
-    d = {'url': find_url(soup, url)}
+    soup = get_soup(url)
+    # 'soup-title' is used in waybackmechine.py.
+    soup_title = soup.title
+    d = {
+        'url': find_url(soup, url),
+        'soup-title': soup_title.text if soup_title else None,
+    }
     authors, tag = find_authors(soup)
     if authors:
         logger.debug('Authors tag: ' + str(tag))
@@ -538,8 +551,9 @@ def url2dictionary(url: str, detect_lang: bool=True) -> dict:
         d['type'] = 'jour'
     else:
         d['type'] = 'web'
-        d['website'], tag = find_sitename(soup, url, authors, hometitle_list,
-                                          home_title_thread)
+        d['website'] = find_sitename(
+            soup, url, authors, hometitle_list, home_title_thread
+        )
         logger.debug('Website tag: ' + str(tag))
     d['title'], tag = find_title(
         soup, url, authors, hometitle_list, home_title_thread
@@ -549,8 +563,7 @@ def url2dictionary(url: str, detect_lang: bool=True) -> dict:
         logger.debug('Date tag: ' + str(tag))
         d['date'] = date
         d['year'] = str(date.year)
-    if detect_lang:
-        d['language'], d['error'] = detect_language(soup.text)
+    d['language'], d['error'] = detect_language(soup.text)
     return d
 
 
