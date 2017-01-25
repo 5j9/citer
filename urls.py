@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 import logging
 from difflib import get_close_matches
 from threading import Thread
+from datetime import date as Date
 
 from requests import get as requests_get
 from requests import head as requests_head
@@ -284,8 +285,8 @@ def find_sitename(
     return hostname
 
 
-def try_find(soup: BeautifulSoup, find_parameters: tuple) -> tuple:
-    """Return the first matching item in find_paras as (string, used_attrs).
+def try_find(soup: BeautifulSoup, find_parameters: tuple) -> str or None:
+    """Return the first matching item in find_paras as string.
 
     args:
         soup: The beautiful soup object.
@@ -294,20 +295,20 @@ def try_find(soup: BeautifulSoup, find_parameters: tuple) -> tuple:
                 ({atrr_name, value}, 'getitem|getattr', 'content|text|...')
                 where {atrrn, value} will be used in
                 bs.find(attrs={atrrn, value}).
-    Return (None, None) if none of the parameters match bs.
+    Return None if none of the parameters match the soup.
     """
     for attrs, get, value in find_parameters:
         m = soup.find(attrs=attrs)
         if not m:
             continue
         if get == 'getitem':
-            result = m.get(value, None)
+            result = m.get(value)
         else:
             #  get == 'getattr'
-            result = getattr(m, value, None)
+            result = getattr(m, value)
         if result:
-            return result.strip(), attrs
-    return None, None
+            return result.strip()
+    return None
 
 
 def find_title(
@@ -316,22 +317,22 @@ def find_title(
     authors: list,
     hometitle: list,
     thread: Thread,
-) -> tuple:
+) -> str or None:
     """Return (title_string, where_info)."""
-    raw_title, tag = try_find(soup, TITLE_FIND_PARAMETERS)
+    raw_title = try_find(soup, TITLE_FIND_PARAMETERS)
     if not raw_title:
         try:
-            raw_title, tag = soup.title.text.strip(), 'soup.title.text'
-        except Exception:
+            raw_title = soup.title.text.strip()
+        except AttributeError:
+            # soup has no title tag
             pass
     if raw_title:
-        logger.debug('Unparsed title tag: ' + str(tag))
-        parsed_title = parse_title(raw_title, url, authors, hometitle,
-                                   thread)
-        logger.debug('Parsed title: ' + str(parsed_title))
-        return parsed_title[1], tag
+        parsed_title = parse_title(
+            raw_title, url, authors, hometitle, thread
+        )
+        return parsed_title[1]
     else:
-        return None, None
+        return None
 
 
 def parse_title(
@@ -424,48 +425,41 @@ def parse_title(
     return intitle_author, pure_title, intitle_sitename
 
 
-def try_find_date(soup: BeautifulSoup) -> tuple:
+def try_find_date(soup: BeautifulSoup) -> Date or None:
     """Similar to try_find(), but for finding dates.
 
     Return a string in '%Y-%m-%d' format.
     """
+    # Todo: simplify.
     for fp in DATE_FIND_PARAMETERS:
         try:
-            attrs = fp[0]
-            m = soup.find(attrs=attrs)
+            m = soup.find(attrs=fp[0])
             if fp[1] == 'getitem':
                 string = m[fp[2]]
                 date = finddate(string)
                 if date:
-                    return date, attrs
+                    return date
             elif fp[1] == 'getattr':
                 string = getattr(m, fp[2])
                 date = finddate(string)
                 if date:
-                    return date, attrs
+                    return date
         except (TypeError, AttributeError, KeyError):
             pass
-    return None, None
+    return None
 
 
-def find_date(soup: BeautifulSoup, url: str) -> tuple:
+def find_date(soup: BeautifulSoup, url: str) -> Date:
     """Get the BeautifulSoup object and url. Return (date_obj, where)."""
-    date, tag = try_find_date(soup)
+    # Example for finddate(url):
+    # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
+    # Example for finddate(soup.text):
+    # https://www.bbc.com/news/uk-england-25462900
+    date = try_find_date(soup) or finddate(url) or finddate(soup.text)
     if date:
-        return date, tag
-    else:
-        # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-        date = finddate(url)
-    if date:
-        return date, 'url'
-    else:
-        # https://www.bbc.com/news/uk-england-25462900
-        date = finddate(soup.text)
-    if date:
-        return date, 'soup.text'
-    else:
-        logger.info('Searching for date in page content.\n' + url)
-        return finddate(str(soup)), 'str(soup)'
+        return date
+    logger.info('Searching for date in page content.\n' + url)
+    return finddate(str(soup))
 
 
 def get_hometitle(url: str, hometitle_list: list) -> None:
@@ -536,9 +530,8 @@ def url2dict(url: str) -> dict:
         'url': find_url(soup, url),
         'soup-title': soup_title.text if soup_title else None,
     }
-    authors, tag = find_authors(soup)
+    authors = find_authors(soup)
     if authors:
-        logger.debug('Authors tag: ' + str(tag))
         d['authors'] = authors
     d['doi'] = find_doi(soup)
     d['issn'] = find_issn(soup)
@@ -554,13 +547,11 @@ def url2dict(url: str) -> dict:
         d['website'] = find_sitename(
             soup, url, authors, hometitle_list, home_title_thread
         )
-        logger.debug('Website tag: ' + str(tag))
-    d['title'], tag = find_title(
+    d['title'] = find_title(
         soup, url, authors, hometitle_list, home_title_thread
     )
-    date, tag = find_date(soup, url)
+    date = find_date(soup, url)
     if date:
-        logger.debug('Date tag: ' + str(tag))
         d['date'] = date
         d['year'] = str(date.year)
     d['language'], d['error'] = detect_language(soup.text)

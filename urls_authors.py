@@ -207,8 +207,8 @@ class InvalidByLineError(Exception):
     pass
 
 
-def try_find_authors(soup):
-    """Try to find authors in soup using the provided parameters."""
+def try_find_authors(soup) -> list or None:
+    """Try to find authors in soup using the FIND_PARAMETERS."""
     html = str(soup)
     text = soup.text
     for fp in FIND_PARAMETERS:
@@ -239,34 +239,34 @@ def try_find_authors(soup):
                             pass
 
                 if names:
-                    return names, attrs
+                    return names
             except AttributeError:
                 pass
         elif fp[0] == 'html':
             try:
                 m = re.search(fp[1], html).group(1)
-                return byline_to_names(m), fp[1]
+                return byline_to_names(m)
             except (AttributeError, InvalidByLineError):
                 pass
         else:
             # fp[0] == 'text'
             try:
                 m = re.search(fp[1], text).group(1)
-                return byline_to_names(m), fp[1]
+                return byline_to_names(m)
             except (AttributeError, InvalidByLineError):
                 pass
-    return None, None
+    return None
     
 
-def find_authors(soup):
+def find_authors(soup) -> list or None:
     """Get a BeautifulSoup object. Return (Names, where_found_string)."""
-    names, where = try_find_authors(soup)
+    names = try_find_authors(soup)
     if names:
-        return names, where
-    return None, None
+        return names
+    return None
 
 
-def byline_to_names(byline):
+def byline_to_names(byline) -> list:
     r"""Find authors in byline sting. Return name objects as a list.
 
     The "By " prefix will be omitted.
@@ -291,9 +291,7 @@ def byline_to_names(byline):
     byline = byline.partition('|')[0]
     for c in ':+':
         if c in byline:
-            raise InvalidByLineError(
-                'Invalid character "%s" in byline' % c
-            )
+            raise InvalidByLineError('Invalid character "%s" in byline' % c)
     m = ANYDATE_SEARCH(byline)
     if m:
         # Removing the date part
@@ -325,9 +323,7 @@ def byline_to_names(byline):
             continue
         names.append(name)
     if not names:
-        raise InvalidByLineError(
-            'No valid name remained after parsing byline.'
-        )
+        raise InvalidByLineError('No valid name remained after parsing byline')
     # Remove names not having firstname (orgs)
     name0 = names[0]  # In case no name remains at the end
     names = [n for n in names if n.firstname]

@@ -106,9 +106,8 @@ def original_url_dict(url: str):
     home_title_thread.start()
     soup = get_soup(url)
     d = {'soup-title': soup.title.text.strip()}
-    authors, tag = find_authors(soup)
+    authors = find_authors(soup)
     if authors:
-        logger.debug('Authors tag: ' + str(tag))
         d['authors'] = authors
     d['journal'] = find_journal(soup)
     if d['journal']:
@@ -118,8 +117,7 @@ def original_url_dict(url: str):
         d['website'] = find_sitename(
             soup, url, authors, hometitle_list, home_title_thread
         )
-        logger.debug('Website tag: ' + str(tag))
-    d['title'], tag = find_title(
+    d['title'] = find_title(
         soup, url, authors, hometitle_list, home_title_thread
     )
     return d
