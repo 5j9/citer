@@ -116,6 +116,13 @@ def citations(d: dict) -> tuple:
         cite += ' | url=' + url
     else:
         sfn += ' | p='
+    archive_url = d.get('archive-url')
+    if archive_url:
+        cite += (
+            ' | archive-url=' + archive_url +
+            ' | archive-date=' + d['archive-date'].strftime(date_format) +
+            ' | dead-url=' + d['dead-url']
+        )
     doi = d.get('doi')
     if doi:
         cite += ' | doi=' + doi
@@ -134,13 +141,6 @@ def citations(d: dict) -> tuple:
         cite += '}}'
     if url:
         cite += ' | accessdate=' + datetime_date.today().strftime(date_format)
-    archive_url = d.get('archive-url')
-    if archive_url:
-        cite += (
-            ' | archive-url=' + archive_url +
-            ' | archive-date=' + d['archive-date'].strftime(date_format) +
-            ' | dead-url=' + d['dead-url']
-        )
     cite += '}}'
     sfn += '}}'
     # Finally create the ref tag.
