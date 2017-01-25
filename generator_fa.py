@@ -71,10 +71,10 @@ def citations(d) -> tuple:
         cite += ' | شماره=' + issue
     ddate = d.get('date')
     if ddate:
-        if isinstance(ddate, date):
-            cite += ' | تاریخ=' + date.isoformat(ddate)
-        else:
+        if isinstance(ddate, str):
             cite += ' | تاریخ=' + ddate
+        else:
+            cite += ' | تاریخ=' + date.isoformat(ddate)
     if year:
         cite += ' | سال=' + year
     month = d.get('month')
@@ -96,6 +96,13 @@ def citations(d) -> tuple:
     url = d.get('url')
     if url:
         cite += ' | پیوند=' + url
+    archive_url = d.get('archive-url')
+    if archive_url:
+        cite += (
+            ' | پیوند بایگانی=' + archive_url +
+            ' | تاریخ بایگانی=' + d['archive-date'].isoformat() +
+            ' | پیوند مرده=' + 'آری' if d['dead-url'] == 'yes' else 'نه'
+        )
     doi = d.get('doi')
     if doi:
         cite += ' | doi=' + doi
@@ -109,7 +116,7 @@ def citations(d) -> tuple:
     if pages:
         sfn += ' | ص=' + pages
     if url:
-        cite += ' | تاریخ بازبینی=' + date.isoformat(date.today())
+        cite += ' | تاریخ بازبینی=' + date.today().isoformat()
     else:
         sfn += ' | ص='
     cite += '}}'

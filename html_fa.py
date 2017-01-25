@@ -9,16 +9,6 @@ from string import Template
 from commons import Response
 
 
-def response_to_html(response):
-    """Insert the response into the HTML_TEMPLATE and return response_body."""
-    return HTML_TEMPLATE.safe_substitute(
-        sfn=response.sfn,
-        cite=response.cite,
-        ref=response.ref,
-        error=response.error,
-    )
-
-
 HTML_TEMPLATE = Template(open('html_fa.html', encoding='utf8').read())
 
 # Predefined responses
@@ -43,8 +33,13 @@ OTHER_EXCEPTION_RESPONSE = Response(
     error='100',
 )
 UNDEFINED_INPUT_RESPONSE = Response(
-    sfn='Undefined input.',
-    cite='Sorry, the input was not recognized. The error was logged.',
+    sfn='ورودی تجزیه‌ناپذیر',
+    cite='پوزش، ورودی قابل پردازش نبود. خطا در سیاهه ثبت شد.',
     ref='',
     error='100',
 )
+
+
+def response_to_html(response: Response):
+    """Insert the response into the HTML_TEMPLATE and return response_body."""
+    return HTML_TEMPLATE.safe_substitute(**response._asdict())

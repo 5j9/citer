@@ -4,10 +4,10 @@
 """Codes required to create English Wikipedia citation templates."""
 
 
-from datetime import date as datetime_date
 import re
+from datetime import date as datetime_date
 
-    
+
 def citations(d: dict) -> tuple:
     """Create citation templates according to the given dictionary."""
     date_format = d['date_format']
@@ -82,10 +82,8 @@ def citations(d: dict) -> tuple:
         cite += ' | issue=' + issue
     date = d.get('date')
     if date:
-        if isinstance(date, datetime_date):
-            date = (
-                date.strftime(date_format).lstrip("0").replace(" 0", " ")
-            )
+        if not isinstance(date, str):
+            date = date.strftime(date_format)
         cite += ' | date=' + date
     year = d.get('year')
     if year:
@@ -135,10 +133,13 @@ def citations(d: dict) -> tuple:
             cite += ' | ' + year
         cite += '}}'
     if url:
+        cite += ' | accessdate=' + datetime_date.today().strftime(date_format)
+    archive_url = d.get('archive-url')
+    if archive_url:
         cite += (
-            ' | accessdate=' +
-            datetime_date.strftime(datetime_date.today(), date_format).
-            lstrip("0").replace(" 0", " ")
+            ' | archive-url=' + archive_url +
+            ' | archive-date=' + d['archive-date'].strftime(date_format) +
+            ' | dead-url=' + d['dead-url']
         )
     cite += '}}'
     sfn += '}}'

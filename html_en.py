@@ -6,21 +6,10 @@
 
 from string import Template
 from datetime import date
+from os import name as osname
 
 from commons import Response
 
-
-def response_to_html(response):
-    """Insert the response into the HTML_TEMPLATE and return response_body."""
-    return HTML_TEMPLATE % (
-        response.sfn,
-        response.cite,
-        response.ref,
-        response.error,
-    )
-
-
-HTML_TEMPLATE = Template(open('html_en.html', encoding='utf8').read())
 
 # Predefined responses
 DEFAULT_RESPONSE = Response(
@@ -49,11 +38,28 @@ OTHER_EXCEPTION_RESPONSE = Response(
     error='100',
 )
 
-TODAY = date.today()
-HTML_TEMPLATE = HTML_TEMPLATE.safe_substitute({
-    'Ymd': TODAY.strftime('%Y-%m-%d'),
-    'BdY': TODAY.strftime('%B %d, %Y'),
-    'bdY': TODAY.strftime('%b %d, %Y'),
-    'dBY': TODAY.strftime('%d %B %Y'),
-    'dbY': TODAY.strftime('%d %b %Y'),
-}).replace('%', '%%').replace('$s', '%s')
+# None-zero-padded day directive is os dependant.
+# See http://stackoverflow.com/questions/904928/
+NZDD = '%#d' if osname == 'nt' else '%-d'
+
+HTML_TEMPLATE = Template(open('html_en.html', encoding='utf8').read())
+
+BdY_FORMAT = '%B ' + NZDD + ', %Y'
+bdY_FORMAT = '%b ' + NZDD + ', %Y'
+dBY_FORMAT = NZDD + ' %B %Y'
+dbY_FORMAT = NZDD + ' %b %Y'
+
+TODAY = date.today
+
+
+def response_to_html(response):
+    """Insert the response into the HTML_TEMPLATE and return response_body."""
+    return HTML_TEMPLATE.safe_substitute(
+        d=NZDD,
+        Ymd=TODAY().strftime('%Y-%m-%d'),
+        BdY=TODAY().strftime(BdY_FORMAT),
+        bdY=TODAY().strftime(bdY_FORMAT),
+        dBY=TODAY().strftime(dBY_FORMAT),
+        dbY=TODAY().strftime(dbY_FORMAT),
+        **response._asdict(),
+    )
