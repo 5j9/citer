@@ -8,14 +8,14 @@ import unittest
 
 import dummy_requests
 import doi
-from doi import DoiResponse
+from doi import doi_response
 
 
 class DoiTest(unittest.TestCase):
 
     def test_doi1(self):
         i = 'http://dx.doi.org/10.1038/nrd842'
-        o = DoiResponse(i)
+        o = doi_response(i)
         e = (
             "* {{cite journal "
             "| last=Atkins "
@@ -39,7 +39,7 @@ class DoiTest(unittest.TestCase):
     def test_doi2(self):
         """Title of this DOI could not be detected in an older version."""
         i = 'http://www.jstor.org/stable/info/10.1086/677379'
-        o = DoiResponse(i)
+        o = doi_response(i)
         e = (
             '* {{cite journal '
             '| title=Books of Critical Interest '
@@ -60,7 +60,7 @@ class DoiTest(unittest.TestCase):
     def test_doi3(self):
         """No author. URL contains %2F."""
         i = 'http://dx.doi.org/10.1037%2Fh0063404'
-        o = DoiResponse(i)
+        o = doi_response(i)
         e = (
             '* {{cite journal '
             '| last=Spitzer '

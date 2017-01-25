@@ -12,15 +12,16 @@ except ImportError:
     from wsgiref.simple_server import make_server
 import requests
 
-from noormags import NoorMagsResponse
-from googlebooks import GoogleBooksResponse
-from noorlib import NoorLibResponse
-from adinebook import AdineBookResponse
-from urls import UrlsResponse
-from doi import DoiResponse, DOI_SEARCH
+from noormags import noormags_response
+from googlebooks import googlebooks_response
+from noorlib import noorlib_response
+from adinebook import adinehbook_response
+from urls import urls_response
+from doi import doi_response, DOI_SEARCH
 from commons import uninum2en, response_to_json
 from config import lang
-from isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError, IsbnResponse
+from isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError, isbn_response
+# from waybackmachine import WaybackMachineResponse
 if lang == 'en':
     from html_en import (
         DEFAULT_RESPONSE,
@@ -40,17 +41,18 @@ else:
 
 
 NETLOC_TO_RESPONSE = {
-    'www.adinehbook.com': AdineBookResponse,
-    'www.adinebook.com': AdineBookResponse,
-    'adinebook.com': AdineBookResponse,
-    'adinehbook.com': AdineBookResponse,
-    'www.noorlib.ir': NoorLibResponse,
-    'www.noorlib.com': NoorLibResponse,
-    'noorlib.com': NoorLibResponse,
-    'noorlib.ir': NoorLibResponse,
-    'www.noormags.ir': NoorMagsResponse,
-    'www.noormags.com': NoorMagsResponse,
-    'noormags.com': NoorMagsResponse,
+    'www.adinehbook.com': adinehbook_response,
+    'www.adinebook.com': adinehbook_response,
+    'adinebook.com': adinehbook_response,
+    'adinehbook.com': adinehbook_response,
+    'www.noorlib.ir': noorlib_response,
+    'www.noorlib.com': noorlib_response,
+    'noorlib.com': noorlib_response,
+    'noorlib.ir': noorlib_response,
+    'www.noormags.ir': noormags_response,
+    'www.noormags.com': noormags_response,
+    'noormags.com': noormags_response,
+    # 'web.archive.org':WaybackMachineResponse,
 }
 
 RESPONSE_HEADERS = [
@@ -96,26 +98,22 @@ def get_response(user_input, date_format):
             url = user_input
         netloc = urlparse(url)[1]
         if '.google.com/books' in url:
-            return GoogleBooksResponse(url, date_format)
-        response_class = NETLOC_TO_RESPONSE.get(netloc)
-        if response_class:
-            return response_class(url, date_format)
+            return googlebooks_response(url, date_format)
+        response_getter = NETLOC_TO_RESPONSE.get(netloc)
+        if response_getter:
+            return response_getter(url, date_format)
         # DOIs contain dots
         m = DOI_SEARCH(unescape(en_user_input))
         if m:
-            return DoiResponse(
-                m.group(1),
-                pure=True,
-                date_format=date_format
-            )
-        return UrlsResponse(url, date_format)
+            return doi_response(m.group(1), pure=True, date_format=date_format)
+        return urls_response(url, date_format)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
         # error prone.
         m = ISBN13_SEARCH(en_user_input) or ISBN10_SEARCH(en_user_input)
         if m:
             try:
-                return IsbnResponse(m.group(), True, date_format)
+                return isbn_response(m.group(), True, date_format)
             except IsbnError:
                 pass
         return UNDEFINED_INPUT_RESPONSE

@@ -11,32 +11,28 @@ from requests import get as requests_get
 
 # import bibtex [1]
 from ris import parse as ris_parse
-from commons import BaseResponse, dictionary_to_citations, detect_language
+from commons import dictionary_to_response, detect_language, Response
 
 
-class GoogleBooksResponse(BaseResponse):
-
-    """Create googlebooks' response object."""
-
-    def __init__(self, url, date_format='%Y-%m-%d'):
-        """Make the dictionary and run self.generate()."""
-        # bibtex_result = get_bibtex(url) [1]
-        # dictionary = bibtex.parse(bibtex_result) [1]
-        dictionary = ris_parse(get_ris(url))
-        dictionary['date_format'] = date_format
-        pu = urlparse(url)
-        pq = parse_qs(pu.query)
-        # default domain is prefered:
-        dictionary['url'] = 'http://' + pu.netloc + '/books?id=' + pq['id'][0]
-        # manually adding page nubmer to dictionary:
-        if 'pg' in pq:
-            dictionary['pages'] = pq['pg'][0][2:]
-            dictionary['url'] += '&pg=' + pq['pg'][0]
-        # although google does not provide a language field:
-        if 'language' not in dictionary:
-            dictionary['language'], dictionary['error'] = \
-                detect_language(dictionary['title'])
-        self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
+def googlebooks_response(url, date_format='%Y-%m-%d') -> Response:
+    """Create the response namedtuple."""
+    # bibtex_result = get_bibtex(url) [1]
+    # dictionary = bibtex.parse(bibtex_result) [1]
+    dictionary = ris_parse(get_ris(url))
+    dictionary['date_format'] = date_format
+    pu = urlparse(url)
+    pq = parse_qs(pu.query)
+    # default domain is prefered:
+    dictionary['url'] = 'http://' + pu.netloc + '/books?id=' + pq['id'][0]
+    # manually adding page number to dictionary:
+    if 'pg' in pq:
+        dictionary['pages'] = pq['pg'][0][2:]
+        dictionary['url'] += '&pg=' + pq['pg'][0]
+    # although google does not provide a language field:
+    if 'language' not in dictionary:
+        dictionary['language'], dictionary['error'] = \
+            detect_language(dictionary['title'])
+    return dictionary_to_response(dictionary)
 
 
 def get_bibtex(googlebook_url):

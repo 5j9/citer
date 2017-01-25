@@ -8,7 +8,7 @@ import unittest
 
 import dummy_requests
 import adinebook
-from adinebook import AdineBookResponse
+from adinebook import adinehbook_response
 
 
 class AdineBookTest(unittest.TestCase):
@@ -19,7 +19,7 @@ class AdineBookTest(unittest.TestCase):
             'http://www.adinebook.com/gp/product/9648165814/'
             'ref=sr_1_1000_42/905-6618179-9188955'
         )
-        o = AdineBookResponse(i)
+        o = adinehbook_response(i)
         e = (
             '* {{cite book '
             '| last=لانسکی '
@@ -41,7 +41,7 @@ class AdineBookTest(unittest.TestCase):
             'http://www.adinebook.com/gp/product/9642823352/'
             'ref=sr_1_1000_41/905-6618179-9188955'
         )
-        o = AdineBookResponse(i)
+        o = adinehbook_response(i)
         e = (
             '* {{cite book '
             '| last=کرسول '
@@ -61,7 +61,7 @@ class AdineBookTest(unittest.TestCase):
     def test_ab3(self):
         """authors = 2, translators = 0, otheo = 4, isbn13"""
         i = 'http://www.adinebook.com/gp/product/6005883435'
-        o = AdineBookResponse(i)
+        o = adinehbook_response(i)
         e = (
             '* {{cite book '
             '| last=فخررحیمی '
@@ -86,7 +86,7 @@ class AdineBookTest(unittest.TestCase):
             'http://www.adinebook.com/gp/product/9649563342/'
             'ref=ftr_1/905-6618179-9188955'
         )
-        o = AdineBookResponse(i)
+        o = adinehbook_response(i)
         e = (
             '* {{cite book '
             '| last=کریمی '
@@ -107,7 +107,7 @@ class AdineBookTest(unittest.TestCase):
     def test_ab5(self):
         """Year is interesting here."""
         i = 'http://www.adinebook.com/gp/product/9642656349/'
-        o = AdineBookResponse(i)
+        o = adinehbook_response(i)
         e = (
             '* {{cite book '
             '| last=نژاد '
@@ -127,7 +127,7 @@ class AdineBookTest(unittest.TestCase):
             'http://www.adinebook.com/gp/product/9645300363/'
             'ref=pd_sim_b_title_4/905-6618179-9188955'
         )
-        o = AdineBookResponse(i)
+        o = adinehbook_response(i)
         e = (
             '* {{cite book '
             '| last=مونس '
@@ -148,7 +148,7 @@ class AdineBookTest(unittest.TestCase):
             'http://www.adinebook.com/gp/product/9644593987/'
             'ref=pd_pos_b_title_4/905-6618179-9188955'
         )
-        o = AdineBookResponse(i)
+        o = adinehbook_response(i)
         e = (
             '* {{cite book '
             '| last=دیماتیو '

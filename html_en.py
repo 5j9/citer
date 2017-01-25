@@ -7,17 +7,7 @@
 from string import Template
 from datetime import date
 
-from commons import BaseResponse
-
-
-class Response(BaseResponse):
-
-    """Create the response object used by the main application."""
-
-    def __init__(self, sfn, cite, error='100'):
-        self.sfn = sfn
-        self.cite = cite
-        self.error = error
+from commons import Response
 
 
 def response_to_html(response):
@@ -33,21 +23,30 @@ def response_to_html(response):
 HTML_TEMPLATE = Template(open('html_en.html', encoding='utf8').read())
 
 # Predefined responses
-DEFAULT_RESPONSE = Response('Generated citation will appear here...', '', '0')
+DEFAULT_RESPONSE = Response(
+    sfn='Generated citation will appear here...', cite='', ref='', error='0'
+)
 
 UNDEFINED_INPUT_RESPONSE = Response(
-    'Undefined input.',
-    'Sorry, the input was not recognized. The error was logged.',
+    sfn='Undefined input.',
+    cite='Sorry, the input was not recognized. The error was logged.',
+    ref='',
+    error='100',
 )
 
 HTTPERROR_RESPONSE = Response(
-    'HTTP error:',
-    'One or more of the web resources required to '
+    sfn='HTTP error:',
+    cite='One or more of the web resources required to '
     'create this citation are not accessible at this moment.',
+    ref='',
+    error='100',
 )
 
 OTHER_EXCEPTION_RESPONSE = Response(
-    'An unknown error occurred.', 'The error was logged.'
+    sfn='An unknown error occurred.',
+    cite='The error was logged.',
+    ref='',
+    error='100',
 )
 
 TODAY = date.today()

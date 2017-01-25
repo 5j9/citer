@@ -8,7 +8,7 @@ import unittest
 
 import dummy_requests
 import isbn
-from isbn import IsbnResponse
+from isbn import isbn_response
 
 
 class IsbnTest(unittest.TestCase):
@@ -16,7 +16,7 @@ class IsbnTest(unittest.TestCase):
     def test_is1(self):
         """not found in adinebook"""
         i = '9780349119168'
-        o = IsbnResponse(i, pure=True)
+        o = isbn_response(i, pure=True)
         e = (
             '* {{cite book '
             '| last=Adkins '
@@ -34,7 +34,7 @@ class IsbnTest(unittest.TestCase):
     def test_is2(self):
         """not found in ottobib"""
         i = '978-964-6736-71-9'
-        o = IsbnResponse(i, pure=True)
+        o = isbn_response(i, pure=True)
         e = (
             '* {{cite book '
             '| others=بدیل بن علی خاقانی (شاعر),  جهانگیر منصور (به اهتمام),'
@@ -51,7 +51,7 @@ class IsbnTest(unittest.TestCase):
     def test_is3(self):
         """exists in both"""
         i = '964-6736-34-3 '
-        o = IsbnResponse(i)
+        o = isbn_response(i)
         e = (
             '* {{cite book '
             '| others=سحر معصومی (به اهتمام) '
@@ -67,7 +67,7 @@ class IsbnTest(unittest.TestCase):
     def test_is4(self):
         """unpure isbn10 not found in ottobib"""
         i = 'choghondar 964-92962-6-3 شلغم'
-        o = IsbnResponse(i)
+        o = isbn_response(i)
         e = (
             '* {{cite book '
             '| last=حافظ '

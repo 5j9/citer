@@ -17,8 +17,8 @@ from requests.exceptions import RequestException
 from bs4 import SoupStrainer, BeautifulSoup
 
 from commons import (
-    finddate, detect_language, BaseResponse, USER_AGENT_HEADER,
-    dictionary_to_citations,
+    finddate, detect_language, Response, USER_AGENT_HEADER,
+    dictionary_to_response,
 )
 from urls_authors import find_authors
 
@@ -102,22 +102,17 @@ DATE_FIND_PARAMETERS = (
 )
 
 
-class UrlsResponse(BaseResponse):
-
-    """Create URL's response object."""
-
-    def __init__(self, url: str, date_format: str='%Y-%m-%d') -> None:
-        """Make the dictionary and run self.generate()."""
-        try:
-            dictionary = url2dictionary(url)
-            dictionary['date_format'] = date_format
-            self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
-        except (ContentTypeError, ContentLengthError) as e:
-            self.sfnt = 'Could not process the request.'
-            self.ctnt = e
-            self.error = 100
-            logger.exception(url)
-
+def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
+    """Create the response namedtuple."""
+    try:
+        dictionary = url2dictionary(url)
+        dictionary['date_format'] = date_format
+        return dictionary_to_response(dictionary)
+    except (ContentTypeError, ContentLengthError) as e:
+        logger.exception(url)
+        return Response(
+            sfnt='Could not process the request.', ctnt=e, error=100
+        )
 
 class ContentTypeError(ValueError):
 

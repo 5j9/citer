@@ -7,22 +7,18 @@ import re
 
 from requests import get as requests_get
 
-from commons import BaseResponse, dictionary_to_citations
+from commons import dictionary_to_response, Response
 from bibtex import parse as bibtex_parse
 # import ris[1]
 
 
-class NoorLibResponse(BaseResponse):
-
-    """Create NoorLib response object."""
-
-    def __init__(self, url, date_format='%Y-%m-%d'):
-        """Make the dictionary and run self.generate()."""
-        dictionary = bibtex_parse(get_bibtex(url))
-        dictionary['date_format'] = date_format
-        # risr = get_ris(url)[1]
-        # dictionary = risr.parse(ris)[1]
-        self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
+def noorlib_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
+    """Create the response namedtuple."""
+    dictionary = bibtex_parse(get_bibtex(url))
+    dictionary['date_format'] = date_format
+    # risr = get_ris(url)[1]
+    # dictionary = risr.parse(ris)[1]
+    return dictionary_to_response(dictionary)
 
 
 def get_bibtex(noorlib_url):

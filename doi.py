@@ -11,7 +11,7 @@ from html import unescape
 
 from requests import get as requests_get
 
-from commons import BaseResponse, dictionary_to_citations, detect_language
+from commons import Response, dictionary_to_response, detect_language
 from config import lang
 from bibtex import parse as bibtex_parse
 
@@ -23,35 +23,31 @@ DOI_SEARCH = re.compile(
 ).search
 
 
-class DoiResponse(BaseResponse):
-
-    """Create a DOI's response object."""
-
-    def __init__(self, doi_or_url, pure=False, date_format='%Y-%m-%d'):
-        """Make the dictionary and run self.generate()."""
-        if pure:
-            doi = doi_or_url
-        else:
-            # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
-            # decode percent encodings
-            decoded_url = unquote(unescape(doi_or_url))
-            m = DOI_SEARCH(decoded_url)
-            if m:
-                doi = m.group(1)
-        url = 'http://dx.doi.org/' + doi
-        bibtex = get_bibtex(url)
-        if bibtex == 'Resource not found.':
-            logger.info('DOI could not be resolved.\n' + url)
-            self.error = 100
-            self.sfnt = 'DOI could not be resolved.'
-            self.ctnt = bibtex
-        else:
-            dictionary = bibtex_parse(bibtex)
-            dictionary['date_format'] = date_format
-            if lang == 'fa':
-                dictionary['language'], dictionary['error'] = \
-                    detect_language(dictionary['title'])
-            self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
+def doi_response(doi_or_url, pure=False, date_format='%Y-%m-%d') -> Response:
+    """Create the response namedtuple."""
+    if pure:
+        doi = doi_or_url
+    else:
+        # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
+        # decode percent encodings
+        decoded_url = unquote(unescape(doi_or_url))
+        m = DOI_SEARCH(decoded_url)
+        if m:
+            doi = m.group(1)
+    url = 'http://dx.doi.org/' + doi
+    bibtex = get_bibtex(url)
+    if bibtex == 'Resource not found.':
+        logger.info('DOI could not be resolved.\n' + url)
+        return Response(
+            error=100, sfnt='DOI could not be resolved.', ctnt=bibtex
+        )
+    else:
+        dictionary = bibtex_parse(bibtex)
+        dictionary['date_format'] = date_format
+        if lang == 'fa':
+            dictionary['language'], dictionary['error'] = \
+                detect_language(dictionary['title'])
+        return dictionary_to_response(dictionary)
 
 
 def get_bibtex(doi_url):

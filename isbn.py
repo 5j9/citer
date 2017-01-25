@@ -11,7 +11,7 @@ from requests import get as requests_get
 from adinebook import url2dictionary as adinebook_url2dictionary
 from adinebook import isbn2url as adinebook_isbn2url
 from bibtex import parse as bibtex_parse
-from commons import BaseResponse, dictionary_to_citations, detect_language
+from commons import dictionary_to_response, detect_language, Response
 
 
 # original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
@@ -40,46 +40,43 @@ class IsbnError(Exception):
     pass
 
 
-class IsbnResponse(BaseResponse):
-
-    """Create isbn's response object."""
-
-    def __init__(self, isbn_container_string, pure=False,
-                 date_format='%Y-%m-%d'):
-        """Make the dictionary and run self.generate()."""
-        if pure:
-            isbn = isbn_container_string
+def isbn_response(
+    isbn_container_str: str, pure: bool=False, date_format: str='%Y-%m-%d'
+) -> Response:
+    """Create the response namedtuple."""
+    if pure:
+        isbn = isbn_container_str
+    else:
+        # search for isbn13
+        m = ISBN13_SEARCH(isbn_container_str)
+        if m:
+            isbn = m.group(0)
         else:
-            # search for isbn13
-            m = ISBN13_SEARCH(isbn_container_string)
-            if m:
-                isbn = m.group(0)
-            else:
-                # search for isbn10
-                m = ISBN10_SEARCH(isbn_container_string)
-                isbn = m.group(0)
-        adinebook_dict_list = []
-        thread = Thread(
-            target=adinebook_thread,
-            args=(isbn, adinebook_dict_list),
-        )
-        thread.start()
-        ottobib_bibtex = ottobib(isbn)
-        if ottobib_bibtex:
-            otto_dict = bibtex_parse(ottobib_bibtex)
-        else:
-            otto_dict = None
-        thread.join()
-        if adinebook_dict_list:
-            adine_dict = adinebook_dict_list.pop()
-        else:
-            adine_dict = None
-        dictionary = choose_dict(adine_dict, otto_dict)
-        dictionary['date_format'] = date_format
-        if 'language' not in dictionary:
-            dictionary['language'], dictionary['error'] = \
-                detect_language(dictionary['title'])
-        self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
+            # search for isbn10
+            m = ISBN10_SEARCH(isbn_container_str)
+            isbn = m.group(0)
+    adinebook_dict_list = []
+    thread = Thread(
+        target=adinebook_thread,
+        args=(isbn, adinebook_dict_list),
+    )
+    thread.start()
+    ottobib_bibtex = ottobib(isbn)
+    if ottobib_bibtex:
+        otto_dict = bibtex_parse(ottobib_bibtex)
+    else:
+        otto_dict = None
+    thread.join()
+    if adinebook_dict_list:
+        adine_dict = adinebook_dict_list.pop()
+    else:
+        adine_dict = None
+    dictionary = choose_dict(adine_dict, otto_dict)
+    dictionary['date_format'] = date_format
+    if 'language' not in dictionary:
+        dictionary['language'], dictionary['error'] = \
+            detect_language(dictionary['title'])
+    return dictionary_to_response(dictionary)
 
 
 def adinebook_thread(isbn, result_list):

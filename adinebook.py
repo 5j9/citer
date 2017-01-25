@@ -9,9 +9,7 @@ import re
 from requests import get as requests_get
 from requests import RequestException
 from bs4 import BeautifulSoup
-from commons import (
-    Name, BaseResponse, dictionary_to_citations, detect_language
-)
+from commons import Name, dictionary_to_response, detect_language, Response
 
 
 ISBN_SEARCH = re.compile(r'شابک:.*?([\d-]*X?)</span></li>').search
@@ -23,21 +21,17 @@ TITLE_SEARCH = re.compile(
 ).search
 
 
-class AdineBookResponse(BaseResponse):
-
-    """Create Adinebook's response object."""
-
-    def __init__(self, url: str, date_format: str= '%Y-%m-%d'):
-        """Make the dictionary and run self.generate()."""
-        dictionary = url2dictionary(url)
-        dictionary['date_format'] = date_format
-        if 'language' not in dictionary:
-            # Assume that language is either fa or en.
-            # Todo: give warning about this assumption.
-            dictionary['language'], dictionary['error'] = detect_language(
-                dictionary['title'], ('en', 'fa')
-            )
-        self.cite, self.sfn, self.ref = dictionary_to_citations(dictionary)
+def adinehbook_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
+    """Create the response namedtuple."""
+    dictionary = url2dictionary(url)
+    dictionary['date_format'] = date_format
+    if 'language' not in dictionary:
+        # Assume that language is either fa or en.
+        # Todo: give warning about this assumption.
+        dictionary['language'], dictionary['error'] = detect_language(
+            dictionary['title'], ('en', 'fa')
+        )
+    return dictionary_to_response(dictionary)
 
 
 def isbn2url(isbn: str):

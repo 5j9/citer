@@ -6,17 +6,7 @@
 
 from string import Template
 
-from commons import BaseResponse
-
-
-class Response(BaseResponse):
-
-    """Create the responce object used by the main application."""
-
-    def __init__(self, sfn, cite, error='100'):
-        self.sfn = sfn
-        self.cite = cite
-        self.error = error
+from commons import Response
 
 
 def response_to_html(response):
@@ -33,18 +23,28 @@ HTML_TEMPLATE = Template(open('html_fa.html', encoding='utf8').read())
 
 # Predefined responses
 DEFAULT_RESPONSE = Response(
-    'یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '??'
+    sfn='یادکرد ساخته‌شده اینجا نمایان خواهد شد...',
+    cite='',
+    ref='',
+    error='0',
 )
 HTTPERROR_RESPONSE = Response(
-    'خطای اچ‌تی‌تی‌پی:',
-    'یک یا چند مورد از منابع اینترنتی مورد '
+    sfn='خطای اچ‌تی‌تی‌پی:',
+    cite='یک یا چند مورد از منابع اینترنتی مورد '
     'نیاز برای ساخت این یادکرد در این لحظه '
     'در دسترس نیستند. (و یا ورودی نامعتبر است)',
+    ref='',
+    error='100'
 )
 OTHER_EXCEPTION_RESPONSE = Response(
-    'خطای ناشناخته‌ای رخ داد..', 'اطلاعات خطا در سیاهه ثبت شد.'
+    sfn='خطای ناشناخته‌ای رخ داد..',
+    cite='اطلاعات خطا در سیاهه ثبت شد.',
+    ref='',
+    error='100',
 )
 UNDEFINED_INPUT_RESPONSE = Response(
-    'Undefined input.',
-    'Sorry, the input was not recognized. The error was logged.',
+    sfn='Undefined input.',
+    cite='Sorry, the input was not recognized. The error was logged.',
+    ref='',
+    error='100',
 )

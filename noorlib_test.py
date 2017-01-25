@@ -8,14 +8,14 @@ import unittest
 
 import dummy_requests
 import noorlib
-from noorlib import NoorLibResponse
+from noorlib import noorlib_response
 
 
 class NoorlibTest(unittest.TestCase):
 
     def test_nl1(self):
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/18879'
-        o = NoorLibResponse(i)
+        o = noorlib_response(i)
         e = (
             '* {{cite book '
             '| last=مرتضی زبیدی '
@@ -37,7 +37,7 @@ class NoorlibTest(unittest.TestCase):
     def test_nl2(self):
         """The year parameter is not present."""
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/18454'
-        o = NoorLibResponse(i)
+        o = noorlib_response(i)
         er = '{{sfn | کورانی}}'
         ec = (
             '* {{cite book '

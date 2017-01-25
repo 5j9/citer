@@ -3,9 +3,10 @@
 
 """Common variables, functions, and classes used in string conversions, etc."""
 
-from datetime import datetime
 import re
 import json
+from datetime import datetime
+from collections import namedtuple
 
 import langid
 from isbnlib import mask as isbn_mask
@@ -79,6 +80,9 @@ USER_AGENT_HEADER = {
 }
 
 
+Response = namedtuple('Response', 'cite sfn ref error')
+
+
 class InvalidNameError(Exception):
 
     """Base class for Name exceptions."""
@@ -128,17 +132,8 @@ class Name:
         self.firstname = ''
 
 
-class BaseResponse:
-
-    """The base class for response objects."""
-
-    # defaults
-    error = 0
-    ref = cite = sfn = ''
-
-
-def dictionary_to_citations(dictionary) -> tuple:
-    """Return (sfn, cite, ref) strings..
+def dictionary_to_response(dictionary) -> Response:
+    """Return (sfn, cite, ref, error) strings..
 
     dictionary should be ready before calling this function.
     The dictionary will be cleaned up (empty values will be removed) and
@@ -154,7 +149,8 @@ def dictionary_to_citations(dictionary) -> tuple:
         from generator_en import citations
     else:
         from generator_fa import citations
-    return citations(dictionary) # cite, sfn, ref
+    cite, sfn, ref = citations(dictionary)
+    return Response(cite, sfn, ref, dictionary.get('error'))
 
 
 def response_to_json(response) -> str:

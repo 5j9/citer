@@ -8,7 +8,7 @@ import unittest
 
 import dummy_requests
 import googlebooks
-from googlebooks import GoogleBooksResponse
+from googlebooks import googlebooks_response
 
 
 class GooglebooksTest(unittest.TestCase):
@@ -18,7 +18,7 @@ class GooglebooksTest(unittest.TestCase):
             'http://books.google.com/books?'
             'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library'
         )
-        o = GoogleBooksResponse(i)
+        o = googlebooks_response(i)
         e = (
             '* {{cite book '
             '| last=Arms '
@@ -40,7 +40,7 @@ class GooglebooksTest(unittest.TestCase):
             'http://books.google.com/books?'
             'id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
         )
-        o = GoogleBooksResponse(i)
+        o = googlebooks_response(i)
         e1 = (
             '{{sfn '
             '| Anderson '
@@ -91,7 +91,7 @@ class GooglebooksTest(unittest.TestCase):
             'Delimiter+is%22&hl=en&sa=X&ei=oNKSUrKeDovItAbO_4CoBA&ved='
             '0CC4Q6AEwAA#v=onepage&q=%22a%20Delimiter%20is%22&f=false'
         )
-        o = GoogleBooksResponse(i)
+        o = googlebooks_response(i)
         e1 = '{{sfn | Farrell | 2009 | p=588}}'
         e2 = (
             '* {{cite book '
@@ -117,7 +117,7 @@ class GooglebooksTest(unittest.TestCase):
             'X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q='
             '%22legal%20translation%20is%22&f=false'
         )
-        o = GoogleBooksResponse(i)
+        o = googlebooks_response(i)
         e1 = '{{sfn | Šarčević | 1997 | p=229}}'
         e2 = (
             '* {{cite book '
@@ -141,7 +141,7 @@ class GooglebooksTest(unittest.TestCase):
             'dq=density+of+granite&hl=en&sa=X&ei=YBHIU-qCBIyX0QXusoDgAg&ved='
             '0CEIQ6AEwBjgK#v=onepage&q=density%20of%20granite&f=false'
         )
-        o = GoogleBooksResponse(i)
+        o = googlebooks_response(i)
         ctnt = (
             '* {{cite book '
             '| last=Serway '
