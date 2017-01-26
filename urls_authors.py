@@ -254,7 +254,8 @@ def byline_to_names(byline) -> list:
         fullname = fullname.partition(' in ')[0]
         fullname = fullname.partition(' for ')[0]
         name = Name(fullname)
-        if name.firstname.startswith('The '):
+        fn_startswith = name.firstname.startswith
+        if fn_startswith('The ') or fn_startswith('خبرگزار'):
             name.nofirst_fulllast()
         if STOPWORDS_SEARCH(name.lastname):
             continue

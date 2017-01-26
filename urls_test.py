@@ -729,16 +729,19 @@ class Others(unittest.TestCase):
         """Detection of website name."""
         i = 'http://www.farsnews.com/newstext.php?nn=13930418000036'
         o = urls_response(i)
-        sf = "{{sfn | ''خبرگزاری فارس'' | 2014}}"
+        # Fars news is using 'خبرگزاری فارس' as og:author which is wrong
+        # and thats why its name is not italicized in sfn.
+        sf = "{{sfn | خبرگزاری فارس | 2014}}"
         ct = (
             '* {{cite web '
-            '| title=آیت‌الله محمدی گیلانی دارفانی را وداع گفت '
+            '| author=خبرگزاری فارس '
+            '| title=آیت\u200cالله محمدی گیلانی دارفانی را وداع گفت '
             '| website=خبرگزاری فارس '
             '| date=2014-07-09 '
             '| url=http://www.farsnews.com/newstext.php?nn=13930418000036 '
             '| language=fa '
-            '| ref={{sfnref | خبرگزاری فارس | 2014}} '
-            '| accessdate='
+            '| ref=harv '
+            '| accessdate=2017-01-26}}'
         )
         self.assertIn(sf, o.sfn)
         self.assertIn(ct, o.cite)
