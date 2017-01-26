@@ -1,52 +1,41 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
+import pickle
+
 import requests
-import re
-import os
-from urllib.parse import urlparse
 
 
 class DummyRequests:
 
     """This class will be used to override the requests mudule in tests."""
 
-    class Response:
+    def get(self, url: str, headers=None, **kwargs):
+        response = CACHE.get(url)
+        if not response:
+            print('Downloading ' + url)
+            response = requests.get(url, headers=headers)
+            CACHE[url] = response
+            save_cache(CACHE)
+        return response
 
-        """Use for emulating requests response."""
+    def head(self, url: str, headers=None, **kwargs):
+        return self.get(url, headers)
 
-        status_code = 200
 
-    def get(self, url, headers=None, *args, **kwargs):
-        pu = urlparse(url)
-        file = (
-            './tests_cache/'
-            + re.sub('/+', '/', '/'.join(pu)).rstrip('/') + '.html'
-        ).replace(':', '_')
-        try:
-            with open(file, 'rb') as f:
-                content = f.read()
-            try:
-                text = content.decode('utf-8')
-            except UnicodeDecodeError:
-                text = None
-        except FileNotFoundError:
-            path = '/'.join(file.split('/')[:-1]) + '/'
-            os.makedirs(path, exist_ok=True)
-            print('* Downloading ' + url)
-            r = requests.get(url, headers=headers)
-            content = r.content
-            text = r.text
-            with open(file, 'wb') as f:
-                f.write(content)
-        self.Response.content = content
-        self.Response.text = text
-        return self.Response
+def save_cache(cache_dict):
+    """Save cache as pickle."""
+    print('saving new cache')
+    with open('.tests_cache', 'w+b') as f:
+        pickle.dump(cache_dict, f)
 
-    def head(self, url, headers=None, *args, **kwargs):
-        rheaders = {
-            'content-type': 'text/html',
-            'content-length': str(len(self.get(url, headers=headers).content))
-        }
-        self.Response.headers = rheaders
-        return self.Response
+
+def load_cache():
+    """Return cache as a dict."""
+    with open('.tests_cache', 'r+b') as f:
+        return pickle.load(f)
+
+
+CACHE = load_cache()
+
+print('len(CACHE):', len(CACHE))
