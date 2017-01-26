@@ -6,8 +6,11 @@
 
 import unittest
 
+import config
+
 
 if __name__ == '__main__':
+    config.lang = 'en'
     tests = unittest.defaultTestLoader.discover('.', '*_test.py')
     runner = unittest.runner.TextTestRunner()
     runner.run(tests)
