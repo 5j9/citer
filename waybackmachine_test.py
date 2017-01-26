@@ -44,11 +44,10 @@ class WaybackmachineResponse(unittest.TestCase):
         self.assertIn(ct, o.cite)
 
     # todo: fix
-    @unittest.skip
     def test_dead_url(self):
         """dead-url=yes"""
         i = (
-            'https://web.archive.org/web/20070429193849_id/'
+            'https://web.archive.org/web/20070429193849id_/'
             'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
         )
         o = waybackmachine_response(i)
@@ -59,12 +58,12 @@ class WaybackmachineResponse(unittest.TestCase):
             '| website=londondevelopmentcentre.org '
             '| date=2007-04-29 '
             '| url=http://www.londondevelopmentcentre.org/page.php?s=1&p=2462 '
-            '| archive-url=https://web.archive.org/web/20070429193849/'
+            '| archive-url=https://web.archive.org/web/20070429193849id_/'
             'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462 '
+            '| archive-date=2007-04-29 '
             '| dead-url=yes '
             '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
-            '| accessdate=2017-01-25 '
-            '| archive-date='
+            '| accessdate='
         )
         self.assertIn(ct, o.cite)
 
