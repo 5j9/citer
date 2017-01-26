@@ -164,7 +164,7 @@ class DilyTelegraphTest(unittest.TestCase):
     def test_dt1(self):
         """`1 author, 2005"""
         i = (
-            'http://www.telegraph.co.uk/health/3334755/'
+            'http://www.telegraph.co.uk/news/health/3334755/'
             'We-could-see-the-whales-eyes-mouth...-'
             'the-barnacles-on-its-back.html'
         )
@@ -178,7 +178,7 @@ class DilyTelegraphTest(unittest.TestCase):
             "the barnacles on its back "
             "| website=Telegraph.co.uk "
             "| date=2005-12-22 "
-            "| url=http://www.telegraph.co.uk/health/3334755/"
+            "| url=http://www.telegraph.co.uk/news/health/3334755/"
             "We-could-see-the-whales-eyes-mouth...-"
             "the-barnacles-on-its-back.html "
             "| ref=harv "
@@ -190,7 +190,7 @@ class DilyTelegraphTest(unittest.TestCase):
     def test_dt2(self):
         """1 author, 2003"""
         i = (
-            'http://www.telegraph.co.uk/science/science-news/3313298/'
+            'http://www.telegraph.co.uk/news/science/science-news/3313298/'
             'Marine-collapse-linked-to-whale-decline.html'
         )
         o = urls_response(i)
@@ -202,7 +202,7 @@ class DilyTelegraphTest(unittest.TestCase):
             "| title=Marine 'collapse' linked to whale decline "
             "| website=Telegraph.co.uk "
             "| date=2003-09-29 "
-            "| url=http://www.telegraph.co.uk/science/science-news/"
+            "| url=http://www.telegraph.co.uk/news/science/science-news/"
             "3313298/Marine-collapse-linked-to-whale-decline.html "
             "| ref=harv "
             "| accessdate="
@@ -213,7 +213,7 @@ class DilyTelegraphTest(unittest.TestCase):
     def test_dt3(self):
         """1 author, 2011"""
         i = (
-            'http://www.telegraph.co.uk/science/8323909/'
+            'http://www.telegraph.co.uk/news/8323909/'
             'The-sperm-whale-works-in-extraordinary-ways.html'
         )
         o = urls_response(i)
@@ -225,7 +225,7 @@ class DilyTelegraphTest(unittest.TestCase):
             "| title=The sperm whale works in extraordinary ways "
             "| website=Telegraph.co.uk "
             "| date=2011-02-15 "
-            "| url=http://www.telegraph.co.uk/science/8323909/"
+            "| url=http://www.telegraph.co.uk/news/science/8323909/"
             "The-sperm-whale-works-in-extraordinary-ways.html "
             "| ref=harv "
             "| accessdate="
@@ -316,10 +316,10 @@ class BbcTest(unittest.TestCase):
             '* {{cite web '
             '| last=Gage '
             '| first=Suzi '
-            '| title=Sea otter return boosts seagrass '
+            '| title=Sea otter return boosts ailing seagrass in California '
             '| website=BBC News '
             '| date=2013-08-26 '
-            '| url=http://www.bbc.co.uk/news/science-environment-23814524 '
+            '| url=http://www.bbc.com/news/science-environment-23814524 '
             '| ref=harv '
             '| accessdate='
         )
@@ -385,7 +385,7 @@ class BbcTest(unittest.TestCase):
             "* {{cite web "
             "| last=Amos "
             "| first=Jonathan "
-            "| title=Europe picks Plato planet-hunter "
+            "| title=European Space Agency picks Plato planet-hunting mission "
             "| website=BBC News "
             "| date=2014-02-20 "
             "| url=http://www.bbc.com/news/science-environment-26267918 "
@@ -412,7 +412,7 @@ class NytTest(unittest.TestCase):
             '| title=Right to Be Forgotten? Not That Easy '
             '| website=The New York Times '
             '| date=2014-05-29 '
-            '| url=http://www.nytimes.com/2014/05/30/business/international/'
+            '| url=https://www.nytimes.com/2014/05/30/business/international/'
             'on-the-internet-the-right-to-forget-vs-the-right-to-know.html '
             '| ref=harv '
             '| accessdate='
@@ -422,7 +422,7 @@ class NytTest(unittest.TestCase):
     def test_nyt2(self):
         """newstylct, 2 authors"""
         i = (
-            'http://www.nytimes.com/2014/05/31/sports/basketball/'
+            'https://www.nytimes.com/2014/05/31/sports/basketball/'
             'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-'
             'the-nba.html?hp'
         )
@@ -437,7 +437,7 @@ class NytTest(unittest.TestCase):
             'It May Be a Steal for Steve Ballmer '
             '| website=The New York Times '
             '| date=2014-05-30 '
-            '| url=http://www.nytimes.com/2014/05/31/sports/basketball/'
+            '| url=https://www.nytimes.com/2014/05/31/sports/basketball/'
             'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-'
             'the-nba.html '
             '| ref=harv '
@@ -456,7 +456,7 @@ class NytTest(unittest.TestCase):
             '| title=Election Rules Complicate Kenya Race '
             '| website=The New York Times '
             '| date=2007-12-25 '
-            '| url=http://www.nytimes.com/2007/12/25/world/africa/'
+            '| url=https://www.nytimes.com/2007/12/25/world/africa/'
             '25kenya.html '
             '| ref=harv '
             '| accessdate='
@@ -480,8 +480,8 @@ class NytTest(unittest.TestCase):
             'Insider Trading Inquiry Includes Mickelson, Icahn and William T. '
             'Walters '
             '| website=DealBook '
-            '| date=2014-05-30 '
-            '| url=http://dealbook.nytimes.com/2014/05/30/'
+            '| date=2014-06-12 '
+            '| url=https://dealbook.nytimes.com/2014/05/30/'
             'insider-trading-inquiry-includes-mickelson-and-icahn/ '
             '| ref=harv '
             '| accessdate='
@@ -491,18 +491,18 @@ class NytTest(unittest.TestCase):
     def test_nyt5(self):
         """special case for date format (not in usual meta tags)"""
         i = (
-            'http://www.nytimes.com/2007/06/13/world/americas/'
+            'https://www.nytimes.com/2007/06/13/world/americas/'
             '13iht-whale.1.6123654.html'
         )
         o = urls_response(i)
         ct = (
             '* {{cite web '
             '| title=19th-century harpoon gives clue on whales '
-            '| website=The New York Times '
+            '| website=International Herald Tribune '
             '| date=2007-06-13 '
-            '| url=http://www.nytimes.com/2007/06/13/world/americas/'
+            '| url=https://www.nytimes.com/2007/06/13/world/americas/'
             '13iht-whale.1.6123654.html '
-            '| ref={{sfnref | The New York Times | 2007}} '
+            '| ref={{sfnref | International Herald Tribune | 2007}} '
             '| accessdate='
         )
         self.assertIn(ct, o.cite)
@@ -522,7 +522,7 @@ class NytTest(unittest.TestCase):
             "Sonar Is Linked to Whale Deaths "
             "| website=The New York Times "
             "| date=2003-10-09 "
-            "| url=http://www.nytimes.com/2003/10/09/us/"
+            "| url=https://www.nytimes.com/2003/10/09/us/"
             "adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html "
             "| ref=harv "
             "| accessdate="
@@ -531,27 +531,6 @@ class NytTest(unittest.TestCase):
         
 
 class TGDaily(unittest.TestCase):
-
-    def test_tgd1(self):
-        """Apparently two authors, but only one of them is valid."""
-        i = (
-            'http://www.tgdaily.com/sustainability-features/'
-            '79712-are-more-wind-turbines-the-answer'
-        )
-        o = urls_response(i)
-        ct = (
-            '* {{cite web '
-            '| last=Danko '
-            '| first=Pete '
-            '| title=Are more wind turbines the answer? '
-            '| website=TG Daily '
-            '| date=2013-09-16 '
-            '| url=http://www.tgdaily.com/sustainability-features/'
-            '79712-are-more-wind-turbines-the-answer '
-            '| ref=harv '
-            '| accessdate='
-        )
-        self.assertIn(ct, o.cite)
 
     def test_tgd2(self):
         """Hard to find author and date."""
@@ -562,14 +541,12 @@ class TGDaily(unittest.TestCase):
         o = urls_response(i)
         ct = (
             '* {{cite web '
-            '| last=Wright '
-            '| first=Guy '
             '| title=Apple might buy Beats for $3.2 billion '
             '| website=TG Daily '
             '| date=2014-05-09 '
             '| url=http://www.tgdaily.com/web/'
             '100381-apple-might-buy-beats-for-32-billion '
-            '| ref=harv '
+            '| ref={{sfnref | TG Daily | 2014}} '
             '| accessdate='
         )
         self.assertIn(ct, o.cite)
@@ -661,7 +638,7 @@ class Others(unittest.TestCase):
             '| last=Carlson '
             '| first=Kimberly '
             '| last2=York '
-            '| first2=Jillian '
+            '| first2=Jillian C. '
             '| title=Sudan Tech Sanctions Harm Innovation and Development: '
             'US Government and Corporations Must Act '
             '| website=Electronic Frontier Foundation '
@@ -674,10 +651,13 @@ class Others(unittest.TestCase):
         )
         self.assertIn(ct, o.cite)
 
+    # Disable because relies on class="author" which has been disabled due
+    # to hight error rate.
+    @unittest.skip
     def test_oth3(self):
-        """3 authors."""
+        """4 authors."""
         i = (
-            'http://arstechnica.com/science/2007/09/'
+            'https://arstechnica.com/science/2007/09/'
             'the-pseudoscience-behind-homeopathy/'
         )
         o = urls_response(i)
@@ -694,7 +674,7 @@ class Others(unittest.TestCase):
             '| title=Diluting the scientific method:  Ars looks at homeopathy '
             '| website=Ars Technica '
             '| date=2007-09-12 '
-            '| url=http://arstechnica.com/science/2007/09/'
+            '| url=https://arstechnica.com/science/2007/09/'
             'the-pseudoscience-behind-homeopathy/ '
             '| ref=harv '
             '| accessdate='
@@ -715,8 +695,8 @@ class Others(unittest.TestCase):
             "| first=Tia "
             "| title='Revolutionary' Physics: "
             "Do Sterile Neutrinos Lurk in the Universe? "
-            "| website=LiveScience.com "
-            "| date=2014-07-02 "
+            "| website=Live Science "
+            "| date=2014-07-01 "
             "| url=http://www.livescience.com/"
             "46619-sterile-neutrino-experiment-beginning.html "
             "| ref=harv "
@@ -749,15 +729,15 @@ class Others(unittest.TestCase):
         """Detection of website name."""
         i = 'http://www.farsnews.com/newstext.php?nn=13930418000036'
         o = urls_response(i)
-        sf = "{{sfn | ''Fars News Agency'' | 2014}}"
+        sf = "{{sfn | ''خبرگزاری فارس'' | 2014}}"
         ct = (
             '* {{cite web '
             '| title=آیت‌الله محمدی گیلانی دارفانی را وداع گفت '
-            '| website=Fars News Agency '
+            '| website=خبرگزاری فارس '
             '| date=2014-07-09 '
             '| url=http://www.farsnews.com/newstext.php?nn=13930418000036 '
             '| language=fa '
-            '| ref={{sfnref | Fars News Agency | 2014}} '
+            '| ref={{sfnref | خبرگزاری فارس | 2014}} '
             '| accessdate='
         )
         self.assertIn(sf, o.sfn)
@@ -766,7 +746,7 @@ class Others(unittest.TestCase):
     def test_oth7(self):
         """Contains a By Topic line and also the byline contains ' | '."""
         i = (
-            'http://newsoffice.mit.edu/2014/'
+            'http://news.mit.edu/2014/'
             'traffic-lights-theres-a-better-way-0707'
         )
         o = urls_response(i)
@@ -775,9 +755,9 @@ class Others(unittest.TestCase):
             '| last=Chandler '
             '| first=David L. '
             '| title=Traffic lights: There’s a better way '
-            '| website=MIT News Office '
+            '| website=MIT News '
             '| date=2014-07-07 '
-            '| url=http://newsoffice.mit.edu/2014/'
+            '| url=http://news.mit.edu/2014/'
             'traffic-lights-theres-a-better-way-0707 '
             '| ref=harv '
             '| accessdate='
@@ -802,24 +782,6 @@ class Others(unittest.TestCase):
             '| date=2014-07-14 '
             '| url=http://www.theguardian.com/world/2014/jul/14/'
             'israel-drone-launched-gaza-ashdod '
-            '| ref=harv '
-            '| accessdate='
-        )
-        self.assertIn(ct, o.cite)
-
-    def test_oth9(self):
-        """Author in str(soup)."""
-        i = 'http://www.defense.gov/News/NewsArticle.aspx?ID=18509'
-        o = urls_response(i)
-        ct = (
-            '* {{cite web '
-            '| last=Garamone '
-            '| first=Jim '
-            '| title=Defense.gov News Article: '
-            'Prison Stands as Testament to Saddam\'s Evil '
-            '| website=United States Department of Defense (defense.gov) '
-            '| date=2005-12-17 '
-            '| url=http://www.defense.gov/News/NewsArticle.aspx?ID=18509 '
             '| ref=harv '
             '| accessdate='
         )
@@ -850,7 +812,7 @@ class Others(unittest.TestCase):
         self.assertIn(ct, o.cite)
 
     def test_oth11(self):
-        """businessnewsdaily."""
+        """Business News Daily."""
         i = (
             'http://www.businessnewsdaily.com/6762-male-female-entrepreneurs'
             '.html?cmpid=514642_20140715_27858876'
@@ -861,8 +823,8 @@ class Others(unittest.TestCase):
             '| last=Helmrich '
             '| first=Brittney '
             '| title=Male vs. Female Entrepreneurs: How Are They Different? '
-            '| website=BusinessNewsDaily.com '
-            '| date=2014-07-15 '
+            '| website=Business News Daily '
+            '| date=2014-07-10 '
             '| url=http://www.businessnewsdaily.com/6762-male-female-'
             'entrepreneurs.html '
             '| ref=harv '
@@ -880,7 +842,7 @@ class Others(unittest.TestCase):
             '| first=Theodore A. '
             '| title=The evidence that shows Iron Dome is not working '
             '| website=Bulletin of the Atomic Scientists '
-            '| date=2014-01-14 '
+            '| date=2014-07-19 '
             '| url=http://thebulletin.org/'
             'evidence-shows-iron-dome-not-working7318 '
             '| ref=harv '
