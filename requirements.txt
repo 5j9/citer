@@ -6,3 +6,4 @@ flup6>=1.1
 langid>=1.1.6
 lxml>=3.7.2
 jdatetime>=1.8.1,
+regex>=2017.1.17
