@@ -13,41 +13,30 @@ from noormags import noormags_response
 
 class NoormagsTest(unittest.TestCase):
 
-    def test_nm1(self):
-        i = 'http://www.noormags.com/view/fa/articlepage/5798/102/Text'
-        o = noormags_response(i)
-        e = (
-            '* {{cite journal '
-            '| last=موسوی '
-            '| first=زهرا '
-            '| title=مقرنس در معماری '
-            '| journal=کتاب ماه هنر '
-            '| issue=45 '
-            '| year=2002 '
-            '| pages=102–106 '
-            '| url=http://www.noormags.ir/view/fa/articlepage/104040 '
-            '| language=fa '
-            '| ref=harv '
-            '| accessdate='
-        )
-        self.assertIn(e, o.cite)
-
     def test_nm2(self):
         """The second author does not have a last name. (Bibtex file error)"""
-        i = 'http://www.noormags.ir/view/fa/articlepage/261461'
+        i = 'http://www.noormags.ir/view/fa/articlepage/105489/' \
+            '%d8%aa%d8%ad%d9%84%db%8c%d9%84-%d9%85%d9%86%d8%a7%d9%81%d8%b9-' \
+            '%d8%a8%d9%87%d8%b1%d9%87-%d9%88%d8%b1%db%8c-' \
+            '%d9%86%d8%a7%d8%b4%db%8c-%d8%a7%d8%b2-' \
+            '%d8%a7%d8%b5%d9%84%d8%a7%d8%ad%d8%a7%d8%aa-' \
+            '%d8%b5%d9%86%d8%b9%d8%aa-%d8%a8%d8%b1%d9%82-' \
+            '%d8%a7%d8%b3%d8%aa%d8%b1%d8%a7%d9%84%db%8c%d8%a7--' \
+            '%da%86%d8%a7%d8%b1%da%86%d9%88%d8%a8-%d9%87%d8%a7%db%8c-' \
+            '%d8%b1%d9%88%d8%b4-%d8%b4%d9%86%d8%a7%d8%ae%d8%aa%db%8c?q=' \
+            '%D8%A8%D8%B1%D9%82&score=21.639421&rownumber=1'
         o = noormags_response(i)
         e = (
             '* {{cite journal '
-            '| last=ایرانی '
-            '| first=هوشنگ '
-            '| last2=ولف '
-            '| first2=آ. '
-            '| title=لوژیستیک '
-            '| journal=دانش '
-            '| issue=6 '
-            '| year=1949 '
-            '| pages=316–324 '
-            '| url=http://www.noormags.ir/view/fa/articlepage/261461 '
+            '| last=فتح\u200cالله\u200cزاده\u200cاقدم '
+            '| first=\u200cرضا '
+            '| title=تحلیل منافع بهره وری ناشی'
+            ' از اصلاحات صنعت برق استرالیا: چارچوب های روش شناختی '
+            '| journal=مطالعات اقتصاد انرژی '
+            '| issue=3 '
+            '| year=1383 '
+            '| pages=55–55 '
+            '| url=http://www.noormags.ir/view/fa/articlepage/105489 '
             '| language=fa '
             '| ref=harv '
             '| accessdate='
@@ -62,38 +51,37 @@ class NoormagsTest(unittest.TestCase):
             'D9%85%D8%B2%D9%87%20%D8%AB%D9%85%D8%A7%D9%84%DB%8C'
         )
         o = noormags_response(i)
-        sfnt = '{{sfn | سلیمانی میمند | 2010 | pp=103–124}}'
-        ctnt = (
+        sfn = '{{sfn | سلیمانی\u200cمیمند | 1389 | pp=103–124}}'
+        ctn = (
             '* {{cite journal '
-            '| last=سلیمانی میمند '
-            '| first=مریم '
+            '| last=سلیمانی\u200cمیمند '
+            '| first=\u200cمریم '
             '| title=بررسی فضایل قرآنی در دعای ابوحمزه ثمالی '
             '| journal=بینات '
             '| issue=68 '
-            '| year=2010 '
+            '| year=1389 '
             '| pages=103–124 '
             '| url=http://www.noormags.ir/view/fa/articlepage/692447 '
             '| language=fa '
             '| ref=harv '
             '| accessdate='
         )
-        rftg = (
-            '<ref name="سلیمانی میمند 2010 pp. 103–124">'
-            '{{cite journal '
-            '| last=سلیمانی میمند '
-            '| first=مریم '
+        rft = (
+            '<ref name="سلیمانی\u200cمیمند 1389 pp. 103–124">{{cite journal '
+            '| last=سلیمانی\u200cمیمند '
+            '| first=\u200cمریم '
             '| title=بررسی فضایل قرآنی در دعای ابوحمزه ثمالی '
             '| journal=بینات '
             '| issue=68 '
-            '| year=2010 '
+            '| year=1389 '
             '| pages=103–124 '
             '| url=http://www.noormags.ir/view/fa/articlepage/692447 '
             '| language=fa '
             '| accessdate='
         )
-        self.assertIn(sfnt, o.sfn)
-        self.assertIn(ctnt, o.cite)
-        self.assertIn(rftg, o.ref)
+        self.assertIn(sfn, o.sfn)
+        self.assertIn(ctn, o.cite)
+        self.assertIn(rft, o.ref)
 
 
 noormags.requests_get = dummy_requests.DummyRequests().get
