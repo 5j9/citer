@@ -100,6 +100,12 @@ FIND_AUTHOR_PARAMETERS = (
         'getattr',
         'text',
     ),
+    (
+        'select',
+        '.byline > .author',
+        'getattr',
+        'text',
+    ),
     # http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html
     (
         'html',
@@ -143,68 +149,70 @@ STOPWORDS_SEARCH = re.compile(r'|'.join((
 )), re.IGNORECASE).search
 
 
-class InvalidByLineError(Exception):
-
-    """Raise in for errors in byline_to_names()."""
-
-    pass
-
-
-def try_find_authors(soup) -> list or None:
+def find_authors_loop(soup) -> list or None:
     """Try to find authors in soup using the FIND_AUTHOR_PARAMETERS."""
     html = str(soup)
     text = soup.text
-    for fp in FIND_AUTHOR_PARAMETERS:
-        if fp[0] == 'soup':
-            try:  # Todo: can this try be removed safely?
-                attrs = fp[1]
-                finding = soup.find(attrs=attrs)
-                next_siblings = finding.find_next_siblings(attrs=attrs)
-                next_siblings.insert(0, finding)
-                names = []
+    for fparams in FIND_AUTHOR_PARAMETERS:
+        fparam0 = fparams[0]
+        if fparam0 == 'soup':
+            # try:  # Todo: can this try be removed safely?
+            attrs = fparams[1]
+            finding = soup.find(attrs=attrs)
+            if not finding:
+                continue
+            next_siblings = finding.find_next_siblings(attrs=attrs)
+            next_siblings.insert(0, finding)
+            names = []
 
-                if fp[2] == 'getitem':
-                    for finding in next_siblings:
-                        try:
-                            string = finding[fp[3]]
-                            name = byline_to_names(string)
-                            names.extend(name)
-                        except (AttributeError, InvalidByLineError):
-                            pass
-                else:
-                    # fp[2] == 'getattr':
-                    for finding in next_siblings:
-                        try:
-                            name = byline_to_names(getattr(finding, fp[3]))
-                            names.extend(name)
-                        except (AttributeError, InvalidByLineError):
-                            pass
-                if names:
-                    return names
-            except AttributeError:
-                pass
-        elif fp[0] == 'html':
-            try:
-                m = fp[1](html).group(1)
-                return byline_to_names(m)
-            except (AttributeError, InvalidByLineError):
-                pass
+            if fparams[2] == 'getitem':
+                for finding in next_siblings:
+                    string = finding[fparams[3]]
+                    name = byline_to_names(string)
+                    if not name:
+                        continue
+                    names.extend(name)
+            else:
+                # fp[2] == 'getattr':
+                for finding in next_siblings:
+                    name = byline_to_names(getattr(finding, fparams[3]))
+                    if not name:
+                        continue
+                    names.extend(name)
+            if names:
+                return names
+            # except AttributeError:
+            #     pass
+        elif fparam0 == 'html':
+            m = fparams[1](html)
+            if not m:
+                continue
+            name = byline_to_names(m.group(1))
+            if name:
+                return name
+        elif fparam0 == 'text':
+            m = fparams[1](text)
+            if not m:
+                continue
+            name = byline_to_names(m.group(1))
+            if name:
+                return name
         else:
-            # fp[0] == 'text'
-            try:
-                m = fp[1](text).group(1)
-                return byline_to_names(m)
-            except (AttributeError, InvalidByLineError):
-                pass
+            # fp[2] == 'select':
+            selection = soup.select(fparams[1])
+            if len(selection) == 1:
+                name = byline_to_names(selection[0].string)
+                if name:
+                    return name
     return None
     
 
 def find_authors(soup) -> list or None:
     """Get a BeautifulSoup object. Return (Names, where_found_string)."""
-    return try_find_authors(soup)
+    return find_authors_loop(soup)
 
 
-def byline_to_names(byline) -> list:
+def byline_to_names(byline) -> list or None:
     r"""Find authors in byline sting. Return name objects as a list.
 
     The "By " prefix will be omitted.
@@ -225,18 +233,16 @@ def byline_to_names(byline) -> list:
     [Name("Erika Solomon"), Name("Borzou Daragahi")]
     """
     if not byline:
-        raise InvalidByLineError('Empry byline')
+        return None
     byline = byline.partition('|')[0]
     if ':' in byline or ':' in byline:
-        raise InvalidByLineError('Invalid character in byline')
+        return None
     m = ANYDATE_SEARCH(byline)
     if m:
         # Removing the date part
         byline = byline[:m.start()]
     if re.search('\d\d\d\d', byline):
-        raise InvalidByLineError(
-            'Found \d\d\d\d in byline. (byline needs to be pure)'
-        )
+        return None
     # Replace 'and\n' (and similar expressions) with 'and '
     # This should be done before cutting the byline at the first newline
     byline = re.sub(r'\s+and\s+', ' and ', byline, 1, re.IGNORECASE)
@@ -261,7 +267,7 @@ def byline_to_names(byline) -> list:
             continue
         names.append(name)
     if not names:
-        raise InvalidByLineError('No valid name remained after parsing byline')
+        return None
     # Remove names not having firstname (orgs)
     name0 = names[0]  # In case no name remains at the end
     names = [n for n in names if n.firstname]
