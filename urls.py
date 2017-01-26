@@ -432,20 +432,21 @@ def try_find_date(soup: BeautifulSoup) -> Date or None:
     """
     # Todo: simplify.
     for fp in DATE_FIND_PARAMETERS:
-        try:
-            m = soup.find(attrs=fp[0])
-            if fp[1] == 'getitem':
-                string = m[fp[2]]
-                date = finddate(string)
-                if date:
-                    return date
-            elif fp[1] == 'getattr':
-                string = getattr(m, fp[2])
-                date = finddate(string)
-                if date:
-                    return date
-        except (TypeError, AttributeError, KeyError):
-            pass
+        m = soup.find(attrs=fp[0])
+        if m:
+            try:
+                if fp[1] == 'getitem':
+                    string = m[fp[2]]
+                    date = finddate(string)
+                    if date:
+                        return date
+                elif fp[1] == 'getattr':
+                    string = getattr(m, fp[2])
+                    date = finddate(string)
+                    if date:
+                        return date
+            except (TypeError, AttributeError, KeyError):
+                pass
     return None
 
 
