@@ -19,26 +19,26 @@ NAME_PATTERN = r'[\w.-]+ [\w.-]+( [\w.-]+)?'
 # names may be seperated with "and", a "comma" or "comma and"
 
 BYLINE_PATTERN = (
-    r"\s*By\s+({NAME_PATTERN}(, {NAME_PATTERN}(, {NAME_PATTERN}(, "
-    r"{NAME_PATTERN}|,? +and {NAME_PATTERN})?|,? +and {NAME_PATTERN}"
-    r"(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?)?|,? +and {NAME_PATTERN}"
-    r"(, {NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?|,? +and "
-    r"{NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?)?)?)\s*"
+    r'\s*By\s+({NAME_PATTERN}(, {NAME_PATTERN}(, {NAME_PATTERN}(, '
+    r'{NAME_PATTERN}|,? +and {NAME_PATTERN})?|,? +and {NAME_PATTERN}'
+    r'(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?)?|,? +and {NAME_PATTERN}'
+    r'(, {NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?|,? +and '
+    r'{NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?)?)?)\s*'
 ).format(NAME_PATTERN=NAME_PATTERN)
 
-# FIND_PARAMETERS are used in find_authors(soup)
-FIND_PARAMETERS = (
+# FIND_AUTHOR_PARAMETERS are used in find_authors(soup)
+FIND_AUTHOR_PARAMETERS = (
     # http://socialhistory.ihcs.ac.ir/article_571_84.html
     # http://jn.physiology.org/content/81/1/319
     (
         'soup',
-        {'name': re.compile('citation_authors?')},
+        {'name': re.compile(r'^citation_authors?')},
         'getitem',
         'content',
     ),
     (
         'soup',
-        {'property': 'og:author'},
+        {'property': re.compile(r'^(og:|article).*?author')},
         'getitem',
         'content',
     ),
@@ -48,64 +48,21 @@ FIND_PARAMETERS = (
         'getitem',
         'content',
     ),
-    (
-        'soup',
-        {'class': "author-title"},
-        'getattr',
-        'text',
-    ),
+    # author_byline example:
     # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
+    # try byline before class_='author'
+    # {'class': 'author'} disabled due to high error rate
     (
         'soup',
-        {'class': 'author_byline'},
+        {
+            'class': re.compile(
+                r'^(author-title|author_byline|bylineAuthor|byline-name'
+                r'|story-byline|meta-author|authorInline|byline)'
+            )
+        },
         'getattr',
         'text',
     ),
-    (
-        'soup',
-        {'class': 'bylineAuthor'},
-        'getattr',
-        'text',
-    ),
-    (
-        'soup',
-        {'class': 'byline-name'},
-        'getattr',
-        'text',
-    ),
-    (
-        'soup',
-        {'class': 'story-byline'},
-        'getattr',
-        'text',
-    ),
-    (
-        'soup',
-        {'class': 'meta-author'},
-        'getattr',
-        'text',
-    ),
-    (
-        'soup',
-        {'class': 'authorInline'},
-        'getattr',
-        'text',
-    ),
-    # try before class_='author'
-    (
-        'soup',
-        {'class': 'byline'},
-        'getattr',
-        'text',
-    ),
-    # disabled due to high error rate
-    # try before {'name': 'author'}
-    #        (
-    #            'soup',
-    #            {'class': 'author'},
-    #            'getattr',
-    #            'text',
-    #        ),
     (
         'soup',
         {'name': 'author'},
@@ -139,25 +96,16 @@ FIND_PARAMETERS = (
     ),
     (
         'soup',
-        {'class': "by_line_date"},
+        {'class': re.compile('^(?:by_line_date|name)')},
         'getattr',
         'text',
-    ),
-    (
-        'soup',
-        {'class': 'name'},
-        'getattr',
-        'text',
-    ),
-    # try before {'rel': 'author'}
-    (
-        'html',
-        r'"author": "(.+?)"',
     ),
     # http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html
     (
         'html',
-        r"authorName:\s*'(.+?)'",
+        re.compile(
+            r'authorName:\s*["\']([^"\']+)["\']|"author": ["\']([^"\']+)["\']'
+        ).search,
     ),
     # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
     (
@@ -166,25 +114,20 @@ FIND_PARAMETERS = (
         'getattr',
         'text',
     ),
+    # Example for [\n|]{BYLINE_PATTERN}\n
+    # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
     (
         'html',
         re.compile(
-            r'>' + BYLINE_PATTERN + r'<',
+            r'>{BYLINE_PATTERN}<|[\n|]{BYLINE_PATTERN}\n'.format(
+                BYLINE_PATTERN=BYLINE_PATTERN
+            ),
             re.IGNORECASE,
-        ),
-    ),
-    # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-    (
-        'text',
-        re.compile(
-            r'[\n|]' + BYLINE_PATTERN + r'\n',
-            re.IGNORECASE,
-        ),
+        ).search,
     ),
 )
 
-
-STOPWORDS_SEARCH = re.compile('|'.join((
+STOPWORDS_SEARCH = re.compile(r'|'.join((
     r'\bReporter\b',
     r'\bPeople\b',
     r'\bEditors?\b',
@@ -208,10 +151,10 @@ class InvalidByLineError(Exception):
 
 
 def try_find_authors(soup) -> list or None:
-    """Try to find authors in soup using the FIND_PARAMETERS."""
+    """Try to find authors in soup using the FIND_AUTHOR_PARAMETERS."""
     html = str(soup)
     text = soup.text
-    for fp in FIND_PARAMETERS:
+    for fp in FIND_AUTHOR_PARAMETERS:
         if fp[0] == 'soup':
             try:  # Todo: can this try be removed safely?
                 attrs = fp[1]
@@ -232,26 +175,24 @@ def try_find_authors(soup) -> list or None:
                     # fp[2] == 'getattr':
                     for finding in next_siblings:
                         try:
-                            string = getattr(finding, fp[3])
-                            name = byline_to_names(string)
+                            name = byline_to_names(getattr(finding, fp[3]))
                             names.extend(name)
                         except (AttributeError, InvalidByLineError):
                             pass
-
                 if names:
                     return names
             except AttributeError:
                 pass
         elif fp[0] == 'html':
             try:
-                m = re.search(fp[1], html).group(1)
+                m = fp[1](html).group(1)
                 return byline_to_names(m)
             except (AttributeError, InvalidByLineError):
                 pass
         else:
             # fp[0] == 'text'
             try:
-                m = re.search(fp[1], text).group(1)
+                m = fp[1](text).group(1)
                 return byline_to_names(m)
             except (AttributeError, InvalidByLineError):
                 pass
@@ -260,10 +201,7 @@ def try_find_authors(soup) -> list or None:
 
 def find_authors(soup) -> list or None:
     """Get a BeautifulSoup object. Return (Names, where_found_string)."""
-    names = try_find_authors(soup)
-    if names:
-        return names
-    return None
+    return try_find_authors(soup)
 
 
 def byline_to_names(byline) -> list:
@@ -289,9 +227,8 @@ def byline_to_names(byline) -> list:
     if not byline:
         raise InvalidByLineError('Empry byline')
     byline = byline.partition('|')[0]
-    for c in ':+':
-        if c in byline:
-            raise InvalidByLineError('Invalid character "%s" in byline' % c)
+    if ':' in byline or ':' in byline:
+        raise InvalidByLineError('Invalid character in byline')
     m = ANYDATE_SEARCH(byline)
     if m:
         # Removing the date part
