@@ -16,23 +16,31 @@ Some of the known issues:
 """
 
 
-import re
+import regex as regex
 
 from commons import Name
 
 
-def search_for_tag(bibtex):
-    """Find all tags in the bibtex and return result as a dictionary."""
-    fs = re.findall('(\w+)\s*=\s*(?:[{"]\s*(.*?)\s*["}]|(\d+))', bibtex)
+# To remove Texts like {APA} from input.
+WORDS_IN_BRACES_SUB = regex.compile(r'(?<!=\s*){([^\\{}\n]*)}').sub
+FINDALL_BIBTEX_FIELDS = regex.compile(
+    r'(\w+)\s*=\s*(?:[{"]\s*(.*?)\s*["}]|(\d+))'
+).findall
+TYPE_SEARCH = regex.compile('@(.*?)\s*\{', regex.IGNORECASE).search
+
+
+def search_for_tag(bibtex: str) -> dict:
+    """Find all fields of the bibtex and return result as a dictionary."""
+    fs = FINDALL_BIBTEX_FIELDS(bibtex)
     return {f[0].lower(): f[1] if f[1] else f[2] for f in fs}
 
 
 def parse(bibtex):
     """Parse bibtex string and return a dictionary of information."""
-    bibtex = replace_specials(bibtex)
+    bibtex = special_sequence_cleanup(bibtex)
     d = search_for_tag(bibtex)
     # type: (book, journal, . . . )
-    m = re.search('@(.*?)\s*\{', bibtex, re.I)
+    m = TYPE_SEARCH(bibtex)
     if m:
         d['type'] = m.group(1).strip().lower()
     # author
@@ -63,11 +71,44 @@ def parse(bibtex):
     return d
 
 
-def replace_specials(bibtex):
+def special_sequence_cleanup(bibtex):
     """Replace common TeX special symbol commonds with their unicode value."""
-    return (
+    return WORDS_IN_BRACES_SUB(r'\g<1>', (
         bibtex
         .replace(r'{\textregistered}', '®')
+        .replace(r'{\textquotesingle}', "'")
+        .replace(r'{\texttrademark}', '™')
+        .replace(r'{\textasciitilde}', '~')
+        .replace(r'{\textasteriskcentered}', '∗')
+        .replace(r'{\textordmasculine}', 'º')
+        .replace(r'{\textordfeminine}', 'ª')
+        .replace(r'{\textparagraph}', '¶')
+        .replace(r'{\textbackslash}', '\\')
+        .replace(r'{\textbar}', '|')
+        .replace(r'{\textperiodcentered}', '·')
+        .replace(r'{\textbullet}', '•')
+        .replace(r'{\textbraceleft}', '{')
+        .replace(r'{\textbraceright}', '}')
+        .replace(r'{\textquotedblleft}', '“')
+        .replace(r'{\textquotedblleft}', '“')
+        .replace(r'{\textcopyright}', '©')
+        .replace(r'{\textquoteleft}', '‘')
+        .replace(r'{\textquoteright}', '’')
+        .replace(r'{\textdagger}', '†')
+        .replace(r'{\textdaggerdbl}', '‡')
+        .replace(r'{\textdollar}', '$')
+        .replace(r'{\textsection}', '§')
+        .replace(r'{\textellipsis}', '…')
+        .replace(r'{\textsterling}', '£')
+        .replace(r'{\textemdash}', '—')
+        .replace(r'{\textendash}', '–')
+        .replace(r'{\textunderscore}', '_')
+        .replace(r'{\textexclamdown}', '¡')
+        .replace(r'{\textvisiblespace}', '␣')
+        .replace(r'{\textgreater}', '>')
+        .replace(r'{\textless}', '<')
+        .replace(r'{\textasciicircum}', '^')
+        .replace(r'{\textquestiondown}', '¿')
         .replace(r'\%', '%')
         .replace(r'\$', '$')
         .replace(r'\{', '{')
@@ -96,4 +137,4 @@ def replace_specials(bibtex):
         .replace(r'{\v{S}}', 'Š')
         .replace(r'{\={U}}', 'Ū')
         .replace(r'{\v{Z}}', 'Ž')
-    )
+    ))
