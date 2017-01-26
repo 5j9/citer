@@ -32,8 +32,7 @@ def doi_response(doi_or_url, pure=False, date_format='%Y-%m-%d') -> Response:
         # decode percent encodings
         decoded_url = unquote(unescape(doi_or_url))
         m = DOI_SEARCH(decoded_url)
-        if m:
-            doi = m.group(1)
+        doi = m.group(1)
     url = 'http://dx.doi.org/' + doi
     bibtex = get_bibtex(url)
     if bibtex == 'Resource not found.':
