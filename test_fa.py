@@ -138,17 +138,28 @@ class GooglebookTest(unittest.TestCase):
         e1 = '<ref>{{پک | Anderson | DeBolt | Featherstone | Gunther | 2010' \
              ' | ک=InterACT with Web Standards: A' \
              ' holistic approach to web design | زبان=en | ص=57}}\u200f</ref>'
-        e2 = '* {{یادکرد کتاب | نام خ' \
-             'انوادگی=Anderson | نام=E. | نام خانوادگی۲=DeBolt | نام۲=V. |' \
-             ' نام خانوادگی۳=Featherstone | نام۳=D. | نام خانوادگی۴=Gunther' \
-             ' | نام۴=L. | نام خانوادگی۵=Jacobs | نام۵=D.R. | نام خانوادگی۶' \
-             '=Mills | نام۶=C. | نام خانوادگی۷=Schmitt | نام۷=C. | نام خانو' \
-             'ادگی۸=Sims | نام۸=G. | نام خانوادگی۹=Walter | نام۹=A. | نام خ' \
-             'انوادگی۱۰=Jensen-Inman | نام۱۰=L. | عنوان=InterACT with Web S' \
-             'tandards: A holistic approach to web design | ناشر=Pearson Ed' \
-             'ucation | سال=2010 | شابک' \
-             '=978-0-13-270490-8 | پیوند=http://books.google.com/books?id=U4' \
-             '6IzqYLZvAC&pg=PT57 | زبان=en | تاریخ بازبینی='
+        e2 = '* {{یادکرد کتاب |' \
+             ' نام خانوادگی=Anderson |' \
+             ' نام=E. |' \
+             ' نام خانوادگی۲=DeBolt | نام۲=V. |' \
+             ' نام خانوادگی۳=Featherstone |' \
+             ' نام۳=D. | نام خانوادگی۴=Gunther |' \
+             ' نام۴=L. |' \
+             ' نام خانوادگی۵=Jacobs | نام۵=D.R. | نام خانوادگی۶=Mills |' \
+             ' نام۶=C. |' \
+             ' نام خانوادگی۷=Schmitt | نام۷=C. | نام خانوادگی۸=Sims |' \
+             ' نام۸=G. |' \
+             ' نام خانوادگی۹=Walter | نام۹=A. |' \
+             ' نام خانوادگی۱۰=Jensen-Inman |' \
+             ' نام۱۰=L. |' \
+             ' عنوان=InterACT with Web Standards:' \
+             ' A holistic approach to web design |' \
+             ' ناشر=Pearson Education |' \
+             ' سری=Voices That Matter | سال=2010 |' \
+             ' شابک=978-0-13-270490-8 |' \
+             ' پیوند=http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57 |' \
+             ' زبان=en |' \
+             ' تاریخ بازبینی=2017-01-26}}'
         self.assertIn(e1, o.sfn)
         self.assertIn(e2, o.cite)
 
@@ -182,44 +193,27 @@ class GooglebookTest(unittest.TestCase):
         e1 = '<ref>{{پک | Šarčević | 1997 ' \
              '| ک=New Approach to Legal Translation |' \
              ' زبان=en | ص=229}}\u200f</ref>'
-        e2 = '* {{یادکرد کتاب | نام خانوادگی=Šarčević | نام=S. |' \
+        e2 = '* {{یادکرد کتاب | نام خانوادگی=Šarčević |' \
+             ' نام=S. |' \
              ' عنوان=New Approach to Legal Translation |' \
-             ' ناشر=Kluwer Law International |' \
-             ' سال=1997 | شابک=978-90-411-0401-4 |' \
+             ' ناشر=Springer Netherlands |' \
+             ' سال=1997 |' \
+             ' شابک=978-90-411-0401-4 |' \
              ' پیوند=http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 |'\
-             ' زبان=en | تاریخ بازبینی='
+             ' زبان=en |' \
+             ' تاریخ بازبینی='
         self.assertIn(e1, o.sfn)
         self.assertIn(e2, o.cite)
 
 
 class NoormagsTest(unittest.TestCase):
 
-    def test_nm1(self):
-        i = 'http://www.noormags.com/view/fa/articlepage/5798/102/Text'
-        o = noormags_response(i)
-        e = '* {{یادکرد ژورنال |' \
-            ' نام خانوادگی=موسوی | نام=زهرا | عنوان=مقرنس در معماری |' \
-            ' ژورنال=کتاب ماه هنر | شماره=45 | سال=2002 | صفحه=102–106 |' \
-            ' پیوند=http://www.noormags.ir/view/fa/articlepage/104040 |' \
-            ' زبان=fa | تاریخ بازبینی='
-        self.assertIn(e, o.cite)
-
     def test_nm2(self):
         i = 'http://www.noormags.com/view/fa/ArticlePage/454096'
         o = noormags_response(i)
         e = '* {{یادکرد ژورنال | عنوان=زندگی نامه علمی دکتر کاووس حسن لی |' \
-            ' ژورنال=شعر | شماره=62 | سال=2008 | صفحه=17–19 |' \
+            ' ژورنال=شعر | شماره=62 | سال=1387 | صفحه=17–19 |' \
             ' پیوند=http://www.noormags.ir/view/fa/articlepage/454096 |' \
-            ' زبان=fa | تاریخ بازبینی='
-        self.assertIn(e, o.cite)
-
-    def test_nm3(self):
-        i = 'http://www.noormags.com/view/fa/articlepage/261461'
-        o = noormags_response(i)
-        e = '* {{یادکرد ژورنال | نام خانوادگی=ایرانی | نام=هوشنگ |' \
-            ' نام خانوادگی۲=ولف | نام۲=آ. | عنوان=لوژیستیک |' \
-            ' ژورنال=دانش | شماره=6 | سال=1949 | صفحه=316–324 |' \
-            ' پیوند=http://www.noormags.ir/view/fa/articlepage/261461 |' \
             ' زبان=fa | تاریخ بازبینی='
         self.assertIn(e, o.cite)
 
@@ -227,14 +221,21 @@ class NoormagsTest(unittest.TestCase):
 class NoorlibTest(unittest.TestCase):
 
     def test_nl1(self):
-        i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/18879'
+        i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/3232'
         o = noorlib_response(i)
-        e = '* {{یادکرد کتاب | نام خانوادگی=مرتضی زبیدی |' \
-            ' نام=محمد بن محمد | نام خانوادگی۲=شیری | نام۲=علی |' \
-            ' عنوان=تاج العروس من جواهر القاموس | ناشر=دار الفکر |' \
-            ' مکان=بيروت | سری=تاج العروس من جواهر القاموس | جلد=10 |' \
-            ' پیوند=http://www.noorlib.ir/View/fa/Book/BookView/Image/18879 |'\
-            ' زبان=عربی | تاریخ بازبینی='
+        e = (
+            '* {{یادکرد کتاب '
+            '| نام خانوادگی=ابن اثیر '
+            '| نام=علی بن محمد '
+            '| عنوان=الكامل في التاريخ '
+            '| ناشر=دار صادر '
+            '| مکان=بیروت - لبنان '
+            '| سری=الكامل في التاريخ '
+            '| جلد=13 '
+            '| پیوند=http://www.noorlib.ir/View/fa/Book/BookView/Image/3232 '
+            '| زبان=عربی '
+            '| تاریخ بازبینی='
+        )
         self.assertIn(e, o.cite)
 
 
@@ -243,15 +244,25 @@ class DoiTest(unittest.TestCase):
     def test_di1(self):
         i = 'http://dx.doi.org/10.1038/nrd842'
         o = doi_response(i)
-        e = "* {{یادکرد ژورنال | نام خانوادگی=Atkins |" \
-            " نام=Joshua H. | نام خانوادگی۲=Gershell | نام۲=Leland J. |" \
-            " عنوان=From the analyst's couch: Selective anticancer drugs |" \
-            " ژورنال=Nature Reviews Drug Discovery |" \
-            " ناشر=Nature Publishing Group | جلد=1 | شماره=7 |" \
-            " سال=2002 | ماه=Jul | صفحه=491–492 |" \
-            " پیوند=http://dx.doi.org/10.1038/nrd842 " \
-            "| doi=10.1038/nrd842 |" \
-            " زبان=en | تاریخ بازبینی="
+        e = (
+            "* {{یادکرد ژورنال "
+            "| نام خانوادگی=Atkins "
+            "| نام=Joshua H. "
+            "| نام خانوادگی۲=Gershell "
+            "| نام۲=Leland J. "
+            "| عنوان=From the analyst's couch: Selective anticancer drugs "
+            "| ژورنال=Nature Reviews Drug Discovery "
+            "| ناشر=Springer Nature "
+            "| جلد=1 "
+            "| شماره=7 "
+            "| سال=2002 "
+            "| ماه=jul "
+            "| صفحه=491–492 "
+            "| پیوند=https://doi.org/10.1038%2Fnrd842 "
+            "| doi=10.1038/nrd842 "
+            "| زبان=en "
+            "| تاریخ بازبینی=2017-01-26}}"
+        )
         self.assertIn(e, o.cite)
 
 
