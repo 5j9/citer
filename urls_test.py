@@ -625,8 +625,8 @@ class Others(unittest.TestCase):
         )
         self.assertIn(ct, o.cite)
 
-    def test_oth2(self):
-        """Byline through body search."""
+    def test_text_search(self):
+        """Match byline on soup.text."""
         i = (
             'https://www.eff.org/deeplinks/2014/06/'
             'sudan-tech-sanctions-harm-innovation-development-us-government-'

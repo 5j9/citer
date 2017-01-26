@@ -32,19 +32,13 @@ FIND_AUTHOR_PARAMETERS = (
     # http://jn.physiology.org/content/81/1/319
     (
         'soup',
-        {'name': re.compile(r'^citation_authors?')},
+        {'name': re.compile(r'^(?:citation_authors?|DCSext.author)')},
         'getitem',
         'content',
     ),
     (
         'soup',
-        {'property': re.compile(r'^(og:|article).*?author')},
-        'getitem',
-        'content',
-    ),
-    (
-        'soup',
-        {'name': 'DCSext.author'},
+        {'property': re.compile(r'^(?:og:|article).*?author')},
         'getitem',
         'content',
     ),
@@ -56,7 +50,7 @@ FIND_AUTHOR_PARAMETERS = (
         'soup',
         {
             'class': re.compile(
-                r'^(author-title|author_byline|bylineAuthor|byline-name'
+                r'^(?:author-title|author_byline|bylineAuthor|byline-name'
                 r'|story-byline|meta-author|authorInline|byline)'
             )
         },
@@ -125,7 +119,16 @@ FIND_AUTHOR_PARAMETERS = (
     (
         'html',
         re.compile(
-            r'>{BYLINE_PATTERN}<|[\n|]{BYLINE_PATTERN}\n'.format(
+            r'>{BYLINE_PATTERN}<'.format(
+                BYLINE_PATTERN=BYLINE_PATTERN
+            ),
+            re.IGNORECASE,
+        ).search,
+    ),
+    (
+        'text',
+        re.compile(
+            r'[\n|]{BYLINE_PATTERN}\n'.format(
                 BYLINE_PATTERN=BYLINE_PATTERN
             ),
             re.IGNORECASE,
@@ -152,7 +155,6 @@ STOPWORDS_SEARCH = re.compile(r'|'.join((
 def find_authors_loop(soup) -> list or None:
     """Try to find authors in soup using the FIND_AUTHOR_PARAMETERS."""
     html = str(soup)
-    text = soup.text
     for fparams in FIND_AUTHOR_PARAMETERS:
         fparam0 = fparams[0]
         if fparam0 == 'soup':
@@ -191,7 +193,7 @@ def find_authors_loop(soup) -> list or None:
             if name:
                 return name
         elif fparam0 == 'text':
-            m = fparams[1](text)
+            m = fparams[1](soup.text)
             if not m:
                 continue
             name = byline_to_names(m.group(1))
@@ -232,8 +234,6 @@ def byline_to_names(byline) -> list or None:
     ... )
     [Name("Erika Solomon"), Name("Borzou Daragahi")]
     """
-    if not byline:
-        return None
     byline = byline.partition('|')[0]
     if ':' in byline or ':' in byline:
         return None
@@ -241,6 +241,8 @@ def byline_to_names(byline) -> list or None:
     if m:
         # Removing the date part
         byline = byline[:m.start()]
+    if not byline:
+        return None
     if re.search('\d\d\d\d', byline):
         return None
     # Replace 'and\n' (and similar expressions) with 'and '
