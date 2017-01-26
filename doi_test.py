@@ -79,6 +79,37 @@ class DoiTest(unittest.TestCase):
         )
         self.assertIn(e, o.cite)
 
+    def test_doi4(self):
+        """publisher=Informa {UK"""
+        i = '10.1081%2Fada-200068110'
+        o = doi_response(i)
+        e = (
+            '* {{cite journal '
+            '| last=Davis '
+            '| first=Margaret I. '
+            '| last2=Jason '
+            '| first2=Leonard A. '
+            '| last3=Ferrari '
+            '| first3=Joseph R. '
+            '| last4=Olson '
+            '| first4=Bradley D. '
+            '| last5=Alvarez '
+            '| first5=Josefina '
+            '| title=A Collaborative Action Approach to Researching '
+            'Substance Abuse Recovery '
+            '| journal=The American Journal of Drug and Alcohol Abuse '
+            '| publisher=Informa UK Limited '
+            '| volume=31 '
+            '| issue=4 '
+            '| year=2005 '
+            '| pages=537–553 '
+            '| url=https://doi.org/10.1081%2Fada-200068110 '
+            '| doi=10.1081/ada-200068110 '
+            '| ref=harv '
+            '| accessdate=2017-01-26}}'
+        )
+        self.assertIn(e, o.cite)
+
 
 doi.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
