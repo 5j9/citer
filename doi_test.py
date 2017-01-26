@@ -106,7 +106,7 @@ class DoiTest(unittest.TestCase):
             '| url=https://doi.org/10.1081%2Fada-200068110 '
             '| doi=10.1081/ada-200068110 '
             '| ref=harv '
-            '| accessdate=2017-01-26}}'
+            '| accessdate='
         )
         self.assertIn(e, o.cite)
 
