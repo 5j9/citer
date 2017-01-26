@@ -14,7 +14,7 @@ from doi import doi_response
 class DoiTest(unittest.TestCase):
 
     def test_doi1(self):
-        i = 'http://dx.doi.org/10.1038/nrd842'
+        i = 'https://doi.org/10.1038%2Fnrd842'
         o = doi_response(i)
         e = (
             "* {{cite journal "
@@ -24,12 +24,12 @@ class DoiTest(unittest.TestCase):
             "| first2=Leland J. "
             "| title=From the analyst's couch: Selective anticancer drugs "
             "| journal=Nature Reviews Drug Discovery "
-            "| publisher=Nature Publishing Group "
+            "| publisher=Springer Nature "
             "| volume=1 "
             "| issue=7 "
             "| year=2002 "
             "| pages=491–492 "
-            "| url=http://dx.doi.org/10.1038/nrd842 "
+            "| url=https://doi.org/10.1038%2Fnrd842 "
             "| doi=10.1038/nrd842 "
             "| ref=harv "
             "| accessdate="
@@ -49,7 +49,7 @@ class DoiTest(unittest.TestCase):
             '| issue=3 '
             '| year=2014 '
             '| pages=272–281 '
-            '| url=http://dx.doi.org/10.1086/677379 '
+            '| url=https://doi.org/10.1086%2F677379 '
             '| doi=10.1086/677379 '
             '| ref={{sfnref '
             '| University of Chicago Press | 2014}} '
@@ -59,7 +59,7 @@ class DoiTest(unittest.TestCase):
 
     def test_doi3(self):
         """No author. URL contains %2F."""
-        i = 'http://dx.doi.org/10.1037%2Fh0063404'
+        i = 'https://doi.org/10.1037%2Fh0063404'
         o = doi_response(i)
         e = (
             '* {{cite journal '
@@ -72,7 +72,7 @@ class DoiTest(unittest.TestCase):
             '| issue=9 '
             '| year=1939 '
             '| pages=641–656 '
-            '| url=http://dx.doi.org/10.1037/h0063404 '
+            '| url=https://doi.org/10.1037%2Fh0063404 '
             '| doi=10.1037/h0063404 '
             '| ref=harv '
             '| accessdate='
