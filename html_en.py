@@ -61,5 +61,9 @@ def response_to_html(response):
         bdY=TODAY().strftime(bdY_FORMAT),
         dBY=TODAY().strftime(dBY_FORMAT),
         dbY=TODAY().strftime(dbY_FORMAT),
-        **response._asdict(),
+        # **response._asdict(), did not work on yadkard but worked on yadfa!
+        sfn=response.sfn,
+        cite=response.cite,
+        ref=response.ref,
+        error=response.error,
     )
