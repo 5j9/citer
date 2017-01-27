@@ -8,13 +8,17 @@ http://tools.wmflabs.org/yadkard/ (English version)
 Tested on Python 3.4.1
 
 The following libraries are required:
-* requests (2.3.0)
-* beautifulsoup4 (4.3.2)
-* langid (1.1.4dev)
-* flup (1.0.3.dev-20140705)
+* beautifulsoup4
+* numpy
+* requests
+* isbnlib
+* flup6
+* langid
+* lxml
+* jdatetime
+* regex
 
 These can be install using `pip install -r requirements.txt`.
-You may also want to install lxml to benefit from its higher speeds.
 
 If flup is not found, wsgiref.simple_server will be used instead. Usually this is what you want if you are running the script on your personal computer.
 
@@ -25,14 +29,13 @@ http://127.0.0.1:5000/
 
 The tool is specially useful for generating citations from Google Books URLs, DOIs (Any Digital object Identifiers) and ISBNs (International Standard Book Numbers).
 Additionally URL of many major news websites are supported, including:
-The New York Times, BBC, Daily Mail, Daily Mirror, The Daily Telegraph, The Huffington Post, The Washington Post, The Boston Globe, Bloomberg Businessweek, Financial Times, and The Times of India.
+The New York Times, BBC, Daily Mail, Daily Mirror, The Daily Telegraph, The Huffington Post, The Washington Post, The Boston Globe, Bloomberg Businessweek, Financial Times, and The Times of India. Sepecial support for the URLs of the [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) is also implemented.
 
-Some other tested and supported sites:
+Some other tested and supported Persion web-sites:
 * http://www.noormags.com (نورمگز)
 * http://www.noorlib.ir (کتابخانه دیجیتال نور)
 * http://www.adinebook.com (آدینه‌بوک)
 * http://socialhistory.ihcs.ac.ir/ (تحقیقات تاریخ اجتماعی)
 
 ## Language Setting
-The default language is English and currently this is the only supported language.
-In future versions you will be able to change language by changing the `lang = 'en'` line in config.py file.
+The default language is English and can be change to Persion using a setting in config.py file.
