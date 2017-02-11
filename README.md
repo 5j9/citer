@@ -24,18 +24,18 @@ If flup is not found, wsgiref.simple_server will be used instead. Usually this i
 
 ## Usage
 
-If running on local computer, the tool will be accessible from:
+If running on local computer, the main page will be accessible from:
 http://127.0.0.1:5000/
 
-The tool is specially useful for generating citations from Google Books URLs, DOIs (Any Digital object Identifiers) and ISBNs (International Standard Book Numbers).
+Yadkard is specially useful for generating citations from Google Books URLs, DOIs (Any Digital object Identifiers) and ISBNs (International Standard Book Numbers).
 Additionally URL of many major news websites are supported, including:
 The New York Times, BBC, Daily Mail, Daily Mirror, The Daily Telegraph, The Huffington Post, The Washington Post, The Boston Globe, Bloomberg Businessweek, Financial Times, and The Times of India. Sepecial support for the URLs of the [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) is also implemented.
 
-Some other tested and supported Persion web-sites:
+Some other tested and supported Persian web-sites:
 * http://www.noormags.com (نورمگز)
 * http://www.noorlib.ir (کتابخانه دیجیتال نور)
 * http://www.adinebook.com (آدینه‌بوک)
 * http://socialhistory.ihcs.ac.ir/ (تحقیقات تاریخ اجتماعی)
 
 ## Language Setting
-The default language is English and can be change to Persion using a setting in config.py file.
+The default language is English and can be change to Persian using the setting in config.py file.
