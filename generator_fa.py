@@ -101,7 +101,7 @@ def citations(d) -> tuple:
         cite += (
             ' | پیوند بایگانی=' + archive_url +
             ' | تاریخ بایگانی=' + d['archive-date'].isoformat() +
-            ' | پیوند مرده=' + 'آری' if d['dead-url'] == 'yes' else 'نه'
+            ' | پیوند مرده=' + ('آری' if d['dead-url'] == 'yes' else 'نه')
         )
     doi = d.get('doi')
     if doi:
