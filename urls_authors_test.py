@@ -110,5 +110,6 @@ class BylineToNames(unittest.TestCase):
         self.assertEqual(name.fullname, 'The Editorial Board')
         
 
+
 if __name__ == '__main__':
     unittest.main()

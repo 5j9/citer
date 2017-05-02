@@ -25,7 +25,7 @@ jB_TO_NUM = {
     'فروردین': 1,
     'فروردين': 1,
     'اردیبهشت': 2,
-    'اردیيهشت': 2,
+    'ارديبهشت': 2,
     'خرداد': 3,
     'تیر': 4,
     'تير': 4,
@@ -70,7 +70,7 @@ zd = r'(?<d>0[1-9]|[12][0-9]|3[01])'
 # Gregorian year pattern 1900-2099
 Y = r'(?<Y>(?:19|20)\d\d)'
 
-# Todo: fstring of 3.6
+# Todo: Migrate to 3.6 and use f-string
 ANYDATE_SEARCH = regex.compile(
     r'(?:'
     r'(?:{B}|{b}) {d}, {Y}'
