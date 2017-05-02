@@ -159,7 +159,7 @@ class GooglebookTest(unittest.TestCase):
              ' شابک=978-0-13-270490-8 |' \
              ' پیوند=http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57 |' \
              ' زبان=en |' \
-             ' تاریخ بازبینی=2017-01-26}}'
+             ' تاریخ بازبینی='
         self.assertIn(e1, o.sfn)
         self.assertIn(e2, o.cite)
 
@@ -261,7 +261,7 @@ class DoiTest(unittest.TestCase):
             "| پیوند=https://doi.org/10.1038%2Fnrd842 "
             "| doi=10.1038/nrd842 "
             "| زبان=en "
-            "| تاریخ بازبینی=2017-01-26}}"
+            "| تاریخ بازبینی="
         )
         self.assertIn(e, o.cite)
 

@@ -731,7 +731,6 @@ class Others(unittest.TestCase):
         o = urls_response(i)
         # Fars news is using 'خبرگزاری فارس' as og:author which is wrong
         # and thats why its name is not italicized in sfn.
-        sf = "{{sfn | خبرگزاری فارس | 2014}}"
         ct = (
             '* {{cite web '
             '| author=خبرگزاری فارس '
@@ -741,9 +740,9 @@ class Others(unittest.TestCase):
             '| url=http://www.farsnews.com/newstext.php?nn=13930418000036 '
             '| language=fa '
             '| ref=harv '
-            '| accessdate=2017-01-26}}'
+            '| accessdate='
         )
-        self.assertIn(sf, o.sfn)
+        self.assertIn('{{sfn | خبرگزاری فارس | 2014}}', o.sfn)
         self.assertIn(ct, o.cite)
 
     def test_oth7(self):
