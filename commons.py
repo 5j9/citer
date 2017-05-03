@@ -301,7 +301,7 @@ def finddate(string) -> datetime.date or None:
         date = gdate(year, b_TO_NUM[month], day)
         if date <= today:
             return date
-        returnmonth = groupdict.get('b')
+        return
     month = groupdict.get('m')
     if month:
         date = gdate(year, int(month), day)
@@ -337,7 +337,7 @@ def value_encode(dictionary) -> None:
     """Cleanup dictionary values.
 
     * Remove any key with False bool value.
-    * Replace special characters in dictionay values with their respective
+    * Replace special characters in dictionary values with their respective
         HTML entities.
     * Strip all values.
 
