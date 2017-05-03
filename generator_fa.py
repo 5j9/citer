@@ -7,6 +7,14 @@
 from datetime import date
 
 from commons import ennum2fa
+from string import digits, ascii_lowercase
+from random import seed as randseed, choice as randchoice
+
+
+# According to https://en.wikipedia.org/wiki/Help:Footnotes,
+# the characters '!$%&()*,-.:;<@[]^_`{|}~' are also supported. But they are
+# hard to use.
+lower_alpha_digits = digits + ascii_lowercase
 
 
 def citations(d) -> tuple:
@@ -115,6 +123,12 @@ def citations(d) -> tuple:
         sfn += ' | زبان=' + language
     if pages:
         sfn += ' | ص=' + pages
+    # Seed the random generator before adding today's date.
+    randseed(cite)
+    ref_name = (
+        randchoice(ascii_lowercase)  # it should contain at least one non-digit
+        + ''.join(randchoice(lower_alpha_digits) for _ in range(4))
+    )
     if url:
         cite += ' | تاریخ بازبینی=' + date.today().isoformat()
     else:
@@ -127,7 +141,7 @@ def citations(d) -> tuple:
         ref = ref[:-2] + ' | صفحه=' + pages + '}}'
     elif not url:
         ref = ref[:-2] + ' | صفحه=}}'
-    ref = '<ref>' + ref + '\u200F</ref>'
+    ref = '<ref name="' + ref_name + '">' + ref + '\u200F</ref>'
     return cite, sfn, ref
 
 
