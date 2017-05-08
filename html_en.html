@@ -4,93 +4,99 @@
 <head>
 	<title>Yadkard</title>
 	<style type="text/css">
-		textarea,
-		input {
-			transition: background-color 5s ease-in;
-			background-color: rgb(255, 255, 255);
-			border: 1px solid rgb(204, 204, 204);
-			padding: 2px 2px;
-			margin-bottom: 10px;
-			font-size: 14px;
-			line-height: 16px;
-			color: rgb(85, 85, 85);
-			vertical-align: middle;
-			border-radius: 5px 5px 5px 5px;
-		}
-		textarea {
-			display: block;
-			margin-left: auto;
-			margin-right: auto;
-			width: 100%;
-			word-break: break-all;
-		}
-		body {
-			font-family: tahoma;
-			font-size: 0.8em
-		}
+        body {
+            margin-left:auto;
+            margin-right:auto;
+            width:80%;
+            font-family: tahoma;
+            font-size: 0.8em;
+        }
+        #shortened, #named_ref, input {
+            transition: background-color 5s ease-in;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(204, 204, 204);
+            padding: 2px 2px;
+            font-size: 14px;
+            line-height: 16px;
+            color: rgb(85, 85, 85);
+            vertical-align: middle;
+            border-radius: 5px;
+        }
+        .input-legend {
+            margin-bottom: 0px;
+        }
+        #shortened, #named_ref {
+            display:inline-block;
+            width: 100%;
+            min-height:70px;
+            word-break: break-all;
+            font-family: monospace;
+        }
+        #shortened:focus, #named_ref:focus {
+            outline: none;
+        }
 		input[type=text] {
 			width: 50%;
 		}
-		input[type=submit] {
-			float: right;
-		}
-		#info {
-			font-size: 90%;
-			color: #666666;
-		}
+		input, #shortened, #named_ref {
+            margin: 5px;
+            margin-bottom: 10px;
+        }
+        #inputs {
+            display: flex;
+        }
+        input[type=text] {
+            width: 100%;
+        }
 		input[type=submit]:hover {
 			transition: background-color 1s ease-in;
 			background-color: #33CC33;
+		}
+		footer {
+			font-size: 90%;
+			color: #666666;
 		}
 	</style>
 </head>
 
 <body>
-	<div style="margin-left:auto; margin-right:auto; width:62%;">
-		<form method="get" action="yadkard.fcgi">
-			<p>
-				URL/DOI/ISBN:
-				<br>
-				<input type="text" name="user_input">
-				<input type="submit" value="Submit">
-			</p>
-			<p>Date format:</p>
-			<input type="radio" value="%Y-%m-%d" name="dateformat" id="Ymd" onclick="onDateChange()" checked>$Ymd
-			<input type="radio" value="%B $d, %Y" name="dateformat" id="BdY" onclick="onDateChange()">$BdY
-			<input type="radio" value="%b $d, %Y" name="dateformat" id="bdY" onclick="onDateChange()">$bdY
-			<input type="radio" value="$d %B %Y" name="dateformat" id="dBY" onclick="onDateChange()">$dBY
-			<input type="radio" value="$d %b %Y" name="dateformat" id="dbY" onclick="onDateChange()">$dbY
-		</form>
-		<p>
-			<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
-			<br>
-			<textarea id="shortened" rows="7">$sfn&#10;&#10;$cite</textarea>
-			<a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:
-			<br>
-			<textarea id="named_ref" rows="5">$ref</textarea>
-		</p>
-		<p>
-			<!-- There may be error in language detection. $error % -->
-		</p>
-		<div id="info">
-			<p>
-				You can use this tool to create shortened footnote/named reference for a given:
-			</p>
-			<p>
-				<a href="http://books.google.com/">Google Books URL</a>, <a href="https://en.wikipedia.org/wiki/Digital_object_identifier">DOI</a> (Any Digital object Identifier) or <a href="https://en.wikipedia.org/wiki/International_Standard_Book_Number">ISBN</a> (International Standard Book Number).
-			</p>
-			<p>Additionaly, URL of many major news websites are supported.</p>
-			<p>
-				Note that there is always a chance of error in the generated output. <b>Please check the results before using them on Wiki</b>.
-			</p>
-			<p>
-				Found a bug or have a suggestion? Contact me on <a href="https://wikitech.wikimedia.org/wiki/User_talk:Dalba">my talk page</a> or open an issue <a href="https://github.com/5j9/yadkard">on github</a>.
-			</p>
-			<p>
-				<a href="javascript:void(window.open('https://tools.wmflabs.org/yadkard/yadkard.fcgi?user_input='+encodeURIComponent(location.href)+'&dateformat=%25B+%25d%2C+%25Y'))">Bookmarklet</a>
-			</p>
+	<form method="get" action="yadkard.fcgi">
+		<p class="input-legend">URL/DOI/ISBN:</p>
+		<div id="inputs">
+			<input type="text" name="user_input">
+			<input type="submit" value="Submit">
 		</div>
-	</div>
+		<p class="input-legend">Date format:</p>
+		<input type="radio" value="%Y-%m-%d" name="dateformat" id="Ymd" onclick="onDateChange()" checked>$Ymd
+		<input type="radio" value="%B $d, %Y" name="dateformat" id="BdY" onclick="onDateChange()">$BdY
+		<input type="radio" value="%b $d, %Y" name="dateformat" id="bdY" onclick="onDateChange()">$bdY
+		<input type="radio" value="$d %B %Y" name="dateformat" id="dBY" onclick="onDateChange()">$dBY
+		<input type="radio" value="$d %b %Y" name="dateformat" id="dbY" onclick="onDateChange()">$dbY
+		<br>
+		<br>
+	</form>
+	<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
+	<br>
+	<div id="shortened" contenteditable="true">$sfn<br><br>$cite</div>
+	<a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:
+	<br>
+	<div id="named_ref" contenteditable="true">$ref</div>
+	<p>
+		<!-- There may be error in language detection. $error % -->
+	</p>
+	<footer>
+		<p>
+			You can use this tool to create shortened footnote/named reference for a given
+			<a href="http://books.google.com/">Google Books URL</a>, <a href="https://en.wikipedia.org/wiki/Digital_object_identifier">DOI</a>, <a href="https://en.wikipedia.org/wiki/International_Standard_Book_Number">ISBN</a>, or the URL of many major news websites.
+		</p>
+		<p>
+			Note that there is always a chance of error in the generated output. <b>Please check the results before using them on Wiki</b>.
+		</p>
+		<p>
+			Found a bug or have a suggestion? Contact me on <a href="https://wikitech.wikimedia.org/wiki/User_talk:Dalba">my talk page</a> or open an issue <a href="https://github.com/5j9/yadkard">on github</a>.
+			<a href="javascript:void(window.open('https://tools.wmflabs.org/yadkard/yadkard.fcgi?user_input='+encodeURIComponent(location.href)+'&dateformat=%25B+%25d%2C+%25Y'))">Bookmarklet</a>
+		</p>
+	</footer>
 	<script>
 /*jslint browser: true, regexp: true, white: true */
 var months = [
@@ -153,10 +159,8 @@ function dbY(date) {
 function changeDates(id) {
 	'use strict';
 	var i, utcdate, text1, text2, dates, date, newdate, formatter;
-	text1 = document.getElementById('shortened')
-		.textContent;
-	text2 = document.getElementById('named_ref')
-		.textContent;
+	text1 = document.getElementById('shortened').innerHTML;
+	text2 = document.getElementById('named_ref').innerHTML;
 	dates = text1.match(/date=.*?(?=\}\}| \| )/g);
 	for (i = 0; i < dates.length; i = i + 1) {
 		date = dates[i].slice(5);
@@ -171,10 +175,8 @@ function changeDates(id) {
 			.replace(" 0", " ");
 		text1 = text1.replace(new RegExp('((?:access)?date=)' + date + '(?=}}| \\| )'), '$1' + newdate);
 		text2 = text2.replace(new RegExp('((?:access)?date=)' + date + '(?=}}| \\| )'), '$1' + newdate);
-		document.getElementById('shortened')
-			.value = text1;
-		document.getElementById('named_ref')
-			.value = text2;
+		document.getElementById('shortened').innerHTML = text1;
+		document.getElementById('named_ref').innerHTML = text2;
 	}
 }
 
@@ -203,8 +205,7 @@ function checkCookie() {
 	'use strict';
 	var datefmt = getCookie('datefmt');
 	if (datefmt !== '') {
-		document.getElementById(datefmt)
-			.checked = true;
+		document.getElementById(datefmt).checked = true;
 		changeDates(datefmt);
 	}
 }
@@ -212,8 +213,7 @@ function checkCookie() {
 function onDateChange() {
 	'use strict';
 	var id;
-	id = getCheckedRadio()
-		.id;
+	id = getCheckedRadio().id;
 	changeDates(id);
 	setCookie('datefmt', id, 365);
 }
