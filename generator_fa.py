@@ -32,11 +32,11 @@ def citations(d) -> tuple:
     authors = d.get('authors')
     if authors:
         cite += names2para(authors, 'نام', 'نام خانوادگی', 'نویسنده')
-        sfn = '<ref>{{پک'
+        sfn = '&lt;ref&gt;{{پک'
         for author in authors[:4]:
             sfn += ' | ' + author.lastname
     else:
-        sfn = '<ref>{{پک/بن'
+        sfn = '&lt;ref&gt;{{پک/بن'
     editors = d.get('editors')
     if editors:
         cite += names2para(
@@ -134,14 +134,14 @@ def citations(d) -> tuple:
     else:
         sfn += ' | ص='
     cite += '}}'
-    sfn += '}}\u200F</ref>'
+    sfn += '}}\u200F&lt;/ref&gt;'
     # Finally create the ref tag.
     ref = cite[2:]
     if pages and ' | صفحه=' not in ref:
         ref = ref[:-2] + ' | صفحه=' + pages + '}}'
     elif not url:
         ref = ref[:-2] + ' | صفحه=}}'
-    ref = '<ref name="' + ref_name + '">' + ref + '\u200F</ref>'
+    ref = '&lt;ref name="' + ref_name + '"&gt;' + ref + '\u200F&lt;/ref&gt;'
     return cite, sfn, ref
 
 

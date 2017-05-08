@@ -160,7 +160,7 @@ def citations(d: dict) -> tuple:
         name = name.replace(' pp=', ' pp. ')
         if pages and ' | pages=' not in text:
             text = text[:-2] + ' | pages=' + pages + '}}'
-    ref = '<ref name="' + name + '">' + text + '</ref>'
+    ref = '&lt;ref name="' + name + '"&gt;' + text + '&lt;/ref&gt;'
     return cite, sfn, ref
 
 
