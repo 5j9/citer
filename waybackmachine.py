@@ -21,7 +21,7 @@ from urls import (
 
 
 URL_FULLMATCH = re.compile(
-    r'https?://web\.archive\.org/web/'
+    r'https?://web\.archive\.org/(?:web/)?'
     r'(\d{4})(\d{2})(\d{2})\d{6}(?:id_|js_|cs_|im_)?/(http.*)'
 ).fullmatch
 

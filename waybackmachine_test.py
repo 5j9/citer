@@ -43,7 +43,6 @@ class WaybackmachineResponse(unittest.TestCase):
         )
         self.assertIn(ct, o.cite)
 
-    # todo: fix
     def test_dead_url(self):
         """dead-url=yes"""
         i = (
@@ -63,6 +62,28 @@ class WaybackmachineResponse(unittest.TestCase):
             '| archive-date=2007-04-29 '
             '| dead-url=yes '
             '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
+            '| accessdate='
+        )
+        self.assertIn(ct, o.cite)
+
+    def test_webless_url(self):
+        """The 'web/ component of the url can be omitted sometimes."""
+        o = waybackmachine_response(
+            'https://web.archive.org/20170119045622/http://www.isna.ir/'
+        )
+        # Todo: Make the title more accurate?
+        ct = (
+            '* {{cite web '
+            '| title=خبرگزاری ایسنا  -  صفحه اصلی  -   ISNA News Agency '
+            '| website=ایسنا '
+            '| date=2017-01-19 '
+            '| url=http://www.isna.ir/ '
+            '| archive-url=https://web.archive.org/20170119045622/'
+            'http://www.isna.ir/ '
+            '| archive-date=2017-01-19 '
+            '| dead-url=unfit '
+            '| language=fa '
+            '| ref={{sfnref | ایسنا | 2017}} '
             '| accessdate='
         )
         self.assertIn(ct, o.cite)
