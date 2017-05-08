@@ -53,6 +53,7 @@ NETLOC_TO_RESPONSE = {
     'www.noormags.com': noormags_response,
     'noormags.com': noormags_response,
     'web.archive.org': waybackmachine_response,
+    'web-beta.archive.org': waybackmachine_response,
 }
 
 RESPONSE_HEADERS = [
