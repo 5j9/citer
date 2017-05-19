@@ -67,7 +67,8 @@ class NoormagsTest(unittest.TestCase):
             '| accessdate='
         )
         rft = (
-            '<ref name="سلیمانی\u200cمیمند 1389 pp. 103–124">{{cite journal '
+            '&lt;ref name="سلیمانی\u200cمیمند 1389 pp. 103–124"&gt;'
+            '{{cite journal '
             '| last=سلیمانی\u200cمیمند '
             '| first=\u200cمریم '
             '| title=بررسی فضایل قرآنی در دعای ابوحمزه ثمالی '

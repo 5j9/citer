@@ -135,9 +135,11 @@ class GooglebookTest(unittest.TestCase):
         i = 'http://books.google.com/books?id=' \
             'U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
         o = googlebooks_response(i)
-        e1 = '<ref>{{پک | Anderson | DeBolt | Featherstone | Gunther | 2010' \
+        e1 = '&lt;ref&gt;' \
+             '{{پک | Anderson | DeBolt | Featherstone | Gunther | 2010' \
              ' | ک=InterACT with Web Standards: A' \
-             ' holistic approach to web design | زبان=en | ص=57}}\u200f</ref>'
+             ' holistic approach to web design | زبان=en | ص=57}}' \
+             '\u200f&lt;/ref&gt;'
         e2 = '* {{یادکرد کتاب |' \
              ' نام خانوادگی=Anderson |' \
              ' نام=E. |' \
@@ -170,10 +172,12 @@ class GooglebookTest(unittest.TestCase):
             'en&sa=X&ei=oNKSUrKeDovItAbO_4CoBA&ved=0CC4Q6AEwAA#v=' \
             'onepage&q=%22a%20Delimiter%20is%22&f=false'
         o = googlebooks_response(i)
-        e1 = '<ref>{{پک | Farrell | 2009 ' \
+        e1 = '&lt;ref&gt;' \
+             '{{پک | Farrell | 2009 ' \
              '| ک=Microsoft Visual C# 2008 Comprehensive: ' \
              'An Introduction to Object-Oriented Programming |' \
-             ' زبان=en | ص=588}}\u200f</ref>'
+             ' زبان=en | ص=588}}' \
+             '\u200f&lt;/ref&gt;'
         e2 = '* {{یادکرد کتاب | نام خانوادگی=Farrell |' \
              ' نام=J. | عنوان=Microsoft Visual C# 2008 Comprehensive: ' \
              'An Introduction to Object-Oriented Programming |' \
@@ -190,9 +194,10 @@ class GooglebookTest(unittest.TestCase):
             'X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q=' \
             '%22legal%20translation%20is%22&f=false'
         o = googlebooks_response(i)
-        e1 = '<ref>{{پک | Šarčević | 1997 ' \
+        e1 = '&lt;ref&gt;{{پک | Šarčević | 1997 ' \
              '| ک=New Approach to Legal Translation |' \
-             ' زبان=en | ص=229}}\u200f</ref>'
+             ' زبان=en | ص=229}}' \
+             '\u200f&lt;/ref&gt;'
         e2 = '* {{یادکرد کتاب | نام خانوادگی=Šarčević |' \
              ' نام=S. |' \
              ' عنوان=New Approach to Legal Translation |' \

@@ -159,7 +159,7 @@ class GooglebooksTest(unittest.TestCase):
             '| accessdate='
         )
         reft = (
-            '<ref name="Serway Jewett 2009 p. 378">'
+            '&lt;ref name="Serway Jewett 2009 p. 378"&gt;'
             '{{cite book '
             '| last=Serway '
             '| first=R.A. '
@@ -175,7 +175,7 @@ class GooglebooksTest(unittest.TestCase):
         )
         self.assertIn(ctnt, o.cite)
         self.assertIn(reft, o.ref)
-        self.assertIn(' | page=378}}</ref>', o.ref)
+        self.assertIn(' | page=378}}&lt;/ref&gt;', o.ref)
 
 
 googlebooks.requests_get = dummy_requests.DummyRequests().get
