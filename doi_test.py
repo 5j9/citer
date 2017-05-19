@@ -9,6 +9,7 @@ import unittest
 import dummy_requests
 import doi
 from doi import doi_response
+from datetime import date as datetime_date
 
 
 class DoiTest(unittest.TestCase):
@@ -109,6 +110,25 @@ class DoiTest(unittest.TestCase):
             '| accessdate='
         )
         self.assertIn(e, o.cite)
+
+    def test_incollection(self):
+        """Test the `incollection` type."""
+        self.assertIn(
+            '* {{cite book '
+            '| last=Meyer '
+            '| first=Albert R. '
+            '| title=Lecture Notes in Mathematics '
+            '| chapter=Weak monadic second order theory of succesor is not'
+            ' elementary-recursive '
+            '| publisher=Springer Berlin Heidelberg '
+            '| year=1975 '
+            '| url=https://doi.org/10.1007%2Fbfb0064872 '
+            '| doi=10.1007/bfb0064872 '
+            '| ref=harv '
+            '| accessdate='
+            + datetime_date.today().strftime('%Y-%m-%d') + '}}',
+            doi_response('DOI 10.1007/BFb0064872')
+        )
 
 
 doi.requests_get = dummy_requests.DummyRequests().get

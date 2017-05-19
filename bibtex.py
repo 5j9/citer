@@ -39,7 +39,7 @@ def parse(bibtex):
     """Parse bibtex string and return a dictionary of information."""
     bibtex = special_sequence_cleanup(bibtex)
     d = search_for_tag(bibtex)
-    # type: (book, journal, . . . )
+    # type; book, journal, incollection, etc.
     m = TYPE_SEARCH(bibtex)
     if m:
         d['type'] = m.group(1).strip().lower()

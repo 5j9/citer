@@ -12,7 +12,7 @@ def citations(d: dict) -> tuple:
     """Create citation templates according to the given dictionary."""
     date_format = d['date_format']
     type_ = d['type']
-    if type_ == 'book':
+    if type_ in ('book', 'incollection'):
         cite = '* {{cite book'
     elif type_ in ('article', 'jour'):
         cite = '* {{cite journal'
@@ -27,6 +27,7 @@ def citations(d: dict) -> tuple:
     publisher = d.get('publisher')
     journal = d.get('journal')
     website = d.get('website')
+    booktitle = d.get('booktitle')
     title = d.get('title')
 
     if authors:
@@ -59,7 +60,11 @@ def citations(d: dict) -> tuple:
     others = d.get('others')
     if others:
         cite += names1para(others, 'others')
-    if title:
+    if booktitle:
+        cite += ' | title=' + booktitle
+        if title:
+            cite += ' | chapter=' + title
+    elif title:
         cite += ' | title=' + title
     if journal:
         cite += ' | journal=' + journal

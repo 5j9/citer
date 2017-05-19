@@ -20,9 +20,9 @@ lower_alpha_digits = digits + ascii_lowercase
 def citations(d) -> tuple:
     """Create citation templates using the given dictionary."""
     type_ = d.get('type')
-    if type_ == 'book':
+    if type_ in ('book', 'incollection'):
         cite = '* {{یادکرد کتاب'
-    elif type_ in ['article', 'jour']:
+    elif type_ in ('article', 'jour'):
         cite = '* {{یادکرد ژورنال'
     elif type_ == 'web':
         cite = '* {{یادکرد وب'
@@ -51,8 +51,13 @@ def citations(d) -> tuple:
     year = d.get('year')
     if year:
         sfn += ' | ' + year
+    booktitle = d.get('booktitle')
     title = d.get('title')
-    if title:
+    if booktitle:
+        cite += ' | عنوان=' + booktitle
+        if title:
+            cite += ' | فصل=' + title
+    elif title:
         cite += ' | عنوان=' + title
         sfn += ' | ک=' + d['title']
     journal = d.get('journal')
