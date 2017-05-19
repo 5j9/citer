@@ -121,11 +121,11 @@ def get_response(user_input, date_format):
 
 
 def application(environ, start_response):
-    query_dict = parse_qs(environ['QUERY_STRING'])
-    action = query_dict.get('action', [''])[0]  # apiquery
+    query_dict_get = parse_qs(environ['QUERY_STRING']).get
+    action = query_dict_get('action', [''])[0]  # apiquery
     # Warning: input is not escaped!
-    user_input = query_dict.get('user_input', [''])[0].strip()
-    date_format = query_dict.get('dateformat', [''])[0].strip()
+    user_input = query_dict_get('user_input', [''])[0].strip()
+    date_format = query_dict_get('dateformat', [''])[0].strip()
     try:
         response = get_response(user_input, date_format)
     except requests.ConnectionError:
