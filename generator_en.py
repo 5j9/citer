@@ -6,21 +6,62 @@
 
 import re
 from datetime import date as datetime_date
+from collections import defaultdict
+
+
+# The following dict maps each BibTex type to its related wiki template.
+# The Descriptions are from
+# http://ctan.um.ac.ir/biblio/bibtex/base/btxdoc.pdf
+TYPE_TO_CITE = {
+    # A book with an explicit publisher.
+    'book': 'book',
+    # A part of a book, which may be a chapter (or section or whatever) and/or
+    # a range of pages.
+    'inbook': 'book',
+    # A work that is printed and bound, but without a named publisher or
+    # sponsoring institution.
+    # Note: Yadkard does not currently support the `howpublished` option.
+    'booklet': 'book',
+    # A part of a book having its own title.
+    'incollection': 'book',
+    # Technical documentation.
+    # Template:Cite manual is a redirect to Template:Cite_book on enwiki.
+    'manual': 'book',
+    # An article from a journal or magazine.
+    'article': 'journal',
+    # The same as INPROCEEDINGS, included for Scribe compatibility.
+    'conference': 'conference',
+    # An article in a conference proceedings.
+    'inproceedings': 'conference',
+    # The proceedings of a conference.
+    'proceedings': 'conference',
+    # A Master's thesis.
+    # Todo: Add support for Template:Cite thesis
+    'mastersthesis': 'thesis',
+    # A PhD thesis.
+    'phdthesis': 'thesis',
+    # A report published by a school or other institution, usually numbered
+    # within a series.
+    # Todo: Add support for Template:Cite techreport
+    'techreport': 'techreport',
+    # Use this type when nothing else fits.
+    # Note that Template:Cite is redirected to Template:Citation.
+    'misc': '',
+    # The following are special type used by other modules of yadkard.
+    'web': 'web',
+}
+TYPE_TO_CITE = defaultdict(str, TYPE_TO_CITE)
 
 
 def citations(d: dict) -> tuple:
     """Create citation templates according to the given dictionary."""
+    # Todo: Use a default dict for `d`?
+    # if type(d) != defaultdict:
+    #     raise TypeError
     date_format = d['date_format']
+    # Todo: Conflicts with the `type` parameter of techreport.
     type_ = d['type']
-    if type_ in ('book', 'incollection'):
-        cite = '* {{cite book'
-    elif type_ in ('article', 'jour'):
-        cite = '* {{cite journal'
-    elif type_ == 'web':
-        cite = '* {{cite web'
-    else:
-        raise KeyError(type_ + " is not a valid value for d['type']")
-
+    cite = '* {{cite ' + TYPE_TO_CITE[type_]
     sfn = '{{sfn'
 
     authors = d.get('authors')
@@ -70,19 +111,25 @@ def citations(d: dict) -> tuple:
         cite += ' | journal=' + journal
     elif website:
         cite += ' | website=' + website
-    publisher = d.get('publisher')
+    chapter = d.get('chapter')
+    if chapter:
+        cite += ' | chapter=' + chapter
+    publisher = d.get('publisher') or d.get('organization')
     if publisher:
         cite += ' | publisher=' + publisher
     address = d.get('address')
     if address:
         cite += ' | location=' + address
+    edition = d.get('edition')
+    if edition:
+        cite += ' | edition=' + edition
     series = d.get('series')
     if series:
         cite += ' | series=' + series
     volume = d.get('volume')
     if volume:
         cite += ' | volume=' + volume
-    issue = d.get('issue')
+    issue = d.get('issue') or d.get('number')
     if issue:
         cite += ' | issue=' + issue
     date = d.get('date')
@@ -110,7 +157,7 @@ def citations(d: dict) -> tuple:
             sfn += ' | pp=' + pages
         else:
             sfn += ' | p=' + pages
-    if type_ in ('article', 'jour'):
+    if type_ in ('article', 'journal'):
         if pages:
             if '–' in pages:
                 cite += ' | pages=' + pages

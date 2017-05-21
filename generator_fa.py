@@ -20,9 +20,10 @@ lower_alpha_digits = digits + ascii_lowercase
 def citations(d) -> tuple:
     """Create citation templates using the given dictionary."""
     type_ = d.get('type')
+    # Todo: Use TYPE_TO_CITE (See generator_en.py)
     if type_ in ('book', 'incollection'):
         cite = '* {{یادکرد کتاب'
-    elif type_ in ('article', 'jour'):
+    elif type_ in ('article', 'journal'):
         cite = '* {{یادکرد ژورنال'
     elif type_ == 'web':
         cite = '* {{یادکرد وب'
@@ -67,19 +68,25 @@ def citations(d) -> tuple:
         website = d.get('website')
         if website:
             cite += ' | وب‌گاه=' + website
-    publisher = d.get('publisher')
+    chapter = d.get('chapter')
+    if chapter:
+        cite += ' | فصل=' + chapter
+    publisher = d.get('publisher') or d.get('organization')
     if publisher:
         cite += ' | ناشر=' + publisher
     address = d.get('address')
     if address:
         cite += ' | مکان=' + address
+    edition = d.get('edition')
+    if edition:
+        cite += ' | ویرایش=' + edition
     series = d.get('series')
     if series:
         cite += ' | سری=' + series
     volume = d.get('volume')
     if volume:
         cite += ' | جلد=' + volume
-    issue = d.get('issue')
+    issue = d.get('issue') or d.get('number')
     if issue:
         cite += ' | شماره=' + issue
     ddate = d.get('date')
@@ -103,7 +110,7 @@ def citations(d) -> tuple:
     if pmid:
         cite += ' | pmid=' + pmid
     pages = d.get('pages')
-    if type_ in ('article', 'jour'):
+    if type_ in ('article', 'journal'):
         if pages:
             cite += ' | صفحه=' + pages
     url = d.get('url')

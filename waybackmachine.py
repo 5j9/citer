@@ -111,7 +111,7 @@ def original_url_dict(url: str):
         d['authors'] = authors
     d['journal'] = find_journal(soup)
     if d['journal']:
-        d['type'] = 'jour'
+        d['type'] = 'journal'
     else:
         d['type'] = 'web'
         d['website'] = find_sitename(

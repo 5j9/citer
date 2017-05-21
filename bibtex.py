@@ -46,8 +46,7 @@ def parse(bibtex):
     # author
     author = d.get('author')
     if author:
-        names = []
-        d['authors'] = names
+        d['authors'] = names = []
         for author in author.split(' and '):
             if author.endswith(' and'):
                 author = author[:-4]
@@ -56,10 +55,18 @@ def parse(bibtex):
             name = Name(author)
             names.append(name)
         del d['author']
-    number = d.get('number')
-    if number:
-        d['issue'] = number
-        del d['number']
+    # editor, not tested, just a copy of author
+    editor = d.get('editor')
+    if editor:
+        d['editors'] = names = []
+        for editor in editor.split(' and '):
+            if editor.endswith(' and'):
+                editor = editor[:-4]
+            if not editor:
+                continue
+            name = Name(editor)
+            names.append(name)
+        del d['editor']
     pages = d.get('pages')
     if pages:
         pages = d['pages'] = (
@@ -72,7 +79,7 @@ def parse(bibtex):
 
 
 def special_sequence_cleanup(bibtex):
-    """Replace common TeX special symbol commonds with their unicode value."""
+    """Replace common TeX special symbol commands with their unicode value."""
     return WORDS_IN_BRACES_SUB(r'\g<1>', (
         bibtex
         .replace(r'{\textregistered}', '®')
