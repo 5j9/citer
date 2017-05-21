@@ -4,6 +4,7 @@
 """Codes required to create citation templates for wikifa."""
 
 
+from collections import defaultdict
 from datetime import date
 
 from commons import ennum2fa
@@ -17,18 +18,18 @@ from random import seed as randseed, choice as randchoice
 lower_alpha_digits = digits + ascii_lowercase
 
 
-def citations(d) -> tuple:
+def citations(d: defaultdict) -> tuple:
     """Create citation templates using the given dictionary."""
-    type_ = d['type']
+    cite_type = d['cite_type']
     # Todo: Use TYPE_TO_CITE (See generator_en.py)
-    if type_ in ('book', 'incollection'):
+    if cite_type in ('book', 'incollection'):
         cite = '* {{یادکرد کتاب'
-    elif type_ in ('article', 'journal'):
+    elif cite_type in ('article', 'journal'):
         cite = '* {{یادکرد ژورنال'
-    elif type_ == 'web':
+    elif cite_type == 'web':
         cite = '* {{یادکرد وب'
     else:
-        raise KeyError(type_ + " is not a valid value for d['type']")
+        raise KeyError(cite_type + " is not a valid value for d['cite_type']")
 
     authors = d['authors']
     if authors:
@@ -110,7 +111,7 @@ def citations(d) -> tuple:
     if pmid:
         cite += ' | pmid=' + pmid
     pages = d['pages']
-    if type_ in ('article', 'journal'):
+    if cite_type in ('article', 'journal'):
         if pages:
             cite += ' | صفحه=' + pages
     url = d['url']
@@ -128,7 +129,7 @@ def citations(d) -> tuple:
         cite += ' | doi=' + doi
     language = d['language']
     if language:
-        if type_ == 'web':
+        if cite_type == 'web':
             cite += ' | کد زبان=' + language
         else:
             cite += ' | زبان=' + language

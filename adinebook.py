@@ -3,6 +3,7 @@
 
 """All things that are specifically related to adinebook website"""
 
+from collections import defaultdict
 import logging
 import re
 
@@ -22,7 +23,7 @@ TITLE_SEARCH = re.compile(
 
 
 def adinehbook_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
-    """Create the response namedtuple."""
+    """Return the response namedtuple."""
     dictionary = url2dictionary(url)
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
@@ -63,7 +64,7 @@ def url2dictionary(adinebook_url: str):
     if 'صفحه مورد نظر پبدا نشد.' in adinebook_html:
         return
     else:
-        d = {'type': 'book'}
+        d = defaultdict(lambda: None, cite_type='book')
         bs = BeautifulSoup(adinebook_html, 'lxml')
         m = TITLE_SEARCH(bs.title.text)
         if m:

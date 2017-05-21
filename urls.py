@@ -4,6 +4,7 @@
 """Codes used for parsing contents of an arbitrary URL."""
 
 
+from collections import defaultdict
 import re
 from urllib.parse import urlparse
 import logging
@@ -241,6 +242,7 @@ def find_sitename(
         if content:
             return content.strip()
     # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
+    # Todo: Factor out .get.
     f = find(attrs={'name': 'PublisherName'})
     if f:
         value = f.get('value')
@@ -525,12 +527,13 @@ def url2dict(url: str) -> dict:
     home_title_thread.start()
 
     soup = get_soup(url)
-    # 'soup-title' is used in waybackmechine.py.
+    # 'soup_title' is used in waybackmechine.py.
     soup_title = soup.title
-    d = {
-        'url': find_url(soup, url),
-        'soup-title': soup_title.text if soup_title else None,
-    }
+    d = defaultdict(
+        lambda: None,
+        url=find_url(soup, url),
+        soup_title=soup_title.text if soup_title else None,
+    )
     authors = find_authors(soup)
     if authors:
         d['authors'] = authors
@@ -542,9 +545,9 @@ def url2dict(url: str) -> dict:
     d['pages'] = find_pages(soup)
     d['journal'] = find_journal(soup)
     if d['journal']:
-        d['type'] = 'journal'
+        d['cite_type'] = 'journal'
     else:
-        d['type'] = 'web'
+        d['cite_type'] = 'web'
         d['website'] = find_sitename(
             soup, url, authors, hometitle_list, home_title_thread
         )

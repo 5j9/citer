@@ -15,6 +15,7 @@ Some of the known issues:
     * Abbreviations are not supported (e.g. @string { foo = "Mrs. Foo" })
 """
 
+from collections import defaultdict
 
 import regex as regex
 
@@ -29,22 +30,24 @@ FINDALL_BIBTEX_FIELDS = regex.compile(
 TYPE_SEARCH = regex.compile('@(.*?)\s*\{', regex.IGNORECASE).search
 
 
-def search_for_tag(bibtex: str) -> dict:
-    """Find all fields of the bibtex and return result as a dictionary."""
+def search_for_tag(bibtex: str) -> defaultdict:
+    """Find all fields of the bibtex and return result as a defaultdict."""
     fs = FINDALL_BIBTEX_FIELDS(bibtex)
-    return {f[0].lower(): f[1] if f[1] else f[2] for f in fs}
+    return defaultdict(
+        lambda: None, {f[0].lower(): f[1] if f[1] else f[2] for f in fs}
+    )
 
 
 def parse(bibtex):
     """Parse bibtex string and return a dictionary of information."""
     bibtex = special_sequence_cleanup(bibtex)
     d = search_for_tag(bibtex)
-    # type; book, journal, incollection, etc.
+    # cite_type: book, journal, incollection, etc.
     m = TYPE_SEARCH(bibtex)
     if m:
-        d['type'] = m.group(1).strip().lower()
+        d['cite_type'] = m.group(1).strip().lower()
     # author
-    author = d.get('author')
+    author = d['author']
     if author:
         d['authors'] = names = []
         for author in author.split(' and '):
@@ -56,7 +59,7 @@ def parse(bibtex):
             names.append(name)
         del d['author']
     # editor, not tested, just a copy of author
-    editor = d.get('editor')
+    editor = d['editor']
     if editor:
         d['editors'] = names = []
         for editor in editor.split(' and '):
@@ -67,7 +70,7 @@ def parse(bibtex):
             name = Name(editor)
             names.append(name)
         del d['editor']
-    pages = d.get('pages')
+    pages = d['pages']
     if pages:
         pages = d['pages'] = (
             pages.replace(' ', '').replace('--', '–').replace('-', '–')

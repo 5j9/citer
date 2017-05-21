@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+from collections import defaultdict
 from doi import DOI_SEARCH
 
 from commons import Name, InvalidNameError
@@ -26,11 +27,11 @@ LA_SEARCH = re.compile('LA  - (.*)').search
 
 def parse(ris_text):
     """Parse RIS_text data and return the result as a dictionary."""
-    d = {}
-    # type: (book, journal, . . . )
+    d = defaultdict(lambda: None)
+    # cite_type: (book, journal, . . . )
     m = TY_SEARCH(ris_text)
     if m:
-        d['type'] = m.group(1).strip().lower()
+        d['cite_type'] = m.group(1).strip().lower()
     # author:
     m = AU_FINDALL(ris_text)
     # d['authors'] should not be created unless there are some authors

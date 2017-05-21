@@ -141,8 +141,6 @@ def dictionary_to_response(dictionary) -> Response:
 
     """
     value_encode(dictionary)
-    # Todo: Can defaultdict also be useful in the caller functions?
-    dictionary = defaultdict(lambda: None, dictionary)
     isbn = dictionary['isbn']
     if isbn:
         dictionary['isbn'] = isbn_mask(isbn) or isbn

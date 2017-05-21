@@ -56,9 +56,8 @@ TYPE_TO_CITE = defaultdict(str, TYPE_TO_CITE)
 def citations(d: defaultdict) -> tuple:
     """Create citation templates according to the given dictionary."""
     date_format = d['date_format']
-    # Todo: Conflicts with the `type` parameter of techreport.
-    type_ = d['type']
-    cite = '* {{cite ' + TYPE_TO_CITE[type_]
+    cite_type = d['cite_type']
+    cite = '* {{cite ' + TYPE_TO_CITE[cite_type]
     sfn = '{{sfn'
 
     authors = d['authors']
@@ -154,7 +153,7 @@ def citations(d: defaultdict) -> tuple:
             sfn += ' | pp=' + pages
         else:
             sfn += ' | p=' + pages
-    if type_ in ('article', 'journal'):
+    if cite_type in ('article', 'journal'):
         if pages:
             if '–' in pages:
                 cite += ' | pages=' + pages

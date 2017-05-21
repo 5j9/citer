@@ -58,7 +58,7 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
         # The original_process has been successful
         if (
             original_dict['title'] == archive_dict['title']
-            or original_dict['soup-title'] == archive_dict['soup-title']
+            or original_dict['soup_title'] == archive_dict['soup_title']
         ):
             archive_dict.update(original_dict)
             archive_dict['dead-url'] = 'no'
@@ -105,15 +105,15 @@ def original_url_dict(url: str):
     )
     home_title_thread.start()
     soup = get_soup(url)
-    d = {'soup-title': soup.title.text.strip()}
+    d = {'soup_title': soup.title.text.strip()}
     authors = find_authors(soup)
     if authors:
         d['authors'] = authors
     d['journal'] = find_journal(soup)
     if d['journal']:
-        d['type'] = 'journal'
+        d['cite_type'] = 'journal'
     else:
-        d['type'] = 'web'
+        d['cite_type'] = 'web'
         d['website'] = find_sitename(
             soup, url, authors, hometitle_list, home_title_thread
         )
