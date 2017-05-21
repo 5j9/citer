@@ -19,7 +19,7 @@ lower_alpha_digits = digits + ascii_lowercase
 
 def citations(d) -> tuple:
     """Create citation templates using the given dictionary."""
-    type_ = d.get('type')
+    type_ = d['type']
     # Todo: Use TYPE_TO_CITE (See generator_en.py)
     if type_ in ('book', 'incollection'):
         cite = '* {{یادکرد کتاب'
@@ -30,7 +30,7 @@ def citations(d) -> tuple:
     else:
         raise KeyError(type_ + " is not a valid value for d['type']")
 
-    authors = d.get('authors')
+    authors = d['authors']
     if authors:
         cite += names2para(authors, 'نام', 'نام خانوادگی', 'نویسنده')
         sfn = '&lt;ref&gt;{{پک'
@@ -38,22 +38,22 @@ def citations(d) -> tuple:
             sfn += ' | ' + author.lastname
     else:
         sfn = '&lt;ref&gt;{{پک/بن'
-    editors = d.get('editors')
+    editors = d['editors']
     if editors:
         cite += names2para(
             editors, 'نام ویراستار', 'نام خانوادگی ویراستار', 'ویراستار'
         )
-    translators = d.get('translators')
+    translators = d['translators']
     if translators:
         cite += names1para(translators, 'ترجمه')
-    others = d.get('others')
+    others = d['others']
     if others:
         cite += names1para(others, 'دیگران')
-    year = d.get('year')
+    year = d['year']
     if year:
         sfn += ' | ' + year
-    booktitle = d.get('booktitle')
-    title = d.get('title')
+    booktitle = d['booktitle']
+    title = d['title']
     if booktitle:
         cite += ' | عنوان=' + booktitle
         if title:
@@ -61,35 +61,35 @@ def citations(d) -> tuple:
     elif title:
         cite += ' | عنوان=' + title
         sfn += ' | ک=' + d['title']
-    journal = d.get('journal')
+    journal = d['journal']
     if journal:
         cite += ' | ژورنال=' + journal
     else:
-        website = d.get('website')
+        website = d['website']
         if website:
             cite += ' | وب‌گاه=' + website
-    chapter = d.get('chapter')
+    chapter = d['chapter']
     if chapter:
         cite += ' | فصل=' + chapter
-    publisher = d.get('publisher') or d.get('organization')
+    publisher = d['publisher'] or d['organization']
     if publisher:
         cite += ' | ناشر=' + publisher
-    address = d.get('address')
+    address = d['address']
     if address:
         cite += ' | مکان=' + address
-    edition = d.get('edition')
+    edition = d['edition']
     if edition:
         cite += ' | ویرایش=' + edition
-    series = d.get('series')
+    series = d['series']
     if series:
         cite += ' | سری=' + series
-    volume = d.get('volume')
+    volume = d['volume']
     if volume:
         cite += ' | جلد=' + volume
-    issue = d.get('issue') or d.get('number')
+    issue = d['issue'] or d['number']
     if issue:
         cite += ' | شماره=' + issue
-    ddate = d.get('date')
+    ddate = d['date']
     if ddate:
         if isinstance(ddate, str):
             cite += ' | تاریخ=' + ddate
@@ -97,36 +97,36 @@ def citations(d) -> tuple:
             cite += ' | تاریخ=' + date.isoformat(ddate)
     if year:
         cite += ' | سال=' + year
-    month = d.get('month')
+    month = d['month']
     if month:
         cite += ' | ماه=' + month
-    isbn = d.get('isbn')
+    isbn = d['isbn']
     if isbn:
         cite += ' | شابک=' + isbn
-    issn = d.get('issn')
+    issn = d['issn']
     if issn:
         cite += ' | issn=' + issn
-    pmid = d.get('pmid')
+    pmid = d['pmid']
     if pmid:
         cite += ' | pmid=' + pmid
-    pages = d.get('pages')
+    pages = d['pages']
     if type_ in ('article', 'journal'):
         if pages:
             cite += ' | صفحه=' + pages
-    url = d.get('url')
+    url = d['url']
     if url:
         cite += ' | پیوند=' + url
-    archive_url = d.get('archive-url')
+    archive_url = d['archive-url']
     if archive_url:
         cite += (
             ' | پیوند بایگانی=' + archive_url +
             ' | تاریخ بایگانی=' + d['archive-date'].isoformat() +
             ' | پیوند مرده=' + ('آری' if d['dead-url'] == 'yes' else 'نه')
         )
-    doi = d.get('doi')
+    doi = d['doi']
     if doi:
         cite += ' | doi=' + doi
-    language = d.get('language')
+    language = d['language']
     if language:
         if type_ == 'web':
             cite += ' | کد زبان=' + language

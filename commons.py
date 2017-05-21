@@ -7,7 +7,7 @@ import regex
 import json
 import calendar
 from datetime import datetime
-from collections import namedtuple
+from collections import namedtuple, defaultdict
 
 import langid
 from isbnlib import mask as isbn_mask
@@ -141,10 +141,13 @@ def dictionary_to_response(dictionary) -> Response:
 
     """
     value_encode(dictionary)
-    isbn = dictionary.get('isbn')
+    # Todo: Can defaultdict also be useful in the caller functions?
+    dictionary = defaultdict(lambda: None, dictionary)
+    isbn = dictionary['isbn']
     if isbn:
         dictionary['isbn'] = isbn_mask(isbn) or isbn
     if lang == 'en':
+        # Todo: Move import to the top?
         from generator_en import citations
     else:
         from generator_fa import citations

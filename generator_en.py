@@ -53,23 +53,20 @@ TYPE_TO_CITE = {
 TYPE_TO_CITE = defaultdict(str, TYPE_TO_CITE)
 
 
-def citations(d: dict) -> tuple:
+def citations(d: defaultdict) -> tuple:
     """Create citation templates according to the given dictionary."""
-    # Todo: Use a default dict for `d`?
-    # if type(d) != defaultdict:
-    #     raise TypeError
     date_format = d['date_format']
     # Todo: Conflicts with the `type` parameter of techreport.
     type_ = d['type']
     cite = '* {{cite ' + TYPE_TO_CITE[type_]
     sfn = '{{sfn'
 
-    authors = d.get('authors')
-    publisher = d.get('publisher')
-    journal = d.get('journal')
-    website = d.get('website')
-    booktitle = d.get('booktitle')
-    title = d.get('title')
+    authors = d['authors']
+    publisher = d['publisher']
+    journal = d['journal']
+    website = d['website']
+    booktitle = d['booktitle']
+    title = d['title']
 
     if authors:
         cite += names2para(authors, 'first', 'last', 'author')
@@ -85,20 +82,20 @@ def citations(d: dict) -> tuple:
             title or 'Anon.'
         )
 
-    editors = d.get('editors')
+    editors = d['editors']
     if editors:
         cite += names2para(editors, 'editor-first', 'editor-last', 'editor')
-    translators = d.get('translators')
+    translators = d['translators']
     if translators:
         for translator in translators:
             translator.fullname += ' (مترجم)'
         # todo: add a 'Translated by ' before name of translators
-        others = d.get('others')
+        others = d['others']
         if others:
             others.extend(d['translators'])
         else:
             d['others'] = d['translators']
-    others = d.get('others')
+    others = d['others']
     if others:
         cite += names1para(others, 'others')
     if booktitle:
@@ -111,47 +108,47 @@ def citations(d: dict) -> tuple:
         cite += ' | journal=' + journal
     elif website:
         cite += ' | website=' + website
-    chapter = d.get('chapter')
+    chapter = d['chapter']
     if chapter:
         cite += ' | chapter=' + chapter
-    publisher = d.get('publisher') or d.get('organization')
+    publisher = d['publisher'] or d['organization']
     if publisher:
         cite += ' | publisher=' + publisher
-    address = d.get('address')
+    address = d['address']
     if address:
         cite += ' | location=' + address
-    edition = d.get('edition')
+    edition = d['edition']
     if edition:
         cite += ' | edition=' + edition
-    series = d.get('series')
+    series = d['series']
     if series:
         cite += ' | series=' + series
-    volume = d.get('volume')
+    volume = d['volume']
     if volume:
         cite += ' | volume=' + volume
-    issue = d.get('issue') or d.get('number')
+    issue = d['issue'] or d['number']
     if issue:
         cite += ' | issue=' + issue
-    date = d.get('date')
+    date = d['date']
     if date:
         if not isinstance(date, str):
             date = date.strftime(date_format)
         cite += ' | date=' + date
-    year = d.get('year')
+    year = d['year']
     if year:
         if not date or year not in date:
             cite += ' | year=' + year
         sfn += ' | ' + year
-    isbn = d.get('isbn')
+    isbn = d['isbn']
     if isbn:
         cite += ' | isbn=' + isbn
-    issn = d.get('issn')
+    issn = d['issn']
     if issn:
         cite += ' | issn=' + issn
-    pmid = d.get('pmid')
+    pmid = d['pmid']
     if pmid:
         cite += '| pmid=' + pmid
-    pages = d.get('pages')
+    pages = d['pages']
     if pages:
         if '–' in pages:
             sfn += ' | pp=' + pages
@@ -163,22 +160,22 @@ def citations(d: dict) -> tuple:
                 cite += ' | pages=' + pages
             else:
                 cite += ' | page=' + pages
-    url = d.get('url')
+    url = d['url']
     if url:
         cite += ' | url=' + url
     else:
         sfn += ' | p='
-    archive_url = d.get('archive-url')
+    archive_url = d['archive-url']
     if archive_url:
         cite += (
             ' | archive-url=' + archive_url +
             ' | archive-date=' + d['archive-date'].strftime(date_format) +
             ' | dead-url=' + d['dead-url']
         )
-    doi = d.get('doi')
+    doi = d['doi']
     if doi:
         cite += ' | doi=' + doi
-    language = d.get('language')
+    language = d['language']
     if language:
         if language.lower() not in ('english', 'en'):
             cite += ' | language=' + language
