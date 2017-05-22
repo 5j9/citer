@@ -3,7 +3,7 @@
 
 """Codes specifically related to Noormags website."""
 
-import re
+from re import search
 from threading import Thread
 
 from requests import get as requests_get
@@ -30,17 +30,17 @@ def noormags_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
 
 
 def get_bibtex(noormags_url):
-    """Get bibtex file content from a noormags_url. Return as string."""
-    pagetext = requests_get(noormags_url).text
-    article_id = re.search('/citation/bibtex/(\d+)', pagetext).group(1)
+    """Get BibTex file content from a noormags_url. Return as string."""
+    page_text = requests_get(noormags_url).text
+    article_id = search('/citation/bibtex/(\d+)', page_text).group(1)
     url = 'http://www.noormags.ir/view/fa/citation/bibtex/' + article_id
     return requests_get(url).text
 
 
 def get_ris(noormags_url):
     """Get ris file content from a noormags url. Return as string."""
-    pagetext = requests_get(noormags_url).text
-    article_id = re.search('/citation/ris/(\d+)', pagetext).group(1)
+    page_text = requests_get(noormags_url).text
+    article_id = search('/citation/ris/(\d+)', page_text).group(1)
     return requests_get(
         'http://www.noormags.ir/view/fa/citation/ris/' + article_id
     ).text
@@ -55,4 +55,3 @@ def ris_fetcher_thread(url, ris_collection):
     authors = ris_dict.get('authors')
     if authors:
         ris_collection['authors'] = authors
-
