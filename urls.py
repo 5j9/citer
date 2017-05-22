@@ -542,7 +542,7 @@ def url2dict(url: str) -> dict:
     d['pmid'] = find_pmid(soup)
     d['volume'] = find_volume(soup)
     d['issue'] = find_issue(soup)
-    d['pages'] = find_pages(soup)
+    d['page'] = find_pages(soup)
     d['journal'] = find_journal(soup)
     if d['journal']:
         d['cite_type'] = 'journal'

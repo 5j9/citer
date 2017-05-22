@@ -91,32 +91,26 @@ Response = namedtuple('Response', 'cite sfn ref error')
 
 class InvalidNameError(Exception):
 
-    """Base class for Name exceptions."""
+    """Base class for RawName exceptions."""
 
     pass
 
 
 class NumberInNameError(InvalidNameError):
 
-    """Raise when a Name() contains digits.."""
+    """Raise when a RawName() contains digits.."""
 
     pass
 
 
 class Name:
 
-    """Take a fullname and its' seperator. Convert it to a Name object.
+    """Represent the name of an author, editor, etc."""
 
-    If no seperator is provided, ',' or ' ' will be used.
-    """
-
-    def __init__(self, fullname: str, seperator: str=None) -> None:
-        """Create appropriate firstname, lastname and fullname properties."""
-        self.firstname, self.lastname = firstname_lastname(fullname, seperator)
-        if self.firstname:
-            self.fullname = self.firstname + ' ' + self.lastname
-        else:
-            self.fullname = self.lastname
+    def __init__(self, firstname: str, lastname: str) -> None:
+        """Create the Name."""
+        self.firstname, self.lastname = firstname, lastname
+        self.fullname = firstname + ' ' + lastname if firstname else lastname
 
     def __repr__(self) -> str:
         return 'Name("' + self.fullname + '")'
@@ -131,8 +125,21 @@ class Name:
         self.firstname = ''
 
 
+class RawName(Name):
+
+    """Take a fullname and its' separator. Convert it to a RawName object.
+
+    If no seperator is provided, ',' or ' ' will be used.
+
+    """
+
+    def __init__(self, fullname: str, seperator: str=None) -> None:
+        """Parse fullname and set firstname, lastname."""
+        super().__init__(*firstname_lastname(fullname, seperator))
+
+
 def dictionary_to_response(dictionary) -> Response:
-    """Return (sfn, cite, ref, error) strings..
+    """Return (sfn, cite, ref, error) strings.
 
     dictionary should be ready before calling this function.
     The dictionary will be cleaned up (empty values will be removed) and
@@ -179,11 +186,11 @@ def detect_language(text, langset=None) -> tuple:
     return language, error
 
 
-def firstname_lastname(fullname, seperator) -> tuple:
+def firstname_lastname(fullname, separator) -> tuple:
     """Return firstname and lastname as a tuple.
 
-    Add Jr.|Sr. suffix to first name.
-    Usually not used directly, called from Name() class.
+    (Jr.|Sr.) suffix will be added to firstname.
+    Usually called from RawName() class and not used directly.
 
     Examples:
 
@@ -209,14 +216,14 @@ def firstname_lastname(fullname, seperator) -> tuple:
         fullname = fullname[:-4]
     else:
         suffix = None
-    if not seperator:
+    if not separator:
         if ',' in fullname:
-            seperator = ','
+            separator = ','
         elif '،' in fullname:
-            seperator = '،'
-    if seperator:
-        if seperator in fullname:
-            lastname, firstname = fullname.split(seperator)
+            separator = '،'
+    if separator:
+        if separator in fullname:
+            lastname, firstname = fullname.split(separator)
         else:
             lastname, firstname = fullname, ''
     else:

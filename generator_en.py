@@ -9,12 +9,9 @@ from datetime import date as datetime_date
 from collections import defaultdict
 
 
-# The following dict maps each BibTex type to its related wiki template.
-# The Descriptions are from
-# http://ctan.um.ac.ir/biblio/bibtex/base/btxdoc.pdf
 TYPE_TO_CITE = {
-    # A book with an explicit publisher.
-    'book': 'book',
+    # BibTex types. Descriptions are from
+    # http://ctan.um.ac.ir/biblio/bibtex/base/btxdoc.pdf
     # A part of a book, which may be a chapter (or section or whatever) and/or
     # a range of pages.
     'inbook': 'book',
@@ -33,8 +30,6 @@ TYPE_TO_CITE = {
     'conference': 'conference',
     # An article in a conference proceedings.
     'inproceedings': 'conference',
-    # The proceedings of a conference.
-    'proceedings': 'conference',
     # A Master's thesis.
     # Todo: Add support for Template:Cite thesis
     'mastersthesis': 'thesis',
@@ -45,27 +40,57 @@ TYPE_TO_CITE = {
     # Todo: Add support for Template:Cite techreport
     'techreport': 'techreport',
     # Use this type when nothing else fits.
-    # Note that Template:Cite is redirected to Template:Citation.
-    'misc': '',
-    # The following are special type used by other modules of yadkard.
+    # 'misc': '',
+    # Types used by Yadkard.
     'web': 'web',
+    # crossref types (https://api.crossref.org/v1/types)
+    'book-section': 'book',
+    'monograph': 'book',
+    'report': 'report',
+    'book-track': 'book',
+    'journal-article': 'journal',
+    'book-part': 'book',
+    # 'other': '',
+    'book': 'book',
+    'journal-volume': 'journal',
+    'book-set': 'book',
+    # 'reference-entry': '',
+    'proceedings-article': 'conference',
+    'journal': 'journal',
+    # 'component': '',
+    'book-chapter': 'book',
+    'report-series': 'report',
+    'proceedings': 'conference',
+    # 'standard': '',
+    'reference-book': 'book',
+    # 'posted-content': '',
+    'journal-issue': 'journal',
+    'dissertation': 'thesis',
+    # 'dataset': '',
+    'book-series': 'book',
+    'edited-book': 'book',
+    # 'standard-series': '',
 }
+# Note that Template:Cite is redirected to Template:Citation.
 TYPE_TO_CITE = defaultdict(str, TYPE_TO_CITE)
 
 
 def citations(d: defaultdict) -> tuple:
     """Create citation templates according to the given dictionary."""
     date_format = d['date_format']
-    cite_type = d['cite_type']
-    cite = '* {{cite ' + TYPE_TO_CITE[cite_type]
+    cite_type = TYPE_TO_CITE[d['cite_type']]
+    cite = '* {{cite ' + cite_type
     sfn = '{{sfn'
 
     authors = d['authors']
     publisher = d['publisher']
-    journal = d['journal']
     website = d['website']
-    booktitle = d['booktitle']
     title = d['title']
+
+    if cite_type == 'journal':
+        journal = d['journal'] or d['container-title']
+    else:
+        journal = d['journal']
 
     if authors:
         cite += names2para(authors, 'first', 'last', 'author')
@@ -97,73 +122,99 @@ def citations(d: defaultdict) -> tuple:
     others = d['others']
     if others:
         cite += names1para(others, 'others')
+
+    if cite_type == 'book':
+        booktitle = d['booktitle'] or d['container-title']
+    else:
+        booktitle = None
+
     if booktitle:
-        cite += ' | title=' + booktitle
-        if title:
-            cite += ' | chapter=' + title
+            cite += ' | title=' + booktitle
+            if title:
+                cite += ' | chapter=' + title
     elif title:
         cite += ' | title=' + title
+
     if journal:
         cite += ' | journal=' + journal
     elif website:
         cite += ' | website=' + website
+
     chapter = d['chapter']
     if chapter:
         cite += ' | chapter=' + chapter
+
     publisher = d['publisher'] or d['organization']
     if publisher:
         cite += ' | publisher=' + publisher
+
     address = d['address']
     if address:
         cite += ' | location=' + address
+
     edition = d['edition']
     if edition:
         cite += ' | edition=' + edition
+
     series = d['series']
     if series:
         cite += ' | series=' + series
+
     volume = d['volume']
     if volume:
         cite += ' | volume=' + volume
+
     issue = d['issue'] or d['number']
     if issue:
         cite += ' | issue=' + issue
+
     date = d['date']
     if date:
         if not isinstance(date, str):
             date = date.strftime(date_format)
         cite += ' | date=' + date
+
     year = d['year']
     if year:
         if not date or year not in date:
             cite += ' | year=' + year
         sfn += ' | ' + year
+
     isbn = d['isbn']
     if isbn:
         cite += ' | isbn=' + isbn
+
     issn = d['issn']
     if issn:
         cite += ' | issn=' + issn
+
     pmid = d['pmid']
     if pmid:
         cite += '| pmid=' + pmid
-    pages = d['pages']
+
+    doi = d['doi']
+    if doi:
+        cite += ' | doi=' + doi
+
+    pages = d['page']
     if pages:
         if '–' in pages:
             sfn += ' | pp=' + pages
         else:
             sfn += ' | p=' + pages
-    if cite_type in ('article', 'journal'):
+    if cite_type == 'journal':
         if pages:
             if '–' in pages:
                 cite += ' | pages=' + pages
             else:
                 cite += ' | page=' + pages
+
     url = d['url']
     if url:
         cite += ' | url=' + url
     else:
         sfn += ' | p='
+
     archive_url = d['archive-url']
     if archive_url:
         cite += (
@@ -171,13 +222,12 @@ def citations(d: defaultdict) -> tuple:
             ' | archive-date=' + d['archive-date'].strftime(date_format) +
             ' | dead-url=' + d['dead-url']
         )
-    doi = d['doi']
-    if doi:
-        cite += ' | doi=' + doi
+
     language = d['language']
     if language:
         if language.lower() not in ('english', 'en'):
             cite += ' | language=' + language
+
     if authors:
         cite += ' | ref=harv'
     else:
@@ -187,15 +237,17 @@ def citations(d: defaultdict) -> tuple:
         if year:
             cite += ' | ' + year
         cite += '}}'
+
     if url:
         cite += ' | accessdate=' + datetime_date.today().strftime(date_format)
+
     cite += '}}'
     sfn += '}}'
     # Finally create the ref tag.
     name = sfn[8:-2].replace(' | ', ' ').replace("'", '')
     text = re.sub(
-        '( \| ref=({{.*?}}|harv))(?P<repl> \| |}})',
-        '\g<repl>',
+        r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})',
+        r'\g<repl>',
         cite[2:],
     )
     if ' p=' in name and ' | page=' not in text:

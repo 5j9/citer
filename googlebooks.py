@@ -26,7 +26,7 @@ def googlebooks_response(url, date_format='%Y-%m-%d') -> Response:
     dictionary['url'] = 'http://' + pu.netloc + '/books?id=' + pq['id'][0]
     # manually adding page number to dictionary:
     if 'pg' in pq:
-        dictionary['pages'] = pq['pg'][0][2:]
+        dictionary['page'] = pq['pg'][0][2:]
         dictionary['url'] += '&pg=' + pq['pg'][0]
     # although google does not provide a language field:
     if 'language' not in dictionary:

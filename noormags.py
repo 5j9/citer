@@ -41,8 +41,9 @@ def get_ris(noormags_url):
     """Get ris file content from a noormags url. Return as string."""
     pagetext = requests_get(noormags_url).text
     article_id = re.search('/citation/ris/(\d+)', pagetext).group(1)
-    url = 'http://www.noormags.ir/view/fa/citation/ris/' + article_id
-    return requests_get(url).text
+    return requests_get(
+        'http://www.noormags.ir/view/fa/citation/ris/' + article_id
+    ).text
 
 
 def ris_fetcher_thread(url, ris_collection):

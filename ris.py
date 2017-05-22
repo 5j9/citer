@@ -5,7 +5,7 @@ import re
 from collections import defaultdict
 from doi import DOI_SEARCH
 
-from commons import Name, InvalidNameError
+from commons import RawName, InvalidNameError
 
 
 TY_SEARCH = re.compile('TY  - (.*)').search
@@ -39,7 +39,7 @@ def parse(ris_text):
         d['authors'] = []
         for match in m:
             try:
-                name = Name(match[1])
+                name = RawName(match[1])
             except InvalidNameError:
                 continue
             d['authors'].append(name)
@@ -81,12 +81,12 @@ def parse(ris_text):
         d['doi'] = m.group(0).strip()
     m = SP_SEARCH(ris_text)
     if m:
-        d['startpage'] = m.group(1).strip()
-        d['pages'] = d['startpage']
-    m = EP_SEARCH(ris_text)
-    if m:
-        d['endpage'] = m.group(1).strip()
-        d['pages'] = d['startpage'] + '–' + d['endpage']
+        start_page = m.group(1).strip()
+        m = EP_SEARCH(ris_text)
+        if m:
+            d['page'] = start_page + '–' + m.group(1).strip()
+        else:
+            d['page'] = start_page
     m = UR_SEARCH(ris_text)
     if m:
         # in IRS, url can be seprated using a ";"

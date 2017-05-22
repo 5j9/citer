@@ -10,7 +10,7 @@ import re
 from requests import get as requests_get
 from requests import RequestException
 from bs4 import BeautifulSoup
-from commons import Name, dictionary_to_response, detect_language, Response
+from commons import RawName, dictionary_to_response, detect_language, Response
 
 
 ISBN_SEARCH = re.compile(r'شابک:.*?([\d-]*X?)</span></li>').search
@@ -28,7 +28,7 @@ def adinehbook_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
         # Assume that language is either fa or en.
-        # Todo: give warning about this assumption.
+        # Todo: give warning about this assumption?
         dictionary['language'], dictionary['error'] = detect_language(
             dictionary['title'], ('en', 'fa')
         )
@@ -78,15 +78,15 @@ def url2dictionary(adinebook_url: str):
         # building lists:
         for name in names:
             if '(ويراستار)' in name:
-                editors.append(Name(name.partition('(ويراستار)')[0]))
+                editors.append(RawName(name.partition('(ويراستار)')[0]))
             elif '(مترجم)' in name:
-                translators.append(Name(name.partition('(مترجم)')[0]))
+                translators.append(RawName(name.partition('(مترجم)')[0]))
             elif '(' in name:
-                other = Name(name.partition('(')[0])
+                other = RawName(name.partition('(')[0])
                 others.append(other)
                 other.fullname = name
             else:
-                authors.append(Name(name))
+                authors.append(RawName(name))
         if authors:
             d['authors'] = authors
         if others:

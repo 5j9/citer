@@ -19,7 +19,7 @@ from collections import defaultdict
 
 import regex as regex
 
-from commons import Name
+from commons import RawName
 
 
 # To remove Texts like {APA} from input.
@@ -50,34 +50,30 @@ def parse(bibtex):
     author = d['author']
     if author:
         d['authors'] = names = []
+        names_append = names.append
         for author in author.split(' and '):
             if author.endswith(' and'):
                 author = author[:-4]
             if not author:
                 continue
-            name = Name(author)
-            names.append(name)
+            names_append(RawName(author))
         del d['author']
     # editor, not tested, just a copy of author
     editor = d['editor']
     if editor:
         d['editors'] = names = []
+        names_append = names.append
         for editor in editor.split(' and '):
             if editor.endswith(' and'):
                 editor = editor[:-4]
             if not editor:
                 continue
-            name = Name(editor)
-            names.append(name)
+            names_append(RawName(editor))
         del d['editor']
     pages = d['pages']
     if pages:
-        pages = d['pages'] = (
+        d['page'] = \
             pages.replace(' ', '').replace('--', '–').replace('-', '–')
-        )
-        startpage, sep, endpage = pages.partition('–')
-        if sep:
-            d['startpage'], d['endpage'] = startpage, endpage
     return d
 
 

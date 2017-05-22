@@ -4,6 +4,8 @@
 """Codes specifically related to DOI inputs."""
 
 
+from collections import defaultdict
+from datetime import date as datetime_date
 import re
 from urllib.parse import unquote
 import logging
@@ -11,7 +13,7 @@ from html import unescape
 
 from requests import get as requests_get
 
-from commons import Response, dictionary_to_response, detect_language
+from commons import Response, dictionary_to_response, detect_language, Name
 from config import lang
 from bibtex import parse as bibtex_parse
 
@@ -24,7 +26,7 @@ DOI_SEARCH = re.compile(
 
 
 def doi_response(doi_or_url, pure=False, date_format='%Y-%m-%d') -> Response:
-    """Create the response namedtuple."""
+    """Return the response namedtuple."""
     if pure:
         doi = doi_or_url
     else:
@@ -33,27 +35,59 @@ def doi_response(doi_or_url, pure=False, date_format='%Y-%m-%d') -> Response:
         decoded_url = unquote(unescape(doi_or_url))
         m = DOI_SEARCH(decoded_url)
         doi = m.group(1)
-    url = 'https://doi.org/' + doi
-    bibtex = get_bibtex(url)
-    if bibtex == 'Resource not found.':
-        logger.info('DOI could not be resolved.\n' + url)
-        return Response(
-            error=100, sfnt='DOI could not be resolved.', ctnt=bibtex
-        )
+    dictionary = crossref(doi)
+    dictionary['date_format'] = date_format
+    if lang == 'fa':
+        dictionary['language'], dictionary['error'] = \
+            detect_language(dictionary['title'])
+    return dictionary_to_response(dictionary)
+
+
+def crossref(doi) -> defaultdict:
+    """Get the crossref.org json data for the given DOI. Return parsed data."""
+    # See https://github.com/CrossRef/rest-api-doc/blob/master/api_format.md
+    # for documentation.
+    j = requests_get('http://api.crossref.org/works/' + doi).json()
+    assert j['status'] == 'ok'
+    d = defaultdict(
+        lambda: None, {k.lower(): v for k, v in j['message'].items()})
+
+    d['cite_type'] = d.pop('type')
+
+    for field in ('title', 'container-title', 'issn', 'isbn'):
+        value = d[field]
+        if value:
+            d[field] = value[0]
+
+    date = d['issued']['date-parts'][0]
+    date_len = len(date)
+    if date_len == 3:
+        d['date'] = datetime_date(*date)
+    elif date_len == 2:
+        d['year'], d['month'] = str(date[0]), str(date[1])
     else:
-        dictionary = bibtex_parse(bibtex)
-        dictionary['date_format'] = date_format
-        if lang == 'fa':
-            dictionary['language'], dictionary['error'] = \
-                detect_language(dictionary['title'])
-        return dictionary_to_response(dictionary)
+        d['year'] = str(date[0])
 
+    authors = d['author']
+    if authors:
+        d['authors'] = \
+            [Name(name['given'], name['family']) for name in authors]
 
-def get_bibtex(doi_url):
-    """Get BibTex file content from a DOI URL. Return as string."""
-    return requests_get(
-        doi_url, headers={'Accept': 'application/x-bibtex'}
-    ).text
+    editors = d['editor']
+    if editors:
+        d['editors'] = \
+            [Name(name['given'], name['family']) for name in editors]
+
+    translators = d['translator']
+    if translators:
+        d['translators'] = \
+            [Name(name['given'], name['family']) for name in translators]
+
+    page = d['page']
+    if page:
+        d['page'] = page.replace('-', '–')
+
+    return d
+
 
 logger = logging.getLogger(__name__)
-

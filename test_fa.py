@@ -214,13 +214,16 @@ class GooglebookTest(unittest.TestCase):
 class NoormagsTest(unittest.TestCase):
 
     def test_nm2(self):
-        i = 'http://www.noormags.com/view/fa/ArticlePage/454096'
-        o = noormags_response(i)
-        e = '* {{یادکرد ژورنال | عنوان=زندگی نامه علمی دکتر کاووس حسن لی |' \
-            ' ژورنال=شعر | شماره=62 | سال=1387 | صفحه=17–19 |' \
-            ' پیوند=http://www.noormags.ir/view/fa/articlepage/454096 |' \
-            ' زبان=fa | تاریخ بازبینی='
-        self.assertIn(e, o.cite)
+        self.assertIn(
+            '* {{یادکرد ژورنال |'
+            ' عنوان=زندگی نامه علمی دکتر کاووس حسن لی |'
+            ' ژورنال=شعر | شماره=62 | سال=1387 | صفحه=17–19 |'
+            ' پیوند=http://www.noormags.ir/view/fa/articlepage/454096 |'
+            ' زبان=fa | تاریخ بازبینی=',
+            noormags_response(
+                'http://www.noormags.com/view/fa/ArticlePage/454096'
+            ).cite,
+        )
 
 
 class NoorlibTest(unittest.TestCase):
@@ -247,28 +250,17 @@ class NoorlibTest(unittest.TestCase):
 class DoiTest(unittest.TestCase):
 
     def test_di1(self):
-        i = 'http://dx.doi.org/10.1038/nrd842'
-        o = doi_response(i)
-        e = (
-            "* {{یادکرد ژورنال "
-            "| نام خانوادگی=Atkins "
-            "| نام=Joshua H. "
-            "| نام خانوادگی۲=Gershell "
-            "| نام۲=Leland J. "
-            "| عنوان=From the analyst's couch: Selective anticancer drugs "
-            "| ژورنال=Nature Reviews Drug Discovery "
-            "| ناشر=Springer Nature "
-            "| جلد=1 "
-            "| شماره=7 "
-            "| سال=2002 "
-            "| ماه=jul "
-            "| صفحه=491–492 "
-            "| پیوند=https://doi.org/10.1038%2Fnrd842 "
-            "| doi=10.1038/nrd842 "
-            "| زبان=en "
-            "| تاریخ بازبینی="
+        self.assertIn(
+            "* {{یادکرد ژورنال | نام خانوادگی=Atkins |"
+            " نام=Joshua H. | نام خانوادگی۲=Gershell | نام۲=Leland J. |"
+            " عنوان=From the analyst's couch: Selective anticancer drugs |"
+            " ژورنال=Nature Reviews Drug Discovery |"
+            " ناشر=Springer Nature | جلد=1 | شماره=7 |"
+            " سال=2002 | ماه=7 | issn=1474-1784 | doi=10.1038/nrd842 |"
+            " صفحه=491–492 | پیوند=http://dx.doi.org/10.1038/nrd842 |"
+            " زبان=en | تاریخ بازبینی=2017-05-22}}",
+            doi_response('http://dx.doi.org/10.1038/nrd842').cite,
         )
-        self.assertIn(e, o.cite)
 
 
 class IsbnTest(unittest.TestCase):

@@ -10,26 +10,87 @@ from datetime import date
 from commons import ennum2fa
 from string import digits, ascii_lowercase
 from random import seed as randseed, choice as randchoice
+from generator_en import citations as en_citations
 
+
+TYPE_TO_CITE = {
+    # BibTex types. Descriptions are from
+    # http://ctan.um.ac.ir/biblio/bibtex/base/btxdoc.pdf
+    # A part of a book, which may be a chapter (or section or whatever) and/or
+    # a range of pages.
+    'inbook': 'کتاب',
+    # A work that is printed and bound, but without a named publisher or
+    # sponsoring institution.
+    # Note: Yadkard does not currently support the `howpublished` option.
+    'booklet': 'کتاب',
+    # A part of a book having its own title.
+    'incollection': 'کتاب',
+    # Technical documentation.
+    # Template:Cite manual is a redirect to Template:Cite_book on enwiki.
+    'manual': 'کتاب',
+    # An article from a journal or magazine.
+    'article': 'ژورنال',
+    # The same as INPROCEEDINGS, included for Scribe compatibility.
+    'conference': 'conference',
+    # An article in a conference proceedings.
+    'inproceedings': 'conference',
+    # A Master's thesis.
+    # Todo: Add support for Template:Cite thesis
+    'mastersthesis': 'thesis',
+    # A PhD thesis.
+    'phdthesis': 'thesis',
+    # A report published by a school or other institution, usually numbered
+    # within a series.
+    # Todo: Add support for Template:Cite techreport
+    'techreport': 'techreport',
+    # Use this type when nothing else fits.
+    # 'misc': '',
+    # Types used by Yadkard.
+    'web': 'وب',
+    # crossref types (https://api.crossref.org/v1/types)
+    'book-section': 'کتاب',
+    'monograph': 'کتاب',
+    'report': 'report',
+    'book-track': 'کتاب',
+    'journal-article': 'ژورنال',
+    'book-part': 'کتاب',
+    # 'other': '',
+    'book': 'کتاب',
+    'journal-volume': 'ژورنال',
+    'book-set': 'کتاب',
+    # 'reference-entry': '',
+    'proceedings-article': 'conference',
+    'journal': 'ژورنال',
+    # 'component': '',
+    'book-chapter': 'کتاب',
+    'report-series': 'report',
+    'proceedings': 'conference',
+    # 'standard': '',
+    'reference-book': 'کتاب',
+    # 'posted-content': '',
+    'journal-issue': 'ژورنال',
+    'dissertation': 'thesis',
+    # 'dataset': '',
+    'book-series': 'کتاب',
+    'edited-book': 'کتاب',
+    # 'standard-series': '',
+}
+# Note that Template:Cite is redirected to Template:Citation.
+TYPE_TO_CITE = defaultdict(str, TYPE_TO_CITE)
 
 # According to https://en.wikipedia.org/wiki/Help:Footnotes,
 # the characters '!$%&()*,-.:;<@[]^_`{|}~' are also supported. But they are
 # hard to use.
-lower_alpha_digits = digits + ascii_lowercase
+LOWER_ALPHA_DIGITS = digits + ascii_lowercase
 
 
 def citations(d: defaultdict) -> tuple:
     """Create citation templates using the given dictionary."""
-    cite_type = d['cite_type']
-    # Todo: Use TYPE_TO_CITE (See generator_en.py)
-    if cite_type in ('book', 'incollection'):
-        cite = '* {{یادکرد کتاب'
-    elif cite_type in ('article', 'journal'):
-        cite = '* {{یادکرد ژورنال'
-    elif cite_type == 'web':
-        cite = '* {{یادکرد وب'
+    cite_type = TYPE_TO_CITE[d['cite_type']]
+    if cite_type in ('کتاب', 'ژورنال', 'وب'):
+        cite = '* {{یادکرد ' + cite_type
     else:
-        raise KeyError(cite_type + " is not a valid value for d['cite_type']")
+        return en_citations(d)
 
     authors = d['authors']
     if authors:
@@ -39,21 +100,30 @@ def citations(d: defaultdict) -> tuple:
             sfn += ' | ' + author.lastname
     else:
         sfn = '&lt;ref&gt;{{پک/بن'
+
     editors = d['editors']
     if editors:
         cite += names2para(
             editors, 'نام ویراستار', 'نام خانوادگی ویراستار', 'ویراستار'
         )
+
     translators = d['translators']
     if translators:
         cite += names1para(translators, 'ترجمه')
+
     others = d['others']
     if others:
         cite += names1para(others, 'دیگران')
+
     year = d['year']
     if year:
         sfn += ' | ' + year
-    booktitle = d['booktitle']
+
+    if cite_type == 'book':
+        booktitle = d['booktitle'] or d['container-title']
+    else:
+        booktitle = None
+
     title = d['title']
     if booktitle:
         cite += ' | عنوان=' + booktitle
@@ -62,61 +132,86 @@ def citations(d: defaultdict) -> tuple:
     elif title:
         cite += ' | عنوان=' + title
         sfn += ' | ک=' + d['title']
-    journal = d['journal']
+
+    if cite_type == 'ژورنال':
+        journal = d['journal'] or d['container-title']
+    else:
+        journal = d['journal']
+
     if journal:
         cite += ' | ژورنال=' + journal
     else:
         website = d['website']
         if website:
             cite += ' | وب‌گاه=' + website
+
     chapter = d['chapter']
     if chapter:
         cite += ' | فصل=' + chapter
+
     publisher = d['publisher'] or d['organization']
     if publisher:
         cite += ' | ناشر=' + publisher
+
     address = d['address']
     if address:
         cite += ' | مکان=' + address
+
     edition = d['edition']
     if edition:
         cite += ' | ویرایش=' + edition
+
     series = d['series']
     if series:
         cite += ' | سری=' + series
+
     volume = d['volume']
     if volume:
         cite += ' | جلد=' + volume
+
     issue = d['issue'] or d['number']
     if issue:
         cite += ' | شماره=' + issue
+
     ddate = d['date']
     if ddate:
         if isinstance(ddate, str):
             cite += ' | تاریخ=' + ddate
         else:
             cite += ' | تاریخ=' + date.isoformat(ddate)
+
     if year:
         cite += ' | سال=' + year
+
     month = d['month']
     if month:
         cite += ' | ماه=' + month
+
     isbn = d['isbn']
     if isbn:
         cite += ' | شابک=' + isbn
+
     issn = d['issn']
     if issn:
         cite += ' | issn=' + issn
+
     pmid = d['pmid']
     if pmid:
         cite += ' | pmid=' + pmid
-    pages = d['pages']
-    if cite_type in ('article', 'journal'):
+
+    doi = d['doi']
+    if doi:
+        cite += ' | doi=' + doi
+
+    pages = d['page']
+    if cite_type == 'ژورنال':
         if pages:
             cite += ' | صفحه=' + pages
+
     url = d['url']
     if url:
         cite += ' | پیوند=' + url
+
     archive_url = d['archive-url']
     if archive_url:
         cite += (
@@ -124,23 +219,22 @@ def citations(d: defaultdict) -> tuple:
             ' | تاریخ بایگانی=' + d['archive-date'].isoformat() +
             ' | پیوند مرده=' + ('آری' if d['dead-url'] == 'yes' else 'نه')
         )
-    doi = d['doi']
-    if doi:
-        cite += ' | doi=' + doi
+
     language = d['language']
     if language:
-        if cite_type == 'web':
+        if cite_type == 'وب':
             cite += ' | کد زبان=' + language
         else:
             cite += ' | زبان=' + language
         sfn += ' | زبان=' + language
+
     if pages:
         sfn += ' | ص=' + pages
     # Seed the random generator before adding today's date.
     randseed(cite)
     ref_name = (
         randchoice(ascii_lowercase)  # it should contain at least one non-digit
-        + ''.join(randchoice(lower_alpha_digits) for _ in range(4))
+        + ''.join(randchoice(LOWER_ALPHA_DIGITS) for _ in range(4))
     )
     if url:
         cite += ' | تاریخ بازبینی=' + date.today().isoformat()

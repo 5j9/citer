@@ -9,7 +9,7 @@ It is in urls.py.
 
 import re
 
-from commons import ANYDATE_SEARCH, Name
+from commons import ANYDATE_SEARCH, RawName
 
 
 # Names in byline are required to be two or three parts
@@ -158,7 +158,6 @@ def find_authors_loop(soup) -> list or None:
     for fparams in FIND_AUTHOR_PARAMETERS:
         fparam0 = fparams[0]
         if fparam0 == 'soup':
-            # try:  # Todo: can this try be removed safely?
             attrs = fparams[1]
             finding = soup.find(attrs=attrs)
             if not finding:
@@ -166,7 +165,6 @@ def find_authors_loop(soup) -> list or None:
             next_siblings = finding.find_next_siblings(attrs=attrs)
             next_siblings.insert(0, finding)
             names = []
-
             if fparams[2] == 'getitem':
                 for finding in next_siblings:
                     string = finding[fparams[3]]
@@ -183,8 +181,6 @@ def find_authors_loop(soup) -> list or None:
                     names.extend(name)
             if names:
                 return names
-            # except AttributeError:
-            #     pass
         elif fparam0 == 'html':
             m = fparams[1](html)
             if not m:
@@ -226,13 +222,13 @@ def byline_to_names(byline) -> list or None:
     Examples:
 
     >>> byline_to_names('\n By Roger Highfield, Science Editor \n')
-    [Name("Roger Highfield")]
+    [RawName("Roger Highfield")]
 
     >>> byline_to_names(
     ...    ' By Erika Solomon in Beirut and Borzou Daragahi, '
     ...    'Middle East correspondent'
     ... )
-    [Name("Erika Solomon"), Name("Borzou Daragahi")]
+    [RawName("Erika Solomon"), RawName("Borzou Daragahi")]
     """
     byline = byline.partition('|')[0]
     if ':' in byline or ':' in byline:
@@ -261,7 +257,7 @@ def byline_to_names(byline) -> list or None:
     for fullname in fullnames:
         fullname = fullname.partition(' in ')[0]
         fullname = fullname.partition(' for ')[0]
-        name = Name(fullname)
+        name = RawName(fullname)
         fn_startswith = name.firstname.startswith
         if fn_startswith('The ') or fn_startswith('خبرگزار'):
             name.nofirst_fulllast()
