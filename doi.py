@@ -15,7 +15,6 @@ from requests import get as requests_get
 
 from commons import Response, dictionary_to_response, detect_language, Name
 from config import lang
-from bibtex import parse as bibtex_parse
 
 
 # The regex is from:
