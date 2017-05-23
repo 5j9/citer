@@ -8,6 +8,8 @@ import re
 from datetime import date as datetime_date
 from collections import defaultdict
 
+from doi import DOI_URL_MATCH
+
 
 TYPE_TO_CITE = {
     # BibTex types. Descriptions are from
@@ -211,7 +213,12 @@ def citations(d: defaultdict) -> tuple:
 
     url = d['url']
     if url:
-        cite += ' | url=' + url
+        # Don't add a DOI URL if we already have added a DOI.
+        if not doi or not DOI_URL_MATCH(url):
+            cite += ' | url=' + url
+        else:
+            # To prevent addition of access date
+            url = None
     else:
         sfn += ' | p='
 

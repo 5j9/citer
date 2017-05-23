@@ -6,10 +6,11 @@
 
 from collections import defaultdict
 from datetime import date
+from random import seed as randseed, choice as randchoice
+from string import digits, ascii_lowercase
 
 from commons import ennum2fa
-from string import digits, ascii_lowercase
-from random import seed as randseed, choice as randchoice
+from doi import DOI_URL_MATCH
 from generator_en import citations as en_citations
 
 
@@ -210,7 +211,12 @@ def citations(d: defaultdict) -> tuple:
 
     url = d['url']
     if url:
-        cite += ' | پیوند=' + url
+        # Don't add a DOI URL if we already have added a DOI.
+        if not doi or not DOI_URL_MATCH(url):
+            cite += ' | پیوند=' + url
+        else:
+            # To prevent addition of access date
+            url = None
 
     archive_url = d['archive-url']
     if archive_url:

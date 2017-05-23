@@ -250,6 +250,7 @@ class NoorlibTest(unittest.TestCase):
 class DoiTest(unittest.TestCase):
 
     def test_di1(self):
+        self.maxDiff = None
         self.assertIn(
             "* {{یادکرد ژورنال | نام خانوادگی=Atkins |"
             " نام=Joshua H. | نام خانوادگی۲=Gershell | نام۲=Leland J. |"
@@ -257,8 +258,8 @@ class DoiTest(unittest.TestCase):
             " ژورنال=Nature Reviews Drug Discovery |"
             " ناشر=Springer Nature | جلد=1 | شماره=7 |"
             " سال=2002 | ماه=7 | issn=1474-1784 | doi=10.1038/nrd842 |"
-            " صفحه=491–492 | پیوند=http://dx.doi.org/10.1038/nrd842 |"
-            " زبان=en | تاریخ بازبینی=2017-05-22}}",
+            " صفحه=491–492 |"
+            " زبان=en}}",
             doi_response('http://dx.doi.org/10.1038/nrd842').cite,
         )
 
@@ -311,8 +312,9 @@ class IsbnTest(unittest.TestCase):
         self.assertIn(e, o.cite)
 
 
-adinebook.requests_get = googlebooks.requests_get = noormags.requests_get = \
-    noorlib.requests_get = doi.requests_get = isbn.requests_get = \
-    DummyRequests().get
 if __name__ == '__main__':
+    adinebook.requests_get = googlebooks.requests_get = \
+        noormags.requests_get = \
+        noorlib.requests_get = doi.requests_get = isbn.requests_get = \
+        DummyRequests().get
     unittest.main()
