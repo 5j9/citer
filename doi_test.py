@@ -9,7 +9,6 @@ import unittest
 import dummy_requests
 import doi
 from doi import doi_response
-from datetime import date as datetime_date
 
 
 class DoiTest(unittest.TestCase):
@@ -85,12 +84,7 @@ class DoiTest(unittest.TestCase):
         )
 
     def test_doi_isbn_no_year(self):
-        """Test when issue date is empty.
-
-        Also the ISBN may sometimes be invalid.
-
-        """
-        self.maxDiff = None
+        """Test when issue date is empty."""
         self.assertEqual(
             '* {{cite thesis | last=Ambati | first=V.R. '
             '| title=Forecasting water waves and currents :'
