@@ -10,7 +10,7 @@ from datetime import datetime
 from collections import namedtuple, defaultdict
 
 import langid
-from isbnlib import mask as isbn_mask
+from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
 from datetime import date as gdate
 
@@ -150,7 +150,11 @@ def dictionary_to_response(dictionary) -> Response:
     value_encode(dictionary)
     isbn = dictionary['isbn']
     if isbn:
-        dictionary['isbn'] = isbn_mask(isbn) or isbn
+        try:
+            dictionary['isbn'] = isbn_mask(isbn)
+        except NotValidISBNError:
+            # https://github.com/CrossRef/rest-api-doc/issues/214
+            del dictionary['isbn']
     if lang == 'en':
         # Todo: Move import to the top?
         from generator_en import citations

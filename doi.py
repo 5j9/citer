@@ -72,7 +72,10 @@ def crossref(doi) -> defaultdict:
     elif date_len == 2:
         d['year'], d['month'] = str(date[0]), str(date[1])
     else:
-        d['year'] = str(date[0])
+        year = date[0]
+        # date can be of the form [None]
+        if year:
+            d['year'] = str(date[0])
 
     authors = d['author']
     if authors:

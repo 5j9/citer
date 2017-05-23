@@ -84,6 +84,23 @@ class DoiTest(unittest.TestCase):
             doi_response('DOI 10.1007/BFb0064872').cite
         )
 
+    def test_doi_isbn_no_year(self):
+        """Test when issue date is empty.
+
+        Also the ISBN may sometimes be invalid.
+
+        """
+        self.maxDiff = None
+        self.assertEqual(
+            '* {{cite thesis | last=Ambati | first=V.R. '
+            '| title=Forecasting water waves and currents :'
+            ' a space-time approach '
+            '| publisher=University Library/University of Twente '
+            '| isbn=978-90-365-2632-6 | doi=10.3990/1.9789036526326 '
+            '| ref=harv}}',
+            doi_response('10.3990/1.9789036526326').cite
+        )
+
 
 doi.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
