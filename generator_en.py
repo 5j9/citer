@@ -235,6 +235,11 @@ def citations(d: defaultdict) -> tuple:
         if language.lower() not in ('english', 'en'):
             cite += ' | language=' + language
 
+    # Todo: Template:Citation by default generates anchors for Harvard
+    # references
+    #   whereas the Cite templates by default do not (although they can be
+    # made to
+    #   do so).
     if authors:
         cite += ' | ref=harv'
     else:
