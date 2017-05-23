@@ -51,7 +51,9 @@ def crossref(doi) -> defaultdict:
     """Get the crossref.org json data for the given DOI. Return parsed data."""
     # See https://github.com/CrossRef/rest-api-doc/blob/master/api_format.md
     # for documentation.
-    j = requests_get('http://api.crossref.org/works/' + doi).json()
+    # Force using the version 1 of the API to prevent breakage. See:
+    # https://github.com/CrossRef/rest-api-doc/blob/master/rest_api.md#how-to-manage-api-versions
+    j = requests_get('http://api.crossref.org/v1/works/' + doi).json()
     assert j['status'] == 'ok'
     d = defaultdict(
         lambda: None, {k.lower(): v for k, v in j['message'].items()})
