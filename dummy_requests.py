@@ -32,8 +32,11 @@ def save_cache(cache_dict):
 
 def load_cache():
     """Return cache as a dict."""
-    with open('.tests_cache', 'r+b') as f:
-        return pickle.load(f)
+    try:
+        with open('.tests_cache', 'r+b') as f:
+            return pickle.load(f)
+    except FileNotFoundError:
+        return {}
 
 
 CACHE = load_cache()
