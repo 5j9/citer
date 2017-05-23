@@ -74,6 +74,7 @@ def crossref(doi) -> defaultdict:
     else:
         year = date[0]
         # date can be of the form [None]
+        # https://github.com/CrossRef/rest-api-doc/issues/169
         if year:
             d['year'] = str(date[0])
 
