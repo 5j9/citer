@@ -10,10 +10,10 @@ It is in urls.py.
 from re import (
     search as re_search, sub as re_sub,
     compile as re_compile, split as re_split,
-    IGNORECASE, DOTALL,
+    IGNORECASE,
 )
 
-from commons import ANYDATE_SEARCH, RawName
+from commons import ANYDATE_SEARCH, RawName, InvalidNameError
 
 
 # Names in byline are required to be two or three parts
@@ -270,7 +270,10 @@ def byline_to_names(byline) -> list or None:
     for fullname in fullnames:
         fullname = fullname.partition(' in ')[0]
         fullname = fullname.partition(' for ')[0]
-        name = RawName(fullname)
+        try:
+            name = RawName(fullname)
+        except InvalidNameError:
+            continue
         fn_startswith = name.firstname.startswith
         if fn_startswith('The ') or fn_startswith('خبرگزار'):
             name.nofirst_fulllast()

@@ -886,16 +886,7 @@ class Others(unittest.TestCase):
 
     def test_oth15(self):
         """Contains <link property="og:site_name" href="ایسنا" />"""
-        i = (
-            'http://www.isna.ir/news/95110603890/'
-            '%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7-'
-            '%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-'
-            '%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-'
-            '%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84-'
-            '%DA%A9%D8%B1%D8%AF'
-        )
-        o = urls_response(i)
-        ct = (
+        self.assertIn(
             '* {{cite web '
             '| title=برجام شرایط بین‌المللی ایران را کاملا متحول کرد '
             '| website=ایسنا '
@@ -903,10 +894,35 @@ class Others(unittest.TestCase):
             '| url=http://www.isna.ir/news/95110603890/ '
             '| language=fa '
             '| ref={{sfnref | ایسنا | 2017}} '
-            '| accessdate='
+            '| accessdate=',
+            urls_response(
+                'http://www.isna.ir/news/95110603890/'
+                '%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7'
+                '-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-'
+                '%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-'
+                '%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84'
+                '-%DA%A9%D8%B1%D8%AF'
+            ).cite,
         )
-        self.assertIn(ct, o.cite)
 
+    def test_invalid_name(self):
+        """Test that URL does not fail with InvalidNameError."""
+        self.assertIn(
+            '* {{cite web | title=انتخابات 96 به روایت آمار '
+            '| website=پایگاه اطلاع رسانی شبکه خبر صدا'
+            ' و سیمای جمهوری اسلامی ایران |'
+            ' date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654 '
+            '| language=fa | ref={{sfnref |'
+            ' پایگاه اطلاع رسانی شبکه خبر'
+            ' صدا و سیمای جمهوری اسلامی ایران | 2017}} |'
+            ' accessdate=',
+            urls_response(
+                'http://www.irinn.ir/fa/news/499654/'
+                '%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-'
+                '%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-'
+                '%D8%A2%D9%85%D8%A7%D8%B1'
+            ).cite,
+        )
 
 dummy_requests = dummy_requests.DummyRequests()
 urls.requests_get = dummy_requests.get
