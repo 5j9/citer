@@ -8,7 +8,7 @@ It is in urls.py.
 
 
 from re import (
-    search as re_search, sub as re_sub,
+    search as re_search,
     compile as re_compile, split as re_split,
     IGNORECASE,
 )
@@ -37,6 +37,8 @@ BY_PREFIX = re_compile(
     IGNORECASE,
 ).sub
 AND_OR_COMMA_SUFFIX = re_compile(r'(?: and|,)?\s*$', IGNORECASE).sub
+AND_OR_COMMA_SPLIT = re_compile(r', and | and |, |;', IGNORECASE).split
+AND_SPLIT = re_compile(r', and | and |;', IGNORECASE).split
 
 # FIND_AUTHOR_PARAMETERS are used in find_authors(soup)
 FIND_AUTHOR_PARAMETERS = (
@@ -261,15 +263,14 @@ def byline_to_names(byline) -> list or None:
     byline = BY_PREFIX(r'\1', byline)
     # Removing ending " and" or ',' and rstrip
     byline = AND_OR_COMMA_SUFFIX('', byline)
-    # Todo: Use compiled regex.
     if ' and ' in byline.lower() or ' ' in byline.replace(', ', ''):
-        fullnames = re_split(', and | and |, |;', byline, flags=IGNORECASE)
+        fullnames = AND_OR_COMMA_SPLIT(byline)
     else:
-        fullnames = re_split(', and | and |;', byline, flags=IGNORECASE)
+        # Comma may be the separator of first name and last name.
+        fullnames = AND_SPLIT(byline)
     names = []
     for fullname in fullnames:
-        fullname = fullname.partition(' in ')[0]
-        fullname = fullname.partition(' for ')[0]
+        fullname = fullname.partition(' in ')[0].partition(' for ')[0]
         try:
             name = RawName(fullname)
         except InvalidNameError:

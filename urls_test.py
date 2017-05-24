@@ -848,11 +848,9 @@ class Others(unittest.TestCase):
         )
         self.assertIn(ct, o.cite)
 
-    def test_oth13(self):
-        """thebulletin.org"""
-        i = 'http://www.highbeam.com/doc/1P3-3372742961.html'
-        o = urls_response(i)
-        ct = (
+    def test_reverse_name(self):
+        """Author is `Martin, Tracy`. Tracy should be the first name."""
+        self.assertIn(
             '* {{cite web '
             '| last=Martin '
             '| first=Tracy '
@@ -861,9 +859,11 @@ class Others(unittest.TestCase):
             '| date=2014-07-01 '
             '| url=http://www.highbeam.com/doc/1P3-3372742961.html '
             '| ref=harv '
-            '| access-date='
+            '| access-date=',
+            urls_response(
+                'http://www.highbeam.com/doc/1P3-3372742961.html'
+            ).cite,
         )
-        self.assertIn(ct, o.cite)
 
     def test_oth14(self):
         """thebulletin.org"""
