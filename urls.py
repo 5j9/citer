@@ -114,7 +114,7 @@ def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
     except (ContentTypeError, ContentLengthError) as e:
         logger.exception(url)
         return Response(
-            sfnt='Could not process the request.', ctnt=e, error=100
+            sfn='Could not process the request.', cite=e, error=100, ref=''
         )
     dictionary['date_format'] = date_format
     return dictionary_to_response(dictionary)
