@@ -21,9 +21,9 @@ Some other tested and supported Persian web-sites:
 
 To run Yadkard on your local computer:
 
-1. Install the latest version of Python.
-2. Install the dependencies using `pip install -r requirements.txt`.
-Clone the project.
+1. Install Python 3.
+2. Clone the project.
+3. Install the dependencies using `pip install -r requirements.txt`.
 3. Make sure that `flup` is __not__ installed in your environment.
 4. Run Yadkard by calling `main.py`.
 
