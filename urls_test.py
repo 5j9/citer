@@ -627,13 +627,7 @@ class Others(unittest.TestCase):
 
     def test_text_search(self):
         """Match byline on soup.text."""
-        i = (
-            'https://www.eff.org/deeplinks/2014/06/'
-            'sudan-tech-sanctions-harm-innovation-development-us-government-'
-            'and-corporations-must-act'
-        )
-        o = urls_response(i)
-        ct = (
+        self.assertIn(
             '* {{cite web '
             '| last=Carlson '
             '| first=Kimberly '
@@ -647,9 +641,13 @@ class Others(unittest.TestCase):
             'sudan-tech-sanctions-harm-innovation-development-us-'
             'government-and-corporations-must-act '
             '| ref=harv '
-            '| accessdate='
+            '| accessdate=',
+            urls_response(
+                'https://www.eff.org/deeplinks/2014/06/'
+                'sudan-tech-sanctions-harm-innovation-development-us-'
+                'government-and-corporations-must-act'
+            ).cite,
         )
-        self.assertIn(ct, o.cite)
 
     # Disable because relies on class="author" which has been disabled due
     # to hight error rate.

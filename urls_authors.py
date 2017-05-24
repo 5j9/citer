@@ -7,7 +7,11 @@ It is in urls.py.
 """
 
 
-import re
+from re import (
+    search as re_search, sub as re_sub,
+    compile as re_compile, split as re_split,
+    IGNORECASE,
+)
 
 from commons import ANYDATE_SEARCH, RawName
 
@@ -32,13 +36,13 @@ FIND_AUTHOR_PARAMETERS = (
     # http://jn.physiology.org/content/81/1/319
     (
         'soup',
-        {'name': re.compile(r'^(?:citation_authors?|DCSext.author)')},
+        {'name': re_compile(r'^(?:citation_authors?|DCSext.author)')},
         'getitem',
         'content',
     ),
     (
         'soup',
-        {'property': re.compile(r'^(?:og:|article).*?author')},
+        {'property': re_compile(r'^(?:og:|article).*?author')},
         'getitem',
         'content',
     ),
@@ -49,7 +53,7 @@ FIND_AUTHOR_PARAMETERS = (
     (
         'soup',
         {
-            'class': re.compile(
+            'class': re_compile(
                 r'^(?:author-title|author_byline|bylineAuthor|byline-name'
                 r'|story-byline|meta-author|authorInline|byline)'
             )
@@ -90,7 +94,7 @@ FIND_AUTHOR_PARAMETERS = (
     ),
     (
         'soup',
-        {'class': re.compile('^(?:by_line_date|name)')},
+        {'class': re_compile('^(?:by_line_date|name)')},
         'getattr',
         'text',
     ),
@@ -103,7 +107,7 @@ FIND_AUTHOR_PARAMETERS = (
     # http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html
     (
         'html',
-        re.compile(
+        re_compile(
             r'authorName:\s*["\']([^"\']+)["\']|"author": ["\']([^"\']+)["\']'
         ).search,
     ),
@@ -118,25 +122,25 @@ FIND_AUTHOR_PARAMETERS = (
     # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
     (
         'html',
-        re.compile(
+        re_compile(
             r'>{BYLINE_PATTERN}<'.format(
                 BYLINE_PATTERN=BYLINE_PATTERN
             ),
-            re.IGNORECASE,
+            IGNORECASE,
         ).search,
     ),
     (
         'text',
-        re.compile(
+        re_compile(
             r'[\n|]{BYLINE_PATTERN}\n'.format(
                 BYLINE_PATTERN=BYLINE_PATTERN
             ),
-            re.IGNORECASE,
+            IGNORECASE,
         ).search,
     ),
 )
 
-STOPWORDS_SEARCH = re.compile(r'|'.join((
+STOPWORDS_SEARCH = re_compile(r'|'.join((
     r'\bReporter\b',
     r'\bPeople\b',
     r'\bEditors?\b',
@@ -149,7 +153,7 @@ STOPWORDS_SEARCH = re.compile(r'|'.join((
     r'\.com\b',
     r'\.ir\b',
     r'www\.',
-)), re.IGNORECASE).search
+)), IGNORECASE).search
 
 
 def find_authors_loop(soup) -> list or None:
@@ -239,20 +243,20 @@ def byline_to_names(byline) -> list or None:
         byline = byline[:m.start()]
     if not byline:
         return None
-    if re.search('\d\d\d\d', byline):
+    if re_search('\d\d\d\d', byline):
         return None
     # Replace 'and\n' (and similar expressions) with 'and '
     # This should be done before cutting the byline at the first newline
-    byline = re.sub(r'\s+and\s+', ' and ', byline, 1, re.IGNORECASE)
-    byline = re.sub(r'\s*,\s+', ', ', byline, 1, re.IGNORECASE)
+    byline = re_sub(r'\s+and\s+', ' and ', byline, 1, IGNORECASE)
+    byline = re_sub(r'\s*,\s+', ', ', byline, 1, IGNORECASE)
     # Remove starting "by", cut at the first newline and lstrip
-    byline = re.search(r'^\s*(by\s+)?(.*)', byline, re.IGNORECASE).group(2)
+    byline = re_search(r'(?:.*?\bby\s+)?(.+)', byline, IGNORECASE).group(1)
     # Removing ending " and" or ',' and rstrip
-    byline = re.sub(r'( and|,)?\s*$', '', byline, 1, re.IGNORECASE)
+    byline = re_sub(r'( and|,)?\s*$', '', byline, 1, IGNORECASE)
     if ' and ' in byline.lower() or ' ' in byline.replace(', ', ''):
-        fullnames = re.split(', and | and |, |;', byline, flags=re.I)
+        fullnames = re_split(', and | and |, |;', byline, flags=IGNORECASE)
     else:
-        fullnames = re.split(', and | and |;', byline, flags=re.I)
+        fullnames = re_split(', and | and |;', byline, flags=IGNORECASE)
     names = []
     for fullname in fullnames:
         fullname = fullname.partition(' in ')[0]
