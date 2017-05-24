@@ -309,9 +309,7 @@ class BbcTest(unittest.TestCase):
 
     def test_bbc2(self):
         """1 author"""
-        i = 'http://www.bbc.com/news/science-environment-23814524'
-        o = urls_response(i)
-        ct = (
+        self.assertIn(
             '* {{cite web '
             '| last=Gage '
             '| first=Suzi '
@@ -320,9 +318,11 @@ class BbcTest(unittest.TestCase):
             '| date=2013-08-26 '
             '| url=http://www.bbc.com/news/science-environment-23814524 '
             '| ref=harv '
-            '| accessdate='
+            '| accessdate=',
+            urls_response(
+                'http://www.bbc.com/news/science-environment-23814524'
+            ).cite,
         )
-        self.assertIn(ct, o.cite)
 
     def test_bbc3(self):
         """https version of bbc2 (differs a lot!)"""
@@ -361,9 +361,7 @@ class BbcTest(unittest.TestCase):
 
     def test_bbc5(self):
         """news.bbc.co.uk, 1 author"""
-        i = 'http://news.bbc.co.uk/2/hi/business/2570109.stm'
-        o = urls_response(i)
-        ct = (
+        self.assertIn(
             "* {{cite web "
             "| last=Madslien "
             "| first=Jorn "
@@ -372,9 +370,11 @@ class BbcTest(unittest.TestCase):
             "| date=2002-12-24 "
             "| url=http://news.bbc.co.uk/2/hi/business/2570109.stm "
             "| ref=harv "
-            "| accessdate="
+            "| accessdate=",
+            urls_response(
+                'http://news.bbc.co.uk/2/hi/business/2570109.stm'
+            ).cite,
         )
-        self.assertIn(ct, o.cite)
 
     def test_bbc6(self):
         """bbc.com, 1 author"""

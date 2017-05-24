@@ -15,14 +15,7 @@ class WaybackmachineResponse(unittest.TestCase):
 
     def test_live_og_link(self):
         """dead-link=no"""
-        i = (
-            'http://web.archive.org/web/20131021230444/'
-            'http://www.huffingtonpost.com/2013/10/19/'
-            'plastic-surgery-justin-bieber-100k_n_4128563.html?'
-            'utm_hp_ref=mostpopular'
-        )
-        o = waybackmachine_response(i)
-        ct = (
+        self.assertIn(
             '* {{cite web '
             '| author=The Huffington Post '
             '| title=LOOK: Bieber Fan Had $100K Worth Of Plastic Surgery To '
@@ -40,8 +33,14 @@ class WaybackmachineResponse(unittest.TestCase):
             '| dead-url=no '
             '| ref=harv '
             '| accessdate='
+            ,
+            waybackmachine_response(
+                'http://web.archive.org/web/20131021230444/'
+                'http://www.huffingtonpost.com/2013/10/19/'
+                'plastic-surgery-justin-bieber-100k_n_4128563.html?'
+                'utm_hp_ref=mostpopular'
+            ).cite,
         )
-        self.assertIn(ct, o.cite)
 
     def test_dead_url(self):
         """dead-url=yes"""

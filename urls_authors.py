@@ -10,7 +10,7 @@ It is in urls.py.
 from re import (
     search as re_search, sub as re_sub,
     compile as re_compile, split as re_split,
-    IGNORECASE,
+    IGNORECASE, DOTALL,
 )
 
 from commons import ANYDATE_SEARCH, RawName
@@ -29,6 +29,13 @@ BYLINE_PATTERN = (
     r'(, {NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?|,? +and '
     r'{NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?)?)?)\s*'
 ).format(NAME_PATTERN=NAME_PATTERN)
+
+NORMALIZE_ANDS = re_compile(r'\s+and\s+', IGNORECASE).sub
+NORMALIZE_COMMA_SPACES = re_compile(r'\s*,\s+', IGNORECASE).sub
+BY_PREFIX_REMOVE = re_compile(
+    r'^(?:[\s\S]*?\bby\s+)?([^\r\n]+)[\s\S]*',
+    IGNORECASE,
+).sub
 
 # FIND_AUTHOR_PARAMETERS are used in find_authors(soup)
 FIND_AUTHOR_PARAMETERS = (
@@ -245,13 +252,14 @@ def byline_to_names(byline) -> list or None:
         return None
     if re_search('\d\d\d\d', byline):
         return None
-    # Replace 'and\n' (and similar expressions) with 'and '
+    # Normalize 'and\n' (and the similar) to standard 'and '
     # This should be done before cutting the byline at the first newline
-    byline = re_sub(r'\s+and\s+', ' and ', byline, 1, IGNORECASE)
-    byline = re_sub(r'\s*,\s+', ', ', byline, 1, IGNORECASE)
+    byline = NORMALIZE_ANDS(' and ', byline)
+    byline = NORMALIZE_COMMA_SPACES(', ', byline)
     # Remove starting "by", cut at the first newline and lstrip
-    byline = re_search(r'(?:.*?\bby\s+)?(.+)', byline, IGNORECASE).group(1)
+    byline = BY_PREFIX_REMOVE(r'\1', byline)
     # Removing ending " and" or ',' and rstrip
+    # Todo: Use precompiled regex.
     byline = re_sub(r'( and|,)?\s*$', '', byline, 1, IGNORECASE)
     if ' and ' in byline.lower() or ' ' in byline.replace(', ', ''):
         fullnames = re_split(', and | and |, |;', byline, flags=IGNORECASE)
