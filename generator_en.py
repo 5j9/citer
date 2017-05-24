@@ -251,7 +251,7 @@ def citations(d: defaultdict) -> tuple:
         cite += '}}'
 
     if url:
-        cite += ' | accessdate=' + datetime_date.today().strftime(date_format)
+        cite += ' | access-date=' + datetime_date.today().strftime(date_format)
 
     cite += '}}'
     sfn += '}}'
