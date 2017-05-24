@@ -1,31 +1,10 @@
 # Yadkard
 
 A citation generator tool for Wikipedia. Currently accessible from:
-http://tools.wmflabs.org/yadkard/ (English version)
+http://tools.wmflabs.org/yadkard/ (the English version)
+http://tools.wmflabs.org/yadfa/ (the Persian version)
 
-## Dependencies
-
-Tested on Python 3.4.1
-
-The following libraries are required:
-* beautifulsoup4
-* numpy
-* requests
-* isbnlib
-* flup6
-* langid
-* lxml
-* jdatetime
-* regex
-
-These can be install using `pip install -r requirements.txt`.
-
-If flup is not found, wsgiref.simple_server will be used instead. Usually this is what you want if you are running the script on your personal computer.
-
-## Usage
-
-If running on local computer, the main page will be accessible from:
-http://127.0.0.1:5000/
+## What does it do?
 
 Yadkard is specially useful for generating citations from Google Books URLs, DOIs (Any Digital object Identifiers) and ISBNs (International Standard Book Numbers).
 Additionally URL of many major news websites are supported, including:
@@ -36,6 +15,21 @@ Some other tested and supported Persian web-sites:
 * http://www.noorlib.ir (کتابخانه دیجیتال نور)
 * http://www.adinebook.com (آدینه‌بوک)
 * http://socialhistory.ihcs.ac.ir/ (تحقیقات تاریخ اجتماعی)
+
+
+## Installation
+
+To run Yadkard on your local computer:
+
+1. Install the latest version of Python.
+2. Install the dependencies using `pip install -r requirements.txt`.
+Clone the project.
+3. Make sure that `flup` is __not__ installed in your environment.
+4. Run Yadkard by calling `main.py`.
+
+If everything goes fine, the main page will be accessible from:
+    http://127.0.0.1:5000/
+
 
 ## Language Setting
 The default language is English and can be change to Persian using the setting in config.py file.
