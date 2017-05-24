@@ -69,7 +69,7 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
             archive_dict['dead-url'] = 'unfit'
     else:
         archive_dict['dead-url'] = 'yes'
-    if archive_dict['website'] == 'Internet Archive':
+    if archive_dict['website'] == 'Wayback Machine':
         archive_dict['website'] = (
             urlparse(original_url).hostname.replace('www.', '')
         )

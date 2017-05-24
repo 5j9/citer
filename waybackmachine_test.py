@@ -45,12 +45,7 @@ class WaybackmachineResponse(unittest.TestCase):
 
     def test_dead_url(self):
         """dead-url=yes"""
-        i = (
-            'https://web.archive.org/web/20070429193849id_/'
-            'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
-        )
-        o = waybackmachine_response(i)
-        ct = (
+        self.assertIn(
             '* {{cite web '
             '| title=London Development Centre: Support, time, recovery (STR) '
             'workers '
@@ -62,9 +57,12 @@ class WaybackmachineResponse(unittest.TestCase):
             '| archive-date=2007-04-29 '
             '| dead-url=yes '
             '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
-            '| accessdate='
+            '| accessdate=',
+            waybackmachine_response(
+                'https://web.archive.org/web/20070429193849id_/'
+                'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
+            ).cite
         )
-        self.assertIn(ct, o.cite)
 
     def test_webless_url(self):
         """The 'web/ component of the url can be omitted sometimes."""
