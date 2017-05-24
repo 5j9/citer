@@ -45,44 +45,40 @@ class NoormagsTest(unittest.TestCase):
 
     def test_nm3(self):
         """Reftag check."""
-        i = (
+        o = noormags_response(
             'http://www.noormags.ir/view/fa/articlepage/'
             '692447?sta=%D8%AF%D8%B9%D8%A7%DB%8C%20%D8%A7%D8%A8%D9%88%D8%AD%'
             'D9%85%D8%B2%D9%87%20%D8%AB%D9%85%D8%A7%D9%84%DB%8C'
         )
-        o = noormags_response(i)
-        sfn = '{{sfn | سلیمانی\u200cمیمند | 1389 | pp=103–124}}'
-        ctn = (
+        self.assertIn(
+            '{{sfn | سلیمانی\u200cمیمند | 1389 | pp=103–124}}', o.sfn
+        )
+        self.assertIn(
             '* {{cite journal '
             '| last=سلیمانی\u200cمیمند '
             '| first=\u200cمریم '
             '| title=بررسی فضایل قرآنی در دعای ابوحمزه ثمالی '
-            '| journal=بینات '
+            '| journal=بینات (موسسه معارف اسلامی امام رضا علیه السلام) '
             '| issue=68 '
             '| year=1389 '
             '| pages=103–124 '
             '| url=http://www.noormags.ir/view/fa/articlepage/692447 '
             '| language=fa '
             '| ref=harv '
-            '| accessdate='
-        )
-        rft = (
+            '| accessdate=', o.cite)
+        self.assertIn(
             '&lt;ref name="سلیمانی\u200cمیمند 1389 pp. 103–124"&gt;'
             '{{cite journal '
             '| last=سلیمانی\u200cمیمند '
             '| first=\u200cمریم '
             '| title=بررسی فضایل قرآنی در دعای ابوحمزه ثمالی '
-            '| journal=بینات '
+            '| journal=بینات (موسسه معارف اسلامی امام رضا علیه السلام) '
             '| issue=68 '
             '| year=1389 '
             '| pages=103–124 '
             '| url=http://www.noormags.ir/view/fa/articlepage/692447 '
             '| language=fa '
-            '| accessdate='
-        )
-        self.assertIn(sfn, o.sfn)
-        self.assertIn(ctn, o.cite)
-        self.assertIn(rft, o.ref)
+            '| accessdate=', o.ref)
 
 
 noormags.requests_get = dummy_requests.DummyRequests().get
