@@ -32,10 +32,11 @@ BYLINE_PATTERN = (
 
 NORMALIZE_ANDS = re_compile(r'\s+and\s+', IGNORECASE).sub
 NORMALIZE_COMMA_SPACES = re_compile(r'\s*,\s+', IGNORECASE).sub
-BY_PREFIX_REMOVE = re_compile(
+BY_PREFIX = re_compile(
     r'^(?:[\s\S]*?\bby\s+)?([^\r\n]+)[\s\S]*',
     IGNORECASE,
 ).sub
+AND_OR_COMMA_SUFFIX = re_compile(r'(?: and|,)?\s*$', IGNORECASE).sub
 
 # FIND_AUTHOR_PARAMETERS are used in find_authors(soup)
 FIND_AUTHOR_PARAMETERS = (
@@ -257,10 +258,10 @@ def byline_to_names(byline) -> list or None:
     byline = NORMALIZE_ANDS(' and ', byline)
     byline = NORMALIZE_COMMA_SPACES(', ', byline)
     # Remove starting "by", cut at the first newline and lstrip
-    byline = BY_PREFIX_REMOVE(r'\1', byline)
+    byline = BY_PREFIX(r'\1', byline)
     # Removing ending " and" or ',' and rstrip
-    # Todo: Use precompiled regex.
-    byline = re_sub(r'( and|,)?\s*$', '', byline, 1, IGNORECASE)
+    byline = AND_OR_COMMA_SUFFIX('', byline)
+    # Todo: Use compiled regex.
     if ' and ' in byline.lower() or ' ' in byline.replace(', ', ''):
         fullnames = re_split(', and | and |, |;', byline, flags=IGNORECASE)
     else:

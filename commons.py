@@ -6,13 +6,13 @@
 import regex
 import json
 import calendar
+from collections import namedtuple
 from datetime import datetime
-from collections import namedtuple, defaultdict
+from datetime import date as datetime_date
 
-import langid
 from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
-from datetime import date as gdate
+from langid import classify, set_languages
 
 from config import lang
 
@@ -185,8 +185,8 @@ def detect_language(text, langset=None) -> tuple:
     """
     # Todo: Use langdetect library instead, it's faster.
     if langset:
-        langid.set_languages(langset)
-    language, confidence = langid.classify(text)
+        set_languages(langset)
+    language, confidence = classify(text)
     error = round((1 - confidence) * 100, 2)
     return language, error
 
@@ -305,19 +305,19 @@ def finddate(string) -> datetime.date or None:
         return
     month = groupdict.get('B')
     if month:
-        date = gdate(year, B_TO_NUM[month], day)
+        date = datetime_date(year, B_TO_NUM[month], day)
         if date <= today:
             return date
         return
     month = groupdict.get('b')
     if month:
-        date = gdate(year, b_TO_NUM[month], day)
+        date = datetime_date(year, b_TO_NUM[month], day)
         if date <= today:
             return date
         return
     month = groupdict.get('m')
     if month:
-        date = gdate(year, int(month), day)
+        date = datetime_date(year, int(month), day)
         if date <= today:
             return date
         return

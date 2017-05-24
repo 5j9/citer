@@ -7,9 +7,9 @@ from collections import defaultdict
 import logging
 import re
 
-from requests import get as requests_get
-from requests import RequestException
 from bs4 import BeautifulSoup
+from requests import get as requests_get, RequestException
+
 from commons import RawName, dictionary_to_response, detect_language, Response
 
 
