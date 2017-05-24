@@ -30,7 +30,7 @@ class GooglebooksTest(unittest.TestCase):
             '| isbn=978-0-262-26134-0 '
             '| url=http://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 '
             '| ref=harv '
-            '| accessdate='
+            '| access-date='
         )
         self.assertIn(e, o.cite)
 
@@ -80,7 +80,7 @@ class GooglebooksTest(unittest.TestCase):
             '| isbn=978-0-13-270490-8 '
             '| url=http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57 '
             '| ref=harv '
-            '| accessdate='
+            '| access-date='
         )
         self.assertIn(e1, o.sfn)
         self.assertIn(e2, o.cite)
@@ -105,7 +105,7 @@ class GooglebooksTest(unittest.TestCase):
             '| isbn=978-1-111-78619-9 '
             '| url=http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588 '
             '| ref=harv '
-            '| accessdate='
+            '| access-date='
         )
         self.assertIn(e1, o.sfn)
         self.assertIn(e2, o.cite)
@@ -130,7 +130,7 @@ class GooglebooksTest(unittest.TestCase):
             '| isbn=978-90-411-0401-4 '
             '| url=http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 '
             '| ref=harv '
-            '| accessdate='
+            '| access-date='
         )
         self.assertIn(e1, o.sfn)
         self.assertIn(e2, o.cite)
@@ -156,7 +156,7 @@ class GooglebooksTest(unittest.TestCase):
             '| isbn=978-1-4390-4838-2 '
             '| url=http://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378 '
             '| ref=harv '
-            '| accessdate='
+            '| access-date='
         )
         reft = (
             '&lt;ref name="Serway Jewett 2009 p. 378"&gt;'
@@ -171,7 +171,7 @@ class GooglebooksTest(unittest.TestCase):
             '| year=2009 '
             '| isbn=978-1-4390-4838-2 '
             '| url=http://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378 '
-            '| accessdate='
+            '| access-date='
         )
         self.assertIn(ctnt, o.cite)
         self.assertIn(reft, o.ref)

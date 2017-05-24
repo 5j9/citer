@@ -39,7 +39,7 @@ class NoormagsTest(unittest.TestCase):
             '| url=http://www.noormags.ir/view/fa/articlepage/105489 '
             '| language=fa '
             '| ref=harv '
-            '| accessdate='
+            '| access-date='
         )
         self.assertIn(e, o.cite)
 
@@ -65,7 +65,7 @@ class NoormagsTest(unittest.TestCase):
             '| url=http://www.noormags.ir/view/fa/articlepage/692447 '
             '| language=fa '
             '| ref=harv '
-            '| accessdate=', o.cite)
+            '| access-date=', o.cite)
         self.assertIn(
             '&lt;ref name="سلیمانی\u200cمیمند 1389 pp. 103–124"&gt;'
             '{{cite journal '
@@ -78,7 +78,7 @@ class NoormagsTest(unittest.TestCase):
             '| pages=103–124 '
             '| url=http://www.noormags.ir/view/fa/articlepage/692447 '
             '| language=fa '
-            '| accessdate=', o.ref)
+            '| access-date=', o.ref)
 
 
 noormags.requests_get = dummy_requests.DummyRequests().get

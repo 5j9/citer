@@ -32,7 +32,7 @@ class WaybackmachineResponse(unittest.TestCase):
             '| archive-date=2013-10-21 '
             '| dead-url=no '
             '| ref=harv '
-            '| accessdate='
+            '| access-date='
             ,
             waybackmachine_response(
                 'http://web.archive.org/web/20131021230444/'
@@ -56,7 +56,7 @@ class WaybackmachineResponse(unittest.TestCase):
             '| archive-date=2007-04-29 '
             '| dead-url=yes '
             '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
-            '| accessdate=',
+            '| access-date=',
             waybackmachine_response(
                 'https://web.archive.org/web/20070429193849id_/'
                 'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
@@ -81,7 +81,7 @@ class WaybackmachineResponse(unittest.TestCase):
             '| dead-url=unfit '
             '| language=fa '
             '| ref={{sfnref | ایسنا | 2017}} '
-            '| accessdate='
+            '| access-date='
         )
         self.assertIn(ct, o.cite)
 

@@ -33,7 +33,7 @@ class NoorlibTest(unittest.TestCase):
             '| url=http://www.noorlib.ir/View/fa/Book/BookView/Image/6120 '
             '| language=فارسی '
             '| ref=harv '
-            '| accessdate='
+            '| access-date='
         )
         self.assertIn(e, o.cite)
 
@@ -56,7 +56,7 @@ class NoorlibTest(unittest.TestCase):
             '| url=http://www.noorlib.ir/View/fa/Book/BookView/Image/18454 '
             '| language=عربی '
             '| ref=harv '
-            '| accessdate='
+            '| access-date='
         )
         self.assertIn(er, o.sfn)
         self.assertIn(ec, o.cite)
