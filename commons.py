@@ -73,7 +73,7 @@ Y = r'(?<Y>(?:19|20)\d\d)'
 # Todo: Migrate to 3.6 and use f-string
 ANYDATE_SEARCH = regex.compile(
     r'(?:'
-    r'(?:{B}|{b}) {d}, {Y}'
+    r'(?:{B}|{b}) {d},? {Y}'
     r'|{d} (?:{B}|{b}) {Y}'
     r'|{Y}(?<sep>[-/]){zm}\g<sep>{zd}'
     r'|(?<d>\d\d?) {jB} (?<Y>\d\d\d\d)'
@@ -183,6 +183,7 @@ def detect_language(text, langset=None) -> tuple:
     "lang" will be a string containing an ISO 639-1 code.
     "error" will be an integer indicating a percentage. (Rounded to 2 digits)
     """
+    # Todo: Use langdetect library instead, it's faster.
     if langset:
         langid.set_languages(langset)
     language, confidence = langid.classify(text)

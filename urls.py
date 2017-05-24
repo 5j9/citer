@@ -102,6 +102,8 @@ DATE_FIND_PARAMETERS = (
     ({'id': 'docByLine'}, 'getattr', 'text'),
     # wikipedia
     ({'id': 'footer-info-lastmod'}, 'getattr', 'text'),
+    # https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0
+    ({'class': 'Dateline'}, 'getattr', 'text'),
 )
 
 
@@ -433,10 +435,12 @@ def try_find_date(soup: BeautifulSoup) -> Date or None:
     Return a string in '%Y-%m-%d' format.
     """
     # Todo: simplify.
+    soup_find = soup.find
     for fp in DATE_FIND_PARAMETERS:
-        m = soup.find(attrs=fp[0])
+        m = soup_find(attrs=fp[0])
         if m:
             try:
+                # Todo: getitem can be a function.
                 if fp[1] == 'getitem':
                     string = m[fp[2]]
                     date = finddate(string)

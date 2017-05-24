@@ -789,12 +789,7 @@ class Others(unittest.TestCase):
 
     def test_oth10(self):
         """The Times. (Authors found by "byline" css selector)"""
-        i = (
-            'http://www.thetimes.co.uk/tto/news/world/australia-newzealand/'
-            'article4151214.ece'
-        )
-        o = urls_response(i)
-        ct = (
+        self.assertIn(
             '* {{cite web '
             '| last=Lagan '
             '| first=Bernard '
@@ -802,14 +797,18 @@ class Others(unittest.TestCase):
             '| first2=David '
             '| title='
             'Woman who lost brother on MH370 mourns relatives on board MH17 '
-            '| website=The Times '
-            '| date=2014-07-17 '
-            '| url=http://www.thetimes.co.uk/tto/news/world/'
-            'australia-newzealand/article4151214.ece '
+            '| website=The Times & The Sunday Times '
+            '| date=2014-07-18 '
+            '| url=https://www.thetimes.co.uk/article/'
+            'woman-who-lost-brother-on-mh370-mourns-relatives-on-board-'
+            'mh17-r07q5rwppl0 '
             '| ref=harv '
-            '| accessdate='
+            '| accessdate=',
+            urls_response(
+                'http://www.thetimes.co.uk/tto/news/world/'
+                'australia-newzealand/article4151214.ece'
+            ).cite
         )
-        self.assertIn(ct, o.cite)
 
     def test_oth11(self):
         """Business News Daily."""
