@@ -12,7 +12,7 @@ class DummyRequests:
 
     def get(self, url: str, headers=None, **kwargs):
         response = CACHE.get(url)
-        if not response:
+        if response is None:
             print('Downloading ' + url)
             response = requests.get(url, headers=headers)
             CACHE[url] = response
