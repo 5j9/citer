@@ -15,25 +15,24 @@ class BostonTest(unittest.TestCase):
 
     def test_bg1(self):
         """boston.com, dateformat '%B %d, %Y'"""
-        i = (
-            'http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod'
-            '-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html'
-        )
-        o = urls_response(i, '%B %d, %Y')
-        ct = (
+        self.assertIn(
             '* {{cite web '
             '| last=Griffith '
             '| first=Bill '
             '| title=Hot Rod Stamps; Google on Road; A GM Prospectus '
             '| website=Boston.com '
             '| date=June 29, 2014 '
-            '| url=http://www.boston.com/cars/news-and-reviews/'
-            '2014/06/28/hot-rod-stamps-google-road-prospectus/'
-            'hylbVi9qonAwBIH10CwiDP/story.html '
+            '| url=https://www.boston.com/cars/news-and-reviews/2014/06/29/'
+            'hot-rod-stamps-google-on-road-a-gm-prospectus '
             '| ref=harv '
-            '| accessdate='
+            '| accessdate=',
+            urls_response(
+                'http://www.boston.com/cars/news-and-reviews/2014/06/28/'
+                'hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/'
+                'story.html',
+                '%B %d, %Y',
+            ).cite
         )
-        self.assertIn(ct, o.cite)
 
     def test_bg2(self):
         """bostonglobe.com"""
