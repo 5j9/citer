@@ -60,27 +60,27 @@
 </head>
 
 <body>
-	<form method="get" action="yadkard.fcgi">
+	<form action="yadkard.fcgi">
 		<p class="input-legend">URL/DOI/ISBN:</p>
 		<div id="inputs">
 			<input type="text" name="user_input">
 			<input type="submit" value="Submit">
 		</div>
 		<p class="input-legend">Date format:</p>
-		<input type="radio" value="%Y-%m-%d" name="dateformat" id="Ymd" onclick="onDateChange()" checked>$Ymd
-		<input type="radio" value="%B $d, %Y" name="dateformat" id="BdY" onclick="onDateChange()">$BdY
-		<input type="radio" value="%b $d, %Y" name="dateformat" id="bdY" onclick="onDateChange()">$bdY
-		<input type="radio" value="$d %B %Y" name="dateformat" id="dBY" onclick="onDateChange()">$dBY
-		<input type="radio" value="$d %b %Y" name="dateformat" id="dbY" onclick="onDateChange()">$dbY
+		<input type="radio" value="%Y-%m-%d" name="dateformat" id="ymd" onclick="onDateChange()" checked>2017-01-01
+		<input type="radio" value="%B $d, %Y" name="dateformat" id="bbdy" onclick="onDateChange()">January 1, 2017
+		<input type="radio" value="%b $d, %Y" name="dateformat" id="bdy" onclick="onDateChange()">Jan 1, 2017
+		<input type="radio" value="$d %B %Y" name="dateformat" id="dbby" onclick="onDateChange()">1 January 2017
+		<input type="radio" value="$d %b %Y" name="dateformat" id="dby" onclick="onDateChange()">1 Jan 2017
 		<br>
 		<br>
 	</form>
 	<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
 	<br>
-	<div id="shortened" contenteditable="true">$sfn<br><br>$cite</div>
+	<div id="shortened" contenteditable>$sfn<br><br>$cite</div>
 	<a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:
 	<br>
-	<div id="named_ref" contenteditable="true">$ref</div>
+	<div id="named_ref" contenteditable>$ref</div>
 	<p>
 		<!-- There may be error in language detection. $error % -->
 	</p>
@@ -126,31 +126,31 @@ function getCheckedRadio() {
 	}
 }
 
-function Ymd(date) {
+function ymd(date) {
 	'use strict';
 	return date.toISOString()
 		.slice(0, 10);
 }
 
-function BdY(date) {
+function bbdy(date) {
 	'use strict';
 	return months[date.getMonth()] + ' ' + date.toISOString()
 		.slice(8, 10) + ', ' + date.getFullYear();
 }
 
-function bdY(date) {
+function bdy(date) {
 	'use strict';
 	return months[date.getMonth()].slice(0, 3) + ' ' + date.toISOString()
 		.slice(8, 10) + ', ' + date.getFullYear();
 }
 
-function dBY(date) {
+function dbby(date) {
 	'use strict';
 	return date.toISOString()
 		.slice(8, 10) + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
 }
 
-function dbY(date) {
+function dby(date) {
 	'use strict';
 	return date.toISOString()
 		.slice(8, 10) + ' ' + months[date.getMonth()].slice(0, 3) + ' ' + date.getFullYear();

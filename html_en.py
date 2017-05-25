@@ -38,29 +38,17 @@ OTHER_EXCEPTION_RESPONSE = Response(
     error='100',
 )
 
-# None-zero-padded day directive is os dependant.
+# None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
-NZDD = '%#d' if osname == 'nt' else '%-d'
-
-HTML_TEMPLATE = Template(open('html_en.html', encoding='utf8').read())
-
-BdY_FORMAT = '%B ' + NZDD + ', %Y'
-bdY_FORMAT = '%b ' + NZDD + ', %Y'
-dBY_FORMAT = NZDD + ' %B %Y'
-dbY_FORMAT = NZDD + ' %b %Y'
-
-TODAY = date.today
+HTML_TEMPLATE = Template(
+    open('html_en.html', encoding='utf8').read()
+    .replace('$d', '%#d' if osname == 'nt' else '%-d')
+)
 
 
 def response_to_html(response):
     """Insert the response into the HTML_TEMPLATE and return response_body."""
     return HTML_TEMPLATE.safe_substitute(
-        d=NZDD,
-        Ymd=TODAY().strftime('%Y-%m-%d'),
-        BdY=TODAY().strftime(BdY_FORMAT),
-        bdY=TODAY().strftime(bdY_FORMAT),
-        dBY=TODAY().strftime(dBY_FORMAT),
-        dbY=TODAY().strftime(dbY_FORMAT),
         # **response._asdict(), did not work on yadkard but worked on yadfa!
         sfn=response.sfn,
         cite=response.cite,
