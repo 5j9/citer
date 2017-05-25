@@ -36,7 +36,6 @@ TYPE_TO_CITE = {
     # An article in a conference proceedings.
     'inproceedings': 'conference',
     # A Master's thesis.
-    # Todo: Add support for Template:Cite thesis
     'mastersthesis': 'thesis',
     # A PhD thesis.
     'phdthesis': 'thesis',
