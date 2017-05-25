@@ -16,7 +16,7 @@ setup(
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
     version='2017.05.25',
-    description='An application used to generate Wikipedia citation templates.',
+    description='A web application to generate Wikipedia citation templates.',
     long_description=long_description,
 
     # The project's main homepage.
