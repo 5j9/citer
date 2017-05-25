@@ -72,11 +72,17 @@ class DoiTest(unittest.TestCase):
     def test_incollection(self):
         """Test the `incollection` type."""
         self.assertEqual(
-            '* {{cite book | last=Meyer | first=Albert R. '
+            '* {{cite book '
+            '| last=Meyer '
+            '| first=Albert R. '
             '| title=Lecture Notes in Mathematics '
             '| chapter=Weak monadic second order theory of succesor is not'
-            ' elementary-recursive | publisher=Springer Berlin Heidelberg '
-            '| year=1975 | isbn=978-3-540-07155-6 | issn=0075-8434 '
+            ' elementary-recursive '
+            '| publisher=Springer Berlin Heidelberg '
+            '| publication-place=Berlin, Heidelberg '
+            '| year=1975 '
+            '| isbn=978-3-540-07155-6 '
+            '| issn=0075-8434 '
             '| doi=10.1007/bfb0064872 '
             '| ref=harv'
             '}}',
@@ -93,6 +99,22 @@ class DoiTest(unittest.TestCase):
             '| isbn=978-90-365-2632-6 | doi=10.3990/1.9789036526326 '
             '| ref=harv}}',
             doi_response('10.3990/1.9789036526326').cite
+        )
+
+    def test_conference_location(self):
+        """Test citing a conference with location."""
+        self.assertEqual(
+            "* {{cite conference "
+            "| title=Proceedings of the international workshop on System-level"
+            " interconnect prediction  - SLIP'06 "
+            "| publisher=ACM Press "
+            "| publication-place=New York, New York, USA "
+            "| year=2006 "
+            "| isbn=1-59593-255-0 "
+            "| doi=10.1145/1117278 "
+            "| ref={{sfnref | ACM Press | 2006}}"
+            "}}",
+            doi_response('10.1145/1117278').cite
         )
 
 

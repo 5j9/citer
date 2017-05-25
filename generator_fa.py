@@ -152,7 +152,7 @@ def citations(d: defaultdict) -> tuple:
     if publisher:
         cite += ' | ناشر=' + publisher
 
-    address = d['address']
+    address = d['address'] or d['publisher-location']
     if address:
         cite += ' | مکان=' + address
 

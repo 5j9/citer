@@ -24,7 +24,7 @@ class IsbnTest(unittest.TestCase):
             '| title=The war for all the oceans : '
             'from Nelson at the Nile to Napoleon at Waterloo '
             '| publisher=Abacus '
-            '| location=London '
+            '| publication-place=London '
             '| year=2007 '
             '| isbn=978-0-349-11916-8 '
             '| ref=harv}}'

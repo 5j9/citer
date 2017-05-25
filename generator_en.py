@@ -153,9 +153,9 @@ def citations(d: defaultdict) -> tuple:
     if publisher:
         cite += ' | publisher=' + publisher
 
-    address = d['address']
+    address = d['address'] or d['publisher-location']
     if address:
-        cite += ' | location=' + address
+        cite += ' | publication-place=' + address
 
     edition = d['edition']
     if edition:
