@@ -9,9 +9,7 @@ from datetime import date
 from random import seed as randseed, choice as randchoice
 from string import digits, ascii_lowercase
 
-from commons import ennum2fa
-from doi import DOI_URL_MATCH
-from generator_en import citations as en_citations
+from generator_en import citations as en_citations, DOI_URL_MATCH
 
 
 TYPE_TO_CITE = {
@@ -292,3 +290,20 @@ def names1para(translators, para):
         else:
             s += '، ' + name.fullname
     return s
+
+
+def ennum2fa(string_or_num) -> str:
+    """Convert English numerical string to equivalent Persian one (‍۰-۹)."""
+    return (
+        str(string_or_num)
+        .replace('0', '۰')
+        .replace('1', '۱')
+        .replace('2', '۲')
+        .replace('3', '۳')
+        .replace('4', '۴')
+        .replace('5', '۵')
+        .replace('6', '۶')
+        .replace('7', '۷')
+        .replace('8', '۸')
+        .replace('9', '۹')
+    )

@@ -15,6 +15,10 @@ from jdatetime import date as jdate
 from langid import classify, set_languages
 
 from config import lang
+if lang == 'en':
+    from generator_en import citations
+else:
+    from generator_fa import citations
 
 
 b_TO_NUM = {name: num for num, name in enumerate(calendar.month_abbr) if num}
@@ -155,11 +159,6 @@ def dictionary_to_response(dictionary) -> Response:
         except NotValidISBNError:
             # https://github.com/CrossRef/rest-api-doc/issues/214
             del dictionary['isbn']
-    if lang == 'en':
-        # Todo: Move import to the top?
-        from generator_en import citations
-    else:
-        from generator_fa import citations
     cite, sfn, ref = citations(dictionary)
     return Response(cite, sfn, ref, dictionary.get('error'))
 
@@ -264,23 +263,6 @@ def uninum2en(string) -> str:
     for digit in digits:
         string = string.replace(digit, str(int(digit)))
     return string
-
-
-def ennum2fa(string_or_num) -> str:
-    """Convert English numerical string to equivalent Persian one (‍۰-۹)."""
-    return (
-        str(string_or_num)
-        .replace('0', '۰')
-        .replace('1', '۱')
-        .replace('2', '۲')
-        .replace('3', '۳')
-        .replace('4', '۴')
-        .replace('5', '۵')
-        .replace('6', '۶')
-        .replace('7', '۷')
-        .replace('8', '۸')
-        .replace('9', '۹')
-    )
 
 
 def finddate(string) -> datetime.date or None:

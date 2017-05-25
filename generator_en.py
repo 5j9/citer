@@ -8,8 +8,11 @@ import re
 from datetime import date as datetime_date
 from collections import defaultdict
 
-from doi import DOI_URL_MATCH
-
+# Includes ShortDOIs (See: http://shortdoi.org/) and
+# https://www.crossref.org/display-guidelines/
+DOI_URL_MATCH = re.compile(
+    r'https?://(dx\.)?doi\.org/'
+).match
 
 TYPE_TO_CITE = {
     # BibTex types. Descriptions are from

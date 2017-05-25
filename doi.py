@@ -22,11 +22,6 @@ from config import lang
 DOI_SEARCH = re.compile(
     r'\b(10\.[0-9]{4,}(?:\.[0-9]+)*/(?:(?!["&\'])\S)+)\b'
 ).search
-# Includes ShortDOIs (See: http://shortdoi.org/) and
-# https://www.crossref.org/display-guidelines/
-DOI_URL_MATCH = re.compile(
-    r'https?://(dx\.)?doi\.org/'
-).match
 
 
 def doi_response(doi_or_url, pure=False, date_format='%Y-%m-%d') -> Response:
