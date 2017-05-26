@@ -7,7 +7,6 @@ from collections import defaultdict
 import logging
 import re
 
-from bs4 import BeautifulSoup
 from requests import get as requests_get, RequestException
 
 from commons import RawName, dictionary_to_response, detect_language, Response
@@ -18,7 +17,7 @@ YEAR_SEARCH = re.compile(r'نشر:</b>.*?\(.*?(\d\d\d\d)\)</li>').search
 MONTH_SEARCH = re.compile(r'نشر:</b>.*\([\d\s]*(.*?)،.*').search
 PUBLISHER_SEARCH = re.compile(r'نشر:</b>\s*(.*?)\s*\(.*</li>').search
 TITLE_SEARCH = re.compile(
-    r'آدینه بوک:\s*(?P<title>.*?)\s*~(?P<names>.*?)\s*$'
+    r'(?<=<title>آدینه بوک: )(?P<title>.*?)\s*~(?P<names>.*?)(?=\s*</title>)'
 ).search
 
 
@@ -65,10 +64,8 @@ def url2dictionary(adinebook_url: str):
         return
     else:
         d = defaultdict(lambda: None, cite_type='book')
-        bs = BeautifulSoup(adinebook_html, 'lxml')
-        m = TITLE_SEARCH(bs.title.text)
-        if m:
-            d['title'] = m.group('title')
+        m = TITLE_SEARCH(adinebook_html)
+        d['title'] = m.group('title')
         names = m.group('names').split('،')
         # initiating name lists:
         others = []

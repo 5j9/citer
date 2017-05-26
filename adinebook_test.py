@@ -144,12 +144,7 @@ class AdineBookTest(unittest.TestCase):
 
     def test_ab7(self):
         """1 Editor."""
-        i = (
-            'http://www.adinebook.com/gp/product/9644593987/'
-            'ref=pd_pos_b_title_4/905-6618179-9188955'
-        )
-        o = adinehbook_response(i)
-        e = (
+        self.assertIn(
             '* {{cite book '
             '| last=دیماتیو '
             '| first=ام.رابین '
@@ -161,9 +156,12 @@ class AdineBookTest(unittest.TestCase):
             '| year=1392 '
             '| isbn=978-964-459-398-7 '
             '| language=fa '
-            '| ref=harv'
+            '| ref=harv',
+            adinehbook_response(
+                'http://www.adinebook.com/gp/product/9644593987/'
+                'ref=pd_pos_b_title_4/905-6618179-9188955'
+            ).cite,
         )
-        self.assertIn(e, o.cite)
 
 
 adinebook.requests_get = dummy_requests.DummyRequests().get
