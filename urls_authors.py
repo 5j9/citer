@@ -7,11 +7,7 @@ It is in urls.py.
 """
 
 
-from re import (
-    search as re_search,
-    compile as re_compile, split as re_split,
-    IGNORECASE,
-)
+from re import search as re_search, compile as re_compile, IGNORECASE
 
 from commons import ANYDATE_SEARCH, RawName, InvalidNameError
 
@@ -20,7 +16,7 @@ from commons import ANYDATE_SEARCH, RawName, InvalidNameError
 NAME_PATTERN = r'[\w.-]+ [\w.-]+( [\w.-]+)?'
 
 # This regex supports up to four names in a byline
-# names may be seperated with "and", a "comma" or "comma and"
+# names may be separated with "and", a "comma" or "comma and"
 
 BYLINE_PATTERN = (
     r'\s*By\s+({NAME_PATTERN}(, {NAME_PATTERN}(, {NAME_PATTERN}(, '
