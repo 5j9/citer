@@ -34,13 +34,11 @@ TYPE_TO_CITE = {
     # An article in a conference proceedings.
     'inproceedings': 'conference',
     # A Master's thesis.
-    # Todo: Add support for Template:Cite thesis
     'mastersthesis': 'thesis',
     # A PhD thesis.
     'phdthesis': 'thesis',
     # A report published by a school or other institution, usually numbered
     # within a series.
-    # Todo: Add support for Template:Cite techreport
     'techreport': 'techreport',
     # Use this type when nothing else fits.
     # 'misc': '',

@@ -244,7 +244,6 @@ def find_sitename(
         if content:
             return content.strip()
     # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-    # Todo: Factor out .get.
     f = find(attrs={'name': 'PublisherName'})
     if f:
         value = f.get('value')
@@ -440,7 +439,6 @@ def try_find_date(soup: BeautifulSoup) -> Date or None:
         m = soup_find(attrs=fp[0])
         if m:
             try:
-                # Todo: getitem can be a function.
                 if fp[1] == 'getitem':
                     string = m[fp[2]]
                     date = finddate(string)
