@@ -20,8 +20,8 @@ from requests.exceptions import RequestException
 from bs4 import SoupStrainer, BeautifulSoup
 
 from commons import (
-    finddate, detect_language, Response, USER_AGENT_HEADER,
-    dictionary_to_response,
+    find_any_date, detect_language, Response, USER_AGENT_HEADER,
+    dictionary_to_response, ANYDATE_PATTERN,
 )
 from urls_authors import find_authors
 
@@ -34,31 +34,24 @@ CHARSET = re.compile(
 
 TITLE_STRAINER = SoupStrainer('title')
 
+CONTENT_ATTR = r'content=(?<q>["\'])(?<result>.*?)(?P=q)'
+
+TITLE_META_NAME = r'name=(?<q>["\'])(?:citation_title|title|Headline)(?P=q)'
+TITLE_META_PROP = r'property=(?<q>["\'])og:title(?P=q)'
 TITLE_SEARCH = regex.compile(
-    r'''
-    # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    # Should be tried before og:title:
-    # http://www.telegraph.co.uk/earth/earthnews/6190335/Whale-found-dead-in-Thames.html
-    # http://news.bbc.co.uk/2/hi/business/2570109.stm
+    rf'''
     <meta\s+(?:
-        name=(?<q>["\'])(?:citation_title|title|Headline)(?P=q)\s+
-        content=(?<q>["\'])(?P<title>.*?)(?P=q)
+        {TITLE_META_NAME}\s+{CONTENT_ATTR}
         |
-        content=(?<q>["\'])(?P<title>.*?)(?P=q)\s+
-        name=(?<q>["\'])(?:citation_title|title|Headline)(?P=q)
+        {CONTENT_ATTR}\s+{TITLE_META_NAME}
     )
-    # http://www.bostonglobe.com/ideas/2014/04/28/new-study-reveals-how-honky-tonk-hits-respond-changing-american-fortunes/9ep0iPknDBl9EFFaoXfbmL/comments.html
-    # Should be tried before og:title:
-    # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
     |
-    class=(?<q>["\'])(?:main-hed|heading1)(?P=q).*?>(?<title>.*?)<
+    class=(?<q>["\'])(?:main-hed|heading1)(?P=q).*?>(?<result>.*?)<
     |
     <meta\s+(?:
-        property=(?<q>["\'])og:title(?P=q)\s+
-        content=(?<q>["\'])(?<title>.*?)(?P=q)
+        {TITLE_META_PROP}\s+{CONTENT_ATTR}
         |
-        content=(?<q>["\'])(?<title>.*?)(?P=q)\s+
-        property=(?<q>["\'])og:title(?P=q)
+        {CONTENT_ATTR}\s+{TITLE_META_PROP}
     )
     ''',
     regex.VERBOSE | regex.IGNORECASE,
@@ -67,63 +60,50 @@ TITLE_SEARCH = regex.compile(
 TITLE_TAG = re.compile(
     r'''
     <title\b[^>]*>
-        (?P<title>\s*[\s\S]*?\s*)
+        (?P<result>\s*[\s\S]*?\s*)
     </title\s*>
     ''',
     re.VERBOSE | re.IGNORECASE,
 ).search
 
-DATE_FIND_PARAMETERS = (
-    # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    ({'name': 'citation_date'}, 'getitem', 'content'),
-    # http://jn.physiology.org/content/81/1/319
-    ({'name': 'citation_publication_date'}, 'getitem', 'content'),
-    # http://www.telegraph.co.uk/news/worldnews/northamerica/usa/9872625/Kasatka-the-killer-whale-gives-birth-in-pool-at-Sea-World-in-San-Diego.html
-    ({'name': 'last-modified'}, 'getitem', 'content'),
-    # http://www.mirror.co.uk/news/weird-news/amazing-rescue-drowning-diver-saved-409479
-    # should be placed before article:modified_time
-    ({'itemprop': 'datePublished'}, 'getitem', 'datetime'),
-    # http://www.mirror.co.uk/news/uk-news/how-reid-will-get-it-all-off-pat--535323
-    # should be placed before article:modified_time
-    ({'data-type': 'pub-date'}, 'getattr', 'text'),
-    # http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/
-    # place before {'property': 'article:modified_time'}
-    ({'property': 'article:published_time'}, 'getitem', 'content'),
-    # http://www.dailymail.co.uk/news/article-2384832/Great-White-sharks-hunt-seals-South-Africa.html
-    ({'property': 'article:modified_time'}, 'getitem', 'content'),
-    # http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion
-    ({'property': 'dc:date dc:created'}, 'getitem', 'content'),
-    # http://www.bbc.co.uk/news/science-environment-20890389
-    ({'name': 'OriginalPublicationDate'}, 'getitem', 'content'),
-    ({'name': 'publish-date'}, 'getitem', 'content'),
-    # http://www.washingtonpost.com/wp-srv/style/movies/reviews/godsandmonsterskempley.htm
-    ({'name': 'pub_date'}, 'getitem', 'content'),
-    # http://www.economist.com/node/1271090?zid=313&ah=fe2aac0b11adef572d67aed9273b6e55
-    ({'name': 'pubdate'}, 'getitem', 'content'),
-    # http://www.ft.com/cms/s/ea29ffb6-c759-11e0-9cac-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2Fea29ffb6-c759-11e0-9cac-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=#axzz31G5ZgwCH
-    ({'id': 'publicationDate'}, 'getattr', 'text'),
-    # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-    ({'class': 'dateline'}, 'getattr', 'text'),
-    # http://www.nytimes.com/2003/12/14/us/willy-whale-dies-in-norway.html
-    ({'name': 'DISPLAYDATE'}, 'getitem', 'content'),
-    # http://www.washingtonpost.com/wp-dyn/content/article/2006/01/19/AR2006011902990.html
-    # http://www.farsnews.com/newstext.php?nn=13930418000036
-    ({'name': re.compile('DC.date.*', re.IGNORECASE)}, 'getitem', 'content'),
-    # http://www.huffingtonpost.ca/arti-patel/nina-davuluri_b_3936174.html
-    ({'name': 'sailthru.date'}, 'getitem', 'content'),
-    # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-    ({'class': 'entry-date'}, 'getattr', 'text'),
-    # http://www.huffingtonpost.com/huff-wires/20121203/us-sci-nasa-voyager/
-    ({'class': 'updated'}, 'getattr', 'text'),
-    # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
-    ({'class': 'byline'}, 'getattr', 'text'),
-    # http://www.highbeam.com/doc/1P3-3372742961.html
-    ({'id': 'docByLine'}, 'getattr', 'text'),
-    # wikipedia
-    ({'id': 'footer-info-lastmod'}, 'getattr', 'text'),
-    # https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0
-    ({'class': 'Dateline'}, 'getattr', 'text'),
+DATE_CONTENT_ATTR = CONTENT_ATTR.replace(
+    r'(?<result>.*?)', r'.*?(?<result>' + ANYDATE_PATTERN + r'.*?)',
 )
+DATE_META_NAME_OR_PROP = (
+    r'''
+    (?:name|property)=(?<q>["\'])(?:
+        citation_date
+        |
+        citation_publication_date
+        |
+        last-modified
+        |
+        article:published_time
+        |
+        article:modified_time
+        |
+        pub_?date
+        |
+        DC\.date\b.*?
+        |
+        sailthru\.date
+    )(?P=q)
+    '''
+)
+DATE_SEARCH = regex.compile(
+    rf'''
+    <meta\s+(?:
+        {DATE_META_NAME_OR_PROP}\s+[^\n<]*?{DATE_CONTENT_ATTR}
+        |
+        {DATE_CONTENT_ATTR}\s+[^\n<]*?{DATE_META_NAME_OR_PROP}
+    )
+    |
+    # http://livescience.com/46619-sterile-neutrino-experiment-beginning.html
+    # https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0
+    (?:datePublished|Dateline)[^\w]+(?<result>{ANYDATE_PATTERN})
+    ''',
+    regex.VERBOSE | regex.IGNORECASE,
+).search
 
 
 def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
@@ -344,11 +324,10 @@ def find_title(
     m = TITLE_SEARCH(html) or TITLE_TAG(html)
     if m:
         parsed_title = parse_title(
-            html_unescape(m.group('title')), url, authors, hometitle, thread
+            html_unescape(m.group('result')), url, authors, hometitle, thread
         )
         return parsed_title[1]
-    else:
-        return None
+    return None
 
 
 def parse_title(
@@ -441,43 +420,14 @@ def parse_title(
     return intitle_author, pure_title, intitle_sitename
 
 
-def try_find_date(soup: BeautifulSoup) -> datetime_date or None:
-    """Similar to try_find(), but for finding dates.
-
-    Return a string in '%Y-%m-%d' format.
-    """
-    # Todo: simplify.
-    soup_find = soup.find
-    for fp in DATE_FIND_PARAMETERS:
-        m = soup_find(attrs=fp[0])
-        if m:
-            try:
-                if fp[1] == 'getitem':
-                    string = m[fp[2]]
-                    date = finddate(string)
-                    if date:
-                        return date
-                elif fp[1] == 'getattr':
-                    string = getattr(m, fp[2])
-                    date = finddate(string)
-                    if date:
-                        return date
-            except (TypeError, AttributeError, KeyError):
-                pass
-    return None
-
-
-def find_date(soup: BeautifulSoup, url: str) -> datetime_date:
+def find_date(html: str, url: str) -> datetime_date:
     """Get the BeautifulSoup object and url. Return (date_obj, where)."""
-    # Example for finddate(url):
+    # Example for find_any_date(url):
     # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-    # Example for finddate(soup.text):
+    # Example for find_any_date(soup.text):
     # https://www.bbc.com/news/uk-england-25462900
-    date = try_find_date(soup) or finddate(url) or finddate(soup.text)
-    if date:
-        return date
-    logger.info('Searching for date in page content.\n' + url)
-    return finddate(str(soup))
+    m = DATE_SEARCH(html)
+    return find_any_date(m) if m else find_any_date(url) or find_any_date(html)
 
 
 def get_hometitle(url: str, hometitle_list: list) -> None:
@@ -573,7 +523,7 @@ def url2dict(url: str) -> dict:
     d['title'] = find_title(
         html, url, authors, hometitle_list, home_title_thread
     )
-    date = find_date(soup, url)
+    date = find_date(html, url)
     if date:
         d['date'] = date
         d['year'] = str(date.year)

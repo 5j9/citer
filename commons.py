@@ -21,8 +21,12 @@ else:
     from generator_fa import citations
 
 
-b_TO_NUM = {name: num for num, name in enumerate(calendar.month_abbr) if num}
-B_TO_NUM = {name: num for num, name in enumerate(calendar.month_name) if num}
+b_TO_NUM = {
+    name.lower(): num for num, name in enumerate(calendar.month_abbr) if num
+}
+B_TO_NUM = {
+    name.lower(): num for num, name in enumerate(calendar.month_name) if num
+}
 
 # jB_TO_NUM contains entries for both ی and ي
 jB_TO_NUM = {
@@ -51,16 +55,22 @@ DOUBLE_DIGIT_SEARCH = regex.compile(r'\d\d').search
 
 # January|February...
 B = (
-    r'(?<B>'
-    r'(?:J(?:anuary|u(?:ne|ly))|February|Ma(?:rch|y)|'
-    r'A(?:pril|ugust)|(?:(?:(?:Sept|Nov|Dec)em)|Octo)ber)'
-    r')'
+    r'''
+    (?<B>(?:J(?:anuary|u(?:ne|ly))
+    |
+    February
+    |
+    Ma(?:rch|y)
+    |
+    A(?:pril|ugust)
+    |
+    (?:(?:(?:Sept|Nov|Dec)em)|Octo)ber))
+    '''
 )
 # فروردین|اردیبهشت|خرداد...
 jB = '(?<jB>{})'.format(
-    '|'.join([jm for jm in jB_TO_NUM]).replace('ی', '[یي]')
+    '|'.join([jm for jm in jB_TO_NUM if 'ي' not in jm]).replace('ی', '[یي]')
 )
-
 # Month abbreviations:
 b = r'(?<b>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec).?'
 # Month numbers 0?1-12
@@ -73,16 +83,22 @@ d = r'(?<d>0?[1-9]|[12][0-9]|3[01])(?>st|nd|th)?'
 zd = r'(?<d>0[1-9]|[12][0-9]|3[01])'
 # Gregorian year pattern 1900-2099
 Y = r'(?<Y>(?:19|20)\d\d)'
-
-# Todo: Migrate to 3.6 and use f-string
+ANYDATE_PATTERN = rf'''
+    (?:
+        (?:{B}|{b})\ {d},?\ {Y}
+        |
+        {d}\ (?:{B}|{b})\ {Y}
+        |
+        {Y}(?<sep>[-/]){zm}(?P=sep){zd}
+        |
+        (?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d)
+        |
+        \b{Y}{zm}{zd}
+    )
+'''
 ANYDATE_SEARCH = regex.compile(
-    r'(?:'
-    r'(?:{B}|{b}) {d},? {Y}'
-    r'|{d} (?:{B}|{b}) {Y}'
-    r'|{Y}(?<sep>[-/]){zm}\g<sep>{zd}'
-    r'|(?<d>\d\d?) {jB} (?<Y>\d\d\d\d)'
-    r'|{Y}{zm}{zd}'
-    r')'.format(**locals())
+    ANYDATE_PATTERN,
+    regex.VERBOSE,
 ).search
 
 USER_AGENT_HEADER = {
@@ -265,14 +281,17 @@ def uninum2en(string) -> str:
     return string
 
 
-def finddate(string) -> datetime.date or None:
+def find_any_date(str_or_match) -> datetime.date or None:
     """Try to find a date in input string and return it as a date object.
 
     If there is no matching date, return None.
     The returned date can't be from the future.
 
     """
-    match = ANYDATE_SEARCH(string)
+    if isinstance(str_or_match, str):
+        match = ANYDATE_SEARCH(str_or_match)
+    else:
+        match = str_or_match
     if not match:
         return None
     groupdict = match.groupdict()
@@ -287,13 +306,13 @@ def finddate(string) -> datetime.date or None:
         return
     month = groupdict.get('B')
     if month:
-        date = datetime_date(year, B_TO_NUM[month], day)
+        date = datetime_date(year, B_TO_NUM[month.lower()], day)
         if date <= today:
             return date
         return
     month = groupdict.get('b')
     if month:
-        date = datetime_date(year, b_TO_NUM[month], day)
+        date = datetime_date(year, b_TO_NUM[month.lower()], day)
         if date <= today:
             return date
         return

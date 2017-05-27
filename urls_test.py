@@ -85,13 +85,12 @@ class WashingtonpostTest(unittest.TestCase):
 
     def test_wp1(self):
         """`1 author, 2005, the pubdate is different from last edit date"""
-        i = (
+        o = urls_response(
             'http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/'
             'AR2005090200822.html'
         )
-        o = urls_response(i)
-        e1 = '{{sfn | Sachs | 2005}}'
-        e2 = (
+        self.assertIn('{{sfn | Sachs | 2005}}', o.sfn)
+        self.assertIn(
             '* {{cite web '
             '| last=Sachs '
             '| first=Andrea '
@@ -101,10 +100,9 @@ class WashingtonpostTest(unittest.TestCase):
             '| url=http://www.washingtonpost.com/wp-dyn/content/article/'
             '2005/09/02/AR2005090200822.html '
             '| ref=harv '
-            '| access-date='
+            '| access-date=',
+            o.cite,
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
 
 
 class HuffingtonpostTest(unittest.TestCase):
@@ -406,7 +404,7 @@ class NytTest(unittest.TestCase):
             '| first=Danny '
             '| title=Right to Be Forgotten? Not That Easy '
             '| website=The New York Times '
-            '| date=2014-05-29 '
+            '| date=2014-05-30 '
             '| url=https://www.nytimes.com/2014/05/30/business/international/'
             'on-the-internet-the-right-to-forget-vs-the-right-to-know.html '
             '| ref=harv '
@@ -416,12 +414,6 @@ class NytTest(unittest.TestCase):
 
     def test_nyt2(self):
         """newstylct, 2 authors"""
-        i = (
-            'https://www.nytimes.com/2014/05/31/sports/basketball/'
-            'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-'
-            'the-nba.html?hp'
-        )
-        o = urls_response(i)
         ct = (
             '* {{cite web '
             '| last=Belson '
@@ -438,7 +430,14 @@ class NytTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(
+            ct,
+            urls_response(
+                'https://www.nytimes.com/2014/05/31/sports/basketball/'
+                'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-'
+                'on-the-nba.html?hp'
+            ).cite,
+        )
 
     def test_nyt3(self):
         """oldstylct, 1 author"""
