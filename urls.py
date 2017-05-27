@@ -287,32 +287,6 @@ def find_sitename(
     return hostname
 
 
-def try_find(soup: BeautifulSoup, find_parameters: tuple) -> str or None:
-    """Return the first matching item in find_paras as string.
-
-    args:
-        soup: The beautiful soup object.
-        find_parameters: List of parameters to try on soup in the following
-            format:
-                ({atrr_name, value}, 'getitem|getattr', 'content|text|...')
-                where {atrrn, value} will be used in
-                bs.find(attrs={atrrn, value}).
-    Return None if none of the parameters match the soup.
-    """
-    for attrs, get, value in find_parameters:
-        m = soup.find(attrs=attrs)
-        if not m:
-            continue
-        if get == 'getitem':
-            result = m.get(value)
-        else:
-            #  get == 'getattr'
-            result = getattr(m, value)
-        if result:
-            return result.strip()
-    return None
-
-
 def find_title(
     html: str,
     url: str,
