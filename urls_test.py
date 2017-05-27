@@ -111,27 +111,25 @@ class HuffingtonpostTest(unittest.TestCase):
 
     def test_hp1(self):
         """`1 author, 2013"""
-        i = (
+        o = urls_response(
             'http://www.huffingtonpost.ca/annelise-sorg/'
             'blackfish-killer-whale-seaworld_b_3686306.html'
         )
-        o = urls_response(i)
-        e1 = '{{sfn | Sorg | 2013}}'
-        e2 = (
+        self.assertIn('{{sfn | Sorg | 2013}}', o.sfn)
+        self.assertIn(
             '* {{cite web '
             '| last=Sorg '
             '| first=Annelise '
-            '| title=When Killer Whales Kill: '
-            'Why the movie "Blackfish" Should Sink Captive Whale Programs '
+            '| title=When Killer Whales Kill: Why the movie'
+            ' "Blackfish" Should Sink Captive Whale Programs '
             '| website=The Huffington Post '
             '| date=2013-08-01 '
             '| url=http://www.huffingtonpost.ca/annelise-sorg/'
             'blackfish-killer-whale-seaworld_b_3686306.html '
             '| ref=harv '
-            '| access-date='
+            '| access-date=',
+            o.cite,
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
 
     def test_hp2(self):
         """`class:author` returns wrong result. Disallow `\n` in fullnames."""
@@ -237,13 +235,14 @@ class DilyMailTest(unittest.TestCase):
 
     def test_dm1(self):
         """4 authors"""
-        i = (
+        o = urls_response(
             'http://www.dailymail.co.uk/news/article-2633025/'
             'London-cleric-convicted-NYC-terrorism-trial.html'
         )
-        o = urls_response(i)
-        e1 = '{{sfn | Malm | Witheridge | Drury | Bates | 2014}}'
-        e2 = (
+        self.assertIn(
+            '{{sfn | Malm | Witheridge | Drury | Bates | 2014}}', o.sfn
+        )
+        self.assertIn(
             '* {{cite web '
             '| last=Malm '
             '| first=Sara '
@@ -253,41 +252,38 @@ class DilyMailTest(unittest.TestCase):
             '| first3=Ian '
             '| last4=Bates '
             '| first4=Daniel '
-            '| title=Hate preacher Abu Hamza GUILTY of setting up US terror '
-            'training camps '
+            '| title=Abu Hamza found guilty in US court of helping'
+            ' Al-Qaeda terrorists '
             '| website=Mail Online '
             '| date=2014-05-19 '
             '| url=http://www.dailymail.co.uk/news/article-2633025/'
             'London-cleric-convicted-NYC-terrorism-trial.html '
             '| ref=harv '
-            '| access-date='
+            '| access-date=',
+            o.cite,
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
 
     def test_dm2(self):
         """`for` in byline."""
-        i = (
-            'http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
-            'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-'
-            'shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html'
-        )
-        o = urls_response(i)
-        e = (
+        self.assertIn(
             '* {{cite web '
             '| last=Gower '
             '| first=Eleanor '
-            '| title=2011 video shows Kim Kardashian meltdown at '
-            'nude magazine cover '
+            "| title=Kim Kardashian's meltdown at nude magazine cover"
+            " three years before full frontal photoshoot "
             '| website=Mail Online '
             '| date=2014-11-14 '
             '| url=http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
             'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-shows-Kim-'
             'Kardashian-s-meltdown-nude-magazine-cover.html '
             '| ref=harv '
-            '| access-date='
+            '| access-date=',
+            urls_response(
+                'http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
+                'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-'
+                'shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html'
+            ).cite,
         )
-        self.assertIn(e, o.cite)
 
 
 class BbcTest(unittest.TestCase):
@@ -343,9 +339,7 @@ class BbcTest(unittest.TestCase):
 
     def test_bbc4(self):
         """news.bbc.co.uk, 1 author"""
-        i = 'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm'
-        o = urls_response(i)
-        ct = (
+        self.assertIn(
             "* {{cite web "
             "| last=Jones "
             "| first=Meirion "
@@ -355,9 +349,11 @@ class BbcTest(unittest.TestCase):
             "| url="
             "http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm "
             "| ref=harv "
-            "| access-date="
+            "| access-date=",
+            urls_response(
+                'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm'
+            ).cite,
         )
-        self.assertIn(ct, o.cite)
 
     def test_bbc5(self):
         """news.bbc.co.uk, 1 author"""
@@ -680,33 +676,30 @@ class Others(unittest.TestCase):
 
     def test_oth4(self):
         """rel="author" tag contains invalid information."""
-        i = (
-            'http://www.livescience.com/'
-            '46619-sterile-neutrino-experiment-beginning.html?'
-            'cmpid=514645_20140702_27078936'
-        )
-        o = urls_response(i)
-        ct = (
+        self.assertIn(
             "* {{cite web "
             "| last=Ghose "
             "| first=Tia "
-            "| title='Revolutionary' Physics: "
-            "Do Sterile Neutrinos Lurk in the Universe? "
+            "| title='Revolutionary' Physics:"
+            " Do Sterile Neutrinos Lurk in the Universe? "
             "| website=Live Science "
             "| date=2014-07-01 "
             "| url=http://www.livescience.com/"
             "46619-sterile-neutrino-experiment-beginning.html "
             "| ref=harv "
-            "| access-date="
+            "| access-date=",
+            urls_response(
+                'http://www.livescience.com/'
+                '46619-sterile-neutrino-experiment-beginning.html?'
+                'cmpid=514645_20140702_27078936'
+            ).cite,
         )
-        self.assertIn(ct, o.cite)
 
     def test_oth5(self):
         """Getting the date is tricky here."""
-        i = 'http://www.magiran.com/npview.asp?ID=1410487'
-        o = urls_response(i)
-        sf = '{{sfn | نوري | 2007}}'
-        ct = (
+        o = urls_response('http://www.magiran.com/npview.asp?ID=1410487')
+        self.assertIn('{{sfn | نوري | 2007}}', o.sfn)
+        self.assertIn(
             '* {{cite web '
             '| last=نوري '
             '| first=آزاده شهمير '
@@ -717,18 +710,19 @@ class Others(unittest.TestCase):
             '| url=http://www.magiran.com/npview.asp?ID=1410487 '
             '| language=fa '
             '| ref=harv '
-            '| access-date='
+            '| access-date=',
+            o.cite,
         )
-        self.assertIn(sf, o.sfn)
-        self.assertIn(ct, o.cite)
 
     def test_oth6(self):
         """Detection of website name."""
-        i = 'http://www.farsnews.com/newstext.php?nn=13930418000036'
-        o = urls_response(i)
+        o = urls_response(
+            'http://www.farsnews.com/newstext.php?nn=13930418000036'
+        )
+        self.assertIn('{{sfn | خبرگزاری فارس | 2014}}', o.sfn)
         # Fars news is using 'خبرگزاری فارس' as og:author which is wrong
         # and thats why its name is not italicized in sfn.
-        ct = (
+        self.assertIn(
             '* {{cite web '
             '| author=خبرگزاری فارس '
             '| title=آیت\u200cالله محمدی گیلانی دارفانی را وداع گفت '
@@ -737,10 +731,9 @@ class Others(unittest.TestCase):
             '| url=http://www.farsnews.com/newstext.php?nn=13930418000036 '
             '| language=fa '
             '| ref=harv '
-            '| access-date='
+            '| access-date=',
+            o.cite,
         )
-        self.assertIn('{{sfn | خبرگزاری فارس | 2014}}', o.sfn)
-        self.assertIn(ct, o.cite)
 
     def test_oth7(self):
         """Contains a By Topic line and also the byline contains ' | '."""

@@ -104,7 +104,7 @@ def original_url_dict(url: str):
         target=get_hometitle, args=(url, hometitle_list)
     )
     home_title_thread.start()
-    soup = get_soup(url)
+    soup, html = get_soup(url)
     d = {'soup_title': soup.title.text.strip()}
     authors = find_authors(soup)
     if authors:
@@ -118,7 +118,7 @@ def original_url_dict(url: str):
             soup, url, authors, hometitle_list, home_title_thread
         )
     d['title'] = find_title(
-        soup, url, authors, hometitle_list, home_title_thread
+        html, url, authors, hometitle_list, home_title_thread
     )
     return d
 

@@ -5,16 +5,17 @@
 
 
 from collections import defaultdict
-import re
-from urllib.parse import urlparse
-import logging
+from datetime import date as datetime_date
 from difflib import get_close_matches
+from html import unescape as html_unescape
+import logging
+import re
 from threading import Thread
-from datetime import date as Date
+from urllib.parse import urlparse
 
+import regex
 from requests import get as requests_get
 from requests import head as requests_head
-
 from requests.exceptions import RequestException
 from bs4 import SoupStrainer, BeautifulSoup
 
@@ -25,33 +26,52 @@ from commons import (
 from urls_authors import find_authors
 
 
+# https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
+CHARSET = re.compile(
+    rb'''<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)''',
+    re.IGNORECASE,
+).search
+
 TITLE_STRAINER = SoupStrainer('title')
 
-TITLE_FIND_PARAMETERS = (
+TITLE_SEARCH = regex.compile(
+    r'''
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    ({'name': 'citation_title'}, 'getitem', 'content'),
+    # Should be tried before og:title:
     # http://www.telegraph.co.uk/earth/earthnews/6190335/Whale-found-dead-in-Thames.html
-    # Should be tried before og:title
-    ({'name': 'title'}, 'getitem', 'content'),
+    # http://news.bbc.co.uk/2/hi/business/2570109.stm
+    <meta\s+(?:
+        name=(?<q>["\'])(?:citation_title|title|Headline)(?P=q)\s+
+        content=(?<q>["\'])(?P<title>.*?)(?P=q)
+        |
+        content=(?<q>["\'])(?P<title>.*?)(?P=q)\s+
+        name=(?<q>["\'])(?:citation_title|title|Headline)(?P=q)
+    )
     # http://www.bostonglobe.com/ideas/2014/04/28/new-study-reveals-how-honky-tonk-hits-respond-changing-american-fortunes/9ep0iPknDBl9EFFaoXfbmL/comments.html
-    # Should be tried before og:title
-    ({'class': 'main-hed'}, 'getattr', 'text'),
+    # Should be tried before og:title:
     # http://timesofindia.indiatimes.com/city/thiruvananthapuram/Whale-shark-dies-in-aquarium/articleshow/32607977.cms
-    # Should be tried before og:title
-    ({'class': 'arttle'}, 'getattr', 'text'),
-    # http://www.bbc.com/news/science-environment-26878529
-    ({'property': 'og:title'}, 'getitem', 'content'),
-    # http://www.bbc.com/news/science-environment-26267918
-    ({'name': 'Headline'}, 'getitem', 'content'),
-    # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-    ({'class': 'articleHeadline'}, 'getattr', 'text'),
-    # http://www.nytimes.com/2007/09/11/us/11whale.html
-    ({'name': 'hdl'}, 'getitem', 'content'),
-    # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-    ({'class': 'entry-title'}, 'getattr', 'text'),
-    # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-    ({'id': 'entryhead'}, 'getattr', 'text'),
-)
+    |
+    class=(?<q>["\'])(?:main-hed|heading1)(?P=q).*?>(?<title>.*?)<
+    |
+    <meta\s+(?:
+        property=(?<q>["\'])og:title(?P=q)\s+
+        content=(?<q>["\'])(?<title>.*?)(?P=q)
+        |
+        content=(?<q>["\'])(?<title>.*?)(?P=q)\s+
+        property=(?<q>["\'])og:title(?P=q)
+    )
+    ''',
+    regex.VERBOSE | regex.IGNORECASE,
+).search
+
+TITLE_TAG = re.compile(
+    r'''
+    <title\b[^>]*>
+        (?P<title>\s*[\s\S]*?\s*)
+    </title\s*>
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
 
 DATE_FIND_PARAMETERS = (
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
@@ -87,9 +107,8 @@ DATE_FIND_PARAMETERS = (
     # http://www.nytimes.com/2003/12/14/us/willy-whale-dies-in-norway.html
     ({'name': 'DISPLAYDATE'}, 'getitem', 'content'),
     # http://www.washingtonpost.com/wp-dyn/content/article/2006/01/19/AR2006011902990.html
-    ({'name': 'DC.date.issued'}, 'getitem', 'content'),
     # http://www.farsnews.com/newstext.php?nn=13930418000036
-    ({'name': 'dc.Date'}, 'getitem', 'content'),
+    ({'name': re.compile('DC.date.*', re.IGNORECASE)}, 'getitem', 'content'),
     # http://www.huffingtonpost.ca/arti-patel/nina-davuluri_b_3936174.html
     ({'name': 'sailthru.date'}, 'getitem', 'content'),
     # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
@@ -315,23 +334,17 @@ def try_find(soup: BeautifulSoup, find_parameters: tuple) -> str or None:
 
 
 def find_title(
-    soup: BeautifulSoup,
+    html: str,
     url: str,
     authors: list,
     hometitle: list,
     thread: Thread,
 ) -> str or None:
     """Return (title_string, where_info)."""
-    raw_title = try_find(soup, TITLE_FIND_PARAMETERS)
-    if not raw_title:
-        try:
-            raw_title = soup.title.text.strip()
-        except AttributeError:
-            # soup has no title tag
-            pass
-    if raw_title:
+    m = TITLE_SEARCH(html) or TITLE_TAG(html)
+    if m:
         parsed_title = parse_title(
-            raw_title, url, authors, hometitle, thread
+            html_unescape(m.group('title')), url, authors, hometitle, thread
         )
         return parsed_title[1]
     else:
@@ -428,7 +441,7 @@ def parse_title(
     return intitle_author, pure_title, intitle_sitename
 
 
-def try_find_date(soup: BeautifulSoup) -> Date or None:
+def try_find_date(soup: BeautifulSoup) -> datetime_date or None:
     """Similar to try_find(), but for finding dates.
 
     Return a string in '%Y-%m-%d' format.
@@ -454,7 +467,7 @@ def try_find_date(soup: BeautifulSoup) -> Date or None:
     return None
 
 
-def find_date(soup: BeautifulSoup, url: str) -> Date:
+def find_date(soup: BeautifulSoup, url: str) -> datetime_date:
     """Get the BeautifulSoup object and url. Return (date_obj, where)."""
     # Example for finddate(url):
     # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
@@ -510,13 +523,17 @@ def check_content_headers(url: str) -> bool:
     return True
 
 
-def get_soup(url: str) -> BeautifulSoup:
-    """Return the soup object for the given url."""
+def get_soup(url: str) -> tuple:
+    """Return the (soup, html) for the given url."""
     check_content_headers(url)
     r = requests_get(url, headers=USER_AGENT_HEADER, timeout=15)
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
-    return BeautifulSoup(r.content, 'lxml')
+    content = r.content
+    charset_match = CHARSET(content)
+    return BeautifulSoup(r.content, 'lxml'), content.decode(
+        charset_match.group(1).decode() if charset_match else r.encoding
+    )
 
 
 def url2dict(url: str) -> dict:
@@ -528,7 +545,7 @@ def url2dict(url: str) -> dict:
     )
     home_title_thread.start()
 
-    soup = get_soup(url)
+    soup, html = get_soup(url)
     # 'soup_title' is used in waybackmechine.py.
     soup_title = soup.title
     d = defaultdict(
@@ -554,7 +571,7 @@ def url2dict(url: str) -> dict:
             soup, url, authors, hometitle_list, home_title_thread
         )
     d['title'] = find_title(
-        soup, url, authors, hometitle_list, home_title_thread
+        html, url, authors, hometitle_list, home_title_thread
     )
     date = find_date(soup, url)
     if date:
