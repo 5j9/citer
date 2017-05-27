@@ -463,7 +463,7 @@ def check_content_headers(url: str) -> bool:
     return True
 
 
-def get_soup(url: str) -> tuple:
+def get_html(url: str) -> tuple:
     """Return the (soup, html) for the given url."""
     check_content_headers(url)
     r = requests_get(url, headers=USER_AGENT_HEADER, timeout=15)
@@ -485,7 +485,7 @@ def url2dict(url: str) -> dict:
     )
     home_title_thread.start()
 
-    soup, html = get_soup(url)
+    soup, html = get_html(url)
     # 'soup_title' is used in waybackmechine.py.
     soup_title = soup.title
     d = defaultdict(
