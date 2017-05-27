@@ -472,7 +472,7 @@ def get_soup(url: str) -> tuple:
     content = r.content
     charset_match = CHARSET(content)
     return BeautifulSoup(r.content, 'lxml'), content.decode(
-        charset_match.group(1).decode() if charset_match else r.encoding
+        charset_match[1].decode() if charset_match else r.encoding
     )
 
 
