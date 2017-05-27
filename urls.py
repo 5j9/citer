@@ -66,8 +66,7 @@ TITLE_TAG = re.compile(
     re.VERBOSE | re.IGNORECASE,
 ).search
 
-DATE_META_NAME_OR_PROP = (
-    r'''
+DATE_META_NAME_OR_PROP = r'''
     (?:name|property)=(?<q>["\'])(?:
         citation_date
         |
@@ -87,8 +86,7 @@ DATE_META_NAME_OR_PROP = (
         |
         date
     )(?P=q)
-    '''
-)
+'''
 DATE_CONTENT_ATTR = rf'''
     content=(?<q>["\'])[^"'<]*?{ANYDATE_PATTERN}[^"'<]*?(?P=q)
 '''
@@ -124,19 +122,6 @@ JOURNAL_TITLE_SEARCH = regex.compile(
 ).search
 
 
-def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
-    """Create the response namedtuple."""
-    try:
-        dictionary = url2dict(url)
-    except (ContentTypeError, ContentLengthError) as e:
-        logger.exception(url)
-        return Response(
-            sfn='Could not process the request.', cite=e, error=100, ref=''
-        )
-    dictionary['date_format'] = date_format
-    return dictionary_to_response(dictionary)
-
-
 class ContentTypeError(ValueError):
 
     """Raise when content-type header does not start with 'text/'."""
@@ -156,6 +141,19 @@ class StatusCodeError(ValueError):
     """Raise when requests_get.status_code != 200."""
 
     pass
+
+
+def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
+    """Create the response namedtuple."""
+    try:
+        dictionary = url2dict(url)
+    except (ContentTypeError, ContentLengthError) as e:
+        logger.exception(url)
+        return Response(
+            sfn='Could not process the request.', cite=e, error=100, ref=''
+        )
+    dictionary['date_format'] = date_format
+    return dictionary_to_response(dictionary)
 
 
 def find_journal(html: str) -> str:
@@ -485,9 +483,9 @@ def url2dict(url: str) -> dict:
     """Get url and return the result as a dictionary."""
     d = defaultdict(lambda: None)
     # Creating a thread to fetch homepage title in background
-    hometitle_list = []  # A mutable variable used to get the thread result
+    home_title_list = []  # A mutable variable used to get the thread result
     home_title_thread = Thread(
-        target=get_hometitle, args=(url, hometitle_list)
+        target=get_hometitle, args=(url, home_title_list)
     )
     home_title_thread.start()
 
@@ -513,10 +511,10 @@ def url2dict(url: str) -> dict:
     else:
         d['cite_type'] = 'web'
         d['website'] = find_site_name(
-            soup, url, authors, hometitle_list, home_title_thread
+            soup, url, authors, home_title_list, home_title_thread
         )
     d['title'] = find_title(
-        html, html_title, url, authors, hometitle_list, home_title_thread
+        html, html_title, url, authors, home_title_list, home_title_thread
     )
     date = find_date(html, url)
     if date:
