@@ -213,7 +213,7 @@ def find_pages(soup: BeautifulSoup) -> str:
         return fp['content'].strip() + '–' + lp['content'].strip()
 
 
-def find_sitename(
+def find_site_name(
     soup: BeautifulSoup,
     url: str,
     authors: list,
@@ -491,7 +491,7 @@ def url2dict(url: str) -> dict:
         d['cite_type'] = 'journal'
     else:
         d['cite_type'] = 'web'
-        d['website'] = find_sitename(
+        d['website'] = find_site_name(
             soup, url, authors, hometitle_list, home_title_thread
         )
     d['title'] = find_title(

@@ -15,7 +15,7 @@ from requests import ConnectionError as RequestsConnectionError
 from commons import dictionary_to_response, Response
 from urls import (
     urls_response, url2dict, get_hometitle, get_soup, find_authors,
-    find_journal, find_sitename, find_title, ContentTypeError,
+    find_journal, find_site_name, find_title, ContentTypeError,
     ContentLengthError, StatusCodeError
 )
 
@@ -114,7 +114,7 @@ def original_url_dict(url: str):
         d['cite_type'] = 'journal'
     else:
         d['cite_type'] = 'web'
-        d['website'] = find_sitename(
+        d['website'] = find_site_name(
             soup, url, authors, hometitle_list, home_title_thread
         )
     d['title'] = find_title(
