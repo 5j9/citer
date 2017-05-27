@@ -34,7 +34,7 @@ CHARSET = re.compile(
 
 TITLE_STRAINER = SoupStrainer('title')
 
-CONTENT_ATTR = r'content=(?<q>["\'])(?<result>.*?)(?P=q)'
+CONTENT_ATTR = r'content=(?<q>["\'])(?<result>.+?)(?P=q)'
 
 TITLE_META_NAME = r'name=(?<q>["\'])(?:citation_title|title|Headline)(?P=q)'
 TITLE_META_PROP = r'property=(?<q>["\'])og:title(?P=q)'
@@ -46,7 +46,7 @@ TITLE_SEARCH = regex.compile(
         {CONTENT_ATTR}\s+{TITLE_META_NAME}
     )
     |
-    class=(?<q>["\'])(?:main-hed|heading1)(?P=q).*?>(?<result>.*?)<
+    class=(?<q>["\'])(?:main-hed|heading1)(?P=q).+?>(?<result>.*?)<
     |
     <meta\s+(?:
         {TITLE_META_PROP}\s+{CONTENT_ATTR}
@@ -66,9 +66,6 @@ TITLE_TAG = re.compile(
     re.VERBOSE | re.IGNORECASE,
 ).search
 
-DATE_CONTENT_ATTR = CONTENT_ATTR.replace(
-    r'(?<result>.*?)', r'.*?(?<result>' + ANYDATE_PATTERN + r'.*?)',
-)
 DATE_META_NAME_OR_PROP = (
     r'''
     (?:name|property)=(?<q>["\'])(?:
@@ -87,9 +84,14 @@ DATE_META_NAME_OR_PROP = (
         DC\.date\b.*?
         |
         sailthru\.date
+        |
+        date
     )(?P=q)
     '''
 )
+DATE_CONTENT_ATTR = rf'''
+    content=(?<q>["\'])[^"'<]*?{ANYDATE_PATTERN}[^"'<]*?(?P=q)
+'''
 DATE_SEARCH = regex.compile(
     rf'''
     <meta\s+(?:
@@ -100,7 +102,7 @@ DATE_SEARCH = regex.compile(
     |
     # http://livescience.com/46619-sterile-neutrino-experiment-beginning.html
     # https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0
-    (?:datePublished|Dateline)[^\w]+(?<result>{ANYDATE_PATTERN})
+    (?:datePublished|Dateline)[^\w]+{ANYDATE_PATTERN}
     ''',
     regex.VERBOSE | regex.IGNORECASE,
 ).search
@@ -305,19 +307,22 @@ def find_site_name(
 
 def find_title(
     html: str,
+    html_title: str,
     url: str,
     authors: list,
-    hometitle: list,
+    home_title: list,
     thread: Thread,
 ) -> str or None:
     """Return (title_string, where_info)."""
-    m = TITLE_SEARCH(html) or TITLE_TAG(html)
+    m = TITLE_SEARCH(html)
     if m:
-        parsed_title = parse_title(
-            html_unescape(m['result']), url, authors, hometitle, thread
-        )
-        return parsed_title[1]
-    return None
+        return parse_title(
+            html_unescape(m['result']), url, authors, home_title, thread,
+        )[1]
+    elif html_title:
+        return parse_title(html_title, url, authors, home_title, thread)[1]
+    else:
+        return None
 
 
 def parse_title(
@@ -478,6 +483,7 @@ def get_html(url: str) -> tuple:
 
 def url2dict(url: str) -> dict:
     """Get url and return the result as a dictionary."""
+    d = defaultdict(lambda: None)
     # Creating a thread to fetch homepage title in background
     hometitle_list = []  # A mutable variable used to get the thread result
     home_title_thread = Thread(
@@ -486,13 +492,12 @@ def url2dict(url: str) -> dict:
     home_title_thread.start()
 
     soup, html = get_html(url)
-    # 'soup_title' is used in waybackmechine.py.
-    soup_title = soup.title
-    d = defaultdict(
-        lambda: None,
-        url=find_url(soup, url),
-        soup_title=soup_title.text if soup_title else None,
-    )
+    d['url'] = find_url(soup, url)
+    m = TITLE_TAG(html)
+    html_title = m['result'] if m else None
+    if html_title:
+        d['html_title'] = html_title
+    # d['html_title'] is used in waybackmechine.py.
     authors = find_authors(soup)
     if authors:
         d['authors'] = authors
@@ -511,7 +516,7 @@ def url2dict(url: str) -> dict:
             soup, url, authors, hometitle_list, home_title_thread
         )
     d['title'] = find_title(
-        html, url, authors, hometitle_list, home_title_thread
+        html, html_title, url, authors, hometitle_list, home_title_thread
     )
     date = find_date(html, url)
     if date:

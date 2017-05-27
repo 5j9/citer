@@ -16,7 +16,7 @@ from commons import dictionary_to_response, Response
 from urls import (
     urls_response, url2dict, get_hometitle, get_html, find_authors,
     find_journal, find_site_name, find_title, ContentTypeError,
-    ContentLengthError, StatusCodeError
+    ContentLengthError, StatusCodeError, TITLE_TAG
 )
 
 
@@ -58,7 +58,7 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
         # The original_process has been successful
         if (
             original_dict['title'] == archive_dict['title']
-            or original_dict['soup_title'] == archive_dict['soup_title']
+            or original_dict['html_title'] == archive_dict['html_title']
         ):
             archive_dict.update(original_dict)
             archive_dict['dead-url'] = 'no'
@@ -98,6 +98,7 @@ def original_url2dict(ogurl: str, child_conn) -> None:
 
 def original_url_dict(url: str):
     """Retuan dictionary only containng required data for og:url."""
+    d = {}
     # Creating a thread to fetch homepage title in background
     hometitle_list = []  # A mutable variable used to get the thread result
     home_title_thread = Thread(
@@ -105,12 +106,16 @@ def original_url_dict(url: str):
     )
     home_title_thread.start()
     soup, html = get_html(url)
-    d = {'soup_title': soup.title.text.strip()}
+    m = TITLE_TAG(html)
+    html_title = m['result'] if m else None
+    if html_title:
+        d['html_title'] = html_title
     authors = find_authors(soup)
     if authors:
         d['authors'] = authors
-    d['journal'] = find_journal(html)
-    if d['journal']:
+    journal = find_journal(html)
+    if journal:
+        d['journal'] = journal
         d['cite_type'] = 'journal'
     else:
         d['cite_type'] = 'web'
@@ -118,7 +123,7 @@ def original_url_dict(url: str):
             soup, url, authors, hometitle_list, home_title_thread
         )
     d['title'] = find_title(
-        html, url, authors, hometitle_list, home_title_thread
+        html, html_title, url, authors, hometitle_list, home_title_thread
     )
     return d
 
