@@ -105,6 +105,22 @@ DATE_SEARCH = regex.compile(
     regex.VERBOSE | regex.IGNORECASE,
 ).search
 
+JOURNAL_META_NAME = r'''
+    name=(?<q>["\'])(?:
+        citation_journal_title
+    )(?P=q)
+'''
+JOURNAL_TITLE_SEARCH = regex.compile(
+    rf'''
+    <meta\s+(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{JOURNAL_META_NAME}
+        |
+        {JOURNAL_META_NAME}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
 
 def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
     """Create the response namedtuple."""
@@ -140,12 +156,12 @@ class StatusCodeError(ValueError):
     pass
 
 
-def find_journal(soup: BeautifulSoup) -> str:
+def find_journal(html: str) -> str:
     """Return journal title as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    m = soup.find(attrs={'name': 'citation_journal_title'})
+    m = JOURNAL_TITLE_SEARCH(html)
     if m:
-        return m['content'].strip()
+        return m['result'].strip()
 
 
 def find_url(soup: BeautifulSoup, url: str) -> str:
@@ -298,7 +314,7 @@ def find_title(
     m = TITLE_SEARCH(html) or TITLE_TAG(html)
     if m:
         parsed_title = parse_title(
-            html_unescape(m.group('result')), url, authors, hometitle, thread
+            html_unescape(m['result']), url, authors, hometitle, thread
         )
         return parsed_title[1]
     return None
@@ -486,7 +502,7 @@ def url2dict(url: str) -> dict:
     d['volume'] = find_volume(soup)
     d['issue'] = find_issue(soup)
     d['page'] = find_pages(soup)
-    d['journal'] = find_journal(soup)
+    d['journal'] = find_journal(html)
     if d['journal']:
         d['cite_type'] = 'journal'
     else:

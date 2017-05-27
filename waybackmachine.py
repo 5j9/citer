@@ -109,7 +109,7 @@ def original_url_dict(url: str):
     authors = find_authors(soup)
     if authors:
         d['authors'] = authors
-    d['journal'] = find_journal(soup)
+    d['journal'] = find_journal(html)
     if d['journal']:
         d['cite_type'] = 'journal'
     else:
