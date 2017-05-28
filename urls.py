@@ -36,23 +36,20 @@ TITLE_STRAINER = SoupStrainer('title')
 
 CONTENT_ATTR = r'content=(?<q>["\'])(?<result>.+?)(?P=q)'
 
-TITLE_META_NAME = r'name=(?<q>["\'])(?:citation_title|title|Headline)(?P=q)'
-TITLE_META_PROP = r'property=(?<q>["\'])og:title(?P=q)'
+TITLE_META_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])
+        (?:citation_title|title|Headline|og:title)
+    (?P=q)
+'''
 TITLE_SEARCH = regex.compile(
     rf'''
     <meta\s+(?:
-        {TITLE_META_NAME}\s+{CONTENT_ATTR}
+        {TITLE_META_NAME_OR_PROP}\s+{CONTENT_ATTR}
         |
-        {CONTENT_ATTR}\s+{TITLE_META_NAME}
+        {CONTENT_ATTR}\s+{TITLE_META_NAME_OR_PROP}
     )
     |
     class=(?<q>["\'])(?:main-hed|heading1)(?P=q).+?>(?<result>.*?)<
-    |
-    <meta\s+(?:
-        {TITLE_META_PROP}\s+{CONTENT_ATTR}
-        |
-        {CONTENT_ATTR}\s+{TITLE_META_PROP}
-    )
     ''',
     regex.VERBOSE | regex.IGNORECASE,
 ).search
@@ -92,7 +89,7 @@ DATE_CONTENT_ATTR = rf'''
 '''
 DATE_SEARCH = regex.compile(
     rf'''
-    <meta\s+(?:
+    <meta\s+[^\n<]*?(?:
         {DATE_META_NAME_OR_PROP}\s+[^\n<]*?{DATE_CONTENT_ATTR}
         |
         {DATE_CONTENT_ATTR}\s+[^\n<]*?{DATE_META_NAME_OR_PROP}
@@ -105,17 +102,33 @@ DATE_SEARCH = regex.compile(
     regex.VERBOSE | regex.IGNORECASE,
 ).search
 
-JOURNAL_META_NAME = r'''
-    name=(?<q>["\'])(?:
+JOURNAL_META_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
         citation_journal_title
     )(?P=q)
 '''
 JOURNAL_TITLE_SEARCH = regex.compile(
     rf'''
-    <meta\s+(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{JOURNAL_META_NAME}
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{JOURNAL_META_NAME_OR_PROP}
         |
-        {JOURNAL_META_NAME}\s+[^\n<]*?{CONTENT_ATTR}
+        {JOURNAL_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
+URL_META_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
+        og:url
+    )(?P=q)
+'''
+URL_SEARCH = regex.compile(
+    rf'''
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{URL_META_NAME_OR_PROP}
+        |
+        {URL_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -164,12 +177,12 @@ def find_journal(html: str) -> str:
         return m['result'].strip()
 
 
-def find_url(soup: BeautifulSoup, url: str) -> str:
+def find_url(html: str, url: str) -> str:
     """Return og:url or url as a string."""
     # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
-    f = soup.find(attrs={'property': 'og:url'})
-    if f:
-        ogurl = f['content']
+    m = URL_SEARCH(html)
+    if m:
+        ogurl = m['result'].strip()
         if urlparse(ogurl).path:
             return ogurl
     return url
@@ -490,7 +503,7 @@ def url2dict(url: str) -> dict:
     home_title_thread.start()
 
     soup, html = get_html(url)
-    d['url'] = find_url(soup, url)
+    d['url'] = find_url(html, url)
     m = TITLE_TAG(html)
     html_title = m['result'] if m else None
     if html_title:
