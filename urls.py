@@ -18,7 +18,7 @@ import regex
 from requests import get as requests_get
 from requests import head as requests_head
 from requests.exceptions import RequestException
-from bs4 import SoupStrainer, BeautifulSoup
+from bs4 import BeautifulSoup
 
 from commons import (
     find_any_date, detect_language, Response, USER_AGENT_HEADER,
@@ -32,8 +32,6 @@ CHARSET = re.compile(
     rb'''<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)''',
     re.IGNORECASE,
 ).search
-
-TITLE_STRAINER = SoupStrainer('title')
 
 CONTENT_ATTR = r'content=(?<q>["\'])\s*(?<result>.+?)\s*(?P=q)'
 
@@ -344,7 +342,7 @@ def find_pmid(html: str) -> Optional[str]:
 
 
 def find_doi(html: str) -> Optional[str]:
-    """Get the BeautifulSoup object of a page. Return DOI as a string."""
+    """Return DOI as a string."""
     # http://jn.physiology.org/content/81/1/319
     m = DOI_SEARCH(html)
     if m:
@@ -538,31 +536,33 @@ def parse_title(
 
 
 def find_date(html: str, url: str) -> datetime_date:
-    """Get the BeautifulSoup object and url. Return (date_obj, where)."""
+    """Return the date of the document."""
     # Example for find_any_date(url):
     # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
-    # Example for find_any_date(soup.text):
+    # Example for find_any_date(html):
     # https://www.bbc.com/news/uk-england-25462900
     m = DATE_SEARCH(html)
     return find_any_date(m) if m else find_any_date(url) or find_any_date(html)
 
 
-def get_hometitle(url: str, home_title_list: List[str]) -> None:
+def get_home_title(url: str, home_title_list: List[str]) -> None:
     """Get homepage of the url and return it's title.
 
     home_title_list will be used to return the thread result.
     This function is invoked through a thread.
     """
-    homeurl = '://'.join(urlparse(url)[:2])
+    home_url = '://'.join(urlparse(url)[:2])
     try:
-        check_content_headers(homeurl)
-        content = requests_get(
-            homeurl, headers=USER_AGENT_HEADER, timeout=15
-        ).content
-        soup = BeautifulSoup(content, 'lxml', parse_only=TITLE_STRAINER)
-        home_title_list.append(soup.title.text.strip())
+        check_content_headers(home_url)
+        r = requests_get(home_url, headers=USER_AGENT_HEADER, timeout=15)
     except RequestException:
-        pass
+        return
+    content = r.content
+    m = CHARSET(content)
+    html = content.decode(m[1].decode() if m else r.encoding)
+    m = TITLE_TAG(html)
+    title = html_unescape(m['result']) if m else None
+    home_title_list.append(title)
 
 
 def check_content_headers(url: str) -> bool:
@@ -592,6 +592,7 @@ def check_content_headers(url: str) -> bool:
 
 def get_html(url: str) -> tuple:
     """Return the (soup, html) for the given url."""
+    # Todo: check_content_headers in a separate thread.
     check_content_headers(url)
     r = requests_get(url, headers=USER_AGENT_HEADER, timeout=15)
     if r.status_code != 200:
@@ -609,7 +610,7 @@ def url2dict(url: str) -> Dict[str, Any]:
     # Creating a thread to fetch homepage title in background
     home_title_list = []  # A mutable variable used to get the thread result
     home_title_thread = Thread(
-        target=get_hometitle, args=(url, home_title_list)
+        target=get_home_title, args=(url, home_title_list)
     )
     home_title_thread.start()
 

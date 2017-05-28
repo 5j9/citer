@@ -14,7 +14,7 @@ from requests import ConnectionError as RequestsConnectionError
 
 from commons import dictionary_to_response, Response
 from urls import (
-    urls_response, url2dict, get_hometitle, get_html, find_authors,
+    urls_response, url2dict, get_home_title, get_html, find_authors,
     find_journal, find_site_name, find_title, ContentTypeError,
     ContentLengthError, StatusCodeError, TITLE_TAG
 )
@@ -102,7 +102,7 @@ def original_url_dict(url: str):
     # Creating a thread to fetch homepage title in background
     hometitle_list = []  # A mutable variable used to get the thread result
     home_title_thread = Thread(
-        target=get_hometitle, args=(url, hometitle_list)
+        target=get_home_title, args=(url, hometitle_list)
     )
     home_title_thread.start()
     soup, html = get_html(url)
