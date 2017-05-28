@@ -11,6 +11,7 @@ from html import unescape as html_unescape
 import logging
 import re
 from threading import Thread
+from typing import Optional
 from urllib.parse import urlparse
 
 import regex
@@ -134,6 +135,120 @@ URL_SEARCH = regex.compile(
     re.VERBOSE | re.IGNORECASE,
 ).search
 
+ISSN_META_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
+        citation_issn
+    )(?P=q)
+'''
+ISSN_SEARCH = regex.compile(
+    rf'''
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{ISSN_META_NAME_OR_PROP}
+        |
+        {ISSN_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
+PMID_META_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
+        citation_pmid
+    )(?P=q)
+'''
+PMID_SEARCH = regex.compile(
+    rf'''
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{PMID_META_NAME_OR_PROP}
+        |
+        {PMID_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
+DOI_META_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
+        citation_doi
+    )(?P=q)
+'''
+DOI_SEARCH = regex.compile(
+    rf'''
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{DOI_META_NAME_OR_PROP}
+        |
+        {DOI_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
+
+VOLUME_META_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
+        citation_volume
+    )(?P=q)
+'''
+VOLUME_SEARCH = regex.compile(
+    rf'''
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{VOLUME_META_NAME_OR_PROP}
+        |
+        {VOLUME_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
+ISSUE_META_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
+        citation_issue
+    )(?P=q)
+'''
+ISSUE_SEARCH = regex.compile(
+    rf'''
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{ISSUE_META_NAME_OR_PROP}
+        |
+        {ISSUE_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
+FIRST_PAGE_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
+        citation_firstpage
+    )(?P=q)
+'''
+FIRST_PAGE_SEARCH = regex.compile(
+    rf'''
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{FIRST_PAGE_NAME_OR_PROP}
+        |
+        {FIRST_PAGE_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
+
+LAST_PAGE_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
+        citation_issue
+    )(?P=q)
+'''
+LAST_PAGE_SEARCH = regex.compile(
+    rf'''
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{LAST_PAGE_NAME_OR_PROP}
+        |
+        {LAST_PAGE_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
 
 class ContentTypeError(ValueError):
 
@@ -169,7 +284,7 @@ def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
     return dictionary_to_response(dictionary)
 
 
-def find_journal(html: str) -> str:
+def find_journal(html: str) -> Optional[str]:
     """Return journal title as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = JOURNAL_TITLE_SEARCH(html)
@@ -188,58 +303,60 @@ def find_url(html: str, url: str) -> str:
     return url
 
 
-def find_issn(soup: BeautifulSoup) -> str:
+def find_issn(html: str) -> Optional[str]:
     """Return International Standard Serial Number as a string.
 
     Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this
     function does not check that.
     """
+    m = ISSN_SEARCH(html)
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     # http://psycnet.apa.org/journals/edu/30/9/641/
-    f = soup.find(attrs={'name': 'citation_issn'})
-    if f:
-        return f['content'].strip()
+    if m:
+        return m['result'].strip()
 
 
-def find_pmid(soup: BeautifulSoup) -> str:
+def find_pmid(html: str) -> Optional[str]:
     """Return pmid as a string."""
     # http://jn.physiology.org/content/81/1/319
-    m = soup.find(attrs={'name': 'citation_pmid'})
+    m = PMID_SEARCH(html)
     if m:
-        return m['content']
+        return m['result'].strip()
 
 
-def find_doi(soup: BeautifulSoup) -> str:
+def find_doi(html: str) -> Optional[str]:
     """Get the BeautifulSoup object of a page. Return DOI as a string."""
     # http://jn.physiology.org/content/81/1/319
-    m = soup.find(attrs={'name': 'citation_doi'})
+    m = DOI_SEARCH(html)
     if m:
-        return m['content']
+        return m['result'].strip()
 
 
-def find_volume(soup: BeautifulSoup) -> str:
+def find_volume(html: str) -> Optional[str]:
     """Return citatoin volume number as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    m = soup.find(attrs={'name': 'citation_volume'})
+    m = VOLUME_SEARCH(html)
     if m:
-        return m['content'].strip()
+        return m['result'].strip()
 
 
-def find_issue(soup: BeautifulSoup) -> str:
-    """Return citatoin issue number as a string."""
+def find_issue(html: str) -> Optional[str]:
+    """Return citation issue number as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    m = soup.find(attrs={'name': 'citation_issue'})
+    m = ISSUE_SEARCH(html)
     if m:
-        return m['content'].strip()
+        return m['result'].strip()
 
 
-def find_pages(soup: BeautifulSoup) -> str:
+def find_pages(html: str) -> Optional[str]:
     """Return citation pages as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    fp = soup.find(attrs={'name': 'citation_firstpage'})
-    lp = soup.find(attrs={'name': 'citation_lastpage'})
-    if fp and lp:
-        return fp['content'].strip() + '–' + lp['content'].strip()
+    fp_match = FIRST_PAGE_SEARCH(html)
+    if fp_match:
+        lp_match = LAST_PAGE_SEARCH(html)
+        if lp_match:
+            return \
+                fp_match['result'].strip() + '–' + lp_match['result'].strip()
 
 
 def find_site_name(
@@ -512,12 +629,12 @@ def url2dict(url: str) -> dict:
     authors = find_authors(soup)
     if authors:
         d['authors'] = authors
-    d['doi'] = find_doi(soup)
-    d['issn'] = find_issn(soup)
-    d['pmid'] = find_pmid(soup)
-    d['volume'] = find_volume(soup)
-    d['issue'] = find_issue(soup)
-    d['page'] = find_pages(soup)
+    d['issn'] = find_issn(html)
+    d['pmid'] = find_pmid(html)
+    d['doi'] = find_doi(html)
+    d['volume'] = find_volume(html)
+    d['issue'] = find_issue(html)
+    d['page'] = find_pages(html)
     d['journal'] = find_journal(html)
     if d['journal']:
         d['cite_type'] = 'journal'
