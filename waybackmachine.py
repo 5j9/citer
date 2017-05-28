@@ -120,7 +120,7 @@ def original_url_dict(url: str):
     else:
         d['cite_type'] = 'web'
         d['website'] = find_site_name(
-            soup, url, authors, hometitle_list, home_title_thread
+            html, html_title, url, authors, hometitle_list, home_title_thread
         )
     d['title'] = find_title(
         html, html_title, url, authors, hometitle_list, home_title_thread

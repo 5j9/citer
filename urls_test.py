@@ -252,7 +252,7 @@ class DilyMailTest(unittest.TestCase):
             '| first4=Daniel '
             '| title=Abu Hamza found guilty in US court of helping'
             ' Al-Qaeda terrorists '
-            '| website=Mail Online '
+            '| website=Daily Mail Online '
             '| date=2014-05-19 '
             '| url=http://www.dailymail.co.uk/news/article-2633025/'
             'London-cleric-convicted-NYC-terrorism-trial.html '
@@ -269,7 +269,7 @@ class DilyMailTest(unittest.TestCase):
             '| first=Eleanor '
             "| title=Kim Kardashian's meltdown at nude magazine cover"
             " three years before full frontal photoshoot "
-            '| website=Mail Online '
+            '| website=Daily Mail Online '
             '| date=2014-11-14 '
             '| url=http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
             'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-shows-Kim-'
@@ -492,11 +492,11 @@ class NytTest(unittest.TestCase):
         ct = (
             '* {{cite web '
             '| title=19th-century harpoon gives clue on whales '
-            '| website=International Herald Tribune '
+            '| website=The New York Times '
             '| date=2007-06-13 '
             '| url=https://www.nytimes.com/2007/06/13/world/americas/'
             '13iht-whale.1.6123654.html '
-            '| ref={{sfnref | International Herald Tribune | 2007}} '
+            '| ref={{sfnref | The New York Times | 2007}} '
             '| access-date='
         )
         self.assertIn(ct, o.cite)
@@ -915,6 +915,29 @@ class Others(unittest.TestCase):
                 '%D8%A2%D9%85%D8%A7%D8%B1'
             ).cite,
         )
+
+    def test_pages_from_html_meta(self):
+        """Test extracting pages from html meta tags."""
+        self.assertIn(
+            '* {{cite journal '
+            '| last=جلیلیان '
+            '| first=شهرام '
+            '| title=نهاد دایگانی در دورۀ ساسانیان '
+            '| journal=تحقیقات تاریخ اجتماعی '
+            '| volume=2 '
+            '| issue=1 '
+            '| date=2012-09-17 '
+            '| issn=2383-0484 '
+            '| pages=53–74 '
+            '| url=http://socialhistory.ihcs.ac.ir/article_319_84.html '
+            '| language=fa '
+            '| ref=harv '
+            '| access-date=',
+            urls_response(
+                'http://socialhistory.ihcs.ac.ir/article_319_84.html'
+            ).cite,
+        )
+
 
 dummy_requests = dummy_requests.DummyRequests()
 urls.requests_get = dummy_requests.get

@@ -11,7 +11,7 @@ from html import unescape as html_unescape
 import logging
 import re
 from threading import Thread
-from typing import Optional
+from typing import Optional, List, Dict, Any, Tuple
 from urllib.parse import urlparse
 
 import regex
@@ -22,7 +22,7 @@ from bs4 import SoupStrainer, BeautifulSoup
 
 from commons import (
     find_any_date, detect_language, Response, USER_AGENT_HEADER,
-    dictionary_to_response, ANYDATE_PATTERN,
+    dictionary_to_response, ANYDATE_PATTERN, Name,
 )
 from urls_authors import find_authors
 
@@ -35,7 +35,7 @@ CHARSET = re.compile(
 
 TITLE_STRAINER = SoupStrainer('title')
 
-CONTENT_ATTR = r'content=(?<q>["\'])(?<result>.+?)(?P=q)'
+CONTENT_ATTR = r'content=(?<q>["\'])\s*(?<result>.+?)\s*(?P=q)'
 
 TITLE_META_NAME_OR_PROP = r'''
     (?:name|property)=(?<q>["\'])
@@ -235,7 +235,7 @@ FIRST_PAGE_SEARCH = regex.compile(
 
 LAST_PAGE_NAME_OR_PROP = r'''
     (?:name|property)=(?<q>["\'])(?:
-        citation_issue
+        citation_lastpage
     )(?P=q)
 '''
 LAST_PAGE_SEARCH = regex.compile(
@@ -244,6 +244,25 @@ LAST_PAGE_SEARCH = regex.compile(
         {CONTENT_ATTR}\s+[^\n<]*?{LAST_PAGE_NAME_OR_PROP}
         |
         {LAST_PAGE_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+    )
+    ''',
+    re.VERBOSE | re.IGNORECASE,
+).search
+
+
+SITE_NAME_NAME_OR_PROP = r'''
+    (?:name|property)=(?<q>["\'])(?:
+        og:site_name
+        |
+        og:site_name
+    )(?P=q)
+'''
+SITE_NAME_SEARCH = regex.compile(
+    rf'''
+    <meta\s+[^\n<]*?(?:
+        {CONTENT_ATTR}\s+[^\n<]*?{SITE_NAME_NAME_OR_PROP}
+        |
+        {SITE_NAME_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -289,7 +308,7 @@ def find_journal(html: str) -> Optional[str]:
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = JOURNAL_TITLE_SEARCH(html)
     if m:
-        return m['result'].strip()
+        return m['result']
 
 
 def find_url(html: str, url: str) -> str:
@@ -297,7 +316,7 @@ def find_url(html: str, url: str) -> str:
     # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
     m = URL_SEARCH(html)
     if m:
-        ogurl = m['result'].strip()
+        ogurl = m['result']
         if urlparse(ogurl).path:
             return ogurl
     return url
@@ -313,7 +332,7 @@ def find_issn(html: str) -> Optional[str]:
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     # http://psycnet.apa.org/journals/edu/30/9/641/
     if m:
-        return m['result'].strip()
+        return m['result']
 
 
 def find_pmid(html: str) -> Optional[str]:
@@ -321,7 +340,7 @@ def find_pmid(html: str) -> Optional[str]:
     # http://jn.physiology.org/content/81/1/319
     m = PMID_SEARCH(html)
     if m:
-        return m['result'].strip()
+        return m['result']
 
 
 def find_doi(html: str) -> Optional[str]:
@@ -329,7 +348,7 @@ def find_doi(html: str) -> Optional[str]:
     # http://jn.physiology.org/content/81/1/319
     m = DOI_SEARCH(html)
     if m:
-        return m['result'].strip()
+        return m['result']
 
 
 def find_volume(html: str) -> Optional[str]:
@@ -337,7 +356,7 @@ def find_volume(html: str) -> Optional[str]:
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = VOLUME_SEARCH(html)
     if m:
-        return m['result'].strip()
+        return m['result']
 
 
 def find_issue(html: str) -> Optional[str]:
@@ -345,7 +364,7 @@ def find_issue(html: str) -> Optional[str]:
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = ISSUE_SEARCH(html)
     if m:
-        return m['result'].strip()
+        return m['result']
 
 
 def find_pages(html: str) -> Optional[str]:
@@ -356,76 +375,51 @@ def find_pages(html: str) -> Optional[str]:
         lp_match = LAST_PAGE_SEARCH(html)
         if lp_match:
             return \
-                fp_match['result'].strip() + '–' + lp_match['result'].strip()
+                fp_match['result'] + '–' + lp_match['result']
 
 
 def find_site_name(
-    soup: BeautifulSoup,
+    html: str,
+    html_title: str,
     url: str,
-    authors: list,
-    hometitle: list,
+    authors: List[Name],
+    home_title: List[str],
     thread: Thread,
 ) -> str:
     """Return (site's name as a string, where).
 
     Parameters:
-        soup: BeautifulSoup object of the page being processed.
+        html: The html string of the page being processed.
+        html_title: Title of the page found in the title tag of the html.
         url: URL of the page.
         authors: Authors list returned from find_authors function.
-        hometitle: A list containing hometitle string.
-        thread: The thread that should be joined before using hometitle_list.
+        home_title: A list containing the title of the home page as a str.
+        thread: The thread that should be joined before using home_title list.
     Returns site's name as a string.
     """
-    find = soup.find
-    f = find(attrs={'name': 'og:site_name'})
-    if f:
-        content = f.get('content')
-        if content:
-            return content.strip()
-    # https://www.bbc.com/news/science-environment-26878529
-    f = find(attrs={'property': 'og:site_name'})
-    if f:
-        content = f.get('content')
-        if content:
-            return content.strip()
-    # http://www.nytimes.com/2007/06/13/world/americas/13iht-whale.1.6123654.html?_r=0
-    f = find(attrs={'name': 'PublisherName'})
-    if f:
-        value = f.get('value')
-        if value:
-            return value.strip()
-    # http://www.bbc.com/news/science-environment-26878529 (Optional)
-    f = find(attrs={'name': 'CPS_SITE_NAME'})
-    if f:
-        content = f.get('content')
-        if content:
-            return content.strip()
-    # http://www.nytimes.com/2013/10/01/science/a-wealth-of-data-in-whale-breath.html
-    f = find(attrs={'name': 'cre'})
-    if f:
-        content = f.get('content')
-        if content:
-            return content.strip()
+    m = SITE_NAME_SEARCH(html)
+    if m:
+        return m['result']
     # search the title
-    sitename = parse_title(
-        soup.title.text, url, authors, hometitle, thread
+    site_name = parse_title(
+        html_title, url, authors, home_title, thread
     )[2]
-    if sitename:
-        return sitename
+    if site_name:
+        return site_name
     try:
-        # using hometitle
+        # using home_title
         thread.join()
-        if ':' in hometitle[0]:
+        if ':' in home_title[0]:
             # http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html
-            sitename = hometitle[0].split(':')[0].strip()
-            if sitename:
-                return sitename
-        sitename = parse_title(hometitle[0], url, None)[2]
-        if sitename:
-            return sitename
-        return hometitle[0]
+            site_name = home_title[0].split(':')[0].strip()
+            if site_name:
+                return site_name
+        site_name = parse_title(home_title[0], url, None)[2]
+        if site_name:
+            return site_name
+        return home_title[0]
     except Exception:
-        pass
+        logger.exception(url)
     # return hostname
     hostname = urlparse(url).hostname
     if hostname.startswith('www.'):
@@ -437,10 +431,10 @@ def find_title(
     html: str,
     html_title: str,
     url: str,
-    authors: list,
-    home_title: list,
+    authors: List[Name],
+    home_title: List[str],
     thread: Thread,
-) -> str or None:
+) -> Optional[str]:
     """Return (title_string, where_info)."""
     m = TITLE_SEARCH(html)
     if m:
@@ -456,10 +450,10 @@ def find_title(
 def parse_title(
     title: str,
     url: str,
-    authors: list or None,
-    hometitle_list=None,
-    thread=None,
-) -> tuple:
+    authors: Optional[List[Name]],
+    home_title_list: Optional[List[str]]=None,
+    thread: Thread=None,
+) -> Tuple[Optional[str], str, Optional[str]]:
     """Return (intitle_author, pure_title, intitle_sitename).
 
     Examples:
@@ -508,19 +502,19 @@ def parse_title(
     if not intitle_sitename:
         if thread:
             thread.join()
-        if hometitle_list:
-            hometitle = hometitle_list[0]
+        if home_title_list:
+            home_title = home_title_list[0]
         else:
-            hometitle = ''
+            home_title = ''
         # 3. In homepage title
         for part in title_parts:
-            if part in hometitle:
+            if part in home_title:
                 intitle_sitename = part
                 break
     if not intitle_sitename:
         # 4. Using difflib on hometitle
         close_matches = get_close_matches(
-            hometitle, title_parts, n=1, cutoff=.3
+            home_title, title_parts, n=1, cutoff=.3
         )
         if close_matches:
             intitle_sitename = close_matches[0]
@@ -553,10 +547,10 @@ def find_date(html: str, url: str) -> datetime_date:
     return find_any_date(m) if m else find_any_date(url) or find_any_date(html)
 
 
-def get_hometitle(url: str, hometitle_list: list) -> None:
+def get_hometitle(url: str, home_title_list: List[str]) -> None:
     """Get homepage of the url and return it's title.
 
-    hometitle_list will be used to return the thread result.
+    home_title_list will be used to return the thread result.
     This function is invoked through a thread.
     """
     homeurl = '://'.join(urlparse(url)[:2])
@@ -566,7 +560,7 @@ def get_hometitle(url: str, hometitle_list: list) -> None:
             homeurl, headers=USER_AGENT_HEADER, timeout=15
         ).content
         soup = BeautifulSoup(content, 'lxml', parse_only=TITLE_STRAINER)
-        hometitle_list.append(soup.title.text.strip())
+        home_title_list.append(soup.title.text.strip())
     except RequestException:
         pass
 
@@ -609,7 +603,7 @@ def get_html(url: str) -> tuple:
     )
 
 
-def url2dict(url: str) -> dict:
+def url2dict(url: str) -> Dict[str, Any]:
     """Get url and return the result as a dictionary."""
     d = defaultdict(lambda: None)
     # Creating a thread to fetch homepage title in background
@@ -622,7 +616,7 @@ def url2dict(url: str) -> dict:
     soup, html = get_html(url)
     d['url'] = find_url(html, url)
     m = TITLE_TAG(html)
-    html_title = m['result'] if m else None
+    html_title = html_unescape(m['result']) if m else None
     if html_title:
         d['html_title'] = html_title
     # d['html_title'] is used in waybackmechine.py.
@@ -641,7 +635,7 @@ def url2dict(url: str) -> dict:
     else:
         d['cite_type'] = 'web'
         d['website'] = find_site_name(
-            soup, url, authors, home_title_list, home_title_thread
+            html, html_title, url, authors, home_title_list, home_title_thread
         )
     d['title'] = find_title(
         html, html_title, url, authors, home_title_list, home_title_thread
