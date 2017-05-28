@@ -551,6 +551,7 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
     home_title_list will be used to return the thread result.
     This function is invoked through a thread.
     """
+    # Todo: cache the result.
     home_url = '://'.join(urlparse(url)[:2])
     try:
         check_content_headers(home_url)

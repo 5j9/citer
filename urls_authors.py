@@ -8,8 +8,9 @@ It is in urls.py.
 
 
 from re import search as re_search, compile as re_compile, IGNORECASE
+from typing import Optional, List
 
-from commons import ANYDATE_SEARCH, RawName, InvalidNameError
+from commons import ANYDATE_SEARCH, RawName, InvalidNameError, Name
 
 
 # Names in byline are required to be two or three parts
@@ -162,7 +163,7 @@ STOPWORDS_SEARCH = re_compile(r'|'.join((
 )), IGNORECASE).search
 
 
-def find_authors_loop(soup) -> list or None:
+def find_authors_loop(soup) -> Optional[List[Name]]:
     """Try to find authors in soup using the FIND_AUTHOR_PARAMETERS."""
     html = str(soup)
     for fparams in FIND_AUTHOR_PARAMETERS:
@@ -215,12 +216,12 @@ def find_authors_loop(soup) -> list or None:
     return None
     
 
-def find_authors(soup) -> list or None:
+def find_authors(soup) -> Optional[List[Name]]:
     """Get a BeautifulSoup object. Return (Names, where_found_string)."""
     return find_authors_loop(soup)
 
 
-def byline_to_names(byline) -> list or None:
+def byline_to_names(byline) -> Optional[List[Name]]:
     r"""Find authors in byline sting. Return name objects as a list.
 
     The "By " prefix will be omitted.
