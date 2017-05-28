@@ -650,7 +650,7 @@ def url2dict(url: str) -> dict:
     if date:
         d['date'] = date
         d['year'] = str(date.year)
-    d['language'], d['error'] = detect_language(soup.text)
+    d['language'], d['error'] = detect_language(html)
     return d
 
 
