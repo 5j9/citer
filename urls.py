@@ -48,7 +48,7 @@ TITLE_SEARCH = regex.compile(
         {CONTENT_ATTR}\s+{TITLE_META_NAME_OR_PROP}
     )
     |
-    class=(?<q>["\'])(?:main-hed|heading1)(?P=q).+?>(?<result>.*?)<
+    class=(?<q>["\'])(?:main-hed|heading1)(?P=q)[^>]+?>(?<result>.*?)<
     ''',
     regex.VERBOSE | regex.IGNORECASE,
 ).search
