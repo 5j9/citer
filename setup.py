@@ -75,13 +75,12 @@ setup(
     # https://packaging.python.org/en/latest/technical.html#install-requires-vs-requirements-files
     install_requires=[
         'requests>=2.3.0',
-        'beautifulsoup4>=4.3.2',
         'isbnlib>=3.3.8',
         'langid>=1.1.6',
         'lxml>=3.7.2',
         'flup6>=1.1',
         'jdatetime>=1.8.1',
-        'regex>=2017.1.17',
+        'regex>=2017.5.26',
     ],
 
     # If there are data files included in your packages that need to be

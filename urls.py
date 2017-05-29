@@ -18,22 +18,19 @@ import regex
 from requests import get as requests_get
 from requests import head as requests_head
 from requests.exceptions import RequestException
-from bs4 import BeautifulSoup
 
 from commons import (
     find_any_date, detect_language, Response, USER_AGENT_HEADER,
     dictionary_to_response, ANYDATE_PATTERN, Name,
 )
-from urls_authors import find_authors
+from urls_authors import find_authors, CONTENT_ATTR
 
-
+# Todo: replace '(?:' with '(?>'
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
 CHARSET = re.compile(
     rb'''<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)''',
     re.IGNORECASE,
 ).search
-
-CONTENT_ATTR = r'content=(?<q>["\'])\s*(?<result>.+?)\s*(?P=q)'
 
 TITLE_META_NAME_OR_PROP = r'''
     (?:name|property)=(?<q>["\'])
@@ -591,7 +588,7 @@ def check_content_headers(url: str) -> bool:
     return True
 
 
-def get_html(url: str) -> tuple:
+def get_html(url: str) -> str:
     """Return the (soup, html) for the given url."""
     # Todo: check_content_headers in a separate thread.
     check_content_headers(url)
@@ -600,7 +597,7 @@ def get_html(url: str) -> tuple:
         raise StatusCodeError(r.status_code)
     content = r.content
     charset_match = CHARSET(content)
-    return BeautifulSoup(r.content, 'lxml'), content.decode(
+    return content.decode(
         charset_match[1].decode() if charset_match else r.encoding
     )
 
@@ -615,14 +612,14 @@ def url2dict(url: str) -> Dict[str, Any]:
     )
     home_title_thread.start()
 
-    soup, html = get_html(url)
+    html = get_html(url)
     d['url'] = find_url(html, url)
     m = TITLE_TAG(html)
     html_title = html_unescape(m['result']) if m else None
     if html_title:
         d['html_title'] = html_title
     # d['html_title'] is used in waybackmechine.py.
-    authors = find_authors(soup)
+    authors = find_authors(html)
     if authors:
         d['authors'] = authors
     d['issn'] = find_issn(html)

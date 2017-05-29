@@ -17,7 +17,8 @@ class WaybackmachineResponse(unittest.TestCase):
         """dead-link=no"""
         self.assertIn(
             '* {{cite web '
-            '| author=The Huffington Post '
+            '| last=Stuart '
+            '| first=Hunter '
             '| title=LOOK: Bieber Fan Had $100K Worth Of Plastic Surgery To '
             'Look Like His Idol '
             '| website=The Huffington Post '

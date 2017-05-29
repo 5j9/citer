@@ -535,12 +535,13 @@ class TGDaily(unittest.TestCase):
         o = urls_response(i)
         ct = (
             '* {{cite web '
+            '| author=TGD Team '
             '| title=Apple might buy Beats for $3.2 billion '
             '| website=TG Daily '
             '| date=2014-05-09 '
             '| url=http://www.tgdaily.com/web/'
             '100381-apple-might-buy-beats-for-32-billion '
-            '| ref={{sfnref | TG Daily | 2014}} '
+            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o.cite)
@@ -718,30 +719,24 @@ class Others(unittest.TestCase):
         o = urls_response(
             'http://www.farsnews.com/newstext.php?nn=13930418000036'
         )
-        self.assertIn('{{sfn | خبرگزاری فارس | 2014}}', o.sfn)
+        self.assertIn("{{sfn | ''خبرگزاری فارس'' | 2014}}", o.sfn)
         # Fars news is using 'خبرگزاری فارس' as og:author which is wrong
         # and thats why its name is not italicized in sfn.
         self.assertIn(
             '* {{cite web '
-            '| author=خبرگزاری فارس '
             '| title=آیت\u200cالله محمدی گیلانی دارفانی را وداع گفت '
             '| website=خبرگزاری فارس '
             '| date=2014-07-09 '
             '| url=http://www.farsnews.com/newstext.php?nn=13930418000036 '
             '| language=fa '
-            '| ref=harv '
+            '| ref={{sfnref | خبرگزاری فارس | 2014}} '
             '| access-date=',
             o.cite,
         )
 
     def test_oth7(self):
         """Contains a By Topic line and also the byline contains ' | '."""
-        i = (
-            'http://news.mit.edu/2014/'
-            'traffic-lights-theres-a-better-way-0707'
-        )
-        o = urls_response(i)
-        ct = (
+        self.assertIn(
             '* {{cite web '
             '| last=Chandler '
             '| first=David L. '
@@ -751,9 +746,12 @@ class Others(unittest.TestCase):
             '| url=http://news.mit.edu/2014/'
             'traffic-lights-theres-a-better-way-0707 '
             '| ref=harv '
-            '| access-date='
+            '| access-date=',
+            urls_response(
+                'http://news.mit.edu/2014/'
+                'traffic-lights-theres-a-better-way-0707'
+            ).cite,
         )
-        self.assertIn(ct, o.cite)
 
     def test_oth8(self):
         """Two authors from guardian that are mentions in other tags, too."""

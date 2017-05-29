@@ -105,12 +105,12 @@ def original_url_dict(url: str):
         target=get_home_title, args=(url, hometitle_list)
     )
     home_title_thread.start()
-    soup, html = get_html(url)
+    html = get_html(url)
     m = TITLE_TAG(html)
     html_title = m['result'] if m else None
     if html_title:
         d['html_title'] = html_title
-    authors = find_authors(soup)
+    authors = find_authors(html)
     if authors:
         d['authors'] = authors
     journal = find_journal(html)

@@ -7,25 +7,50 @@ It is in urls.py.
 """
 
 
-from re import search as re_search, compile as re_compile, IGNORECASE
+from re import search as re_search, compile as re_compile, IGNORECASE, VERBOSE
 from typing import Optional, List
+
+import regex
 
 from commons import ANYDATE_SEARCH, RawName, InvalidNameError, Name
 
 
 # Names in byline are required to be two or three parts
-NAME_PATTERN = r'[\w.-]+ [\w.-]+( [\w.-]+)?'
+NAME_PATTERN = r'\w[\w.-]+\ \w[\w.-]+(\ \w[\w.-]+)?'
 
-# This regex supports up to four names in a byline
+# BYLINE_PATTERN supports up to four names in a byline
 # names may be separated with "and", a "comma" or "comma and"
-
-BYLINE_PATTERN = (
-    r'\s*By\s+({NAME_PATTERN}(, {NAME_PATTERN}(, {NAME_PATTERN}(, '
-    r'{NAME_PATTERN}|,? +and {NAME_PATTERN})?|,? +and {NAME_PATTERN}'
-    r'(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?)?|,? +and {NAME_PATTERN}'
-    r'(, {NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?|,? +and '
-    r'{NAME_PATTERN}(, {NAME_PATTERN}|,? +and {NAME_PATTERN})?)?)?)\s*'
-).format(NAME_PATTERN=NAME_PATTERN)
+BYLINE_PATTERN = rf'''
+    \s*By\s+{NAME_PATTERN}(
+        ,\ {NAME_PATTERN}(
+            ,\ {NAME_PATTERN}(
+                ,\ {NAME_PATTERN}
+                |
+                ,?\ +and\ {NAME_PATTERN}
+            )?
+            |
+            ,?\ +and\ {NAME_PATTERN}(
+                ,\ {NAME_PATTERN}
+                |
+                ,?\ +and\ {NAME_PATTERN}
+            )?
+        )?
+        |
+        ,?\ +and\ {NAME_PATTERN}(
+            ,\ {NAME_PATTERN}(
+                ,\ {NAME_PATTERN}
+                |
+                ,?\ +and\ {NAME_PATTERN}
+            )?
+            |
+            ,?\ +and\ {NAME_PATTERN}(
+                ,\ {NAME_PATTERN}
+                |
+                ,?\ +and\ {NAME_PATTERN}
+            )?
+        )?
+    )?\s*
+'''
 
 NORMALIZE_ANDS = re_compile(r'\s+and\s+', IGNORECASE).sub
 NORMALIZE_COMMA_SPACES = re_compile(r'\s*,\s+', IGNORECASE).sub
@@ -37,188 +62,146 @@ AND_OR_COMMA_SUFFIX = re_compile(r'(?: and|,)?\s*$', IGNORECASE).sub
 AND_OR_COMMA_SPLIT = re_compile(r', and | and |, |;', IGNORECASE).split
 AND_SPLIT = re_compile(r', and | and |;', IGNORECASE).split
 
-# FIND_AUTHOR_PARAMETERS are used in find_authors(soup)
-FIND_AUTHOR_PARAMETERS = (
-    # http://socialhistory.ihcs.ac.ir/article_571_84.html
-    # http://jn.physiology.org/content/81/1/319
-    (
-        'soup',
-        {'name': re_compile(r'^(?:citation_authors?|DCSext.author)')},
-        'getitem',
-        'content',
-    ),
-    (
-        'soup',
-        {'property': re_compile(r'^(?:og:|article).*?author')},
-        'getitem',
-        'content',
-    ),
-    # author_byline example:
-    # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
-    # try byline before class_='author'
-    # {'class': 'author'} disabled due to high error rate
-    (
-        'soup',
-        {
-            'class': re_compile(
-                r'^(?:author-title|author_byline|bylineAuthor|byline-name'
-                r'|story-byline|meta-author|authorInline|byline)'
-            )
-        },
-        'getattr',
-        'text',
-    ),
-    (
-        'soup',
-        {'name': 'author'},
-        'getitem',
-        'content',
-    ),
-    # http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
-    (
-        'soup',
-        {'id': 'byline'},
-        'getattr',
-        'text',
-    ),
-    (
-        'soup',
-        {'class': 'byline'},
-        'getattr',
-        'text',
-    ),
-    (
-        'soup',
-        {'name': 'byl'},
-        'getitem',
-        'content',
-    ),
-    (
-        'soup',
-        {'id': 'authortext'},
-        'getattr',
-        'text',
-    ),
-    (
-        'soup',
-        {'class': re_compile('^(?:by_line_date|name)')},
-        'getattr',
-        'text',
-    ),
-    (
-        'select',
-        '.byline > .author',
-        'getattr',
-        'text',
-    ),
-    # http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html
-    (
-        'html',
-        re_compile(
-            r'authorName:\s*["\']([^"\']+)["\']|"author": ["\']([^"\']+)["\']'
-        ).search,
-    ),
-    # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
-    (
-        'soup',
-        {'rel': 'author'},
-        'getattr',
-        'text',
-    ),
-    # Example for [\n|]{BYLINE_PATTERN}\n
-    # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-    (
-        'html',
-        re_compile(
-            r'>{BYLINE_PATTERN}<'.format(
-                BYLINE_PATTERN=BYLINE_PATTERN
-            ),
-            IGNORECASE,
-        ).search,
-    ),
-    (
-        'text',
-        re_compile(
-            r'[\n|]{BYLINE_PATTERN}\n'.format(
-                BYLINE_PATTERN=BYLINE_PATTERN
-            ),
-            IGNORECASE,
-        ).search,
-    ),
-)
-
-STOPWORDS_SEARCH = re_compile(r'|'.join((
-    r'\bReporter\b',
-    r'\bPeople\b',
-    r'\bEditors?\b',
-    r'\bCorrespondent\b',
-    r'\bAdministrator\b',
-    r'\bStaff\b',
-    r'\bWriter\b',
-    r'\bOffice\b',
-    r'\bNews\b',
-    r'\.com\b',
-    r'\.ir\b',
-    r'www\.',
-)), IGNORECASE).search
+CONTENT_ATTR = r'content=(?<q>["\'])\s*(?<result>.+?)\s*(?P=q)'
+AUTHOR_META_NAME_OR_PROP = r'''
+    (?<id>(?:name|property)\s*=\s*(?<q>["\'])
+        (?>
+            # http://socialhistory.ihcs.ac.ir/article_571_84.html
+            # http://jn.physiology.org/content/81/1/319
+            citation_authors?
+            |
+            (?>og:|article)
+            |
+            article:author
+            |
+            og:author
+            |
+            author
+        )
+    (?P=q))
+'''
+META_AUTHOR_FINDITER = regex.compile(
+    rf'''
+    <meta\s[^>]*?(?:
+        {AUTHOR_META_NAME_OR_PROP}\s[^>]*?{CONTENT_ATTR}
+        |
+        {CONTENT_ATTR}\s[^>]*?{AUTHOR_META_NAME_OR_PROP}
+    )
+    ''',
+    regex.VERBOSE | regex.IGNORECASE
+).finditer
+# id=byline
+# http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
+# rel=author
+# http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
+# [\n|]{BYLINE_PATTERN}\n
+# http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
+BYLINE_TAG_FINDITER = regex.compile(
+    rf'''
+    (?>
+        # author_byline example:
+        # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
+        # try byline before class_='author'
+        # Removed:
+        # author|meta-author|authorInline|author-title|author_byline|
+        # bylineAuthor|byline-name|story-byline|by_line_date
+        <(?<tag>[a-z]\w+)\s+[^>]*?(?>class|id|rel)=(?<q>["\'])(?<id>    
+            [^'"\n><]*?(?>(?:by_?line|author)[^'"\n><]*)
+        )(?P=q)[^>]*?>(?<result>[\s\S]*?)</(?P=tag)(?>[^>]*)>
+        |
+        # http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html
+        (?<id>authorName["\']?\s*:\s*["\'])(?<result>[^"\'>\n]+)["\']
+        |
+        # schema.org
+        (?<q>["'])author(?P=q)\s*:\s*{{\s*(?P=q)@type(?P=q)\s*:\s*(?P=q)
+        (?<id>Person)(?P=q)\s*,\s*(?P=q)name(?P=q)\s*:\s*(?P=q)(?<result>.*?)(?P=q)
+    )
+    ''',
+    regex.VERBOSE | regex.IGNORECASE | regex.ASCII,
+).finditer
 
 
-def find_authors_loop(soup) -> Optional[List[Name]]:
-    """Try to find authors in soup using the FIND_AUTHOR_PARAMETERS."""
-    html = str(soup)
-    for fparams in FIND_AUTHOR_PARAMETERS:
-        fparam0 = fparams[0]
-        if fparam0 == 'soup':
-            attrs = fparams[1]
-            finding = soup.find(attrs=attrs)
-            if not finding:
+BYLINE_HTML_PATTERN = re_compile(
+    rf'>{BYLINE_PATTERN}<', IGNORECASE
+).search
+BYLINE_TEXT_PATTERN = re_compile(
+    rf'[\n|]{BYLINE_PATTERN}\n', IGNORECASE | regex.VERBOSE
+).search
+
+TAGS_SUB = regex.compile(r'</?[a-z][^>]*>', regex.IGNORECASE).sub
+
+# http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876
+#  .byline > .author
+BYLINE_AUTHOR = regex.compile(
+    r'<[a-z][^>]*?class=(?<q>["\'])author(?P=q)[^>]*?>(?<result>[^<>]*)',
+    regex.IGNORECASE | regex.ASCII
+).finditer
+
+STOPWORDS_SEARCH = re_compile(
+    r'''
+    \b(?:
+        Reporter
+        |People
+        |Editors?
+        |Correspondent
+        |Administrator
+        |Staff
+        |Writer
+        |Office
+        |News
+        |By
+    )\b
+    |\.(?:com|ir)\b
+    |www\.
+    ''',
+    IGNORECASE | VERBOSE,
+).search
+
+
+def find_authors(html) -> Optional[List[Name]]:
+    """Return authors names found in html."""
+    names = []
+    match_id = None
+    for match in META_AUTHOR_FINDITER(html):
+        if match_id and match_id != match['id']:
+            break
+        name = byline_to_names(match['result'])
+        if name:
+            names.extend(name)
+            match_id = match['id']
+    if names:
+        return names
+    match_id = None
+    for match in BYLINE_TAG_FINDITER(html):
+        # Only match authors using the same search criteria.
+        if match_id and match_id != match['id']:
+            break
+        if match['tag']:
+            tag_text = TAGS_SUB('', match['result'])
+            ns = byline_to_names(tag_text)
+            if ns:
+                match_id = match['id']
+                names.extend(ns)
                 continue
-            next_siblings = finding.find_next_siblings(attrs=attrs)
-            next_siblings.insert(0, finding)
-            names = []
-            if fparams[2] == 'getitem':
-                for finding in next_siblings:
-                    string = finding[fparams[3]]
-                    name = byline_to_names(string)
-                    if not name:
-                        continue
-                    names.extend(name)
-            else:
-                # fp[2] == 'getattr':
-                for finding in next_siblings:
-                    name = byline_to_names(getattr(finding, fparams[3]))
-                    if not name:
-                        continue
-                    names.extend(name)
+            for m in BYLINE_AUTHOR(match['result']):
+                author = m['result']
+                ns = byline_to_names(author)
+                if ns:
+                    names.extend(ns)
             if names:
                 return names
-        elif fparam0 == 'html':
-            m = fparams[1](html)
-            if not m:
-                continue
-            name = byline_to_names(m.group(1))
-            if name:
-                return name
-        elif fparam0 == 'text':
-            m = fparams[1](soup.text)
-            if not m:
-                continue
-            name = byline_to_names(m.group(1))
-            if name:
-                return name
         else:
-            # fp[2] == 'select':
-            selection = soup.select(fparams[1])
-            if len(selection) == 1:
-                name = byline_to_names(selection[0].string)
-                if name:
-                    return name
+            # not containing tags.
+            ns = byline_to_names(match['result'])
+            if ns:
+                match_id = match['id']
+                names.extend(ns)
+    if names:
+        return names
+    match = BYLINE_TEXT_PATTERN(TAGS_SUB('', html))
+    if match:
+        return byline_to_names(match[0])
     return None
-    
-
-def find_authors(soup) -> Optional[List[Name]]:
-    """Get a BeautifulSoup object. Return (Names, where_found_string)."""
-    return find_authors_loop(soup)
 
 
 def byline_to_names(byline) -> Optional[List[Name]]:
@@ -272,11 +255,17 @@ def byline_to_names(byline) -> Optional[List[Name]]:
             name = RawName(fullname)
         except InvalidNameError:
             continue
-        fn_startswith = name.firstname.startswith
-        if fn_startswith('The ') or fn_startswith('خبرگزار'):
-            name.nofirst_fulllast()
-        if STOPWORDS_SEARCH(name.lastname):
+        lastname = name.lastname
+        if STOPWORDS_SEARCH(lastname):
             continue
+        firstname = name.firstname
+        fn_startswith = firstname.startswith
+        if (
+            fn_startswith('The ')
+            or fn_startswith('خبرگزار')
+            or firstname.istitle() != lastname.istitle()
+        ):
+            name.nofirst_fulllast()
         names.append(name)
     if not names:
         return None

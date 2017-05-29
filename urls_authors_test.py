@@ -9,17 +9,20 @@ import unittest
 
 from urls_authors import byline_to_names, BYLINE_PATTERN
 
+BYLINE_PATTERN_REGEX = re.compile(
+    '^' + BYLINE_PATTERN + '$',
+    re.IGNORECASE | re.VERBOSE
+)
+
 
 class RegexTest(unittest.TestCase):
 
     """BYLINE_PATTERN should pass the following tests."""
 
-    regex = re.compile('^' + BYLINE_PATTERN + '$', re.IGNORECASE)
-
     def test_one_author(self):
         """http://www.defense.gov/News/NewsArticle.aspx?ID=18509"""
         text = 'By Jim Garamone'
-        self.assertRegex(text, self.regex)
+        self.assertRegex(text, BYLINE_PATTERN_REGEX)
 
     def test_cap_names_joined_by_and(self):
         """Test two authors with and.
@@ -33,7 +36,7 @@ class RegexTest(unittest.TestCase):
 
         """
         text = 'By Kimberly Carlson  and Jillian York'
-        self.assertRegex(text, self.regex)
+        self.assertRegex(text, BYLINE_PATTERN_REGEX)
 
     def test_four_authors(self):
         """Test four authors, last one with and.
@@ -43,7 +46,7 @@ class RegexTest(unittest.TestCase):
 
         """
         text = 'by John Timmer, Matt Ford, Chris Lee, and Jonathan Gitlin Sept'
-        self.assertRegex(text, self.regex)
+        self.assertRegex(text, BYLINE_PATTERN_REGEX)
 
     @unittest.expectedFailure
     def test_four_authors_with_for(self):
@@ -57,7 +60,7 @@ class RegexTest(unittest.TestCase):
             'By Sara Malm and Annette Witheridge and '
             'Ian Drury for the Daily Mail and Daniel Bates'
             )
-        self.assertRegex(text, self.regex)
+        self.assertRegex(text, BYLINE_PATTERN_REGEX)
 
 
 class BylineToNames(unittest.TestCase):
@@ -108,7 +111,6 @@ class BylineToNames(unittest.TestCase):
         self.assertEqual(name.firstname, '')
         self.assertEqual(name.lastname, 'The Editorial Board')
         self.assertEqual(name.fullname, 'The Editorial Board')
-        
 
 
 if __name__ == '__main__':
