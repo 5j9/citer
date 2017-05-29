@@ -6,7 +6,6 @@
 import re
 import logging
 from threading import Thread
-from multiprocessing import Process, Pipe
 from datetime import date
 from urllib.parse import urlparse
 
@@ -34,11 +33,11 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
         return urls_response(archive_url, date_format)
     archive_year, archive_month, archive_day, original_url = \
         m.groups()
-    parent_conn, child_conn = Pipe()
-    original_process = Process(
-        target=original_url2dict, args=(original_url, child_conn)
+    original_dict = {}
+    thread = Thread(
+        target=original_url2dict, args=(original_url, original_dict)
     )
-    original_process.start()
+    thread.start()
     try:
         archive_dict = url2dict(archive_url)
     except (ContentTypeError, ContentLengthError) as e:
@@ -52,8 +51,7 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
     archive_dict['archive-date'] = date(
         int(archive_year), int(archive_month), int(archive_day)
     )
-    original_dict = parent_conn.recv()
-    original_process.join()
+    thread.join()
     if original_dict:
         # The original_process has been successful
         if (
@@ -76,24 +74,21 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
     return dictionary_to_response(archive_dict)
 
 
-def original_url2dict(ogurl: str, child_conn) -> None:
+def original_url2dict(ogurl: str, original_dict) -> None:
     """Fill the dictionary with the information found in ogurl."""
     try:
-        original_dict = original_url_dict(ogurl)
+        original_dict.update(original_url_dict(ogurl))
     except (
         ContentTypeError,
         ContentLengthError,
         StatusCodeError,
         RequestsConnectionError,
     ):
-        child_conn.send(None)
+        pass
     except Exception:
         logger.exception(
             'There was an unexpected error in waybackmechine thread'
         )
-        child_conn.send(None)
-    else:
-        child_conn.send(original_dict)
 
 
 def original_url_dict(url: str):
