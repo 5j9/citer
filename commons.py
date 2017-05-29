@@ -68,11 +68,11 @@ B = (
     '''
 )
 # فروردین|اردیبهشت|خرداد...
-jB = '(?<jB>{})'.format(
+jB = '(?>(?<jB>{0}))'.format(
     '|'.join([jm for jm in jB_TO_NUM if 'ي' not in jm]).replace('ی', '[یي]')
 )
 # Month abbreviations:
-b = r'(?<b>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec).?'
+b = r'(?>(?<b>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)).?'
 # Month numbers 0?1-12
 m = r'(?<m>0?[1-9]|1[012])'
 # Zero padded month numbers 01-12
@@ -198,7 +198,6 @@ def detect_language(text, langset=None) -> tuple:
     "lang" will be a string containing an ISO 639-1 code.
     "error" will be an integer indicating a percentage. (Rounded to 2 digits)
     """
-    # Todo: Use langdetect library instead, it's faster.
     if langset:
         set_languages(langset)
     language, confidence = classify(text)

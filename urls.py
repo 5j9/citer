@@ -33,8 +33,8 @@ CHARSET = re.compile(
 ).search
 
 TITLE_META_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])
-        (?:citation_title|title|Headline|og:title)
+    (?>name|property)=(?<q>["\'])
+        (?>citation_title|title|Headline|og:title)
     (?P=q)
 '''
 TITLE_SEARCH = regex.compile(
@@ -45,7 +45,7 @@ TITLE_SEARCH = regex.compile(
         {CONTENT_ATTR}\s+{TITLE_META_NAME_OR_PROP}
     )
     |
-    class=(?<q>["\'])(?:main-hed|heading1)(?P=q)[^>]+?>(?<result>.*?)<
+    class=(?<q>["\'])(?>main-hed|heading1)(?P=q)[^>]+?>(?<result>.*?)<
     ''',
     regex.VERBOSE | regex.IGNORECASE,
 ).search
@@ -60,7 +60,7 @@ TITLE_TAG = re.compile(
 ).search
 
 DATE_META_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
+    (?>name|property)=(?<q>["\'])(?>(?:
         citation_date
         |
         citation_publication_date
@@ -78,10 +78,10 @@ DATE_META_NAME_OR_PROP = r'''
         sailthru\.date
         |
         date
-    )(?P=q)
+    )(?P=q))
 '''
 DATE_CONTENT_ATTR = rf'''
-    content=(?<q>["\'])[^"'<]*?{ANYDATE_PATTERN}[^"'<]*?(?P=q)
+    content=(?<q>["\'])[^"'<]*?{ANYDATE_PATTERN}(?>[^"'<]*?(?P=q))
 '''
 DATE_SEARCH = regex.compile(
     rf'''
@@ -93,15 +93,13 @@ DATE_SEARCH = regex.compile(
     |
     # http://livescience.com/46619-sterile-neutrino-experiment-beginning.html
     # https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0
-    (?:datePublished|Dateline)[^\w]+{ANYDATE_PATTERN}
+    (?>datePublished|Dateline)[^\w]+?{ANYDATE_PATTERN}
     ''',
     regex.VERBOSE | regex.IGNORECASE,
 ).search
 
 JOURNAL_META_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        citation_journal_title
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])citation_journal_title(?P=q)
 '''
 JOURNAL_TITLE_SEARCH = regex.compile(
     rf'''
@@ -115,9 +113,7 @@ JOURNAL_TITLE_SEARCH = regex.compile(
 ).search
 
 URL_META_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        og:url
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])og:url(?P=q)
 '''
 URL_SEARCH = regex.compile(
     rf'''
@@ -131,9 +127,7 @@ URL_SEARCH = regex.compile(
 ).search
 
 ISSN_META_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        citation_issn
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])citation_issn(?P=q)
 '''
 ISSN_SEARCH = regex.compile(
     rf'''
@@ -147,9 +141,7 @@ ISSN_SEARCH = regex.compile(
 ).search
 
 PMID_META_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        citation_pmid
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])citation_pmid(?P=q)
 '''
 PMID_SEARCH = regex.compile(
     rf'''
@@ -163,9 +155,7 @@ PMID_SEARCH = regex.compile(
 ).search
 
 DOI_META_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        citation_doi
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])citation_doi(?P=q)
 '''
 DOI_SEARCH = regex.compile(
     rf'''
@@ -180,9 +170,7 @@ DOI_SEARCH = regex.compile(
 
 
 VOLUME_META_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        citation_volume
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])citation_volume(?P=q)
 '''
 VOLUME_SEARCH = regex.compile(
     rf'''
@@ -196,9 +184,7 @@ VOLUME_SEARCH = regex.compile(
 ).search
 
 ISSUE_META_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        citation_issue
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])citation_issue(?P=q)
 '''
 ISSUE_SEARCH = regex.compile(
     rf'''
@@ -212,9 +198,7 @@ ISSUE_SEARCH = regex.compile(
 ).search
 
 FIRST_PAGE_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        citation_firstpage
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])citation_firstpage(?P=q)
 '''
 FIRST_PAGE_SEARCH = regex.compile(
     rf'''
@@ -229,9 +213,7 @@ FIRST_PAGE_SEARCH = regex.compile(
 
 
 LAST_PAGE_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        citation_lastpage
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])citation_lastpage(?P=q)
 '''
 LAST_PAGE_SEARCH = regex.compile(
     rf'''
@@ -246,11 +228,7 @@ LAST_PAGE_SEARCH = regex.compile(
 
 
 SITE_NAME_NAME_OR_PROP = r'''
-    (?:name|property)=(?<q>["\'])(?:
-        og:site_name
-        |
-        og:site_name
-    )(?P=q)
+    (?>name|property)=(?<q>["\'])og:site_name(?P=q)
 '''
 SITE_NAME_SEARCH = regex.compile(
     rf'''
@@ -507,7 +485,7 @@ def parse_title(
                 intitle_sitename = part
                 break
     if not intitle_sitename:
-        # 4. Using difflib on hometitle
+        # 4. Using difflib on home_title
         close_matches = get_close_matches(
             home_title, title_parts, n=1, cutoff=.3
         )
