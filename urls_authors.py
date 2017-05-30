@@ -51,6 +51,7 @@ BYLINE_PATTERN = rf'''
         )?
     )?\s*
 '''
+BYLINE_PATTERN_SEARCH = regex.compile(BYLINE_PATTERN, regex.X | regex.I)
 
 NORMALIZE_ANDS = re_compile(r'\s+and\s+', IGNORECASE).sub
 NORMALIZE_COMMA_SPACES = re_compile(r'\s*,\s+', IGNORECASE).sub
@@ -62,7 +63,7 @@ AND_OR_COMMA_SUFFIX = re_compile(r'(?: and|,)?\s*$', IGNORECASE).sub
 AND_OR_COMMA_SPLIT = re_compile(r', and | and |, |;', IGNORECASE).split
 AND_SPLIT = re_compile(r', and | and |;', IGNORECASE).split
 
-CONTENT_ATTR = r'content=(?<q>["\'])\s*(?<result>.+?)\s*(?P=q)'
+CONTENT_ATTR = r'content=(?<q>["\'])\s*(?<result>.*?)\s*(?P=q)'
 AUTHOR_META_NAME_OR_PROP = r'''
     (?<id>(?:name|property)\s*=\s*(?<q>["\'])
         (?>
@@ -94,20 +95,30 @@ META_AUTHOR_FINDITER = regex.compile(
 # http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
 # rel=author
 # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
-# [\n|]{BYLINE_PATTERN}\n
-# http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
 BYLINE_TAG_FINDITER = regex.compile(
     rf'''
     (?>
         # author_byline example:
         # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
         # try byline before class_='author'
-        # Removed:
-        # author|meta-author|authorInline|author-title|author_byline|
-        # bylineAuthor|byline-name|story-byline|by_line_date
-        <(?<tag>[a-z]\w+)\s+[^>]*?(?>class|id|rel)=(?<q>["\'])(?<id>    
-            [^'"\n><]*?(?>(?:by_?line|author)[^'"\n><]*)
-        )(?P=q)[^>]*?>(?<result>[\s\S]*?)</(?P=tag)(?>[^>]*)>
+        <(?<tag>[a-z]\w+)\s+[^>]*?
+        (?<id>
+            (?>class|id|rel)=(?<q>["\'])
+                (?:
+                    byline
+                    |bylineAuthor
+                    |byline-name
+                    |by_line
+                    |story-byline
+                    |by_line_date
+                    |author_byline
+                    |authorInline
+                    |meta-author
+                    |author-title
+                    |author
+                )
+            )
+        (?P=q)[^>]*?>(?<result>[\s\S]*?)</(?P=tag)(?>[^>]*)>
         |
         # http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html
         (?<id>authorName["\']?\s*:\s*["\'])(?<result>[^"\'>\n]+)["\']
@@ -122,10 +133,12 @@ BYLINE_TAG_FINDITER = regex.compile(
 
 
 BYLINE_HTML_PATTERN = re_compile(
-    rf'>{BYLINE_PATTERN}<', IGNORECASE
+    rf'>{BYLINE_PATTERN}<', regex.VERBOSE | regex.IGNORECASE
 ).search
+# [\n|]{BYLINE_PATTERN}\n
+# http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
 BYLINE_TEXT_PATTERN = re_compile(
-    rf'[\n|]{BYLINE_PATTERN}\n', IGNORECASE | regex.VERBOSE
+    rf'[\n|]{BYLINE_PATTERN}\n', regex.VERBOSE | regex.IGNORECASE
 ).search
 
 TAGS_SUB = regex.compile(r'</?[a-z][^>]*>', regex.IGNORECASE).sub

@@ -535,13 +535,12 @@ class TGDaily(unittest.TestCase):
         o = urls_response(i)
         ct = (
             '* {{cite web '
-            '| author=TGD Team '
             '| title=Apple might buy Beats for $3.2 billion '
             '| website=TG Daily '
             '| date=2014-05-09 '
             '| url=http://www.tgdaily.com/web/'
             '100381-apple-might-buy-beats-for-32-billion '
-            '| ref=harv '
+            '| ref={{sfnref | TG Daily | 2014}} '
             '| access-date='
         )
         self.assertIn(ct, o.cite)
@@ -933,6 +932,23 @@ class Others(unittest.TestCase):
             '| access-date=',
             urls_response(
                 'http://socialhistory.ihcs.ac.ir/article_319_84.html'
+            ).cite,
+        )
+
+    def test_empty_meta_author_content(self):
+        """Test that the output will not be malformed because empty meta."""
+        self.assertIn(
+            "* {{cite web "
+            "| title=UAE's Enoc pays Iran $4 billion in oil dues "
+            "| website=Al Jazeera "
+            "| date=2017-05-29 "
+            "| url=http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-"
+            "billion-oil-dues-170529171315570.html "
+            "| ref={{sfnref | Al Jazeera | 2017}} "
+            "| access-date=",
+            urls_response(
+                'http://www.aljazeera.com/news/2017/05/'
+                'uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html'
             ).cite,
         )
 
