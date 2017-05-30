@@ -153,16 +153,17 @@ BYLINE_AUTHOR = regex.compile(
 STOPWORDS_SEARCH = re_compile(
     r'''
     \b(?:
-        Reporter
-        |People
-        |Editors?
+        Administrator
+        |By
         |Correspondent
-        |Administrator
+        |Editors?
+        |News
+        |Office
+        |People
+        |Reporter
         |Staff
         |Writer
-        |Office
-        |News
-        |By
+        |سایت # tabnak.ir
     )\b
     |\.(?:com|ir)\b
     |www\.
