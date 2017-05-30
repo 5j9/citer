@@ -265,13 +265,13 @@ def byline_to_names(byline) -> Optional[List[Name]]:
     names = []
     for fullname in fullnames:
         fullname = fullname.partition(' in ')[0].partition(' for ')[0]
+        if STOPWORDS_SEARCH(fullname):
+            continue
         try:
             name = RawName(fullname)
         except InvalidNameError:
             continue
         lastname = name.lastname
-        if STOPWORDS_SEARCH(lastname):
-            continue
         firstname = name.firstname
         fn_startswith = firstname.startswith
         if (
