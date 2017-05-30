@@ -104,13 +104,13 @@ BYLINE_TAG_FINDITER = regex.compile(
         <(?<tag>[a-z]\w+)\s+[^>]*?
         (?<id>
             (?>class|id|rel)=(?<q>["\'])
-                (?:
-                    byline
-                    |bylineAuthor
+                (?>
+                    bylineAuthor
                     |byline-name
+                    |by_line_date
                     |by_line
                     |story-byline
-                    |by_line_date
+                    |byline
                     |author_byline
                     |authorInline
                     |meta-author

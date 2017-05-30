@@ -60,25 +60,17 @@ TITLE_TAG = re.compile(
 ).search
 
 DATE_META_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])(?>(?:
+    (?>name|property)=(?<q>["\'])(?>
         citation_date
-        |
-        citation_publication_date
-        |
-        last-modified
-        |
-        article:published_time
-        |
-        article:modified_time
-        |
-        pub_?date
-        |
-        DC\.date\b.*?
-        |
-        sailthru\.date
-        |
-        date
-    )(?P=q))
+        |citation_publication_date
+        |last-modified
+        |article:published_time
+        |article:modified_time
+        |pub_?date
+        |DC.date.[^'"\n>]*
+        |sailthru\.date
+        |date
+    )(?P=q)
 '''
 DATE_CONTENT_ATTR = rf'''
     content=(?<q>["\'])[^"'<]*?{ANYDATE_PATTERN}(?>[^"'<]*?(?P=q))
