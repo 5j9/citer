@@ -7,7 +7,7 @@ It is in urls.py.
 """
 
 
-from re import search as re_search, compile as re_compile, IGNORECASE, VERBOSE
+from re import compile as re_compile, IGNORECASE, VERBOSE
 from typing import Optional, List
 
 import regex
@@ -171,6 +171,8 @@ STOPWORDS_SEARCH = re_compile(
     IGNORECASE | VERBOSE,
 ).search
 
+FOUR_DIGIT_NUM = re_compile('\d\d\d\d').search
+
 
 def find_authors(html) -> Optional[List[Name]]:
     """Return authors names found in html."""
@@ -247,7 +249,7 @@ def byline_to_names(byline) -> Optional[List[Name]]:
         byline = byline[:m.start()]
     if not byline:
         return None
-    if re_search('\d\d\d\d', byline):
+    if FOUR_DIGIT_NUM(byline):
         return None
     # Normalize 'and\n' (and the similar) to standard 'and '
     # This should be done before cutting the byline at the first newline
