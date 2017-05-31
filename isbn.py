@@ -16,7 +16,7 @@ from commons import dictionary_to_response, detect_language, Response
 
 # original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
 ISBN13_SEARCH = re.compile(
-    r'97(?:8|9)([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
+    r'97[89]([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
 ).search
 
 # original regex from: https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
