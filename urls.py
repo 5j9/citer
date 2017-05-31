@@ -25,7 +25,6 @@ from commons import (
 )
 from urls_authors import find_authors, CONTENT_ATTR
 
-# Todo: replace '(?:' with '(?>'
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
 CHARSET = re.compile(
     rb'''<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)''',
@@ -61,15 +60,13 @@ TITLE_TAG = re.compile(
 
 DATE_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])(?>
-        citation_date
-        |citation_publication_date
-        |last-modified
-        |article:published_time
-        |article:modified_time
-        |pub_?date
-        |DC.date.[^'"\n>]*
-        |sailthru\.date
+        article:(?>modified_time|published_time)
+        |citation_(?>date|publication_date)
         |date
+        |DC.date.[^'"\n>]*
+        |last-modified
+        |pub_?date
+        |sailthru\.date
     )(?P=q)
 '''
 DATE_CONTENT_ATTR = rf'''
@@ -85,7 +82,7 @@ DATE_SEARCH = regex.compile(
     |
     # http://livescience.com/46619-sterile-neutrino-experiment-beginning.html
     # https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0
-    (?>datePublished|Dateline)[^\w]+?{ANYDATE_PATTERN}
+    date(?>Published|line)[^\w]+?{ANYDATE_PATTERN}
     ''',
     regex.VERBOSE | regex.IGNORECASE,
 ).search

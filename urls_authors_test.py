@@ -4,14 +4,14 @@
 """Test urls_authors.BYLINE_PATTERN."""
 
 
-import re
+from regex import compile as regex_compile, VERBOSE, IGNORECASE
 import unittest
 
 from urls_authors import byline_to_names, BYLINE_PATTERN
 
-BYLINE_PATTERN_REGEX = re.compile(
+BYLINE_PATTERN_REGEX = regex_compile(
     '^' + BYLINE_PATTERN + '$',
-    re.IGNORECASE | re.VERBOSE
+    IGNORECASE | VERBOSE
 )
 
 

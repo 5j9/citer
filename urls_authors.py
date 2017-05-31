@@ -7,7 +7,7 @@ It is in urls.py.
 """
 
 
-from re import compile as re_compile, IGNORECASE, VERBOSE
+from re import compile as re_compile, IGNORECASE
 from typing import Optional, List
 
 import regex
@@ -16,7 +16,7 @@ from commons import ANYDATE_SEARCH, RawName, InvalidNameError, Name
 
 
 # Names in byline are required to be two or three parts
-NAME_PATTERN = r'\w[\w.-]+\ \w[\w.-]+(\ \w[\w.-]+)?'
+NAME_PATTERN = r'(?>\w[\w.-]+\ )(?>\w[\w.-]+)(?>\ \w[\w.-]+)?'
 
 # BYLINE_PATTERN supports up to four names in a byline
 # names may be separated with "and", a "comma" or "comma and"
@@ -69,15 +69,9 @@ AUTHOR_META_NAME_OR_PROP = r'''
         (?>
             # http://socialhistory.ihcs.ac.ir/article_571_84.html
             # http://jn.physiology.org/content/81/1/319
-            citation_authors?
-            |
-            (?>og:|article)
-            |
-            article:author
-            |
-            og:author
-            |
-            author
+            a(?>rticle:author|uthor)
+            |citation_authors?
+            |og:author
         )
     (?P=q))
 '''
@@ -105,17 +99,13 @@ BYLINE_TAG_FINDITER = regex.compile(
         (?<id>
             (?>class|id|rel)=(?<q>["\'])
                 (?>
-                    bylineAuthor
-                    |byline-name
-                    |by_line_date
-                    |by_line
-                    |story-byline
-                    |byline
-                    |author_byline
-                    |authorInline
+                    author(?>_byline|Inline|-title)?
+                    |by(?>
+                        line(?>Author|line-name)?
+                        |_line(?:_date)?
+                    )
                     |meta-author
-                    |author-title
-                    |author
+                    |story-byline
                 )
             )
         (?P=q)[^>]*?>(?<result>[\s\S]*?)</(?P=tag)(?>[^>]*)>
@@ -132,12 +122,12 @@ BYLINE_TAG_FINDITER = regex.compile(
 ).finditer
 
 
-BYLINE_HTML_PATTERN = re_compile(
+BYLINE_HTML_PATTERN = regex.compile(
     rf'>{BYLINE_PATTERN}<', regex.VERBOSE | regex.IGNORECASE
 ).search
 # [\n|]{BYLINE_PATTERN}\n
 # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-BYLINE_TEXT_PATTERN = re_compile(
+BYLINE_TEXT_PATTERN = regex.compile(
     rf'[\n|]{BYLINE_PATTERN}\n', regex.VERBOSE | regex.IGNORECASE
 ).search
 
@@ -150,9 +140,9 @@ BYLINE_AUTHOR = regex.compile(
     regex.IGNORECASE | regex.ASCII
 ).finditer
 
-STOPWORDS_SEARCH = re_compile(
+STOPWORDS_SEARCH = regex.compile(
     r'''
-    \b(?:
+    \b(?>
         Administrator
         |By
         |Correspondent
@@ -165,10 +155,10 @@ STOPWORDS_SEARCH = re_compile(
         |Writer
         |سایت # tabnak.ir
     )\b
-    |\.(?:com|ir)\b
+    |\.(?>com|ir)\b
     |www\.
     ''',
-    IGNORECASE | VERBOSE,
+    regex.IGNORECASE | regex.VERBOSE,
 ).search
 
 FOUR_DIGIT_NUM = re_compile('\d\d\d\d').search
