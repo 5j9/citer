@@ -952,6 +952,36 @@ class Others(unittest.TestCase):
             ).cite,
         )
 
+    def test_citation_author_reverse_order(self):
+        """Test correct detection of citation_author.
+
+        first name and last name are in reverse order.
+
+        """
+        self.assertIn(
+            '* {{cite web '
+            '| last=Hartman '
+            '| first=JudithAnn R. '
+            '| last2=Nelson '
+            '| first2=Eric A. '
+            '| title=Automaticity in Computation and Student Success in '
+            'Introductory Physical Science Courses '
+            '| website=arXiv.org e-Print archive '
+            '| date=2016-08-17 '
+            '| url=https://arxiv.org/abs/1608.05006?utm_medium=email&'
+            'utm_source=other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.'
+            'announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.'
+            '4xDVKzx5EeeJjRJrkGD1dA '
+            '| ref=harv '
+            '| access-date=',
+            urls_response(
+                'https://arxiv.org/abs/1608.05006?utm_medium=email&utm_source='
+                'other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.'
+                'announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.'
+                '4xDVKzx5EeeJjRJrkGD1dA'
+            ).cite,
+        )
+
 
 dummy_requests = dummy_requests.DummyRequests()
 urls.requests_get = dummy_requests.get

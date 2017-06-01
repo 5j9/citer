@@ -249,7 +249,7 @@ def byline_to_names(byline) -> Optional[List[Name]]:
     byline = BY_PREFIX(r'\1', byline)
     # Removing ending " and" or ',' and rstrip
     byline = AND_OR_COMMA_SUFFIX('', byline)
-    if ' and ' in byline.lower() or ' ' in byline.replace(', ', ''):
+    if ' and ' in byline.lower() or ' ' in byline.partition(', ')[0]:
         fullnames = AND_OR_COMMA_SPLIT(byline)
     else:
         # Comma may be the separator of first name and last name.
@@ -269,7 +269,7 @@ def byline_to_names(byline) -> Optional[List[Name]]:
         if (
             fn_startswith('The ')
             or fn_startswith('خبرگزار')
-            or firstname.istitle() != lastname.istitle()
+            or lastname.islower()
         ):
             name.nofirst_fulllast()
         names.append(name)
