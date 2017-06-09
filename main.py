@@ -89,8 +89,7 @@ def get_response(user_input, date_format):
     # Checking the user input for dot is important because
     # the use of dotless domains is prohibited.
     # See: https://features.icann.org/dotless-domains
-    user_input_contains_dot = '.' in en_user_input
-    if user_input_contains_dot:
+    if '.' in en_user_input:
         # Try predefined URLs
         # Todo: The following code could be done in threads.
         if not user_input.startswith('http'):
