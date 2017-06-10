@@ -6,7 +6,7 @@
 
 import unittest
 
-import config
+from src import config
 
 
 if __name__ == '__main__':

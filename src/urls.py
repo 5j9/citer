@@ -19,11 +19,11 @@ from requests import get as requests_get
 from requests import head as requests_head
 from requests.exceptions import RequestException
 
-from commons import (
+from src.commons import (
     find_any_date, detect_language, Response, USER_AGENT_HEADER,
     dictionary_to_response, ANYDATE_PATTERN, Name,
 )
-from urls_authors import find_authors, CONTENT_ATTR
+from src.urls_authors import find_authors, CONTENT_ATTR
 
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
 CHARSET = re.compile(

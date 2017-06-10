@@ -6,9 +6,9 @@
 
 import unittest
 
-import dummy_requests
-import urls
-from waybackmachine import waybackmachine_response
+from src import dummy_requests
+from src import urls
+from src.waybackmachine import waybackmachine_response
 
 
 class WaybackmachineResponse(unittest.TestCase):

@@ -8,10 +8,10 @@ from threading import Thread
 
 from requests import get as requests_get
 
-from adinebook import url2dictionary as adinebook_url2dictionary
-from adinebook import isbn2url as adinebook_isbn2url
-from bibtex import parse as bibtex_parse
-from commons import dictionary_to_response, detect_language, Response
+from src.adinebook import url2dictionary as adinebook_url2dictionary
+from src.adinebook import isbn2url as adinebook_isbn2url
+from src.bibtex import parse as bibtex_parse
+from src.commons import dictionary_to_response, detect_language, Response
 
 
 # original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9

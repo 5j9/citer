@@ -6,9 +6,9 @@
 
 import unittest
 
-import dummy_requests
-import googlebooks
-from googlebooks import googlebooks_response
+from src import dummy_requests
+from src import googlebooks
+from src.googlebooks import googlebooks_response
 
 
 class GooglebooksTest(unittest.TestCase):

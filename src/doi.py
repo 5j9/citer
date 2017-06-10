@@ -13,8 +13,8 @@ from html import unescape
 
 from requests import get as requests_get
 
-from commons import Response, dictionary_to_response, detect_language, Name
-from config import lang
+from src.commons import Response, dictionary_to_response, detect_language, Name
+from src.config import lang
 
 
 # The regex is from:

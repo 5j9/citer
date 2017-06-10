@@ -19,7 +19,7 @@ from collections import defaultdict
 
 import regex as regex
 
-from commons import RawName
+from src.commons import RawName
 
 
 # To remove Texts like {APA} from input.

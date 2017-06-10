@@ -6,9 +6,9 @@
 
 import unittest
 
-import dummy_requests
-import noorlib
-from noorlib import noorlib_response
+from src import dummy_requests
+from src import noorlib
+from src.noorlib import noorlib_response
 
 
 class NoorlibTest(unittest.TestCase):

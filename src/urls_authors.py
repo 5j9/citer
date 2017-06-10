@@ -12,7 +12,7 @@ from typing import Optional, List
 
 import regex
 
-from commons import ANYDATE_SEARCH, RawName, InvalidNameError, Name
+from src.commons import ANYDATE_SEARCH, RawName, InvalidNameError, Name
 
 
 # Names in byline are required to be two or three parts

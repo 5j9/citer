@@ -12,18 +12,18 @@ except ImportError:
     from wsgiref.simple_server import make_server
 import requests
 
-from noormags import noormags_response
-from googlebooks import googlebooks_response
-from noorlib import noorlib_response
-from adinebook import adinehbook_response
-from urls import urls_response
-from doi import doi_response, DOI_SEARCH
-from commons import uninum2en, response_to_json
-from config import lang
-from isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError, isbn_response
-from waybackmachine import waybackmachine_response
+from src.noormags import noormags_response
+from src.googlebooks import googlebooks_response
+from src.noorlib import noorlib_response
+from src.adinebook import adinehbook_response
+from src.urls import urls_response
+from src.doi import doi_response, DOI_SEARCH
+from src.commons import uninum2en, response_to_json
+from src.config import lang
+from src.isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError, isbn_response
+from src.waybackmachine import waybackmachine_response
 if lang == 'en':
-    from html_en import (
+    from src.html_en import (
         DEFAULT_RESPONSE,
         UNDEFINED_INPUT_RESPONSE,
         HTTPERROR_RESPONSE,
@@ -31,7 +31,7 @@ if lang == 'en':
         response_to_html,
     )
 else:
-    from html_fa import (
+    from src.html_fa import (
         DEFAULT_RESPONSE,
         UNDEFINED_INPUT_RESPONSE,
         HTTPERROR_RESPONSE,

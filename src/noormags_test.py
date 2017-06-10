@@ -6,9 +6,9 @@
 
 import unittest
 
-import dummy_requests
-import noormags
-from noormags import noormags_response
+from src import dummy_requests
+from src import noormags
+from src.noormags import noormags_response
 
 
 class NoormagsTest(unittest.TestCase):

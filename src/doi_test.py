@@ -6,9 +6,9 @@
 
 import unittest
 
-import dummy_requests
-import doi
-from doi import doi_response
+from src import dummy_requests
+from src import doi
+from src.doi import doi_response
 
 
 class DoiTest(unittest.TestCase):

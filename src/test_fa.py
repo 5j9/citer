@@ -3,20 +3,20 @@
 
 import unittest
 
-from dummy_requests import DummyRequests
-import config; config.lang = 'fa'
-import adinebook
-import googlebooks
-import noormags
-import noorlib
-import doi
-import isbn
-from adinebook import adinehbook_response
-from googlebooks import googlebooks_response
-from noormags import noormags_response
-from noorlib import noorlib_response
-from doi import doi_response
-from isbn import isbn_response
+from src.dummy_requests import DummyRequests
+from src import config; config.lang = 'fa'
+from src import adinebook
+from src import googlebooks
+from src import noormags
+from src import noorlib
+from src import doi
+from src import isbn
+from src.adinebook import adinehbook_response
+from src.googlebooks import googlebooks_response
+from src.noormags import noormags_response
+from src.noorlib import noorlib_response
+from src.doi import doi_response
+from src.isbn import isbn_response
 
 
 class AdinebookTest(unittest.TestCase):

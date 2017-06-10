@@ -7,8 +7,8 @@ import re
 
 from requests import get as requests_get
 
-from commons import dictionary_to_response, Response
-from bibtex import parse as bibtex_parse
+from src.commons import dictionary_to_response, Response
+from src.bibtex import parse as bibtex_parse
 # import ris[1]
 
 

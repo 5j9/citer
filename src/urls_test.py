@@ -6,9 +6,9 @@
 
 import unittest
 
-import dummy_requests
-import urls
-from urls import urls_response
+from src import dummy_requests
+from src import urls
+from src.urls import urls_response
 
 
 class BostonTest(unittest.TestCase):

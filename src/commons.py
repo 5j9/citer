@@ -14,11 +14,11 @@ from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
 from langid import classify, set_languages
 
-from config import lang
+from src.config import lang
 if lang == 'en':
-    from generator_en import citations
+    from src.generator_en import citations
 else:
-    from generator_fa import citations
+    from src.generator_fa import citations
 
 
 b_TO_NUM = {

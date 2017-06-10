@@ -10,8 +10,8 @@ from urllib.parse import urlparse
 from requests import get as requests_get
 
 # import bibtex [1]
-from ris import parse as ris_parse
-from commons import dictionary_to_response, detect_language, Response
+from src.ris import parse as ris_parse
+from src.commons import dictionary_to_response, detect_language, Response
 
 
 def googlebooks_response(url, date_format='%Y-%m-%d') -> Response:

@@ -9,7 +9,7 @@ import re
 
 from requests import get as requests_get, RequestException
 
-from commons import RawName, dictionary_to_response, detect_language, Response
+from src.commons import RawName, dictionary_to_response, detect_language, Response
 
 
 ISBN_SEARCH = re.compile(r'شابک:.*?([\d-]*X?)</span></li>').search

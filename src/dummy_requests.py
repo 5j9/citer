@@ -26,14 +26,14 @@ class DummyRequests:
 def save_cache(cache_dict):
     """Save cache as pickle."""
     print('saving new cache')
-    with open('.tests_cache', 'w+b') as f:
+    with open('src/.tests_cache', 'w+b') as f:
         pickle.dump(cache_dict, f)
 
 
 def load_cache():
     """Return cache as a dict."""
     try:
-        with open('.tests_cache', 'r+b') as f:
+        with open('src/.tests_cache', 'r+b') as f:
             return pickle.load(f)
     except FileNotFoundError:
         return {}

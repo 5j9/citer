@@ -5,10 +5,9 @@
 
 
 from string import Template
-from datetime import date
 from os import name as osname
 
-from commons import Response
+from src.commons import Response
 
 
 # Predefined responses
@@ -41,7 +40,7 @@ OTHER_EXCEPTION_RESPONSE = Response(
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
 HTML_TEMPLATE = Template(
-    open('html_en.html', encoding='utf8').read()
+    open('yadkard/html_en.html', encoding='utf8').read()
     .replace('$d', '%#d' if osname == 'nt' else '%-d')
 )
 

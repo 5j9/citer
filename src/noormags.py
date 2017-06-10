@@ -8,9 +8,9 @@ from threading import Thread
 
 from requests import get as requests_get
 
-from commons import dictionary_to_response, Response
-from bibtex import parse as bibtex_parse
-from ris import parse as ris_parse
+from src.commons import dictionary_to_response, Response
+from src.bibtex import parse as bibtex_parse
+from src.ris import parse as ris_parse
 
 
 def noormags_response(url: str, date_format: str= '%Y-%m-%d') -> Response:

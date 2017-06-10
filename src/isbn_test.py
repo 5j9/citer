@@ -6,9 +6,9 @@
 
 import unittest
 
-import dummy_requests
-import isbn
-from isbn import isbn_response
+from src import dummy_requests
+from src import isbn
+from src.isbn import isbn_response
 
 
 class IsbnTest(unittest.TestCase):

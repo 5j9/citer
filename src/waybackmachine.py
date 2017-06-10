@@ -11,8 +11,8 @@ from urllib.parse import urlparse
 
 from requests import ConnectionError as RequestsConnectionError
 
-from commons import dictionary_to_response, Response
-from urls import (
+from src.commons import dictionary_to_response, Response
+from src.urls import (
     urls_response, url2dict, get_home_title, get_html, find_authors,
     find_journal, find_site_name, find_title, ContentTypeError,
     ContentLengthError, StatusCodeError, TITLE_TAG

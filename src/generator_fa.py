@@ -9,7 +9,7 @@ from datetime import date
 from random import seed as randseed, choice as randchoice
 from string import digits, ascii_lowercase
 
-from generator_en import citations as en_citations, DOI_URL_MATCH
+from src.generator_en import citations as en_citations, DOI_URL_MATCH
 
 
 TYPE_TO_CITE = {

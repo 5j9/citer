@@ -6,10 +6,10 @@
 
 from string import Template
 
-from commons import Response
+from src.commons import Response
 
 
-HTML_TEMPLATE = Template(open('html_fa.html', encoding='utf8').read())
+HTML_TEMPLATE = Template(open('yadkard/html_fa.html', encoding='utf8').read())
 
 # Predefined responses
 DEFAULT_RESPONSE = Response(

@@ -3,9 +3,9 @@
 
 import re
 from collections import defaultdict
-from doi import DOI_SEARCH
+from src.doi import DOI_SEARCH
 
-from commons import RawName, InvalidNameError
+from src.commons import RawName, InvalidNameError
 
 
 TY_SEARCH = re.compile('TY  - (.*)').search

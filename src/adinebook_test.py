@@ -6,9 +6,9 @@
 
 import unittest
 
-import dummy_requests
-import adinebook
-from adinebook import adinehbook_response
+from src import dummy_requests
+from src import adinebook
+from src.adinebook import adinehbook_response
 
 
 class AdineBookTest(unittest.TestCase):
