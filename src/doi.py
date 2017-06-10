@@ -14,7 +14,7 @@ from html import unescape
 from requests import get as requests_get
 
 from src.commons import Response, dictionary_to_response, detect_language, Name
-from src.config import lang
+from config import lang
 
 
 # The regex is from:

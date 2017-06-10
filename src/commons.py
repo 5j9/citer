@@ -14,7 +14,7 @@ from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
 from langid import classify, set_languages
 
-from src.config import lang
+from config import lang
 if lang == 'en':
     from src.generator_en import citations
 else:

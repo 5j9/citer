@@ -3,8 +3,8 @@
 
 import unittest
 
+import config; config.lang = 'fa'
 from src.dummy_requests import DummyRequests
-from src import config; config.lang = 'fa'
 from src import adinebook
 from src import googlebooks
 from src import noormags
