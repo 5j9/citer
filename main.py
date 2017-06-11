@@ -126,25 +126,28 @@ def application(environ, start_response):
     try:
         response = get_response(user_input, date_format)
     except requests.ConnectionError:
+        status = '500 ConnectionError'
         logger.exception(user_input)
         if action == 'apiquery':
             response_body = HTTPERROR_RESPONSE.api_json()
         else:
             response_body = response_to_html(HTTPERROR_RESPONSE)
     except Exception:
+        status = '500 Internal Server Error'
         logger.exception(user_input)
         if action == 'apiquery':
             response_body = OTHER_EXCEPTION_RESPONSE.api_json()
         else:
             response_body = response_to_html(OTHER_EXCEPTION_RESPONSE)
     else:
+        status = '200 OK'
         if action == 'apiquery':
             response_body = response_to_json(response)
         else:
             response_body = response_to_html(response)
     response_body = response_body.encode()
     RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
-    start_response('200 OK', RESPONSE_HEADERS.items())
+    start_response(status, RESPONSE_HEADERS.items())
     return [response_body]
 
 
