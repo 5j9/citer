@@ -9,7 +9,7 @@ from string import Template
 from src.commons import Response
 
 
-HTML_TEMPLATE = Template(open('yadkard/html_fa.html', encoding='utf8').read())
+HTML_TEMPLATE = Template(open('src/html_fa.html', encoding='utf8').read())
 
 # Predefined responses
 DEFAULT_RESPONSE = Response(

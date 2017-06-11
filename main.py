@@ -12,6 +12,7 @@ except ImportError:
     from wsgiref.simple_server import make_server
 import requests
 
+from config import lang
 from src.noormags import noormags_response
 from src.googlebooks import googlebooks_response
 from src.noorlib import noorlib_response
@@ -19,7 +20,6 @@ from src.adinebook import adinehbook_response
 from src.urls import urls_response
 from src.doi import doi_response, DOI_SEARCH
 from src.commons import uninum2en, response_to_json
-from src.config import lang
 from src.isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError, isbn_response
 from src.waybackmachine import waybackmachine_response
 if lang == 'en':
