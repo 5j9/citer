@@ -5,6 +5,7 @@ import logging
 import logging.handlers
 from urllib.parse import parse_qs, urlparse, unquote
 from html import unescape
+from wsgiref.headers import Headers
 
 try:
     from flup.server.fcgi import WSGIServer
@@ -56,10 +57,7 @@ NETLOC_TO_RESPONSE = {
     'web-beta.archive.org': waybackmachine_response,
 }
 
-RESPONSE_HEADERS = [
-    ('Content-Type', 'text/html; charset=UTF-8'),
-    ('Content-Length', ''),
-]
+RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
 
 
 def mylogger():
@@ -144,8 +142,10 @@ def application(environ, start_response):
             response_body = response_to_json(response)
         else:
             response_body = response_to_html(response)
-    start_response('200 OK', RESPONSE_HEADERS)
-    return [response_body.encode()]
+    response_body = response_body.encode()
+    RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
+    start_response('200 OK', RESPONSE_HEADERS.items())
+    return [response_body]
 
 
 if __name__ == '__main__':
