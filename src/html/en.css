@@ -39,9 +39,6 @@ input, #shortened, #named_ref {
 #inputs {
     display: flex;
 }
-input[type=text] {
-    width: 100%;
-}
 input[type=submit]:hover {
     transition: background-color 1s ease-in;
     background-color: #33CC33;
