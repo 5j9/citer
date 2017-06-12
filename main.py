@@ -30,6 +30,10 @@ if lang == 'en':
         HTTPERROR_RESPONSE,
         OTHER_EXCEPTION_RESPONSE,
         response_to_html,
+        CSS,
+        CSS_HEADERS,
+        JS,
+        JS_HEADERS,
     )
 else:
     from src.html.fa import (
@@ -38,6 +42,8 @@ else:
         HTTPERROR_RESPONSE,
         OTHER_EXCEPTION_RESPONSE,
         response_to_html,
+        CSS,
+        CSS_HEADERS,
     )
 
 
@@ -119,6 +125,17 @@ def get_response(user_input, date_format):
 
 def application(environ, start_response):
     query_dict_get = parse_qs(environ['QUERY_STRING']).get
+
+    path_info = environ['PATH_INFO']
+    if path_info.startswith('/static/'):
+        if path_info.endswith('.css'):
+            start_response('200 OK', CSS_HEADERS)
+            return [CSS]
+        else:
+            # path_info.endswith('.js') and config.lang == 'en'
+            start_response('200 OK', JS_HEADERS)
+            return [JS]
+
     action = query_dict_get('action', [''])[0]  # apiquery
     # Warning: input is not escaped!
     user_input = query_dict_get('user_input', [''])[0].strip()

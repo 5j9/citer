@@ -3,67 +3,14 @@
 
 <head>
     <title>یادفا</title>
-    <style type="text/css">
-        body {
-            margin-left:auto;
-            margin-right:auto;
-            width:80%;
-            font-family: tahoma;
-            font-size: 0.8em;
-        }
-        #shortened, #named_ref, input {
-            transition: background-color 5s ease-in;
-            background-color: rgb(255, 255, 255);
-            border: 1px solid rgb(204, 204, 204);
-            padding: 2px 2px;
-            font-size: 14px;
-            line-height: 16px;
-            color: rgb(85, 85, 85);
-            vertical-align: middle;
-            border-radius: 5px;
-        }
-        .input-legend {
-            margin-bottom: 0px;
-        }
-        #shortened, #named_ref {
-            display:inline-block;
-            width: 100%;
-            min-height:70px;
-            word-break: break-all;
-            font-family: monospace;
-        }
-        #shortened:focus, #named_ref:focus {
-            outline: none;
-        }
-        input, #shortened, #named_ref {
-            margin: 5px;
-            margin-bottom: 10px;
-        }
-        #inputs {
-            display: flex;
-        }
-        input[type=text] {
-            width: 100%;
-        }
-        input[type=submit]:hover {
-            transition: background-color 1s ease-in;
-            background-color: #33CC33;
-        }
-        footer {
-            font-size: 90%;
-            color: #666666;
-        }
-        #bookmarklet {
-            float: left;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/fa.css">
 </head>
 
 <body>
         <form action="yadkard.fcgi">
             <p class="input-legend">نشانی وب/شابک/شناسهٔ برنمود رقمی:</p>
             <div id="inputs">
-                <input type="text" name="user_input">
+                <input name="user_input">
                 <input type="submit" value="ثبت درخواست">
             </div>
         </form>

@@ -5,11 +5,25 @@
 
 
 from string import Template
+from zlib import adler32
 
 from src.commons import Response
 
 
-HTML_TEMPLATE = Template(open('src/html/fa.html', encoding='utf8').read())
+CSS = open('src/html/fa.css', 'rb').read()
+CSS_HEADERS = [
+    ('Content-Type', 'text/css; charset=UTF-8'),
+    ('Content-Length', str(len(CSS))),
+    ('Cache-Control', 'max-age=31536000'),
+]
+
+HTML_TEMPLATE = Template(
+    open('src/html/fa.html', encoding='utf8').read().replace(
+        # Invalidate css cache after any change in css file.
+        '"stylesheet" href="static/fa',
+        '"stylesheet" href="static/fa' + str(adler32(CSS)),
+    )
+)
 
 # Predefined responses
 DEFAULT_RESPONSE = Response(

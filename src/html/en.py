@@ -6,6 +6,7 @@
 
 from string import Template
 from os import name as osname
+from zlib import adler32
 
 from src.commons import Response
 
@@ -37,10 +38,38 @@ OTHER_EXCEPTION_RESPONSE = Response(
     error='100',
 )
 
+CSS = open('src/html/en.css', 'rb').read()
+# Invalidate cache after css change.
+CSS = CSS.replace(
+    b'"stylesheet" href="static/en',
+    b'"stylesheet" href="static/en' + str(adler32(CSS)).encode(),
+)
+CSS_HEADERS = [
+    ('Content-Type', 'text/css; charset=UTF-8'),
+    ('Content-Length', str(len(CSS))),
+    ('Cache-Control', 'max-age=31536000'),
+]
+
+JS = open('src/html/en.js', 'rb').read()
+# Invalidate cache after css change.
+JS_HEADERS = [
+    ('Content-Type', 'application/javascript; charset=UTF-8'),
+    ('Content-Length', str(len(JS))),
+    ('Cache-Control', 'max-age=31536000'),
+]
+
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
 HTML_TEMPLATE = Template(
-    open('src/html/en.html', encoding='utf8').read()
+    open('src/html/en.html', encoding='utf8').read().replace(
+        # Invalidate css cache after any change in css file.
+        '"stylesheet" href="static/en',
+        '"stylesheet" href="static/en' + str(adler32(CSS)),
+    ).replace(
+        # Invalidate js cache after any change in js file.
+        'src="/static/en',
+        'src="/static/en' + str(adler32(JS)),
+    )
     .replace('$d', '%#d' if osname == 'nt' else '%-d')
 )
 

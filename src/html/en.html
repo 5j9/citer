@@ -3,67 +3,14 @@
 
 <head>
 	<title>Yadkard</title>
-	<style type="text/css">
-        body {
-            margin-left:auto;
-            margin-right:auto;
-            width:80%;
-            font-family: tahoma;
-            font-size: 0.8em;
-        }
-        #shortened, #named_ref, input {
-            transition: background-color 5s ease-in;
-            background-color: rgb(255, 255, 255);
-            border: 1px solid rgb(204, 204, 204);
-            padding: 2px 2px;
-            font-size: 14px;
-            line-height: 16px;
-            color: rgb(85, 85, 85);
-            vertical-align: middle;
-            border-radius: 5px;
-        }
-        .input-legend {
-            margin-bottom: 0px;
-        }
-        #shortened, #named_ref {
-            display:inline-block;
-            width: 100%;
-            min-height:70px;
-            word-break: break-all;
-            font-family: monospace;
-        }
-        #shortened:focus, #named_ref:focus {
-            outline: none;
-        }
-		input[type=text] {
-			width: 50%;
-		}
-		input, #shortened, #named_ref {
-            margin: 5px;
-            margin-bottom: 10px;
-        }
-        #inputs {
-            display: flex;
-        }
-        input[type=text] {
-            width: 100%;
-        }
-		input[type=submit]:hover {
-			transition: background-color 1s ease-in;
-			background-color: #33CC33;
-		}
-		footer {
-			font-size: 90%;
-			color: #666666;
-		}
-	</style>
+	<link rel="stylesheet" href="/static/en.css">
 </head>
 
 <body>
 	<form action="yadkard.fcgi">
 		<p class="input-legend">URL/DOI/ISBN:</p>
 		<div id="inputs">
-			<input type="text" name="user_input">
+			<input name="user_input">
 			<input type="submit" value="Submit">
 		</div>
 		<p class="input-legend">Date format:</p>
@@ -97,129 +44,7 @@
 			<a href="javascript:void(window.open('https://tools.wmflabs.org/yadkard/yadkard.fcgi?user_input='+encodeURIComponent(location.href)+'&dateformat=%25B+%25d%2C+%25Y'))">Bookmarklet</a>
 		</p>
 	</footer>
-	<script>
-/*jslint browser: true, regexp: true, white: true */
-var months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ];
-
-function getCheckedRadio() {
-	'use strict';
-	var radio_group, i, button;
-	radio_group = document.getElementsByName('dateformat');
-	for (i = 0; i < radio_group.length; i = i + 1) {
-		button = radio_group[i];
-		if (button.checked) {
-			return button;
-		}
-	}
-}
-
-function ymd(date) {
-	'use strict';
-	return date.toISOString()
-		.slice(0, 10);
-}
-
-function bbdy(date) {
-	'use strict';
-	return months[date.getMonth()] + ' ' + date.toISOString()
-		.slice(8, 10) + ', ' + date.getFullYear();
-}
-
-function bdy(date) {
-	'use strict';
-	return months[date.getMonth()].slice(0, 3) + ' ' + date.toISOString()
-		.slice(8, 10) + ', ' + date.getFullYear();
-}
-
-function dbby(date) {
-	'use strict';
-	return date.toISOString()
-		.slice(8, 10) + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
-}
-
-function dby(date) {
-	'use strict';
-	return date.toISOString()
-		.slice(8, 10) + ' ' + months[date.getMonth()].slice(0, 3) + ' ' + date.getFullYear();
-}
-
-function changeDates(id) {
-	'use strict';
-	var i, utcdate, text1, text2, dates, date, newdate, formatter;
-	text1 = document.getElementById('shortened').innerHTML;
-	text2 = document.getElementById('named_ref').innerHTML;
-	dates = text1.match(/date=.*?(?=\}\}| \| )/g);
-	for (i = 0; i < dates.length; i = i + 1) {
-		date = dates[i].slice(5);
-		if (date.indexOf('-') !== -1) {
-			utcdate = date;
-		} else {
-			utcdate = date + " UTC";
-		}
-		formatter = window[id];
-		newdate = formatter(new Date(utcdate))
-			.replace(/^[0]+/g, "")
-			.replace(" 0", " ");
-		text1 = text1.replace(new RegExp('((?:access)?date=)' + date + '(?=}}| \\| )'), '$1' + newdate);
-		text2 = text2.replace(new RegExp('((?:access)?date=)' + date + '(?=}}| \\| )'), '$1' + newdate);
-		document.getElementById('shortened').innerHTML = text1;
-		document.getElementById('named_ref').innerHTML = text2;
-	}
-}
-
-function setCookie(cname, cvalue, exdays) {
-	'use strict';
-	var expires, d = new Date();
-	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-	expires = 'expires=' + d.toGMTString();
-	document.cookie = cname + '=' + cvalue + '; ' + expires;
-}
-
-function getCookie(cname) {
-	'use strict';
-	var c, i, ca, name = cname + '=';
-	ca = document.cookie.split(';');
-	for (i = 0; i < ca.length; i = i + 1) {
-		c = ca[i].trim();
-		if (c.indexOf(name) === 0) {
-			return c.substring(name.length, c.length);
-		}
-	}
-	return '';
-}
-
-function checkCookie() {
-	'use strict';
-	var datefmt = getCookie('datefmt');
-	if (datefmt !== '') {
-		document.getElementById(datefmt).checked = true;
-		changeDates(datefmt);
-	}
-}
-
-function onDateChange() {
-	'use strict';
-	var id;
-	id = getCheckedRadio().id;
-	changeDates(id);
-	setCookie('datefmt', id, 365);
-}
-checkCookie();
-
-	</script>
+	<script src="/static/en.js"></script>
 </body>
 
 </html>
