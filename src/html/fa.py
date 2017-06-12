@@ -20,8 +20,8 @@ CSS_HEADERS = [
 HTML_TEMPLATE = Template(
     open('src/html/fa.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
-        '"stylesheet" href="static/fa',
-        '"stylesheet" href="static/fa' + str(adler32(CSS)),
+        '"stylesheet" href="/static/fa',
+        '"stylesheet" href="/static/fa' + str(adler32(CSS)),
     )
 )
 
