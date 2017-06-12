@@ -47,7 +47,7 @@ CSS = CSS.replace(
 CSS_HEADERS = [
     ('Content-Type', 'text/css; charset=UTF-8'),
     ('Content-Length', str(len(CSS))),
-    ('Cache-Control', 'max-age=31536000'),
+    ('Cache-Control', 'immutable, public, max-age=31536000'),
 ]
 
 JS = open('src/html/en.js', 'rb').read()
@@ -55,7 +55,7 @@ JS = open('src/html/en.js', 'rb').read()
 JS_HEADERS = [
     ('Content-Type', 'application/javascript; charset=UTF-8'),
     ('Content-Length', str(len(JS))),
-    ('Cache-Control', 'max-age=31536000'),
+    ('Cache-Control', 'immutable, public, max-age=31536000'),
 ]
 
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
