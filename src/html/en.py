@@ -40,7 +40,7 @@ OTHER_EXCEPTION_RESPONSE = Response(
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
 HTML_TEMPLATE = Template(
-    open('src/html_en.html', encoding='utf8').read()
+    open('src/html/en.html', encoding='utf8').read()
     .replace('$d', '%#d' if osname == 'nt' else '%-d')
 )
 

@@ -24,7 +24,7 @@ from src.commons import uninum2en, response_to_json
 from src.isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError, isbn_response
 from src.waybackmachine import waybackmachine_response
 if lang == 'en':
-    from src.html_en import (
+    from src.html.en import (
         DEFAULT_RESPONSE,
         UNDEFINED_INPUT_RESPONSE,
         HTTPERROR_RESPONSE,
@@ -32,7 +32,7 @@ if lang == 'en':
         response_to_html,
     )
 else:
-    from src.html_fa import (
+    from src.html.fa import (
         DEFAULT_RESPONSE,
         UNDEFINED_INPUT_RESPONSE,
         HTTPERROR_RESPONSE,
