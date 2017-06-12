@@ -127,7 +127,7 @@ def application(environ, start_response):
     query_dict_get = parse_qs(environ['QUERY_STRING']).get
 
     path_info = environ['PATH_INFO']
-    if path_info.startswith('/static/'):
+    if '/static/' in path_info:
         if path_info.endswith('.css'):
             start_response('200 OK', CSS_HEADERS)
             return [CSS]
