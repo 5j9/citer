@@ -39,11 +39,6 @@ OTHER_EXCEPTION_RESPONSE = Response(
 )
 
 CSS = open('src/html/en.css', 'rb').read()
-# Invalidate cache after css change.
-CSS = CSS.replace(
-    b'"stylesheet" href="static/en',
-    b'"stylesheet" href="static/en' + str(adler32(CSS)).encode(),
-)
 CSS_HEADERS = [
     ('Content-Type', 'text/css; charset=UTF-8'),
     ('Content-Length', str(len(CSS))),
@@ -63,12 +58,12 @@ JS_HEADERS = [
 HTML_TEMPLATE = Template(
     open('src/html/en.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
-        '"stylesheet" href="static/en',
-        '"stylesheet" href="static/en' + str(adler32(CSS)),
+        '"stylesheet" href="./static/en',
+        '"stylesheet" href="./static/en' + str(adler32(CSS)),
     ).replace(
         # Invalidate js cache after any change in js file.
-        'src="/static/en',
-        'src="/static/en' + str(adler32(JS)),
+        'src="./static/en',
+        'src="./static/en' + str(adler32(JS)),
     )
     .replace('$d', '%#d' if osname == 'nt' else '%-d')
 )
