@@ -62,6 +62,7 @@ function changeDates(id) {
 	text1 = document.getElementById('shortened').innerHTML;
 	text2 = document.getElementById('named_ref').innerHTML;
 	dates = text1.match(/date=.*?(?=\}\}| \| )/g);
+	if (!dates) return;
 	for (i = 0; i < dates.length; i = i + 1) {
 		date = dates[i].slice(5);
 		if (date.indexOf('-') !== -1) {
