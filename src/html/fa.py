@@ -17,13 +17,13 @@ CSS_HEADERS = [
     ('Cache-Control', 'max-age=31536000'),
 ]
 
-HTML_TEMPLATE = Template(
+HTML_SUBST = Template(
     open('src/html/fa.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
         '"stylesheet" href="./static/fa',
         '"stylesheet" href="./static/fa' + str(adler32(CSS)),
     )
-)
+).substitute
 
 # Predefined responses
 DEFAULT_RESPONSE = Response(
@@ -54,6 +54,6 @@ UNDEFINED_INPUT_RESPONSE = Response(
 )
 
 
-def response_to_html(response: Response):
-    """Insert the response into the HTML_TEMPLATE and return response_body."""
-    return HTML_TEMPLATE.safe_substitute(**response._asdict())
+def response_to_html(response: Response, date_format: str):
+    """Insert the response into the HTML template and return response_body."""
+    return HTML_SUBST(**response._asdict())

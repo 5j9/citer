@@ -55,26 +55,29 @@ JS_HEADERS = [
 
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
-HTML_TEMPLATE = Template(
+HTML_SUBST = Template(
     open('src/html/en.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
         '"stylesheet" href="./static/en',
         '"stylesheet" href="./static/en' + str(adler32(CSS)),
+        1,
     ).replace(
         # Invalidate js cache after any change in js file.
         'src="./static/en',
         'src="./static/en' + str(adler32(JS)),
+        1,
     )
-    .replace('$d', '%#d' if osname == 'nt' else '%-d')
-)
+    .replace('~d', '%#d' if osname == 'nt' else '%-d')
+).substitute
 
 
-def response_to_html(response):
-    """Insert the response into the HTML_TEMPLATE and return response_body."""
-    return HTML_TEMPLATE.safe_substitute(
+def response_to_html(response, date_format):
+    """Insert the response into the HTML template and return response_body."""
+    date_format = date_format or '%Y-%m-%d'
+    return HTML_SUBST(
         # **response._asdict(), did not work on yadkard but worked on yadfa!
         sfn=response.sfn,
         cite=response.cite,
         ref=response.ref,
         error=response.error,
-    )
+    ).replace(date_format + '"', date_format + '" checked', 1)

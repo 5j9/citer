@@ -148,20 +148,22 @@ def application(environ, start_response):
         if action == 'apiquery':
             response_body = HTTPERROR_RESPONSE.api_json()
         else:
-            response_body = response_to_html(HTTPERROR_RESPONSE)
+            response_body = response_to_html(HTTPERROR_RESPONSE, date_format)
     except Exception:
         status = '500 Internal Server Error'
         logger.exception(user_input)
         if action == 'apiquery':
             response_body = OTHER_EXCEPTION_RESPONSE.api_json()
         else:
-            response_body = response_to_html(OTHER_EXCEPTION_RESPONSE)
+            response_body = response_to_html(
+                OTHER_EXCEPTION_RESPONSE, date_format
+            )
     else:
         status = '200 OK'
         if action == 'apiquery':
             response_body = response_to_json(response)
         else:
-            response_body = response_to_html(response)
+            response_body = response_to_html(response, date_format)
     response_body = response_body.encode()
     RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
     start_response(status, RESPONSE_HEADERS.items())
