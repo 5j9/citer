@@ -6,12 +6,13 @@
 import re
 from threading import Thread
 
+from langid import classify
 from requests import get as requests_get
 
 from src.adinebook import url2dictionary as adinebook_url2dictionary
 from src.adinebook import isbn2url as adinebook_isbn2url
 from src.bibtex import parse as bibtex_parse
-from src.commons import dictionary_to_response, detect_language, Response
+from src.commons import dictionary_to_response, Response
 
 
 # original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
@@ -74,8 +75,7 @@ def isbn_response(
     dictionary = choose_dict(adine_dict, otto_dict)
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
-        dictionary['language'], dictionary['error'] = \
-            detect_language(dictionary['title'])
+        dictionary['language'] = classify(dictionary['title'])[0]
     return dictionary_to_response(dictionary)
 
 

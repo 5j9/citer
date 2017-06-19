@@ -12,11 +12,11 @@
 				<input type="submit" value="Submit">
 			</div>
 			<p class="input-legend">Date format:</p>
-			<input type="radio" value="%Y-%m-%d" name="dateformat" id="ymd" onclick="onDateChange()">2017-01-01
-			<input type="radio" value="%B ~d, %Y" name="dateformat" id="bbdy" onclick="onDateChange()">January 1, 2017
-			<input type="radio" value="%b ~d, %Y" name="dateformat" id="bdy" onclick="onDateChange()">Jan 1, 2017
-			<input type="radio" value="~d %B %Y" name="dateformat" id="dbby" onclick="onDateChange()">1 January 2017
-			<input type="radio" value="~d %b %Y" name="dateformat" id="dby" onclick="onDateChange()">1 Jan 2017
+			<input type="radio" name="dateformat" value="%Y-%m-%d" id="ymd" onclick="onDateChange()">2017-01-01
+			<input type="radio" name="dateformat" value="%B ~d, %Y" id="bbdy" onclick="onDateChange()">January 1, 2017
+			<input type="radio" name="dateformat" value="%b ~d, %Y" id="bdy" onclick="onDateChange()">Jan 1, 2017
+			<input type="radio" name="dateformat" value="~d %B %Y" id="dbby" onclick="onDateChange()">1 January 2017
+			<input type="radio" name="dateformat" value="~d %b %Y" id="dby" onclick="onDateChange()">1 Jan 2017
 			<br><br>
 		</form>
 		<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
@@ -25,9 +25,6 @@
 		<a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:
 		<br>
 		<div id="named_ref" contenteditable>$ref</div>
-		<p>
-			<!-- There may be error in language detection. $error % -->
-		</p>
 		<footer>
 			<p>
 				You can use this tool to create shortened footnote/named reference for a given

@@ -14,13 +14,14 @@ from threading import Thread
 from typing import Optional, List, Dict, Any, Tuple
 from urllib.parse import urlparse
 
+from langid import classify
 import regex
 from requests import get as requests_get
 from requests import head as requests_head
 from requests.exceptions import RequestException
 
 from src.commons import (
-    find_any_date, detect_language, Response, USER_AGENT_HEADER,
+    find_any_date, Response, USER_AGENT_HEADER,
     dictionary_to_response, ANYDATE_PATTERN, Name,
 )
 from src.urls_authors import find_authors, CONTENT_ATTR
@@ -258,9 +259,7 @@ def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
         dictionary = url2dict(url)
     except (ContentTypeError, ContentLengthError) as e:
         logger.exception(url)
-        return Response(
-            sfn='Could not process the request.', cite=e, error=100, ref=''
-        )
+        return Response(sfn='Could not process the request.', cite=e, ref='')
     dictionary['date_format'] = date_format
     return dictionary_to_response(dictionary)
 
@@ -610,7 +609,7 @@ def url2dict(url: str) -> Dict[str, Any]:
     if date:
         d['date'] = date
         d['year'] = str(date.year)
-    d['language'], d['error'] = detect_language(html)
+    d['language'] = classify(html)[0]
     return d
 
 

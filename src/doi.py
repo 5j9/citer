@@ -11,9 +11,10 @@ from urllib.parse import unquote
 import logging
 from html import unescape
 
+from langid import classify
 from requests import get as requests_get
 
-from src.commons import Response, dictionary_to_response, detect_language, Name
+from src.commons import Response, dictionary_to_response, Name
 from config import lang
 
 
@@ -37,8 +38,7 @@ def doi_response(doi_or_url, pure=False, date_format='%Y-%m-%d') -> Response:
     dictionary = crossref(doi)
     dictionary['date_format'] = date_format
     if lang == 'fa':
-        dictionary['language'], dictionary['error'] = \
-            detect_language(dictionary['title'])
+        dictionary['language'] = classify(dictionary['title'])[0]
     return dictionary_to_response(dictionary)
 
 

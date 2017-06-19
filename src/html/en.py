@@ -13,14 +13,13 @@ from src.commons import Response
 
 # Predefined responses
 DEFAULT_RESPONSE = Response(
-    sfn='Generated citation will appear here...', cite='', ref='', error='0'
+    sfn='Generated citation will appear here...', cite='', ref='',
 )
 
 UNDEFINED_INPUT_RESPONSE = Response(
     sfn='Undefined input.',
     cite='Sorry, the input was not recognized. The error was logged.',
     ref='',
-    error='100',
 )
 
 HTTPERROR_RESPONSE = Response(
@@ -28,14 +27,12 @@ HTTPERROR_RESPONSE = Response(
     cite='One or more of the web resources required to '
     'create this citation are not accessible at this moment.',
     ref='',
-    error='100',
 )
 
 OTHER_EXCEPTION_RESPONSE = Response(
     sfn='An unknown error occurred.',
     cite='The error was logged.',
     ref='',
-    error='100',
 )
 
 CSS = open('src/html/en.css', 'rb').read()
@@ -71,7 +68,7 @@ HTML_SUBST = Template(
 ).substitute
 
 
-def response_to_html(response, date_format):
+def response_to_html(response: Response, date_format: str):
     """Insert the response into the HTML template and return response_body."""
     date_format = date_format or '%Y-%m-%d'
     return HTML_SUBST(
@@ -79,5 +76,4 @@ def response_to_html(response, date_format):
         sfn=response.sfn,
         cite=response.cite,
         ref=response.ref,
-        error=response.error,
     ).replace(date_format + '"', date_format + '" checked', 1)

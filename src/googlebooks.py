@@ -7,11 +7,12 @@
 from urllib.parse import parse_qs
 from urllib.parse import urlparse
 
+from langid import classify
 from requests import get as requests_get
 
 # import bibtex [1]
 from src.ris import parse as ris_parse
-from src.commons import dictionary_to_response, detect_language, Response
+from src.commons import dictionary_to_response, Response
 
 
 def googlebooks_response(url, date_format='%Y-%m-%d') -> Response:
@@ -30,8 +31,7 @@ def googlebooks_response(url, date_format='%Y-%m-%d') -> Response:
         dictionary['url'] += '&pg=' + pq['pg'][0]
     # although google does not provide a language field:
     if 'language' not in dictionary:
-        dictionary['language'], dictionary['error'] = \
-            detect_language(dictionary['title'])
+        dictionary['language'] = classify(dictionary['title'])[0]
     return dictionary_to_response(dictionary)
 
 

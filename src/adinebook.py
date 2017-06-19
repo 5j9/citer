@@ -7,9 +7,10 @@ from collections import defaultdict
 import logging
 import re
 
+from langid import classify
 from requests import get as requests_get, RequestException
 
-from src.commons import RawName, dictionary_to_response, detect_language, Response
+from src.commons import RawName, dictionary_to_response, Response
 
 
 ISBN_SEARCH = re.compile(r'شابک:.*?([\d-]*X?)</span></li>').search
@@ -28,9 +29,8 @@ def adinehbook_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
     if 'language' not in dictionary:
         # Assume that language is either fa or en.
         # Todo: give warning about this assumption?
-        dictionary['language'], dictionary['error'] = detect_language(
-            dictionary['title'], ('en', 'fa')
-        )
+        dictionary['language'] = \
+            classify(dictionary['title'])[0]
     return dictionary_to_response(dictionary)
 
 

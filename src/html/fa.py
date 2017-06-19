@@ -30,7 +30,6 @@ DEFAULT_RESPONSE = Response(
     sfn='یادکرد ساخته‌شده اینجا نمایان خواهد شد...',
     cite='',
     ref='',
-    error='0',
 )
 HTTPERROR_RESPONSE = Response(
     sfn='خطای اچ‌تی‌تی‌پی:',
@@ -38,19 +37,16 @@ HTTPERROR_RESPONSE = Response(
     'نیاز برای ساخت این یادکرد در این لحظه '
     'در دسترس نیستند و یا ورودی نامعتبر است.',
     ref='',
-    error='100'
 )
 OTHER_EXCEPTION_RESPONSE = Response(
     sfn='خطای ناشناخته‌ای رخ داد..',
     cite='اطلاعات خطا در سیاهه ثبت شد.',
     ref='',
-    error='100',
 )
 UNDEFINED_INPUT_RESPONSE = Response(
     sfn='ورودی تجزیه‌ناپذیر',
     cite='پوزش، ورودی قابل پردازش نبود. خطا در سیاهه ثبت شد.',
     ref='',
-    error='100',
 )
 
 

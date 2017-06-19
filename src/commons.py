@@ -12,7 +12,6 @@ from datetime import date as datetime_date
 
 from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
-from langid import classify, set_languages
 
 from config import lang
 if lang == 'en':
@@ -106,7 +105,7 @@ USER_AGENT_HEADER = {
                   'Gecko/20100101 Firefox/53.0'
 }
 
-Response = namedtuple('Response', 'cite sfn ref error')
+Response = namedtuple('Response', 'cite sfn ref')
 
 
 class InvalidNameError(Exception):
@@ -159,7 +158,7 @@ class RawName(Name):
 
 
 def dictionary_to_response(dictionary) -> Response:
-    """Return (sfn, cite, ref, error) strings.
+    """Return Response(sfn, cite, ref) strings.
 
     dictionary should be ready before calling this function.
     The dictionary will be cleaned up (empty values will be removed) and
@@ -176,7 +175,7 @@ def dictionary_to_response(dictionary) -> Response:
             # https://github.com/CrossRef/rest-api-doc/issues/214
             del dictionary['isbn']
     cite, sfn, ref = citations(dictionary)
-    return Response(cite, sfn, ref, dictionary.get('error'))
+    return Response(cite, sfn, ref)
 
 
 def response_to_json(response) -> str:
@@ -186,23 +185,6 @@ def response_to_json(response) -> str:
         'citation_template': response.cite,
         'shortened_footnote': response.sfn,
     })
-
-
-def detect_language(text, langset=None) -> tuple:
-    """Detect the language of the text. Return (lang, error).
-
-    args:
-    "langset" is the set of languages that the result should be limited to.
-
-    return:
-    "lang" will be a string containing an ISO 639-1 code.
-    "error" will be an integer indicating a percentage. (Rounded to 2 digits)
-    """
-    if langset:
-        set_languages(langset)
-    language, confidence = classify(text)
-    error = round((1 - confidence) * 100, 2)
-    return language, error
 
 
 def firstname_lastname(fullname, separator) -> tuple:
