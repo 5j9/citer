@@ -526,7 +526,7 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
             ContentTypeError, ContentLengthError,
         ):
             return
-        content = r.content
+        content = next(r.iter_content(2_000_000))
     m = CHARSET(content)
     html = content.decode(m[1].decode() if m else r.encoding)
     m = TITLE_TAG(html)
@@ -567,7 +567,7 @@ def get_html(url: str) -> str:
         url, stream=True, headers=USER_AGENT_HEADER, timeout=15
     ) as r:
         check_response_headers(r)
-        content = r.content
+        content = next(r.iter_content(2_000_000))
     charset_match = CHARSET(content)
     return content.decode(
         charset_match[1].decode() if charset_match else r.encoding
