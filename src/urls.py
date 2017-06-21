@@ -25,6 +25,9 @@ from src.commons import (
 )
 from src.urls_authors import find_authors, CONTENT_ATTR
 
+
+MAX_RESPONSE_LENGTH = 2_000_000
+
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
 CHARSET = re.compile(
     rb'''<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)''',
@@ -526,7 +529,7 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
             ContentTypeError, ContentLengthError,
         ):
             return
-        content = next(r.iter_content(2_000_000))
+        content = next(r.iter_content(MAX_RESPONSE_LENGTH))
     m = CHARSET(content)
     html = content.decode(m[1].decode() if m else r.encoding)
     m = TITLE_TAG(html)
@@ -545,7 +548,7 @@ def check_response_headers(r: RequestsResponse) -> None:
     response_headers = r.headers
     if 'content-length' in response_headers:
         bytes_length = int(response_headers['content-length'])
-        if bytes_length > 2_000_000:
+        if bytes_length > MAX_RESPONSE_LENGTH:
             raise ContentLengthError(
                 f'Content-length was too long. '
                 f'({bytes_length / 1_000_000:.2f} MB)'
@@ -567,7 +570,7 @@ def get_html(url: str) -> str:
         url, stream=True, headers=USER_AGENT_HEADER, timeout=15
     ) as r:
         check_response_headers(r)
-        content = next(r.iter_content(2_000_000))
+        content = next(r.iter_content(MAX_RESPONSE_LENGTH))
     charset_match = CHARSET(content)
     return content.decode(
         charset_match[1].decode() if charset_match else r.encoding
