@@ -366,6 +366,7 @@ def find_site_name(
     )[2]
     if site_name:
         return site_name
+    # noinspection PyBroadException
     try:
         # using home_title
         thread.join()
