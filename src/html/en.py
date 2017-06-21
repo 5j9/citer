@@ -72,8 +72,5 @@ def response_to_html(response: Response, date_format: str):
     """Insert the response into the HTML template and return response_body."""
     date_format = date_format or '%Y-%m-%d'
     return HTML_SUBST(
-        # **response._asdict(), did not work on yadkard but worked on yadfa!
-        sfn=response.sfn,
-        cite=response.cite,
-        ref=response.ref,
+        **response._asdict(),
     ).replace(date_format + '"', date_format + '" checked', 1)
