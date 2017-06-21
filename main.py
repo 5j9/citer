@@ -140,6 +140,7 @@ def application(environ, start_response):
     # Warning: input is not escaped!
     user_input = query_dict_get('user_input', [''])[0].strip()
     date_format = query_dict_get('dateformat', [''])[0].strip()
+    # noinspection PyBroadException
     try:
         response = get_response(user_input, date_format)
     except requests.ConnectionError:
