@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 
 from langid import classify
 import regex
-from requests import get as requests_get, Response
+from requests import get as requests_get, Response as RequestsResponse
 from requests.exceptions import RequestException
 
 from src.commons import (
@@ -533,7 +533,7 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
     home_title_list.append(title)
 
 
-def check_response_headers(r: Response) -> None:
+def check_response_headers(r: RequestsResponse) -> None:
     """Check content-type and content-length of the response.
 
     Raise ContentLengthError or ContentTypeError when appropriate.
