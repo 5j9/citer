@@ -16,8 +16,7 @@ from urllib.parse import urlparse
 
 from langid import classify
 import regex
-from requests import get as requests_get
-from requests import head as requests_head
+from requests import get as requests_get, Response
 from requests.exceptions import RequestException
 
 from src.commons import (
@@ -516,12 +515,17 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
     """
     # Todo: cache the result.
     home_url = '://'.join(urlparse(url)[:2])
-    try:
-        check_content_headers(home_url)
-        r = requests_get(home_url, headers=USER_AGENT_HEADER, timeout=15)
-    except RequestException:
-        return
-    content = r.content
+    with requests_get(
+        home_url, stream=True, headers=USER_AGENT_HEADER, timeout=15
+    ) as r:
+        try:
+            check_response_headers(r)
+        except (
+            RequestException, StatusCodeError,
+            ContentTypeError, ContentLengthError,
+        ):
+            return
+        content = r.content
     m = CHARSET(content)
     html = content.decode(m[1].decode() if m else r.encoding)
     m = TITLE_TAG(html)
@@ -529,39 +533,40 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
     home_title_list.append(title)
 
 
-def check_content_headers(url: str) -> bool:
+def check_response_headers(r: Response) -> None:
     """Check content-type and content-length of the response.
 
-    Return True if content-type is text/* and content-length is less than 1MB.
-    Also return True if no information is available. Else return False.
+    Raise ContentLengthError or ContentTypeError when appropriate.
+
     """
-    response_headers = requests_head(url, headers=USER_AGENT_HEADER).headers
+    if r.status_code != 200:
+        raise StatusCodeError(r.status_code)
+    response_headers = r.headers
     if 'content-length' in response_headers:
-        megabytes = int(response_headers['content-length']) / 1000000
-        if megabytes > 1:
+        bytes_length = int(response_headers['content-length'])
+        if bytes_length > 2_000_000:
             raise ContentLengthError(
-                'Content-length was too long. (' +
-                format(megabytes, '.2f') + ' MB)'
+                f'Content-length was too long. '
+                f'({bytes_length / 1_000_000:.2f} MB)'
             )
     content_type = response_headers.get('content-type')
     if content_type:
         if content_type.startswith('text/'):
-            return True
+            return
         raise ContentTypeError(
             'Invalid content-type: ' +
             content_type + ' (URL-content is supposed to be text/html)'
         )
-    return True
+    return
 
 
 def get_html(url: str) -> str:
-    """Return the (soup, html) for the given url."""
-    # Todo: check_content_headers in a separate thread.
-    check_content_headers(url)
-    r = requests_get(url, headers=USER_AGENT_HEADER, timeout=15)
-    if r.status_code != 200:
-        raise StatusCodeError(r.status_code)
-    content = r.content
+    """Return the html string for the given url."""
+    with requests_get(
+        url, stream=True, headers=USER_AGENT_HEADER, timeout=15
+    ) as r:
+        check_response_headers(r)
+        content = r.content
     charset_match = CHARSET(content)
     return content.decode(
         charset_match[1].decode() if charset_match else r.encoding
