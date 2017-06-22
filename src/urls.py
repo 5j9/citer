@@ -456,7 +456,7 @@ def parse_title(
         if (part in hostname) or not set(part.lower().split()) - hnset:
             intitle_sitename = part
             break
-    if not intitle_sitename:
+    else:
         # 2. Using difflib on hostname
         # Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
         close_matches = get_close_matches(
@@ -464,25 +464,23 @@ def parse_title(
         )
         if close_matches:
             intitle_sitename = close_matches[0]
-    if not intitle_sitename:
-        if thread:
-            thread.join()
-        if home_title_list:
-            home_title = home_title_list[0]
-            # 3. In homepage title
-            for part in title_parts:
-                if part in home_title:
-                    intitle_sitename = part
-                    break
         else:
-            home_title = ''
-    if not intitle_sitename:
-        # 4. Using difflib on home_title
-        close_matches = get_close_matches(
-            home_title, title_parts, n=1, cutoff=.3
-        )
-        if close_matches:
-            intitle_sitename = close_matches[0]
+            if thread:
+                thread.join()
+            if home_title_list:
+                home_title = home_title_list[0]
+                # 3. In homepage title
+                for part in title_parts:
+                    if part in home_title:
+                        intitle_sitename = part
+                        break
+                else:
+                    # 4. Using difflib on home_title
+                    close_matches = get_close_matches(
+                        home_title, title_parts, n=1, cutoff=.3
+                    )
+                    if close_matches:
+                        intitle_sitename = close_matches[0]
     # Remove sitename from title_parts
     if intitle_sitename:
         title_parts.remove(intitle_sitename)
