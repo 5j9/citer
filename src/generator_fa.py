@@ -240,8 +240,10 @@ def citations(d: defaultdict) -> tuple:
     )
     if url:
         cite += ' | تاریخ بازبینی=' + date.today().isoformat()
-    else:
+
+    if not pages and cite_type != 'وب':
         sfn += ' | ص='
+
     cite += '}}'
     sfn += '}}\u200F&lt;/ref&gt;'
     # Finally create the ref tag.

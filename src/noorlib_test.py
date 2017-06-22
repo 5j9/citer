@@ -41,8 +41,8 @@ class NoorlibTest(unittest.TestCase):
         """The year parameter is not present."""
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/18454'
         o = noorlib_response(i)
-        er = '{{sfn | کورانی}}'
-        ec = (
+        self.assertIn('{{sfn | کورانی | p=}}', o.sfn)
+        self.assertIn(
             '* {{cite book '
             '| last=کورانی '
             '| first=علی '
@@ -56,10 +56,9 @@ class NoorlibTest(unittest.TestCase):
             '| url=http://www.noorlib.ir/View/fa/Book/BookView/Image/18454 '
             '| language=عربی '
             '| ref=harv '
-            '| access-date='
+            '| access-date=',
+            o.cite,
         )
-        self.assertIn(er, o.sfn)
-        self.assertIn(ec, o.cite)
 
 
 noorlib.requests_get = dummy_requests.DummyRequests().get

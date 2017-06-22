@@ -221,7 +221,8 @@ def citations(d: defaultdict) -> tuple:
         else:
             # To prevent addition of access date
             url = None
-    else:
+
+    if not pages and cite_type != 'web':
         sfn += ' | p='
 
     archive_url = d['archive-url']
