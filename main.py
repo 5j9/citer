@@ -147,14 +147,14 @@ def application(environ, start_response):
         status = '500 ConnectionError'
         logger.exception(user_input)
         if action == 'apiquery':
-            response_body = HTTPERROR_RESPONSE.api_json()
+            response_body = response_to_json(HTTPERROR_RESPONSE)
         else:
             response_body = response_to_html(HTTPERROR_RESPONSE, date_format)
     except Exception:
         status = '500 Internal Server Error'
         logger.exception(user_input)
         if action == 'apiquery':
-            response_body = OTHER_EXCEPTION_RESPONSE.api_json()
+            response_body = response_to_json(OTHER_EXCEPTION_RESPONSE)
         else:
             response_body = response_to_html(
                 OTHER_EXCEPTION_RESPONSE, date_format
