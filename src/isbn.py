@@ -23,6 +23,15 @@ ISBN_10OR13_SEARCH = re.compile(
     r'|(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
 ).search
 
+ISBN10_SEARCH = re.compile(
+    r'(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
+).search
+
+ISBN13_SEARCH = re.compile(
+    r'97[89]([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
+).search
+
+
 # original regex from: http://stackoverflow.com/a/14260708/2705757
 # ISBN_REGEX = re.compile(
 #     r'(?=[-0-9 ]{17}|[-0-9X ]{13}|[0-9X]{10})(?:97[89][- ]?)'
