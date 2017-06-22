@@ -469,13 +469,13 @@ def parse_title(
             thread.join()
         if home_title_list:
             home_title = home_title_list[0]
+            # 3. In homepage title
+            for part in title_parts:
+                if part in home_title:
+                    intitle_sitename = part
+                    break
         else:
             home_title = ''
-        # 3. In homepage title
-        for part in title_parts:
-            if part in home_title:
-                intitle_sitename = part
-                break
     if not intitle_sitename:
         # 4. Using difflib on home_title
         close_matches = get_close_matches(
