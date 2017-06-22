@@ -40,6 +40,8 @@ ISBN13_SEARCH = re.compile(
 
 OTTOBIB_SEARCH = re.compile('<textarea.*>(.*)</textarea>', re.DOTALL).search
 
+RM_DASH_SPACE = str.maketrans('', '', '- ')
+
 
 class IsbnError(Exception):
 
@@ -103,6 +105,7 @@ def choose_dict(adine_dict, otto_dict):
     
     Background: adinebook.com ommits 3 digits from it's isbn when converting
     them to URLs. This may make them volnarable to resolving into wrong ISBN.
+
     """
     if not otto_dict and not adine_dict:
         raise IsbnError('Bibliographic information not found.')
@@ -124,7 +127,7 @@ def choose_dict(adine_dict, otto_dict):
 
 def isbn2int(isbn):
     """Get ISBN string and return it as in integer."""
-    return int(isbn.replace('-', '').replace(' ', ''))
+    return int(isbn.translate(RM_DASH_SPACE))
 
 
 def ottobib(isbn):
