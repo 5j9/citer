@@ -136,7 +136,7 @@ def application(environ, start_response):
             start_response('200 OK', JS_HEADERS)
             return [JS]
 
-    action = query_dict_get('action', [''])[0]  # apiquery
+    output_format = query_dict_get('output_format', [''])[0]  # apiquery
     # Warning: input is not escaped!
     user_input = query_dict_get('user_input', [''])[0].strip()
     date_format = query_dict_get('dateformat', [''])[0].strip()
@@ -146,14 +146,14 @@ def application(environ, start_response):
     except requests.ConnectionError:
         status = '500 ConnectionError'
         logger.exception(user_input)
-        if action == 'apiquery':
+        if output_format == 'json':
             response_body = response_to_json(HTTPERROR_RESPONSE)
         else:
             response_body = response_to_html(HTTPERROR_RESPONSE, date_format)
     except Exception:
         status = '500 Internal Server Error'
         logger.exception(user_input)
-        if action == 'apiquery':
+        if output_format == 'json':
             response_body = response_to_json(OTHER_EXCEPTION_RESPONSE)
         else:
             response_body = response_to_html(
@@ -161,7 +161,7 @@ def application(environ, start_response):
             )
     else:
         status = '200 OK'
-        if action == 'apiquery':
+        if output_format == 'json':
             response_body = response_to_json(response)
         else:
             response_body = response_to_html(response, date_format)
