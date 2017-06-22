@@ -8,7 +8,6 @@ from collections import defaultdict
 from datetime import date as datetime_date
 import re
 from urllib.parse import unquote
-import logging
 from html import unescape
 
 from langid import classify
@@ -33,8 +32,7 @@ def doi_response(doi_or_url, pure=False, date_format='%Y-%m-%d') -> Response:
         # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
         # decode percent encodings
         decoded_url = unquote(unescape(doi_or_url))
-        m = DOI_SEARCH(decoded_url)
-        doi = m.group(1)
+        doi = DOI_SEARCH(decoded_url)[1]
     dictionary = crossref(doi)
     dictionary['date_format'] = date_format
     if lang == 'fa':
@@ -93,6 +91,3 @@ def crossref(doi) -> defaultdict:
         d['page'] = page.replace('-', '–')
 
     return d
-
-
-logger = logging.getLogger(__name__)
