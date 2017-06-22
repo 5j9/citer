@@ -443,6 +443,7 @@ def parse_title(
             'http://news.bbc.co.uk/2/hi/health/3679313.stm',
             None)
     (None, "Health - New teeth 'could soon be grown'", 'BBC NEWS')
+
     """
     intitle_author = intitle_sitename = None
     title_parts = TITLE_SPLIT(title.strip())
@@ -621,10 +622,4 @@ def url2dict(url: str) -> Dict[str, Any]:
     return d
 
 
-if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
-    logging.getLogger("requests").setLevel(logging.WARNING)
-    logging.getLogger("langid").setLevel(logging.WARNING)
-    logger = logging.getLogger()
-else:
-    logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
