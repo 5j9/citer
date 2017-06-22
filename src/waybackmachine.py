@@ -74,6 +74,7 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
 
 def original_url2dict(ogurl: str, original_dict) -> None:
     """Fill the dictionary with the information found in ogurl."""
+    # noinspection PyBroadException
     try:
         original_dict.update(original_url_dict(ogurl))
     except (
@@ -121,10 +122,4 @@ def original_url_dict(url: str):
     return d
 
 
-if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
-    logging.getLogger("requests").setLevel(logging.WARNING)
-    logging.getLogger("langid").setLevel(logging.WARNING)
-    logger = logging.getLogger()
-else:
-    logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
