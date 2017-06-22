@@ -233,6 +233,8 @@ SITE_NAME_SEARCH = regex.compile(
     re.VERBOSE | re.IGNORECASE,
 ).search
 
+TITLE_SPLIT = re.compile(r' - | — |\|').split
+
 
 class ContentTypeError(ValueError):
 
@@ -443,8 +445,7 @@ def parse_title(
     (None, "Health - New teeth 'could soon be grown'", 'BBC NEWS')
     """
     intitle_author = intitle_sitename = None
-    sep_regex = ' - | — |\|'
-    title_parts = re.split(sep_regex, title.strip())
+    title_parts = TITLE_SPLIT(title.strip())
     if len(title_parts) == 1:
         return None, title, None
     hostname = urlparse(url).hostname.replace('www.', '')
