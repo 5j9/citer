@@ -21,7 +21,7 @@ from src.adinebook import adinehbook_response
 from src.urls import urls_response
 from src.doi import doi_response, DOI_SEARCH
 from src.commons import uninum2en, response_to_json
-from src.isbn import ISBN13_SEARCH, ISBN10_SEARCH, IsbnError, isbn_response
+from src.isbn import ISBN_10OR13_SEARCH, IsbnError, isbn_response
 from src.waybackmachine import waybackmachine_response
 if lang == 'en':
     from src.html.en import (
@@ -47,7 +47,7 @@ else:
     )
 
 
-NETLOC_TO_RESPONSE = {
+NETLOC_RESPONSE_GET = {
     'www.adinehbook.com': adinehbook_response,
     'www.adinebook.com': adinehbook_response,
     'adinebook.com': adinehbook_response,
@@ -61,7 +61,7 @@ NETLOC_TO_RESPONSE = {
     'noormags.com': noormags_response,
     'web.archive.org': waybackmachine_response,
     'web-beta.archive.org': waybackmachine_response,
-}
+}.get
 
 RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
 
@@ -85,7 +85,7 @@ def mylogger():
     return custom_logger
 
 
-def get_response(user_input, date_format):
+def url_doi_isbn_response(user_input, date_format):
     if not user_input:
         # on first run user_input is ''
         return DEFAULT_RESPONSE
@@ -103,7 +103,7 @@ def get_response(user_input, date_format):
         netloc = urlparse(url)[1]
         if '.google.com/books' in url:
             return googlebooks_response(url, date_format)
-        response_getter = NETLOC_TO_RESPONSE.get(netloc)
+        response_getter = NETLOC_RESPONSE_GET(netloc)
         if response_getter:
             return response_getter(url, date_format)
         # DOIs contain dots
@@ -114,7 +114,7 @@ def get_response(user_input, date_format):
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
         # error prone.
-        m = ISBN13_SEARCH(en_user_input) or ISBN10_SEARCH(en_user_input)
+        m = ISBN_10OR13_SEARCH(en_user_input)
         if m:
             try:
                 return isbn_response(m.group(), True, date_format)
@@ -142,7 +142,7 @@ def application(environ, start_response):
     date_format = query_dict_get('dateformat', [''])[0].strip()
     # noinspection PyBroadException
     try:
-        response = get_response(user_input, date_format)
+        response = url_doi_isbn_response(user_input, date_format)
     except requests.ConnectionError:
         status = '500 ConnectionError'
         logger.exception(user_input)

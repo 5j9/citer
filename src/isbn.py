@@ -15,14 +15,12 @@ from src.bibtex import parse as bibtex_parse
 from src.commons import dictionary_to_response, Response
 
 
-# original regex from: https://www.debuggex.com/r/0Npla56ipD5aeTr9
-ISBN13_SEARCH = re.compile(
+# original regex from:
+# https://www.debuggex.com/r/0Npla56ipD5aeTr9
+# https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
+ISBN_10OR13_SEARCH = re.compile(
     r'97[89]([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
-).search
-
-# original regex from: https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
-ISBN10_SEARCH = re.compile(
-    r'(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
+    r'|(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
 ).search
 
 # original regex from: http://stackoverflow.com/a/14260708/2705757
