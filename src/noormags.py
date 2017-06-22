@@ -31,7 +31,7 @@ def noormags_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
 
 def get_bibtex(noormags_url):
     """Get BibTex file content from a noormags_url. Return as string."""
-    page_text = requests_get(noormags_url).text
+    page_text = requests_get(noormags_url, timeout=10).text
     article_id = search('/citation/bibtex/(\d+)', page_text).group(1)
     url = 'http://www.noormags.ir/view/fa/citation/bibtex/' + article_id
     return requests_get(url).text
@@ -39,10 +39,10 @@ def get_bibtex(noormags_url):
 
 def get_ris(noormags_url):
     """Get ris file content from a noormags url. Return as string."""
-    page_text = requests_get(noormags_url).text
+    page_text = requests_get(noormags_url, timeout=10).text
     article_id = search('/citation/ris/(\d+)', page_text).group(1)
     return requests_get(
-        'http://www.noormags.ir/view/fa/citation/ris/' + article_id
+        'http://www.noormags.ir/view/fa/citation/ris/' + article_id, timeout=10
     ).text
 
 

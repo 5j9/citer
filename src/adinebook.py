@@ -55,7 +55,7 @@ def url2dictionary(adinebook_url: str):
             'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) '
             'Gecko/20100101 Firefox/33.0'
         }
-        r = requests_get(adinebook_url, headers=headers)
+        r = requests_get(adinebook_url, headers=headers, timeout=10)
         adinebook_html = r.content.decode('utf-8')
     except RequestException:
         logger.exception(adinebook_url)

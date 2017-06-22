@@ -49,7 +49,7 @@ def get_bibtex(googlebook_url):
         'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
         'Firefox/33.0'
     }
-    bibtex = requests_get(url, headers=headers).text
+    bibtex = requests_get(url, headers=headers, timeout=10).text
     return bibtex
 
 
@@ -67,4 +67,4 @@ def get_ris(googlebook_url):
         'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
         'Firefox/33.0'
     }
-    return requests_get(url, headers=headers).text
+    return requests_get(url, headers=headers, timeout=10).text

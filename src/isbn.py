@@ -133,7 +133,9 @@ def isbn2int(isbn):
 def ottobib(isbn):
     """Convert ISBN to bibtex using ottobib.com."""
     m = OTTOBIB_SEARCH(
-        requests_get('http://www.ottobib.com/isbn/' + isbn + '/bibtex').text
+        requests_get(
+            'http://www.ottobib.com/isbn/' + isbn + '/bibtex', timeout=10
+        ).text
     )
     if m:
         return m.group(1)
