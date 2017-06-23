@@ -8,7 +8,7 @@ from collections import defaultdict
 from datetime import date as datetime_date
 from difflib import get_close_matches
 from html import unescape as html_unescape
-import logging
+from logging import getLogger
 import re
 from threading import Thread
 from typing import Optional, List, Dict, Any, Tuple
@@ -622,4 +622,4 @@ def url2dict(url: str) -> Dict[str, Any]:
     return d
 
 
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
