@@ -6,6 +6,7 @@
 
 from collections import defaultdict
 from datetime import date
+from logging import getLogger
 from random import seed as randseed, choice as randchoice
 from string import digits, ascii_lowercase
 
@@ -41,7 +42,7 @@ TYPE_TO_CITE = {
     # within a series.
     'techreport': 'techreport',
     # Use this type when nothing else fits.
-    # 'misc': '',
+    'misc': '',
     # Types used by Yadkard.
     'web': 'وب',
     # crossref types (https://api.crossref.org/v1/types)
@@ -51,29 +52,29 @@ TYPE_TO_CITE = {
     'book-track': 'کتاب',
     'journal-article': 'ژورنال',
     'book-part': 'کتاب',
-    # 'other': '',
+    'other': '',
     'book': 'کتاب',
     'journal-volume': 'ژورنال',
     'book-set': 'کتاب',
-    # 'reference-entry': '',
+    'reference-entry': '',
     'proceedings-article': 'conference',
     'journal': 'ژورنال',
-    # 'component': '',
+    # https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=22368089&retmode=json&tool=my_tool&email=my_email@example.com
+    'Journal Article': 'ژورنال',
+    'component': '',
     'book-chapter': 'کتاب',
     'report-series': 'report',
     'proceedings': 'conference',
-    # 'standard': '',
+    'standard': '',
     'reference-book': 'کتاب',
-    # 'posted-content': '',
+    'posted-content': '',
     'journal-issue': 'ژورنال',
     'dissertation': 'thesis',
-    # 'dataset': '',
+    'dataset': '',
     'book-series': 'کتاب',
     'edited-book': 'کتاب',
-    # 'standard-series': '',
-}
-# Note that Template:Cite is redirected to Template:Citation.
-TYPE_TO_CITE = defaultdict(str, TYPE_TO_CITE)
+    'standard-series': '',
+}.get
 
 # According to https://en.wikipedia.org/wiki/Help:Footnotes,
 # the characters '!$%&()*,-.:;<@[]^_`{|}~' are also supported. But they are
@@ -83,7 +84,10 @@ LOWER_ALPHA_DIGITS = digits + ascii_lowercase
 
 def citations(d: defaultdict) -> tuple:
     """Create citation templates using the given dictionary."""
-    cite_type = TYPE_TO_CITE[d['cite_type']]
+    cite_type = TYPE_TO_CITE(d['cite_type'])
+    if not cite_type:
+        logger.warning(f'Unknown citation type: {cite_type}, d: {d}')
+        cite_type = ''
     if cite_type in ('کتاب', 'ژورنال', 'وب'):
         cite = '* {{یادکرد ' + cite_type
     else:
@@ -196,6 +200,10 @@ def citations(d: defaultdict) -> tuple:
     if pmid:
         cite += ' | pmid=' + pmid
 
+    pmcid = d['pmcid']
+    if pmcid:
+        cite += ' | pmc=' + pmcid
+
     doi = d['doi']
     if doi:
         cite += ' | doi=' + doi
@@ -307,3 +315,5 @@ def ennum2fa(string_or_num) -> str:
         .replace('8', '۸')
         .replace('9', '۹')
     )
+
+logger = getLogger(__name__)

@@ -5,7 +5,7 @@ body {
     font-family: tahoma;
     font-size: 0.8em;
 }
-#shortened, #named_ref, input {
+#shortened, #named_ref, input, select {
     transition: background-color 5s ease-in;
     background-color: rgb(255, 255, 255);
     border: 1px solid rgb(204, 204, 204);

@@ -50,6 +50,8 @@ UNDEFINED_INPUT_RESPONSE = Response(
 )
 
 
-def response_to_html(response: Response, date_format: str):
+def response_to_html(response: Response, date_format: str, input_type: str):
     """Insert the response into the HTML template and return response_body."""
-    return HTML_SUBST(**response._asdict())
+    return HTML_SUBST(**response._asdict()).replace(
+        '="' + input_type + '"', '="' + input_type + '" selected', 1
+    )

@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
+from collections import defaultdict
 import logging
 import logging.handlers
 from urllib.parse import parse_qs, urlparse, unquote
@@ -14,14 +15,15 @@ except ImportError:
 import requests
 
 from config import lang
-from src.noormags import noormags_response
-from src.googlebooks import googlebooks_response
-from src.noorlib import noorlib_response
 from src.adinebook import adinehbook_response
-from src.urls import urls_response
-from src.doi import doi_response, DOI_SEARCH
 from src.commons import uninum2en, response_to_json
+from src.doi import doi_response, DOI_SEARCH
+from src.googlebooks import googlebooks_response
 from src.isbn import ISBN_10OR13_SEARCH, IsbnError, isbn_response
+from src.noorlib import noorlib_response
+from src.noormags import noormags_response
+from src.pubmed import pmcid_response, pmid_response
+from src.urls import urls_response
 from src.waybackmachine import waybackmachine_response
 if lang == 'en':
     from src.html.en import (
@@ -86,9 +88,6 @@ def mylogger():
 
 
 def url_doi_isbn_response(user_input, date_format):
-    if not user_input:
-        # on first run user_input is ''
-        return DEFAULT_RESPONSE
     en_user_input = unquote(uninum2en(user_input))
     # Checking the user input for dot is important because
     # the use of dotless domains is prohibited.
@@ -136,20 +135,35 @@ def application(environ, start_response):
             start_response('200 OK', JS_HEADERS)
             return [JS]
 
-    output_format = query_dict_get('output_format', [''])[0]  # apiquery
+    date_format = query_dict_get('dateformat', [''])[0].strip()
+
+    input_type = query_dict_get('input_type', [''])[0]
+
     # Warning: input is not escaped!
     user_input = query_dict_get('user_input', [''])[0].strip()
-    date_format = query_dict_get('dateformat', [''])[0].strip()
+    if not user_input:
+        response_body = response_to_html(
+            DEFAULT_RESPONSE, date_format, input_type
+        ).encode()
+        RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
+        start_response('200 OK', RESPONSE_HEADERS.items())
+        return [response_body]
+
+    output_format = query_dict_get('output_format', [''])[0]  # apiquery
+
+    resolver = input_type_to_resolver[input_type]
     # noinspection PyBroadException
     try:
-        response = url_doi_isbn_response(user_input, date_format)
+        response = resolver(user_input, date_format)
     except requests.ConnectionError:
         status = '500 ConnectionError'
         logger.exception(user_input)
         if output_format == 'json':
             response_body = response_to_json(HTTPERROR_RESPONSE)
         else:
-            response_body = response_to_html(HTTPERROR_RESPONSE, date_format)
+            response_body = response_to_html(
+                HTTPERROR_RESPONSE, date_format, input_type
+            )
     except Exception:
         status = '500 Internal Server Error'
         logger.exception(user_input)
@@ -157,19 +171,26 @@ def application(environ, start_response):
             response_body = response_to_json(OTHER_EXCEPTION_RESPONSE)
         else:
             response_body = response_to_html(
-                OTHER_EXCEPTION_RESPONSE, date_format
+                OTHER_EXCEPTION_RESPONSE, date_format, input_type
             )
     else:
         status = '200 OK'
         if output_format == 'json':
             response_body = response_to_json(response)
         else:
-            response_body = response_to_html(response, date_format)
+            response_body = response_to_html(response, date_format, input_type)
     response_body = response_body.encode()
     RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
     start_response(status, RESPONSE_HEADERS.items())
     return [response_body]
 
+
+input_type_to_resolver = defaultdict(
+    lambda: url_doi_isbn_response, {
+    'url-doi-isbn': url_doi_isbn_response,
+    'pmid': pmid_response,
+    'pmcid': pmcid_response,
+})
 
 if __name__ == '__main__':
     logger = mylogger()

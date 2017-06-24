@@ -68,9 +68,11 @@ HTML_SUBST = Template(
 ).substitute
 
 
-def response_to_html(response: Response, date_format: str):
+def response_to_html(response: Response, date_format: str, input_type: str):
     """Insert the response into the HTML template and return response_body."""
     date_format = date_format or '%Y-%m-%d'
     return HTML_SUBST(
         **response._asdict(),
-    ).replace(date_format + '"', date_format + '" checked', 1)
+    ).replace(date_format + '"', date_format + '" checked', 1).replace(
+        '="' + input_type + '"', '="' + input_type + '" selected', 1
+    )

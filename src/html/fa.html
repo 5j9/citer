@@ -6,9 +6,13 @@
     </head>
     <body>
 		<form action="yadkard.fcgi">
-			<p class="input-legend">نشانی وب/شابک/شناسهٔ برنمود رقمی:</p>
+            <select class="input-legend" name="input_type">
+                <option value="url-doi-isbn">نشانی وب/شابک/شناسهٔ برنمود رقمی</option>
+                <option value="pmid">PMID</option>
+                <option value="pmcid">PMCID</option>
+            </select>:
 			<div id="inputs">
-				<input name="user_input">
+				<input name="user_input" autofocus>
 				<input type="submit" value="ثبت درخواست">
 			</div>
 		</form>
@@ -20,7 +24,7 @@
 		<div id="named_ref" contenteditable>$ref</div>
 		<footer>
 			<p>
-				<i>یادفا</i> ابزاریست برای ساخت الگوهای یادکرد ویکی‌پدیای فارسی. ابزار نشانی وب <a href="http://books.google.com/">کتاب‌های گوگل</a>، <a href="https://fa.wikipedia.org/wiki/%D9%86%D8%B4%D8%A7%D9%86%DA%AF%D8%B1_%D8%AF%DB%8C%D8%AC%DB%8C%D8%AA%D8%A7%D9%84%DB%8C_%D8%B4%DB%8C%D8%A1">شناسانۀ برنمود رقمی</a>، <a href="https://fa.wikipedia.org/wiki/%D8%B4%D8%A7%D8%A8%DA%A9">شابک</a>، و نشانی‌های وب برخی از وب‌گاه‌های دیگر را به عنوان ورودی می‌پذیرد.
+				<i>یادفا</i> ابزاری است برای ساخت الگوهای یادکرد ویکی‌پدیای فارسی. این ابزار نشانی وب <a href="http://books.google.com/">کتاب‌های گوگل</a>، <a href="https://fa.wikipedia.org/wiki/%D9%86%D8%B4%D8%A7%D9%86%DA%AF%D8%B1_%D8%AF%DB%8C%D8%AC%DB%8C%D8%AA%D8%A7%D9%84%DB%8C_%D8%B4%DB%8C%D8%A1">شناسانۀ برنمود رقمی</a>، <a href="https://fa.wikipedia.org/wiki/%D8%B4%D8%A7%D8%A8%DA%A9">شابک</a>، <a href="https://en.wikipedia.org/wiki/PubMed#PubMed_identifier">PMID</a>&rlm;، <a href="https://en.wikipedia.org/wiki/PubMed_Central#PMCID">PMCID</a> و نشانی‌های وب برخی از وب‌گاه‌های دیگر را به عنوان ورودی می‌پذیرد.
 			</p>
 			<p>
 				توجه داشته باشید که همواره احتمال خطا در خروجی ابزار وجود دارد و نیازمند بازبینی خواهد بود. <b>با مسئولیت خودتان از آن استفاده کنید.</b>

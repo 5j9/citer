@@ -7,6 +7,8 @@
 import re
 from datetime import date as datetime_date
 from collections import defaultdict
+from logging import getLogger
+
 
 # Includes ShortDOIs (See: http://shortdoi.org/) and
 # https://www.crossref.org/display-guidelines/
@@ -44,7 +46,7 @@ TYPE_TO_CITE = {
     # Todo: Add support for Template:Cite techreport
     'techreport': 'techreport',
     # Use this type when nothing else fits.
-    # 'misc': '',
+    'misc': '',
     # Types used by Yadkard.
     'web': 'web',
     # crossref types (https://api.crossref.org/v1/types)
@@ -54,35 +56,38 @@ TYPE_TO_CITE = {
     'book-track': 'book',
     'journal-article': 'journal',
     'book-part': 'book',
-    # 'other': '',
+    'other': '',
     'book': 'book',
     'journal-volume': 'journal',
     'book-set': 'book',
-    # 'reference-entry': '',
+    'reference-entry': '',
     'proceedings-article': 'conference',
     'journal': 'journal',
-    # 'component': '',
+    # https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=22368089&retmode=json&tool=my_tool&email=my_email@example.com
+    'Journal Article': 'journal',
+    'component': '',
     'book-chapter': 'book',
     'report-series': 'report',
     'proceedings': 'conference',
-    # 'standard': '',
+    'standard': '',
     'reference-book': 'book',
-    # 'posted-content': '',
+    'posted-content': '',
     'journal-issue': 'journal',
     'dissertation': 'thesis',
-    # 'dataset': '',
+    'dataset': '',
     'book-series': 'book',
     'edited-book': 'book',
-    # 'standard-series': '',
-}
-# Note that Template:Cite is redirected to Template:Citation.
-TYPE_TO_CITE = defaultdict(str, TYPE_TO_CITE)
+    'standard-series': '',
+}.get
 
 
 def citations(d: defaultdict) -> tuple:
     """Create citation templates according to the given dictionary."""
     date_format = d['date_format']
-    cite_type = TYPE_TO_CITE[d['cite_type']]
+    cite_type = TYPE_TO_CITE(d['cite_type'])
+    if not cite_type:
+        logger.warning(f'Unknown citation type: {cite_type}, d: {d}')
+        cite_type = ''
     cite = '* {{cite ' + cite_type
     sfn = '{{sfn'
 
@@ -194,7 +199,11 @@ def citations(d: defaultdict) -> tuple:
 
     pmid = d['pmid']
     if pmid:
-        cite += '| pmid=' + pmid
+        cite += ' | pmid=' + pmid
+
+    pmcid = d['pmcid']
+    if pmcid:
+        cite += ' | pmc=' + pmcid
 
     doi = d['doi']
     if doi:
@@ -313,3 +322,5 @@ def names1para(translators, para):
         else:
             s += ', ' + name.fullname
     return s
+
+logger = getLogger(__name__)
