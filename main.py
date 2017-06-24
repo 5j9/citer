@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from collections import defaultdict
+from html import unescape
 import logging
 import logging.handlers
 from urllib.parse import parse_qs, urlparse, unquote
-from html import unescape
 from wsgiref.headers import Headers
 
 try:
@@ -58,7 +58,6 @@ TLDLESS_NETLOC_RESOLVER = {
     'web-beta.archive': waybackmachine_response,
     'books.google.co': googlebooks_response,
     'books.google': googlebooks_response,
-
 }.get
 
 RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
@@ -105,7 +104,7 @@ def url_doi_isbn_response(user_input, date_format):
         # DOIs contain dots
         m = DOI_SEARCH(unescape(en_user_input))
         if m:
-            return doi_response(m.group(1), pure=True, date_format=date_format)
+            return doi_response(m[1], pure=True, date_format=date_format)
         return urls_response(url, date_format)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
@@ -113,7 +112,7 @@ def url_doi_isbn_response(user_input, date_format):
         m = ISBN_10OR13_SEARCH(en_user_input)
         if m:
             try:
-                return isbn_response(m.group(), True, date_format)
+                return isbn_response(m[0], True, date_format)
             except IsbnError:
                 pass
         return UNDEFINED_INPUT_RESPONSE
