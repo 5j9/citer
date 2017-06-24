@@ -11,6 +11,7 @@ from random import seed as randseed, choice as randchoice
 from string import digits, ascii_lowercase
 
 from src.generator_en import citations as en_citations, DOI_URL_MATCH
+from src.language import TO_TWO_LETTER_CODE
 
 
 TYPE_TO_CITE = {
@@ -232,6 +233,7 @@ def citations(d: defaultdict) -> tuple:
 
     language = d['language']
     if language:
+        language = TO_TWO_LETTER_CODE(language.lower(), language)
         if cite_type == 'وب':
             cite += ' | کد زبان=' + language
         else:

@@ -5,18 +5,14 @@ import unittest
 
 import config; config.lang = 'fa'
 from src.dummy_requests import DummyRequests
-from src import adinebook
-from src import googlebooks
-from src import noormags
-from src import noorlib
-from src import doi
-from src import isbn
+from src import adinebook, googlebooks, noormags, noorlib, doi, isbn, pubmed
 from src.adinebook import adinehbook_response
+from src.doi import doi_response
 from src.googlebooks import googlebooks_response
+from src.isbn import isbn_response
 from src.noormags import noormags_response
 from src.noorlib import noorlib_response
-from src.doi import doi_response
-from src.isbn import isbn_response
+from src.pubmed import pmid_response
 
 
 class AdinebookTest(unittest.TestCase):
@@ -311,10 +307,26 @@ class IsbnTest(unittest.TestCase):
             ' ماه=آذر | شابک=964-92962-6-3 | زبان=fa}}'
         self.assertIn(e, o.cite)
 
+    def test_2letter_langcode(self):
+        """Test that 3letter language code is converted to a 2-letter one."""
+        # Todo: The fawiki template mixes persian and chinese characters...
+        self.assertIn(
+            '* {{یادکرد ژورنال | نام خانوادگی=Huang | نام=Y '
+            '| نام خانوادگی۲=Lu | نام۲=J | نام خانوادگی۳=Shen '
+            '| نام۳=Y | نام خانوادگی۴=Lu | نام۴=J '
+            '| عنوان=&amp;#91;The protective effects of total flavonoids from '
+            'Lycium Barbarum L. on lipid peroxidation of liver mitochondria '
+            'and red blood cell in rats&amp;#93;. '
+            '| ژورنال=Wei sheng yan jiu = Journal of hygiene research '
+            '| جلد=28 | شماره=2 | تاریخ=1999-03-30 | issn=1000-8020 '
+            '| pmid=11938998 | صفحه=115–6 | زبان=zh}}',
+            pmid_response('11938998').cite,
+        )
+
 
 if __name__ == '__main__':
     adinebook.requests_get = googlebooks.requests_get = \
-        noormags.requests_get = \
+        noormags.requests_get = pubmed.requests_get = \
         noorlib.requests_get = doi.requests_get = isbn.requests_get = \
         DummyRequests().get
     unittest.main()

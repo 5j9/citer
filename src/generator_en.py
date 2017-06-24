@@ -9,6 +9,8 @@ from datetime import date as datetime_date
 from collections import defaultdict
 from logging import getLogger
 
+from src.language import TO_TWO_LETTER_CODE
+
 
 # Includes ShortDOIs (See: http://shortdoi.org/) and
 # https://www.crossref.org/display-guidelines/
@@ -244,7 +246,8 @@ def citations(d: defaultdict) -> tuple:
 
     language = d['language']
     if language:
-        if language.lower() not in ('english', 'en'):
+        language = TO_TWO_LETTER_CODE(language.lower(), language)
+        if language.lower() != 'en':
             cite += ' | language=' + language
 
     # Todo: Template:Citation by default generates anchors for Harvard
