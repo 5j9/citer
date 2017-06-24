@@ -49,20 +49,16 @@ else:
     )
 
 
-NETLOC_RESPONSE_GET = {
-    'www.adinehbook.com': adinehbook_response,
-    'www.adinebook.com': adinehbook_response,
-    'adinebook.com': adinehbook_response,
-    'adinehbook.com': adinehbook_response,
-    'www.noorlib.ir': noorlib_response,
-    'www.noorlib.com': noorlib_response,
-    'noorlib.com': noorlib_response,
-    'noorlib.ir': noorlib_response,
-    'www.noormags.ir': noormags_response,
-    'www.noormags.com': noormags_response,
-    'noormags.com': noormags_response,
-    'web.archive.org': waybackmachine_response,
-    'web-beta.archive.org': waybackmachine_response,
+TLDLESS_NETLOC_RESOLVER = {
+    'adinebook': adinehbook_response,
+    'adinehbook': adinehbook_response,
+    'noorlib': noorlib_response,
+    'noormags': noormags_response,
+    'web.archive': waybackmachine_response,
+    'web-beta.archive': waybackmachine_response,
+    'books.google.co': googlebooks_response,
+    'books.google': googlebooks_response,
+
 }.get
 
 RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
@@ -99,12 +95,13 @@ def url_doi_isbn_response(user_input, date_format):
             url = 'http://' + user_input
         else:
             url = user_input
-        netloc = urlparse(url)[1]
-        if '.google.com/books' in url:
-            return googlebooks_response(url, date_format)
-        response_getter = NETLOC_RESPONSE_GET(netloc)
-        if response_getter:
-            return response_getter(url, date_format)
+        tldless_netloc = urlparse(url)[1].rpartition('.')[0]
+        resolver = TLDLESS_NETLOC_RESOLVER(
+            tldless_netloc[4:] if tldless_netloc.startswith('www.')
+            else tldless_netloc
+        )
+        if resolver:
+            return resolver(url, date_format)
         # DOIs contain dots
         m = DOI_SEARCH(unescape(en_user_input))
         if m:
