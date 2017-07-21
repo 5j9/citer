@@ -82,6 +82,7 @@ TYPE_TO_CITE = {
 # hard to use.
 LOWER_ALPHA_DIGITS = digits + ascii_lowercase
 
+DIGITS_TO_FA = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
 
 def citations(d: defaultdict) -> tuple:
     """Create citation templates using the given dictionary."""
@@ -274,16 +275,25 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
         c += 1
         if c == 1:
             if name.firstname or not nofn_parameter:
-                s += ' | ' + ln_parameter + '=' + name.lastname
-                s += ' | ' + fn_parameter + '=' + name.firstname
+                s += (
+                    ' | ' + ln_parameter + '=' + name.lastname +
+                    ' | ' + fn_parameter + '=' + name.firstname
+                )
             else:
                 s += ' | ' + nofn_parameter + '=' + name.fullname
         else:
             if name.firstname or not nofn_parameter:
-                s += ' | ' + ln_parameter + ennum2fa(c) + '=' + name.lastname
-                s += ' | ' + fn_parameter + ennum2fa(c) + '=' + name.firstname
+                s += (
+                    ' | ' + ln_parameter + str(c).translate(DIGITS_TO_FA)
+                    + '=' + name.lastname +
+                    ' | ' + fn_parameter + str(c).translate(DIGITS_TO_FA)
+                    + '=' + name.firstname
+                )
             else:
-                s += ' | ' + nofn_parameter + ennum2fa(c) + '=' + name.fullname
+                s += (
+                    ' | ' + nofn_parameter + str(c).translate(DIGITS_TO_FA)
+                    + '=' + name.fullname
+                )
     return s
 
 
@@ -301,21 +311,5 @@ def names1para(translators, para):
             s += '، ' + name.fullname
     return s
 
-
-def ennum2fa(string_or_num) -> str:
-    """Convert English numerical string to equivalent Persian one (‍۰-۹)."""
-    return (
-        str(string_or_num)
-        .replace('0', '۰')
-        .replace('1', '۱')
-        .replace('2', '۲')
-        .replace('3', '۳')
-        .replace('4', '۴')
-        .replace('5', '۵')
-        .replace('6', '۶')
-        .replace('7', '۷')
-        .replace('8', '۸')
-        .replace('9', '۹')
-    )
 
 logger = getLogger(__name__)
