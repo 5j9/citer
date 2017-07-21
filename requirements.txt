@@ -1,8 +1,7 @@
 numpy>=1.8.1
 requests>=2.3.0
 isbnlib>=3.3.8
-# flup6>=1.1 (only required on server)
+# flup6>=1.1 (only required on remote server)
 langid>=1.1.6
-lxml>=3.7.2
 jdatetime>=1.8.1
 regex>=2017.5.26
