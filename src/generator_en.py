@@ -124,7 +124,7 @@ def citations(d: defaultdict) -> tuple:
     if translators:
         for translator in translators:
             translator.fullname += ' (مترجم)'
-        # todo: add a 'Translated by ' before name of translators
+        # Todo: add a 'Translated by ' before name of translators?
         others = d['others']
         if others:
             others.extend(d['translators'])
@@ -250,7 +250,7 @@ def citations(d: defaultdict) -> tuple:
         if language.lower() != 'en':
             cite += ' | language=' + language
 
-    # Todo: Template:Citation by default generates anchors for Harvard
+    # Todo: Template:Citation generates anchors for Harvard by default
     # references
     #   whereas the Cite templates by default do not (although they can be
     # made to
