@@ -42,7 +42,8 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
         archive_dict = url2dict(archive_url)
     except (ContentTypeError, ContentLengthError) as e:
         logger.exception(archive_url)
-        return Response(sfnt='Could not process the request.', ctnt=e)
+        # Todo: i18n
+        return Response(cite=e, sfn='Invalid content type or length.', ref='')
     archive_dict['date_format'] = date_format
     archive_dict['url'] = original_url
     archive_dict['archive-url'] = archive_url
