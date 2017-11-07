@@ -3,8 +3,8 @@
 
 """Codes specifically related to PubMed inputs."""
 
-
 from collections import defaultdict
+from config import ncbi_api_key, ncbi_email, ncbi_tool
 from datetime import datetime
 import logging
 from re import compile as re_compile
@@ -16,6 +16,13 @@ from src.commons import Response, dictionary_to_response, Name, b_TO_NUM
 from src.doi import crossref
 
 NON_DIGITS_SUB = re_compile(r'[^\d]').sub
+
+NCBI_URL = (
+    'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?'
+    f'api_key={ncbi_api_key}&retmode=json&tool={ncbi_tool}&email={ncbi_email}'
+)
+PUBMED_URL = NCBI_URL + '&db=pubmed&id='
+PMC_URL = NCBI_URL + '&db=pmc&id='
 
 
 def pmid_response(pmid: str, date_format='%Y-%m-%d') -> Response:
@@ -39,16 +46,12 @@ def ncbi(type_: str, id_: str) -> defaultdict:
     # According to https://www.ncbi.nlm.nih.gov/pmc/tools/get-metadata/
     if type_ == 'pmid':
         result_get = requests_get(
-            'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?'
-            'db=pubmed&retmode=json&tool=yadkard&email=dalba.wiki@gmail.com&'
-            'id=' + id_,
+            PUBMED_URL + id_,
             timeout=10,
         ).json()['result'][id_].get
     else:  # type_ == 'pmcid'
         result_get = requests_get(
-            'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?'
-            'db=pmc&retmode=json&tool=yadkard&email=dalba.wiki@gmail.com&'
-            'id=' + id_,
+            PMC_URL + id_,
             timeout=10,
         ).json()['result'][id_].get
 
