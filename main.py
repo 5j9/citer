@@ -67,7 +67,7 @@ def mylogger():
     custom_logger = logging.getLogger()
     custom_logger.setLevel(logging.INFO)
     handler = logging.handlers.RotatingFileHandler(
-        filename='yadkard.log',
+        filename='citer.log',
         mode='a',
         maxBytes=20000,
         backupCount=0,
