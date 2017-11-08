@@ -8,7 +8,7 @@ import unittest
 
 from src import dummy_requests
 from src import googlebooks
-from src.googlebooks import googlebooks_response
+from src.googlebooks import googlebooks_sfn_cit_ref
 
 
 class GooglebooksTest(unittest.TestCase):
@@ -18,7 +18,7 @@ class GooglebooksTest(unittest.TestCase):
             'http://books.google.com/books?'
             'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library'
         )
-        o = googlebooks_response(i)
+        o = googlebooks_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| last=Arms '
@@ -32,7 +32,7 @@ class GooglebooksTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_gb2(self):
         """a book with more than 4 authors (10 authors)"""
@@ -40,7 +40,7 @@ class GooglebooksTest(unittest.TestCase):
             'http://books.google.com/books?'
             'id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
         )
-        o = googlebooks_response(i)
+        o = googlebooks_sfn_cit_ref(i)
         e1 = (
             '{{sfn '
             '| Anderson '
@@ -82,8 +82,8 @@ class GooglebooksTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
+        self.assertIn(e1, o[0])
+        self.assertIn(e2, o[1])
 
     def test_gb3(self):
         """Non-ascii characters in title (Some of them where removed later)"""
@@ -92,7 +92,7 @@ class GooglebooksTest(unittest.TestCase):
             'Delimiter+is%22&hl=en&sa=X&ei=oNKSUrKeDovItAbO_4CoBA&ved='
             '0CC4Q6AEwAA#v=onepage&q=%22a%20Delimiter%20is%22&f=false'
         )
-        o = googlebooks_response(i)
+        o = googlebooks_sfn_cit_ref(i)
         e1 = '{{sfn | Farrell | 2009 | p=588}}'
         e2 = (
             '* {{cite book '
@@ -107,8 +107,8 @@ class GooglebooksTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
+        self.assertIn(e1, o[0])
+        self.assertIn(e2, o[1])
 
     def test_gb4(self):
         """Non-ascii characters in author's name."""
@@ -118,7 +118,7 @@ class GooglebooksTest(unittest.TestCase):
             'X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q='
             '%22legal%20translation%20is%22&f=false'
         )
-        o = googlebooks_response(i)
+        o = googlebooks_sfn_cit_ref(i)
         e1 = '{{sfn | Šarčević | 1997 | p=229}}'
         e2 = (
             '* {{cite book '
@@ -132,8 +132,8 @@ class GooglebooksTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
+        self.assertIn(e1, o[0])
+        self.assertIn(e2, o[1])
 
     def test_gb5(self):
         """ref checking"""
@@ -142,7 +142,7 @@ class GooglebooksTest(unittest.TestCase):
             'dq=density+of+granite&hl=en&sa=X&ei=YBHIU-qCBIyX0QXusoDgAg&ved='
             '0CEIQ6AEwBjgK#v=onepage&q=density%20of%20granite&f=false'
         )
-        o = googlebooks_response(i)
+        o = googlebooks_sfn_cit_ref(i)
         ctnt = (
             '* {{cite book '
             '| last=Serway '
@@ -173,9 +173,9 @@ class GooglebooksTest(unittest.TestCase):
             '| url=http://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378 '
             '| access-date='
         )
-        self.assertIn(ctnt, o.cite)
-        self.assertIn(reft, o.ref)
-        self.assertIn(' | page=378}}&lt;/ref&gt;', o.ref)
+        self.assertIn(ctnt, o[1])
+        self.assertIn(reft, o[2])
+        self.assertIn(' | page=378}}&lt;/ref&gt;', o[2])
 
 
 googlebooks.requests_get = dummy_requests.DummyRequests().get

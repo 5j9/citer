@@ -8,7 +8,7 @@ import unittest
 
 from src import dummy_requests
 from src import doi
-from src.doi import doi_response
+from src.doi import doi_sfn_cit_ref
 
 
 class DoiTest(unittest.TestCase):
@@ -21,7 +21,7 @@ class DoiTest(unittest.TestCase):
             "Discovery | publisher=Springer Nature | volume=1 | issue=7 | "
             "year=2002 | issn=1474-1784 | doi=10.1038/nrd842 | pages=491–492 "
             "| ref=harv}}",
-            doi_response('https://doi.org/10.1038%2Fnrd842').cite,
+            doi_sfn_cit_ref('https://doi.org/10.1038%2Fnrd842')[1],
         )
 
     def test_doi2(self):
@@ -34,9 +34,9 @@ class DoiTest(unittest.TestCase):
             '| pages=272–281 '
             '| ref={{sfnref | University of Chicago Press | 2014}}'
             '}}',
-            doi_response(
+            doi_sfn_cit_ref(
                 'http://www.jstor.org/stable/info/10.1086/677379'
-            ).cite,
+            )[1],
         )
 
     def test_doi3(self):
@@ -49,7 +49,7 @@ class DoiTest(unittest.TestCase):
             '| volume=30 | issue=9 | year=1939 | issn=0022-0663 '
             '| doi=10.1037/h0063404 | pages=641–656 '
             '| ref=harv}}',
-            doi_response('https://doi.org/10.1037%2Fh0063404').cite,
+            doi_sfn_cit_ref('https://doi.org/10.1037%2Fh0063404')[1],
         )
 
     def test_doi4(self):
@@ -66,7 +66,7 @@ class DoiTest(unittest.TestCase):
             '| volume=31 | issue=4 | year=2005 | issn=0095-2990 '
             '| doi=10.1081/ada-200068110 | pages=537–553 '
             '| ref=harv}}',
-            doi_response('10.1081%2Fada-200068110').cite,
+            doi_sfn_cit_ref('10.1081%2Fada-200068110')[1],
         )
 
     def test_incollection(self):
@@ -86,7 +86,7 @@ class DoiTest(unittest.TestCase):
             '| doi=10.1007/bfb0064872 '
             '| ref=harv'
             '}}',
-            doi_response('DOI 10.1007/BFb0064872').cite
+            doi_sfn_cit_ref('DOI 10.1007/BFb0064872')[1]
         )
 
     def test_doi_isbn_no_year(self):
@@ -98,7 +98,7 @@ class DoiTest(unittest.TestCase):
             '| publisher=University Library/University of Twente '
             '| isbn=978-90-365-2632-6 | doi=10.3990/1.9789036526326 '
             '| ref=harv}}',
-            doi_response('10.3990/1.9789036526326').cite
+            doi_sfn_cit_ref('10.3990/1.9789036526326')[1]
         )
 
     def test_conference_location(self):
@@ -114,7 +114,7 @@ class DoiTest(unittest.TestCase):
             "| doi=10.1145/1117278 "
             "| ref={{sfnref | ACM Press | 2006}}"
             "}}",
-            doi_response('10.1145/1117278').cite
+            doi_sfn_cit_ref('10.1145/1117278')[1]
         )
 
 

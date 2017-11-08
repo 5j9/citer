@@ -15,23 +15,23 @@ except ImportError:
 import requests
 
 from config import lang
-from src.adinebook import adinehbook_response
-from src.commons import uninum2en, response_to_json
-from src.doi import doi_response, DOI_SEARCH
-from src.googlebooks import googlebooks_response
-from src.isbn import ISBN_10OR13_SEARCH, IsbnError, isbn_response
-from src.noorlib import noorlib_response
-from src.noormags import noormags_response
-from src.pubmed import pmcid_response, pmid_response
-from src.urls import urls_response
-from src.waybackmachine import waybackmachine_response
+from src.adinebook import adinehbook_sfn_cit_ref
+from src.commons import uninum2en, sfn_cit_ref_to_json
+from src.doi import doi_sfn_cit_ref, DOI_SEARCH
+from src.googlebooks import googlebooks_sfn_cit_ref
+from src.isbn import ISBN_10OR13_SEARCH, IsbnError, isbn_sfn_cit_ref
+from src.noorlib import noorlib_sfn_cit_ref
+from src.noormags import noormags_sfn_cit_ref
+from src.pubmed import pmcid_sfn_cit_ref, pmid_sfn_cit_ref
+from src.urls import urls_sfn_cit_ref
+from src.waybackmachine import waybackmachine_sfn_cit_ref
 if lang == 'en':
     from src.html.en import (
-        DEFAULT_RESPONSE,
-        UNDEFINED_INPUT_RESPONSE,
-        HTTPERROR_RESPONSE,
-        OTHER_EXCEPTION_RESPONSE,
-        response_to_html,
+        DEFAULT_SFN_CIT_REF,
+        UNDEFINED_INPUT_SFN_CIT_REF,
+        HTTPERROR_SFN_CIT_REF,
+        OTHER_EXCEPTION_SFN_CIT_REF,
+        sfn_cit_ref_to_html,
         CSS,
         CSS_HEADERS,
         JS,
@@ -39,25 +39,25 @@ if lang == 'en':
     )
 else:
     from src.html.fa import (
-        DEFAULT_RESPONSE,
-        UNDEFINED_INPUT_RESPONSE,
-        HTTPERROR_RESPONSE,
-        OTHER_EXCEPTION_RESPONSE,
-        response_to_html,
+        DEFAULT_SFN_CIT_REF,
+        UNDEFINED_INPUT_SFN_CIT_REF,
+        HTTPERROR_SFN_CIT_REF,
+        OTHER_EXCEPTION_SFN_CIT_REF,
+        sfn_cit_ref_to_html,
         CSS,
         CSS_HEADERS,
     )
 
 
 TLDLESS_NETLOC_RESOLVER = {
-    'adinebook': adinehbook_response,
-    'adinehbook': adinehbook_response,
-    'noorlib': noorlib_response,
-    'noormags': noormags_response,
-    'web.archive': waybackmachine_response,
-    'web-beta.archive': waybackmachine_response,
-    'books.google.co': googlebooks_response,
-    'books.google': googlebooks_response,
+    'adinebook': adinehbook_sfn_cit_ref,
+    'adinehbook': adinehbook_sfn_cit_ref,
+    'noorlib': noorlib_sfn_cit_ref,
+    'noormags': noormags_sfn_cit_ref,
+    'web.archive': waybackmachine_sfn_cit_ref,
+    'web-beta.archive': waybackmachine_sfn_cit_ref,
+    'books.google.co': googlebooks_sfn_cit_ref,
+    'books.google': googlebooks_sfn_cit_ref,
 }.get
 
 RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
@@ -82,7 +82,7 @@ def mylogger():
     return custom_logger
 
 
-def url_doi_isbn_response(user_input, date_format):
+def url_doi_isbn_to_sfn_cit_ref(user_input, date_format) -> tuple:
     en_user_input = unquote(uninum2en(user_input))
     # Checking the user input for dot is important because
     # the use of dotless domains is prohibited.
@@ -104,18 +104,18 @@ def url_doi_isbn_response(user_input, date_format):
         # DOIs contain dots
         m = DOI_SEARCH(unescape(en_user_input))
         if m:
-            return doi_response(m[1], pure=True, date_format=date_format)
-        return urls_response(url, date_format)
+            return doi_sfn_cit_ref(m[1], pure=True, date_format=date_format)
+        return urls_sfn_cit_ref(url, date_format)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
         # error prone.
         m = ISBN_10OR13_SEARCH(en_user_input)
         if m:
             try:
-                return isbn_response(m[0], True, date_format)
+                return isbn_sfn_cit_ref(m[0], True, date_format)
             except IsbnError:
                 pass
-        return UNDEFINED_INPUT_RESPONSE
+        return UNDEFINED_INPUT_SFN_CIT_REF
 
 
 def application(environ, start_response):
@@ -138,8 +138,8 @@ def application(environ, start_response):
     # Warning: input is not escaped!
     user_input = query_dict_get('user_input', [''])[0].strip()
     if not user_input:
-        response_body = response_to_html(
-            DEFAULT_RESPONSE, date_format, input_type
+        response_body = sfn_cit_ref_to_html(
+            DEFAULT_SFN_CIT_REF, date_format, input_type
         ).encode()
         RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
         start_response('200 OK', RESPONSE_HEADERS.items())
@@ -155,26 +155,28 @@ def application(environ, start_response):
         status = '500 ConnectionError'
         logger.exception(user_input)
         if output_format == 'json':
-            response_body = response_to_json(HTTPERROR_RESPONSE)
+            response_body = sfn_cit_ref_to_json(HTTPERROR_SFN_CIT_REF)
         else:
-            response_body = response_to_html(
-                HTTPERROR_RESPONSE, date_format, input_type
+            response_body = sfn_cit_ref_to_html(
+                HTTPERROR_SFN_CIT_REF, date_format, input_type
             )
     except Exception:
         status = '500 Internal Server Error'
         logger.exception(user_input)
         if output_format == 'json':
-            response_body = response_to_json(OTHER_EXCEPTION_RESPONSE)
+            response_body = sfn_cit_ref_to_json(OTHER_EXCEPTION_SFN_CIT_REF)
         else:
-            response_body = response_to_html(
-                OTHER_EXCEPTION_RESPONSE, date_format, input_type
+            response_body = sfn_cit_ref_to_html(
+                OTHER_EXCEPTION_SFN_CIT_REF, date_format, input_type
             )
     else:
         status = '200 OK'
         if output_format == 'json':
-            response_body = response_to_json(response)
+            response_body = sfn_cit_ref_to_json(response)
         else:
-            response_body = response_to_html(response, date_format, input_type)
+            response_body = sfn_cit_ref_to_html(
+                response, date_format, input_type
+            )
     response_body = response_body.encode()
     RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
     start_response(status, RESPONSE_HEADERS.items())
@@ -182,10 +184,10 @@ def application(environ, start_response):
 
 
 input_type_to_resolver = defaultdict(
-    lambda: url_doi_isbn_response, {
-    'url-doi-isbn': url_doi_isbn_response,
-    'pmid': pmid_response,
-    'pmcid': pmcid_response,
+    lambda: url_doi_isbn_to_sfn_cit_ref, {
+    'url-doi-isbn': url_doi_isbn_to_sfn_cit_ref,
+    'pmid': pmid_sfn_cit_ref,
+    'pmcid': pmcid_sfn_cit_ref,
 })
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ import unittest
 
 from src import dummy_requests
 from src import urls
-from src.waybackmachine import waybackmachine_response
+from src.waybackmachine import waybackmachine_sfn_cit_ref
 
 
 class WaybackmachineResponse(unittest.TestCase):
@@ -33,14 +33,13 @@ class WaybackmachineResponse(unittest.TestCase):
             '| archive-date=2013-10-21 '
             '| dead-url=no '
             '| ref=harv '
-            '| access-date='
-            ,
-            waybackmachine_response(
+            '| access-date=',
+            waybackmachine_sfn_cit_ref(
                 'http://web.archive.org/web/20131021230444/'
                 'http://www.huffingtonpost.com/2013/10/19/'
                 'plastic-surgery-justin-bieber-100k_n_4128563.html?'
                 'utm_hp_ref=mostpopular'
-            ).cite,
+            )[1],
         )
 
     def test_dead_url(self):
@@ -58,15 +57,15 @@ class WaybackmachineResponse(unittest.TestCase):
             '| dead-url=yes '
             '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
             '| access-date=',
-            waybackmachine_response(
+            waybackmachine_sfn_cit_ref(
                 'https://web.archive.org/web/20070429193849id_/'
                 'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
-            ).cite
+            )[1]
         )
 
     def test_webless_url(self):
         """The 'web/ component of the url can be omitted sometimes."""
-        o = waybackmachine_response(
+        o = waybackmachine_sfn_cit_ref(
             'https://web.archive.org/web/20170119050001/'
             'http://www.isna.ir/news/95102918901/'
             '%D8%B1%D9%88%D8%A7%D9%86%DA%86%DB%8C-%D8%AF%D8%B1-'
@@ -108,7 +107,7 @@ class WaybackmachineResponse(unittest.TestCase):
             '| ref={{sfnref | ایسنا | 2017}} '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
 
 dummy_requests = dummy_requests.DummyRequests()

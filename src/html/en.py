@@ -8,31 +8,29 @@ from string import Template
 from os import name as osname
 from zlib import adler32
 
-from src.commons import Response
-
 
 # Predefined responses
-DEFAULT_RESPONSE = Response(
-    sfn='Generated citation will appear here...', cite='', ref='',
+DEFAULT_SFN_CIT_REF = (
+    'Generated citation will appear here...', '', '',
 )
 
-UNDEFINED_INPUT_RESPONSE = Response(
-    sfn='Undefined input.',
-    cite='Sorry, the input was not recognized. The error was logged.',
-    ref='',
+UNDEFINED_INPUT_SFN_CIT_REF = (
+    'Undefined input.',
+    'Sorry, the input was not recognized. The error was logged.',
+    '',
 )
 
-HTTPERROR_RESPONSE = Response(
-    sfn='HTTP error:',
-    cite='One or more of the web resources required to '
+HTTPERROR_SFN_CIT_REF = (
+    'HTTP error:',
+    'One or more of the web resources required to '
     'create this citation are not accessible at this moment.',
-    ref='',
+    '',
 )
 
-OTHER_EXCEPTION_RESPONSE = Response(
-    sfn='An unknown error occurred.',
-    cite='The error was logged.',
-    ref='',
+OTHER_EXCEPTION_SFN_CIT_REF = (
+    'An unknown error occurred.',
+    'The error was logged.',
+    '',
 )
 
 CSS = open('src/html/en.css', 'rb').read()
@@ -68,11 +66,12 @@ HTML_SUBST = Template(
 ).substitute
 
 
-def response_to_html(response: Response, date_format: str, input_type: str):
-    """Insert the response into the HTML template and return response_body."""
+def sfn_cit_ref_to_html(sfn_cit_ref: tuple, date_format: str, input_type: str):
+    """Insert sfn_cit_ref into the HTML template and return response_body."""
     date_format = date_format or '%Y-%m-%d'
+    sfn, cit, ref = sfn_cit_ref
     return HTML_SUBST(
-        **response._asdict(),
+        sfn=sfn, cit=cit, ref=ref,
     ).replace(date_format + '"', date_format + '" checked', 1).replace(
         '="' + input_type + '"', '="' + input_type + '" selected', 1
     )

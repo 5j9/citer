@@ -20,8 +20,8 @@ from requests import get as requests_get, Response as RequestsResponse
 from requests.exceptions import RequestException
 
 from src.commons import (
-    find_any_date, Response, USER_AGENT_HEADER,
-    dictionary_to_response, ANYDATE_PATTERN, Name,
+    find_any_date, USER_AGENT_HEADER,
+    dict_to_sfn_cit_ref, ANYDATE_PATTERN, Name,
 )
 from src.urls_authors import find_authors, CONTENT_ATTR
 
@@ -257,15 +257,16 @@ class StatusCodeError(ValueError):
     pass
 
 
-def urls_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
+def urls_sfn_cit_ref(url: str, date_format: str= '%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     try:
         dictionary = url2dict(url)
     except (ContentTypeError, ContentLengthError) as e:
         logger.exception(url)
-        return Response(sfn='Could not process the request.', cite=e, ref='')
+        # Todo: i18n
+        return 'Could not process the request.', e, ''
     dictionary['date_format'] = date_format
-    return dictionary_to_response(dictionary)
+    return dict_to_sfn_cit_ref(dictionary)
 
 
 def find_journal(html: str) -> Optional[str]:

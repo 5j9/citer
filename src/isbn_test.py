@@ -8,7 +8,7 @@ import unittest
 
 from src import dummy_requests
 from src import isbn
-from src.isbn import isbn_response
+from src.isbn import isbn_sfn_cit_ref
 
 
 class IsbnTest(unittest.TestCase):
@@ -16,7 +16,7 @@ class IsbnTest(unittest.TestCase):
     def test_is1(self):
         """not found in adinebook"""
         i = '9780349119168'
-        o = isbn_response(i, pure=True)
+        o = isbn_sfn_cit_ref(i, pure=True)
         e = (
             '* {{cite book '
             '| last=Adkins '
@@ -29,12 +29,12 @@ class IsbnTest(unittest.TestCase):
             '| isbn=978-0-349-11916-8 '
             '| ref=harv}}'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_is2(self):
         """not found in ottobib"""
         i = '978-964-6736-71-9'
-        o = isbn_response(i, pure=True)
+        o = isbn_sfn_cit_ref(i, pure=True)
         e = (
             '* {{cite book '
             '| others=بدیل بن علی خاقانی (شاعر),  جهانگیر منصور (به اهتمام),'
@@ -46,12 +46,12 @@ class IsbnTest(unittest.TestCase):
             '| language=fa '
             '| ref={{sfnref | نگاه | 1389}}'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_is3(self):
         """exists in both"""
         i = '964-6736-34-3 '
-        o = isbn_response(i)
+        o = isbn_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| others=سحر معصومی (به اهتمام) '
@@ -62,12 +62,12 @@ class IsbnTest(unittest.TestCase):
             '| language=fa '
             '| ref={{sfnref | نگاه | 1386}}'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_is4(self):
         """unpure isbn10 not found in ottobib"""
         i = 'choghondar 964-92962-6-3 شلغم'
-        o = isbn_response(i)
+        o = isbn_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| last=حافظ '
@@ -80,7 +80,7 @@ class IsbnTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
 
 isbn.requests_get = dummy_requests.DummyRequests().get

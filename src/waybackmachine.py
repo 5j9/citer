@@ -11,9 +11,9 @@ from urllib.parse import urlparse
 
 from requests import ConnectionError as RequestsConnectionError
 
-from src.commons import dictionary_to_response, Response
+from src.commons import dict_to_sfn_cit_ref
 from src.urls import (
-    urls_response, url2dict, get_home_title, get_html, find_authors,
+    urls_sfn_cit_ref, url2dict, get_home_title, get_html, find_authors,
     find_journal, find_site_name, find_title, ContentTypeError,
     ContentLengthError, StatusCodeError, TITLE_TAG
 )
@@ -25,12 +25,14 @@ URL_FULLMATCH = re.compile(
 ).fullmatch
 
 
-def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
+def waybackmachine_sfn_cit_ref(
+    archive_url: str, date_format: str= '%Y-%m-%d'
+) -> tuple:
     """Create the response namedtuple."""
     m = URL_FULLMATCH(archive_url)
     if not m:
         # Could not parse the archive_url. Treat as an ordinary URL.
-        return urls_response(archive_url, date_format)
+        return urls_sfn_cit_ref(archive_url, date_format)
     archive_year, archive_month, archive_day, original_url = \
         m.groups()
     original_dict = {}
@@ -43,7 +45,7 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
     except (ContentTypeError, ContentLengthError) as e:
         logger.exception(archive_url)
         # Todo: i18n
-        return Response(cite=e, sfn='Invalid content type or length.', ref='')
+        return 'Invalid content type or length.', e, ''
     archive_dict['date_format'] = date_format
     archive_dict['url'] = original_url
     archive_dict['archive-url'] = archive_url
@@ -70,7 +72,7 @@ def waybackmachine_response(archive_url: str, date_format: str= '%Y-%m-%d'):
         archive_dict['website'] = (
             urlparse(original_url).hostname.replace('www.', '')
         )
-    return dictionary_to_response(archive_dict)
+    return dict_to_sfn_cit_ref(archive_dict)
 
 
 def original_url2dict(ogurl: str, original_dict) -> None:

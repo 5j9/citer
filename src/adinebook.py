@@ -10,7 +10,7 @@ import re
 from langid import classify
 from requests import get as requests_get, RequestException
 
-from src.commons import RawName, dictionary_to_response, Response
+from src.commons import RawName, dict_to_sfn_cit_ref
 
 
 ISBN_SEARCH = re.compile(r'شابک:.*?([\d-]*X?)</span></li>').search
@@ -22,7 +22,7 @@ TITLE_SEARCH = re.compile(
 ).search
 
 
-def adinehbook_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
+def adinehbook_sfn_cit_ref(url: str, date_format: str= '%Y-%m-%d') -> tuple:
     """Return the response namedtuple."""
     dictionary = url2dictionary(url)
     dictionary['date_format'] = date_format
@@ -31,7 +31,7 @@ def adinehbook_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
         # Todo: give warning about this assumption?
         dictionary['language'] = \
             classify(dictionary['title'])[0]
-    return dictionary_to_response(dictionary)
+    return dict_to_sfn_cit_ref(dictionary)
 
 
 def isbn2url(isbn: str):
@@ -105,5 +105,6 @@ def url2dictionary(adinebook_url: str):
         if m:
             d['isbn'] = m.group(1)
     return d
+
 
 logger = logging.getLogger(__name__)

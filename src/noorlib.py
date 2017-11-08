@@ -7,18 +7,18 @@ import re
 
 from requests import get as requests_get
 
-from src.commons import dictionary_to_response, Response
+from src.commons import dict_to_sfn_cit_ref
 from src.bibtex import parse as bibtex_parse
 # import ris[1]
 
 
-def noorlib_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
+def noorlib_sfn_cit_ref(url: str, date_format: str= '%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     dictionary = bibtex_parse(get_bibtex(url))
     dictionary['date_format'] = date_format
     # risr = get_ris(url)[1]
     # dictionary = risr.parse(ris)[1]
-    return dictionary_to_response(dictionary)
+    return dict_to_sfn_cit_ref(dictionary)
 
 
 def get_bibtex(noorlib_url):

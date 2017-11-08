@@ -8,7 +8,7 @@ import unittest
 
 from src import dummy_requests
 from src import urls
-from src.urls import urls_response
+from src.urls import urls_sfn_cit_ref
 
 
 class BostonTest(unittest.TestCase):
@@ -26,12 +26,12 @@ class BostonTest(unittest.TestCase):
             'hot-rod-stamps-google-on-road-a-gm-prospectus '
             '| ref=harv '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://www.boston.com/cars/news-and-reviews/2014/06/28/'
                 'hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/'
                 'story.html',
                 '%B %d, %Y',
-            ).cite
+            )[1]
         )
 
     def test_bg2(self):
@@ -41,7 +41,7 @@ class BostonTest(unittest.TestCase):
             'walsh-meets-with-college-leaders-off-campus-housing/'
             'lsxtLSGJMD86Gbkjay3D6J/story.html'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Saltzman '
@@ -57,7 +57,7 @@ class BostonTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_bg3(self):
         """bostonmagazine.com. Author tags return unrelated authors."""
@@ -65,7 +65,7 @@ class BostonTest(unittest.TestCase):
             'http://www.bostonmagazine.com/news/blog/2013/08/21/'
             'juliette-kayyem-jumps-in-for-guv/'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Bernstein '
@@ -78,18 +78,18 @@ class BostonTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
 
 class WashingtonpostTest(unittest.TestCase):
 
     def test_wp1(self):
         """`1 author, 2005, the pubdate is different from last edit date"""
-        o = urls_response(
+        o = urls_sfn_cit_ref(
             'http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/'
             'AR2005090200822.html'
         )
-        self.assertIn('{{sfn | Sachs | 2005}}', o.sfn)
+        self.assertIn('{{sfn | Sachs | 2005}}', o[0])
         self.assertIn(
             '* {{cite web '
             '| last=Sachs '
@@ -101,7 +101,7 @@ class WashingtonpostTest(unittest.TestCase):
             '2005/09/02/AR2005090200822.html '
             '| ref=harv '
             '| access-date=',
-            o.cite,
+            o[1],
         )
 
 
@@ -109,11 +109,11 @@ class HuffingtonpostTest(unittest.TestCase):
 
     def test_hp1(self):
         """`1 author, 2013"""
-        o = urls_response(
+        o = urls_sfn_cit_ref(
             'http://www.huffingtonpost.ca/annelise-sorg/'
             'blackfish-killer-whale-seaworld_b_3686306.html'
         )
-        self.assertIn('{{sfn | Sorg | 2013}}', o.sfn)
+        self.assertIn('{{sfn | Sorg | 2013}}', o[0])
         self.assertIn(
             '* {{cite web '
             '| last=Sorg '
@@ -126,7 +126,7 @@ class HuffingtonpostTest(unittest.TestCase):
             'blackfish-killer-whale-seaworld_b_3686306.html '
             '| ref=harv '
             '| access-date=',
-            o.cite,
+            o[1],
         )
 
     def test_hp2(self):
@@ -135,7 +135,7 @@ class HuffingtonpostTest(unittest.TestCase):
             'http://www.huffingtonpost.com/jeremy-rifkin/'
             'obamas-climate-change-plan_b_5427656.html'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         e1 = '{{sfn | Rifkin | 2014}}'
         e2 = (
             "* {{cite web "
@@ -150,8 +150,8 @@ class HuffingtonpostTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
+        self.assertIn(e1, o[0])
+        self.assertIn(e2, o[1])
 
 
 class DilyTelegraphTest(unittest.TestCase):
@@ -163,7 +163,7 @@ class DilyTelegraphTest(unittest.TestCase):
             'We-could-see-the-whales-eyes-mouth...-'
             'the-barnacles-on-its-back.html'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         e1 = '{{sfn | Fogle | 2005}}'
         e2 = (
             "* {{cite web "
@@ -179,8 +179,8 @@ class DilyTelegraphTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
+        self.assertIn(e1, o[0])
+        self.assertIn(e2, o[1])
 
     def test_dt2(self):
         """1 author, 2003"""
@@ -188,7 +188,7 @@ class DilyTelegraphTest(unittest.TestCase):
             'http://www.telegraph.co.uk/news/science/science-news/3313298/'
             'Marine-collapse-linked-to-whale-decline.html'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         e1 = '{{sfn | Highfield | 2003}}'
         e2 = (
             "* {{cite web "
@@ -202,8 +202,8 @@ class DilyTelegraphTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
+        self.assertIn(e1, o[0])
+        self.assertIn(e2, o[1])
 
     def test_dt3(self):
         """1 author, 2011"""
@@ -211,7 +211,7 @@ class DilyTelegraphTest(unittest.TestCase):
             'http://www.telegraph.co.uk/news/8323909/'
             'The-sperm-whale-works-in-extraordinary-ways.html'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         e1 = '{{sfn | Whitehead | 2011}}'
         e2 = (
             "* {{cite web "
@@ -225,20 +225,20 @@ class DilyTelegraphTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(e1, o.sfn)
-        self.assertIn(e2, o.cite)
+        self.assertIn(e1, o[0])
+        self.assertIn(e2, o[1])
 
 
 class DilyMailTest(unittest.TestCase):
 
     def test_dm1(self):
         """4 authors"""
-        o = urls_response(
+        o = urls_sfn_cit_ref(
             'http://www.dailymail.co.uk/news/article-2633025/'
             'London-cleric-convicted-NYC-terrorism-trial.html'
         )
         self.assertIn(
-            '{{sfn | Malm | Witheridge | Drury | Bates | 2014}}', o.sfn
+            '{{sfn | Malm | Witheridge | Drury | Bates | 2014}}', o[0]
         )
         self.assertIn(
             '* {{cite web '
@@ -258,7 +258,7 @@ class DilyMailTest(unittest.TestCase):
             'London-cleric-convicted-NYC-terrorism-trial.html '
             '| ref=harv '
             '| access-date=',
-            o.cite,
+            o[1],
         )
 
     def test_dm2(self):
@@ -276,11 +276,11 @@ class DilyMailTest(unittest.TestCase):
             'Kardashian-s-meltdown-nude-magazine-cover.html '
             '| ref=harv '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
                 'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-'
                 'shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html'
-            ).cite,
+            )[1],
         )
 
 
@@ -289,7 +289,7 @@ class BbcTest(unittest.TestCase):
     def test_bbc1(self):
         """no authors"""
         i = 'https://www.bbc.com/news/world-asia-27653361'
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             "* {{cite web "
             "| title=US 'received Qatar assurances' on Afghan prisoner deal "
@@ -299,7 +299,7 @@ class BbcTest(unittest.TestCase):
             "| ref={{sfnref | BBC News | 2014}} "
             "| access-date="
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_bbc2(self):
         """1 author"""
@@ -313,15 +313,15 @@ class BbcTest(unittest.TestCase):
             '| url=http://www.bbc.com/news/science-environment-23814524 '
             '| ref=harv '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://www.bbc.com/news/science-environment-23814524'
-            ).cite,
+            )[1],
         )
 
     def test_bbc3(self):
         """https version of bbc2 (differs a lot!)"""
         i = 'https://www.bbc.com/news/science-environment-23814524'
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Gage '
@@ -333,7 +333,7 @@ class BbcTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_bbc4(self):
         """news.bbc.co.uk, 1 author"""
@@ -348,9 +348,9 @@ class BbcTest(unittest.TestCase):
             "http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm "
             "| ref=harv "
             "| access-date=",
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm'
-            ).cite,
+            )[1],
         )
 
     def test_bbc5(self):
@@ -365,15 +365,15 @@ class BbcTest(unittest.TestCase):
             "| url=http://news.bbc.co.uk/2/hi/business/2570109.stm "
             "| ref=harv "
             "| access-date=",
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://news.bbc.co.uk/2/hi/business/2570109.stm'
-            ).cite,
+            )[1],
         )
 
     def test_bbc6(self):
         """bbc.com, 1 author"""
         i = 'http://www.bbc.com/news/science-environment-26267918'
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             "* {{cite web "
             "| last=Amos "
@@ -385,7 +385,7 @@ class BbcTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
         
 class NytTest(unittest.TestCase):
@@ -397,7 +397,7 @@ class NytTest(unittest.TestCase):
             'on-the-internet-the-right-to-forget-vs-the-right-to-know.html?'
             'hp&_r=0'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Hakim '
@@ -410,7 +410,7 @@ class NytTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_nyt2(self):
         """newstylct, 2 authors"""
@@ -432,17 +432,17 @@ class NytTest(unittest.TestCase):
         )
         self.assertIn(
             ct,
-            urls_response(
+            urls_sfn_cit_ref(
                 'https://www.nytimes.com/2014/05/31/sports/basketball/'
                 'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-'
                 'on-the-nba.html?hp'
-            ).cite,
+            )[1],
         )
 
     def test_nyt3(self):
         """oldstylct, 1 author"""
         i = 'http://www.nytimes.com/2007/12/25/world/africa/25kenya.html'
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Gettleman '
@@ -455,7 +455,7 @@ class NytTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_nyt4(self):
         """newstylct, 2 authors, only byline"""
@@ -463,7 +463,7 @@ class NytTest(unittest.TestCase):
             'http://dealbook.nytimes.com/2014/05/30/'
             'insider-trading-inquiry-includes-mickelson-and-icahn/'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Goldstein '
@@ -480,7 +480,7 @@ class NytTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_nyt5(self):
         """special case for date format (not in usual meta tags)"""
@@ -488,7 +488,7 @@ class NytTest(unittest.TestCase):
             'https://www.nytimes.com/2007/06/13/world/americas/'
             '13iht-whale.1.6123654.html'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| title=19th-century harpoon gives clue on whales '
@@ -499,7 +499,7 @@ class NytTest(unittest.TestCase):
             '| ref={{sfnref | The New York Times | 2007}} '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_nyt6(self):
         """lastname=O'Connor"""
@@ -507,7 +507,7 @@ class NytTest(unittest.TestCase):
             'http://www.nytimes.com/2003/10/09/us/'
             'adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             "* {{cite web "
             "| last=O'Connor "
@@ -521,7 +521,7 @@ class NytTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
         
 
 class TGDaily(unittest.TestCase):
@@ -532,7 +532,7 @@ class TGDaily(unittest.TestCase):
             'http://www.tgdaily.com/web/'
             '100381-apple-might-buy-beats-for-32-billion'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| title=Apple might buy Beats for $3.2 billion '
@@ -543,7 +543,7 @@ class TGDaily(unittest.TestCase):
             '| ref={{sfnref | TG Daily | 2014}} '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_tgd3(self):
         """"Staff" in author name."""
@@ -551,7 +551,7 @@ class TGDaily(unittest.TestCase):
             'http://www.tgdaily.com/space-features/'
             '82906-sma-reveals-giant-star-cluster-in-the-making'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| title=SMA reveals giant star cluster in the making '
@@ -562,7 +562,7 @@ class TGDaily(unittest.TestCase):
             '| ref={{sfnref | TG Daily | 2013}} '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
 
 @unittest.skip
@@ -570,7 +570,7 @@ class NotWorking(unittest.TestCase):
     def test_tgd1(self):
         """ABCNews. Wrong author:  | last=News | first=ABC."""
         i = 'http://abcnews.go.com/blogs/headlines/2006/12/saddam_executed/'
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Ross '
@@ -583,7 +583,7 @@ class NotWorking(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_oth12(self):
         """Times of India, author could not be detected."""
@@ -592,9 +592,9 @@ class NotWorking(unittest.TestCase):
             'UK-allows-working-visas-for-Indian-students/'
             'articleshow/1163528927.cms?'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         sfn = "{{sfn | Kashyap | 2001}}"
-        self.assertIn(sfn, o.sfn)
+        self.assertIn(sfn, o[0])
 
 
 class Others(unittest.TestCase):
@@ -602,7 +602,7 @@ class Others(unittest.TestCase):
     def test_oth1(self):
         """Get title by hometitle comparison."""
         i = 'http://www.ensani.ir/fa/content/326173/default.aspx'
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=جلیلیان '
@@ -617,7 +617,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_text_search(self):
         """Match byline on soup.text."""
@@ -636,11 +636,11 @@ class Others(unittest.TestCase):
             'government-and-corporations-must-act '
             '| ref=harv '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'https://www.eff.org/deeplinks/2014/06/'
                 'sudan-tech-sanctions-harm-innovation-development-us-'
                 'government-and-corporations-must-act'
-            ).cite,
+            )[1],
         )
 
     # Disable because relies on class="author" which has been disabled due
@@ -652,7 +652,7 @@ class Others(unittest.TestCase):
             'https://arstechnica.com/science/2007/09/'
             'the-pseudoscience-behind-homeopathy/'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Timmer '
@@ -671,7 +671,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_oth4(self):
         """rel="author" tag contains invalid information."""
@@ -687,17 +687,17 @@ class Others(unittest.TestCase):
             "46619-sterile-neutrino-experiment-beginning.html "
             "| ref=harv "
             "| access-date=",
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://www.livescience.com/'
                 '46619-sterile-neutrino-experiment-beginning.html?'
                 'cmpid=514645_20140702_27078936'
-            ).cite,
+            )[1],
         )
 
     def test_oth5(self):
         """Getting the date is tricky here."""
-        o = urls_response('http://www.magiran.com/npview.asp?ID=1410487')
-        self.assertIn('{{sfn | نوري | 2007}}', o.sfn)
+        o = urls_sfn_cit_ref('http://www.magiran.com/npview.asp?ID=1410487')
+        self.assertIn('{{sfn | نوري | 2007}}', o[0])
         self.assertIn(
             '* {{cite web '
             '| last=نوري '
@@ -710,15 +710,15 @@ class Others(unittest.TestCase):
             '| language=fa '
             '| ref=harv '
             '| access-date=',
-            o.cite,
+            o[1],
         )
 
     def test_oth6(self):
         """Detection of website name."""
-        o = urls_response(
+        o = urls_sfn_cit_ref(
             'http://www.farsnews.com/newstext.php?nn=13930418000036'
         )
-        self.assertIn("{{sfn | ''خبرگزاری فارس'' | 2014}}", o.sfn)
+        self.assertIn("{{sfn | ''خبرگزاری فارس'' | 2014}}", o[0])
         # Fars news is using 'خبرگزاری فارس' as og:author which is wrong
         # and thats why its name is not italicized in sfn.
         self.assertIn(
@@ -730,7 +730,7 @@ class Others(unittest.TestCase):
             '| language=fa '
             '| ref={{sfnref | خبرگزاری فارس | 2014}} '
             '| access-date=',
-            o.cite,
+            o[1],
         )
 
     def test_oth7(self):
@@ -746,10 +746,10 @@ class Others(unittest.TestCase):
             'traffic-lights-theres-a-better-way-0707 '
             '| ref=harv '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://news.mit.edu/2014/'
                 'traffic-lights-theres-a-better-way-0707'
-            ).cite,
+            )[1],
         )
 
     def test_oth8(self):
@@ -758,7 +758,7 @@ class Others(unittest.TestCase):
             'http://www.theguardian.com/world/2014/jul/14/'
             'israel-drone-launched-gaza-ashdod'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Beaumont '
@@ -773,7 +773,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_oth10(self):
         """The Times. (Authors found by "byline" css selector)"""
@@ -792,10 +792,10 @@ class Others(unittest.TestCase):
             'mh17-r07q5rwppl0 '
             '| ref=harv '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://www.thetimes.co.uk/tto/news/world/'
                 'australia-newzealand/article4151214.ece'
-            ).cite
+            )[1]
         )
 
     def test_oth11(self):
@@ -804,7 +804,7 @@ class Others(unittest.TestCase):
             'http://www.businessnewsdaily.com/6762-male-female-entrepreneurs'
             '.html?cmpid=514642_20140715_27858876'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Helmrich '
@@ -817,12 +817,12 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_oth12(self):
         """thebulletin.org"""
         i = 'http://thebulletin.org/evidence-shows-iron-dome-not-working7318'
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| last=Postol '
@@ -835,7 +835,7 @@ class Others(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_reverse_name(self):
         """Author is `Martin, Tracy`. Tracy should be the first name."""
@@ -849,9 +849,9 @@ class Others(unittest.TestCase):
             '| url=http://www.highbeam.com/doc/1P3-3372742961.html '
             '| ref=harv '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://www.highbeam.com/doc/1P3-3372742961.html'
-            ).cite,
+            )[1],
         )
 
     def test_oth14(self):
@@ -860,7 +860,7 @@ class Others(unittest.TestCase):
             'http://www.independent.co.uk/news/business/'
             'the-investment-column-tt-group-1103208.html'
         )
-        o = urls_response(i)
+        o = urls_sfn_cit_ref(i)
         ct = (
             '* {{cite web '
             '| title=The Investment column: TT Group '
@@ -871,7 +871,7 @@ class Others(unittest.TestCase):
             '| ref={{sfnref | The Independent | 1999}} '
             '| access-date='
         )
-        self.assertIn(ct, o.cite)
+        self.assertIn(ct, o[1])
 
     def test_oth15(self):
         """Contains <link property="og:site_name" href="ایسنا" />"""
@@ -884,14 +884,14 @@ class Others(unittest.TestCase):
             '| language=fa '
             '| ref={{sfnref | ایسنا | 2017}} '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://www.isna.ir/news/95110603890/'
                 '%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7'
                 '-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-'
                 '%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-'
                 '%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84'
                 '-%DA%A9%D8%B1%D8%AF'
-            ).cite,
+            )[1],
         )
 
     def test_invalid_name(self):
@@ -905,12 +905,12 @@ class Others(unittest.TestCase):
             ' پایگاه اطلاع رسانی شبکه خبر'
             ' صدا و سیمای جمهوری اسلامی ایران | 2017}} |'
             ' access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://www.irinn.ir/fa/news/499654/'
                 '%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-'
                 '%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-'
                 '%D8%A2%D9%85%D8%A7%D8%B1'
-            ).cite,
+            )[1],
         )
 
     def test_pages_from_html_meta(self):
@@ -930,9 +930,9 @@ class Others(unittest.TestCase):
             '| language=fa '
             '| ref=harv '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://socialhistory.ihcs.ac.ir/article_319_84.html'
-            ).cite,
+            )[1],
         )
 
     def test_empty_meta_author_content(self):
@@ -946,10 +946,10 @@ class Others(unittest.TestCase):
             "billion-oil-dues-170529171315570.html "
             "| ref={{sfnref | Al Jazeera | 2017}} "
             "| access-date=",
-            urls_response(
+            urls_sfn_cit_ref(
                 'http://www.aljazeera.com/news/2017/05/'
                 'uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html'
-            ).cite,
+            )[1],
         )
 
     def test_citation_author_reverse_order(self):
@@ -974,12 +974,12 @@ class Others(unittest.TestCase):
             '4xDVKzx5EeeJjRJrkGD1dA '
             '| ref=harv '
             '| access-date=',
-            urls_response(
+            urls_sfn_cit_ref(
                 'https://arxiv.org/abs/1608.05006?utm_medium=email&utm_source='
                 'other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.'
                 'announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.'
                 '4xDVKzx5EeeJjRJrkGD1dA'
-            ).cite,
+            )[1],
         )
 
 

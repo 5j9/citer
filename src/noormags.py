@@ -8,12 +8,12 @@ from threading import Thread
 
 from requests import get as requests_get
 
-from src.commons import dictionary_to_response, Response
+from src.commons import dict_to_sfn_cit_ref
 from src.bibtex import parse as bibtex_parse
 from src.ris import parse as ris_parse
 
 
-def noormags_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
+def noormags_sfn_cit_ref(url: str, date_format: str= '%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     ris_collection = {}
     ris_thread = Thread(target=ris_fetcher_thread, args=(url, ris_collection))
@@ -26,7 +26,7 @@ def noormags_response(url: str, date_format: str= '%Y-%m-%d') -> Response:
     # "IS  - 1" is wrong in RIS but "number = { 45 }," is correct in bibtex
     ris_thread.join()
     dictionary.update(ris_collection)
-    return dictionary_to_response(dictionary)
+    return dict_to_sfn_cit_ref(dictionary)
 
 
 def get_bibtex(noormags_url):

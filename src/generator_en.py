@@ -83,14 +83,14 @@ TYPE_TO_CITE = {
 }.get
 
 
-def citations(d: defaultdict) -> tuple:
+def sfn_cit_ref(d: defaultdict) -> tuple:
     """Create citation templates according to the given dictionary."""
     date_format = d['date_format']
     cite_type = TYPE_TO_CITE(d['cite_type'])
     if not cite_type:
         logger.warning(f'Unknown citation type: {cite_type}, d: {d}')
         cite_type = ''
-    cite = '* {{cite ' + cite_type
+    cit = '* {{cite ' + cite_type
     sfn = '{{sfn'
 
     authors = d['authors']
@@ -104,7 +104,7 @@ def citations(d: defaultdict) -> tuple:
         journal = d['journal']
 
     if authors:
-        cite += names2para(authors, 'first', 'last', 'author')
+        cit += names2para(authors, 'first', 'last', 'author')
         # {{sfn}} only supports a maximum of four authors
         for author in authors[:4]:
             sfn += ' | ' + author.lastname
@@ -119,7 +119,7 @@ def citations(d: defaultdict) -> tuple:
 
     editors = d['editors']
     if editors:
-        cite += names2para(editors, 'editor-first', 'editor-last', 'editor')
+        cit += names2para(editors, 'editor-first', 'editor-last', 'editor')
     translators = d['translators']
     if translators:
         for translator in translators:
@@ -132,7 +132,7 @@ def citations(d: defaultdict) -> tuple:
             d['others'] = d['translators']
     others = d['others']
     if others:
-        cite += names1para(others, 'others')
+        cit += names1para(others, 'others')
 
     if cite_type == 'book':
         booktitle = d['booktitle'] or d['container-title']
@@ -140,76 +140,76 @@ def citations(d: defaultdict) -> tuple:
         booktitle = None
 
     if booktitle:
-            cite += ' | title=' + booktitle
+            cit += ' | title=' + booktitle
             if title:
-                cite += ' | chapter=' + title
+                cit += ' | chapter=' + title
     elif title:
-        cite += ' | title=' + title
+        cit += ' | title=' + title
 
     if journal:
-        cite += ' | journal=' + journal
+        cit += ' | journal=' + journal
     elif website:
-        cite += ' | website=' + website
+        cit += ' | website=' + website
 
     chapter = d['chapter']
     if chapter:
-        cite += ' | chapter=' + chapter
+        cit += ' | chapter=' + chapter
 
     publisher = d['publisher'] or d['organization']
     if publisher:
-        cite += ' | publisher=' + publisher
+        cit += ' | publisher=' + publisher
 
     address = d['address'] or d['publisher-location']
     if address:
-        cite += ' | publication-place=' + address
+        cit += ' | publication-place=' + address
 
     edition = d['edition']
     if edition:
-        cite += ' | edition=' + edition
+        cit += ' | edition=' + edition
 
     series = d['series']
     if series:
-        cite += ' | series=' + series
+        cit += ' | series=' + series
 
     volume = d['volume']
     if volume:
-        cite += ' | volume=' + volume
+        cit += ' | volume=' + volume
 
     issue = d['issue'] or d['number']
     if issue:
-        cite += ' | issue=' + issue
+        cit += ' | issue=' + issue
 
     date = d['date']
     if date:
         if not isinstance(date, str):
             date = date.strftime(date_format)
-        cite += ' | date=' + date
+        cit += ' | date=' + date
 
     year = d['year']
     if year:
         if not date or year not in date:
-            cite += ' | year=' + year
+            cit += ' | year=' + year
         sfn += ' | ' + year
 
     isbn = d['isbn']
     if isbn:
-        cite += ' | isbn=' + isbn
+        cit += ' | isbn=' + isbn
 
     issn = d['issn']
     if issn:
-        cite += ' | issn=' + issn
+        cit += ' | issn=' + issn
 
     pmid = d['pmid']
     if pmid:
-        cite += ' | pmid=' + pmid
+        cit += ' | pmid=' + pmid
 
     pmcid = d['pmcid']
     if pmcid:
-        cite += ' | pmc=' + pmcid
+        cit += ' | pmc=' + pmcid
 
     doi = d['doi']
     if doi:
-        cite += ' | doi=' + doi
+        cit += ' | doi=' + doi
 
     pages = d['page']
     if pages:
@@ -220,15 +220,15 @@ def citations(d: defaultdict) -> tuple:
     if cite_type == 'journal':
         if pages:
             if '–' in pages:
-                cite += ' | pages=' + pages
+                cit += ' | pages=' + pages
             else:
-                cite += ' | page=' + pages
+                cit += ' | page=' + pages
 
     url = d['url']
     if url:
         # Don't add a DOI URL if we already have added a DOI.
         if not doi or not DOI_URL_MATCH(url):
-            cite += ' | url=' + url
+            cit += ' | url=' + url
         else:
             # To prevent addition of access date
             url = None
@@ -238,7 +238,7 @@ def citations(d: defaultdict) -> tuple:
 
     archive_url = d['archive-url']
     if archive_url:
-        cite += (
+        cit += (
             ' | archive-url=' + archive_url +
             ' | archive-date=' + d['archive-date'].strftime(date_format) +
             ' | dead-url=' + d['dead-url']
@@ -248,7 +248,7 @@ def citations(d: defaultdict) -> tuple:
     if language:
         language = TO_TWO_LETTER_CODE(language.lower(), language)
         if language.lower() != 'en':
-            cite += ' | language=' + language
+            cit += ' | language=' + language
 
     # Todo: Template:Citation generates anchors for Harvard by default
     # references
@@ -256,26 +256,26 @@ def citations(d: defaultdict) -> tuple:
     # made to
     #   do so).
     if authors:
-        cite += ' | ref=harv'
+        cit += ' | ref=harv'
     else:
         # order should match sfn_template
-        cite += ' | ref={{sfnref | ' +\
+        cit += ' | ref={{sfnref | ' +\
              (publisher or journal or website or title or 'Anon.')
         if year:
-            cite += ' | ' + year
-        cite += '}}'
+            cit += ' | ' + year
+        cit += '}}'
 
     if url:
-        cite += ' | access-date=' + datetime_date.today().strftime(date_format)
+        cit += ' | access-date=' + datetime_date.today().strftime(date_format)
 
-    cite += '}}'
+    cit += '}}'
     sfn += '}}'
     # Finally create the ref tag.
     name = sfn[8:-2].replace(' | ', ' ').replace("'", '')
     text = re.sub(
         r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})',
         r'\g<repl>',
-        cite[2:],
+        cit[2:],
     )
     if ' p=' in name and ' | page=' not in text:
         name = name.replace(' p=', ' p. ')
@@ -288,7 +288,7 @@ def citations(d: defaultdict) -> tuple:
         if pages and ' | pages=' not in text:
             text = text[:-2] + ' | pages=' + pages + '}}'
     ref = '&lt;ref name="' + name + '"&gt;' + text + '&lt;/ref&gt;'
-    return cite, sfn, ref
+    return sfn, cit, ref
 
 
 def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):

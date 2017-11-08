@@ -7,8 +7,6 @@
 from string import Template
 from zlib import adler32
 
-from src.commons import Response
-
 
 CSS = open('src/html/fa.css', 'rb').read()
 CSS_HEADERS = [
@@ -26,32 +24,29 @@ HTML_SUBST = Template(
 ).substitute
 
 # Predefined responses
-DEFAULT_RESPONSE = Response(
-    sfn='یادکرد ساخته‌شده اینجا نمایان خواهد شد...',
-    cite='',
-    ref='',
-)
-HTTPERROR_RESPONSE = Response(
-    sfn='خطای اچ‌تی‌تی‌پی:',
-    cite='یک یا چند مورد از منابع اینترنتی مورد '
+DEFAULT_SFN_CIT_REF = ('یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '')
+HTTPERROR_SFN_CIT_REF = (
+    'خطای اچ‌تی‌تی‌پی:',
+    'یک یا چند مورد از منابع اینترنتی مورد '
     'نیاز برای ساخت این یادکرد در این لحظه '
     'در دسترس نیستند و یا ورودی نامعتبر است.',
-    ref='',
+    '',
 )
-OTHER_EXCEPTION_RESPONSE = Response(
-    sfn='خطای ناشناخته‌ای رخ داد..',
-    cite='اطلاعات خطا در سیاهه ثبت شد.',
-    ref='',
+OTHER_EXCEPTION_SFN_CIT_REF = (
+    'خطای ناشناخته‌ای رخ داد..',
+    'اطلاعات خطا در سیاهه ثبت شد.',
+    '',
 )
-UNDEFINED_INPUT_RESPONSE = Response(
-    sfn='ورودی تجزیه‌ناپذیر',
-    cite='پوزش، ورودی قابل پردازش نبود. خطا در سیاهه ثبت شد.',
-    ref='',
+UNDEFINED_INPUT_SFN_CIT_REF = (
+    'ورودی تجزیه‌ناپذیر',
+    'پوزش، ورودی قابل پردازش نبود. خطا در سیاهه ثبت شد.',
+    '',
 )
 
 
-def response_to_html(response: Response, date_format: str, input_type: str):
-    """Insert the response into the HTML template and return response_body."""
-    return HTML_SUBST(**response._asdict()).replace(
+def sfn_cit_ref_to_html(sfn_cit_ref: tuple, date_format: str, input_type: str):
+    """Insert sfn_cite_ref into the HTML template and return response_body."""
+    sfn, cit, ref = sfn_cit_ref
+    return HTML_SUBST(sfn=sfn, cit=cit, ref=ref).replace(
         '="' + input_type + '"', '="' + input_type + '" selected', 1
     )

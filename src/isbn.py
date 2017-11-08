@@ -12,7 +12,7 @@ from requests import get as requests_get
 from src.adinebook import url2dictionary as adinebook_url2dictionary
 from src.adinebook import isbn2url as adinebook_isbn2url
 from src.bibtex import parse as bibtex_parse
-from src.commons import dictionary_to_response, Response
+from src.commons import dict_to_sfn_cit_ref
 
 
 # original regex from:
@@ -50,9 +50,9 @@ class IsbnError(Exception):
     pass
 
 
-def isbn_response(
+def isbn_sfn_cit_ref(
     isbn_container_str: str, pure: bool=False, date_format: str='%Y-%m-%d'
-) -> Response:
+) -> tuple:
     """Create the response namedtuple."""
     if pure:
         isbn = isbn_container_str
@@ -85,7 +85,7 @@ def isbn_response(
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
         dictionary['language'] = classify(dictionary['title'])[0]
-    return dictionary_to_response(dictionary)
+    return dict_to_sfn_cit_ref(dictionary)
 
 
 def adinebook_thread(isbn, result_list):

@@ -12,7 +12,7 @@ from threading import Thread
 
 from requests import get as requests_get
 
-from src.commons import Response, dictionary_to_response, Name, b_TO_NUM
+from src.commons import dict_to_sfn_cit_ref, Name, b_TO_NUM
 from src.doi import crossref
 
 NON_DIGITS_SUB = re_compile(r'[^\d]').sub
@@ -25,36 +25,47 @@ PUBMED_URL = NCBI_URL + '&db=pubmed&id='
 PMC_URL = NCBI_URL + '&db=pmc&id='
 
 
-def pmid_response(pmid: str, date_format='%Y-%m-%d') -> Response:
+class NCBIError(Exception):
+
+    pass
+
+
+def pmid_sfn_cit_ref(pmid: str, date_format='%Y-%m-%d') -> tuple:
     """Return the response namedtuple."""
     pmid = NON_DIGITS_SUB('', pmid)
     dictionary = ncbi('pmid', pmid)
     dictionary['date_format'] = date_format
-    return dictionary_to_response(dictionary)
+    return dict_to_sfn_cit_ref(dictionary)
 
 
-def pmcid_response(pmcid: str, date_format='%Y-%m-%d') -> Response:
+def pmcid_sfn_cit_ref(pmcid: str, date_format='%Y-%m-%d') -> tuple:
     """Return the response namedtuple."""
     pmcid = NON_DIGITS_SUB('', pmcid)
     dictionary = ncbi('pmcid', pmcid)
     dictionary['date_format'] = date_format
-    return dictionary_to_response(dictionary)
+    return dict_to_sfn_cit_ref(dictionary)
 
 
 def ncbi(type_: str, id_: str) -> defaultdict:
     """Return the NCBI data for the given id_."""
     # According to https://www.ncbi.nlm.nih.gov/pmc/tools/get-metadata/
     if type_ == 'pmid':
-        result_get = requests_get(
+        json_response = requests_get(
             PUBMED_URL + id_,
             timeout=10,
-        ).json()['result'][id_].get
+        ).json()
     else:  # type_ == 'pmcid'
-        result_get = requests_get(
+        json_response = requests_get(
             PMC_URL + id_,
             timeout=10,
-        ).json()['result'][id_].get
-
+        ).json()
+    if 'error' in json_response:
+        # Example error message if rates are exceeded:
+        # {"error":"API rate limit exceeded","count":"11"}
+        # https://www.ncbi.nlm.nih.gov/books/NBK25497/#chapter2.Coming_in_May_2018_API_Keys
+        # Return a 503 Service Unavailable
+        raise NCBIError(json_response)
+    result_get = json_response['result'][id_].get
     d = defaultdict(lambda: None)
 
     doi = None

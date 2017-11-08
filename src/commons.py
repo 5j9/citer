@@ -6,7 +6,6 @@
 import regex
 import json
 import calendar
-from collections import namedtuple
 from datetime import datetime
 from datetime import date as datetime_date
 
@@ -15,9 +14,9 @@ from jdatetime import date as jdate
 
 from config import lang
 if lang == 'en':
-    from src.generator_en import citations
+    from src.generator_en import sfn_cit_ref
 else:
-    from src.generator_fa import citations
+    from src.generator_fa import sfn_cit_ref
 
 
 b_TO_NUM = {
@@ -105,8 +104,6 @@ USER_AGENT_HEADER = {
                   'Gecko/20100101 Firefox/53.0'
 }
 
-Response = namedtuple('Response', 'cite sfn ref')
-
 
 class InvalidNameError(Exception):
 
@@ -157,8 +154,8 @@ class RawName(Name):
         super().__init__(*firstname_lastname(fullname, seperator))
 
 
-def dictionary_to_response(dictionary) -> Response:
-    """Return Response(sfn, cite, ref) strings.
+def dict_to_sfn_cit_ref(dictionary) -> tuple:
+    """Return (sfn, cite, ref) strings.
 
     dictionary should be ready before calling this function.
     The dictionary will be cleaned up (empty values will be removed) and
@@ -174,11 +171,10 @@ def dictionary_to_response(dictionary) -> Response:
         except NotValidISBNError:
             # https://github.com/CrossRef/rest-api-doc/issues/214
             del dictionary['isbn']
-    cite, sfn, ref = citations(dictionary)
-    return Response(cite, sfn, ref)
+    return sfn_cit_ref(dictionary)
 
 
-def response_to_json(response) -> str:
+def sfn_cit_ref_to_json(response) -> str:
     """Generate api JSON response containing sfn, cite and ref."""
     return json.dumps({
         'reference_tag': response.ref,

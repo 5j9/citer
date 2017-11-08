@@ -8,14 +8,14 @@ import unittest
 
 from src import dummy_requests
 from src import noorlib
-from src.noorlib import noorlib_response
+from src.noorlib import noorlib_sfn_cit_ref
 
 
 class NoorlibTest(unittest.TestCase):
 
     def test_nl1(self):
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/6120'
-        o = noorlib_response(i)
+        o = noorlib_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| last=رشید یاسمی '
@@ -35,13 +35,13 @@ class NoorlibTest(unittest.TestCase):
             '| ref=harv '
             '| access-date='
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_nl2(self):
         """The year parameter is not present."""
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/18454'
-        o = noorlib_response(i)
-        self.assertIn('{{sfn | کورانی | p=}}', o.sfn)
+        o = noorlib_sfn_cit_ref(i)
+        self.assertIn('{{sfn | کورانی | p=}}', o[0])
         self.assertIn(
             '* {{cite book '
             '| last=کورانی '
@@ -57,7 +57,7 @@ class NoorlibTest(unittest.TestCase):
             '| language=عربی '
             '| ref=harv '
             '| access-date=',
-            o.cite,
+            o[1],
         )
 
 

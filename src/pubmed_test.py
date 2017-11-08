@@ -8,12 +8,12 @@ import unittest
 from unittest.mock import patch, Mock
 
 from src import dummy_requests, pubmed
-from src.pubmed import pmid_response, pmcid_response
+from src.pubmed import pmid_sfn_cit_ref, pmcid_sfn_cit_ref
 
 
 class PMCID(unittest.TestCase):
 
-    """Test pmcid_response."""
+    """Test pmcid_sfn_cit_ref."""
 
     def test_doi_update(self):
         """Updated using doi."""
@@ -34,7 +34,7 @@ class PMCID(unittest.TestCase):
             '| doi=10.1016/j.mayocp.2012.02.015 '
             '| pages=596–602 '
             '| ref=harv}}',
-            pmcid_response('3538472').cite,
+            pmcid_sfn_cit_ref('3538472')[1],
         )
 
     def test_spanish_no_doi(self):
@@ -47,7 +47,7 @@ class PMCID(unittest.TestCase):
             ' Pan American Sanitary Bureau | volume=78 | issue=4 | year=1975 '
             '| issn=0030-0632 | pmid=123455 | pages=307–17 | language=es '
             '| ref=harv}}',
-            pmid_response('123455').cite,
+            pmid_sfn_cit_ref('123455')[1],
         )
 
     @patch.object(pubmed, 'crossref_update', Mock(return_value=None))
@@ -62,7 +62,7 @@ class PMCID(unittest.TestCase):
             '| date=22 August 2008 | pmid=18723523 | pmc=2562006 '
             '| doi=10.1093/bioinformatics/btn450 | pages=2339–2343 '
             '| ref=harv}}',
-            pmcid_response('2562006', '%d %B %Y').cite,
+            pmcid_sfn_cit_ref('2562006', '%d %B %Y')[1],
         )
 
 

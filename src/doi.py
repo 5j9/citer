@@ -13,7 +13,7 @@ from html import unescape
 from langid import classify
 from requests import get as requests_get
 
-from src.commons import Response, dictionary_to_response, Name
+from src.commons import dict_to_sfn_cit_ref, Name
 from config import lang
 
 
@@ -24,7 +24,7 @@ DOI_SEARCH = re.compile(
 ).search
 
 
-def doi_response(doi_or_url, pure=False, date_format='%Y-%m-%d') -> Response:
+def doi_sfn_cit_ref(doi_or_url, pure=False, date_format='%Y-%m-%d') -> tuple:
     """Return the response namedtuple."""
     if pure:
         doi = doi_or_url
@@ -37,7 +37,7 @@ def doi_response(doi_or_url, pure=False, date_format='%Y-%m-%d') -> Response:
     dictionary['date_format'] = date_format
     if lang == 'fa':
         dictionary['language'] = classify(dictionary['title'])[0]
-    return dictionary_to_response(dictionary)
+    return dict_to_sfn_cit_ref(dictionary)
 
 
 def crossref(doi) -> defaultdict:

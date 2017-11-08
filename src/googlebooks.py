@@ -12,10 +12,10 @@ from requests import get as requests_get
 
 # import bibtex [1]
 from src.ris import parse as ris_parse
-from src.commons import dictionary_to_response, Response
+from src.commons import dict_to_sfn_cit_ref
 
 
-def googlebooks_response(url, date_format='%Y-%m-%d') -> Response:
+def googlebooks_sfn_cit_ref(url, date_format='%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     # bibtex_result = get_bibtex(url) [1]
     # dictionary = bibtex.parse(bibtex_result) [1]
@@ -32,7 +32,7 @@ def googlebooks_response(url, date_format='%Y-%m-%d') -> Response:
     # although google does not provide a language field:
     if 'language' not in dictionary:
         dictionary['language'] = classify(dictionary['title'])[0]
-    return dictionary_to_response(dictionary)
+    return dict_to_sfn_cit_ref(dictionary)
 
 
 def get_bibtex(googlebook_url):

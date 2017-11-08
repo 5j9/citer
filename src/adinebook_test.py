@@ -8,7 +8,7 @@ import unittest
 
 from src import dummy_requests
 from src import adinebook
-from src.adinebook import adinehbook_response
+from src.adinebook import adinehbook_sfn_cit_ref
 
 
 class AdineBookTest(unittest.TestCase):
@@ -19,7 +19,7 @@ class AdineBookTest(unittest.TestCase):
             'http://www.adinebook.com/gp/product/9648165814/'
             'ref=sr_1_1000_42/905-6618179-9188955'
         )
-        o = adinehbook_response(i)
+        o = adinehbook_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| last=لانسکی '
@@ -33,7 +33,7 @@ class AdineBookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_ab2(self):
         """authors = 3, translators = 2, otheo = 0, isbn13"""
@@ -41,7 +41,7 @@ class AdineBookTest(unittest.TestCase):
             'http://www.adinebook.com/gp/product/9642823352/'
             'ref=sr_1_1000_41/905-6618179-9188955'
         )
-        o = adinehbook_response(i)
+        o = adinehbook_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| last=کرسول '
@@ -56,12 +56,12 @@ class AdineBookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_ab3(self):
         """authors = 2, translators = 0, otheo = 4, isbn13"""
         i = 'http://www.adinebook.com/gp/product/6005883435'
-        o = adinehbook_response(i)
+        o = adinehbook_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| last=فخررحیمی '
@@ -78,7 +78,7 @@ class AdineBookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_ab4(self):
         """authors = 3, translators = 0, otheo = 0, isbn13"""
@@ -86,7 +86,7 @@ class AdineBookTest(unittest.TestCase):
             'http://www.adinebook.com/gp/product/9649563342/'
             'ref=ftr_1/905-6618179-9188955'
         )
-        o = adinehbook_response(i)
+        o = adinehbook_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| last=کریمی '
@@ -102,12 +102,12 @@ class AdineBookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_ab5(self):
         """Year is interesting here."""
         i = 'http://www.adinebook.com/gp/product/9642656349/'
-        o = adinehbook_response(i)
+        o = adinehbook_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| last=نژاد '
@@ -119,7 +119,7 @@ class AdineBookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_ab6(self):
         """Month and year detection."""
@@ -127,7 +127,7 @@ class AdineBookTest(unittest.TestCase):
             'http://www.adinebook.com/gp/product/9645300363/'
             'ref=pd_sim_b_title_4/905-6618179-9188955'
         )
-        o = adinehbook_response(i)
+        o = adinehbook_sfn_cit_ref(i)
         e = (
             '* {{cite book '
             '| last=مونس '
@@ -140,7 +140,7 @@ class AdineBookTest(unittest.TestCase):
             '| language=fa '
             '| ref=harv'
         )
-        self.assertIn(e, o.cite)
+        self.assertIn(e, o[1])
 
     def test_ab7(self):
         """1 Editor."""
@@ -157,10 +157,10 @@ class AdineBookTest(unittest.TestCase):
             '| isbn=978-964-459-398-7 '
             '| language=fa '
             '| ref=harv',
-            adinehbook_response(
+            adinehbook_sfn_cit_ref(
                 'http://www.adinebook.com/gp/product/9644593987/'
                 'ref=pd_pos_b_title_4/905-6618179-9188955'
-            ).cite,
+            )[1],
         )
 
 

@@ -10,7 +10,7 @@ from logging import getLogger
 from random import seed as randseed, choice as randchoice
 from string import digits, ascii_lowercase
 
-from src.generator_en import citations as en_citations, DOI_URL_MATCH
+from src.generator_en import sfn_cit_ref as en_citations, DOI_URL_MATCH
 from src.language import TO_TWO_LETTER_CODE
 
 
@@ -84,20 +84,21 @@ LOWER_ALPHA_DIGITS = digits + ascii_lowercase
 
 DIGITS_TO_FA = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
 
-def citations(d: defaultdict) -> tuple:
+
+def sfn_cit_ref(d: defaultdict) -> tuple:
     """Create citation templates using the given dictionary."""
     cite_type = TYPE_TO_CITE(d['cite_type'])
     if not cite_type:
         logger.warning(f'Unknown citation type: {cite_type}, d: {d}')
         cite_type = ''
     if cite_type in ('کتاب', 'ژورنال', 'وب'):
-        cite = '* {{یادکرد ' + cite_type
+        cit = '* {{یادکرد ' + cite_type
     else:
         return en_citations(d)
 
     authors = d['authors']
     if authors:
-        cite += names2para(authors, 'نام', 'نام خانوادگی', 'نویسنده')
+        cit += names2para(authors, 'نام', 'نام خانوادگی', 'نویسنده')
         sfn = '&lt;ref&gt;{{پک'
         for author in authors[:4]:
             sfn += ' | ' + author.lastname
@@ -106,17 +107,17 @@ def citations(d: defaultdict) -> tuple:
 
     editors = d['editors']
     if editors:
-        cite += names2para(
+        cit += names2para(
             editors, 'نام ویراستار', 'نام خانوادگی ویراستار', 'ویراستار'
         )
 
     translators = d['translators']
     if translators:
-        cite += names1para(translators, 'ترجمه')
+        cit += names1para(translators, 'ترجمه')
 
     others = d['others']
     if others:
-        cite += names1para(others, 'دیگران')
+        cit += names1para(others, 'دیگران')
 
     year = d['year']
     if year:
@@ -129,11 +130,11 @@ def citations(d: defaultdict) -> tuple:
 
     title = d['title']
     if booktitle:
-        cite += ' | عنوان=' + booktitle
+        cit += ' | عنوان=' + booktitle
         if title:
-            cite += ' | فصل=' + title
+            cit += ' | فصل=' + title
     elif title:
-        cite += ' | عنوان=' + title
+        cit += ' | عنوان=' + title
         sfn += ' | ک=' + d['title']
 
     if cite_type == 'ژورنال':
@@ -142,91 +143,91 @@ def citations(d: defaultdict) -> tuple:
         journal = d['journal']
 
     if journal:
-        cite += ' | ژورنال=' + journal
+        cit += ' | ژورنال=' + journal
     else:
         website = d['website']
         if website:
-            cite += ' | وب‌گاه=' + website
+            cit += ' | وب‌گاه=' + website
 
     chapter = d['chapter']
     if chapter:
-        cite += ' | فصل=' + chapter
+        cit += ' | فصل=' + chapter
 
     publisher = d['publisher'] or d['organization']
     if publisher:
-        cite += ' | ناشر=' + publisher
+        cit += ' | ناشر=' + publisher
 
     address = d['address'] or d['publisher-location']
     if address:
-        cite += ' | مکان=' + address
+        cit += ' | مکان=' + address
 
     edition = d['edition']
     if edition:
-        cite += ' | ویرایش=' + edition
+        cit += ' | ویرایش=' + edition
 
     series = d['series']
     if series:
-        cite += ' | سری=' + series
+        cit += ' | سری=' + series
 
     volume = d['volume']
     if volume:
-        cite += ' | جلد=' + volume
+        cit += ' | جلد=' + volume
 
     issue = d['issue'] or d['number']
     if issue:
-        cite += ' | شماره=' + issue
+        cit += ' | شماره=' + issue
 
     ddate = d['date']
     if ddate:
         if isinstance(ddate, str):
-            cite += ' | تاریخ=' + ddate
+            cit += ' | تاریخ=' + ddate
         else:
-            cite += ' | تاریخ=' + date.isoformat(ddate)
+            cit += ' | تاریخ=' + date.isoformat(ddate)
 
     if year:
-        cite += ' | سال=' + year
+        cit += ' | سال=' + year
 
     month = d['month']
     if month:
-        cite += ' | ماه=' + month
+        cit += ' | ماه=' + month
 
     isbn = d['isbn']
     if isbn:
-        cite += ' | شابک=' + isbn
+        cit += ' | شابک=' + isbn
 
     issn = d['issn']
     if issn:
-        cite += ' | issn=' + issn
+        cit += ' | issn=' + issn
 
     pmid = d['pmid']
     if pmid:
-        cite += ' | pmid=' + pmid
+        cit += ' | pmid=' + pmid
 
     pmcid = d['pmcid']
     if pmcid:
-        cite += ' | pmc=' + pmcid
+        cit += ' | pmc=' + pmcid
 
     doi = d['doi']
     if doi:
-        cite += ' | doi=' + doi
+        cit += ' | doi=' + doi
 
     pages = d['page']
     if cite_type == 'ژورنال':
         if pages:
-            cite += ' | صفحه=' + pages
+            cit += ' | صفحه=' + pages
 
     url = d['url']
     if url:
         # Don't add a DOI URL if we already have added a DOI.
         if not doi or not DOI_URL_MATCH(url):
-            cite += ' | پیوند=' + url
+            cit += ' | پیوند=' + url
         else:
             # To prevent addition of access date
             url = None
 
     archive_url = d['archive-url']
     if archive_url:
-        cite += (
+        cit += (
             ' | پیوند بایگانی=' + archive_url +
             ' | تاریخ بایگانی=' + d['archive-date'].isoformat() +
             ' | پیوند مرده=' + ('آری' if d['dead-url'] == 'yes' else 'نه')
@@ -236,35 +237,35 @@ def citations(d: defaultdict) -> tuple:
     if language:
         language = TO_TWO_LETTER_CODE(language.lower(), language)
         if cite_type == 'وب':
-            cite += ' | کد زبان=' + language
+            cit += ' | کد زبان=' + language
         else:
-            cite += ' | زبان=' + language
+            cit += ' | زبان=' + language
         sfn += ' | زبان=' + language
 
     if pages:
         sfn += ' | ص=' + pages
     # Seed the random generator before adding today's date.
-    randseed(cite)
+    randseed(cit)
     ref_name = (
         randchoice(ascii_lowercase)  # it should contain at least one non-digit
         + ''.join(randchoice(LOWER_ALPHA_DIGITS) for _ in range(4))
     )
     if url:
-        cite += ' | تاریخ بازبینی=' + date.today().isoformat()
+        cit += ' | تاریخ بازبینی=' + date.today().isoformat()
 
     if not pages and cite_type != 'وب':
         sfn += ' | ص='
 
-    cite += '}}'
+    cit += '}}'
     sfn += '}}\u200F&lt;/ref&gt;'
     # Finally create the ref tag.
-    ref = cite[2:]
+    ref = cit[2:]
     if pages and ' | صفحه=' not in ref:
         ref = ref[:-2] + ' | صفحه=' + pages + '}}'
     elif not url:
         ref = ref[:-2] + ' | صفحه=}}'
     ref = '&lt;ref name="' + ref_name + '"&gt;' + ref + '\u200F&lt;/ref&gt;'
-    return cite, sfn, ref
+    return sfn, cit, ref
 
 
 def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
