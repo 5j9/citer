@@ -9,7 +9,6 @@ from datetime import date as datetime_date
 from difflib import get_close_matches
 from html import unescape as html_unescape
 from logging import getLogger
-import re
 from threading import Thread
 from typing import Optional, List, Dict, Any, Tuple
 from urllib.parse import urlparse
@@ -60,7 +59,7 @@ TITLE_TAG = regex_compile(
         (?P<result>\s*+[\s\S]*?\s*+)
     </title\s*+>
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 DATE_META_NAME_OR_PROP = r'''
@@ -103,7 +102,7 @@ JOURNAL_TITLE_SEARCH = regex_compile(
         {JOURNAL_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 URL_META_NAME_OR_PROP = r'''
@@ -117,7 +116,7 @@ URL_SEARCH = regex_compile(
         {URL_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 ISSN_META_NAME_OR_PROP = r'''
@@ -131,7 +130,7 @@ ISSN_SEARCH = regex_compile(
         {ISSN_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 PMID_META_NAME_OR_PROP = r'''
@@ -145,7 +144,7 @@ PMID_SEARCH = regex_compile(
         {PMID_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 DOI_META_NAME_OR_PROP = r'''
@@ -159,7 +158,7 @@ DOI_SEARCH = regex_compile(
         {DOI_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 
@@ -174,7 +173,7 @@ VOLUME_SEARCH = regex_compile(
         {VOLUME_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 ISSUE_META_NAME_OR_PROP = r'''
@@ -188,7 +187,7 @@ ISSUE_SEARCH = regex_compile(
         {ISSUE_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 FIRST_PAGE_NAME_OR_PROP = r'''
@@ -202,7 +201,7 @@ FIRST_PAGE_SEARCH = regex_compile(
         {FIRST_PAGE_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 
@@ -217,7 +216,7 @@ LAST_PAGE_SEARCH = regex_compile(
         {LAST_PAGE_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 
@@ -232,10 +231,10 @@ SITE_NAME_SEARCH = regex_compile(
         {SITE_NAME_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
-    re.VERBOSE | re.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
-TITLE_SPLIT = re.compile(r' - | — |\|').split
+TITLE_SPLIT = regex_compile(r' - | — |\|').split
 
 
 class ContentTypeError(ValueError):
