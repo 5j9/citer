@@ -30,7 +30,7 @@ def googlebooks_sfn_cit_ref(url, date_format='%Y-%m-%d') -> tuple:
         dictionary['page'] = pq['pg'][0][2:]
         dictionary['url'] += '&pg=' + pq['pg'][0]
     # although google does not provide a language field:
-    if 'language' not in dictionary:
+    if not dictionary['language']:
         dictionary['language'] = classify(dictionary['title'])[0]
     return dict_to_sfn_cit_ref(dictionary)
 
