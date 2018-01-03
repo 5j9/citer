@@ -3,12 +3,12 @@
 
 """Define related tools for web.archive.org (aka Wayback Machine)."""
 
-import re
 import logging
 from threading import Thread
 from datetime import date
 from urllib.parse import urlparse
 
+from regex import compile as regex_compile
 from requests import ConnectionError as RequestsConnectionError
 
 from src.commons import dict_to_sfn_cit_ref
@@ -19,9 +19,9 @@ from src.urls import (
 )
 
 
-URL_FULLMATCH = re.compile(
-    r'https?://web(?:-beta)?\.archive\.org/(?:web/)?'
-    r'(\d{4})(\d{2})(\d{2})\d{6}(?:id_|js_|cs_|im_)?/(http.*)'
+URL_FULLMATCH = regex_compile(
+    r'https?+://web(?:-beta)?+\.archive\.org/(?:web/)?+'
+    r'(\d{4})(\d{2})(\d{2})\d{6}(?>cs_|i(?>d_|m_)|js_)?+/(http.*)'
 ).fullmatch
 
 

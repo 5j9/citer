@@ -1,97 +1,114 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-import re
 from collections import defaultdict
-from src.doi import DOI_SEARCH
 
+from regex import compile as regex_compile, VERBOSE
+
+from src.doi import DOI_SEARCH
 from src.commons import RawName, InvalidNameError
 
 
-TY_SEARCH = re.compile('TY  - (.*)').search
-AU_FINDALL = re.compile('(:?AU|A\d)  - (.*)').findall
-T1_SEARCH = re.compile('(T1|TI)  - (.*)').search
-T3_SEARCH = re.compile('T3  - (.*)').search
-PB_SEARCH = re.compile('PB  - (.*)').search
-JF_SEARCH = re.compile('(JF|JA)  - (.*)').search
-IS_SEARCH = re.compile('IS  - (.*)').search
-VL_SEARCH = re.compile('VL  - (.*)').search
-PY_SEARCH = re.compile('(PY|Y1|DA)  - (\d*)').search
-DA_SEARCH = re.compile('(PY|Y1|DA)  - \d+/(\d*)').search
-SN_SEARCH = re.compile('SN  - (.*)').search
-SP_SEARCH = re.compile('SP  - (.*)').search
-EP_SEARCH = re.compile('EP  - (.*)').search
-UR_SEARCH = re.compile('UR  - (.*)').search
-LA_SEARCH = re.compile('LA  - (.*)').search
+RIS_FULLMATCH = regex_compile(
+    r'''
+    (?: # this  group matches any line
+        (?>
+            A[U\d]\ {2}-\ (?<author>.++)
+            |DA\ {2}-\ \d++/(?<month>\d++).*+
+            |EP\ {2}-\ (?<end_page>.++)
+            |T(?>
+                [1I]\ {2}-\ (?<title>.++)
+                |3\ {2}-\ (?<series>.++)
+                |Y\ {2}-\ (?<type>.++)
+            )
+            |IS\ {2}-\ (?<issue>.++)
+            |J[FA]\ {2}-\ (?<journal>.++)
+            |LA\ {2}-\ (?<language>.++)
+            |P(?>
+                B\ {2}-\ (?<publisher>.++)
+                |Y\ {2}-\ (?<year>\d++).*+
+            )
+            |S(?>
+                N\ {2}-\ (?<isbn>.++)
+                |P\ {2}-\ (?<start_page>.++)
+            )
+            |UR\ {2}-\ (?<url>.++)
+            |VL\ {2}-\ (?<volume>.++)
+            |Y1\ {2}-\ (?<year>\d++).*+
+            # any other line
+            |[^\n]*+
+        )
+        \n
+    )*
+    ''',
+    VERBOSE,
+).fullmatch
 
 
 def parse(ris_text):
     """Parse RIS_text data and return the result as a dictionary."""
     d = defaultdict(lambda: None)
     # cite_type: (book, journal, . . . )
-    m = TY_SEARCH(ris_text)
-    if m:
-        d['cite_type'] = m.group(1).strip().lower()
+    match = RIS_FULLMATCH(ris_text)
+    groupdict_get = match.groupdict().get
+    type_ = groupdict_get('type')
+    if type_:
+        d['cite_type'] = type_.lower()
     # author:
-    m = AU_FINDALL(ris_text)
     # d['authors'] should not be created unless there are some authors
-    if m:
+    authors = match.captures('author')
+    if authors:
         d['authors'] = []
-        for match in m:
+        for author in authors:
             try:
-                name = RawName(match[1])
+                author = RawName(author)
             except InvalidNameError:
                 continue
-            d['authors'].append(name)
-
-    m = T1_SEARCH(ris_text)
-    if m:
-        if m.group(2):
-            d['title'] = m.group(2).strip()
-    m = T3_SEARCH(ris_text)
-    if m:
-        d['series'] = m.group(1).strip()
-    m = PB_SEARCH(ris_text)
-    if m:
-        d['publisher'] = m.group(1).strip()
-    m = JF_SEARCH(ris_text)
-    if m:
-        if m.group(2):
-            d['journal'] = m.group(2).strip()
-    m = IS_SEARCH(ris_text)
-    if m:
-        d['issue'] = m.group(1).strip()
-    m = VL_SEARCH(ris_text)
-    if m:
-        d['volume'] = m.group(1).strip()
-    m = PY_SEARCH(ris_text)
-    if m:
-        if m.group(2):
-            d['year'] = m.group(2).strip()
-    m = DA_SEARCH(ris_text)
-    if m:
-        if m.group(2):
-            d['month'] = m.group(2).strip()
-    m = SN_SEARCH(ris_text)
-    if m:
-        d['isbn'] = m.group(1).strip()
+            else:
+                d['authors'].append(author)
+    title = groupdict_get('title')
+    if title:
+        d['title'] = title
+    series = groupdict_get('series')
+    if series:
+        d['series'] = series
+    publisher = groupdict_get('publisher')
+    if publisher:
+        d['publisher'] = publisher
+    journal = groupdict_get('journal')
+    if journal:
+        d['journal'] = journal
+    issue = groupdict_get('issue')
+    if issue:
+        d['issue'] = issue
+    volume = groupdict_get('volume')
+    if volume:
+        d['volume'] = volume
+    year = groupdict_get('year')
+    if year:
+        d['year'] = year
+    month = groupdict_get('month')
+    if month:
+        d['month'] = month
+    isbn = groupdict_get('isbn')
+    if isbn:
+        d['isbn'] = isbn
     # DOIs may be in N1 (notes) tag, search for it in any tag
     m = DOI_SEARCH(ris_text)
     if m:
-        d['doi'] = m.group(0).strip()
-    m = SP_SEARCH(ris_text)
-    if m:
-        start_page = m.group(1).strip()
-        m = EP_SEARCH(ris_text)
-        if m:
-            d['page'] = start_page + '–' + m.group(1).strip()
+        d['doi'] = m[0]
+    start_page = groupdict_get('start_page')
+    if start_page:
+        end_page = groupdict_get('end_page')
+        if end_page:
+            d['page'] = start_page + '–' + end_page
         else:
             d['page'] = start_page
-    m = UR_SEARCH(ris_text)
-    if m:
+    url = groupdict_get('url')
+    if url:
         # in IRS, url can be seprated using a ";"
-        d['url'] = m.group(1).split(';')[0].strip()
-    m = LA_SEARCH(ris_text)
-    if m:
-        d['language'] = m.group(1).strip()
+        d['url'] = url.partition(';')[0]
+    language = groupdict_get('language')
+    if language:
+        d['language'] = language
     return d

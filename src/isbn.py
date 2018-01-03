@@ -3,10 +3,10 @@
 
 """Codes specifically related to ISBNs."""
 
-import re
 from threading import Thread
 
 from langid import classify
+from regex import compile as regex_compile, DOTALL
 from requests import get as requests_get
 
 from src.adinebook import url2dictionary as adinebook_url2dictionary
@@ -18,27 +18,30 @@ from src.commons import dict_to_sfn_cit_ref
 # original regex from:
 # https://www.debuggex.com/r/0Npla56ipD5aeTr9
 # https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
-ISBN_10OR13_SEARCH = re.compile(
-    r'97[89]([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
-    r'|(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
+ISBN_10OR13_SEARCH = regex_compile(
+    r'97[89]([ -]?+)(?=\d{1,5}\1?+\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*){9}\d'
+    r'|(?=\d{1,5}([ -]?+)\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}[\dX]'
 ).search
 
-ISBN10_SEARCH = re.compile(
-    r'(?=\d{1,5}([ -]?)\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}[\dX]'
+ISBN10_SEARCH = regex_compile(
+    r'(?=\d{1,5}([ -]?+)\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}[\dX]'
 ).search
 
-ISBN13_SEARCH = re.compile(
-    r'97[89]([ -]?)(?=\d{1,5}\1?\d{1,7}\1?\d{1,6}\1?\d)(?:\d\1*){9}\d'
+ISBN13_SEARCH = regex_compile(
+    r'97[89]([ -]?+)(?=\d{1,5}\1?+\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}\d'
 ).search
 
 
 # original regex from: http://stackoverflow.com/a/14260708/2705757
-# ISBN_REGEX = re.compile(
+# ISBN_REGEX = regex_compile(
 #     r'(?=[-0-9 ]{17}|[-0-9X ]{13}|[0-9X]{10})(?:97[89][- ]?)'
 #     r'?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
 # )
 
-OTTOBIB_SEARCH = re.compile('<textarea.*>(.*)</textarea>', re.DOTALL).search
+OTTOBIB_SEARCH = regex_compile(
+    '<textarea[^>]*+>(.*?)</textarea>',
+    DOTALL,
+).search
 
 RM_DASH_SPACE = str.maketrans('', '', '- ')
 

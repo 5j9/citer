@@ -6,11 +6,11 @@
 
 from collections import defaultdict
 from datetime import date as datetime_date
-import re
 from urllib.parse import unquote
 from html import unescape
 
 from langid import classify
+from regex import compile as regex_compile, VERBOSE
 from requests import get as requests_get
 
 from src.commons import dict_to_sfn_cit_ref, Name
@@ -19,8 +19,15 @@ from config import lang
 
 # The regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
-DOI_SEARCH = re.compile(
-    r'\b(10\.[0-9]{4,}(?:\.[0-9]+)*/(?:(?!["&\'])\S)+)\b'
+DOI_SEARCH = regex_compile(
+    r'''
+    \b(
+        10\.[0-9]{4,}+
+        (?:\.[0-9]++)*+
+        /[^"&\'\s]++
+    )\b
+    ''',
+    VERBOSE,
 ).search
 
 

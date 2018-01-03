@@ -7,65 +7,64 @@ It is in urls.py.
 """
 
 
-from re import compile as re_compile, IGNORECASE
 from typing import Optional, List
 
-import regex
+from regex import compile as regex_compile, VERBOSE, IGNORECASE, ASCII
 
 from src.commons import ANYDATE_SEARCH, RawName, InvalidNameError, Name
 
 
 # Names in byline are required to be two or three parts
-NAME_PATTERN = r'(?>\w[\w.-]+\ )(?>\w[\w.-]+)(?>\ \w[\w.-]+)?'
+NAME_PATTERN = r'\w[\w.-]++\ \w[\w.-]++(?>\ \w[\w.-]+)?'
 
 # BYLINE_PATTERN supports up to four names in a byline
 # names may be separated with "and", a "comma" or "comma and"
 BYLINE_PATTERN = rf'''
-    \s*By\s+{NAME_PATTERN}(
+    \s*+By\s++{NAME_PATTERN}(
         ,\ {NAME_PATTERN}(
             ,\ {NAME_PATTERN}(
                 ,\ {NAME_PATTERN}
                 |
-                ,?\ +and\ {NAME_PATTERN}
+                ,?\ ++and\ {NAME_PATTERN}
             )?
             |
-            ,?\ +and\ {NAME_PATTERN}(
+            ,?\ ++and\ {NAME_PATTERN}(
                 ,\ {NAME_PATTERN}
                 |
-                ,?\ +and\ {NAME_PATTERN}
+                ,?\ ++and\ {NAME_PATTERN}
             )?
         )?
         |
-        ,?\ +and\ {NAME_PATTERN}(
+        ,?\ ++and\ {NAME_PATTERN}(
             ,\ {NAME_PATTERN}(
                 ,\ {NAME_PATTERN}
                 |
-                ,?\ +and\ {NAME_PATTERN}
+                ,?\ ++and\ {NAME_PATTERN}
             )?
             |
-            ,?\ +and\ {NAME_PATTERN}(
+            ,?\ ++and\ {NAME_PATTERN}(
                 ,\ {NAME_PATTERN}
                 |
-                ,?\ +and\ {NAME_PATTERN}
+                ,?\ ++and\ {NAME_PATTERN}
             )?
         )?
     )?\s*
 '''
-BYLINE_PATTERN_SEARCH = regex.compile(BYLINE_PATTERN, regex.X | regex.I)
+BYLINE_PATTERN_SEARCH = regex_compile(BYLINE_PATTERN, VERBOSE | IGNORECASE)
 
-NORMALIZE_ANDS = re_compile(r'\s+and\s+', IGNORECASE).sub
-NORMALIZE_COMMA_SPACES = re_compile(r'\s*,\s+', IGNORECASE).sub
-BY_PREFIX = re_compile(
-    r'^(?:[\s\S]*?\bby\s+)?([^\r\n]+)[\s\S]*',
+NORMALIZE_ANDS = regex_compile(r'\s++and\s++', IGNORECASE).sub
+NORMALIZE_COMMA_SPACES = regex_compile(r'\s*+,\s++', IGNORECASE).sub
+BY_PREFIX = regex_compile(
+    r'^(?:[\s\S]*?\bby\s++)?([^\r\n]++)[\s\S]*',
     IGNORECASE,
 ).sub
-AND_OR_COMMA_SUFFIX = re_compile(r'(?: and|,)?\s*$', IGNORECASE).sub
-AND_OR_COMMA_SPLIT = re_compile(r', and | and |, |;', IGNORECASE).split
-AND_SPLIT = re_compile(r', and | and |;', IGNORECASE).split
+AND_OR_COMMA_SUFFIX = regex_compile(r'(?> and|,)?\s*+$', IGNORECASE).sub
+AND_OR_COMMA_SPLIT = regex_compile(r', and | and |, |;', IGNORECASE).split
+AND_SPLIT = regex_compile(r', and | and |;', IGNORECASE).split
 
-CONTENT_ATTR = r'content=(?<q>["\'])\s*(?<result>.*?)\s*(?P=q)'
+CONTENT_ATTR = r'content=(?<q>["\'])\s*+(?<result>.*?)\s*+(?P=q)'
 AUTHOR_META_NAME_OR_PROP = r'''
-    (?<id>(?:name|property)\s*=\s*(?<q>["\'])
+    (?<id>(?:name|property)\s*+=\s*+(?<q>["\'])
         (?>
             # http://socialhistory.ihcs.ac.ir/article_571_84.html
             # http://jn.physiology.org/content/81/1/319
@@ -75,7 +74,7 @@ AUTHOR_META_NAME_OR_PROP = r'''
         )
     (?P=q))
 '''
-META_AUTHOR_FINDITER = regex.compile(
+META_AUTHOR_FINDITER = regex_compile(
     rf'''
     <meta\s[^>]*?(?:
         {AUTHOR_META_NAME_OR_PROP}\s[^>]*?{CONTENT_ATTR}
@@ -83,19 +82,19 @@ META_AUTHOR_FINDITER = regex.compile(
         {CONTENT_ATTR}\s[^>]*?{AUTHOR_META_NAME_OR_PROP}
     )
     ''',
-    regex.VERBOSE | regex.IGNORECASE
+    VERBOSE | IGNORECASE
 ).finditer
 # id=byline
 # http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
 # rel=author
 # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
-BYLINE_TAG_FINDITER = regex.compile(
+BYLINE_TAG_FINDITER = regex_compile(
     rf'''
     (?>
         # author_byline example:
         # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
         # try byline before class_='author'
-        <(?<tag>[a-z]\w+)\s+[^>]*?
+        <(?<tag>[a-z]\w++)\s++[^>]*?
         (?<id>
             (?>class|id|rel)=(?<q>["\'])
                 (?>
@@ -108,39 +107,40 @@ BYLINE_TAG_FINDITER = regex.compile(
                     |story-byline
                 )
             )
-        (?P=q)[^>]*?>(?<result>[\s\S]*?)</(?P=tag)(?>[^>]*)>
+        (?P=q)[^>]*?>(?<result>[\s\S]*?)</(?P=tag)[^>]*+>
         |
         # http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html
-        (?<id>authorName["\']?\s*:\s*["\'])(?<result>[^"\'>\n]+)["\']
+        (?<id>authorName["\']?\s*+:\s*+["\'])(?<result>[^"\'>\n]++)["\']
         |
         # schema.org
-        (?<q>["'])author(?P=q)\s*:\s*{{\s*(?P=q)@type(?P=q)\s*:\s*(?P=q)
-        (?<id>Person)(?P=q)\s*,\s*(?P=q)name(?P=q)\s*:\s*(?P=q)(?<result>.*?)(?P=q)
+        (?<q>["'])author(?P=q)\s*+:\s*+{{\s*+(?P=q)@type(?P=q)\s*+:\s*+(?P=q)
+        (?<id>Person)
+        (?P=q)\s*+,\s*+(?P=q)name(?P=q)\s*+:\s*+(?P=q)(?<result>.*?)(?P=q)
     )
     ''',
-    regex.VERBOSE | regex.IGNORECASE | regex.ASCII,
+    VERBOSE | IGNORECASE | ASCII,
 ).finditer
 
 
-BYLINE_HTML_PATTERN = regex.compile(
-    rf'>{BYLINE_PATTERN}<', regex.VERBOSE | regex.IGNORECASE
+BYLINE_HTML_PATTERN = regex_compile(
+    rf'>{BYLINE_PATTERN}<', VERBOSE | IGNORECASE
 ).search
 # [\n|]{BYLINE_PATTERN}\n
 # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-BYLINE_TEXT_PATTERN = regex.compile(
-    rf'[\n|]{BYLINE_PATTERN}\n', regex.VERBOSE | regex.IGNORECASE
+BYLINE_TEXT_PATTERN = regex_compile(
+    rf'[\n|]{BYLINE_PATTERN}\n', VERBOSE | IGNORECASE
 ).search
 
-TAGS_SUB = regex.compile(r'</?[a-z][^>]*>', regex.IGNORECASE).sub
+TAGS_SUB = regex_compile(r'</?[a-z][^>]*+>', IGNORECASE).sub
 
 # http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876
 #  .byline > .author
-BYLINE_AUTHOR = regex.compile(
-    r'<[a-z][^>]*?class=(?<q>["\'])author(?P=q)[^>]*?>(?<result>[^<>]*)',
-    regex.IGNORECASE | regex.ASCII
+BYLINE_AUTHOR = regex_compile(
+    r'<[a-z][^>]*?class=(?<q>["\'])author(?P=q)[^>]*?>(?<result>[^<>]*+)',
+    IGNORECASE | ASCII
 ).finditer
 
-STOPWORDS_SEARCH = regex.compile(
+STOPWORDS_SEARCH = regex_compile(
     r'''
     \b(?>
         Administrator
@@ -158,10 +158,10 @@ STOPWORDS_SEARCH = regex.compile(
     |\.(?>com|ir)\b
     |www\.
     ''',
-    regex.IGNORECASE | regex.VERBOSE,
+    IGNORECASE | VERBOSE,
 ).search
 
-FOUR_DIGIT_NUM = re_compile('\d\d\d\d').search
+FOUR_DIGIT_NUM = regex_compile('\d\d\d\d').search
 
 
 def find_authors(html) -> Optional[List[Name]]:

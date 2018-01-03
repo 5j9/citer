@@ -15,7 +15,7 @@ from typing import Optional, List, Dict, Any, Tuple
 from urllib.parse import urlparse
 
 from langid import classify
-import regex
+from regex import compile as regex_compile, VERBOSE, IGNORECASE
 from requests import get as requests_get, Response as RequestsResponse
 from requests.exceptions import RequestException
 
@@ -29,9 +29,11 @@ from src.urls_authors import find_authors, CONTENT_ATTR
 MAX_RESPONSE_LENGTH = 2_000_000
 
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
-CHARSET = re.compile(
-    rb'''<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)''',
-    re.IGNORECASE,
+CHARSET = regex_compile(
+    rb'''
+    <meta(?!\s*+(?>name|value)\s*+=)[^>]*?charset\s*+=[\s"']*+([^\s"'/>]*)
+    ''',
+    IGNORECASE | VERBOSE,
 ).search
 
 TITLE_META_NAME_OR_PROP = r'''
@@ -39,24 +41,24 @@ TITLE_META_NAME_OR_PROP = r'''
         (?>citation_title|title|Headline|og:title)
     (?P=q)
 '''
-TITLE_SEARCH = regex.compile(
+TITLE_SEARCH = regex_compile(
     rf'''
-    <meta\s+(?:
-        {TITLE_META_NAME_OR_PROP}\s+{CONTENT_ATTR}
+    <meta\s++(?:
+        {TITLE_META_NAME_OR_PROP}\s++{CONTENT_ATTR}
         |
-        {CONTENT_ATTR}\s+{TITLE_META_NAME_OR_PROP}
+        {CONTENT_ATTR}\s++{TITLE_META_NAME_OR_PROP}
     )
     |
-    class=(?<q>["\'])(?>main-hed|heading1)(?P=q)[^>]+?>(?<result>.*?)<
+    class=(?<q>["\'])(?>main-hed|heading1)(?P=q)[^>]++>(?<result>[^<]*+)<
     ''',
-    regex.VERBOSE | regex.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
-TITLE_TAG = re.compile(
+TITLE_TAG = regex_compile(
     r'''
-    <title\b[^>]*>
-        (?P<result>\s*[\s\S]*?\s*)
-    </title\s*>
+    <title\b[^>]*+>
+        (?P<result>\s*+[\s\S]*?\s*+)
+    </title\s*+>
     ''',
     re.VERBOSE | re.IGNORECASE,
 ).search
@@ -66,39 +68,39 @@ DATE_META_NAME_OR_PROP = r'''
         article:(?>modified_time|published_time)
         |citation_(?>date|publication_date)
         |date
-        |DC.date.[^'"\n>]*
+        |DC.date.[^'"\n>]*+
         |last-modified
         |pub_?date
         |sailthru\.date
     )(?P=q)
 '''
 DATE_CONTENT_ATTR = rf'''
-    content=(?<q>["\'])[^"'<]*?{ANYDATE_PATTERN}(?>[^"'<]*?(?P=q))
+    content=(?<q>["\'])[^"'<]*?{ANYDATE_PATTERN}[^"'<]*+(?P=q)
 '''
-DATE_SEARCH = regex.compile(
+DATE_SEARCH = regex_compile(
     rf'''
     <meta\s+[^\n<]*?(?:
-        {DATE_META_NAME_OR_PROP}\s+[^\n<]*?{DATE_CONTENT_ATTR}
+        {DATE_META_NAME_OR_PROP}\s++[^\n<]*?{DATE_CONTENT_ATTR}
         |
-        {DATE_CONTENT_ATTR}\s+[^\n<]*?{DATE_META_NAME_OR_PROP}
+        {DATE_CONTENT_ATTR}\s++[^\n<]*?{DATE_META_NAME_OR_PROP}
     )
     |
     # http://livescience.com/46619-sterile-neutrino-experiment-beginning.html
     # https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0
-    date(?>Published|line)[^\w]+?{ANYDATE_PATTERN}
+    date(?>Published|line)[^\w]++{ANYDATE_PATTERN}
     ''',
-    regex.VERBOSE | regex.IGNORECASE,
+    VERBOSE | IGNORECASE,
 ).search
 
 JOURNAL_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_journal_title(?P=q)
 '''
-JOURNAL_TITLE_SEARCH = regex.compile(
+JOURNAL_TITLE_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{JOURNAL_META_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{JOURNAL_META_NAME_OR_PROP}
         |
-        {JOURNAL_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {JOURNAL_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -107,12 +109,12 @@ JOURNAL_TITLE_SEARCH = regex.compile(
 URL_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])og:url(?P=q)
 '''
-URL_SEARCH = regex.compile(
+URL_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{URL_META_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{URL_META_NAME_OR_PROP}
         |
-        {URL_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {URL_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -121,12 +123,12 @@ URL_SEARCH = regex.compile(
 ISSN_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_issn(?P=q)
 '''
-ISSN_SEARCH = regex.compile(
+ISSN_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{ISSN_META_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{ISSN_META_NAME_OR_PROP}
         |
-        {ISSN_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {ISSN_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -135,12 +137,12 @@ ISSN_SEARCH = regex.compile(
 PMID_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_pmid(?P=q)
 '''
-PMID_SEARCH = regex.compile(
+PMID_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{PMID_META_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{PMID_META_NAME_OR_PROP}
         |
-        {PMID_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {PMID_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -149,12 +151,12 @@ PMID_SEARCH = regex.compile(
 DOI_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_doi(?P=q)
 '''
-DOI_SEARCH = regex.compile(
+DOI_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{DOI_META_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{DOI_META_NAME_OR_PROP}
         |
-        {DOI_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {DOI_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -164,12 +166,12 @@ DOI_SEARCH = regex.compile(
 VOLUME_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_volume(?P=q)
 '''
-VOLUME_SEARCH = regex.compile(
+VOLUME_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{VOLUME_META_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{VOLUME_META_NAME_OR_PROP}
         |
-        {VOLUME_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {VOLUME_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -178,12 +180,12 @@ VOLUME_SEARCH = regex.compile(
 ISSUE_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_issue(?P=q)
 '''
-ISSUE_SEARCH = regex.compile(
+ISSUE_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{ISSUE_META_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{ISSUE_META_NAME_OR_PROP}
         |
-        {ISSUE_META_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {ISSUE_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -192,12 +194,12 @@ ISSUE_SEARCH = regex.compile(
 FIRST_PAGE_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_firstpage(?P=q)
 '''
-FIRST_PAGE_SEARCH = regex.compile(
+FIRST_PAGE_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{FIRST_PAGE_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{FIRST_PAGE_NAME_OR_PROP}
         |
-        {FIRST_PAGE_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {FIRST_PAGE_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -207,12 +209,12 @@ FIRST_PAGE_SEARCH = regex.compile(
 LAST_PAGE_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_lastpage(?P=q)
 '''
-LAST_PAGE_SEARCH = regex.compile(
+LAST_PAGE_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{LAST_PAGE_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{LAST_PAGE_NAME_OR_PROP}
         |
-        {LAST_PAGE_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {LAST_PAGE_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
@@ -222,12 +224,12 @@ LAST_PAGE_SEARCH = regex.compile(
 SITE_NAME_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])og:site_name(?P=q)
 '''
-SITE_NAME_SEARCH = regex.compile(
+SITE_NAME_SEARCH = regex_compile(
     rf'''
-    <meta\s+[^\n<]*?(?:
-        {CONTENT_ATTR}\s+[^\n<]*?{SITE_NAME_NAME_OR_PROP}
+    <meta\s++[^\n<]*?(?:
+        {CONTENT_ATTR}\s++[^\n<]*?{SITE_NAME_NAME_OR_PROP}
         |
-        {SITE_NAME_NAME_OR_PROP}\s+[^\n<]*?{CONTENT_ATTR}
+        {SITE_NAME_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
     )
     ''',
     re.VERBOSE | re.IGNORECASE,
