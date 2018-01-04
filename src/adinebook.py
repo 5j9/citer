@@ -5,20 +5,32 @@
 
 from collections import defaultdict
 import logging
-import re
 
 from langid import classify
+from regex import compile as regex_compile
 from requests import get as requests_get, RequestException
 
 from src.commons import RawName, dict_to_sfn_cit_ref
 
 
-ISBN_SEARCH = re.compile(r'شابک:.*?([\d-]*X?)</span></li>').search
-YEAR_SEARCH = re.compile(r'نشر:</b>.*?\(.*?(\d\d\d\d)\)</li>').search
-MONTH_SEARCH = re.compile(r'نشر:</b>.*\([\d\s]*(.*?)،.*').search
-PUBLISHER_SEARCH = re.compile(r'نشر:</b>\s*(.*?)\s*\(.*</li>').search
-TITLE_SEARCH = re.compile(
-    r'(?<=<title>آدینه بوک: )(?P<title>.*?)\s*~(?P<names>.*?)(?=\s*</title>)'
+ISBN_SEARCH = regex_compile(
+    r'(?<=شابک:</b> <span dir="ltr">)[\d-]{10,}+X?'
+).search
+YEAR_SEARCH = regex_compile(
+    r'(?<=نشر:</b>[^(].*?)\d{4}'
+).search
+MONTH_SEARCH = regex_compile(
+    r'(?<=نشر:</b>.*?\(\d+ ).*?(?=،)'
+).search
+PUBLISHER_SEARCH = regex_compile(
+    r'(?<=نشر:</b> ).*?(?= \()'
+).search
+TITLE_SEARCH = regex_compile(
+    r'(?<=<title>آدینه بوک: )'
+    r'(?P<title>.*?)'
+    r'\s*+~'
+    r'(?P<names>.*?)'
+    r'(?=\s*+</title>)'
 ).search
 
 
@@ -94,16 +106,16 @@ def url2dictionary(adinebook_url: str):
             d['translators'] = translators
         m = PUBLISHER_SEARCH(adinebook_html)
         if m:
-            d['publisher'] = m.group(1)
+            d['publisher'] = m[0]
         m = MONTH_SEARCH(adinebook_html)
         if m:
-            d['month'] = m.group(1)
+            d['month'] = m[0]
         m = YEAR_SEARCH(adinebook_html)
         if m:
-            d['year'] = m.group(1)
+            d['year'] = m[0]
         m = ISBN_SEARCH(adinebook_html)
         if m:
-            d['isbn'] = m.group(1)
+            d['isbn'] = m[0]
     return d
 
 
