@@ -46,8 +46,8 @@ def get_bibtex(googlebook_url):
     # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
     headers = {
         'User-agent':
-        'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
-        'Firefox/33.0'
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 '
+        'Firefox/58.0'
     }
     bibtex = requests_get(url, headers=headers, timeout=10).text
     return bibtex
