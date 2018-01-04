@@ -3,7 +3,7 @@
 
 from collections import defaultdict
 
-from regex import compile as regex_compile, VERBOSE
+from regex import compile as regex_compile, MULTILINE, VERBOSE
 
 from src.doi import DOI_SEARCH
 from src.commons import RawName, InvalidNameError
@@ -12,6 +12,7 @@ from src.commons import RawName, InvalidNameError
 RIS_FULLMATCH = regex_compile(
     r'''
     (?: # this  group matches any line
+        ^
         (?>
             A[U\d]\ {2}-\ (?<author>.++)
             |DA\ {2}-\ \d++/(?<month>\d++).*+
@@ -41,7 +42,7 @@ RIS_FULLMATCH = regex_compile(
         \n
     )*
     ''',
-    VERBOSE,
+    VERBOSE | MULTILINE,
 ).fullmatch
 
 
