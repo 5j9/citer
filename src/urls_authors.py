@@ -105,18 +105,21 @@ BYLINE_TAG_FINDITER = regex_compile(
         # try byline before class_='author'
         <(?<tag>[a-z]\w++)\s++[^>]*?
         (?<id>
-            (?>class|id|rel)=(?<q>["\'])
-                (?>
-                    author(?>_byline|Inline|-title)?
-                    |by(?>
-                        line(?>Author|line-name)?
-                        |_line(?:_date)?
-                    )
-                    |meta-author
-                    |story-byline
+            (?>class|id|rel)=
+            (?<q>["\'])
+            (?>
+                author(?>_byline|Inline|-title)?
+                |by(?>
+                    line(?>Author|line-name)?
+                    |_line(?:_date)?
                 )
+                |meta-author
+                |story-byline
             )
-        (?P=q)[^>]*?>(?<result>[\s\S]*?)</(?P=tag)[^>]*+>
+        )
+        (?P=q)[^>]*+>
+        (?<result>[^<]*+[\s\S]*?)
+        </(?P=tag)[^>]*+>
         |
         # http://www.dailymail.co.uk/news/article-2633025/London-cleric-convicted-NYC-terrorism-trial.html
         (?<id>authorName["\']?\s*+:\s*+["\'])(?<result>[^"\'>\n]++)["\']
@@ -124,7 +127,7 @@ BYLINE_TAG_FINDITER = regex_compile(
         # schema.org
         (?<q>["'])author(?P=q)\s*+:\s*+{{\s*+(?P=q)@type(?P=q)\s*+:\s*+(?P=q)
         (?<id>Person)
-        (?P=q)\s*+,\s*+(?P=q)name(?P=q)\s*+:\s*+(?P=q)(?<result>.*?)(?P=q)
+        (?P=q)\s*+,\s*+(?P=q)name(?P=q)\s*+:\s*+(?P=q)(?<result>[^"']*+)(?P=q)
     )
     ''',
     VERBOSE | IGNORECASE | ASCII,
@@ -145,7 +148,7 @@ TAGS_SUB = regex_compile(r'</?[a-z][^>]*+>', IGNORECASE).sub
 # http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876
 #  .byline > .author
 BYLINE_AUTHOR = regex_compile(
-    r'<[a-z][^>]*?class=(?<q>["\'])author(?P=q)[^>]*?>(?<result>[^<>]*+)',
+    r'<[a-z][^>]*?class=(?<q>["\'])author(?P=q)[^>]*+>(?<result>[^<>]*+)',
     IGNORECASE | ASCII
 ).finditer
 
