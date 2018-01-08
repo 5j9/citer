@@ -982,6 +982,20 @@ class Others(unittest.TestCase):
             )[1],
         )
 
+    def test_single_line_meta_tags(self):
+        """Issue #9."""
+        self.assertIn(
+            "* {{cite web | last=Shoichet | first=Catherine E. "
+            "| title=Spill spews tons of coal ash into North Carolina's "
+            "Dan River | website=CNN | date=2014-02-09 "
+            "| url=http://www.cnn.com/2014/02/09/us/north-carolina-coal-ash"
+            "-spill/index.html | ref=harv | access-date=",
+            urls_sfn_cit_ref(
+                'https://edition.cnn.com/'
+                '2014/02/09/us/north-carolina-coal-ash-spill/'
+            )[1],
+        )
+
 
 dummy_requests = dummy_requests.DummyRequests()
 urls.requests_get = dummy_requests.get

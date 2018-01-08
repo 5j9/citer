@@ -62,7 +62,18 @@ AND_OR_COMMA_SUFFIX = regex_compile(r'(?> and|,)?\s*+$', IGNORECASE).sub
 AND_OR_COMMA_SPLIT = regex_compile(r', and | and |, |;', IGNORECASE).split
 AND_SPLIT = regex_compile(r', and | and |;', IGNORECASE).split
 
-CONTENT_ATTR = r'content=(?<q>["\'])\s*+(?<result>.*?)\s*+(?P=q)'
+CONTENT_ATTR = r'''
+    content=(?<q>["\'])\s*+
+    (?<result>
+        (?>
+            [^'"\s]++
+            |
+            \s++(?!\g<q>)
+            |
+            (?!\g<q>)['"]
+        )++
+    )\s*+\g<q>
+'''
 AUTHOR_META_NAME_OR_PROP = r'''
     (?<id>(?:name|property)\s*+=\s*+(?<q>["\'])
         (?>
