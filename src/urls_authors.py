@@ -80,9 +80,9 @@ CONTENT_ATTR = r'''
         (?>
             [^'"]++
             |
-            (?!\g<q>)['"]
+            (?!(?P=q))['"]
         )++
-    )\g<q>
+    )(?P=q)
 '''
 AUTHOR_META_NAME_OR_PROP = r'''
     (?<id>(?:name|property)\s*+=\s*+(?<q>["\'])
