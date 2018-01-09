@@ -56,7 +56,7 @@ TITLE_SEARCH = regex_compile(
 TITLE_TAG = regex_compile(
     r'''
     <title\b[^>]*+>
-        (?P<result>\s*+[\s\S]*?\s*+)
+        (?P<result>[^<]*+[\s\S]*?)
     </title\s*+>
     ''',
     VERBOSE | IGNORECASE,

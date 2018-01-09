@@ -55,8 +55,20 @@ BYLINE_PATTERN_SEARCH = regex_compile(BYLINE_PATTERN, VERBOSE | IGNORECASE)
 NORMALIZE_ANDS = regex_compile(r'\s++and\s++', IGNORECASE).sub
 NORMALIZE_COMMA_SPACES = regex_compile(r'\s*+,\s++', IGNORECASE).sub
 BY_PREFIX = regex_compile(
-    r'^(?:[\s\S]*?\bby\s++)?([^\r\n]++)[\s\S]*',
-    IGNORECASE,
+    r'''
+    ^(?:
+        (?>
+            [^b]++
+            |
+            (?<!\b)b
+            |b(?!y)
+        )*+
+        \bby\s++
+    )?
+    ([^\r\n]++)
+    [\s\S]*
+    ''',
+    IGNORECASE | VERBOSE,
 ).sub
 AND_OR_COMMA_SUFFIX = regex_compile(r'(?> and|,)?\s*+$', IGNORECASE).sub
 AND_OR_COMMA_SPLIT = regex_compile(r', and | and |, |;', IGNORECASE).split
@@ -86,7 +98,7 @@ AUTHOR_META_NAME_OR_PROP = r'''
 META_AUTHOR_FINDITER = regex_compile(
     rf'''
     <meta\s[^>]*?(?:
-        {AUTHOR_META_NAME_OR_PROP}\s[^>]*?{CONTENT_ATTR}
+        {AUTHOR_META_NAME_OR_PROP}\s[^c]*+[^>]*?{CONTENT_ATTR}
         |
         {CONTENT_ATTR}\s[^>]*?{AUTHOR_META_NAME_OR_PROP}
     )
@@ -148,7 +160,8 @@ TAGS_SUB = regex_compile(r'</?[a-z][^>]*+>', IGNORECASE).sub
 # http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876
 #  .byline > .author
 BYLINE_AUTHOR = regex_compile(
-    r'<[a-z][^>]*?class=(?<q>["\'])author(?P=q)[^>]*+>(?<result>[^<>]*+)',
+    r'<[a-z]++[^c]*+[^>]*?class=(?<q>["\'])author(?P=q)'
+    r'[^>]*+>(?<result>[^<>]++)',
     IGNORECASE | ASCII
 ).finditer
 
