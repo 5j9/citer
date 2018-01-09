@@ -63,7 +63,7 @@ AND_OR_COMMA_SPLIT = regex_compile(r', and | and |, |;', IGNORECASE).split
 AND_SPLIT = regex_compile(r', and | and |;', IGNORECASE).split
 
 CONTENT_ATTR = r'''
-    content=(?<q>["\'])\s*+
+    content=(?<q>["\'])
     (?<result>
         (?>
             [^'"]++
