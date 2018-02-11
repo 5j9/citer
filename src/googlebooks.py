@@ -24,7 +24,7 @@ def googlebooks_sfn_cit_ref(url, date_format='%Y-%m-%d') -> tuple:
     pu = urlparse(url)
     pq = parse_qs(pu.query)
     # default domain is prefered:
-    dictionary['url'] = 'http://' + pu.netloc + '/books?id=' + pq['id'][0]
+    dictionary['url'] = 'https://' + pu.netloc + '/books?id=' + pq['id'][0]
     # manually adding page number to dictionary:
     if 'pg' in pq:
         dictionary['page'] = pq['pg'][0][2:]

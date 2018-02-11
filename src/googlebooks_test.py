@@ -28,7 +28,7 @@ class GooglebooksTest(unittest.TestCase):
             '| series=Digital libraries and electronic publishing '
             '| year=2000 '
             '| isbn=978-0-262-26134-0 '
-            '| url=http://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 '
+            '| url=https://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 '
             '| ref=harv '
             '| access-date='
         )
@@ -78,7 +78,7 @@ class GooglebooksTest(unittest.TestCase):
             '| series=Voices That Matter '
             '| year=2010 '
             '| isbn=978-0-13-270490-8 '
-            '| url=http://books.google.com/books?id=U46IzqYLZvAC&pg=PT57 '
+            '| url=https://books.google.com/books?id=U46IzqYLZvAC&pg=PT57 '
             '| ref=harv '
             '| access-date='
         )
@@ -103,7 +103,7 @@ class GooglebooksTest(unittest.TestCase):
             '| publisher=Cengage Learning '
             '| year=2009 '
             '| isbn=978-1-111-78619-9 '
-            '| url=http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588 '
+            '| url=https://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588 '
             '| ref=harv '
             '| access-date='
         )
@@ -113,7 +113,7 @@ class GooglebooksTest(unittest.TestCase):
     def test_gb4(self):
         """Non-ascii characters in author's name."""
         i = (
-            'http://books.google.com/books?id='
+            'https://books.google.com/books?id='
             'i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa='
             'X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q='
             '%22legal%20translation%20is%22&f=false'
@@ -128,7 +128,7 @@ class GooglebooksTest(unittest.TestCase):
             '| publisher=Springer Netherlands '
             '| year=1997 '
             '| isbn=978-90-411-0401-4 '
-            '| url=http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 '
+            '| url=https://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 '
             '| ref=harv '
             '| access-date='
         )
@@ -154,7 +154,8 @@ class GooglebooksTest(unittest.TestCase):
             '| series=Physics for Scientists and Engineers '
             '| year=2009 '
             '| isbn=978-1-4390-4838-2 '
-            '| url=http://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378 '
+            '| url=https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378'
+            ' '
             '| ref=harv '
             '| access-date='
         )
@@ -170,7 +171,8 @@ class GooglebooksTest(unittest.TestCase):
             '| series=Physics for Scientists and Engineers '
             '| year=2009 '
             '| isbn=978-1-4390-4838-2 '
-            '| url=http://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378 '
+            '| url=https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378'
+            ' '
             '| access-date='
         )
         self.assertIn(ctnt, o[1])
