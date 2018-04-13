@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Codes specifically related to DOI inputs."""
+"""Codes related to DOI inputs."""
 
 
 from collections import defaultdict
