@@ -7,7 +7,8 @@
 import unittest
 from unittest.mock import patch, Mock
 
-from src import dummy_requests, pubmed
+from src import pubmed
+from test import dummy_requests
 from src.pubmed import pmid_sfn_cit_ref, pmcid_sfn_cit_ref
 
 

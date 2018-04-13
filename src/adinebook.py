@@ -14,23 +14,20 @@ from src.commons import RawName, dict_to_sfn_cit_ref
 
 
 ISBN_SEARCH = regex_compile(
-    r'(?<=شابک:</b> <span dir="ltr">)[\d-]{10,}+X?'
+    r'<meta property="book:isbn" content="([^"]++)'
 ).search
-YEAR_SEARCH = regex_compile(
-    r'(?<=نشر:</b>[^(].*?)\d{4}'
-).search
-MONTH_SEARCH = regex_compile(
-    r'(?<=نشر:</b>.*?\(\d+ ).*?(?=،)'
+DATE_SEARCH = regex_compile(
+    r'تاریخ نشر:</span>\s*+'
+    r'(?:(?<day>\d\d?)? (?<month>[^،]*+)، )?(?<year>\d{4})'
 ).search
 PUBLISHER_SEARCH = regex_compile(
-    r'(?<=نشر:</b> ).*?(?= \()'
+    r'ناشر:</span>\s*+([^\n]++)'
 ).search
 TITLE_SEARCH = regex_compile(
-    r'(?<=<title>آدینه بوک: )'
-    r'(?P<title>.*?)'
-    r'\s*+~'
-    r'(?P<names>.*?)'
-    r'(?=\s*+</title>)'
+    r'<meta property="og:title" content="([^"]++)'
+).search
+AUTHORS_SEARCH = regex_compile(
+    r'<meta property="book:author" content=" *+~([^"]++)'
 ).search
 
 
@@ -76,18 +73,16 @@ def url2dictionary(adinebook_url: str):
         return
     else:
         d = defaultdict(lambda: None, cite_type='book')
-        m = TITLE_SEARCH(adinebook_html)
-        d['title'] = m.group('title')
-        names = m.group('names').split('،')
+        d['title'] = TITLE_SEARCH(adinebook_html)[1]
         # initiating name lists:
         others = []
         authors = []
         editors = []
         translators = []
         # building lists:
-        for name in names:
-            if '(ويراستار)' in name:
-                editors.append(RawName(name.partition('(ويراستار)')[0]))
+        for name in AUTHORS_SEARCH(adinebook_html)[1].strip().split('،'):
+            if '(ویراستار)' in name:
+                editors.append(RawName(name.partition('(ویراستار)')[0]))
             elif '(مترجم)' in name:
                 translators.append(RawName(name.partition('(مترجم)')[0]))
             elif '(' in name:
@@ -106,16 +101,14 @@ def url2dictionary(adinebook_url: str):
             d['translators'] = translators
         m = PUBLISHER_SEARCH(adinebook_html)
         if m:
-            d['publisher'] = m[0]
-        m = MONTH_SEARCH(adinebook_html)
+            d['publisher'] = m[1]
+        m = DATE_SEARCH(adinebook_html)
         if m:
-            d['month'] = m[0]
-        m = YEAR_SEARCH(adinebook_html)
-        if m:
-            d['year'] = m[0]
+            d['month'] = m['month']
+            d['year'] = m['year']
         m = ISBN_SEARCH(adinebook_html)
         if m:
-            d['isbn'] = m[0]
+            d['isbn'] = m[1]
     return d
 
 

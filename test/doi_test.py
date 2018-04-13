@@ -6,7 +6,7 @@
 
 import unittest
 
-from src import dummy_requests
+from test import dummy_requests
 from src import doi
 from src.doi import doi_sfn_cit_ref
 
@@ -16,10 +16,10 @@ class DoiTest(unittest.TestCase):
     def test_doi1(self):
         self.assertEqual(
             "* {{cite journal | last=Atkins | first=Joshua H. | "
-            "last2=Gershell | first2=Leland J. | title=From the analyst's "
-            "couch: Selective anticancer drugs | journal=Nature Reviews Drug "
+            "last2=Gershell | first2=Leland J. | title="
+            "Selective anticancer drugs | journal=Nature Reviews Drug "
             "Discovery | publisher=Springer Nature | volume=1 | issue=7 | "
-            "year=2002 | issn=1474-1784 | doi=10.1038/nrd842 | pages=491–492 "
+            "year=2002 | issn=1474-1776 | doi=10.1038/nrd842 | pages=491–492 "
             "| ref=harv}}",
             doi_sfn_cit_ref('https://doi.org/10.1038%2Fnrd842')[1],
         )

@@ -6,7 +6,7 @@
 
 import unittest
 
-from src import dummy_requests
+from test import dummy_requests
 from src import urls
 from src.waybackmachine import waybackmachine_sfn_cit_ref
 

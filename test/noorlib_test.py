@@ -6,7 +6,7 @@
 
 import unittest
 
-from src import dummy_requests
+from test import dummy_requests
 from src import noorlib
 from src.noorlib import noorlib_sfn_cit_ref
 

@@ -6,7 +6,7 @@
 
 import unittest
 
-from src import dummy_requests
+from test import dummy_requests
 from src import googlebooks
 from src.googlebooks import googlebooks_sfn_cit_ref
 
@@ -26,7 +26,7 @@ class GooglebooksTest(unittest.TestCase):
             '| title=Digital Libraries '
             '| publisher=MIT Press '
             '| series=Digital libraries and electronic publishing '
-            '| year=2000 '
+            '| year=2001 '
             '| isbn=978-0-262-26134-0 '
             '| url=https://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 '
             '| ref=harv '

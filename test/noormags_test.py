@@ -6,7 +6,7 @@
 
 import unittest
 
-from src import dummy_requests
+from test import dummy_requests
 from src import noormags
 from src.noormags import noormags_sfn_cit_ref
 

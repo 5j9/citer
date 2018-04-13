@@ -6,7 +6,7 @@
 
 import unittest
 
-from src import dummy_requests
+from test import dummy_requests
 from src import isbn
 from src.isbn import isbn_sfn_cit_ref
 

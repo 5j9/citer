@@ -6,7 +6,7 @@
 
 import unittest
 
-from src import dummy_requests
+from test import dummy_requests
 from src import adinebook
 from src.adinebook import adinehbook_sfn_cit_ref
 
@@ -24,7 +24,7 @@ class AdineBookTest(unittest.TestCase):
             '* {{cite book '
             '| last=لانسکی '
             '| first=ویکی '
-            '| others= کی وایت (تصويرگر), فیروزه دالکی (مترجم)'
+            '| others= کی وایت (تصویرگر), فیروزه دالکی (مترجم)'
             ', and مژگان امیرفروغی (مترجم) '
             '| title=101 راه برای اینکه پدر بهتری باشید '
             '| publisher=پیک ادبیات '
@@ -50,7 +50,7 @@ class AdineBookTest(unittest.TestCase):
             '| first2=ویکی پلانو '
             '| others=محسن نیازی (مترجم), and عباس زارعی (مترجم) '
             '| title=روش های تحقیق تلفیقی '
-            '| publisher=علم و دانش '
+            '| publisher=ثامن الحجج '
             '| year=1387 '
             '| isbn=978-964-2823-35-2 '
             '| language=fa '
@@ -134,7 +134,8 @@ class AdineBookTest(unittest.TestCase):
             '| first=حسین '
             '| others=حمیدرضا شیخی (مترجم) '
             '| title=تاریخ و تمدن مغرب - جلد اول '
-            '| publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها '
+            '| publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها'
+            ' (سمت) '
             '| year=1392 '
             '| isbn=978-964-530-036-2 '
             '| language=fa '
@@ -150,9 +151,10 @@ class AdineBookTest(unittest.TestCase):
             '| first=ام.رابین '
             '| editor-last=جباری '
             '| editor-first=کریم '
-            '| others= کیانوش هاشمیان (زيرنظر), and محمد کاویانی (مترجم) '
+            '| others= کیانوش هاشمیان (زیرنظر), and محمد کاویانی (مترجم) '
             '| title=روانشناسی سلامت به ضمیمه نگرشی بر منابع اسلامی - جلد اول '
-            '| publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها '
+            '| publisher=سازمان مطالعه و تدوین کتب علوم انسانی دانشگاهها'
+            ' (سمت) '
             '| year=1392 '
             '| isbn=978-964-459-398-7 '
             '| language=fa '
@@ -164,6 +166,5 @@ class AdineBookTest(unittest.TestCase):
         )
 
 
-adinebook.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
     unittest.main()
