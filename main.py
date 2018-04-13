@@ -185,10 +185,11 @@ def application(environ, start_response):
 
 input_type_to_resolver = defaultdict(
     lambda: url_doi_isbn_to_sfn_cit_ref, {
-    'url-doi-isbn': url_doi_isbn_to_sfn_cit_ref,
-    'pmid': pmid_sfn_cit_ref,
-    'pmcid': pmcid_sfn_cit_ref,
-})
+        'url-doi-isbn': url_doi_isbn_to_sfn_cit_ref,
+        'pmid': pmid_sfn_cit_ref,
+        'pmcid': pmcid_sfn_cit_ref,
+    }
+)
 
 if __name__ == '__main__':
     logger = mylogger()
