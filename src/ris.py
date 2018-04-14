@@ -52,7 +52,12 @@ def parse(ris_text):
     match = RIS_FULLMATCH(ris_text)
     d.update(match.groupdict())
     # cite_type: (book, journal, . . . )
-    d['cite_type'] = d['type'].lower()
+    cite_type = d['type'].lower()
+    url = d['url']
+    if cite_type == 'elec' and url:
+        d['cite_type'] = 'web'
+    else:
+        d['cite_type'] = cite_type
     # author:
     # d['authors'] should not be created unless there are some authors
     authors = match.captures('author')
