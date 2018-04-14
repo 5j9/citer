@@ -15,9 +15,7 @@ class IsbnTest(unittest.TestCase):
 
     def test_is1(self):
         """not found in adinebook"""
-        i = '9780349119168'
-        o = isbn_sfn_cit_ref(i, pure=True)
-        e = (
+        self.assertIn((
             '* {{cite book '
             '| last=Adkins '
             '| first=Roy '
@@ -27,15 +25,13 @@ class IsbnTest(unittest.TestCase):
             '| publication-place=London '
             '| year=2007 '
             '| isbn=978-0-349-11916-8 '
+            '| oclc=137313052 '
             '| ref=harv}}'
-        )
-        self.assertIn(e, o[1])
+        ), isbn_sfn_cit_ref('9780349119168', pure=True)[1])
 
     def test_is2(self):
         """not found in ottobib"""
-        i = '978-964-6736-71-9'
-        o = isbn_sfn_cit_ref(i, pure=True)
-        e = (
+        self.assertIn((
             '* {{cite book '
             '| others=بدیل بن علی خاقانی (شاعر),  جهانگیر منصور (به اهتمام),'
             ' and  بدیع الزمان فروزانفر (مقدمه) '
@@ -45,30 +41,25 @@ class IsbnTest(unittest.TestCase):
             '| isbn=978-964-6736-71-9 '
             '| language=fa '
             '| ref={{sfnref | نگاه | 1389}}'
-        )
-        self.assertIn(e, o[1])
+        ), isbn_sfn_cit_ref('978-964-6736-71-9', pure=True)[1])
 
     def test_is3(self):
         """exists in both"""
-        i = '964-6736-34-3 '
-        o = isbn_sfn_cit_ref(i)
-        e = (
+        self.assertIn((
             '* {{cite book '
             '| others=سحر معصومی (به اهتمام) '
             '| title=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری '
             '| publisher=نگاه '
             '| year=1386 '
             '| isbn=964-6736-34-3 '
+            '| oclc=53446327 '
             '| language=fa '
             '| ref={{sfnref | نگاه | 1386}}'
-        )
-        self.assertIn(e, o[1])
+        ), isbn_sfn_cit_ref('964-6736-34-3 ')[1])
 
     def test_is4(self):
         """unpure isbn10 not found in ottobib"""
-        i = 'choghondar 964-92962-6-3 شلغم'
-        o = isbn_sfn_cit_ref(i)
-        e = (
+        self.assertIn((
             '* {{cite book '
             '| last=حافظ '
             '| first=شمس الدین محمد '
@@ -79,8 +70,7 @@ class IsbnTest(unittest.TestCase):
             '| isbn=964-92962-6-3 '
             '| language=fa '
             '| ref=harv'
-        )
-        self.assertIn(e, o[1])
+        ), isbn_sfn_cit_ref('choghondar 964-92962-6-3 شلغم')[1])
 
 
 isbn.requests_get = dummy_requests.DummyRequests().get

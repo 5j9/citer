@@ -211,6 +211,10 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if doi:
         cit += ' | doi=' + doi
 
+    oclc = d['oclc']
+    if oclc:
+        cit += ' | oclc=' + oclc
+
     pages = d['page']
     if pages:
         if '–' in pages:

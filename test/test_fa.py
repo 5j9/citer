@@ -301,7 +301,9 @@ class IsbnTest(unittest.TestCase):
             ' عنوان=The war for all the oceans : '
             'from Nelson at the Nile to Napoleon at Waterloo |'
             ' ناشر=Abacus | مکان=London | سال=2007 |'
-            ' شابک=978-0-349-11916-8 | زبان=en}}',
+            ' شابک=978-0-349-11916-8 '
+            '| oclc=137313052 '
+            '| زبان=en}}',
             isbn_sfn_cit_ref('9780349119168', pure=True)[1],
         )
 
@@ -324,7 +326,9 @@ class IsbnTest(unittest.TestCase):
             '* {{یادکرد کتاب | دیگران=سحر معصومی (به اهتمام) |'
             ' عنوان=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری |'
             ' ناشر=نگاه | سال=1386 | ماه=بهمن |'
-            ' شابک=964-6736-34-3 | زبان=fa}}',
+            ' شابک=964-6736-34-3 '
+            '| oclc=53446327 '
+            '| زبان=fa}}',
             isbn_sfn_cit_ref('964-6736-34-3 ')[1],
         )
 
