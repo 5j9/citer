@@ -86,9 +86,26 @@ class OCLCTest(unittest.TestCase):
             ' politics, economics and culture '
             '| publisher=RoutledgeCurzon '
             '| year=2002 '
+            '| isbn=0-7007-1512-6 '
             '| oclc=875039842 '
             '| ref=harv}}'
         ), oclc_sfn_cit_ref('875039842')[1])
+
+    def test_elec_type_with_url(self):
+        self.assertIn((
+            "* {{cite web "
+            "| last=Rahman "
+            "| first=Mizanur. "
+            "| title=MediaWiki Administrators' Tutorial Guide. "
+            "| publisher=Packt Pub. "
+            "| year=2007 "
+            "| isbn=978-1-84719-045-1 "
+            "| oclc=809771201 "
+            "| url=http://public.eblib.com/choice/publicfullrecord.aspx?p="
+            "995605 "
+            "| ref=harv "
+            "| access-date="
+        ), oclc_sfn_cit_ref('809771201')[1])
 
 
 isbn_oclc.requests_get = dummy_requests.DummyRequests().get

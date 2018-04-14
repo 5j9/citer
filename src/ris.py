@@ -25,7 +25,7 @@ RIS_FULLMATCH = regex_compile(
                 |Y\ {2}-\ (?<year>\d++).*+
             )
             |S(?>
-                N\ {2}-\ (?<isbn>.++)
+                N\ {2}-\ (?<isbn>\S*+).*+
                 |P\ {2}-\ (?<start_page>.++)
             )
             |T(?>
@@ -78,7 +78,6 @@ def parse(ris_text):
         else:
             d['page'] = start_page
     # in IRS, url can be separated using a ";"
-    url = d['325524']
     if url:
         d['url'] = url.partition(';')[0]
     return d
