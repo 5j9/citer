@@ -1,12 +1,14 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-import pickle
+from atexit import register as atexit_register
+from pickle import dump, load
 
 import requests
 
 
 FORCE_CACHE_OVERWRITE = False  # Use for updating cache entries
+NEW_DOWNLOAD = False
 
 
 class DummyRequests:
@@ -14,12 +16,13 @@ class DummyRequests:
     """This class will be used to override the requests mudule in tests."""
 
     def get(self, url: str, headers=None, **kwargs):
-        response = not FORCE_CACHE_OVERWRITE and CACHE.get(url)
+        response = not FORCE_CACHE_OVERWRITE and cache.get(url)
         if not response:
             print('Downloading ' + url)
             response = requests.get(url, headers=headers)
-            CACHE[url] = response
-            save_cache(CACHE)
+            cache[url] = response
+            global NEW_DOWNLOAD
+            NEW_DOWNLOAD = True
         return response
 
     def head(self, url: str, headers=None, **kwargs):
@@ -28,19 +31,22 @@ class DummyRequests:
 
 def save_cache(cache_dict):
     """Save cache as pickle."""
+    if not NEW_DOWNLOAD:
+        return
     print('saving new cache')
     with open(f'{__file__}/../.tests_cache', 'w+b') as f:
-        pickle.dump(cache_dict, f)
+        dump(cache_dict, f)
 
 
 def load_cache():
     """Return cache as a dict."""
     try:
         with open(f'{__file__}/../.tests_cache', 'r+b') as f:
-            return pickle.load(f)
+            return load(f)
     except FileNotFoundError:
         return {}
 
 
-CACHE = load_cache()
-print('len(CACHE) ==', len(CACHE))
+cache = load_cache()
+print('len(cache) ==', len(cache))
+atexit_register(save_cache, cache)
