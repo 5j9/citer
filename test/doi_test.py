@@ -6,9 +6,9 @@
 
 import unittest
 
-from test import dummy_requests
 from src import doi
 from src.doi import doi_sfn_cit_ref
+from test import DummyRequests
 
 
 class DoiTest(unittest.TestCase):
@@ -118,6 +118,6 @@ class DoiTest(unittest.TestCase):
         )
 
 
-doi.requests_get = dummy_requests.DummyRequests().get
+doi.requests_get = DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

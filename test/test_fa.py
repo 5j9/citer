@@ -5,7 +5,6 @@ import unittest
 
 import config; config.lang = 'fa'
 
-from test.dummy_requests import DummyRequests
 from src import (
     adinebook, googlebooks, noormags, noorlib, doi, isbn_oclc, pubmed)
 from src.adinebook import adinehbook_sfn_cit_ref
@@ -15,6 +14,7 @@ from src.isbn_oclc import isbn_sfn_cit_ref
 from src.noormags import noormags_sfn_cit_ref
 from src.noorlib import noorlib_sfn_cit_ref
 from src.pubmed import pmid_sfn_cit_ref
+from test import DummyRequests
 
 
 class AdinebookTest(unittest.TestCase):

@@ -6,9 +6,9 @@
 
 import unittest
 
-from test import dummy_requests
 from src import urls
 from src.waybackmachine import waybackmachine_sfn_cit_ref
+from test import DummyRequests
 
 
 class WaybackmachineResponse(unittest.TestCase):
@@ -110,7 +110,7 @@ class WaybackmachineResponse(unittest.TestCase):
         self.assertIn(ct, o[1])
 
 
-dummy_requests = dummy_requests.DummyRequests()
+dummy_requests = DummyRequests()
 urls.requests_get = dummy_requests.get
 urls.requests_head = dummy_requests.head
 if __name__ == '__main__':

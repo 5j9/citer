@@ -8,8 +8,8 @@ import unittest
 from unittest.mock import patch, Mock
 
 from src import pubmed
-from test import dummy_requests
 from src.pubmed import pmid_sfn_cit_ref, pmcid_sfn_cit_ref
+from test import DummyRequests
 
 
 class PMCID(unittest.TestCase):
@@ -67,6 +67,6 @@ class PMCID(unittest.TestCase):
         )
 
 
-pubmed.requests_get = dummy_requests.DummyRequests().get
+pubmed.requests_get = DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

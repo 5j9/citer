@@ -6,7 +6,7 @@
 
 import unittest
 
-from test import dummy_requests
+from test import DummyRequests
 from src import urls
 from src.urls import urls_sfn_cit_ref
 
@@ -997,7 +997,7 @@ class Others(unittest.TestCase):
         )
 
 
-dummy_requests = dummy_requests.DummyRequests()
+dummy_requests = DummyRequests()
 urls.requests_get = dummy_requests.get
 urls.requests_head = dummy_requests.head
 if __name__ == '__main__':

@@ -6,9 +6,9 @@
 
 import unittest
 
-from test import dummy_requests
 from src import noormags
 from src.noormags import noormags_sfn_cit_ref
+from test import DummyRequests
 
 
 class NoormagsTest(unittest.TestCase):
@@ -81,6 +81,6 @@ class NoormagsTest(unittest.TestCase):
             '| access-date=', o[2])
 
 
-noormags.requests_get = dummy_requests.DummyRequests().get
+noormags.requests_get = DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

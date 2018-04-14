@@ -6,9 +6,9 @@
 
 import unittest
 
-from test import dummy_requests
 from src import googlebooks
 from src.googlebooks import googlebooks_sfn_cit_ref
+from test import DummyRequests
 
 
 class GooglebooksTest(unittest.TestCase):
@@ -180,6 +180,6 @@ class GooglebooksTest(unittest.TestCase):
         self.assertIn(' | page=378}}&lt;/ref&gt;', o[2])
 
 
-googlebooks.requests_get = dummy_requests.DummyRequests().get
+googlebooks.requests_get = DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

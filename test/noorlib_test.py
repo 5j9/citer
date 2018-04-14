@@ -6,9 +6,9 @@
 
 import unittest
 
-from test import dummy_requests
 from src import noorlib
 from src.noorlib import noorlib_sfn_cit_ref
+from test import DummyRequests
 
 
 class NoorlibTest(unittest.TestCase):
@@ -61,6 +61,6 @@ class NoorlibTest(unittest.TestCase):
         )
 
 
-noorlib.requests_get = dummy_requests.DummyRequests().get
+noorlib.requests_get = DummyRequests().get
 if __name__ == '__main__':
     unittest.main()
