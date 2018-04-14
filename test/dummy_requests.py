@@ -15,9 +15,10 @@ class DummyRequests:
 
     """This class will be used to override the requests mudule in tests."""
 
-    def get(self, url: str, headers=None, **kwargs):
-        response = not FORCE_CACHE_OVERWRITE and cache.get(url)
-        if not response:
+    @staticmethod
+    def get(url: str, headers=None, **kwargs):
+        response = cache.get(url)
+        if FORCE_CACHE_OVERWRITE or response is None:
             print('Downloading ' + url)
             response = requests.get(url, headers=headers)
             cache[url] = response
