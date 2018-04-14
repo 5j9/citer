@@ -7,8 +7,8 @@
 import unittest
 
 from test import dummy_requests
-from src import isbn
-from src.isbn import isbn_sfn_cit_ref
+from src import isbn_oclc
+from src.isbn_oclc import isbn_sfn_cit_ref, oclc_sfn_cit_ref
 
 
 class IsbnTest(unittest.TestCase):
@@ -73,6 +73,24 @@ class IsbnTest(unittest.TestCase):
         ), isbn_sfn_cit_ref('choghondar 964-92962-6-3 شلغم')[1])
 
 
-isbn.requests_get = dummy_requests.DummyRequests().get
+class OCLCTest(unittest.TestCase):
+
+    def test_oclc1(self):
+        self.assertEqual((
+            '* {{cite book '
+            '| last=Lewis '
+            '| first=James Bryant. '
+            '| last2=Sesay '
+            '| first2=Amadu. '
+            '| title=Korea and globalization :'
+            ' politics, economics and culture '
+            '| publisher=RoutledgeCurzon '
+            '| year=2002 '
+            '| oclc=875039842 '
+            '| ref=harv}}'
+        ), oclc_sfn_cit_ref('875039842')[1])
+
+
+isbn_oclc.requests_get = dummy_requests.DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

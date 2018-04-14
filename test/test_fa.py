@@ -6,11 +6,12 @@ import unittest
 import config; config.lang = 'fa'
 
 from test.dummy_requests import DummyRequests
-from src import adinebook, googlebooks, noormags, noorlib, doi, isbn, pubmed
+from src import (
+    adinebook, googlebooks, noormags, noorlib, doi, isbn_oclc, pubmed)
 from src.adinebook import adinehbook_sfn_cit_ref
 from src.doi import doi_sfn_cit_ref
 from src.googlebooks import googlebooks_sfn_cit_ref
-from src.isbn import isbn_sfn_cit_ref
+from src.isbn_oclc import isbn_sfn_cit_ref
 from src.noormags import noormags_sfn_cit_ref
 from src.noorlib import noorlib_sfn_cit_ref
 from src.pubmed import pmid_sfn_cit_ref
@@ -362,7 +363,7 @@ class IsbnTest(unittest.TestCase):
 
 adinebook.requests_get = googlebooks.requests_get = \
     noormags.requests_get = pubmed.requests_get = \
-    noorlib.requests_get = doi.requests_get = isbn.requests_get = \
+    noorlib.requests_get = doi.requests_get = isbn_oclc.requests_get = \
     DummyRequests().get
 if __name__ == '__main__':
     unittest.main()

@@ -77,5 +77,7 @@ def parse(ris_text):
         else:
             d['page'] = start_page
     # in IRS, url can be separated using a ";"
-    d['url'] = d['url'].partition(';')[0]
+    url = d['325524']
+    if url:
+        d['url'] = url.partition(';')[0]
     return d

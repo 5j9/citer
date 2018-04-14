@@ -19,7 +19,8 @@ from src.adinebook import adinehbook_sfn_cit_ref
 from src.commons import uninum2en, sfn_cit_ref_to_json
 from src.doi import doi_sfn_cit_ref, DOI_SEARCH
 from src.googlebooks import googlebooks_sfn_cit_ref
-from src.isbn import ISBN_10OR13_SEARCH, IsbnError, isbn_sfn_cit_ref
+from src.isbn_oclc import (
+    ISBN_10OR13_SEARCH, IsbnError, isbn_sfn_cit_ref, oclc_sfn_cit_ref)
 from src.noorlib import noorlib_sfn_cit_ref
 from src.noormags import noormags_sfn_cit_ref
 from src.pubmed import pmcid_sfn_cit_ref, pmid_sfn_cit_ref
@@ -35,8 +36,7 @@ if lang == 'en':
         CSS,
         CSS_HEADERS,
         JS,
-        JS_HEADERS,
-    )
+        JS_HEADERS)
 else:
     from src.html.fa import (
         DEFAULT_SFN_CIT_REF,
@@ -45,8 +45,7 @@ else:
         OTHER_EXCEPTION_SFN_CIT_REF,
         sfn_cit_ref_to_html,
         CSS,
-        CSS_HEADERS,
-    )
+        CSS_HEADERS)
 
 
 TLDLESS_NETLOC_RESOLVER = {
@@ -72,8 +71,7 @@ def mylogger():
         maxBytes=20000,
         backupCount=0,
         encoding='utf-8',
-        delay=0
-    )
+        delay=0)
     handler.setLevel(logging.INFO)
     fmt = '\n%(asctime)s\n%(levelname)s\n%(message)s\n'
     formatter = logging.Formatter(fmt)
@@ -97,8 +95,7 @@ def url_doi_isbn_to_sfn_cit_ref(user_input, date_format) -> tuple:
         tldless_netloc = urlparse(url)[1].rpartition('.')[0]
         resolver = TLDLESS_NETLOC_RESOLVER(
             tldless_netloc[4:] if tldless_netloc.startswith('www.')
-            else tldless_netloc
-        )
+            else tldless_netloc)
         if resolver:
             return resolver(url, date_format)
         # DOIs contain dots
@@ -158,8 +155,7 @@ def application(environ, start_response):
             response_body = sfn_cit_ref_to_json(HTTPERROR_SFN_CIT_REF)
         else:
             response_body = sfn_cit_ref_to_html(
-                HTTPERROR_SFN_CIT_REF, date_format, input_type
-            )
+                HTTPERROR_SFN_CIT_REF, date_format, input_type)
     except Exception:
         status = '500 Internal Server Error'
         logger.exception(user_input)
@@ -167,16 +163,14 @@ def application(environ, start_response):
             response_body = sfn_cit_ref_to_json(OTHER_EXCEPTION_SFN_CIT_REF)
         else:
             response_body = sfn_cit_ref_to_html(
-                OTHER_EXCEPTION_SFN_CIT_REF, date_format, input_type
-            )
+                OTHER_EXCEPTION_SFN_CIT_REF, date_format, input_type)
     else:
         status = '200 OK'
         if output_format == 'json':
             response_body = sfn_cit_ref_to_json(response)
         else:
             response_body = sfn_cit_ref_to_html(
-                response, date_format, input_type
-            )
+                response, date_format, input_type)
     response_body = response_body.encode()
     RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
     start_response(status, RESPONSE_HEADERS.items())
@@ -188,8 +182,7 @@ input_type_to_resolver = defaultdict(
         'url-doi-isbn': url_doi_isbn_to_sfn_cit_ref,
         'pmid': pmid_sfn_cit_ref,
         'pmcid': pmcid_sfn_cit_ref,
-    }
-)
+        'oclc': oclc_sfn_cit_ref})
 
 if __name__ == '__main__':
     logger = mylogger()

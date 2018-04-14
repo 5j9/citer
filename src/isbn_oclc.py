@@ -1,7 +1,6 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
-
-"""Codes specifically related to ISBNs."""
+"""Define functions to process ISBNs and OCLC numbers."""
 
 # from collections import defaultdict
 from threading import Thread
@@ -16,6 +15,7 @@ from src.adinebook import url2dictionary as adinebook_url2dictionary
 from src.adinebook import isbn2url as adinebook_isbn2url
 from src.bibtex import parse as bibtex_parse
 from src.commons import dict_to_sfn_cit_ref  # , Name
+from src.ris import parse as ris_parse
 
 
 # original regex from:
@@ -190,3 +190,20 @@ def ottobib(isbn):
     )
     if m:
         return m[1]
+
+
+def oclc_sfn_cit_ref(oclc: str, date_format: str='%Y-%m-%d') -> tuple:
+    text = requests_get(
+        f'https://www.worldcat.org/oclc/{oclc}?page=endnote'
+        '&client=worldcat.org-detailed_record'
+    ).text
+    if '<html' in text:  # invalid OCLC number
+        return (
+            f'Error processing OCLC number: {oclc}',
+            'Perhaps you entered an invalid OCLC number?',
+            '',
+        )
+    d = ris_parse(text)
+    d['date_format'] = date_format
+    d['oclc'] = oclc
+    return dict_to_sfn_cit_ref(d)
