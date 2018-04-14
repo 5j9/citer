@@ -40,15 +40,15 @@ def doi_sfn_cit_ref(doi_or_url, pure=False, date_format='%Y-%m-%d') -> tuple:
         # decode percent encodings
         decoded_url = unquote(unescape(doi_or_url))
         doi = DOI_SEARCH(decoded_url)[1]
-    dictionary = crossref(doi)
+    dictionary = get_crossref_dict(doi)
     dictionary['date_format'] = date_format
     if lang == 'fa':
         dictionary['language'] = classify(dictionary['title'])[0]
     return dict_to_sfn_cit_ref(dictionary)
 
 
-def crossref(doi) -> defaultdict:
-    """Get the crossref.org json data for the given DOI. Return parsed data."""
+def get_crossref_dict(doi) -> defaultdict:
+    """Return the parsed data of crossref.org for the given DOI."""
     # See https://github.com/CrossRef/rest-api-doc/blob/master/api_format.md
     # for documentation.
     # Force using the version 1 of the API to prevent breakage. See:

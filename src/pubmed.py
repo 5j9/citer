@@ -13,7 +13,7 @@ from threading import Thread
 from requests import get as requests_get
 
 from src.commons import dict_to_sfn_cit_ref, Name, b_TO_NUM
-from src.doi import crossref
+from src.doi import get_crossref_dict
 
 NON_DIGITS_SUB = re_compile(r'[^\d]').sub
 
@@ -152,7 +152,7 @@ def crossref_update(dct: dict, doi: str):
     """Update dct using crossref result."""
     # noinspection PyBroadException
     try:
-        dct.update(crossref(doi))
+        dct.update(get_crossref_dict(doi))
     except Exception:
         logger.exception(
             f'There was an error in resolving crossref DOI: {doi}'
