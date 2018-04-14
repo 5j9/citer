@@ -220,7 +220,7 @@ def firstname_lastname(fullname, separator) -> tuple:
             separator = '،'
     if separator:
         if separator in fullname:
-            lastname, firstname = fullname.split(separator)
+            lastname, _, firstname = fullname.partition(separator)
         else:
             lastname, firstname = fullname, ''
     else:
