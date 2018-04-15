@@ -97,7 +97,7 @@ class OCLCTest(unittest.TestCase):
             "* {{cite web "
             "| last=Rahman "
             "| first=Mizanur "
-            "| title=MediaWiki Administrators' Tutorial Guide. "
+            "| title=MediaWiki Administrators' Tutorial Guide "
             "| publisher=Packt Pub. "
             "| year=2007 "
             "| isbn=978-1-84719-045-1 "
@@ -112,7 +112,7 @@ class OCLCTest(unittest.TestCase):
         self.assertEqual((
             '* {{cite book '
             '| author=Universidade Federal do Rio de Janeiro '
-            '| title=Universidade do Brasil, 1948-1966. '
+            '| title=Universidade do Brasil, 1948-1966 '
             '| year=1966 '
             '| oclc=24680975 '
             '| language=pt '

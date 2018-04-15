@@ -213,4 +213,5 @@ def oclc_sfn_cit_ref(oclc: str, date_format: str='%Y-%m-%d') -> tuple:
         ) for fn, ln in authors]
     d['date_format'] = date_format
     d['oclc'] = oclc
+    d['title'] = d['title'].rstrip('.')
     return dict_to_sfn_cit_ref(d)
