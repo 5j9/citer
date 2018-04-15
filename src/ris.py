@@ -6,7 +6,7 @@ from collections import defaultdict
 from regex import compile as regex_compile, MULTILINE, VERBOSE
 
 from src.doi import DOI_SEARCH
-from src.commons import RawName, InvalidNameError
+from src.commons import first_last, InvalidNameError
 
 
 RIS_FULLMATCH = regex_compile(
@@ -66,7 +66,7 @@ def parse(ris_text):
         for author in authors:
             author.rstrip(',')
             try:
-                author = RawName(author)
+                author = first_last(author)
             except InvalidNameError:
                 continue
             else:

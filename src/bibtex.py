@@ -19,7 +19,7 @@ from collections import defaultdict
 
 import regex as regex
 
-from src.commons import RawName
+from src.commons import first_last
 
 
 # To remove Texts like {APA} from input.
@@ -56,7 +56,7 @@ def parse(bibtex):
                 author = author[:-4]
             if not author:
                 continue
-            names_append(RawName(author))
+            names_append(first_last(author))
         del d['author']
     # editor, not tested, just a copy of author
     editor = d['editor']
@@ -68,7 +68,7 @@ def parse(bibtex):
                 editor = editor[:-4]
             if not editor:
                 continue
-            names_append(RawName(editor))
+            names_append(first_last(editor))
         del d['editor']
     pages = d['pages']
     if pages:

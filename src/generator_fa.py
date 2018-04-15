@@ -10,7 +10,8 @@ from logging import getLogger
 from random import seed as randseed, choice as randchoice
 from string import digits, ascii_lowercase
 
-from src.generator_en import sfn_cit_ref as en_citations, DOI_URL_MATCH
+from src.generator_en import (
+    DOI_URL_MATCH, sfn_cit_ref as en_citations, fullname)
 from src.language import TO_TWO_LETTER_CODE
 
 
@@ -100,8 +101,8 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if authors:
         cit += names2para(authors, 'نام', 'نام خانوادگی', 'نویسنده')
         sfn = '&lt;ref&gt;{{پک'
-        for author in authors[:4]:
-            sfn += ' | ' + author.lastname
+        for first, last in authors[:4]:
+            sfn += ' | ' + last
     else:
         sfn = '&lt;ref&gt;{{پک/بن'
 
@@ -276,28 +277,28 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
     """Take list of names. Return the string to be appended to citation."""
     c = 0
     s = ''
-    for name in names:
+    for first, last in names:
         c += 1
         if c == 1:
-            if name.firstname or not nofn_parameter:
+            if first or not nofn_parameter:
                 s += (
-                    ' | ' + ln_parameter + '=' + name.lastname +
-                    ' | ' + fn_parameter + '=' + name.firstname
+                    ' | ' + ln_parameter + '=' + last +
+                    ' | ' + fn_parameter + '=' + first
                 )
             else:
-                s += ' | ' + nofn_parameter + '=' + name.fullname
+                s += ' | ' + nofn_parameter + '=' + fullname(first, last)
         else:
-            if name.firstname or not nofn_parameter:
+            if first or not nofn_parameter:
                 s += (
                     ' | ' + ln_parameter + str(c).translate(DIGITS_TO_FA)
-                    + '=' + name.lastname +
+                    + '=' + last +
                     ' | ' + fn_parameter + str(c).translate(DIGITS_TO_FA)
-                    + '=' + name.firstname
+                    + '=' + first
                 )
             else:
                 s += (
                     ' | ' + nofn_parameter + str(c).translate(DIGITS_TO_FA)
-                    + '=' + name.fullname
+                    + '=' + fullname(first, last)
                 )
     return s
 
@@ -306,14 +307,14 @@ def names1para(translators, para):
     """Take list of names. Return the string to be appended to citation."""
     s = ' | ' + para + '='
     c = 0
-    for name in translators:
+    for first, last in translators:
         c += 1
         if c == 1:
-            s += name.fullname
+            s += fullname(first, last)
         elif c == len(translators):
-            s += ' و ' + name.fullname
+            s += ' و ' + fullname(first, last)
         else:
-            s += '، ' + name.fullname
+            s += '، ' + fullname(first, last)
     return s
 
 

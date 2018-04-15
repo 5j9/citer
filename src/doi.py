@@ -13,7 +13,7 @@ from langid import classify
 from regex import compile as regex_compile, VERBOSE
 from requests import get as requests_get
 
-from src.commons import dict_to_sfn_cit_ref, Name
+from src.commons import dict_to_sfn_cit_ref
 from config import lang
 
 
@@ -83,17 +83,17 @@ def get_crossref_dict(doi) -> defaultdict:
     authors = d['author']
     if authors:
         d['authors'] = \
-            [Name(name['given'], name['family']) for name in authors]
+            [(name['given'], name['family']) for name in authors]
 
     editors = d['editor']
     if editors:
         d['editors'] = \
-            [Name(name['given'], name['family']) for name in editors]
+            [(name['given'], name['family']) for name in editors]
 
     translators = d['translator']
     if translators:
         d['translators'] = \
-            [Name(name['given'], name['family']) for name in translators]
+            [(name['given'], name['family']) for name in translators]
 
     page = d['page']
     if page:

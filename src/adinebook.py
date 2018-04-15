@@ -10,7 +10,7 @@ from langid import classify
 from regex import compile as regex_compile
 from requests import get as requests_get, RequestException
 
-from src.commons import RawName, dict_to_sfn_cit_ref
+from src.commons import first_last, dict_to_sfn_cit_ref
 
 
 ISBN_SEARCH = regex_compile(
@@ -82,15 +82,15 @@ def url2dictionary(adinebook_url: str):
         # building lists:
         for name in AUTHORS_SEARCH(adinebook_html)[1].strip().split('،'):
             if '(ویراستار)' in name:
-                editors.append(RawName(name.partition('(ویراستار)')[0]))
+                editors.append(
+                    first_last(name.partition('(ویراستار)')[0]))
             elif '(مترجم)' in name:
-                translators.append(RawName(name.partition('(مترجم)')[0]))
+                translators.append(
+                    first_last(name.partition('(مترجم)')[0]))
             elif '(' in name:
-                other = RawName(name.partition('(')[0])
-                others.append(other)
-                other.fullname = name
+                others.append(('', name))
             else:
-                authors.append(RawName(name))
+                authors.append(first_last(name))
         if authors:
             d['authors'] = authors
         if others:

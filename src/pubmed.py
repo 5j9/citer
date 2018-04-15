@@ -12,7 +12,7 @@ from threading import Thread
 
 from requests import get as requests_get
 
-from src.commons import dict_to_sfn_cit_ref, Name, b_TO_NUM
+from src.commons import dict_to_sfn_cit_ref, b_TO_NUM
 from src.doi import get_crossref_dict
 
 NON_DIGITS_SUB = re_compile(r'[^\d]').sub
@@ -125,7 +125,7 @@ def ncbi(type_: str, id_: str) -> defaultdict:
         else:
             last = ' '.join(parts[:-1])
             first = parts[-1]
-        authors_append(Name(first, last))
+        authors_append((first, last))
     d['authors'] = authors
 
     d['journal'] = result_get('fulljournalname') or result_get('source')

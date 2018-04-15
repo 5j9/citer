@@ -7,11 +7,11 @@ It is in urls.py.
 """
 
 
-from typing import Optional, List
+from typing import List, Optional, Tuple
 
 from regex import compile as regex_compile, VERBOSE, IGNORECASE, ASCII
 
-from src.commons import ANYDATE_SEARCH, RawName, InvalidNameError, Name
+from src.commons import ANYDATE_SEARCH, first_last, InvalidNameError
 
 
 # Names in byline are required to be two or three parts
@@ -189,7 +189,7 @@ STOPWORDS_SEARCH = regex_compile(
 FOUR_DIGIT_NUM = regex_compile('\d\d\d\d').search
 
 
-def find_authors(html) -> Optional[List[Name]]:
+def find_authors(html) -> Optional[List[Tuple[str, str]]]:
     """Return authors names found in html."""
     names = []
     match_id = None
@@ -235,7 +235,7 @@ def find_authors(html) -> Optional[List[Name]]:
     return None
 
 
-def byline_to_names(byline) -> Optional[List[Name]]:
+def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
     r"""Find authors in byline sting. Return name objects as a list.
 
     The "By " prefix will be omitted.
@@ -285,24 +285,20 @@ def byline_to_names(byline) -> Optional[List[Name]]:
         if STOPWORDS_SEARCH(fullname):
             continue
         try:
-            name = RawName(fullname)
+            first, last = first_last(fullname)
         except InvalidNameError:
             continue
-        lastname = name.lastname
-        firstname = name.firstname
-        fn_startswith = firstname.startswith
         if (
-            fn_startswith('The ')
-            or fn_startswith('خبرگزار')
-            or lastname.islower()
+            first.startswith(('The ', 'خبرگزار'))
+            or last.islower()
         ):
-            name.nofirst_fulllast()
-        names.append(name)
+            first, last = '', first + ' ' + last
+        names.append((first, last))
     if not names:
         return None
-    # Remove names not having firstname (orgs)
+    # Remove names not having first name (orgs)
     name0 = names[0]  # In case no name remains at the end
-    names = [n for n in names if n.firstname]
+    names = [(fn, ln) for fn, ln in names if fn]
     if not names:
         names.append(name0)
     return names

@@ -20,7 +20,7 @@ from requests.exceptions import RequestException
 
 from src.commons import (
     find_any_date, USER_AGENT_HEADER,
-    dict_to_sfn_cit_ref, ANYDATE_PATTERN, Name,
+    dict_to_sfn_cit_ref, ANYDATE_PATTERN,
 )
 from src.urls_authors import find_authors, CONTENT_ATTR
 
@@ -349,7 +349,7 @@ def find_site_name(
     html: str,
     html_title: str,
     url: str,
-    authors: List[Name],
+    authors: List[Tuple[str, str]],
     home_title: List[str],
     thread: Thread,
 ) -> str:
@@ -399,7 +399,7 @@ def find_title(
     html: str,
     html_title: str,
     url: str,
-    authors: List[Name],
+    authors: List[Tuple[str, str]],
     home_title: List[str],
     thread: Thread,
 ) -> Optional[str]:
@@ -418,7 +418,7 @@ def find_title(
 def parse_title(
     title: str,
     url: str,
-    authors: Optional[List[Name]],
+    authors: Optional[List[Tuple[str, str]]],
     home_title_list: Optional[List[str]]=None,
     thread: Thread=None,
 ) -> Tuple[Optional[str], str, Optional[str]]:
@@ -490,9 +490,9 @@ def parse_title(
         intitle_sitename = intitle_sitename.strip()
     # Searching for intitle_author
     if authors:
-        for author in authors:
+        for first, last in authors:
             for part in title_parts:
-                if author.lastname.lower() in part.lower():
+                if last.lower() in part.lower():
                     intitle_author = part
                     break
     # Remove intitle_author from title_parts

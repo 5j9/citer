@@ -106,8 +106,8 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if authors:
         cit += names2para(authors, 'first', 'last', 'author')
         # {{sfn}} only supports a maximum of four authors
-        for author in authors[:4]:
-            sfn += ' | ' + author.lastname
+        for first, last in authors[:4]:
+            sfn += ' | ' + last
     else:
         # the same order should be used in citation_template:
         sfn += ' | ' + (
@@ -122,8 +122,8 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         cit += names2para(editors, 'editor-first', 'editor-last', 'editor')
     translators = d['translators']
     if translators:
-        for translator in translators:
-            translator.fullname += ' (مترجم)'
+        for i, (first, last) in enumerate(translators):
+            translators[i] = first, last + ' (مترجم)'
         # Todo: add a 'Translated by ' before name of translators?
         others = d['others']
         if others:
@@ -299,20 +299,21 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
     """Take list of names. Return the string to be appended to citation."""
     c = 0
     s = ''
-    for name in names:
+    for first, last in names:
         c += 1
         if c == 1:
-            if name.firstname or not nofn_parameter:
-                s += ' | ' + ln_parameter + '=' + name.lastname
-                s += ' | ' + fn_parameter + '=' + name.firstname
+            if first or not nofn_parameter:
+                s += ' | ' + ln_parameter + '=' + last
+                s += ' | ' + fn_parameter + '=' + first
             else:
-                s += ' | ' + nofn_parameter + '=' + name.fullname
+                s += ' | ' + nofn_parameter + '=' + fullname(first, last)
         else:
-            if name.firstname or not nofn_parameter:
-                s += ' | ' + ln_parameter + str(c) + '=' + name.lastname
-                s += ' | ' + fn_parameter + str(c) + '=' + name.firstname
+            if first or not nofn_parameter:
+                s += ' | ' + ln_parameter + str(c) + '=' + last
+                s += ' | ' + fn_parameter + str(c) + '=' + first
             else:
-                s += ' | ' + nofn_parameter + str(c) + '=' + name.fullname
+                s += ' | ' + nofn_parameter + str(c) + '=' + \
+                     fullname(first, last)
     return s
 
 
@@ -320,14 +321,21 @@ def names1para(translators, para):
     """Take list of names. Return the string to be appended to citation."""
     s = ' | ' + para + '='
     c = 0
-    for name in translators:
+    for first, last in translators:
         c += 1
         if c == 1:
-            s += name.fullname
+            s += fullname(first, last)
         elif c == len(translators):
-            s += ', and ' + name.fullname
+            s += ', and ' + fullname(first, last)
         else:
-            s += ', ' + name.fullname
+            s += ', ' + fullname(first, last)
     return s
+
+
+def fullname(first: str, last: str) -> str:
+    if first:
+        return first + ' ' + last
+    return last
+
 
 logger = getLogger(__name__)

@@ -105,53 +105,14 @@ USER_AGENT_HEADER = {
 }
 
 
-class InvalidNameError(Exception):
+class InvalidNameError(ValueError):
 
     """Base class for RawName exceptions."""
-
-    pass
 
 
 class NumberInNameError(InvalidNameError):
 
     """Raise when a RawName() contains digits.."""
-
-    pass
-
-
-class Name:
-
-    """Represent the name of an author, editor, etc."""
-
-    def __init__(self, firstname: str, lastname: str) -> None:
-        """Create the Name."""
-        self.firstname = firstname
-        self.lastname = lastname
-        self.fullname = firstname + ' ' + lastname if firstname else lastname
-
-    def __repr__(self) -> str:
-        return 'Name("' + self.fullname + '")'
-
-    def nofirst_fulllast(self) -> None:
-        """Change firstname to an empty string and assign fullname to lastname.
-
-        Use this method if the author is a legal person.
-        """
-        self.lastname = self.fullname
-        self.firstname = ''
-
-
-class RawName(Name):
-
-    """Take a fullname and its' separator. Convert it to a RawName object.
-
-    If no seperator is provided, ',' or ' ' will be used.
-
-    """
-
-    def __init__(self, fullname: str, seperator: str=None) -> None:
-        """Parse fullname and set firstname, lastname."""
-        super().__init__(*firstname_lastname(fullname, seperator))
 
 
 def dict_to_sfn_cit_ref(dictionary) -> tuple:
@@ -161,7 +122,6 @@ def dict_to_sfn_cit_ref(dictionary) -> tuple:
     The dictionary will be cleaned up (empty values will be removed) and
     all values will be encoded using encode_for_template() function.
     ISBN (if exist) will be hyphenated.
-
     """
     value_encode(dictionary)
     isbn = dictionary['isbn']
@@ -183,7 +143,7 @@ def sfn_cit_ref_to_json(response) -> str:
     })
 
 
-def firstname_lastname(fullname, separator) -> tuple:
+def first_last(fullname, separator=None) -> tuple:
     """Return firstname and lastname as a tuple.
 
     (Jr.|Sr.) suffix will be added to firstname.
@@ -191,13 +151,13 @@ def firstname_lastname(fullname, separator) -> tuple:
 
     Examples:
 
-    >>> firstname_lastname('JAMES C. MCKINLEY Jr.', None)
+    >>> first_last('JAMES C. MCKINLEY Jr.', None)
     ('James C. Jr.', 'McKinley')
 
-    >>> firstname_lastname('DeBolt, V.', ',')
+    >>> first_last('DeBolt, V.', ',')
     ('V.', 'DeBolt')
 
-    >>> firstname_lastname('BBC', None)
+    >>> first_last('BBC', None)
     ('', 'BBC')
     """
     fullname = fullname.strip()
@@ -263,7 +223,6 @@ def find_any_date(str_or_match) -> datetime.date or None:
 
     If there is no matching date, return None.
     The returned date can't be from the future.
-
     """
     if isinstance(str_or_match, str):
         match = ANYDATE_SEARCH(str_or_match)
@@ -331,7 +290,6 @@ def value_encode(dictionary) -> None:
     * Replace special characters in dictionary values with their respective
         HTML entities.
     * Strip all values.
-
     """
     for k, v in dictionary.items():
         if isinstance(v, str):
