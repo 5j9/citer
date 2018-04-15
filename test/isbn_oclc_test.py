@@ -108,6 +108,17 @@ class OCLCTest(unittest.TestCase):
             "| access-date="
         ), oclc_sfn_cit_ref('809771201')[1])
 
+    def test_fullname_in_ris(self):
+        self.assertEqual((
+            '* {{cite book '
+            '| author=Universidade Federal do Rio de Janeiro '
+            '| title=Universidade do Brasil, 1948-1966. '
+            '| year=1966 '
+            '| oclc=24680975 '
+            '| language=pt '
+            '| ref=harv}}'
+        ), oclc_sfn_cit_ref('24680975')[1])
+
 
 isbn_oclc.requests_get = DummyRequests().get
 if __name__ == '__main__':
