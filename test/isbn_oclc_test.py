@@ -76,12 +76,13 @@ class IsbnTest(unittest.TestCase):
 class OCLCTest(unittest.TestCase):
 
     def test_oclc1(self):
+        self.maxDiff = None
         self.assertEqual((
             '* {{cite book '
             '| last=Lewis '
-            '| first=James Bryant. '
+            '| first=James Bryant '
             '| last2=Sesay '
-            '| first2=Amadu. '
+            '| first2=Amadu '
             '| title=Korea and globalization :'
             ' politics, economics and culture '
             '| publisher=RoutledgeCurzon '
@@ -95,7 +96,7 @@ class OCLCTest(unittest.TestCase):
         self.assertIn((
             "* {{cite web "
             "| last=Rahman "
-            "| first=Mizanur. "
+            "| first=Mizanur "
             "| title=MediaWiki Administrators' Tutorial Guide. "
             "| publisher=Packt Pub. "
             "| year=2007 "

@@ -204,6 +204,10 @@ def oclc_sfn_cit_ref(oclc: str, date_format: str='%Y-%m-%d') -> tuple:
             '',
         )
     d = ris_parse(text)
+    if 'authors' in d:
+        for author in d['authors']:
+            # worldcat adds a '.' the end of the first name
+            author.firstname = author.firstname.rstrip('.')
     d['date_format'] = date_format
     d['oclc'] = oclc
     return dict_to_sfn_cit_ref(d)
