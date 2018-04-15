@@ -62,15 +62,20 @@ def parse(ris_text):
     # d['authors'] should not be created unless there are some authors
     authors = match.captures('author')
     if authors:
+        # From RIS Format Specifications:
+        # Each author must be on a separate line, preceded by this tag. Each
+        # reference can contain unlimited author fields, and can contain up
+        # to 255 characters for each field.
+        # The author name must be in the following syntax:
+        # Lastname,Firstname,Suffix
+        # For Firstname, you can use full names, initials, or both.
         d['authors'] = []
         for author in authors:
-            author.rstrip(',')
             try:
-                author = first_last(author)
+                author = first_last(author, separator=',')
             except InvalidNameError:
                 continue
-            else:
-                d['authors'].append(author)
+            d['authors'].append(author)
     # DOIs may be in N1 (notes) tag, search for it in any tag
     m = DOI_SEARCH(ris_text)
     if m:
