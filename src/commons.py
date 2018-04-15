@@ -125,7 +125,8 @@ class Name:
 
     def __init__(self, firstname: str, lastname: str) -> None:
         """Create the Name."""
-        self.firstname, self.lastname = firstname, lastname
+        self.firstname = firstname
+        self.lastname = lastname
         self.fullname = firstname + ' ' + lastname if firstname else lastname
 
     def __repr__(self) -> str:
@@ -134,8 +135,7 @@ class Name:
     def nofirst_fulllast(self) -> None:
         """Change firstname to an empty string and assign fullname to lastname.
 
-        Use this method for corporate authors.
-
+        Use this method if the author is a legal person.
         """
         self.lastname = self.fullname
         self.firstname = ''
@@ -208,7 +208,7 @@ def firstname_lastname(fullname, separator) -> tuple:
         or DOUBLE_DIGIT_SEARCH(fullname)
     ):
         raise InvalidNameError
-    if fullname.endswith(' Jr.') or fullname.endswith(' Sr.'):
+    if fullname[-4:] in (' Sr.', ' Jr.'):
         suffix = fullname[-4:]
         fullname = fullname[:-4]
     else:
