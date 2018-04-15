@@ -64,7 +64,7 @@ def parse(ris_text):
     if authors:
         d['authors'] = []
         for author in authors:
-            author.strip(',')
+            author.rstrip(',')
             try:
                 author = RawName(author)
             except InvalidNameError:
