@@ -12,7 +12,7 @@ from datetime import date as datetime_date
 from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
 
-from config import LANG
+from config import LANG, USER_AGENT
 if LANG == 'en':
     from src.generator_en import sfn_cit_ref
 else:
@@ -99,10 +99,7 @@ ANYDATE_SEARCH = regex.compile(
     regex.VERBOSE,
 ).search
 
-USER_AGENT_HEADER = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:53.0) '
-                  'Gecko/20100101 Firefox/53.0'
-}
+USER_AGENT_HEADER = {'User-Agent': USER_AGENT}
 
 
 class InvalidNameError(ValueError):
