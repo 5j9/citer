@@ -3,7 +3,7 @@
 
 import unittest
 
-import config; config.lang = 'fa'
+import config; config.LANG = 'fa'
 
 from src import (
     adinebook, googlebooks, noormags, noorlib, doi, isbn_oclc, pubmed)

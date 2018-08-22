@@ -14,7 +14,7 @@ from regex import compile as regex_compile, VERBOSE
 from requests import get as requests_get
 
 from src.commons import dict_to_sfn_cit_ref
-from config import lang
+from config import LANG
 
 
 # The regex is from:
@@ -42,7 +42,7 @@ def doi_sfn_cit_ref(doi_or_url, pure=False, date_format='%Y-%m-%d') -> tuple:
         doi = DOI_SEARCH(decoded_url)[1]
     dictionary = get_crossref_dict(doi)
     dictionary['date_format'] = date_format
-    if lang == 'fa':
+    if LANG == 'fa':
         dictionary['language'] = classify(dictionary['title'])[0]
     return dict_to_sfn_cit_ref(dictionary)
 

@@ -14,7 +14,7 @@ except ImportError:
     from wsgiref.simple_server import make_server
 import requests
 
-from config import lang
+from config import LANG
 from src.adinebook import adinehbook_sfn_cit_ref
 from src.commons import uninum2en, sfn_cit_ref_to_json
 from src.doi import doi_sfn_cit_ref, DOI_SEARCH
@@ -26,7 +26,7 @@ from src.noormags import noormags_sfn_cit_ref
 from src.pubmed import pmcid_sfn_cit_ref, pmid_sfn_cit_ref
 from src.urls import urls_sfn_cit_ref
 from src.waybackmachine import waybackmachine_sfn_cit_ref
-if lang == 'en':
+if LANG == 'en':
     from src.html.en import (
         DEFAULT_SFN_CIT_REF,
         UNDEFINED_INPUT_SFN_CIT_REF,

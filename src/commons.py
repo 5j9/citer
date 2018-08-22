@@ -12,8 +12,8 @@ from datetime import date as datetime_date
 from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
 
-from config import lang
-if lang == 'en':
+from config import LANG
+if LANG == 'en':
     from src.generator_en import sfn_cit_ref
 else:
     from src.generator_fa import sfn_cit_ref

@@ -4,7 +4,7 @@
 """Codes specifically related to PubMed inputs."""
 
 from collections import defaultdict
-from config import ncbi_api_key, ncbi_email, ncbi_tool
+from config import NCBI_API_KEY, NCBI_EMAIL, NCBI_TOOL
 from datetime import datetime
 import logging
 from re import compile as re_compile
@@ -19,7 +19,7 @@ NON_DIGITS_SUB = re_compile(r'[^\d]').sub
 
 NCBI_URL = (
     'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?'
-    f'api_key={ncbi_api_key}&retmode=json&tool={ncbi_tool}&email={ncbi_email}'
+    f'api_key={NCBI_API_KEY}&retmode=json&tool={NCBI_TOOL}&email={NCBI_EMAIL}'
 )
 PUBMED_URL = NCBI_URL + '&db=pubmed&id='
 PMC_URL = NCBI_URL + '&db=pmc&id='

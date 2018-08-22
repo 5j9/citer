@@ -10,7 +10,7 @@ from langid import classify
 from regex import compile as regex_compile, DOTALL
 from requests import get as requests_get
 
-from config import ncbi_email, ncbi_tool
+from config import NCBI_EMAIL, NCBI_TOOL
 from src.adinebook import url2dictionary as adinebook_url2dictionary
 from src.adinebook import isbn2url as adinebook_isbn2url
 from src.bibtex import parse as bibtex_parse
@@ -49,7 +49,7 @@ OTTOBIB_SEARCH = regex_compile(
 RM_DASH_SPACE = str.maketrans('', '', '- ')
 
 CITOID_HEADERS = {
-    'Api-User-Agent': ncbi_tool + '/' + ncbi_email,
+    'Api-User-Agent': NCBI_TOOL + '/' + NCBI_EMAIL,
 }
 
 

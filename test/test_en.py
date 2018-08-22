@@ -10,7 +10,7 @@ import config
 
 
 if __name__ == '__main__':
-    config.lang = 'en'
+    config.LANG = 'en'
     tests = unittest.defaultTestLoader.discover('.', '*_test.py')
     runner = unittest.runner.TextTestRunner()
     runner.run(tests)
