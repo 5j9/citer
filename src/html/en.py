@@ -62,7 +62,7 @@ HTML_SUBST = Template(
         'src="./static/en' + str(adler32(JS)),
         1,
     )
-    .replace('~d', '%#d' if osname == 'nt' else '%-d')
+    .replace('{d}', '#d' if osname == 'nt' else '-d')
 ).substitute
 
 

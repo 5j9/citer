@@ -18,10 +18,10 @@
 			</div>
 			<p class="input-legend">Date format:</p>
 			<input type="radio" name="dateformat" value="%Y-%m-%d" id="ymd" onclick="onDateChange()">2017-01-01
-			<input type="radio" name="dateformat" value="%B ~d, %Y" id="bbdy" onclick="onDateChange()">January 1, 2017
-			<input type="radio" name="dateformat" value="%b ~d, %Y" id="bdy" onclick="onDateChange()">Jan 1, 2017
-			<input type="radio" name="dateformat" value="~d %B %Y" id="dbby" onclick="onDateChange()">1 January 2017
-			<input type="radio" name="dateformat" value="~d %b %Y" id="dby" onclick="onDateChange()">1 Jan 2017
+			<input type="radio" name="dateformat" value="%B %{d}, %Y" id="bbdy" onclick="onDateChange()">January 1, 2017
+			<input type="radio" name="dateformat" value="%b %{d}, %Y" id="bdy" onclick="onDateChange()">Jan 1, 2017
+			<input type="radio" name="dateformat" value="%{d} %B %Y" id="dbby" onclick="onDateChange()">1 January 2017
+			<input type="radio" name="dateformat" value="%{d} %b %Y" id="dby" onclick="onDateChange()">1 Jan 2017
 			<br><br>
 		</form>
 		<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
@@ -40,7 +40,7 @@
 			</p>
 			<p>
 				Found a bug or have a suggestion? Contact me on <a href="https://wikitech.wikimedia.org/wiki/User_talk:Dalba">my talk page</a> or open an issue <a href="https://github.com/5j9/citer">on github</a>.
-				<a href="javascript:void(window.open('https://tools.wmflabs.org/citer/citer.fcgi?user_input='+encodeURIComponent(location.href)+'&dateformat=%25B+%25d%2C+%25Y'))">Bookmarklet</a>
+				<a href="javascript:void(window.open('https://tools.wmflabs.org/citer/citer.fcgi?user_input='+encodeURIComponent(location.href)+'&dateformat='+encodeURIComponent('%B %{d}, %Y')))">Bookmarklet</a>
 			</p>
 		</footer>
 		<script src="./static/en.js"></script>
