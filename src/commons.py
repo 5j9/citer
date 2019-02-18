@@ -3,14 +3,14 @@
 
 """Common variables, functions, and classes used in string conversions, etc."""
 
-import regex
-import json
-import calendar
+from calendar import month_abbr, month_name
 from datetime import datetime
 from datetime import date as datetime_date
+from json import dumps as json_dumps
 
 from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
+from regex import compile as regex_compile, VERBOSE, IGNORECASE
 
 from config import LANG, USER_AGENT
 if LANG == 'en':
@@ -20,10 +20,10 @@ else:
 
 
 b_TO_NUM = {
-    name.lower(): num for num, name in enumerate(calendar.month_abbr) if num
+    name.lower(): num for num, name in enumerate(month_abbr) if num
 }
 B_TO_NUM = {
-    name.lower(): num for num, name in enumerate(calendar.month_name) if num
+    name.lower(): num for num, name in enumerate(month_name) if num
 }
 
 # jB_TO_NUM contains entries for both ی and ي
@@ -47,7 +47,7 @@ jB_TO_NUM = {
     'اسفند': 12,
 }
 
-DOUBLE_DIGIT_SEARCH = regex.compile(r'\d\d').search
+DOUBLE_DIGIT_SEARCH = regex_compile(r'\d\d').search
 
 # Date patterns:
 
@@ -94,10 +94,13 @@ ANYDATE_PATTERN = rf'''
         \b{Y}{zm}{zd}
     )
 '''
-ANYDATE_SEARCH = regex.compile(
+ANYDATE_SEARCH = regex_compile(
     ANYDATE_PATTERN,
-    regex.VERBOSE,
+    VERBOSE,
 ).search
+
+DIGITS_FINDALL = regex_compile(r'\d').findall
+MC_SUB = regex_compile(r'MC(\w)', IGNORECASE).sub
 
 USER_AGENT_HEADER = {'User-Agent': USER_AGENT}
 
@@ -133,7 +136,7 @@ def dict_to_sfn_cit_ref(dictionary) -> tuple:
 
 def sfn_cit_ref_to_json(response) -> str:
     """Generate api JSON response containing sfn, cite and ref."""
-    return json.dumps({
+    return json_dumps({
         'reference_tag': response.ref,
         'citation_template': response.cite,
         'shortened_footnote': response.sfn,
@@ -189,11 +192,9 @@ def first_last(fullname, separator=None) -> tuple:
        (firstname.islower() and lastname.islower()):
         firstname = firstname.title()
         lastname = lastname.title()
-        lastname = regex.sub(
-            'MC(\w)',
+        lastname = MC_SUB(
             lambda mtch: 'Mc' + mtch.group(1).upper(),
             lastname,
-            flags=regex.I
         )
     if suffix:
         firstname += suffix.title()
@@ -209,7 +210,7 @@ def uninum2en(string) -> str:
     """
     if not string:
         raise ValueError
-    digits = set(regex.findall(r'\d', string))
+    digits = set(DIGITS_FINDALL(string))
     for digit in digits:
         string = string.replace(digit, str(int(digit)))
     return string
