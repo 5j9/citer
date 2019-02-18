@@ -8,10 +8,6 @@ import logging.handlers
 from urllib.parse import parse_qs, urlparse, unquote
 from wsgiref.headers import Headers
 
-try:
-    from flup.server.fcgi import WSGIServer
-except ImportError:
-    from wsgiref.simple_server import make_server
 import requests
 
 from config import LANG
@@ -186,12 +182,12 @@ input_type_to_resolver = defaultdict(
 
 if __name__ == '__main__':
     logger = mylogger()
-    logging.getLogger("requests").setLevel(logging.WARNING)
-    logging.getLogger("langid").setLevel(logging.WARNING)
+    logging.getLogger('requests').setLevel(logging.WARNING)
+    logging.getLogger('langid').setLevel(logging.WARNING)
     try:
-        # on remote server
+        from flup.server.fcgi import WSGIServer
         WSGIServer(application).run()
-    except NameError:
-        # on local computer
+    except ImportError:  # on local computer
+        from wsgiref.simple_server import make_server
         httpd = make_server('localhost', 5000, application)
         httpd.serve_forever()
