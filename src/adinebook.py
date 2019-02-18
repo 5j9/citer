@@ -31,7 +31,7 @@ AUTHORS_SEARCH = regex_compile(
 ).search
 
 
-def adinehbook_sfn_cit_ref(url: str, date_format: str= '%Y-%m-%d') -> tuple:
+def adinehbook_sfn_cit_ref(url: str, date_format='%Y-%m-%d') -> tuple:
     """Return the response namedtuple."""
     dictionary = url2dictionary(url)
     dictionary['date_format'] = date_format
