@@ -4,18 +4,18 @@
 """Test adinebook.py module."""
 
 
-import unittest
+from unittest import TestCase, main
 
 from src import adinebook
 from src.adinebook import adinehbook_sfn_cit_ref
-from test import DummyRequests, CitationAssert
+from test import DummyRequests
 
 
-class AdineBookTest(CitationAssert):
+class AdineBookTest(TestCase):
 
     def test_ab1(self):
         """authors = 1, translators = 2, otheo = 1, isbn13"""
-        self.assert_cite_equal(
+        self.assertEqual(
             '* {{cite book '
             '| last=لانسکی '
             '| first=ویکی '
@@ -26,7 +26,7 @@ class AdineBookTest(CitationAssert):
             '| year=1386 '
             '| isbn=978-964-8165-81-4 '
             '| language=fa '
-            '| ref=harv',
+            '| ref=harv}}',
             adinehbook_sfn_cit_ref(
                 'http://www.adinebook.com/gp/product/9648165814/'
                 'ref=sr_1_1000_42/905-6618179-9188955'
@@ -166,4 +166,4 @@ class AdineBookTest(CitationAssert):
 
 if __name__ == '__main__':
     adinebook.requests_get = DummyRequests().get
-    unittest.main()
+    main()

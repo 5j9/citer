@@ -81,12 +81,12 @@ def url2dictionary(adinebook_url: str):
         translators = []
         # building lists:
         for name in AUTHORS_SEARCH(adinebook_html)[1].strip().split('،'):
-            if '(ویراستار)' in name:
-                editors.append(
-                    first_last(name.partition('(ویراستار)')[0]))
+            if '(به اهتمام)' in name:
+                authors.append(first_last(name.partition('(به اهتمام)')[0]))
+            elif '(ویراستار)' in name:
+                editors.append(first_last(name.partition('(ویراستار)')[0]))
             elif '(مترجم)' in name:
-                translators.append(
-                    first_last(name.partition('(مترجم)')[0]))
+                translators.append(first_last(name.partition('(مترجم)')[0]))
             elif '(' in name:
                 others.append(('', name))
             else:

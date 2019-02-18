@@ -31,12 +31,6 @@ class DummyRequests:
         return self.get(url, headers)
 
 
-class CitationAssert(TestCase):
-
-    def assert_cite_equal(self, expected, actual):
-        self.assertEqual(expected, actual[:-2])
-
-
 def save_cache(cache_dict):
     """Save cache as pickle."""
     if not NEW_DOWNLOAD:

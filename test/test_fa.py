@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-import unittest
+from unittest import TestCase, main
 
 import config; config.LANG = 'fa'
 
@@ -17,7 +17,7 @@ from src.pubmed import pmid_sfn_cit_ref
 from test import DummyRequests
 
 
-class AdinebookTest(unittest.TestCase):
+class AdinebookTest(TestCase):
 
     def test_ab1(self):
         """authors = 1, translators = 2, otheo = 1, isbn13"""
@@ -128,7 +128,7 @@ class AdinebookTest(unittest.TestCase):
         )
 
 
-class GooglebookTest(unittest.TestCase):
+class GooglebookTest(TestCase):
 
     def test_gb1(self):
         self.assertIn(
@@ -239,7 +239,7 @@ class GooglebookTest(unittest.TestCase):
         )
 
 
-class NoormagsTest(unittest.TestCase):
+class NoormagsTest(TestCase):
 
     def test_nm2(self):
         self.assertIn(
@@ -254,7 +254,7 @@ class NoormagsTest(unittest.TestCase):
         )
 
 
-class NoorlibTest(unittest.TestCase):
+class NoorlibTest(TestCase):
 
     def test_nl1(self):
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/3232'
@@ -275,7 +275,7 @@ class NoorlibTest(unittest.TestCase):
         self.assertIn(e, o[1])
 
 
-class DoiTest(unittest.TestCase):
+class DoiTest(TestCase):
 
     def test_di1(self):
         self.maxDiff = None
@@ -293,7 +293,7 @@ class DoiTest(unittest.TestCase):
         )
 
 
-class IsbnTest(unittest.TestCase):
+class IsbnTest(TestCase):
 
     def test_is1(self):
         """not found in adinebook"""
@@ -310,21 +310,19 @@ class IsbnTest(unittest.TestCase):
 
     def test_is2(self):
         """not found in ottobib"""
-        self.assertIn(
-            '* {{یادکرد کتاب | دیگران=بدیل بن علی خاقانی '
-            '(شاعر)،  جهانگیر منصور (به اهتمام)'
+        self.assertEqual(
+            '* {{یادکرد کتاب | نام خانوادگی=منصور |'
+            ' نام=جهانگیر | دیگران=بدیل بن علی خاقانی (شاعر)'
             ' و  بدیع الزمان فروزانفر (مقدمه) |'
             ' عنوان=دیوان خاقانی شروانی | ناشر=نگاه |'
-            ' سال=1389 | ماه=مرداد |'
-            ' شابک=978-964-6736-71-9 |'
-            ' زبان=fa}}',
+            ' سال=1389 | ماه=مرداد | شابک=978-964-6736-71-9 | زبان=fa}}',
             isbn_sfn_cit_ref('978-964-6736-71-9', pure=True)[1]
         )
 
     def test_is3(self):
         """exists in both"""
-        self.assertIn(
-            '* {{یادکرد کتاب | دیگران=سحر معصومی (به اهتمام) |'
+        self.assertEqual(
+            '* {{یادکرد کتاب | نام خانوادگی=معصومی | نام=سحر |'
             ' عنوان=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری |'
             ' ناشر=نگاه | سال=1386 | ماه=بهمن |'
             ' شابک=964-6736-34-3 '
@@ -337,7 +335,7 @@ class IsbnTest(unittest.TestCase):
         """unpure isbn10"""
         self.assertEqual(
             '* {{یادکرد کتاب | نام خانوادگی=حافظ | نام=شمس الدین محمد |'
-            ' دیگران= رضا نظرزاده (به اهتمام) |'
+            ' نام خانوادگی۲=نظرزاده | نام۲=رضا |'
             ' عنوان=دیوان کامل حافظ همراه با فالنامه |'
             ' ناشر=دیوان | سال=1385 |'
             ' ماه=آذر | شابک=964-92962-6-3 | زبان=fa}}',
@@ -366,4 +364,4 @@ adinebook.requests_get = googlebooks.requests_get = \
     noorlib.requests_get = doi.requests_get = isbn_oclc.requests_get = \
     DummyRequests().get
 if __name__ == '__main__':
-    unittest.main()
+    main()

@@ -4,14 +4,14 @@
 """Test isbn.py module."""
 
 
-import unittest
+from unittest import TestCase, main
 
 from src import isbn_oclc
 from src.isbn_oclc import isbn_sfn_cit_ref, oclc_sfn_cit_ref
-from test import DummyRequests, CitationAssert
+from test import DummyRequests
 
 
-class IsbnTest(CitationAssert):
+class IsbnTest(TestCase):
 
     def test_is1(self):
         """not found in adinebook"""
@@ -31,50 +31,34 @@ class IsbnTest(CitationAssert):
 
     def test_is2(self):
         """not found in ottobib"""
-        self.assert_cite_equal(
-            '* {{cite book '
-            '| others=بدیع الزمان فروزانفر (مقدمه)'
-            ',  جهانگیر منصور (به اهتمام), and  بدیل بن علی خاقانی (شاعر) '
-            '| title=دیوان خاقانی شروانی '
-            '| publisher=نگاه '
-            '| year=1389 '
-            '| isbn=978-964-6736-71-9 '
-            '| language=fa '
-            '| ref={{sfnref | نگاه | 1389}}',
+        self.assertEqual(
+            '* {{cite book | last=منصور | first=جهانگیر '
+            '| others=بدیع الزمان فروزانفر (مقدمه), and  '
+            'بدیل بن علی خاقانی (شاعر) | title=دیوان خاقانی شروانی'
+            ' | publisher=نگاه | year=1389 | isbn=978-964-6736-71-9 '
+            '| language=fa | ref=harv}}',
             isbn_sfn_cit_ref('978-964-6736-71-9', pure=True)[1]
         )
 
     def test_is3(self):
         """exists in both"""
-        self.assertIn((
-            '* {{cite book '
-            '| others=سحر معصومی (به اهتمام) '
-            '| title=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری '
-            '| publisher=نگاه '
-            '| year=1386 '
-            '| isbn=964-6736-34-3 '
-            '| oclc=53446327 '
-            '| language=fa '
-            '| ref={{sfnref | نگاه | 1386}}'
+        self.assertEqual((
+            '* {{cite book | last=معصومی | first=سحر | title=راز گل سرخ: نقد '
+            'و گزیده شعرهای سهراب سپهری | publisher=نگاه | year=1386 | '
+            'isbn=964-6736-34-3 | oclc=53446327 | language=fa | ref=harv}}'
         ), isbn_sfn_cit_ref('964-6736-34-3 ')[1])
 
     def test_is4(self):
         """unpure isbn10 not found in ottobib"""
-        self.assertIn((
-            '* {{cite book '
-            '| last=حافظ '
-            '| first=شمس الدین محمد '
-            '| others= رضا نظرزاده (به اهتمام) '
-            '| title=دیوان کامل حافظ همراه با فالنامه '
-            '| publisher=دیوان '
-            '| year=1385 '
-            '| isbn=964-92962-6-3 '
-            '| language=fa '
-            '| ref=harv'
+        self.assertEqual((
+            '* {{cite book | last=حافظ | first=شمس الدین محمد | '
+            'last2=نظرزاده | first2=رضا | title=دیوان کامل حافظ همراه با '
+            'فالنامه | publisher=دیوان | year=1385 | isbn=964-92962-6-3 | '
+            'language=fa | ref=harv}}'
         ), isbn_sfn_cit_ref('choghondar 964-92962-6-3 شلغم')[1])
 
 
-class OCLCTest(unittest.TestCase):
+class OCLCTest(TestCase):
 
     def test_oclc1(self):
         self.maxDiff = None
@@ -123,4 +107,4 @@ class OCLCTest(unittest.TestCase):
 
 isbn_oclc.requests_get = DummyRequests().get
 if __name__ == '__main__':
-    unittest.main()
+    main()
