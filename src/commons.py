@@ -143,7 +143,7 @@ def sfn_cit_ref_to_json(response) -> str:
 def first_last(fullname, separator=None) -> tuple:
     """Return firstname and lastname as a tuple.
 
-    (Jr.|Sr.) suffix will be added to firstname.
+    (Jr.|Sr.) suffixes will be considered as part of the firstname.
     Usually called from RawName() class and not used directly.
 
     Examples:
