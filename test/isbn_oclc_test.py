@@ -8,10 +8,10 @@ import unittest
 
 from src import isbn_oclc
 from src.isbn_oclc import isbn_sfn_cit_ref, oclc_sfn_cit_ref
-from test import DummyRequests
+from test import DummyRequests, CitationAssert
 
 
-class IsbnTest(unittest.TestCase):
+class IsbnTest(CitationAssert):
 
     def test_is1(self):
         """not found in adinebook"""
@@ -31,17 +31,18 @@ class IsbnTest(unittest.TestCase):
 
     def test_is2(self):
         """not found in ottobib"""
-        self.assertIn((
+        self.assert_cite_equal(
             '* {{cite book '
-            '| others=بدیل بن علی خاقانی (شاعر),  جهانگیر منصور (به اهتمام),'
-            ' and  بدیع الزمان فروزانفر (مقدمه) '
+            '| others=بدیع الزمان فروزانفر (مقدمه)'
+            ',  جهانگیر منصور (به اهتمام), and  بدیل بن علی خاقانی (شاعر) '
             '| title=دیوان خاقانی شروانی '
             '| publisher=نگاه '
             '| year=1389 '
             '| isbn=978-964-6736-71-9 '
             '| language=fa '
-            '| ref={{sfnref | نگاه | 1389}}'
-        ), isbn_sfn_cit_ref('978-964-6736-71-9', pure=True)[1])
+            '| ref={{sfnref | نگاه | 1389}}',
+            isbn_sfn_cit_ref('978-964-6736-71-9', pure=True)[1]
+        )
 
     def test_is3(self):
         """exists in both"""

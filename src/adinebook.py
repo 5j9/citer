@@ -21,7 +21,7 @@ DATE_SEARCH = regex_compile(
     r'(?:(?<day>\d\d?)? (?<month>[^،]*+)، )?(?<year>\d{4})'
 ).search
 PUBLISHER_SEARCH = regex_compile(
-    r'ناشر:</span>\s*+([^\n]++)'
+    r'ناشر:(?:<[^>]++>\s*)++([^<\n]++)'
 ).search
 TITLE_SEARCH = regex_compile(
     r'<meta property="og:title" content="([^"]++)'

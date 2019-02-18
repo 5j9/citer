@@ -8,19 +8,14 @@ import unittest
 
 from src import adinebook
 from src.adinebook import adinehbook_sfn_cit_ref
-from test import DummyRequests
+from test import DummyRequests, CitationAssert
 
 
-class AdineBookTest(unittest.TestCase):
+class AdineBookTest(CitationAssert):
 
     def test_ab1(self):
         """authors = 1, translators = 2, otheo = 1, isbn13"""
-        i = (
-            'http://www.adinebook.com/gp/product/9648165814/'
-            'ref=sr_1_1000_42/905-6618179-9188955'
-        )
-        o = adinehbook_sfn_cit_ref(i)
-        e = (
+        self.assert_cite_equal(
             '* {{cite book '
             '| last=لانسکی '
             '| first=ویکی '
@@ -31,9 +26,12 @@ class AdineBookTest(unittest.TestCase):
             '| year=1386 '
             '| isbn=978-964-8165-81-4 '
             '| language=fa '
-            '| ref=harv'
+            '| ref=harv',
+            adinehbook_sfn_cit_ref(
+                'http://www.adinebook.com/gp/product/9648165814/'
+                'ref=sr_1_1000_42/905-6618179-9188955'
+            )[1]
         )
-        self.assertIn(e, o[1])
 
     def test_ab2(self):
         """authors = 3, translators = 2, otheo = 0, isbn13"""

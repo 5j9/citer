@@ -3,6 +3,7 @@
 
 from atexit import register as atexit_register
 from pickle import dump, load
+from unittest import TestCase
 
 import requests
 
@@ -28,6 +29,12 @@ class DummyRequests:
 
     def head(self, url: str, headers=None, **kwargs):
         return self.get(url, headers)
+
+
+class CitationAssert(TestCase):
+
+    def assert_cite_equal(self, expected, actual):
+        self.assertEqual(expected, actual[:-2])
 
 
 def save_cache(cache_dict):
