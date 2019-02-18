@@ -103,14 +103,6 @@ def write_config_py():
         f.write(new_conf_py)
 
 
-def activate_server_requirements():
-    # enables flup6 and pip-review
-    with open('main.py', encoding='utf8') as f:
-        requirements = f.read()
-    with open('main.py', 'w', encoding='utf8') as f:
-        f.write(requirements.replace('# ', ''))
-
-
 def set_file_permissions():
     Path('main.py').chmod(0o771)
     Path('citer.log').chmod(0o660)
@@ -121,7 +113,6 @@ def configure():
     create_lighttpd_conf()
     fix_main_python_path()
     write_config_py()
-    activate_server_requirements()
     try:
         Path(HOME / 'error.log').unlink()
     except FileNotFoundError:
