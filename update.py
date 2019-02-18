@@ -7,7 +7,7 @@ from os import chdir
 from pathlib import Path
 from subprocess import run
 
-HOME = Path(__file__).parent.resolve()
+HOME = Path.home()
 TOOL_NAME = HOME.name
 if TOOL_NAME == 'yadfa':
     LANG = 'fa'
