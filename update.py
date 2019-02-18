@@ -130,5 +130,9 @@ if __name__ == '__main__':
     set_file_permissions()
     configure()
     install()
+    try:  # To prevent corrupt manifest file. See T164245.
+        Path(HOME / 'service.manifest').unlink()
+    except FileNotFoundError:
+        pass
     run('webservice restart', shell=True, check=True)
     print('All Done!')
