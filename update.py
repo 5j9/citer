@@ -48,13 +48,12 @@ def create_lighttpd_conf():
 
 
 def clone_repo_and_cd():
-    citer_path = HOME / 'citer'
-    if not citer_path.exists():
+    if not CITER.exists():
         run('git clone https://github.com/5j9/citer.git --depth 1',
             shell=True, check=True)
-        chdir(citer_path)
+        chdir(CITER)
     else:
-        chdir(citer_path)
+        chdir(CITER)
         run('git fetch --all --depth 1', shell=True, check=True)
         run('git reset --hard origin/master', shell=True, check=True)
 
@@ -105,7 +104,10 @@ def write_config_py():
 
 def set_file_permissions():
     Path('main.py').chmod(0o771)
-    Path('citer.log').chmod(0o660)
+    try:
+        Path('citer.log').chmod(0o660)
+    except FileNotFoundError:
+        pass
     Path('config.py').chmod(0o660)
 
 
