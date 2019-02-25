@@ -6,7 +6,7 @@
 
 from unittest import TestCase, main
 
-from src import isbn_oclc
+from src import isbn_oclc, adinebook
 from src.isbn_oclc import isbn_sfn_cit_ref, oclc_sfn_cit_ref
 from test import DummyRequests
 
@@ -33,10 +33,9 @@ class IsbnTest(TestCase):
         """not found in ottobib"""
         self.assertEqual(
             '* {{cite book | last=منصور | first=جهانگیر '
-            '| others=بدیع الزمان فروزانفر (مقدمه), and  '
-            'بدیل بن علی خاقانی (شاعر) | title=دیوان خاقانی شروانی'
-            ' | publisher=نگاه | year=1389 | isbn=978-964-6736-71-9 '
-            '| language=fa | ref=harv}}',
+            '| others=بدیل بن علی خاقانی (شاعر), and  بدیع الزمان فروزانفر'
+            ' (مقدمه) | title=دیوان خاقانی شروانی | publisher=نگاه '
+            '| year=1389 | isbn=978-964-6736-71-9 | language=fa | ref=harv}}',
             isbn_sfn_cit_ref('978-964-6736-71-9', pure=True)[1]
         )
 
@@ -106,5 +105,6 @@ class OCLCTest(TestCase):
 
 
 isbn_oclc.requests_get = DummyRequests().get
+adinebook.requests_get = DummyRequests().get
 if __name__ == '__main__':
     main()
