@@ -29,20 +29,15 @@ B_TO_NUM = {
 # jB_TO_NUM contains entries for both ی and ي
 jB_TO_NUM = {
     'فروردین': 1,
-    'فروردين': 1,
     'اردیبهشت': 2,
-    'ارديبهشت': 2,
     'خرداد': 3,
     'تیر': 4,
-    'تير': 4,
     'مرداد': 5,
     'شهریور': 6,
-    'شهريور': 6,
     'مهر': 7,
     'آبان': 8,
     'آذر': 9,
     'دی': 10,
-    'دي': 10,
     'بهمن': 11,
     'اسفند': 12,
 }
@@ -66,8 +61,10 @@ B = (
     '''
 )
 # فروردین|اردیبهشت|خرداد...
-jB = '(?>(?<jB>{0}))'.format(
-    '|'.join([jm for jm in jB_TO_NUM if 'ي' not in jm]).replace('ی', '[یي]')
+jB = (
+    '(?>(?<jB>'
+    + '|'.join([jm for jm in jB_TO_NUM]).replace('ی', '[یي]')
+    + '))'
 )
 # Month abbreviations:
 b = r'(?>(?<b>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)).?'
