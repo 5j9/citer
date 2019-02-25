@@ -88,7 +88,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     date_format = d['date_format']
     cite_type = TYPE_TO_CITE(d['cite_type'])
     if not cite_type:
-        logger.warning(f'Unknown citation type: {cite_type}, d: {d}')
+        logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
         cite_type = ''
     cit = '* {{cite ' + cite_type
     sfn = '{{sfn'

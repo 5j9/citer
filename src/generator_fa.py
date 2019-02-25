@@ -90,7 +90,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     """Create citation templates using the given dictionary."""
     cite_type = TYPE_TO_CITE(d['cite_type'])
     if not cite_type:
-        logger.warning(f'Unknown citation type: {cite_type}, d: {d}')
+        logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
         cite_type = ''
     if cite_type in ('کتاب', 'ژورنال', 'وب'):
         cit = '* {{یادکرد ' + cite_type
