@@ -2,4 +2,3 @@
 *.log
 .*
 __pycache__/
-tests_cache
