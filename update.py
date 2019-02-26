@@ -3,6 +3,7 @@
 
 from os import chdir
 from pathlib import Path
+from shutil import copyfile
 from subprocess import run
 
 HOME = Path.home()
@@ -80,26 +81,6 @@ def fix_shebang():
         f.write(new_app_py)
 
 
-def write_config_py():
-    with open('config.py', encoding='utf8') as f:
-        conf_py = f.read()
-    new_conf_py = conf_py.replace(
-        "LANG = 'en'", f"LANG = '{LANG}'", 1,
-    ).replace(
-        "USER_AGENT = 'citer v'",
-        "USER_AGENT = 'https://tools.wmflabs.org/citer/ v'", 1,
-    ).replace(
-        "NCBI_EMAIL = ''", "NCBI_EMAIL = 'dalba.wiki@gmail.com'", 1,
-    ).replace(
-        "NCBI_TOOL = ''", "NCBI_TOOL = '5j9.citer@github.com'", 1,
-    ).replace(
-        "NCBI_API_KEY = ''",
-        "NCBI_API_KEY = '7907f7ca634d6de5808137b8298ed476f408'", 1,
-    )
-    with open('config.py', 'w', encoding='utf8') as f:
-        f.write(new_conf_py)
-
-
 def set_file_permissions():
     Path('app.py').chmod(0o771)
     try:
@@ -112,7 +93,7 @@ def set_file_permissions():
 def configure():
     create_lighttpd_conf()
     fix_shebang()
-    write_config_py()
+    copyfile(HOME/ '.config.py', 'config.py')
     try:
         Path(HOME / 'error.log').unlink()
     except FileNotFoundError:
