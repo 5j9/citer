@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Update the tool on toolforge."""
 
-__version__ = '2019.02.18'
-
 from os import chdir
 from pathlib import Path
 from subprocess import run
@@ -19,7 +17,7 @@ LIGHTTPD_CONF = f'''#Main configuration:
 fastcgi.server += ( "/{TOOL_NAME}" =>
     ((
         "socket" => "/tmp/{TOOL_NAME}-fcgi.socket",
-        "bin-path" => "/data/project/$TOOL/citer/main.py",
+        "bin-path" => "/data/project/$TOOL/citer/app.py",
         "check-local" => "disable",
         "max-procs" => 1,
     ))
@@ -62,24 +60,24 @@ def latest_ve_path():
     return sorted((HOME / 'pythons').glob('ve*'))[-1] / 'bin/python'
 
 
-def fix_main_python_path():
+def fix_shebang():
     # If python path is not set correctly then the webservice will fail with:
     # 2017-11-08 18:31:44: (log.c.166) server started
     # 2017-11-08 18:31:44: (mod_fastcgi.c.1103) the fastcgi-backend
-    # /data/project/citer/citer/main.py failed to start:
+    # /data/project/citer/citer/app.py failed to start:
     # 2017-11-08 18:31:44: (mod_fastcgi.c.1107) child exited with status 2
-    # /data/project/citer/citer/main.py
+    # /data/project/citer/citer/app.py
     # 2017-11-08 18:31:44: (mod_fastcgi.c.1110) If you're trying to run your
     # app as a FastCGI backend, make sure you're using the FastCGI-enabled
     # version. If this is PHP on Gentoo, add 'fastcgi' to the USE flags.
     # 2017-11-08 18:31:44: (mod_fastcgi.c.1398) [ERROR]: spawning fcgi failed.
     # 2017-11-08 18:31:44: (server.c.1021) Configuration of plugins failed.
     # Going down.
-    with open('main.py', encoding='utf8') as f:
-        main_py = f.read()
-    new_main_py = main_py.replace('/usr/bin/python', str(latest_ve_path()))
-    with open('main.py', 'w', encoding='utf8') as f:
-        f.write(new_main_py)
+    with open('app.py', encoding='utf8') as f:
+        app_py = f.read()
+    new_app_py = app_py.replace('/usr/bin/python', str(latest_ve_path()))
+    with open('app.py', 'w', encoding='utf8') as f:
+        f.write(new_app_py)
 
 
 def write_config_py():
@@ -103,7 +101,7 @@ def write_config_py():
 
 
 def set_file_permissions():
-    Path('main.py').chmod(0o771)
+    Path('app.py').chmod(0o771)
     try:
         Path('citer.log').chmod(0o660)
     except FileNotFoundError:
@@ -113,7 +111,7 @@ def set_file_permissions():
 
 def configure():
     create_lighttpd_conf()
-    fix_main_python_path()
+    fix_shebang()
     write_config_py()
     try:
         Path(HOME / 'error.log').unlink()
