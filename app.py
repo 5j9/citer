@@ -111,7 +111,7 @@ def url_doi_isbn_to_sfn_cit_ref(user_input, date_format) -> tuple:
         return UNDEFINED_INPUT_SFN_CIT_REF
 
 
-def application(environ, start_response):
+def app(environ, start_response):
     query_dict_get = parse_qs(environ['QUERY_STRING']).get
 
     path_info = environ['PATH_INFO']
@@ -186,8 +186,8 @@ if __name__ == '__main__':
     logging.getLogger('langid').setLevel(logging.WARNING)
     try:
         from flup.server.fcgi import WSGIServer
-        WSGIServer(application).run()
+        WSGIServer(app).run()
     except ImportError:  # on local computer
         from wsgiref.simple_server import make_server
-        httpd = make_server('localhost', 5000, application)
+        httpd = make_server('localhost', 5000, app)
         httpd.serve_forever()

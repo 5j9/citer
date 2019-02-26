@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""HTML skeleton of the application and its predefined responses."""
+"""HTML skeleton of the predefined fa responses."""
 
 
 from string import Template
