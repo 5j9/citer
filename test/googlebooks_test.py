@@ -6,8 +6,8 @@
 
 import unittest
 
-from src import googlebooks
-from src.googlebooks import googlebooks_sfn_cit_ref
+from lib import googlebooks
+from lib.googlebooks import googlebooks_sfn_cit_ref
 from test import DummyRequests
 
 

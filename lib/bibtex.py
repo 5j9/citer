@@ -19,7 +19,7 @@ from collections import defaultdict
 
 import regex as regex
 
-from src.commons import first_last
+from lib.commons import first_last
 
 
 # To remove Texts like {APA} from input.

@@ -14,9 +14,9 @@ from regex import compile as regex_compile, VERBOSE, IGNORECASE
 
 from config import LANG, USER_AGENT
 if LANG == 'en':
-    from src.generator_en import sfn_cit_ref
+    from lib.generator_en import sfn_cit_ref
 else:
-    from src.generator_fa import sfn_cit_ref
+    from lib.generator_fa import sfn_cit_ref
 
 
 b_TO_NUM = {

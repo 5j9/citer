@@ -12,8 +12,8 @@ from threading import Thread
 
 from requests import get as requests_get
 
-from src.commons import dict_to_sfn_cit_ref, b_TO_NUM
-from src.doi import get_crossref_dict
+from lib.commons import dict_to_sfn_cit_ref, b_TO_NUM
+from lib.doi import get_crossref_dict
 
 NON_DIGITS_SUB = re_compile(r'[^\d]').sub
 

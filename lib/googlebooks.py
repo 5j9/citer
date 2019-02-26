@@ -11,8 +11,8 @@ from langid import classify
 from requests import get as requests_get
 
 # import bibtex [1]
-from src.ris import parse as ris_parse
-from src.commons import dict_to_sfn_cit_ref
+from lib.ris import parse as ris_parse
+from lib.commons import dict_to_sfn_cit_ref
 
 
 def googlebooks_sfn_cit_ref(url, date_format='%Y-%m-%d') -> tuple:

@@ -7,8 +7,8 @@
 import unittest
 
 from test import DummyRequests
-from src import urls
-from src.urls import urls_sfn_cit_ref
+from lib import urls
+from lib.urls import urls_sfn_cit_ref
 
 
 class BostonTest(unittest.TestCase):

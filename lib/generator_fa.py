@@ -10,9 +10,9 @@ from logging import getLogger
 from random import seed as randseed, choice as randchoice
 from string import digits, ascii_lowercase
 
-from src.generator_en import (
+from lib.generator_en import (
     DOI_URL_MATCH, sfn_cit_ref as en_citations, fullname)
-from src.language import TO_TWO_LETTER_CODE
+from lib.language import TO_TWO_LETTER_CODE
 
 
 TYPE_TO_CITE = {

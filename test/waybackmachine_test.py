@@ -6,8 +6,8 @@
 
 import unittest
 
-from src import urls
-from src.waybackmachine import waybackmachine_sfn_cit_ref
+from lib import urls
+from lib.waybackmachine import waybackmachine_sfn_cit_ref
 from test import DummyRequests
 
 

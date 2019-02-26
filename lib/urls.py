@@ -18,11 +18,11 @@ from regex import compile as regex_compile, VERBOSE, IGNORECASE
 from requests import get as requests_get, Response as RequestsResponse
 from requests.exceptions import RequestException
 
-from src.commons import (
+from lib.commons import (
     find_any_date, USER_AGENT_HEADER,
     dict_to_sfn_cit_ref, ANYDATE_PATTERN,
 )
-from src.urls_authors import find_authors, CONTENT_ATTR
+from lib.urls_authors import find_authors, CONTENT_ATTR
 
 
 MAX_RESPONSE_LENGTH = 2_000_000

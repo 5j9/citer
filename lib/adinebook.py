@@ -10,7 +10,7 @@ from langid import classify
 from regex import compile as regex_compile
 from requests import get as requests_get, RequestException
 
-from src.commons import first_last, dict_to_sfn_cit_ref
+from lib.commons import first_last, dict_to_sfn_cit_ref
 
 
 ISBN_SEARCH = regex_compile(

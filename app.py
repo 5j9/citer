@@ -11,19 +11,19 @@ from wsgiref.headers import Headers
 import requests
 
 from config import LANG
-from src.adinebook import adinehbook_sfn_cit_ref
-from src.commons import uninum2en, sfn_cit_ref_to_json
-from src.doi import doi_sfn_cit_ref, DOI_SEARCH
-from src.googlebooks import googlebooks_sfn_cit_ref
-from src.isbn_oclc import (
+from lib.adinebook import adinehbook_sfn_cit_ref
+from lib.commons import uninum2en, sfn_cit_ref_to_json
+from lib.doi import doi_sfn_cit_ref, DOI_SEARCH
+from lib.googlebooks import googlebooks_sfn_cit_ref
+from lib.isbn_oclc import (
     ISBN_10OR13_SEARCH, IsbnError, isbn_sfn_cit_ref, oclc_sfn_cit_ref)
-from src.noorlib import noorlib_sfn_cit_ref
-from src.noormags import noormags_sfn_cit_ref
-from src.pubmed import pmcid_sfn_cit_ref, pmid_sfn_cit_ref
-from src.urls import urls_sfn_cit_ref
-from src.waybackmachine import waybackmachine_sfn_cit_ref
+from lib.noorlib import noorlib_sfn_cit_ref
+from lib.noormags import noormags_sfn_cit_ref
+from lib.pubmed import pmcid_sfn_cit_ref, pmid_sfn_cit_ref
+from lib.urls import urls_sfn_cit_ref
+from lib.waybackmachine import waybackmachine_sfn_cit_ref
 if LANG == 'en':
-    from src.html.en import (
+    from lib.html.en import (
         DEFAULT_SFN_CIT_REF,
         UNDEFINED_INPUT_SFN_CIT_REF,
         HTTPERROR_SFN_CIT_REF,
@@ -34,7 +34,7 @@ if LANG == 'en':
         JS,
         JS_HEADERS)
 else:
-    from src.html.fa import (
+    from lib.html.fa import (
         DEFAULT_SFN_CIT_REF,
         UNDEFINED_INPUT_SFN_CIT_REF,
         HTTPERROR_SFN_CIT_REF,

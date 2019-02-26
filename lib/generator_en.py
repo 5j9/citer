@@ -9,7 +9,7 @@ from datetime import date as datetime_date
 from collections import defaultdict
 from logging import getLogger
 
-from src.language import TO_TWO_LETTER_CODE
+from lib.language import TO_TWO_LETTER_CODE
 
 
 # Includes ShortDOIs (See: http://shortdoi.org/) and

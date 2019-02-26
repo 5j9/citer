@@ -6,8 +6,8 @@
 
 from unittest import TestCase, main
 
-from src import isbn_oclc, adinebook
-from src.isbn_oclc import isbn_sfn_cit_ref, oclc_sfn_cit_ref
+from lib import isbn_oclc, adinebook
+from lib.isbn_oclc import isbn_sfn_cit_ref, oclc_sfn_cit_ref
 from test import DummyRequests
 
 

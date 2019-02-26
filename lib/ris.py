@@ -5,8 +5,8 @@ from collections import defaultdict
 
 from regex import compile as regex_compile, MULTILINE, VERBOSE
 
-from src.doi import DOI_SEARCH
-from src.commons import first_last, InvalidNameError
+from lib.doi import DOI_SEARCH
+from lib.commons import first_last, InvalidNameError
 
 
 RIS_FULLMATCH = regex_compile(

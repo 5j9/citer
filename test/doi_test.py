@@ -6,8 +6,8 @@
 
 import unittest
 
-from src import doi
-from src.doi import doi_sfn_cit_ref
+from lib import doi
+from lib.doi import doi_sfn_cit_ref
 from test import DummyRequests
 
 

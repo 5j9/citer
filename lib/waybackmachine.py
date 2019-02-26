@@ -11,8 +11,8 @@ from urllib.parse import urlparse
 from regex import compile as regex_compile
 from requests import ConnectionError as RequestsConnectionError
 
-from src.commons import dict_to_sfn_cit_ref
-from src.urls import (
+from lib.commons import dict_to_sfn_cit_ref
+from lib.urls import (
     urls_sfn_cit_ref, url2dict, get_home_title, get_html, find_authors,
     find_journal, find_site_name, find_title, ContentTypeError,
     ContentLengthError, StatusCodeError, TITLE_TAG

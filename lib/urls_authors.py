@@ -11,7 +11,7 @@ from typing import List, Optional, Tuple
 
 from regex import compile as regex_compile, VERBOSE, IGNORECASE, ASCII
 
-from src.commons import ANYDATE_SEARCH, first_last, InvalidNameError
+from lib.commons import ANYDATE_SEARCH, first_last, InvalidNameError
 
 
 # Names in byline are required to be two or three parts

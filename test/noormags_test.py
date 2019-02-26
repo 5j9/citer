@@ -6,8 +6,8 @@
 
 import unittest
 
-from src import noormags
-from src.noormags import noormags_sfn_cit_ref
+from lib import noormags
+from lib.noormags import noormags_sfn_cit_ref
 from test import DummyRequests
 
 

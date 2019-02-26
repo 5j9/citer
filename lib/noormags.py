@@ -8,9 +8,9 @@ from threading import Thread
 
 from requests import get as requests_get
 
-from src.commons import dict_to_sfn_cit_ref
-from src.bibtex import parse as bibtex_parse
-from src.ris import parse as ris_parse
+from lib.commons import dict_to_sfn_cit_ref
+from lib.bibtex import parse as bibtex_parse
+from lib.ris import parse as ris_parse
 
 
 BIBTEX_ARTICLE_ID_SEARCH = re_compile('(?<=/citation/bibtex/)\d+').search

@@ -11,11 +11,11 @@ from regex import compile as regex_compile, DOTALL
 from requests import get as requests_get
 
 from config import NCBI_EMAIL, NCBI_TOOL
-from src.adinebook import url2dictionary as adinebook_url2dictionary
-from src.adinebook import isbn2url as adinebook_isbn2url
-from src.bibtex import parse as bibtex_parse
-from src.commons import dict_to_sfn_cit_ref  # , Name
-from src.ris import parse as ris_parse
+from lib.adinebook import url2dictionary as adinebook_url2dictionary
+from lib.adinebook import isbn2url as adinebook_isbn2url
+from lib.bibtex import parse as bibtex_parse
+from lib.commons import dict_to_sfn_cit_ref  # , Name
+from lib.ris import parse as ris_parse
 
 
 # original regex from:

@@ -7,7 +7,7 @@
 from regex import compile as regex_compile, VERBOSE, IGNORECASE
 import unittest
 
-from src.urls_authors import byline_to_names, BYLINE_PATTERN
+from lib.urls_authors import byline_to_names, BYLINE_PATTERN
 
 BYLINE_PATTERN_REGEX = regex_compile(
     '^' + BYLINE_PATTERN + '$',

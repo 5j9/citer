@@ -6,8 +6,8 @@
 
 from unittest import TestCase, main
 
-from src import adinebook
-from src.adinebook import adinehbook_sfn_cit_ref
+from lib import adinebook
+from lib.adinebook import adinehbook_sfn_cit_ref
 from test import DummyRequests
 
 

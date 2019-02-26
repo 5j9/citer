@@ -13,7 +13,7 @@ from langid import classify
 from regex import compile as regex_compile, VERBOSE
 from requests import get as requests_get
 
-from src.commons import dict_to_sfn_cit_ref
+from lib.commons import dict_to_sfn_cit_ref
 from config import LANG
 
 
