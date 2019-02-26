@@ -78,19 +78,19 @@ d = r'(?<d>0?[1-9]|[12][0-9]|3[01])(?>st|nd|th)?'
 zd = r'(?<d>0[1-9]|[12][0-9]|3[01])'
 # Gregorian year pattern 1900-2099
 Y = r'(?<Y>(?:19|20)\d\d)'
-ANYDATE_PATTERN = (
-    '(?:'
-    '(?:' + B + '|' + b + r')\ ' + d + r',?\ ' + Y
-    + '|'
-    + d + r'\ (?:' + B + '|' + b + r')\ ' + Y
-    + '|'
-    + Y + '(?<sep>[-/])' + zm + '(?P=sep)' + zd
-    + '|'
-    + r'(?<d>\d\d?)\ ' + jB + r'\ (?<Y>\d\d\d\d)'
-    + '|'
-    + r'\b' + Y + zm + zd
-    + ')'
-)
+ANYDATE_PATTERN = rf'''
+    (?:
+        (?:{B}|{b})\ {d},?\ {Y}
+        |
+        {d}\ (?:{B}|{b})\ {Y}
+        |
+        {Y}(?<sep>[-/]){zm}(?P=sep){zd}
+        |
+        (?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d)
+        |
+        \b{Y}{zm}{zd}
+    )
+'''
 ANYDATE_SEARCH = regex_compile(
     ANYDATE_PATTERN,
     VERBOSE,
