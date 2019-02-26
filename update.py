@@ -121,17 +121,12 @@ def configure():
         pass
 
 
-def install():
-    run('pip install -r requirements.txt', shell=True, check=True)
-    run("pip-review --auto", shell=True, check=True)
-
-
 if __name__ == '__main__':
     chdir(HOME)
     clone_repo_and_cd()
     set_file_permissions()
     configure()
-    install()
+    run('pip install -rU requirements.txt', shell=True, check=True)
     try:  # To prevent corrupt manifest file. See T164245.
         Path(HOME / 'service.manifest').unlink()
     except FileNotFoundError:
