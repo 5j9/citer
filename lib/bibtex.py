@@ -27,7 +27,7 @@ WORDS_IN_BRACES_SUB = regex.compile(r'(?<!=\s*){([^\\{}\n]*)}').sub
 FINDALL_BIBTEX_FIELDS = regex.compile(
     r'(\w+)\s*=\s*(?:[{"]\s*(.*?)\s*["}]|(\d+))'
 ).findall
-TYPE_SEARCH = regex.compile('@(.*?)\s*\{', regex.IGNORECASE).search
+TYPE_SEARCH = regex.compile(r'@(.*?)\s*\{', regex.IGNORECASE).search
 
 
 def search_for_tag(bibtex: str) -> defaultdict:

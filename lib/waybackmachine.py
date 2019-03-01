@@ -26,7 +26,7 @@ URL_FULLMATCH = regex_compile(
 
 
 def waybackmachine_sfn_cit_ref(
-    archive_url: str, date_format: str= '%Y-%m-%d'
+    archive_url: str, date_format: str = '%Y-%m-%d'
 ) -> tuple:
     """Create the response namedtuple."""
     m = URL_FULLMATCH(archive_url)

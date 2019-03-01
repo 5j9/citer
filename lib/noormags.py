@@ -13,11 +13,11 @@ from lib.bibtex import parse as bibtex_parse
 from lib.ris import parse as ris_parse
 
 
-BIBTEX_ARTICLE_ID_SEARCH = re_compile('(?<=/citation/bibtex/)\d+').search
-RIS_ARTICLE_ID_SEARCH = re_compile('(?<=/citation/ris/)\d+').search
+BIBTEX_ARTICLE_ID_SEARCH = re_compile(r'(?<=/citation/bibtex/)\d+').search
+RIS_ARTICLE_ID_SEARCH = re_compile(r'(?<=/citation/ris/)\d+').search
 
 
-def noormags_sfn_cit_ref(url: str, date_format: str= '%Y-%m-%d') -> tuple:
+def noormags_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     ris_collection = {}
     ris_thread = Thread(target=ris_fetcher_thread, args=(url, ris_collection))

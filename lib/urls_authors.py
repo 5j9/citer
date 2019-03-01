@@ -186,7 +186,7 @@ STOPWORDS_SEARCH = regex_compile(
     IGNORECASE | VERBOSE,
 ).search
 
-FOUR_DIGIT_NUM = regex_compile('\d\d\d\d').search
+FOUR_DIGIT_NUM = regex_compile(r'\d\d\d\d').search
 
 
 def find_authors(html) -> Optional[List[Tuple[str, str]]]:

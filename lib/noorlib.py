@@ -12,12 +12,12 @@ from lib.bibtex import parse as bibtex_parse
 
 
 BIBTEX_ARTICLE_ID_SEARCH = re_compile(
-    '(?<=CitationHandler\.ashx\?id=)\d+'
+    r'(?<=CitationHandler\.ashx\?id=)\d+'
 ).search
-RIS_ARTICLE_ID_SEARCH = re_compile('(?<=RIS&id=)\d+').search
+RIS_ARTICLE_ID_SEARCH = re_compile(r'(?<=RIS&id=)\d+').search
 
 
-def noorlib_sfn_cit_ref(url: str, date_format: str= '%Y-%m-%d') -> tuple:
+def noorlib_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     dictionary = bibtex_parse(get_bibtex(url))
     dictionary['date_format'] = date_format

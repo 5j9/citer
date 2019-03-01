@@ -61,7 +61,7 @@ class IsbnError(Exception):
 
 
 def isbn_sfn_cit_ref(
-    isbn_container_str: str, pure: bool=False, date_format: str='%Y-%m-%d'
+    isbn_container_str: str, pure: bool = False, date_format: str = '%Y-%m-%d'
 ) -> tuple:
     """Create the response namedtuple."""
     if pure:
@@ -192,7 +192,7 @@ def ottobib(isbn):
         return m[1]
 
 
-def oclc_sfn_cit_ref(oclc: str, date_format: str='%Y-%m-%d') -> tuple:
+def oclc_sfn_cit_ref(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:
     text = requests_get(
         'https://www.worldcat.org/oclc/' + oclc + '?page=endnote'
         '&client=worldcat.org-detailed_record'

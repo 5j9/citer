@@ -233,7 +233,7 @@ class StatusCodeError(ValueError):
     pass
 
 
-def urls_sfn_cit_ref(url: str, date_format: str= '%Y-%m-%d') -> tuple:
+def urls_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     try:
         dictionary = url2dict(url)
@@ -265,7 +265,7 @@ def find_url(html: str, url: str) -> str:
 
 
 def find_issn(html: str) -> Optional[str]:
-    """Return International Standard Serial Number as a string.
+    r"""Return International Standard Serial Number as a string.
 
     Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this
     function does not check that.
@@ -394,8 +394,8 @@ def parse_title(
     title: str,
     url: str,
     authors: Optional[List[Tuple[str, str]]],
-    home_title_list: Optional[List[str]]=None,
-    thread: Thread=None,
+    home_title_list: Optional[List[str]] = None,
+    thread: Thread = None,
 ) -> Tuple[Optional[str], str, Optional[str]]:
     """Return (intitle_author, pure_title, intitle_sitename).
 
