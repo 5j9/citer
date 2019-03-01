@@ -3,7 +3,6 @@
 
 from atexit import register as atexit_register
 from pickle import dump, load
-from unittest import TestCase
 
 import requests
 
@@ -36,14 +35,14 @@ def save_cache(cache_dict):
     if not NEW_DOWNLOAD:
         return
     print('saving new cache')
-    with open(f'{__file__}/../.tests_cache', 'w+b') as f:
+    with open(__file__ + '/../.tests_cache', 'w+b') as f:
         dump(cache_dict, f)
 
 
 def load_cache():
     """Return cache as a dict."""
     try:
-        with open(f'{__file__}/../.tests_cache', 'r+b') as f:
+        with open(__file__ + '/../.tests_cache', 'r+b') as f:
             return load(f)
     except FileNotFoundError:
         return {}

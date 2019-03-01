@@ -19,7 +19,8 @@ NON_DIGITS_SUB = re_compile(r'[^\d]').sub
 
 NCBI_URL = (
     'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?'
-    f'api_key={NCBI_API_KEY}&retmode=json&tool={NCBI_TOOL}&email={NCBI_EMAIL}'
+    'api_key=' + NCBI_API_KEY + '&retmode=json&tool=' + NCBI_TOOL + '&email='
+    + NCBI_EMAIL
 )
 PUBMED_URL = NCBI_URL + '&db=pubmed&id='
 PMC_URL = NCBI_URL + '&db=pmc&id='
@@ -155,7 +156,7 @@ def crossref_update(dct: dict, doi: str):
         dct.update(get_crossref_dict(doi))
     except Exception:
         logger.exception(
-            f'There was an error in resolving crossref DOI: {doi}'
+            'There was an error in resolving crossref DOI: ' + doi
         )
 
 

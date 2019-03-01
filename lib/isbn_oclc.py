@@ -194,12 +194,12 @@ def ottobib(isbn):
 
 def oclc_sfn_cit_ref(oclc: str, date_format: str='%Y-%m-%d') -> tuple:
     text = requests_get(
-        f'https://www.worldcat.org/oclc/{oclc}?page=endnote'
+        'https://www.worldcat.org/oclc/' + oclc + '?page=endnote'
         '&client=worldcat.org-detailed_record'
     ).text
     if '<html' in text:  # invalid OCLC number
         return (
-            f'Error processing OCLC number: {oclc}',
+            'Error processing OCLC number: ' + oclc,
             'Perhaps you entered an invalid OCLC number?',
             '',
         )

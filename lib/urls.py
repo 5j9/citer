@@ -25,7 +25,7 @@ from lib.commons import (
 from lib.urls_authors import find_authors, CONTENT_ATTR
 
 
-MAX_RESPONSE_LENGTH = 2_000_000
+MAX_RESPONSE_LENGTH = 2000000
 
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
 CHARSET = regex_compile(
@@ -41,15 +41,13 @@ TITLE_META_NAME_OR_PROP = r'''
     (?P=q)
 '''
 TITLE_SEARCH = regex_compile(
-    rf'''
-    <meta\s++(?:
-        {TITLE_META_NAME_OR_PROP}\s++{CONTENT_ATTR}
-        |
-        {CONTENT_ATTR}\s++{TITLE_META_NAME_OR_PROP}
-    )
-    |
-    class=(?<q>["\'])(?>main-hed|heading1)(?P=q)[^>]++>(?<result>[^<]*+)<
-    ''',
+    r'<meta\s++(?:'
+    + TITLE_META_NAME_OR_PROP + r'\s++' + CONTENT_ATTR
+    + '|'
+    + CONTENT_ATTR + r'\s++' + TITLE_META_NAME_OR_PROP
+    + ')'
+    '|'
+    r'class=(?<q>["\'])(?>main-hed|heading1)(?P=q)[^>]++>(?<result>[^<]*+)<',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -73,21 +71,18 @@ DATE_META_NAME_OR_PROP = r'''
         |sailthru\.date
     )(?P=q)
 '''
-DATE_CONTENT_ATTR = rf'''
-    content=(?<q>["\'])[^"'<]*?{ANYDATE_PATTERN}[^"'<]*+(?P=q)
-'''
+DATE_CONTENT_ATTR =\
+    r'content=(?<q>["\'])[^"\'<]*?' + ANYDATE_PATTERN + r'[^"\'<]*+(?P=q)'
 DATE_SEARCH = regex_compile(
-    rf'''
-    <meta\s+[^\n<]*?(?:
-        {DATE_META_NAME_OR_PROP}\s++[^\n<]*?{DATE_CONTENT_ATTR}
-        |
-        {DATE_CONTENT_ATTR}\s++[^\n<]*?{DATE_META_NAME_OR_PROP}
-    )
-    |
+    r'<meta\s+[^\n<]*?(?:'
+    + DATE_META_NAME_OR_PROP + r'\s++[^\n<]*?' + DATE_CONTENT_ATTR
+    + '|'
+    + DATE_CONTENT_ATTR + r'\s++[^\n<]*?' + DATE_META_NAME_OR_PROP
+    + ')'
+    '|'
     # http://livescience.com/46619-sterile-neutrino-experiment-beginning.html
     # https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0
-    date(?>Published|line)[^\w]++{ANYDATE_PATTERN}
-    ''',
+    r'date(?>Published|line)[^\w]++' + ANYDATE_PATTERN,
     VERBOSE | IGNORECASE,
 ).search
 
@@ -95,13 +90,11 @@ JOURNAL_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_journal_title(?P=q)
 '''
 JOURNAL_TITLE_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{JOURNAL_META_NAME_OR_PROP}
-        |
-        {JOURNAL_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + JOURNAL_META_NAME_OR_PROP
+    + '|'
+    + JOURNAL_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -109,13 +102,11 @@ URL_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])og:url(?P=q)
 '''
 URL_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{URL_META_NAME_OR_PROP}
-        |
-        {URL_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + URL_META_NAME_OR_PROP
+    + '|'
+    + URL_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -123,13 +114,11 @@ ISSN_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_issn(?P=q)
 '''
 ISSN_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{ISSN_META_NAME_OR_PROP}
-        |
-        {ISSN_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + ISSN_META_NAME_OR_PROP
+    + '|'
+    + ISSN_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -137,13 +126,11 @@ PMID_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_pmid(?P=q)
 '''
 PMID_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{PMID_META_NAME_OR_PROP}
-        |
-        {PMID_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + PMID_META_NAME_OR_PROP
+    + '|'
+    + PMID_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -151,13 +138,11 @@ DOI_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_doi(?P=q)
 '''
 DOI_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{DOI_META_NAME_OR_PROP}
-        |
-        {DOI_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + DOI_META_NAME_OR_PROP
+    + '|'
+    + DOI_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -166,13 +151,11 @@ VOLUME_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_volume(?P=q)
 '''
 VOLUME_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{VOLUME_META_NAME_OR_PROP}
-        |
-        {VOLUME_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + VOLUME_META_NAME_OR_PROP
+    + '|'
+    + VOLUME_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -180,13 +163,11 @@ ISSUE_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_issue(?P=q)
 '''
 ISSUE_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{ISSUE_META_NAME_OR_PROP}
-        |
-        {ISSUE_META_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + ISSUE_META_NAME_OR_PROP
+    + '|'
+    + ISSUE_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -194,13 +175,11 @@ FIRST_PAGE_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_firstpage(?P=q)
 '''
 FIRST_PAGE_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{FIRST_PAGE_NAME_OR_PROP}
-        |
-        {FIRST_PAGE_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + FIRST_PAGE_NAME_OR_PROP
+    + '|'
+    + FIRST_PAGE_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -209,13 +188,11 @@ LAST_PAGE_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_lastpage(?P=q)
 '''
 LAST_PAGE_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{LAST_PAGE_NAME_OR_PROP}
-        |
-        {LAST_PAGE_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + LAST_PAGE_NAME_OR_PROP
+    + '|'
+    + LAST_PAGE_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -224,13 +201,11 @@ SITE_NAME_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])og:site_name(?P=q)
 '''
 SITE_NAME_SEARCH = regex_compile(
-    rf'''
-    <meta\s++[^\n<]*?(?:
-        {CONTENT_ATTR}\s++[^\n<]*?{SITE_NAME_NAME_OR_PROP}
-        |
-        {SITE_NAME_NAME_OR_PROP}\s++[^\n<]*?{CONTENT_ATTR}
-    )
-    ''',
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + SITE_NAME_NAME_OR_PROP
+    + '|'
+    + SITE_NAME_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
     VERBOSE | IGNORECASE,
 ).search
 
@@ -552,17 +527,15 @@ def check_response_headers(r: RequestsResponse) -> None:
         bytes_length = int(response_headers['content-length'])
         if bytes_length > MAX_RESPONSE_LENGTH:
             raise ContentLengthError(
-                f'Content-length was too long. '
-                f'({bytes_length / 1_000_000:.2f} MB)'
-            )
+                'Content-length was too long. '
+                '({mb:.2f} MB)'.format(mb=bytes_length / 1000000))
     content_type = response_headers.get('content-type')
     if content_type:
         if content_type.startswith('text/'):
             return
         raise ContentTypeError(
             'Invalid content-type: ' +
-            content_type + ' (URL-content is supposed to be text/html)'
-        )
+            content_type + ' (URL-content is supposed to be text/html)')
     return
 
 
