@@ -33,14 +33,14 @@ OTHER_EXCEPTION_SFN_CIT_REF = (
     '',
 )
 
-CSS = open('src/html/en.css', 'rb').read()
+CSS = open('lib/html/en.css', 'rb').read()
 CSS_HEADERS = [
     ('Content-Type', 'text/css; charset=UTF-8'),
     ('Content-Length', str(len(CSS))),
     ('Cache-Control', 'immutable, public, max-age=31536000'),
 ]
 
-JS = open('src/html/en.js', 'rb').read()
+JS = open('lib/html/en.js', 'rb').read()
 # Invalidate cache after css change.
 JS_HEADERS = [
     ('Content-Type', 'application/javascript; charset=UTF-8'),
@@ -51,7 +51,7 @@ JS_HEADERS = [
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
 HTML_SUBST = Template(
-    open('src/html/en.html', encoding='utf8').read().replace(
+    open('lib/html/en.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
         '"stylesheet" href="./static/en',
         '"stylesheet" href="./static/en' + str(adler32(CSS)),

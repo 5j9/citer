@@ -8,7 +8,7 @@ from string import Template
 from zlib import adler32
 
 
-CSS = open('src/html/fa.css', 'rb').read()
+CSS = open('lib/html/fa.css', 'rb').read()
 CSS_HEADERS = [
     ('Content-Type', 'text/css; charset=UTF-8'),
     ('Content-Length', str(len(CSS))),
@@ -16,7 +16,7 @@ CSS_HEADERS = [
 ]
 
 HTML_SUBST = Template(
-    open('src/html/fa.html', encoding='utf8').read().replace(
+    open('lib/html/fa.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
         '"stylesheet" href="./static/fa',
         '"stylesheet" href="./static/fa' + str(adler32(CSS)),
