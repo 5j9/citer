@@ -113,7 +113,7 @@ class HuffingtonpostTest(unittest.TestCase):
             'http://www.huffingtonpost.ca/annelise-sorg/'
             'blackfish-killer-whale-seaworld_b_3686306.html'
         )
-        self.assertIn('{{sfn | Sorg | 2013}}', o[0])
+        self.assertEqual('{{sfn | Sorg | 2013}}', o[0])
         self.assertIn(
             '* {{cite web '
             '| last=Sorg '
@@ -136,7 +136,6 @@ class HuffingtonpostTest(unittest.TestCase):
             'obamas-climate-change-plan_b_5427656.html'
         )
         o = urls_sfn_cit_ref(i)
-        e1 = '{{sfn | Rifkin | 2014}}'
         e2 = (
             "* {{cite web "
             "| last=Rifkin "
@@ -150,7 +149,7 @@ class HuffingtonpostTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(e1, o[0])
+        self.assertEqual('{{sfn | Rifkin | 2014}}', o[0])
         self.assertIn(e2, o[1])
 
 
@@ -164,7 +163,6 @@ class DilyTelegraphTest(unittest.TestCase):
             'the-barnacles-on-its-back.html'
         )
         o = urls_sfn_cit_ref(i)
-        e1 = '{{sfn | Fogle | 2005}}'
         e2 = (
             "* {{cite web "
             "| last=Fogle "
@@ -179,7 +177,7 @@ class DilyTelegraphTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(e1, o[0])
+        self.assertEqual('{{sfn | Fogle | 2005}}', o[0])
         self.assertIn(e2, o[1])
 
     def test_dt2(self):
@@ -189,7 +187,6 @@ class DilyTelegraphTest(unittest.TestCase):
             'Marine-collapse-linked-to-whale-decline.html'
         )
         o = urls_sfn_cit_ref(i)
-        e1 = '{{sfn | Highfield | 2003}}'
         e2 = (
             "* {{cite web "
             "| last=Highfield "
@@ -202,7 +199,7 @@ class DilyTelegraphTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(e1, o[0])
+        self.assertEqual('{{sfn | Highfield | 2003}}', o[0])
         self.assertIn(e2, o[1])
 
     def test_dt3(self):
@@ -212,7 +209,6 @@ class DilyTelegraphTest(unittest.TestCase):
             'The-sperm-whale-works-in-extraordinary-ways.html'
         )
         o = urls_sfn_cit_ref(i)
-        e1 = '{{sfn | Whitehead | 2011}}'
         e2 = (
             "* {{cite web "
             "| last=Whitehead "
@@ -225,7 +221,7 @@ class DilyTelegraphTest(unittest.TestCase):
             "| ref=harv "
             "| access-date="
         )
-        self.assertIn(e1, o[0])
+        self.assertEqual('{{sfn | Whitehead | 2011}}', o[0])
         self.assertIn(e2, o[1])
 
 
@@ -237,7 +233,7 @@ class DilyMailTest(unittest.TestCase):
             'http://www.dailymail.co.uk/news/article-2633025/'
             'London-cleric-convicted-NYC-terrorism-trial.html'
         )
-        self.assertIn(
+        self.assertEqual(
             '{{sfn | Malm | Witheridge | Drury | Bates | 2014}}', o[0]
         )
         self.assertIn(

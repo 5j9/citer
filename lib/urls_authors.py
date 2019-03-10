@@ -19,7 +19,7 @@ NAME_PATTERN = r'\w[\w.-]++\ \w[\w.-]++(?>\ \w[\w.-]+)?'
 
 # BYLINE_PATTERN supports up to four names in a byline
 # names may be separated with "and", a "comma" or "comma and"
-BYLINE_PATTERN = rf'''
+BYLINE_PATTERN = r'''
     \s*+By\s++{NAME_PATTERN}(
         ,\ {NAME_PATTERN}(
             ,\ {NAME_PATTERN}(
@@ -49,7 +49,7 @@ BYLINE_PATTERN = rf'''
             )?
         )?
     )?\s*
-'''
+'''.format_map(locals())
 BYLINE_PATTERN_SEARCH = regex_compile(BYLINE_PATTERN, VERBOSE | IGNORECASE)
 
 NORMALIZE_ANDS = regex_compile(r'\s++and\s++', IGNORECASE).sub
@@ -96,13 +96,13 @@ AUTHOR_META_NAME_OR_PROP = r'''
     (?P=q))
 '''
 META_AUTHOR_FINDITER = regex_compile(
-    rf'''
+    r'''
     <meta\s[^>]*?(?:
         {AUTHOR_META_NAME_OR_PROP}\s[^c]*+[^>]*?{CONTENT_ATTR}
         |
         {CONTENT_ATTR}\s[^>]*?{AUTHOR_META_NAME_OR_PROP}
     )
-    ''',
+    '''.format_map(locals()),
     VERBOSE | IGNORECASE
 ).finditer
 # id=byline
@@ -110,7 +110,7 @@ META_AUTHOR_FINDITER = regex_compile(
 # rel=author
 # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
 BYLINE_TAG_FINDITER = regex_compile(
-    rf'''
+    r'''
     (?>
         # author_byline example:
         # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
@@ -137,7 +137,7 @@ BYLINE_TAG_FINDITER = regex_compile(
         (?<id>authorName["\']?\s*+:\s*+["\'])(?<result>[^"\'>\n]++)["\']
         |
         # schema.org
-        (?<q>["'])author(?P=q)\s*+:\s*+{{\s*+(?P=q)@type(?P=q)\s*+:\s*+(?P=q)
+        (?<q>["'])author(?P=q)\s*+:\s*+{\s*+(?P=q)@type(?P=q)\s*+:\s*+(?P=q)
         (?<id>Person)
         (?P=q)\s*+,\s*+(?P=q)name(?P=q)\s*+:\s*+(?P=q)(?<result>[^"']*+)(?P=q)
     )
@@ -147,12 +147,12 @@ BYLINE_TAG_FINDITER = regex_compile(
 
 
 BYLINE_HTML_PATTERN = regex_compile(
-    rf'>{BYLINE_PATTERN}<', VERBOSE | IGNORECASE
+    '>' + BYLINE_PATTERN + '<', VERBOSE | IGNORECASE
 ).search
 # [\n|]{BYLINE_PATTERN}\n
 # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
 BYLINE_TEXT_PATTERN = regex_compile(
-    rf'[\n|]{BYLINE_PATTERN}\n', VERBOSE | IGNORECASE
+    r'[\n|]' + BYLINE_PATTERN + r'\n', VERBOSE | IGNORECASE
 ).search
 
 TAGS_SUB = regex_compile(r'</?[a-z][^>]*+>', IGNORECASE).sub
