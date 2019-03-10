@@ -1,10 +1,10 @@
 """Provide utilities to convert between language codes and names.
 
 Data Source: http://data.okfn.org/data/core/language-codes
-
 """
 
-THREE_LETTER_TO_TWO_LETTER_CODE = {
+TO_TWO_LETTER_CODE = {
+    # THREE_LETTER_TO_TWO_LETTER_CODE
     'aar': 'aa', 'abk': 'ab', 'afr': 'af', 'aka': 'ak', 'alb': 'sq',
     'amh': 'am', 'ara': 'ar', 'arg': 'an', 'arm': 'hy', 'asm': 'as',
     'ava': 'av', 'ave': 'ae', 'aym': 'ay', 'aze': 'az', 'bak': 'ba',
@@ -41,10 +41,8 @@ THREE_LETTER_TO_TWO_LETTER_CODE = {
     'tso': 'ts', 'tuk': 'tk', 'tur': 'tr', 'twi': 'tw', 'uig': 'ug',
     'ukr': 'uk', 'urd': 'ur', 'uzb': 'uz', 'ven': 've', 'vie': 'vi',
     'vol': 'vo', 'wel': 'cy', 'wln': 'wa', 'wol': 'wo', 'xho': 'xh',
-    'yid': 'yi', 'yor': 'yo', 'zha': 'za', 'zul': 'zu'
-}
-
-NAME_TO_2LETTER_CODE = {
+    'yid': 'yi', 'yor': 'yo', 'zha': 'za', 'zul': 'zu',
+    # NAME_TO_2LETTER_CODE
     'abkhazian': 'ab',
     'afar': 'aa',
     'afrikaans': 'af',
@@ -96,7 +94,6 @@ NAME_TO_2LETTER_CODE = {
     'english': 'en',
     'esperanto': 'eo',
     'estonian': 'et',
-    'ewe': 'ee',
     'faroese': 'fo',
     'fijian': 'fj',
     'finnish': 'fi',
@@ -122,7 +119,6 @@ NAME_TO_2LETTER_CODE = {
     'hiri motu': 'ho',
     'hungarian': 'hu',
     'icelandic': 'is',
-    'ido': 'io',
     'igbo': 'ig',
     'indonesian': 'id',
     'interlingua (international auxiliary language association)': 'ia',
@@ -148,7 +144,6 @@ NAME_TO_2LETTER_CODE = {
     'kurdish': 'ku',
     'kwanyama': 'kj',
     'kyrgyz': 'ky',
-    'lao': 'lo',
     'latin': 'la',
     'latvian': 'lv',
     'letzeburgesch': 'lb',
@@ -246,7 +241,6 @@ NAME_TO_2LETTER_CODE = {
     'tswana': 'tn',
     'turkish': 'tr',
     'turkmen': 'tk',
-    'twi': 'tw',
     'uighur': 'ug',
     'ukrainian': 'uk',
     'urdu': 'ur',
@@ -265,8 +259,4 @@ NAME_TO_2LETTER_CODE = {
     'yoruba': 'yo',
     'zhuang': 'za',
     'zulu': 'zu'
-}
-
-TO_TWO_LETTER_CODE = {
-    **NAME_TO_2LETTER_CODE, **THREE_LETTER_TO_TWO_LETTER_CODE
 }.get
