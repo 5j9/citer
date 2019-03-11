@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A script to be run as part of forgetools' kube_python_reinstall.py."""
+"""A script to be run as part of forgetools/install_python_webservice.py."""
 
 from os import chmod, open as os_open, close, O_CREAT, O_WRONLY, O_EXCL
 from os.path import expanduser
