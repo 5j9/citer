@@ -1,6 +1,5 @@
-__version__ = '2018.08.23'
 LANG = 'en'
-USER_AGENT = 'citer v' + __version__
+USER_AGENT = 'https://github.com/5j9/citer'
 
 # https://www.ncbi.nlm.nih.gov/books/NBK25497/#chapter2.Frequency_Timing_and_Registrati
 NCBI_EMAIL = ''

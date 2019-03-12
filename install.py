@@ -3,6 +3,8 @@
 
 from os import chmod, open as os_open, close, O_CREAT, O_WRONLY, O_EXCL
 from os.path import expanduser
+from subprocess import check_output
+from re import sub
 
 
 HOME = expanduser('~')
@@ -20,9 +22,19 @@ def set_file_permissions():
 
 
 def copy_config():
-    with open(HOME + '/.config.py', 'r') as home_config:
-        with open(HOME + '/www/python/src/config.py', 'w') as src_config:
-            src_config.write(home_config.read())
+    committer_date = check_output([
+        'git', '-C', HOME + '/www/python/src', 'log', '-1', '--format=%cI'
+    ]).partition(b'T')[0].replace(b'-', b'.')
+    with open(HOME + '/.citer_config', 'rb') as home_config:
+        with open(HOME + '/www/python/src/config.py', 'wb') as src_config:
+            src_config.write(
+                sub(
+                    b"(USER_AGENT = '.*)'\n",
+                    br"\1 v" + committer_date + b"'\n",
+                    home_config.read(),
+                    1,
+                )
+            )
 
 
 def main():
