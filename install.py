@@ -23,8 +23,8 @@ def set_file_permissions():
 
 def copy_config():
     committer_date = check_output([
-        'git', '-C', HOME + '/www/python/src', 'log', '-1', '--format=%cI'
-    ]).partition(b'T')[0].replace(b'-', b'.')
+        'git', '-C', HOME + '/www/python/src', 'log', '-1', '--format=%cd',
+        '--date=short']).rstrip().replace(b'-', b'.')
     with open(HOME + '/.citer_config', 'rb') as home_config:
         with open(HOME + '/www/python/src/config.py', 'wb') as src_config:
             src_config.write(
