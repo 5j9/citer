@@ -6,7 +6,7 @@ from os.path import abspath
 
 from requests import Session
 
-# Do not import library parts here. The config should not be initialized
+# Do not import library parts here. commons.py should not be loaded
 # until LANG is set by test_fa and test_en.
 
 
