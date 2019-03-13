@@ -1,9 +1,7 @@
 body {
-    margin-left:auto;
-    margin-right:auto;
-    width:80%;
+    margin-left:2em;
+    margin-right:2em;
     font-family: tahoma;
-    font-size: 0.8em;
 }
 #shortened, #named_ref, input, select {
     transition: background-color 5s ease-in;
