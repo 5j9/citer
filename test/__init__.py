@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from atexit import register as atexit_register
 from pickle import dump, load
+from os.path import abspath
 
 from requests import Session
 
@@ -11,6 +12,7 @@ from requests import Session
 
 FORCE_CACHE_OVERWRITE = False  # Use for updating cache entries
 NEW_DOWNLOAD = False
+CACHE_PATH = abspath(__file__ + '/../.tests_cache')
 
 
 def fake_request(method, url, **kwargs):
@@ -30,14 +32,14 @@ def save_cache(cache_dict):
     if not NEW_DOWNLOAD:
         return
     print('saving new cache')
-    with open(__file__ + '/../.tests_cache', 'w+b') as f:
+    with open(CACHE_PATH, 'wb') as f:
         dump(cache_dict, f)
 
 
 def load_cache():
     """Return cache as a dict."""
     try:
-        with open(__file__ + '/../.tests_cache', 'r+b') as f:
+        with open(CACHE_PATH, 'rb') as f:
             return load(f)
     except FileNotFoundError:
         return {}
