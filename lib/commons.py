@@ -106,9 +106,9 @@ class NumberInNameError(InvalidNameError):
 def fetch(url, spoof=False, **kwargs):
     with Session() as session:
         return session.request(
-            method='get', url=url,
-            headers=AGENT_HEADER if spoof else SPOOFED_AGENT_HEADER,
-            timeout=10, **kwargs)
+            'get', url, timeout=10,
+            headers=SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER,
+            **kwargs)
 
 
 def dict_to_sfn_cit_ref(dictionary) -> tuple:
