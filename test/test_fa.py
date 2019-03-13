@@ -4,6 +4,9 @@
 from unittest import TestCase, main
 
 import config; config.LANG = 'fa'
+# load .tests_cache
+# noinspection PyUnresolvedReferences
+import test
 
 from lib.adinebook import adinehbook_sfn_cit_ref
 from lib.doi import doi_sfn_cit_ref
