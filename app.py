@@ -3,12 +3,12 @@
 
 from collections import defaultdict
 from html import unescape
-import logging
-import logging.handlers
+from logging import getLogger, Formatter, WARNING, INFO
+from logging.handlers import RotatingFileHandler
 from urllib.parse import parse_qs, urlparse, unquote
 from wsgiref.headers import Headers
 
-import requests
+from requests import ConnectionError as RequestsConnectionError
 
 from config import LANG
 from lib.adinebook import adinehbook_sfn_cit_ref
@@ -58,22 +58,28 @@ TLDLESS_NETLOC_RESOLVER = {
 RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
 
 
-def mylogger():
-    custom_logger = logging.getLogger()
-    custom_logger.setLevel(logging.INFO)
-    handler = logging.handlers.RotatingFileHandler(
+getLogger('requests').setLevel(WARNING)
+getLogger('langid').setLevel(WARNING)
+
+
+def get_root_logger():
+    custom_logger = getLogger()
+    custom_logger.setLevel(INFO)
+    handler = RotatingFileHandler(
         filename='citer.log',
         mode='a',
         maxBytes=20000,
         backupCount=0,
         encoding='utf-8',
         delay=0)
-    handler.setLevel(logging.INFO)
-    fmt = '\n%(asctime)s\n%(levelname)s\n%(message)s\n'
-    formatter = logging.Formatter(fmt)
-    handler.setFormatter(formatter)
+    handler.setLevel(INFO)
+    handler.setFormatter(
+        Formatter('\n%(asctime)s\n%(levelname)s\n%(message)s\n'))
     custom_logger.addHandler(handler)
     return custom_logger
+
+
+LOGGER = get_root_logger()
 
 
 def url_doi_isbn_to_sfn_cit_ref(user_input, date_format) -> tuple:
@@ -88,6 +94,7 @@ def url_doi_isbn_to_sfn_cit_ref(user_input, date_format) -> tuple:
             url = 'http://' + user_input
         else:
             url = user_input
+        # TLD stands for top-level domain
         tldless_netloc = urlparse(url)[1].rpartition('.')[0]
         resolver = TLDLESS_NETLOC_RESOLVER(
             tldless_netloc[4:] if tldless_netloc.startswith('www.')
@@ -144,9 +151,9 @@ def app(environ, start_response):
     # noinspection PyBroadException
     try:
         response = resolver(user_input, date_format)
-    except requests.ConnectionError:
+    except RequestsConnectionError:
         status = '500 ConnectionError'
-        logger.exception(user_input)
+        LOGGER.exception(user_input)
         if output_format == 'json':
             response_body = sfn_cit_ref_to_json(HTTPERROR_SFN_CIT_REF)
         else:
@@ -154,7 +161,7 @@ def app(environ, start_response):
                 HTTPERROR_SFN_CIT_REF, date_format, input_type)
     except Exception:
         status = '500 Internal Server Error'
-        logger.exception(user_input)
+        LOGGER.exception(user_input)
         if output_format == 'json':
             response_body = sfn_cit_ref_to_json(OTHER_EXCEPTION_SFN_CIT_REF)
         else:
@@ -180,10 +187,9 @@ input_type_to_resolver = defaultdict(
         'pmcid': pmcid_sfn_cit_ref,
         'oclc': oclc_sfn_cit_ref})
 
+
 if __name__ == '__main__':
-    logger = mylogger()
-    logging.getLogger('requests').setLevel(logging.WARNING)
-    logging.getLogger('langid').setLevel(logging.WARNING)
+    # note that app.py is not run as '__main__' in kubernetes
     try:
         from flup.server.fcgi import WSGIServer
         WSGIServer(app).run()
