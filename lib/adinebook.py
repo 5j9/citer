@@ -67,14 +67,14 @@ def url2dictionary(adinebook_url: str):
         return
     else:
         d = defaultdict(lambda: None, cite_type='book')
-        d['title'] = TITLE_SEARCH(adinebook_html)[1]
+        d['title'] = TITLE_SEARCH(adinebook_html).group(1)
         # initiating name lists:
         others = []
         authors = []
         editors = []
         translators = []
         # building lists:
-        for name in AUTHORS_SEARCH(adinebook_html)[1].strip().split('،'):
+        for name in AUTHORS_SEARCH(adinebook_html).group(1).strip().split('،'):
             if '(به اهتمام)' in name:
                 authors.append(first_last(name.partition('(به اهتمام)')[0]))
             elif '(ویراستار)' in name:
