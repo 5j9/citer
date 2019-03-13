@@ -11,6 +11,7 @@ from langid import classify
 from requests import get as requests_get
 
 # import bibtex [1]
+from config import SPOOFED_USER_AGENT
 from lib.ris import parse as ris_parse
 from lib.commons import dict_to_sfn_cit_ref
 
@@ -35,7 +36,7 @@ def googlebooks_sfn_cit_ref(url, date_format='%Y-%m-%d') -> tuple:
     return dict_to_sfn_cit_ref(dictionary)
 
 
-def get_bibtex(googlebook_url):
+def get_bibtex(googlebook_url) -> bytes:
     """Get bibtex file content from a noormags url."""
     # getting id:
     pu = urlparse(googlebook_url)
@@ -44,13 +45,9 @@ def get_bibtex(googlebook_url):
     url = 'http://books.google.com/books/download/?id=' +\
           bookid + '&output=bibtex'
     # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    headers = {
-        'User-agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 '
-        'Firefox/58.0'
-    }
-    bibtex = requests_get(url, headers=headers, timeout=10).text
-    return bibtex
+    return requests_get(
+        url, headers={'User-agent': SPOOFED_USER_AGENT}, timeout=10
+    ).content
 
 
 def get_ris(googlebook_url):
@@ -62,9 +59,6 @@ def get_ris(googlebook_url):
     url = 'http://books.google.com/books/download/?id=' +\
         bookid + '&output=ris'
     # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    headers = {
-        'User-agent':
-        'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 '
-        'Firefox/33.0'
-    }
-    return requests_get(url, headers=headers, timeout=10).text
+    return requests_get(
+        url, headers={'User-agent': SPOOFED_USER_AGENT}, timeout=10
+    ).text

@@ -10,6 +10,7 @@ from langid import classify
 from regex import compile as regex_compile
 from requests import get as requests_get, RequestException
 
+from config import SPOOFED_USER_AGENT
 from lib.commons import first_last, dict_to_sfn_cit_ref
 
 
@@ -59,12 +60,9 @@ def url2dictionary(adinebook_url: str):
     try:
         # Try to see if adinebook is available,
         # ottobib should continoue its work in isbn.py if it is not.
-        headers = {
-            'User-agent':
-            'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) '
-            'Gecko/20100101 Firefox/33.0'
-        }
-        r = requests_get(adinebook_url, headers=headers, timeout=10)
+        r = requests_get(
+            adinebook_url, headers={'User-agent': SPOOFED_USER_AGENT},
+            timeout=10)
         adinebook_html = r.content.decode('utf-8')
     except RequestException:
         logger.exception(adinebook_url)

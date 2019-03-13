@@ -1,5 +1,6 @@
 LANG = 'en'
 USER_AGENT = 'https://github.com/5j9/citer'
+SPOOFED_USER_AGENT = ''
 
 # https://www.ncbi.nlm.nih.gov/books/NBK25497/#chapter2.Frequency_Timing_and_Registrati
 NCBI_EMAIL = ''
