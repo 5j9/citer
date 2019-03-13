@@ -45,3 +45,6 @@ footer {
     font-size: 90%;
     color: #666666;
 }
+#bookmarklet {
+    float: right;
+}
