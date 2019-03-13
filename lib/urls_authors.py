@@ -194,28 +194,28 @@ def find_authors(html) -> Optional[List[Tuple[str, str]]]:
     names = []
     match_id = None
     for match in META_AUTHOR_FINDITER(html):
-        if match_id and match_id != match['id']:
+        if match_id and match_id != match.group('id'):
             break
-        name = byline_to_names(match['result'])
+        name = byline_to_names(match.group('result'))
         if name:
             names.extend(name)
-            match_id = match['id']
+            match_id = match.group('id')
     if names:
         return names
     match_id = None
     for match in BYLINE_TAG_FINDITER(html):
         # Only match authors using the same search criteria.
-        if match_id and match_id != match['id']:
+        if match_id and match_id != match.group('id'):
             break
-        if match['tag']:
-            tag_text = TAGS_SUB('', match['result'])
+        if match.group('tag'):
+            tag_text = TAGS_SUB('', match.group('result'))
             ns = byline_to_names(tag_text)
             if ns:
-                match_id = match['id']
+                match_id = match.group('id')
                 names.extend(ns)
                 continue
-            for m in BYLINE_AUTHOR(match['result']):
-                author = m['result']
+            for m in BYLINE_AUTHOR(match.group('result')):
+                author = m.group('result')
                 ns = byline_to_names(author)
                 if ns:
                     names.extend(ns)
@@ -223,15 +223,15 @@ def find_authors(html) -> Optional[List[Tuple[str, str]]]:
                 return names
         else:
             # not containing tags.
-            ns = byline_to_names(match['result'])
+            ns = byline_to_names(match.group('result'))
             if ns:
-                match_id = match['id']
+                match_id = match.group('id')
                 names.extend(ns)
     if names:
         return names
     match = BYLINE_TEXT_PATTERN(TAGS_SUB('', html))
     if match:
-        return byline_to_names(match[0])
+        return byline_to_names(match.group())
     return None
 
 

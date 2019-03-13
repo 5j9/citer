@@ -104,7 +104,7 @@ def url_doi_isbn_to_sfn_cit_ref(user_input, date_format) -> tuple:
         # DOIs contain dots
         m = DOI_SEARCH(unescape(en_user_input))
         if m:
-            return doi_sfn_cit_ref(m[1], pure=True, date_format=date_format)
+            return doi_sfn_cit_ref(m.group(1), True, date_format)
         return urls_sfn_cit_ref(url, date_format)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
@@ -112,7 +112,7 @@ def url_doi_isbn_to_sfn_cit_ref(user_input, date_format) -> tuple:
         m = ISBN_10OR13_SEARCH(en_user_input)
         if m:
             try:
-                return isbn_sfn_cit_ref(m[0], True, date_format)
+                return isbn_sfn_cit_ref(m.group(), True, date_format)
             except IsbnError:
                 pass
         return UNDEFINED_INPUT_SFN_CIT_REF

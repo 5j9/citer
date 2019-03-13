@@ -104,7 +104,7 @@ def original_url_dict(url: str):
     home_title_thread.start()
     html = get_html(url)
     m = TITLE_TAG(html)
-    html_title = m['result'] if m else None
+    html_title = m.group('result') if m else None
     if html_title:
         d['html_title'] = html_title
     authors = find_authors(html)

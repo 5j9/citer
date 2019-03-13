@@ -95,14 +95,14 @@ def url2dictionary(adinebook_url: str):
             d['translators'] = translators
         m = PUBLISHER_SEARCH(adinebook_html)
         if m:
-            d['publisher'] = m[1]
+            d['publisher'] = m.group(1)
         m = DATE_SEARCH(adinebook_html)
         if m:
-            d['month'] = m['month']
-            d['year'] = m['year']
+            d['month'] = m.group('month')
+            d['year'] = m.group('year')
         m = ISBN_SEARCH(adinebook_html)
         if m:
-            d['isbn'] = m[1]
+            d['isbn'] = m.group(1)
     return d
 
 

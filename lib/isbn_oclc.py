@@ -178,7 +178,7 @@ def ottobib(isbn):
     m = OTTOBIB_SEARCH(
         fetch('http://www.ottobib.com/isbn/' + isbn + '/bibtex').text)
     if m:
-        return m[1]
+        return m.group(1)
 
 
 def oclc_sfn_cit_ref(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:

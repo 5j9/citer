@@ -79,7 +79,7 @@ def parse(ris_text):
     # DOIs may be in N1 (notes) tag, search for it in any tag
     m = DOI_SEARCH(ris_text)
     if m:
-        d['doi'] = m[0]
+        d['doi'] = m.group()
     start_page = d['start_page']
     if start_page:
         end_page = d['end_page']
