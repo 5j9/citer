@@ -455,8 +455,7 @@ def parse_title(
                 else:
                     # 4. Using difflib on home_title
                     close_matches = get_close_matches(
-                        home_title, title_parts, n=1, cutoff=.3
-                    )
+                        home_title, title_parts, n=1, cutoff=.3)
                     if close_matches:
                         intitle_sitename = close_matches[0]
     # Remove sitename from title_parts
@@ -548,8 +547,7 @@ def get_html(url: str) -> str:
         content = next(r.iter_content(MAX_RESPONSE_LENGTH))
     charset_match = CHARSET(content)
     return content.decode(
-        charset_match[1].decode() if charset_match else r.encoding
-    )
+        charset_match[1].decode() if charset_match else r.encoding)
 
 
 def url2dict(url: str) -> Dict[str, Any]:
@@ -558,8 +556,7 @@ def url2dict(url: str) -> Dict[str, Any]:
     # Creating a thread to fetch homepage title in background
     home_title_list = []  # A mutable variable used to get the thread result
     home_title_thread = Thread(
-        target=get_home_title, args=(url, home_title_list)
-    )
+        target=get_home_title, args=(url, home_title_list))
     home_title_thread.start()
 
     html = get_html(url)
@@ -584,11 +581,9 @@ def url2dict(url: str) -> Dict[str, Any]:
     else:
         d['cite_type'] = 'web'
         d['website'] = find_site_name(
-            html, html_title, url, authors, home_title_list, home_title_thread
-        )
+            html, html_title, url, authors, home_title_list, home_title_thread)
     d['title'] = find_title(
-        html, html_title, url, authors, home_title_list, home_title_thread
-    )
+        html, html_title, url, authors, home_title_list, home_title_thread)
     date = find_date(html, url)
     if date:
         d['date'] = date

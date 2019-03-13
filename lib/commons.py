@@ -19,12 +19,8 @@ else:
     from lib.generator_fa import sfn_cit_ref
 
 
-b_TO_NUM = {
-    name.lower(): num for num, name in enumerate(month_abbr) if num
-}
-B_TO_NUM = {
-    name.lower(): num for num, name in enumerate(month_name) if num
-}
+b_TO_NUM = {name.lower(): num for num, name in enumerate(month_abbr) if num}
+B_TO_NUM = {name.lower(): num for num, name in enumerate(month_name) if num}
 
 # jB_TO_NUM contains entries for both ی and ي
 jB_TO_NUM = {
@@ -39,8 +35,7 @@ jB_TO_NUM = {
     'آذر': 9,
     'دی': 10,
     'بهمن': 11,
-    'اسفند': 12,
-}
+    'اسفند': 12}
 
 DOUBLE_DIGIT_SEARCH = regex_compile(r'\d\d').search
 
@@ -58,14 +53,12 @@ B = (
     A(?:pril|ugust)
     |
     (?:(?:(?:Sept|Nov|Dec)em)|Octo)ber))
-    '''
-)
+    ''')
 # فروردین|اردیبهشت|خرداد...
 jB = (
     '(?>(?<jB>'
     + '|'.join([jm for jm in jB_TO_NUM]).replace('ی', '[یي]')
-    + '))'
-)
+    + '))')
 # Month abbreviations:
 b = r'(?>(?<b>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)).?'
 # Month numbers 0?1-12
@@ -84,13 +77,8 @@ ANYDATE_PATTERN = (
     + '|' + Y + '(?<sep>[-/])' + zm + '(?P=sep)' + zd
     + '|' + r'(?<d>\d\d?)\ ' + jB + r'\ (?<Y>\d\d\d\d)'
     + r'|\b' + Y + zm + zd
-    + ')'
-)
-ANYDATE_SEARCH = regex_compile(
-    ANYDATE_PATTERN,
-    VERBOSE,
-).search
-
+    + ')')
+ANYDATE_SEARCH = regex_compile(ANYDATE_PATTERN, VERBOSE).search
 DIGITS_FINDALL = regex_compile(r'\d').findall
 MC_SUB = regex_compile(r'MC(\w)', IGNORECASE).sub
 
