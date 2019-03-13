@@ -4,14 +4,12 @@
 """Test noorlib.py module."""
 
 
-import unittest
+from unittest import main, TestCase
 
-from lib import noorlib
 from lib.noorlib import noorlib_sfn_cit_ref
-from test import DummyRequests
 
 
-class NoorlibTest(unittest.TestCase):
+class NoorlibTest(TestCase):
 
     def test_nl1(self):
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/6120'
@@ -61,6 +59,5 @@ class NoorlibTest(unittest.TestCase):
         )
 
 
-noorlib.requests_get = DummyRequests().get
 if __name__ == '__main__':
-    unittest.main()
+    main()

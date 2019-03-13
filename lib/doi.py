@@ -11,9 +11,8 @@ from html import unescape
 
 from langid import classify
 from regex import compile as regex_compile, VERBOSE
-from requests import get as requests_get
 
-from lib.commons import dict_to_sfn_cit_ref
+from lib.commons import dict_to_sfn_cit_ref, fetch
 from config import LANG
 
 
@@ -53,9 +52,7 @@ def get_crossref_dict(doi) -> defaultdict:
     # for documentation.
     # Force using the version 1 of the API to prevent breakage. See:
     # https://github.com/CrossRef/rest-api-doc/blob/master/rest_api.md#how-to-manage-api-versions
-    j = requests_get(
-        'http://api.crossref.org/v1/works/' + doi, timeout=10
-    ).json()
+    j = fetch('http://api.crossref.org/v1/works/' + doi).json()
     assert j['status'] == 'ok'
     d = defaultdict(
         lambda: None, {k.lower(): v for k, v in j['message'].items()})

@@ -6,6 +6,7 @@ from pickle import dump, load
 
 import requests
 
+from lib import commons
 
 FORCE_CACHE_OVERWRITE = False  # Use for updating cache entries
 NEW_DOWNLOAD = False
@@ -47,6 +48,8 @@ def load_cache():
     except FileNotFoundError:
         return {}
 
+
+commons.get = DummyRequests().get
 
 cache = load_cache()
 print('len(cache) ==', len(cache))

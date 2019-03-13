@@ -5,8 +5,7 @@ from unittest import TestCase, main
 
 import config; config.LANG = 'fa'
 
-from lib import (
-    adinebook, googlebooks, noormags, noorlib, doi, isbn_oclc, pubmed)
+from lib import commons
 from lib.adinebook import adinehbook_sfn_cit_ref
 from lib.doi import doi_sfn_cit_ref
 from lib.googlebooks import googlebooks_sfn_cit_ref
@@ -359,9 +358,5 @@ class IsbnTest(TestCase):
         )
 
 
-adinebook.requests_get = googlebooks.requests_get = \
-    noormags.requests_get = pubmed.requests_get = \
-    noorlib.requests_get = doi.requests_get = isbn_oclc.requests_get = \
-    DummyRequests().get
 if __name__ == '__main__':
     main()

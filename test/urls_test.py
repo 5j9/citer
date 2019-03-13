@@ -4,14 +4,12 @@
 """Test urls.py module."""
 
 
-import unittest
+from unittest import main, TestCase, skip
 
-from test import DummyRequests
-from lib import urls
 from lib.urls import urls_sfn_cit_ref
 
 
-class BostonTest(unittest.TestCase):
+class BostonTest(TestCase):
 
     def test_bg1(self):
         """boston.com, dateformat '%B %d, %Y'"""
@@ -81,7 +79,7 @@ class BostonTest(unittest.TestCase):
         self.assertIn(ct, o[1])
 
 
-class WashingtonpostTest(unittest.TestCase):
+class WashingtonpostTest(TestCase):
 
     def test_wp1(self):
         """`1 author, 2005, the pubdate is different from last edit date"""
@@ -105,7 +103,7 @@ class WashingtonpostTest(unittest.TestCase):
         )
 
 
-class HuffingtonpostTest(unittest.TestCase):
+class HuffingtonpostTest(TestCase):
 
     def test_hp1(self):
         """`1 author, 2013"""
@@ -153,7 +151,7 @@ class HuffingtonpostTest(unittest.TestCase):
         self.assertIn(e2, o[1])
 
 
-class DilyTelegraphTest(unittest.TestCase):
+class DilyTelegraphTest(TestCase):
 
     def test_dt1(self):
         """`1 author, 2005"""
@@ -225,7 +223,7 @@ class DilyTelegraphTest(unittest.TestCase):
         self.assertIn(e2, o[1])
 
 
-class DilyMailTest(unittest.TestCase):
+class DilyMailTest(TestCase):
 
     def test_dm1(self):
         """4 authors"""
@@ -280,7 +278,7 @@ class DilyMailTest(unittest.TestCase):
         )
 
 
-class BbcTest(unittest.TestCase):
+class BbcTest(TestCase):
 
     def test_bbc1(self):
         """no authors"""
@@ -384,7 +382,7 @@ class BbcTest(unittest.TestCase):
         self.assertIn(ct, o[1])
 
         
-class NytTest(unittest.TestCase):
+class NytTest(TestCase):
 
     def test_nyt1(self):
         """newstylct, 1 author"""
@@ -520,7 +518,7 @@ class NytTest(unittest.TestCase):
         self.assertIn(ct, o[1])
         
 
-class TGDaily(unittest.TestCase):
+class TGDaily(TestCase):
 
     def test_tgd2(self):
         """Hard to find author and date."""
@@ -561,8 +559,8 @@ class TGDaily(unittest.TestCase):
         self.assertIn(ct, o[1])
 
 
-@unittest.skip
-class NotWorking(unittest.TestCase):
+@skip
+class NotWorking(TestCase):
     def test_tgd1(self):
         """ABCNews. Wrong author:  | last=News | first=ABC."""
         i = 'http://abcnews.go.com/blogs/headlines/2006/12/saddam_executed/'
@@ -593,7 +591,7 @@ class NotWorking(unittest.TestCase):
         self.assertIn(sfn, o[0])
 
 
-class Others(unittest.TestCase):
+class Others(TestCase):
 
     def test_oth1(self):
         """Get title by hometitle comparison."""
@@ -641,7 +639,7 @@ class Others(unittest.TestCase):
 
     # Disable because relies on class="author" which has been disabled due
     # to hight error rate.
-    @unittest.skip
+    @skip
     def test_oth3(self):
         """4 authors."""
         i = (
@@ -993,8 +991,5 @@ class Others(unittest.TestCase):
         )
 
 
-dummy_requests = DummyRequests()
-urls.requests_get = dummy_requests.get
-urls.requests_head = dummy_requests.head
 if __name__ == '__main__':
-    unittest.main()
+    main()

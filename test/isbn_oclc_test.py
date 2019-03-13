@@ -6,9 +6,7 @@
 
 from unittest import TestCase, main
 
-from lib import isbn_oclc, adinebook
 from lib.isbn_oclc import isbn_sfn_cit_ref, oclc_sfn_cit_ref
-from test import DummyRequests
 
 
 class IsbnTest(TestCase):
@@ -104,7 +102,5 @@ class OCLCTest(TestCase):
         ), oclc_sfn_cit_ref('24680975')[1])
 
 
-isbn_oclc.requests_get = DummyRequests().get
-adinebook.requests_get = DummyRequests().get
 if __name__ == '__main__':
     main()

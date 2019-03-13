@@ -4,14 +4,12 @@
 """Test googlebooks.py module."""
 
 
-import unittest
+from unittest import main, TestCase
 
-from lib import googlebooks
 from lib.googlebooks import googlebooks_sfn_cit_ref
-from test import DummyRequests
 
 
-class GooglebooksTest(unittest.TestCase):
+class GooglebooksTest(TestCase):
 
     def test_gb1(self):
         i = (
@@ -180,6 +178,5 @@ class GooglebooksTest(unittest.TestCase):
         self.assertIn(' | page=378}}&lt;/ref&gt;', o[2])
 
 
-googlebooks.requests_get = DummyRequests().get
 if __name__ == '__main__':
-    unittest.main()
+    main()

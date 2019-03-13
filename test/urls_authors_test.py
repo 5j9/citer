@@ -5,7 +5,7 @@
 
 
 from regex import compile as regex_compile, VERBOSE, IGNORECASE
-import unittest
+from unittest import main, expectedFailure, TestCase
 
 from lib.urls_authors import byline_to_names, BYLINE_PATTERN
 
@@ -15,7 +15,7 @@ BYLINE_PATTERN_REGEX = regex_compile(
 )
 
 
-class RegexTest(unittest.TestCase):
+class RegexTest(TestCase):
 
     """BYLINE_PATTERN should pass the following tests."""
 
@@ -48,7 +48,7 @@ class RegexTest(unittest.TestCase):
         text = 'by John Timmer, Matt Ford, Chris Lee, and Jonathan Gitlin Sept'
         self.assertRegex(text, BYLINE_PATTERN_REGEX)
 
-    @unittest.expectedFailure
+    @expectedFailure
     def test_four_authors_with_for(self):
         """Test four authors, having a "for" at the end.
 
@@ -63,7 +63,7 @@ class RegexTest(unittest.TestCase):
         self.assertRegex(text, BYLINE_PATTERN_REGEX)
 
 
-class BylineToNames(unittest.TestCase):
+class BylineToNames(TestCase):
 
     """Test byline_to_names function."""
 
@@ -113,4 +113,4 @@ class BylineToNames(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    main()

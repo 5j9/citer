@@ -4,14 +4,12 @@
 """Test noormags.py module."""
 
 
-import unittest
+from unittest import main, TestCase
 
-from lib import noormags
 from lib.noormags import noormags_sfn_cit_ref
-from test import DummyRequests
 
 
-class NoormagsTest(unittest.TestCase):
+class NoormagsTest(TestCase):
 
     def test_nm2(self):
         """The second author does not have a last name. (Bibtex file error)"""
@@ -81,6 +79,5 @@ class NoormagsTest(unittest.TestCase):
             '| access-date=', o[2])
 
 
-noormags.requests_get = DummyRequests().get
 if __name__ == '__main__':
-    unittest.main()
+    main()

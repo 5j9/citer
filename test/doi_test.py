@@ -4,14 +4,12 @@
 """Test doi.py module."""
 
 
-import unittest
+from unittest import main, TestCase
 
-from lib import doi
 from lib.doi import doi_sfn_cit_ref
-from test import DummyRequests
 
 
-class DoiTest(unittest.TestCase):
+class DoiTest(TestCase):
 
     def test_doi1(self):
         self.assertEqual(
@@ -118,6 +116,5 @@ class DoiTest(unittest.TestCase):
         )
 
 
-doi.requests_get = DummyRequests().get
 if __name__ == '__main__':
-    unittest.main()
+    main()

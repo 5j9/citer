@@ -4,15 +4,14 @@
 """Test noormags.py module."""
 
 
-import unittest
+from unittest import main, TestCase
 from unittest.mock import patch, Mock
 
 from lib import pubmed
 from lib.pubmed import pmid_sfn_cit_ref, pmcid_sfn_cit_ref
-from test import DummyRequests
 
 
-class PMCID(unittest.TestCase):
+class PMCID(TestCase):
 
     """Test pmcid_sfn_cit_ref."""
 
@@ -67,6 +66,5 @@ class PMCID(unittest.TestCase):
         )
 
 
-pubmed.requests_get = DummyRequests().get
 if __name__ == '__main__':
-    unittest.main()
+    main()

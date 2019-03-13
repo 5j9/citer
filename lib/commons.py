@@ -11,8 +11,10 @@ from json import dumps as json_dumps
 from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
 from regex import compile as regex_compile, VERBOSE, IGNORECASE
+from requests import get
 
-from config import LANG, USER_AGENT
+from config import LANG, SPOOFED_USER_AGENT, NCBI_TOOL, NCBI_EMAIL, USER_AGENT
+
 if LANG == 'en':
     from lib.generator_en import sfn_cit_ref
 else:
@@ -82,7 +84,13 @@ ANYDATE_SEARCH = regex_compile(ANYDATE_PATTERN, VERBOSE).search
 DIGITS_FINDALL = regex_compile(r'\d').findall
 MC_SUB = regex_compile(r'MC(\w)', IGNORECASE).sub
 
-USER_AGENT_HEADER = {'User-Agent': USER_AGENT}
+
+AGENT_HEADER = {
+    'User-Agent': USER_AGENT,
+    # Not required but recommended by
+    # https://meta.wikimedia.org/wiki/User-Agent_policy
+    'Api-User-Agent': NCBI_TOOL + '/' + NCBI_EMAIL}
+SPOOFED_AGENT_HEADER = {'User-Agent': SPOOFED_USER_AGENT}
 
 
 class InvalidNameError(ValueError):
@@ -93,6 +101,12 @@ class InvalidNameError(ValueError):
 class NumberInNameError(InvalidNameError):
 
     """Raise when a RawName() contains digits.."""
+
+
+def fetch(url, spoof=False, **kwargs):
+    return get(
+        url, headers=AGENT_HEADER if spoof else SPOOFED_AGENT_HEADER,
+        timeout=10, **kwargs)
 
 
 def dict_to_sfn_cit_ref(dictionary) -> tuple:

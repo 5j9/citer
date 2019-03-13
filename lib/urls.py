@@ -15,13 +15,12 @@ from urllib.parse import urlparse
 
 from langid import classify
 from regex import compile as regex_compile, VERBOSE, IGNORECASE
-from requests import get as requests_get, Response as RequestsResponse
+from requests import Response as RequestsResponse
 from requests.exceptions import RequestException
 
 from lib.commons import (
-    find_any_date, USER_AGENT_HEADER,
-    dict_to_sfn_cit_ref, ANYDATE_PATTERN,
-)
+    find_any_date, dict_to_sfn_cit_ref, ANYDATE_PATTERN,
+    fetch)
 from lib.urls_authors import find_authors, CONTENT_ATTR
 
 
@@ -228,7 +227,7 @@ class ContentLengthError(ValueError):
 
 class StatusCodeError(ValueError):
 
-    """Raise when requests_get.status_code != 200."""
+    """Raise when status_code != 200."""
 
     pass
 
@@ -240,7 +239,7 @@ def urls_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     except (ContentTypeError, ContentLengthError) as e:
         logger.exception(url)
         # Todo: i18n
-        return 'Could not process the request.', e, ''
+        return 'Could not process the fetch.', e, ''
     dictionary['date_format'] = date_format
     return dict_to_sfn_cit_ref(dictionary)
 
@@ -495,8 +494,8 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
     """
     # Todo: cache the result.
     home_url = '://'.join(urlparse(url)[:2])
-    with requests_get(
-        home_url, stream=True, headers=USER_AGENT_HEADER, timeout=15
+    with fetch(
+        home_url, spoof=True, stream=True
     ) as r:
         try:
             check_response_headers(r)
@@ -540,8 +539,8 @@ def check_response_headers(r: RequestsResponse) -> None:
 
 def get_html(url: str) -> str:
     """Return the html string for the given url."""
-    with requests_get(
-        url, stream=True, headers=USER_AGENT_HEADER, timeout=15
+    with fetch(
+        url, stream=True, spoof=True
     ) as r:
         check_response_headers(r)
         content = next(r.iter_content(MAX_RESPONSE_LENGTH))

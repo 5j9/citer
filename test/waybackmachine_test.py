@@ -4,14 +4,12 @@
 """Test urls.py module."""
 
 
-import unittest
+from unittest import main, TestCase
 
-from lib import urls
 from lib.waybackmachine import waybackmachine_sfn_cit_ref
-from test import DummyRequests
 
 
-class WaybackmachineResponse(unittest.TestCase):
+class WaybackmachineResponse(TestCase):
 
     def test_live_og_link(self):
         """dead-link=no"""
@@ -110,8 +108,5 @@ class WaybackmachineResponse(unittest.TestCase):
         self.assertIn(ct, o[1])
 
 
-dummy_requests = DummyRequests()
-urls.requests_get = dummy_requests.get
-urls.requests_head = dummy_requests.head
 if __name__ == '__main__':
-    unittest.main()
+    main()

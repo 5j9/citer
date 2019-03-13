@@ -6,9 +6,7 @@
 
 from unittest import TestCase, main
 
-from lib import adinebook
 from lib.adinebook import adinehbook_sfn_cit_ref
-from test import DummyRequests
 
 
 class AdineBookTest(TestCase):
@@ -165,5 +163,4 @@ class AdineBookTest(TestCase):
 
 
 if __name__ == '__main__':
-    adinebook.requests_get = DummyRequests().get
     main()

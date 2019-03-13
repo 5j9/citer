@@ -8,13 +8,11 @@ from typing import Optional
 
 from langid import classify
 from regex import compile as regex_compile, DOTALL
-from requests import get as requests_get
 
-from config import NCBI_EMAIL, NCBI_TOOL
 from lib.adinebook import url2dictionary as adinebook_url2dictionary
 from lib.adinebook import isbn2url as adinebook_isbn2url
 from lib.bibtex import parse as bibtex_parse
-from lib.commons import dict_to_sfn_cit_ref  # , Name
+from lib.commons import dict_to_sfn_cit_ref, fetch  # , Name
 from lib.ris import parse as ris_parse
 
 
@@ -47,10 +45,6 @@ OTTOBIB_SEARCH = regex_compile(
 ).search
 
 RM_DASH_SPACE = str.maketrans('', '', '- ')
-
-CITOID_HEADERS = {
-    'Api-User-Agent': NCBI_TOOL + '/' + NCBI_EMAIL,
-}
 
 
 class IsbnError(Exception):
@@ -148,11 +142,9 @@ def isbn2int(isbn):
 
 
 def get_citoid_dict(isbn) -> Optional[dict]:
-    r = requests_get(
-        'https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki/' + isbn,
-        headers=CITOID_HEADERS,
-        timeout=10,
-    )
+    # https://www.mediawiki.org/wiki/Citoid/API
+    r = fetch(
+        'https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki/' + isbn)
     if r.status_code != 200:
         return
     return r.json()[0]
@@ -184,25 +176,20 @@ def citoid_thread_target(isbn: str, result: list) -> None:
 def ottobib(isbn):
     """Convert ISBN to bibtex using ottobib.com."""
     m = OTTOBIB_SEARCH(
-        requests_get(
-            'http://www.ottobib.com/isbn/' + isbn + '/bibtex', timeout=10
-        ).text
-    )
+        fetch('http://www.ottobib.com/isbn/' + isbn + '/bibtex').text)
     if m:
         return m[1]
 
 
 def oclc_sfn_cit_ref(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:
-    text = requests_get(
+    text = fetch(
         'https://www.worldcat.org/oclc/' + oclc + '?page=endnote'
-        '&client=worldcat.org-detailed_record'
-    ).text
+        '&client=worldcat.org-detailed_record').text
     if '<html' in text:  # invalid OCLC number
         return (
             'Error processing OCLC number: ' + oclc,
             'Perhaps you entered an invalid OCLC number?',
-            '',
-        )
+            '')
     d = ris_parse(text)
     authors = d['authors']
     if authors:
