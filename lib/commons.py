@@ -11,7 +11,7 @@ from json import dumps as json_dumps
 from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
 from regex import compile as regex_compile, VERBOSE, IGNORECASE
-from requests import get
+from requests import Session
 
 from config import LANG, SPOOFED_USER_AGENT, NCBI_TOOL, NCBI_EMAIL, USER_AGENT
 
@@ -104,9 +104,11 @@ class NumberInNameError(InvalidNameError):
 
 
 def fetch(url, spoof=False, **kwargs):
-    return get(
-        url, headers=AGENT_HEADER if spoof else SPOOFED_AGENT_HEADER,
-        timeout=10, **kwargs)
+    with Session() as session:
+        return session.request(
+            method='get', url=url,
+            headers=AGENT_HEADER if spoof else SPOOFED_AGENT_HEADER,
+            timeout=10, **kwargs)
 
 
 def dict_to_sfn_cit_ref(dictionary) -> tuple:

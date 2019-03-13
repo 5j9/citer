@@ -1,34 +1,28 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
-
 from atexit import register as atexit_register
 from pickle import dump, load
 
-import requests
+from requests import Session
 
-from lib import commons
+# Do not import library parts here. The config should not be initialized
+# until LANG is set by test_fa and test_en.
+
 
 FORCE_CACHE_OVERWRITE = False  # Use for updating cache entries
 NEW_DOWNLOAD = False
 
 
-class DummyRequests:
-
-    """This class will be used to override the requests mudule in tests."""
-
-    @staticmethod
-    def get(url: str, headers=None, **kwargs):
-        response = cache.get(url)
-        if FORCE_CACHE_OVERWRITE or response is None:
-            print('Downloading ' + url)
-            response = requests.get(url, headers=headers)
-            cache[url] = response
-            global NEW_DOWNLOAD
-            NEW_DOWNLOAD = True
-        return response
-
-    def head(self, url: str, headers=None, **kwargs):
-        return self.get(url, headers)
+def fake_request(method, url, **kwargs):
+    assert method == 'get'
+    response = cache.get(url)
+    if FORCE_CACHE_OVERWRITE or response is None:
+        print('Downloading ' + url)
+        response = Session().request(method, url, **kwargs)
+        cache[url] = response
+        global NEW_DOWNLOAD
+        NEW_DOWNLOAD = True
+    return response
 
 
 def save_cache(cache_dict):
@@ -49,7 +43,7 @@ def load_cache():
         return {}
 
 
-commons.get = DummyRequests().get
+Session.request = staticmethod(fake_request)
 
 cache = load_cache()
 print('len(cache) ==', len(cache))
