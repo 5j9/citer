@@ -27,7 +27,7 @@ def noorlib_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
 def get_bibtex(noorlib_url):
     """Get bibtex file content from a noormags url. Return as string."""
     pagetext = fetch(noorlib_url).text
-    article_id = BIBTEX_ARTICLE_ID_SEARCH(pagetext)[0]
+    article_id = BIBTEX_ARTICLE_ID_SEARCH(pagetext).group()
     url = 'http://www.noorlib.ir/View/HttpHandler/CitationHandler.ashx?id=' +\
           article_id + '&format=BibTex'
     return fetch(url).text
@@ -38,7 +38,7 @@ def get_ris(noorlib_url):
     # be)[1]
     """Get ris file content from a noormags url. Return as string."""
     pagetext = fetch(noorlib_url).text
-    article_id = RIS_ARTICLE_ID_SEARCH(pagetext)[0]
+    article_id = RIS_ARTICLE_ID_SEARCH(pagetext).group()
     url = 'http://www.noormags.com/view/CitationHandler.ashx?format=RIS&id=' +\
           article_id
     return fetch(url).text
