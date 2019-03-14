@@ -66,44 +66,43 @@ def url2dictionary(adinebook_url: str):
         return
     if 'صفحه مورد نظر پبدا نشد.' in adinebook_html:
         return
-    else:
-        d = defaultdict(lambda: None, cite_type='book')
-        d['title'] = TITLE_SEARCH(adinebook_html).group(1)
-        # initiating name lists:
-        others = []
-        authors = []
-        editors = []
-        translators = []
-        # building lists:
-        for name in AUTHORS_SEARCH(adinebook_html).group(1).strip().split('،'):
-            if '(به اهتمام)' in name:
-                authors.append(first_last(name.partition('(به اهتمام)')[0]))
-            elif '(ویراستار)' in name:
-                editors.append(first_last(name.partition('(ویراستار)')[0]))
-            elif '(مترجم)' in name:
-                translators.append(first_last(name.partition('(مترجم)')[0]))
-            elif '(' in name:
-                others.append(('', name))
-            else:
-                authors.append(first_last(name))
-        if authors:
-            d['authors'] = authors
-        if others:
-            d['others'] = others
-        if editors:
-            d['editors'] = editors
-        if translators:
-            d['translators'] = translators
-        m = PUBLISHER_SEARCH(adinebook_html)
-        if m:
-            d['publisher'] = m.group(1)
-        m = DATE_SEARCH(adinebook_html)
-        if m:
-            d['month'] = m.group('month')
-            d['year'] = m.group('year')
-        m = ISBN_SEARCH(adinebook_html)
-        if m:
-            d['isbn'] = m.group(1)
+    d = defaultdict(lambda: None, cite_type='book')
+    d['title'] = TITLE_SEARCH(adinebook_html).group(1)
+    # initiating name lists:
+    others = []
+    authors = []
+    editors = []
+    translators = []
+    # building lists:
+    for name in AUTHORS_SEARCH(adinebook_html).group(1).strip().split('،'):
+        if '(به اهتمام)' in name:
+            authors.append(first_last(name.partition('(به اهتمام)')[0]))
+        elif '(ویراستار)' in name:
+            editors.append(first_last(name.partition('(ویراستار)')[0]))
+        elif '(مترجم)' in name:
+            translators.append(first_last(name.partition('(مترجم)')[0]))
+        elif '(' in name:
+            others.append(('', name))
+        else:
+            authors.append(first_last(name))
+    if authors:
+        d['authors'] = authors
+    if others:
+        d['others'] = others
+    if editors:
+        d['editors'] = editors
+    if translators:
+        d['translators'] = translators
+    m = PUBLISHER_SEARCH(adinebook_html)
+    if m:
+        d['publisher'] = m.group(1)
+    m = DATE_SEARCH(adinebook_html)
+    if m:
+        d['month'] = m.group('month')
+        d['year'] = m.group('year')
+    m = ISBN_SEARCH(adinebook_html)
+    if m:
+        d['isbn'] = m.group(1)
     return d
 
 
