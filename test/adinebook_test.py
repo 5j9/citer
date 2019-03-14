@@ -6,6 +6,9 @@
 
 from unittest import TestCase, main
 
+# load .tests_cache
+# noinspection PyUnresolvedReferences
+import test
 from lib.adinebook import adinehbook_sfn_cit_ref
 
 
