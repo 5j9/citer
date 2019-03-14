@@ -58,7 +58,8 @@ def url2dictionary(adinebook_url: str):
     try:
         # Try to see if adinebook is available,
         # ottobib should continoue its work in isbn.py if it is not.
-        r = fetch(adinebook_url)
+        # It seems that adinehbook.com bans robot IPs after a while.
+        r = fetch(adinebook_url, spoof=True)
         adinebook_html = r.content.decode('utf-8')
     except RequestException:
         logger.exception(adinebook_url)

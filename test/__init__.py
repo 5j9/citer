@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 from atexit import register as atexit_register
+from contextlib import contextmanager
 from pickle import dump, load
 from os.path import abspath
 
@@ -11,25 +12,28 @@ from requests import Session
 
 
 FORCE_CACHE_OVERWRITE = False  # Use for updating cache entries
-NEW_DOWNLOAD = False
+CHACHE_CHANGE = False
 CACHE_PATH = abspath(__file__ + '/../.tests_cache')
 
 
+# noinspection PyDecorator
+@staticmethod
 def fake_request(method, url, **kwargs):
     assert method == 'get'
     response = cache.get(url)
     if FORCE_CACHE_OVERWRITE or response is None:
         print('Downloading ' + url)
-        response = Session().request(method, url, **kwargs)
+        with real_request():
+            response = Session().request(method, url, **kwargs)
         cache[url] = response
-        global NEW_DOWNLOAD
-        NEW_DOWNLOAD = True
+        global CHACHE_CHANGE
+        CHACHE_CHANGE = True
     return response
 
 
 def save_cache(cache_dict):
     """Save cache as pickle."""
-    if not NEW_DOWNLOAD:
+    if not CHACHE_CHANGE:
         return
     print('saving new cache')
     with open(CACHE_PATH, 'wb') as f:
@@ -45,8 +49,27 @@ def load_cache():
         return {}
 
 
-Session.request = staticmethod(fake_request)
+def invalidate_cache(in_url):
+    global CHACHE_CHANGE
+    lower_url = in_url.lower()
+    for k in cache.copy():
+        if lower_url in k:
+            del cache[k]
+            CHACHE_CHANGE = True
+
+
+@contextmanager
+def real_request():
+    Session.request = original_request
+    yield
+    Session.request = fake_request
+
+
+original_request = Session.request
+Session.request = fake_request
+
 
 cache = load_cache()
+# invalidate_cache('adine')
 print('len(cache) ==', len(cache))
 atexit_register(save_cache, cache)
