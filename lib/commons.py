@@ -103,10 +103,10 @@ class NumberInNameError(InvalidNameError):
     """Raise when a RawName() contains digits.."""
 
 
-def fetch(url, spoof=False, **kwargs):
+def request(url, spoof=False, method='get', **kwargs):
     with Session() as session:
         return session.request(
-            'get', url, timeout=10,
+            method, url, timeout=10,
             headers=SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER,
             **kwargs)
 

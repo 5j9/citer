@@ -13,7 +13,7 @@ The New York Times, BBC, Daily Mail, Daily Mirror, The Daily Telegraph, The Huff
 Some other tested and supported Persian web-sites:
 * http://www.noormags.com (نورمگز)
 * http://www.noorlib.ir (کتابخانه دیجیتال نور)
-* http://www.adinebook.com (آدینه‌بوک)
+* http://www.ketab.ir (خانه كتاب)
 * http://socialhistory.ihcs.ac.ir/ (تحقیقات تاریخ اجتماعی)
 
 

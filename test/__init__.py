@@ -18,15 +18,19 @@ CACHE_PATH = abspath(__file__ + '/../.tests_cache')
 
 # noinspection PyDecorator
 @staticmethod
-def fake_request(method, url, **kwargs):
-    assert method == 'get'
-    response = cache.get(url)
+def fake_request(method, url, data=None, **kwargs):
+    global CHACHE_CHANGE
+    if data:
+        cache_key = url + repr(sorted(data))
+    else:
+        cache_key = url
+    response = cache.get(cache_key)
     if FORCE_CACHE_OVERWRITE or response is None:
         print('Downloading ' + url)
         with real_request():
-            response = Session().request(method, url, **kwargs)
-        cache[url] = response
-        global CHACHE_CHANGE
+            response = Session().request(
+                method, url, data=data, **kwargs)
+        cache[cache_key] = response
         CHACHE_CHANGE = True
     return response
 
