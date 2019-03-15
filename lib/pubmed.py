@@ -10,7 +10,7 @@ import logging
 from re import compile as re_compile
 from threading import Thread
 
-from lib.commons import dict_to_sfn_cit_ref, b_TO_NUM, fetch
+from lib.commons import dict_to_sfn_cit_ref, b_TO_NUM, request
 from lib.doi import get_crossref_dict
 
 NON_DIGITS_SUB = re_compile(r'[^\d]').sub
@@ -49,9 +49,9 @@ def ncbi(type_: str, id_: str) -> defaultdict:
     """Return the NCBI data for the given id_."""
     # According to https://www.ncbi.nlm.nih.gov/pmc/tools/get-metadata/
     if type_ == 'pmid':
-        json_response = fetch(PUBMED_URL + id_).json()
+        json_response = request(PUBMED_URL + id_).json()
     else:  # type_ == 'pmcid'
-        json_response = fetch(PMC_URL + id_).json()
+        json_response = request(PMC_URL + id_).json()
     if 'error' in json_response:
         # Example error message if rates are exceeded:
         # {"error":"API rate limit exceeded","count":"11"}

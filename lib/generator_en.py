@@ -173,7 +173,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
 
     volume = d['volume']
     if volume:
-        cit += ' | volume=' + volume
+        cit += ' | volume=' + str(int(volume))
 
     issue = d['issue'] or d['number']
     if issue:
@@ -187,6 +187,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
 
     year = d['year']
     if year:
+        year = str(int(year))  # convert any non-Latin digits to English ones
         if not date or year not in date:
             cit += ' | year=' + year
         sfn += ' | ' + year

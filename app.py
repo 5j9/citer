@@ -11,7 +11,7 @@ from wsgiref.headers import Headers
 from requests import ConnectionError as RequestsConnectionError
 
 from config import LANG
-from lib.adinebook import adinehbook_sfn_cit_ref
+from lib.ketabir import ketabir_sfn_cit_ref
 from lib.commons import uninum2en, sfn_cit_ref_to_json
 from lib.doi import doi_sfn_cit_ref, DOI_SEARCH
 from lib.googlebooks import googlebooks_sfn_cit_ref
@@ -45,8 +45,7 @@ else:
 
 
 TLDLESS_NETLOC_RESOLVER = {
-    'adinebook': adinehbook_sfn_cit_ref,
-    'adinehbook': adinehbook_sfn_cit_ref,
+    'ketab': ketabir_sfn_cit_ref,
     'noorlib': noorlib_sfn_cit_ref,
     'noormags': noormags_sfn_cit_ref,
     'web.archive': waybackmachine_sfn_cit_ref,

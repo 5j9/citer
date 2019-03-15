@@ -20,7 +20,7 @@ from requests.exceptions import RequestException
 
 from lib.commons import (
     find_any_date, dict_to_sfn_cit_ref, ANYDATE_PATTERN,
-    fetch)
+    request)
 from lib.urls_authors import find_authors, CONTENT_ATTR
 
 
@@ -239,7 +239,7 @@ def urls_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     except (ContentTypeError, ContentLengthError) as e:
         logger.exception(url)
         # Todo: i18n
-        return 'Could not process the fetch.', e, ''
+        return 'Could not process the request.', e, ''
     dictionary['date_format'] = date_format
     return dict_to_sfn_cit_ref(dictionary)
 
@@ -494,7 +494,7 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
     """
     # Todo: cache the result.
     home_url = '://'.join(urlparse(url)[:2])
-    with fetch(
+    with request(
         home_url, spoof=True, stream=True
     ) as r:
         try:
@@ -539,7 +539,7 @@ def check_response_headers(r: RequestsResponse) -> None:
 
 def get_html(url: str) -> str:
     """Return the html string for the given url."""
-    with fetch(
+    with request(
         url, stream=True, spoof=True
     ) as r:
         check_response_headers(r)
@@ -552,7 +552,7 @@ def get_html(url: str) -> str:
 def url2dict(url: str) -> Dict[str, Any]:
     """Get url and return the result as a dictionary."""
     d = defaultdict(lambda: None)
-    # Creating a thread to fetch homepage title in background
+    # Creating a thread to request homepage title in background
     home_title_list = []  # A mutable variable used to get the thread result
     home_title_thread = Thread(
         target=get_home_title, args=(url, home_title_list))

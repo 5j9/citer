@@ -96,7 +96,7 @@ def original_url2dict(ogurl: str, original_dict) -> None:
 def original_url_dict(url: str):
     """Retuan dictionary only containing required data for og:url."""
     d = {}
-    # Creating a thread to fetch homepage title in background
+    # Creating a thread to request homepage title in background
     hometitle_list = []  # A mutable variable used to get the thread result
     home_title_thread = Thread(
         target=get_home_title, args=(url, hometitle_list)

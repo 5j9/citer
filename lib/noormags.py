@@ -6,7 +6,7 @@
 from re import compile as re_compile
 from threading import Thread
 
-from lib.commons import dict_to_sfn_cit_ref, fetch
+from lib.commons import dict_to_sfn_cit_ref, request
 from lib.bibtex import parse as bibtex_parse
 from lib.ris import parse as ris_parse
 
@@ -33,17 +33,17 @@ def noormags_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
 
 def get_bibtex(noormags_url):
     """Get BibTex file content from a noormags_url. Return as string."""
-    page_text = fetch(noormags_url).text
+    page_text = request(noormags_url).text
     article_id = BIBTEX_ARTICLE_ID_SEARCH(page_text).group()
     url = 'http://www.noormags.ir/view/fa/citation/bibtex/' + article_id
-    return fetch(url).text
+    return request(url).text
 
 
 def get_ris(noormags_url):
     """Get ris file content from a noormags url. Return as string."""
-    page_text = fetch(noormags_url).text
+    page_text = request(noormags_url).text
     article_id = RIS_ARTICLE_ID_SEARCH(page_text).group()
-    return fetch(
+    return request(
         'http://www.noormags.ir/view/fa/citation/ris/' + article_id).text
 
 

@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 from langid import classify
 
 # import bibtex [1]
-from lib.commons import fetch
+from lib.commons import request
 from lib.ris import parse as ris_parse
 from lib.commons import dict_to_sfn_cit_ref
 
@@ -44,7 +44,7 @@ def get_bibtex(googlebook_url) -> bytes:
     url = 'http://books.google.com/books/download/?id=' +\
           bookid + '&output=bibtex'
     # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    return fetch(url, spoof=True, timeout=10).content
+    return request(url, spoof=True, timeout=10).content
 
 
 def get_ris(googlebook_url):
@@ -56,4 +56,4 @@ def get_ris(googlebook_url):
     url = 'http://books.google.com/books/download/?id=' +\
         bookid + '&output=ris'
     # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    return fetch(url, spoof=True).text
+    return request(url, spoof=True).text

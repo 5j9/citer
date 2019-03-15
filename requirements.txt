@@ -1,7 +1,8 @@
-requests
-isbnlib
-langid
-jdatetime
-regex
 flup6
+isbnlib
+jdatetime
+langid
+mechanicalsoup
+regex
+requests
 typing  ; python_version < '3.5'
