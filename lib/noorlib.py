@@ -39,6 +39,6 @@ def get_ris(noorlib_url):
     """Get ris file content from a noormags url. Return as string."""
     pagetext = request(noorlib_url).text
     article_id = RIS_ARTICLE_ID_SEARCH(pagetext).group()
-    url = 'http://www.noormags.com/view/CitationHandler.ashx?format=RIS&id=' +\
+    url = 'http://www.noormags.ir/view/CitationHandler.ashx?format=RIS&id=' +\
           article_id
     return request(url).text

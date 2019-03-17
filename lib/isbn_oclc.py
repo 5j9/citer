@@ -72,6 +72,7 @@ def isbn_sfn_cit_ref(
             isbn = m.group(0)
 
     ketabir_result_list = []
+    # Todo: only create this thread if ISBN belongs to iran?
     ketabir_thread = Thread(
         target=ketabir_thread_target,
         args=(isbn, ketabir_result_list),
