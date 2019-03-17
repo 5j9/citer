@@ -24,7 +24,7 @@ def noormags_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     dictionary['date_format'] = date_format
     # language parameter needs to be taken from RIS
     # other information are more accurate in bibtex
-    # for example: http://www.noormags.com/view/fa/articlepage/104040
+    # for example: http://www.noormags.ir/view/fa/articlepage/104040
     # "IS  - 1" is wrong in RIS but "number = { 45 }," is correct in bibtex
     ris_thread.join()
     dictionary.update(ris_collection)

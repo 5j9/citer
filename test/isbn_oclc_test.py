@@ -12,7 +12,7 @@ from lib.isbn_oclc import isbn_sfn_cit_ref, oclc_sfn_cit_ref
 class IsbnTest(TestCase):
 
     def test_is1(self):
-        """not found in adinebook"""
+        """not found in ketabir"""
         self.assertIn((
             '* {{cite book '
             '| last=Adkins '
