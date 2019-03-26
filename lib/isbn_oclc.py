@@ -3,6 +3,7 @@
 """Define functions to process ISBNs and OCLC numbers."""
 
 # from collections import defaultdict
+from logging import getLogger
 from threading import Thread
 from typing import Optional
 
@@ -107,12 +108,17 @@ def isbn_sfn_cit_ref(
 
 
 def ketabir_thread_target(isbn: str, result: list) -> None:
-    url = ketabir_isbn2url(isbn)
-    if url is None:  # ketab.ir does not have any entries for this isbn
+    # noinspection PyBroadException
+    try:
+        url = ketabir_isbn2url(isbn)
+        if url is None:  # ketab.ir does not have any entries for this isbn
+            return
+        d = ketabir_url2dictionary(url)
+        if d:
+            result.append(d)
+    except Exception:
+        logger.exception('isbn: %s', isbn)
         return
-    d = ketabir_url2dictionary(url)
-    if d:
-        result.append(d)
 
 
 def choose_dict(ketabir_dict, otto_dict):
@@ -200,3 +206,6 @@ def oclc_sfn_cit_ref(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:
     d['oclc'] = oclc
     d['title'] = d['title'].rstrip('.')
     return dict_to_sfn_cit_ref(d)
+
+
+logger = getLogger(__name__)
