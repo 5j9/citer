@@ -1,4 +1,5 @@
 LANG = 'en'
+STATIC_PATH = './static/' + LANG
 USER_AGENT = 'https://github.com/5j9/citer'
 SPOOFED_USER_AGENT = ''
 
