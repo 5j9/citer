@@ -25,10 +25,11 @@ To run Citer on your local computer:
 2. Clone the project.
 3. Install the dependencies using `pip install -r requirements.txt`.
 3. Make sure that `flup` is __not__ installed in your environment.
-4. Run Citer by calling `main.py`.
+5. Copy `config.py.example` to `config.py`. (You might want to get an NCBI API key and add it to the config file if you're going to use its services.)
+4. Run `python3 app.py`.
 
 If everything goes fine, the main page will be accessible from:
-    http://127.0.0.1:5000/
+    http://localhost:5000/
 
 
 ## Language Setting
