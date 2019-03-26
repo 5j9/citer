@@ -63,7 +63,7 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
         return
     html = r.content.decode('utf-8')
     d = defaultdict(lambda: None, cite_type='book')
-    d['title'] = TITLE_SEARCH(html).group(1)
+    d['title'] = TITLE_SEARCH(html)[1]
     # initiating name lists:
     others = []
     authors = []
@@ -89,24 +89,24 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
         d['translators'] = translators
     m = PUBLISHER_SEARCH(html)
     if m:
-        d['publisher'] = m.group(1)
+        d['publisher'] = m[1]
     m = DATE_SEARCH(html)
     if m:
         if LANG != 'fa':
-            d['month'] = m.group('month')
-            d['year'] = '۱۳' + m.group('year')
+            d['month'] = m['month']
+            d['year'] = '۱۳' + m['year']
         else:
-            d['month'] = m.group('month')
-            d['year'] = '۱۳' + m.group('year')
+            d['month'] = m['month']
+            d['year'] = '۱۳' + m['year']
     m = ISBN_SEARCH(html)
     if m:
-        d['isbn'] = m.group(1)
+        d['isbn'] = m[1]
     m = VOLUME_SEARCH(html)
     if m:
-        d['volume'] = m.group(1)
+        d['volume'] = m[1]
     m = LOCATION_SEARCH(html)
     if m:
-        d['publisher-location'] = m.group(1)
+        d['publisher-location'] = m[1]
     return d
 
 

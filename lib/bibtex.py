@@ -45,7 +45,7 @@ def parse(bibtex):
     # cite_type: book, journal, incollection, etc.
     m = TYPE_SEARCH(bibtex)
     if m:
-        d['cite_type'] = m.group(1).strip().lower()
+        d['cite_type'] = m[1].strip().lower()
     # author
     author = d['author']
     if author:

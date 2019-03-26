@@ -249,7 +249,7 @@ def find_journal(html: str) -> Optional[str]:
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = JOURNAL_TITLE_SEARCH(html)
     if m:
-        return m.group('result')
+        return m['result']
 
 
 def find_url(html: str, url: str) -> str:
@@ -257,7 +257,7 @@ def find_url(html: str, url: str) -> str:
     # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
     m = URL_SEARCH(html)
     if m:
-        ogurl = m.group('result')
+        ogurl = m['result']
         if urlparse(ogurl).path:
             return ogurl
     return url
@@ -273,7 +273,7 @@ def find_issn(html: str) -> Optional[str]:
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     # http://psycnet.apa.org/journals/edu/30/9/641/
     if m:
-        return m.group('result')
+        return m['result']
 
 
 def find_pmid(html: str) -> Optional[str]:
@@ -281,7 +281,7 @@ def find_pmid(html: str) -> Optional[str]:
     # http://jn.physiology.org/content/81/1/319
     m = PMID_SEARCH(html)
     if m:
-        return m.group('result')
+        return m['result']
 
 
 def find_doi(html: str) -> Optional[str]:
@@ -289,7 +289,7 @@ def find_doi(html: str) -> Optional[str]:
     # http://jn.physiology.org/content/81/1/319
     m = DOI_SEARCH(html)
     if m:
-        return m.group('result')
+        return m['result']
 
 
 def find_volume(html: str) -> Optional[str]:
@@ -297,7 +297,7 @@ def find_volume(html: str) -> Optional[str]:
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = VOLUME_SEARCH(html)
     if m:
-        return m.group('result')
+        return m['result']
 
 
 def find_issue(html: str) -> Optional[str]:
@@ -305,7 +305,7 @@ def find_issue(html: str) -> Optional[str]:
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = ISSUE_SEARCH(html)
     if m:
-        return m.group('result')
+        return m['result']
 
 
 def find_pages(html: str) -> Optional[str]:
@@ -316,7 +316,7 @@ def find_pages(html: str) -> Optional[str]:
         lp_match = LAST_PAGE_SEARCH(html)
         if lp_match:
             return \
-                fp_match.group('result') + '–' + lp_match.group('result')
+                fp_match['result'] + '–' + lp_match['result']
 
 
 def find_site_name(
@@ -340,7 +340,7 @@ def find_site_name(
     """
     m = SITE_NAME_SEARCH(html)
     if m:
-        return m.group('result')
+        return m['result']
     # search the title
     site_name = parse_title(
         html_title, url, authors, home_title, thread
@@ -381,7 +381,7 @@ def find_title(
     m = TITLE_SEARCH(html)
     if m:
         return parse_title(
-            html_unescape(m.group('result')), url, authors, home_title, thread,
+            html_unescape(m['result']), url, authors, home_title, thread,
         )[1]
     elif html_title:
         return parse_title(html_title, url, authors, home_title, thread)[1]
@@ -506,9 +506,9 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
             return
         content = next(r.iter_content(MAX_RESPONSE_LENGTH))
     m = CHARSET(content)
-    html = content.decode(m.group(1).decode() if m else r.encoding)
+    html = content.decode(m[1].decode() if m else r.encoding)
     m = TITLE_TAG(html)
-    title = html_unescape(m.group('result')) if m else None
+    title = html_unescape(m['result']) if m else None
     home_title_list.append(title)
 
 
@@ -546,7 +546,7 @@ def get_html(url: str) -> str:
         content = next(r.iter_content(MAX_RESPONSE_LENGTH))
     charset_match = CHARSET(content)
     return content.decode(
-        charset_match.group(1).decode() if charset_match else r.encoding)
+        charset_match[1].decode() if charset_match else r.encoding)
 
 
 def url2dict(url: str) -> Dict[str, Any]:
@@ -561,7 +561,7 @@ def url2dict(url: str) -> Dict[str, Any]:
     html = get_html(url)
     d['url'] = find_url(html, url)
     m = TITLE_TAG(html)
-    html_title = html_unescape(m.group('result')) if m else None
+    html_title = html_unescape(m['result']) if m else None
     if html_title:
         d['html_title'] = html_title
     # d['html_title'] is used in waybackmechine.py.

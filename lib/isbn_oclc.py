@@ -66,11 +66,11 @@ def isbn_sfn_cit_ref(
         # search for isbn13
         m = ISBN13_SEARCH(isbn_container_str)
         if m:
-            isbn = m.group(0)
+            isbn = m[0]
         else:
             # search for isbn10
             m = ISBN10_SEARCH(isbn_container_str)
-            isbn = m.group(0)
+            isbn = m[0]
 
     ketabir_result_list = []
     ketabir_thread = Thread(
@@ -182,7 +182,7 @@ def ottobib(isbn):
     m = OTTOBIB_SEARCH(
         request('http://www.ottobib.com/isbn/' + isbn + '/bibtex').text)
     if m:
-        return m.group(1)
+        return m[1]
 
 
 def oclc_sfn_cit_ref(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:

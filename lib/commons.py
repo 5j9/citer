@@ -189,7 +189,7 @@ def first_last(fullname, separator=None) -> tuple:
         firstname = firstname.title()
         lastname = lastname.title()
         lastname = MC_SUB(
-            lambda mtch: 'Mc' + mtch.group(1).upper(),
+            lambda mtch: 'Mc' + mtch[1].upper(),
             lastname,
         )
     if suffix:

@@ -4,19 +4,23 @@
 """Codes required to create English Wikipedia citation templates."""
 
 
-import re
 from datetime import date as datetime_date
+from functools import partial
 from collections import defaultdict
 from logging import getLogger
+
+from regex import compile as regex_compile
 
 from lib.language import TO_TWO_LETTER_CODE
 
 
 # Includes ShortDOIs (See: http://shortdoi.org/) and
 # https://www.crossref.org/display-guidelines/
-DOI_URL_MATCH = re.compile(
-    r'https?://(dx\.)?doi\.org/'
-).match
+DOI_URL_MATCH = regex_compile(r'https?://(dx\.)?doi\.org/').match
+
+refless = partial(regex_compile(
+    r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})'
+).sub, r'\g<repl>')
 
 TYPE_TO_CITE = {
     # BibTex types. Descriptions are from
@@ -277,11 +281,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     sfn += '}}'
     # Finally create the ref tag.
     name = sfn[8:-2].replace(' | ', ' ').replace("'", '')
-    text = re.sub(
-        r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})',
-        r'\g<repl>',
-        cit[2:],
-    )
+    text = refless(cit[2:])
     if ' p=' in name and ' | page=' not in text:
         name = name.replace(' p=', ' p. ')
         if pages:
