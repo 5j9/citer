@@ -2,3 +2,4 @@
 *.log
 .docs
 __pycache__/
+config.py
