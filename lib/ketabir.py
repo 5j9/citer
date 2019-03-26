@@ -4,7 +4,8 @@
 """All things that are specifically related to adinebook website"""
 
 from collections import defaultdict
-import logging
+from logging import getLogger
+from typing import Optional
 
 from langid import classify
 from regex import compile as regex_compile
@@ -17,8 +18,7 @@ from lib.commons import first_last, dict_to_sfn_cit_ref, request, USER_AGENT,\
 
 ISBN_SEARCH = regex_compile(r'ISBN: </b> ([-\d]++)').search
 DATE_SEARCH = regex_compile(
-    r'تاریخ نشر:</b>(?<year>\d\d)/(?<month>\d\d)/(?<day>\d\d)'
-).search
+    r'تاریخ نشر:</b>(?<year>\d\d)/(?<month>\d\d)/(?<day>\d\d)').search
 PUBLISHER_SEARCH = regex_compile(
     r'Publisher_ctl00_NameLabel" class="linkk">(.*?)</span>').search
 VOLUME_SEARCH = regex_compile(r'\bجلد (\d+)').search
@@ -40,7 +40,7 @@ def ketabir_sfn_cit_ref(url: str, date_format='%Y-%m-%d') -> tuple:
     return dict_to_sfn_cit_ref(dictionary)
 
 
-def isbn2url(isbn: str) -> str:
+def isbn2url(isbn: str) -> Optional[str]:
     """Return the ketab.ir book-url for the given isbn."""
     browser = StatefulBrowser(user_agent=USER_AGENT)
     browser.open('http://www.ketab.ir/Search.aspx')
@@ -53,7 +53,7 @@ def isbn2url(isbn: str) -> str:
     return browser.absolute_url(first_link['href'])
 
 
-def url2dictionary(ketabir_url: str):
+def url2dictionary(ketabir_url: str) -> Optional[dict]:
     try:
         # Try to see if ketabir is available,
         # ottobib should continoue its work in isbn.py if it is not.
@@ -110,4 +110,4 @@ def url2dictionary(ketabir_url: str):
     return d
 
 
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
