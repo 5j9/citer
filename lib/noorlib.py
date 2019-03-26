@@ -3,16 +3,15 @@
 
 """Codes specifically related to Noormags website."""
 
-from re import compile as re_compile
+from regex import compile as regex_compile
 
 from lib.commons import dict_to_sfn_cit_ref, request
 from lib.bibtex import parse as bibtex_parse
 
 
-BIBTEX_ARTICLE_ID_SEARCH = re_compile(
-    r'(?<=CitationHandler\.ashx\?id=)\d+'
-).search
-RIS_ARTICLE_ID_SEARCH = re_compile(r'(?<=RIS&id=)\d+').search
+BIBTEX_ARTICLE_ID_SEARCH = regex_compile(
+    r'(?<=CitationHandler\.ashx\?id=)\d+').search
+RIS_ARTICLE_ID_SEARCH = regex_compile(r'(?<=RIS&id=)\d+').search
 
 
 def noorlib_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
@@ -27,7 +26,7 @@ def noorlib_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
 def get_bibtex(noorlib_url):
     """Get bibtex file content from a noormags url. Return as string."""
     pagetext = request(noorlib_url).text
-    article_id = BIBTEX_ARTICLE_ID_SEARCH(pagetext).group()
+    article_id = BIBTEX_ARTICLE_ID_SEARCH(pagetext)[0]
     url = 'http://www.noorlib.ir/View/HttpHandler/CitationHandler.ashx?id=' +\
           article_id + '&format=BibTex'
     return request(url).text
@@ -38,7 +37,7 @@ def get_ris(noorlib_url):
     # be)[1]
     """Get ris file content from a noormags url. Return as string."""
     pagetext = request(noorlib_url).text
-    article_id = RIS_ARTICLE_ID_SEARCH(pagetext).group()
+    article_id = RIS_ARTICLE_ID_SEARCH(pagetext)[0]
     url = 'http://www.noormags.ir/view/CitationHandler.ashx?format=RIS&id=' +\
           article_id
     return request(url).text

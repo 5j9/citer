@@ -6,20 +6,20 @@
 from collections import defaultdict
 from config import NCBI_API_KEY, NCBI_EMAIL, NCBI_TOOL
 from datetime import datetime
-import logging
-from re import compile as re_compile
+from logging import getLogger
 from threading import Thread
+
+from regex import compile as regex_compile
 
 from lib.commons import dict_to_sfn_cit_ref, b_TO_NUM, request
 from lib.doi import get_crossref_dict
 
-NON_DIGITS_SUB = re_compile(r'[^\d]').sub
+NON_DIGITS_SUB = regex_compile(r'[^\d]').sub
 
 NCBI_URL = (
     'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?'
     'api_key=' + NCBI_API_KEY + '&retmode=json&tool=' + NCBI_TOOL + '&email='
-    + NCBI_EMAIL
-)
+    + NCBI_EMAIL)
 PUBMED_URL = NCBI_URL + '&db=pubmed&id='
 PMC_URL = NCBI_URL + '&db=pmc&id='
 
@@ -69,8 +69,7 @@ def ncbi(type_: str, id_: str) -> defaultdict:
             doi = articleid['value']
             crossref_dict = {}
             crossref_thread = Thread(
-                target=crossref_update, args=(crossref_dict, doi)
-            )
+                target=crossref_update, args=(crossref_dict, doi))
             crossref_thread.start()
             d['doi'] = doi
         elif idtype == 'pmcid':
@@ -148,8 +147,7 @@ def crossref_update(dct: dict, doi: str):
         dct.update(get_crossref_dict(doi))
     except Exception:
         logger.exception(
-            'There was an error in resolving crossref DOI: ' + doi
-        )
+            'There was an error in resolving crossref DOI: ' + doi)
 
 
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
