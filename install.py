@@ -27,14 +27,11 @@ def copy_config():
         '--date=short']).rstrip().replace(b'-', b'.')
     with open(HOME + '/.citer_config', 'rb') as home_config:
         with open(HOME + '/www/python/src/config.py', 'wb') as src_config:
-            src_config.write(
-                sub(
-                    b"(USER_AGENT = '.*)'\n",
-                    br"\1 v" + committer_date + b"'\n",
-                    home_config.read(),
-                    1,
-                )
-            )
+            src_config.write(sub(
+                b"(USER_AGENT = '.*)'\n",
+                br"\1 v" + committer_date + b"'\n",
+                home_config.read(),
+                1))
 
 
 def main():

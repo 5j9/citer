@@ -74,15 +74,13 @@ def isbn_sfn_cit_ref(
     ketabir_result_list = []
     ketabir_thread = Thread(
         target=ketabir_thread_target,
-        args=(isbn, ketabir_result_list),
-    )
+        args=(isbn, ketabir_result_list))
     ketabir_thread.start()
 
     citoid_result_list = []
     citoid_thread = Thread(
         target=citoid_thread_target,
-        args=(isbn, citoid_result_list),
-    )
+        args=(isbn, citoid_result_list))
     citoid_thread.start()
 
     ottobib_bibtex = ottobib(isbn)
