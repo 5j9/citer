@@ -17,6 +17,7 @@ from lib.language import TO_TWO_LETTER_CODE
 # Includes ShortDOIs (See: http://shortdoi.org/) and
 # https://www.crossref.org/display-guidelines/
 DOI_URL_MATCH = regex_compile(r'https?://(dx\.)?doi\.org/').match
+DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 
 refless = partial(regex_compile(
     r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})'
@@ -177,7 +178,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
 
     volume = d['volume']
     if volume:
-        cit += ' | volume=' + str(int(volume))
+        cit += ' | volume=' + volume.translate(DIGITS_TO_EN)
 
     issue = d['issue'] or d['number']
     if issue:

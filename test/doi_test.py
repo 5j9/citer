@@ -115,6 +115,19 @@ class DoiTest(TestCase):
             doi_sfn_cit_ref('10.1145/1117278')[1]
         )
 
+    def test_non_numeric_volume(self):
+        self.assertEqual(
+            '* {{cite journal | last=Niemeyer | first=Jurgen | last2=Hinken '
+            '| first2=Johann H. | last3=Kautz | first3=Richard L. '
+            '| title=Near-Zero Bias Arrays of Josephson Tunnel Junctions '
+            'Providing Standard Voltages up to 1 V | journal=IEEE '
+            'Transactions on Instrumentation and Measurement '
+            '| publisher=Institute of Electrical and Electronics Engineers '
+            '(IEEE) | volume=IM-34 | issue=2 | year=1985 | issn=0018-9456 '
+            '| doi=10.1109/tim.1985.4315297 | pages=185–187 | ref=harv}}',
+            doi_sfn_cit_ref('10.1109/TIM.1985.4315297')[1]
+        )
+
 
 if __name__ == '__main__':
     main()
