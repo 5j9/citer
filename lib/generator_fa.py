@@ -148,7 +148,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     else:
         website = d['website']
         if website:
-            cit += ' | وب‌گاه=' + website
+            cit += ' | وبگاه=' + website
 
     chapter = d['chapter']
     if chapter:
