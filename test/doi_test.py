@@ -128,6 +128,19 @@ class DoiTest(TestCase):
             doi_sfn_cit_ref('10.1109/TIM.1985.4315297')[1]
         )
 
+    def test_bad_author_name(self):
+        self.assertEqual(
+            '* {{cite journal | last=Giusti | first=D. | last2=Lubicz '
+            '| first2=V. | last3=Martinelli | first3=G. | last4=Sanfilippo '
+            '| first4=F. | last5=Simula | first5=S. '
+            '| title=Strange and charm HVP contributions to the muon (g − 2) '
+            'including QED corrections with twisted-mass fermions '
+            '| journal=Journal of High Energy Physics '
+            '| publisher=Springer Nature | volume=2017 | issue=10 '
+            '| year=2017 | issn=1029-8479 | doi=10.1007/jhep10(2017)157 '
+            '| ref=harv}}',
+            doi_sfn_cit_ref('10.1007/JHEP10(2017)157')[1]
+        )
 
 if __name__ == '__main__':
     main()

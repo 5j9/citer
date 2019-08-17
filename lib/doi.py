@@ -77,23 +77,25 @@ def get_crossref_dict(doi) -> defaultdict:
         if year:
             d['year'] = str(date[0])
 
-    authors = d['author']
-    if authors:
-        d['authors'] = \
-            [(name['given'], name['family']) for name in authors]
-
-    editors = d['editor']
-    if editors:
-        d['editors'] = \
-            [(name['given'], name['family']) for name in editors]
-
-    translators = d['translator']
-    if translators:
-        d['translators'] = \
-            [(name['given'], name['family']) for name in translators]
+    extract_names(d, 'author', 'authors')
+    extract_names(d, 'editor', 'editors')
+    extract_names(d, 'translator', 'translators')
 
     page = d['page']
     if page:
         d['page'] = page.replace('-', '–')
 
     return d
+
+
+def extract_names(d: dict, from_key: str, to_key: str):
+    from_values = d[from_key]
+    if from_values is None:
+        return
+    to_values = d[to_key] = []
+    authors_append = to_values.append
+    for from_value in from_values:
+        try:
+            authors_append((from_value['given'], from_value['family']))
+        except KeyError:
+            pass
