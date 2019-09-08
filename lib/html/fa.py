@@ -4,20 +4,23 @@
 """HTML skeleton of the predefined fa responses."""
 
 
+from os.path import dirname
 from string import Template
 from zlib import adler32
 
 from config import STATIC_PATH
 
 
-CSS = open('lib/html/fa.css', 'rb').read()
+htmldir = dirname(__file__)
+
+CSS = open(htmldir + '/fa.css', 'rb').read()
 CSS_HEADERS = [
     ('Content-Type', 'text/css; charset=UTF-8'),
     ('Content-Length', str(len(CSS))),
     ('Cache-Control', 'max-age=31536000')]
 
 HTML_SUBST = Template(
-    open('lib/html/fa.html', encoding='utf8').read().replace(
+    open(htmldir + '/fa.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
         '"stylesheet" href="./static/fa',
         '"stylesheet" href="' + STATIC_PATH + str(adler32(CSS))
