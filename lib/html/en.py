@@ -6,9 +6,12 @@
 
 from string import Template
 from os import name as osname
+from os.path import dirname
 from zlib import adler32
 from config import STATIC_PATH
 
+
+htmldir = dirname(__file__)
 
 # Predefined responses
 DEFAULT_SFN_CIT_REF = (
@@ -30,13 +33,13 @@ OTHER_EXCEPTION_SFN_CIT_REF = (
     'The error was logged.',
     '')
 
-CSS = open('lib/html/en.css', 'rb').read()
+CSS = open(htmldir + '/en.css', 'rb').read()
 CSS_HEADERS = [
     ('Content-Type', 'text/css; charset=UTF-8'),
     ('Content-Length', str(len(CSS))),
     ('Cache-Control', 'immutable, public, max-age=31536000')]
 
-JS = open('lib/html/en.js', 'rb').read()
+JS = open(htmldir + '/en.js', 'rb').read()
 # Invalidate cache after css change.
 JS_HEADERS = [
     ('Content-Type', 'application/javascript; charset=UTF-8'),
@@ -46,7 +49,7 @@ JS_HEADERS = [
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
 HTML_SUBST = Template(
-    open('lib/html/en.html', encoding='utf8').read().replace(
+    open(htmldir + '/en.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
         '"stylesheet" href="./static/en',
         '"stylesheet" href="' + STATIC_PATH + str(adler32(CSS)),
