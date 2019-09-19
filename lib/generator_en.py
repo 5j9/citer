@@ -251,7 +251,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         cit += (
             ' | archive-url=' + archive_url +
             ' | archive-date=' + d['archive-date'].strftime(date_format) +
-            ' | dead-url=' + d['dead-url']
+            ' | url-status=' + d['url-status']
         )
 
     language = d['language']

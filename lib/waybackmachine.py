@@ -60,14 +60,14 @@ def waybackmachine_sfn_cit_ref(
             or original_dict['html_title'] == archive_dict['html_title']
         ):
             archive_dict.update(original_dict)
-            archive_dict['dead-url'] = 'no'
+            archive_dict['url-status'] = 'live'
         else:
             # and original title is the same as archive title. Otherwise it
             # means that the content probably has changed and the original data
             # cannot be trusted.
-            archive_dict['dead-url'] = 'unfit'
+            archive_dict['url-status'] = 'unfit'
     else:
-        archive_dict['dead-url'] = 'yes'
+        archive_dict['url-status'] = 'dead'
     if archive_dict['website'] == 'Wayback Machine':
         archive_dict['website'] = (
             urlparse(original_url).hostname.replace('www.', '')
