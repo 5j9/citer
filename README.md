@@ -21,7 +21,7 @@ Some other tested and supported Persian web-sites:
 
 To run Citer on your local computer:
 
-1. Install Python 3.6+.
+1. Install Python 3.4+.
 2. Clone the project.
 3. Install the dependencies using `pip install -r requirements.txt`.
 3. Make sure that `flup` is __not__ installed in your environment.
