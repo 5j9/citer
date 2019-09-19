@@ -29,7 +29,7 @@ class WaybackmachineResponse(TestCase):
             'plastic-surgery-justin-bieber-100k_n_4128563.html?'
             'utm_hp_ref=mostpopular '
             '| archive-date=2013-10-21 '
-            '| dead-url=no '
+            '| url-status=live '
             '| ref=harv '
             '| access-date=',
             waybackmachine_sfn_cit_ref(
@@ -41,7 +41,7 @@ class WaybackmachineResponse(TestCase):
         )
 
     def test_dead_url(self):
-        """dead-url=yes"""
+        """url-status=dead"""
         self.assertIn(
             '* {{cite web '
             '| title=London Development Centre: Support, time, recovery (STR) '
@@ -52,7 +52,7 @@ class WaybackmachineResponse(TestCase):
             '| archive-url=https://web.archive.org/web/20070429193849id_/'
             'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462 '
             '| archive-date=2007-04-29 '
-            '| dead-url=yes '
+            '| url-status=dead '
             '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
             '| access-date=',
             waybackmachine_sfn_cit_ref(
@@ -100,7 +100,7 @@ class WaybackmachineResponse(TestCase):
             '%D8%A7%D9%86%DA%AF%D9%84%DB%8C%D8%B3%DB%8C-%D8%AF%D8%B1-'
             '%D9%85%D9%88%D8%B1%D8%AF '
             '| archive-date=2017-01-19 '
-            '| dead-url=no '
+            '| url-status=live '
             '| language=fa '
             '| ref={{sfnref | ایسنا | 2017}} '
             '| access-date='

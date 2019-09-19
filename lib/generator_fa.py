@@ -235,7 +235,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         cit += (
             ' | پیوند بایگانی=' + archive_url +
             ' | تاریخ بایگانی=' + d['archive-date'].isoformat() +
-            ' | پیوند مرده=' + ('آری' if d['dead-url'] == 'yes' else 'نه')
+            ' | پیوند مرده=' + ('آری' if d['url-status'] == 'yes' else 'نه')
         )
 
     language = d['language']
