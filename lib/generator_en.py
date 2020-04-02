@@ -305,14 +305,14 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
         c += 1
         if c == 1:
             if first or not nofn_parameter:
-                s += ' | ' + ln_parameter + '=' + last
-                s += ' | ' + fn_parameter + '=' + first
+                s += (' | ' + ln_parameter + '=' + last
+                      + ' | ' + fn_parameter + '=' + first)
             else:
                 s += ' | ' + nofn_parameter + '=' + fullname(first, last)
         else:
             if first or not nofn_parameter:
-                s += ' | ' + ln_parameter + str(c) + '=' + last
-                s += ' | ' + fn_parameter + str(c) + '=' + first
+                s += (' | ' + ln_parameter + str(c) + '=' + last
+                      + ' | ' + fn_parameter + str(c) + '=' + first)
             else:
                 s += ' | ' + nofn_parameter + str(c) + '=' + \
                      fullname(first, last)
