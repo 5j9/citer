@@ -22,7 +22,6 @@ class BostonTest(TestCase):
             '| date=June 29, 2014 '
             '| url=https://www.boston.com/cars/news-and-reviews/2014/06/29/'
             'hot-rod-stamps-google-on-road-a-gm-prospectus '
-            '| ref=harv '
             '| access-date=',
             urls_sfn_cit_ref(
                 'http://www.boston.com/cars/news-and-reviews/2014/06/28/'
@@ -52,7 +51,6 @@ class BostonTest(TestCase):
             '| url=https://www.bostonglobe.com/metro/2014/06/03/'
             'walsh-meets-with-college-leaders-off-campus-housing/'
             'lsxtLSGJMD86Gbkjay3D6J/story.html '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -73,7 +71,6 @@ class BostonTest(TestCase):
             '| date=2013-08-21 '
             '| url=http://www.bostonmagazine.com/news/blog/2013/08/21/'
             'juliette-kayyem-jumps-in-for-guv/ '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -97,7 +94,6 @@ class WashingtonpostTest(TestCase):
             '| date=2005-09-04 '
             '| url=http://www.washingtonpost.com/wp-dyn/content/article/'
             '2005/09/02/AR2005090200822.html '
-            '| ref=harv '
             '| access-date=',
             o[1],
         )
@@ -122,7 +118,6 @@ class HuffingtonpostTest(TestCase):
             '| date=2013-08-01 '
             '| url=http://www.huffingtonpost.ca/annelise-sorg/'
             'blackfish-killer-whale-seaworld_b_3686306.html '
-            '| ref=harv '
             '| access-date=',
             o[1],
         )
@@ -144,7 +139,6 @@ class HuffingtonpostTest(TestCase):
             "| date=2014-06-02 "
             "| url=http://www.huffingtonpost.com/jeremy-rifkin/"
             "obamas-climate-change-plan_b_5427656.html "
-            "| ref=harv "
             "| access-date="
         )
         self.assertEqual('{{sfn | Rifkin | 2014}}', o[0])
@@ -172,7 +166,6 @@ class DilyTelegraphTest(TestCase):
             "| url=http://www.telegraph.co.uk/news/health/3334755/"
             "We-could-see-the-whales-eyes-mouth...-"
             "the-barnacles-on-its-back.html "
-            "| ref=harv "
             "| access-date="
         )
         self.assertEqual('{{sfn | Fogle | 2005}}', o[0])
@@ -194,7 +187,6 @@ class DilyTelegraphTest(TestCase):
             "| date=2003-09-29 "
             "| url=http://www.telegraph.co.uk/news/science/science-news/"
             "3313298/Marine-collapse-linked-to-whale-decline.html "
-            "| ref=harv "
             "| access-date="
         )
         self.assertEqual('{{sfn | Highfield | 2003}}', o[0])
@@ -216,7 +208,6 @@ class DilyTelegraphTest(TestCase):
             "| date=2011-02-15 "
             "| url=http://www.telegraph.co.uk/news/science/8323909/"
             "The-sperm-whale-works-in-extraordinary-ways.html "
-            "| ref=harv "
             "| access-date="
         )
         self.assertEqual('{{sfn | Whitehead | 2011}}', o[0])
@@ -250,7 +241,6 @@ class DilyMailTest(TestCase):
             '| date=2014-05-19 '
             '| url=http://www.dailymail.co.uk/news/article-2633025/'
             'London-cleric-convicted-NYC-terrorism-trial.html '
-            '| ref=harv '
             '| access-date=',
             o[1],
         )
@@ -268,7 +258,6 @@ class DilyMailTest(TestCase):
             '| url=http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
             'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-shows-Kim-'
             'Kardashian-s-meltdown-nude-magazine-cover.html '
-            '| ref=harv '
             '| access-date=',
             urls_sfn_cit_ref(
                 'http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
@@ -305,7 +294,6 @@ class BbcTest(TestCase):
             '| website=BBC News '
             '| date=2013-08-26 '
             '| url=http://www.bbc.com/news/science-environment-23814524 '
-            '| ref=harv '
             '| access-date=',
             urls_sfn_cit_ref(
                 'http://www.bbc.com/news/science-environment-23814524'
@@ -324,7 +312,6 @@ class BbcTest(TestCase):
             '| website=BBC News '
             '| date=2013-08-26 '
             '| url=http://www.bbc.com/news/science-environment-23814524 '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -340,7 +327,6 @@ class BbcTest(TestCase):
             "| date=2006-07-13 "
             "| url="
             "http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm "
-            "| ref=harv "
             "| access-date=",
             urls_sfn_cit_ref(
                 'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm'
@@ -357,7 +343,6 @@ class BbcTest(TestCase):
             "| website=BBC NEWS "
             "| date=2002-12-24 "
             "| url=http://news.bbc.co.uk/2/hi/business/2570109.stm "
-            "| ref=harv "
             "| access-date=",
             urls_sfn_cit_ref(
                 'http://news.bbc.co.uk/2/hi/business/2570109.stm'
@@ -376,7 +361,6 @@ class BbcTest(TestCase):
             "| website=BBC News "
             "| date=2014-02-20 "
             "| url=http://www.bbc.com/news/science-environment-26267918 "
-            "| ref=harv "
             "| access-date="
         )
         self.assertIn(ct, o[1])
@@ -401,7 +385,6 @@ class NytTest(TestCase):
             '| date=2014-05-30 '
             '| url=https://www.nytimes.com/2014/05/30/business/international/'
             'on-the-internet-the-right-to-forget-vs-the-right-to-know.html '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -421,7 +404,6 @@ class NytTest(TestCase):
             '| url=https://www.nytimes.com/2014/05/31/sports/basketball/'
             'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-'
             'the-nba.html '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(
@@ -446,7 +428,6 @@ class NytTest(TestCase):
             '| date=2007-12-25 '
             '| url=https://www.nytimes.com/2007/12/25/world/africa/'
             '25kenya.html '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -471,7 +452,6 @@ class NytTest(TestCase):
             '| date=2014-06-12 '
             '| url=https://dealbook.nytimes.com/2014/05/30/'
             'insider-trading-inquiry-includes-mickelson-and-icahn/ '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -512,7 +492,6 @@ class NytTest(TestCase):
             "| date=2003-10-09 "
             "| url=https://www.nytimes.com/2003/10/09/us/"
             "adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html "
-            "| ref=harv "
             "| access-date="
         )
         self.assertIn(ct, o[1])
@@ -574,7 +553,6 @@ class NotWorking(TestCase):
             '| date=2006-12-30 '
             '| url=http://abcnews.go.com/blogs/headlines/2006/12/'
             'saddam_executed/ '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -608,7 +586,6 @@ class Others(TestCase):
             '| date=2014-05-20 '
             '| url=http://www.ensani.ir/fa/content/326173/default.aspx '
             '| language=fa '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -628,7 +605,6 @@ class Others(TestCase):
             '| url=https://www.eff.org/deeplinks/2014/06/'
             'sudan-tech-sanctions-harm-innovation-development-us-'
             'government-and-corporations-must-act '
-            '| ref=harv '
             '| access-date=',
             urls_sfn_cit_ref(
                 'https://www.eff.org/deeplinks/2014/06/'
@@ -662,7 +638,6 @@ class Others(TestCase):
             '| date=2007-09-12 '
             '| url=https://arstechnica.com/science/2007/09/'
             'the-pseudoscience-behind-homeopathy/ '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -679,7 +654,6 @@ class Others(TestCase):
             "| date=2014-07-01 "
             "| url=http://www.livescience.com/"
             "46619-sterile-neutrino-experiment-beginning.html "
-            "| ref=harv "
             "| access-date=",
             urls_sfn_cit_ref(
                 'http://www.livescience.com/'
@@ -702,7 +676,6 @@ class Others(TestCase):
             '| date=2007-05-22 '
             '| url=http://www.magiran.com/npview.asp?ID=1410487 '
             '| language=fa '
-            '| ref=harv '
             '| access-date=',
             o[1],
         )
@@ -738,7 +711,6 @@ class Others(TestCase):
             '| date=2014-07-07 '
             '| url=http://news.mit.edu/2014/'
             'traffic-lights-theres-a-better-way-0707 '
-            '| ref=harv '
             '| access-date=',
             urls_sfn_cit_ref(
                 'http://news.mit.edu/2014/'
@@ -764,7 +736,6 @@ class Others(TestCase):
             '| date=2014-07-14 '
             '| url=http://www.theguardian.com/world/2014/jul/14/'
             'israel-drone-launched-gaza-ashdod '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -784,7 +755,6 @@ class Others(TestCase):
             '| url=https://www.thetimes.co.uk/article/'
             'woman-who-lost-brother-on-mh370-mourns-relatives-on-board-'
             'mh17-r07q5rwppl0 '
-            '| ref=harv '
             '| access-date=',
             urls_sfn_cit_ref(
                 'http://www.thetimes.co.uk/tto/news/world/'
@@ -808,7 +778,6 @@ class Others(TestCase):
             '| date=2014-07-10 '
             '| url=http://www.businessnewsdaily.com/6762-male-female-'
             'entrepreneurs.html '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -826,7 +795,6 @@ class Others(TestCase):
             '| date=2014-07-19 '
             '| url=http://thebulletin.org/'
             'evidence-shows-iron-dome-not-working7318 '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(ct, o[1])
@@ -841,7 +809,6 @@ class Others(TestCase):
             '| website=HighBeam Research '
             '| date=2014-07-01 '
             '| url=http://www.highbeam.com/doc/1P3-3372742961.html '
-            '| ref=harv '
             '| access-date=',
             urls_sfn_cit_ref(
                 'http://www.highbeam.com/doc/1P3-3372742961.html'
@@ -922,7 +889,6 @@ class Others(TestCase):
             '| pages=53–74 '
             '| url=http://socialhistory.ihcs.ac.ir/article_319_84.html '
             '| language=fa '
-            '| ref=harv '
             '| access-date=',
             urls_sfn_cit_ref(
                 'http://socialhistory.ihcs.ac.ir/article_319_84.html'
@@ -966,7 +932,6 @@ class Others(TestCase):
             'utm_source=other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.'
             'announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.'
             '4xDVKzx5EeeJjRJrkGD1dA '
-            '| ref=harv '
             '| access-date=',
             urls_sfn_cit_ref(
                 'https://arxiv.org/abs/1608.05006?utm_medium=email&utm_source='
@@ -983,7 +948,7 @@ class Others(TestCase):
             "| title=Spill spews tons of coal ash into North Carolina's "
             "Dan River | website=CNN | date=2014-02-09 "
             "| url=http://www.cnn.com/2014/02/09/us/north-carolina-coal-ash"
-            "-spill/index.html | ref=harv | access-date=",
+            "-spill/index.html | access-date=",
             urls_sfn_cit_ref(
                 'https://edition.cnn.com/'
                 '2014/02/09/us/north-carolina-coal-ash-spill/'

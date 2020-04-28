@@ -27,7 +27,6 @@ class GooglebooksTest(TestCase):
             '| year=2001 '
             '| isbn=978-0-262-26134-0 '
             '| url=https://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(e, o[1])
@@ -77,7 +76,6 @@ class GooglebooksTest(TestCase):
             '| year=2010 '
             '| isbn=978-0-13-270490-8 '
             '| url=https://books.google.com/books?id=U46IzqYLZvAC&pg=PT57 '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(e1, o[0])
@@ -102,7 +100,6 @@ class GooglebooksTest(TestCase):
             '| year=2009 '
             '| isbn=978-1-111-78619-9 '
             '| url=https://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588 '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(e1, o[0])
@@ -127,7 +124,6 @@ class GooglebooksTest(TestCase):
             '| year=1997 '
             '| isbn=978-90-411-0401-4 '
             '| url=https://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(e1, o[0])
@@ -154,7 +150,6 @@ class GooglebooksTest(TestCase):
             '| isbn=978-1-4390-4838-2 '
             '| url=https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378'
             ' '
-            '| ref=harv '
             '| access-date='
         )
         reft = (

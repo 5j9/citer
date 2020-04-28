@@ -32,8 +32,7 @@ class PMCID(TestCase):
             '| pmid=22677080 '
             '| pmc=3538472 '
             '| doi=10.1016/j.mayocp.2012.02.015 '
-            '| pages=596–602 '
-            '| ref=harv}}',
+            '| pages=596–602}}',
             pmcid_sfn_cit_ref('3538472')[1],
         )
 
@@ -45,8 +44,7 @@ class PMCID(TestCase):
             ' Intravenous and oral rehydration&amp;#93;. '
             '| journal=Boletin de la Oficina Sanitaria Panamericana.'
             ' Pan American Sanitary Bureau | volume=78 | issue=4 | year=1975 '
-            '| issn=0030-0632 | pmid=123455 | pages=307–17 | language=es '
-            '| ref=harv}}',
+            '| issn=0030-0632 | pmid=123455 | pages=307–17 | language=es}}',
             pmid_sfn_cit_ref('123455')[1],
         )
 
@@ -60,8 +58,7 @@ class PMCID(TestCase):
             '| title=Optimal design of thermally stable proteins '
             '| journal=Bioinformatics | volume=24 | issue=20 '
             '| date=22 August 2008 | pmid=18723523 | pmc=2562006 '
-            '| doi=10.1093/bioinformatics/btn450 | pages=2339–2343 '
-            '| ref=harv}}',
+            '| doi=10.1093/bioinformatics/btn450 | pages=2339–2343}}',
             pmcid_sfn_cit_ref('2562006', '%d %B %Y')[1],
         )
 

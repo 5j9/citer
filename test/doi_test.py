@@ -17,8 +17,7 @@ class DoiTest(TestCase):
             "last2=Gershell | first2=Leland J. | title="
             "Selective anticancer drugs | journal=Nature Reviews Drug "
             "Discovery | publisher=Springer Nature | volume=1 | issue=7 | "
-            "year=2002 | issn=1474-1776 | doi=10.1038/nrd842 | pages=491–492 "
-            "| ref=harv}}",
+            "year=2002 | issn=1474-1776 | doi=10.1038/nrd842 | pages=491–492}}",
             doi_sfn_cit_ref('https://doi.org/10.1038%2Fnrd842')[1],
         )
 
@@ -45,8 +44,7 @@ class DoiTest(TestCase):
             '| journal=Journal of Educational Psychology '
             '| publisher=American Psychological Association (APA) '
             '| volume=30 | issue=9 | year=1939 | issn=0022-0663 '
-            '| doi=10.1037/h0063404 | pages=641–656 '
-            '| ref=harv}}',
+            '| doi=10.1037/h0063404 | pages=641–656}}',
             doi_sfn_cit_ref('https://doi.org/10.1037%2Fh0063404')[1],
         )
 
@@ -62,8 +60,7 @@ class DoiTest(TestCase):
             '| journal=The American Journal of Drug and Alcohol Abuse '
             '| publisher=Informa UK Limited '
             '| volume=31 | issue=4 | year=2005 | issn=0095-2990 '
-            '| doi=10.1081/ada-200068110 | pages=537–553 '
-            '| ref=harv}}',
+            '| doi=10.1081/ada-200068110 | pages=537–553}}',
             doi_sfn_cit_ref('10.1081%2Fada-200068110')[1],
         )
 
@@ -81,9 +78,7 @@ class DoiTest(TestCase):
             '| year=1975 '
             '| isbn=978-3-540-07155-6 '
             '| issn=0075-8434 '
-            '| doi=10.1007/bfb0064872 '
-            '| ref=harv'
-            '}}',
+            '| doi=10.1007/bfb0064872}}',
             doi_sfn_cit_ref('DOI 10.1007/BFb0064872')[1]
         )
 
@@ -94,8 +89,7 @@ class DoiTest(TestCase):
             '| title=Forecasting water waves and currents :'
             ' a space-time approach '
             '| publisher=University Library/University of Twente '
-            '| isbn=978-90-365-2632-6 | doi=10.3990/1.9789036526326 '
-            '| ref=harv}}',
+            '| isbn=978-90-365-2632-6 | doi=10.3990/1.9789036526326}}',
             doi_sfn_cit_ref('10.3990/1.9789036526326')[1]
         )
 
@@ -124,7 +118,7 @@ class DoiTest(TestCase):
             'Transactions on Instrumentation and Measurement '
             '| publisher=Institute of Electrical and Electronics Engineers '
             '(IEEE) | volume=IM-34 | issue=2 | year=1985 | issn=0018-9456 '
-            '| doi=10.1109/tim.1985.4315297 | pages=185–187 | ref=harv}}',
+            '| doi=10.1109/tim.1985.4315297 | pages=185–187}}',
             doi_sfn_cit_ref('10.1109/TIM.1985.4315297')[1]
         )
 
@@ -137,8 +131,7 @@ class DoiTest(TestCase):
             'including QED corrections with twisted-mass fermions '
             '| journal=Journal of High Energy Physics '
             '| publisher=Springer Nature | volume=2017 | issue=10 '
-            '| year=2017 | issn=1029-8479 | doi=10.1007/jhep10(2017)157 '
-            '| ref=harv}}',
+            '| year=2017 | issn=1029-8479 | doi=10.1007/jhep10(2017)157}}',
             doi_sfn_cit_ref('10.1007/JHEP10(2017)157')[1]
         )
 

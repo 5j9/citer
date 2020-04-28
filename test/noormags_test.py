@@ -36,7 +36,6 @@ class NoormagsTest(TestCase):
             '| pages=55–55 '
             '| url=http://www.noormags.ir/view/fa/articlepage/105489 '
             '| language=fa '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(e, o[1])
@@ -62,7 +61,6 @@ class NoormagsTest(TestCase):
             '| pages=103–124 '
             '| url=http://www.noormags.ir/view/fa/articlepage/692447 '
             '| language=fa '
-            '| ref=harv '
             '| access-date=', o[1])
         self.assertIn(
             '&lt;ref name="سلیمانی\u200cمیمند 1389 pp. 103–124"&gt;'
