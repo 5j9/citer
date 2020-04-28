@@ -30,7 +30,6 @@ class WaybackmachineResponse(TestCase):
             'utm_hp_ref=mostpopular '
             '| archive-date=2013-10-21 '
             '| url-status=live '
-            '| ref=harv '
             '| access-date=',
             waybackmachine_sfn_cit_ref(
                 'http://web.archive.org/web/20131021230444/'

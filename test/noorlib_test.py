@@ -30,7 +30,6 @@ class NoorlibTest(TestCase):
             '| year=1368 '
             '| url=http://www.noorlib.ir/View/fa/Book/BookView/Image/6120 '
             '| language=فارسی '
-            '| ref=harv '
             '| access-date='
         )
         self.assertIn(e, o[1])
@@ -53,7 +52,6 @@ class NoorlibTest(TestCase):
             '| volume=1 '
             '| url=http://www.noorlib.ir/View/fa/Book/BookView/Image/18454 '
             '| language=عربی '
-            '| ref=harv '
             '| access-date=',
             o[1],
         )

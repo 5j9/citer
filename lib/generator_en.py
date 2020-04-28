@@ -260,14 +260,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         if language.lower() != 'en':
             cit += ' | language=' + language
 
-    # Todo: Template:Citation generates anchors for Harvard by default
-    # references
-    #   whereas the Cite templates by default do not (although they can be
-    # made to
-    #   do so).
-    if authors:
-        cit += ' | ref=harv'
-    else:
+    if not authors:
         # order should match sfn_template
         cit += ' | ref={{sfnref | ' +\
              (publisher or journal or website or title or 'Anon.')

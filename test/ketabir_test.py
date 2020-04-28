@@ -16,7 +16,7 @@ class KetabirTest(TestCase):
             'and مژگان امیرفروغی (مترجم) '
             '| title=101 راه برای اینکه پدر بهتری باشید '
             '| publisher=پیک ادبیات | publication-place=تهران - تهران '
-            '| year=1386 | isbn=978-964-8165-81-4 | language=fa | ref=harv}}',
+            '| year=1386 | isbn=978-964-8165-81-4 | language=fa}}',
             ketabir_sfn_cit_ref(
                 'http://www.ketab.ir/bookview.aspx?bookid=1323394')[1])
 
@@ -27,8 +27,7 @@ class KetabirTest(TestCase):
             '| first2=ویکی | others=عباس زارعی (مترجم), '
             'and محسن نیازی (مترجم) | title=روش‌های تحقیق تلفیقی '
             '| publisher=ثامن‌ الحجج‌(ع) | publication-place=تهران - تهران '
-            '| volume=1 | year=1387 | isbn=978-964-2823-35-2 | language=fa '
-            '| ref=harv}}',
+            '| volume=1 | year=1387 | isbn=978-964-2823-35-2 | language=fa}}',
             ketabir_sfn_cit_ref(
                 'http://www.ketab.ir/bookview.aspx?bookid=1369975')[1])
 
@@ -43,7 +42,7 @@ class KetabirTest(TestCase):
             '| title=آموزش گام به گام پیکربندی مسیریابهای میکروتیک:'
             ' آمادگی آزمون MTCNA | publisher=نشرگستر '
             '| publication-place=تهران - تهران | year=1391 '
-            '| isbn=978-600-5883-43-5 | language=fa | ref=harv}}',
+            '| isbn=978-600-5883-43-5 | language=fa}}',
             ketabir_sfn_cit_ref(
                 'http://www.ketab.ir/bookview.aspx?bookid=1676357')[1])
 
@@ -54,7 +53,7 @@ class KetabirTest(TestCase):
             '| first2=فروغ | last3=مختاری | first3=صفورا '
             '| title=11 سپتامبر ... آرماگدون | publisher=حدیث راه عشق '
             '| publication-place=اصفهان - اصفهان | year=1386 '
-            '| isbn=978-964-95633-4-3 | language=fa | ref=harv}}',
+            '| isbn=978-964-95633-4-3 | language=fa}}',
             ketabir_sfn_cit_ref(
                 'http://www.ketab.ir/bookview.aspx?bookid=1324978')[1])
 
@@ -66,7 +65,7 @@ class KetabirTest(TestCase):
             'در مثنوی‌سرایی: بررسی قالب غزل - مثنوی در ادب فارسی '
             '| publisher=هنر رسانه اردی‌بهشت '
             '| publication-place=تهران - تهران | year=1388 '
-            '| isbn=978-964-2656-34-9 | language=fa | ref=harv}}',
+            '| isbn=978-964-2656-34-9 | language=fa}}',
             ketabir_sfn_cit_ref(
                 'http://www.ketab.ir/bookview.aspx?bookid=1430801')[1])
 
@@ -78,7 +77,7 @@ class KetabirTest(TestCase):
             '| publisher=سازمان‌ مطالعه ‌و تدوین‌ کتب‌ علوم'
             ' ‌انسانی ‌دانشگاهها (سمت) '
             '| publication-place=خراسان رضوی - مشهد | volume=1 '
-            '| year=1390 | isbn=978-964-530-036-2 | language=fa | ref=harv}}',
+            '| year=1390 | isbn=978-964-530-036-2 | language=fa}}',
             ketabir_sfn_cit_ref(
                 'http://www.ketab.ir/bookview.aspx?bookid=1643445')[1])
 
@@ -92,7 +91,7 @@ class KetabirTest(TestCase):
             '| publisher=سازمان‌ مطالعه'
             ' ‌و تدوین‌ کتب‌ علوم ‌انسانی ‌دانشگاهها (سمت) '
             '| publication-place=تهران - تهران | volume=1 | year=1379 '
-            '| isbn=964-459-398-7 | language=fa | ref=harv}}',
+            '| isbn=964-459-398-7 | language=fa}}',
             ketabir_sfn_cit_ref(
                 'http://www.ketab.ir/bookview.aspx?bookid=227129')[1])
 

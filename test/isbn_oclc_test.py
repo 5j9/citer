@@ -23,8 +23,7 @@ class IsbnTest(TestCase):
             '| publication-place=London '
             '| year=2007 '
             '| isbn=978-0-349-11916-8 '
-            '| oclc=137313052 '
-            '| ref=harv}}'
+            '| oclc=137313052}}'
         ), isbn_sfn_cit_ref('9780349119168', pure=True)[1])
 
     def test_is2(self):
@@ -47,7 +46,7 @@ class IsbnTest(TestCase):
             '| title=Rāz-i gul-i surkh '
             '| publisher=Muʼassasah-ʼi Intishārāt-i Nigāh '
             '| publication-place=Tihrān | year=1379 | isbn=964-6736-34-3 '
-            '| oclc=53446327 | ref=harv}}'
+            '| oclc=53446327}}'
         ), isbn_sfn_cit_ref('964-6736-34-3 ')[1])
 
     def test_is4(self):
@@ -57,7 +56,7 @@ class IsbnTest(TestCase):
             '| others=رضا نظرزاده (به‌اهتمام) '
             '| title=دیوان کامل حافظ همراه با فالنامه | publisher=دیوان '
             '| publication-place=قم - قم | year=1385 | isbn=964-92962-6-3 '
-            '| language=fa | ref=harv}}'
+            '| language=fa}}'
         ), isbn_sfn_cit_ref('choghondar 964-92962-6-3 شلغم')[1])
 
 
@@ -76,8 +75,7 @@ class OCLCTest(TestCase):
             '| publisher=RoutledgeCurzon '
             '| year=2002 '
             '| isbn=0-7007-1512-6 '
-            '| oclc=875039842 '
-            '| ref=harv}}'
+            '| oclc=875039842}}'
         ), oclc_sfn_cit_ref('875039842')[1])
 
     def test_elec_type_with_url(self):
@@ -92,7 +90,6 @@ class OCLCTest(TestCase):
             "| oclc=809771201 "
             "| url=http://public.eblib.com/choice/publicfullrecord.aspx?p="
             "995605 "
-            "| ref=harv "
             "| access-date="
         ), oclc_sfn_cit_ref('809771201')[1])
 
@@ -103,8 +100,7 @@ class OCLCTest(TestCase):
             '| title=Universidade do Brasil, 1948-1966 '
             '| year=1966 '
             '| oclc=24680975 '
-            '| language=pt '
-            '| ref=harv}}'
+            '| language=pt}}'
         ), oclc_sfn_cit_ref('24680975')[1])
 
 
