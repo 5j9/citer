@@ -9,7 +9,6 @@ from urllib.parse import urlparse
 
 from langid import classify
 
-# import bibtex [1]
 from lib.commons import request
 from lib.ris import parse as ris_parse
 from lib.commons import dict_to_sfn_cit_ref
@@ -17,43 +16,22 @@ from lib.commons import dict_to_sfn_cit_ref
 
 def googlebooks_sfn_cit_ref(url, date_format='%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
-    # bibtex_result = get_bibtex(url) [1]
-    # dictionary = bibtex.parse(bibtex_result) [1]
-    dictionary = ris_parse(get_ris(url))
+    parsed_url = urlparse(url)
+    parsed_query = parse_qs(parsed_url.query)
+    book_id = parsed_query["id"][0]
+    dictionary = ris_parse(request(
+        f'http://books.google.com/books/download/?id={book_id}'
+        f'&output=ris', spoof=True).content.decode('utf8'))
     dictionary['date_format'] = date_format
-    pu = urlparse(url)
-    pq = parse_qs(pu.query)
     # default domain is prefered:
-    dictionary['url'] = 'https://' + pu.netloc + '/books?id=' + pq['id'][0]
+    dictionary['url'] = f'https://{parsed_url.netloc}/books?id={book_id}'
     # manually adding page number to dictionary:
-    if 'pg' in pq:
-        dictionary['page'] = pq['pg'][0][2:]
-        dictionary['url'] += '&pg=' + pq['pg'][0]
+    pg = parsed_query.get('pg')
+    if pg is not None:
+        pg0 = pg[0]
+        dictionary['page'] = pg0[2:]
+        dictionary['url'] += f'&pg={pg0}'
     # although google does not provide a language field:
     if not dictionary['language']:
         dictionary['language'] = classify(dictionary['title'])[0]
     return dict_to_sfn_cit_ref(dictionary)
-
-
-def get_bibtex(googlebook_url) -> bytes:
-    """Get bibtex file content from a noormags url."""
-    # getting id:
-    pu = urlparse(googlebook_url)
-    pq = parse_qs(pu.query)
-    bookid = pq['id'][0]
-    url = 'http://books.google.com/books/download/?id=' +\
-          bookid + '&output=bibtex'
-    # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    return request(url, spoof=True, timeout=10).content
-
-
-def get_ris(googlebook_url):
-    """Get ris file content from a noormags url."""
-    # getting id:
-    pu = urlparse(googlebook_url)
-    pq = parse_qs(pu.query)
-    bookid = pq['id'][0]
-    url = 'http://books.google.com/books/download/?id=' +\
-        bookid + '&output=ris'
-    # Agent spoofing is needed, otherwise: HTTP Error 401: Unauthorized
-    return request(url, spoof=True).text
