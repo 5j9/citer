@@ -45,18 +45,12 @@ else:
         CSS_HEADERS)
 
 
-def google_com_scr(url, parsed_url, date_format):
-    if parsed_url[2][:6] == '/books':
-        # examples:
+def google_encrypted_scr(url, parsed_url, date_format):
+    if parsed_url[2][:7] in {'/books', '/books/'}:
+        # sample urls:
+        # https://encrypted.google.com/books?id=6upvonUt0O8C
         # https://www.google.com/books?id=bwfoCAAAQBAJ&pg=PA32
-        # https://www.google.com/books/edition/The_Formative_Years_of_R_G_Collingwood/bwfoCAAAQBAJ?gbpv=1&pg=PA32
-        return googlebooks_scr(parsed_url, date_format)
-    return urls_scr(url, date_format)
-
-
-def encrypted_google_scr(url, parsed_url, date_format):
-    if parsed_url[2] == '/books':
-        # e.g. https://encrypted.google.com/books?id=6upvonUt0O8C
+        # https://www.google.com/books/edition/_/bwfoCAAAQBAJ?gbpv=1&pg=PA32
         return googlebooks_scr(parsed_url, date_format)
     return urls_scr(url, date_format)
 
@@ -74,8 +68,8 @@ TLDLESS_NETLOC_RESOLVER = {
     'books.google.com': googlebooks_scr,
     'books.google': googlebooks_scr,
 
-    'google': google_com_scr,
-    'encrypted.google': encrypted_google_scr,
+    'google': google_encrypted_scr,
+    'encrypted.google': google_encrypted_scr,
 }.get
 
 RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
@@ -127,7 +121,7 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
         if resolver:
             if resolver is googlebooks_scr:
                 return resolver(parsed_url, date_format)
-            elif resolver in {google_com_scr, encrypted_google_scr}:
+            elif resolver is google_encrypted_scr:
                 return resolver(url, parsed_url, date_format)
             return resolver(url, date_format)
         # DOIs contain dots
