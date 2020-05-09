@@ -45,11 +45,17 @@ else:
         CSS_HEADERS)
 
 
-def google_com_scr(url, date_format):
-    if url.startswith('https://www.google.com/books/edition/'):
-        return googlebooks_scr(url, date_format)
-    else:
-        return urls_scr(url, date_format)
+def google_com_scr(url, parsed_url, date_format):
+    if parsed_url[2][:7] == '/books/':
+        return googlebooks_scr(parsed_url, date_format)
+    return urls_scr(url, date_format)
+
+
+def encrypted_google_scr(url, parsed_url, date_format):
+    if parsed_url[2] == '/books':
+        # e.g. https://encrypted.google.com/books?id=6upvonUt0O8C
+        return googlebooks_scr(parsed_url, date_format)
+    return urls_scr(url, date_format)
 
 
 TLDLESS_NETLOC_RESOLVER = {
@@ -66,7 +72,7 @@ TLDLESS_NETLOC_RESOLVER = {
     'books.google': googlebooks_scr,
 
     'google': google_com_scr,
-    'encrypted.google': google_com_scr,
+    'encrypted.google': encrypted_google_scr,
 }.get
 
 RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
@@ -109,12 +115,17 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
             url = 'http://' + user_input
         else:
             url = user_input
+        parsed_url = urlparse(url)
         # TLD stands for top-level domain
-        tldless_netloc = urlparse(url)[1].rpartition('.')[0]
+        tldless_netloc = parsed_url[1].rpartition('.')[0]
         resolver = TLDLESS_NETLOC_RESOLVER(
             tldless_netloc[4:] if tldless_netloc.startswith('www.')
             else tldless_netloc)
         if resolver:
+            if resolver is googlebooks_scr:
+                return resolver(parsed_url, date_format)
+            elif resolver in {google_com_scr, encrypted_google_scr}:
+                return resolver(url, parsed_url, date_format)
             return resolver(url, date_format)
         # DOIs contain dots
         m = DOI_SEARCH(unescape(en_user_input))

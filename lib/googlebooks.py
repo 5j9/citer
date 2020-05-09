@@ -13,9 +13,8 @@ from lib.ris import parse as ris_parse
 from lib.commons import dict_to_sfn_cit_ref
 
 
-def googlebooks_scr(url, date_format='%Y-%m-%d') -> tuple:
+def googlebooks_scr(parsed_url, date_format='%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
-    parsed_url = urlparse(url)
     parsed_query = parse_qs(parsed_url.query)
 
     id_ = parsed_query.get('id')
