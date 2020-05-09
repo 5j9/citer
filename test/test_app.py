@@ -3,8 +3,8 @@ from unittest import TestCase, main
 from unittest.mock import patch
 
 from app import (
-    url_doi_isbn_scr, TLDLESS_NETLOC_RESOLVER, google_com_scr, googlebooks_scr,
-    noormags_scr, noorlib_scr, encrypted_google_scr
+    url_doi_isbn_scr, TLDLESS_NETLOC_RESOLVER, googlebooks_scr,
+    noormags_scr, noorlib_scr, google_encrypted_scr
 )
 
 
@@ -35,11 +35,17 @@ class TestURLHandler(TestCase):
     def test_google_books_netloc(self):
         ag = self.assert_google_books_scr
         # note that top level domains are ignored
-        ag('encrypted.google.com/books?id=6upvonUt0O8C', encrypted_google_scr)
+        ag('encrypted.google.com/books?id=6upvonUt0O8C', google_encrypted_scr)
         ag('books.google.com/books?id=pzmt3pcBuGYC')
         ag('books.google.de/books?id=pzmt3pcBuGYC')
         ag('books.google.com.ar/books?id=pzmt3pcBuGYC')
         ag('books.google.co.il/books?id=pzmt3pcBuGYC')
+        with patch('app.googlebooks_scr') as mock:
+            url_doi_isbn_scr(
+                'www.google.com/books?id=bwfoCAAAQBAJ', None)
+            url_doi_isbn_scr(
+                'www.google.com/books/edition/_/bwfoCAAAQBAJ', None)
+        assert mock.call_count == 2
 
     def assert_noormags_scr(self, url):
         self.assert_scr(url, noormags_scr)
