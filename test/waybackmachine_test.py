@@ -6,7 +6,7 @@
 
 from unittest import main, TestCase
 
-from lib.waybackmachine import waybackmachine_sfn_cit_ref
+from lib.waybackmachine import waybackmachine_scr
 
 
 class WaybackmachineResponse(TestCase):
@@ -31,7 +31,7 @@ class WaybackmachineResponse(TestCase):
             '| archive-date=2013-10-21 '
             '| url-status=live '
             '| access-date=',
-            waybackmachine_sfn_cit_ref(
+            waybackmachine_scr(
                 'http://web.archive.org/web/20131021230444/'
                 'http://www.huffingtonpost.com/2013/10/19/'
                 'plastic-surgery-justin-bieber-100k_n_4128563.html?'
@@ -54,7 +54,7 @@ class WaybackmachineResponse(TestCase):
             '| url-status=dead '
             '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
             '| access-date=',
-            waybackmachine_sfn_cit_ref(
+            waybackmachine_scr(
                 'https://web.archive.org/web/20070429193849id_/'
                 'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
             )[1]
@@ -62,7 +62,7 @@ class WaybackmachineResponse(TestCase):
 
     def test_webless_url(self):
         """The 'web/ component of the url can be omitted sometimes."""
-        o = waybackmachine_sfn_cit_ref(
+        o = waybackmachine_scr(
             'https://web.archive.org/web/20170119050001/'
             'http://www.isna.ir/news/95102918901/'
             '%D8%B1%D9%88%D8%A7%D9%86%DA%86%DB%8C-%D8%AF%D8%B1-'

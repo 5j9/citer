@@ -13,7 +13,7 @@ from requests import ConnectionError as RequestsConnectionError
 
 from lib.commons import dict_to_sfn_cit_ref
 from lib.urls import (
-    urls_sfn_cit_ref, url2dict, get_home_title, get_html, find_authors,
+    urls_scr, url2dict, get_home_title, get_html, find_authors,
     find_journal, find_site_name, find_title, ContentTypeError,
     ContentLengthError, StatusCodeError, TITLE_TAG
 )
@@ -25,14 +25,14 @@ URL_FULLMATCH = regex_compile(
 ).fullmatch
 
 
-def waybackmachine_sfn_cit_ref(
+def waybackmachine_scr(
     archive_url: str, date_format: str = '%Y-%m-%d'
 ) -> tuple:
     """Create the response namedtuple."""
     m = URL_FULLMATCH(archive_url)
     if not m:
         # Could not parse the archive_url. Treat as an ordinary URL.
-        return urls_sfn_cit_ref(archive_url, date_format)
+        return urls_scr(archive_url, date_format)
     archive_year, archive_month, archive_day, original_url = \
         m.groups()
     original_dict = {}

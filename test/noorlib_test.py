@@ -6,14 +6,14 @@
 
 from unittest import main, TestCase
 
-from lib.noorlib import noorlib_sfn_cit_ref
+from lib.noorlib import noorlib_scr
 
 
 class NoorlibTest(TestCase):
 
     def test_nl1(self):
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/6120'
-        o = noorlib_sfn_cit_ref(i)
+        o = noorlib_scr(i)
         e = (
             '* {{cite book '
             '| last=رشید یاسمی '
@@ -37,7 +37,7 @@ class NoorlibTest(TestCase):
     def test_nl2(self):
         """The year parameter is not present."""
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/18454'
-        o = noorlib_sfn_cit_ref(i)
+        o = noorlib_scr(i)
         self.assertIn('{{sfn | کورانی | p=}}', o[0])
         self.assertIn(
             '* {{cite book '

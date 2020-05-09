@@ -30,7 +30,7 @@ DOI_SEARCH = regex_compile(
 ).search
 
 
-def doi_sfn_cit_ref(doi_or_url, pure=False, date_format='%Y-%m-%d') -> tuple:
+def doi_scr(doi_or_url, pure=False, date_format='%Y-%m-%d') -> tuple:
     """Return the response namedtuple."""
     if pure:
         doi = doi_or_url

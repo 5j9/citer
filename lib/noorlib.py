@@ -14,7 +14,7 @@ BIBTEX_ARTICLE_ID_SEARCH = regex_compile(
 RIS_ARTICLE_ID_SEARCH = regex_compile(r'(?<=RIS&id=)\d+').search
 
 
-def noorlib_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
+def noorlib_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     dictionary = bibtex_parse(get_bibtex(url))
     dictionary['date_format'] = date_format

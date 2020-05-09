@@ -14,23 +14,23 @@ from config import STATIC_PATH
 htmldir = dirname(__file__)
 
 # Predefined responses
-DEFAULT_SFN_CIT_REF = (
+DEFAULT_SCR = (
     'Generated citation will appear here...', '', '')
 
-UNDEFINED_INPUT_SFN_CIT_REF = (
+UNDEFINED_INPUT_SCR = (
     'Undefined input.',
-    'Sorry, the input was not recognized. The error was logged.',
+    'Sorry, the input was not recognized.',
     '')
 
-HTTPERROR_SFN_CIT_REF = (
+HTTPERROR_SCR = (
     'HTTP error:',
     'One or more of the web resources required to '
     'create this citation are not accessible at this moment.',
     '')
 
-OTHER_EXCEPTION_SFN_CIT_REF = (
+OTHER_EXCEPTION_SCR = (
     'An unknown error occurred.',
-    'The error was logged.',
+    '',
     '')
 
 CSS = open(htmldir + '/en.css', 'rb').read()
@@ -63,7 +63,7 @@ HTML_SUBST = Template(
 ).substitute
 
 
-def sfn_cit_ref_to_html(sfn_cit_ref: tuple, date_format: str, input_type: str):
+def scr_to_html(sfn_cit_ref: tuple, date_format: str, input_type: str):
     """Insert sfn_cit_ref into the HTML template and return response_body."""
     date_format = date_format or '%Y-%m-%d'
     sfn, cit, ref = sfn_cit_ref

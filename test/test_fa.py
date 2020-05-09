@@ -8,13 +8,13 @@ import config; config.LANG = 'fa'
 # noinspection PyUnresolvedReferences
 import test
 
-from lib.ketabir import ketabir_sfn_cit_ref
-from lib.doi import doi_sfn_cit_ref
-from lib.googlebooks import googlebooks_sfn_cit_ref
-from lib.isbn_oclc import isbn_sfn_cit_ref
-from lib.noormags import noormags_sfn_cit_ref
-from lib.noorlib import noorlib_sfn_cit_ref
-from lib.pubmed import pmid_sfn_cit_ref
+from lib.ketabir import ketabir_scr
+from lib.doi import doi_scr
+from lib.googlebooks import googlebooks_scr
+from lib.isbn_oclc import isbn_scr
+from lib.noormags import noormags_scr
+from lib.noorlib import noorlib_scr
+from lib.pubmed import pmid_scr
 
 
 class KetabirTest(TestCase):
@@ -28,7 +28,7 @@ class KetabirTest(TestCase):
             ' عنوان=101 راه برای اینکه پدر بهتری باشید |'
             ' ناشر=پیک ادبیات | مکان=تهران - تهران |'
             ' سال=۱۳۸۶ | ماه=۰۶ | شابک=978-964-8165-81-4 | زبان=fa}}',
-            ketabir_sfn_cit_ref(
+            ketabir_scr(
                 'http://www.ketab.ir/bookview.aspx?bookid=1323394')[1])
 
     def test_ab2(self):
@@ -40,7 +40,7 @@ class KetabirTest(TestCase):
             ' عنوان=روش‌های تحقیق تلفیقی |'
             ' ناشر=ثامن‌ الحجج‌(ع) | مکان=تهران - تهران | جلد=۱ |'
             ' سال=۱۳۸۷ | ماه=۰۳ | شابک=978-964-2823-35-2 | زبان=fa}}',
-            ketabir_sfn_cit_ref(
+            ketabir_scr(
                 'http://www.ketab.ir/bookview.aspx?bookid=1369975')[1])
 
     def test_ab3(self):
@@ -54,7 +54,7 @@ class KetabirTest(TestCase):
             ' به گام پیکربندی مسیریابهای میکروتیک: آمادگی آزمون MTCNA '
             '| ناشر=نشرگستر | مکان=تهران - تهران |'
             ' سال=۱۳۹۱ | ماه=۰۳ | شابک=978-600-5883-43-5 | زبان=fa}}',
-            ketabir_sfn_cit_ref(
+            ketabir_scr(
                 'http://www.ketab.ir/bookview.aspx?bookid=1676357')[1])
 
     def test_ab4(self):
@@ -66,7 +66,7 @@ class KetabirTest(TestCase):
             ' نام۳=صفورا | عنوان=11 سپتامبر ... آرماگدون |'
             ' ناشر=حدیث راه عشق | مکان=اصفهان - اصفهان |'
             ' سال=۱۳۸۶ | ماه=۰۶ | شابک=978-964-95633-4-3 | زبان=fa}}',
-            ketabir_sfn_cit_ref(
+            ketabir_scr(
                 'http://www.ketab.ir/bookview.aspx?bookid=1324978')[1])
 
     def test_ab5(self):
@@ -77,7 +77,7 @@ class KetabirTest(TestCase):
             ' مثنوی‌سرایی: بررسی قالب غزل - مثنوی در ادب فارسی |'
             ' ناشر=هنر رسانه اردی‌بهشت | مکان=تهران - تهران |'
             ' سال=۱۳۸۸ | ماه=۰۲ | شابک=978-964-2656-34-9 | زبان=fa}}',
-            ketabir_sfn_cit_ref(
+            ketabir_scr(
                 'http://www.ketab.ir/bookview.aspx?bookid=1430801')[1])
 
     def test_ab6(self):
@@ -89,7 +89,7 @@ class KetabirTest(TestCase):
             '‌و تدوین‌ کتب‌ علوم ‌انسانی ‌دانشگاهها (سمت) |'
             ' مکان=خراسان رضوی - مشهد | جلد=۱ |'
             ' سال=۱۳۹۰ | ماه=۱۱ | شابک=978-964-530-036-2 | زبان=fa}}',
-            ketabir_sfn_cit_ref(
+            ketabir_scr(
                 'http://www.ketab.ir/bookview.aspx?bookid=1643445')[1])
 
     def test_ab7(self):
@@ -102,7 +102,7 @@ class KetabirTest(TestCase):
             ' ناشر=سازمان‌ مطالعه ‌و تدوین‌ کتب‌ علوم'
             ' ‌انسانی ‌دانشگاهها (سمت) | مکان=تهران - تهران | جلد=۱ |'
             ' سال=۱۳۸۸ | ماه=۰۸ | شابک=978-964-459-398-7 | زبان=fa}}',
-            ketabir_sfn_cit_ref(
+            ketabir_scr(
                 'http://www.ketab.ir/bookview.aspx?bookid=1459372')[1])
 
 
@@ -116,7 +116,7 @@ class GooglebookTest(TestCase):
             ' سال=2001 | شابک=978-0-262-26134-0 |'
             ' پیوند=https://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 |'
             ' زبان=en | تاریخ بازبینی=',
-            googlebooks_sfn_cit_ref(
+            googlebooks_scr(
                 'http://books.google.com/books?'
                 'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library'
             )[1],
@@ -124,7 +124,7 @@ class GooglebookTest(TestCase):
 
     def test_gb2(self):
         """a book with more than 4 authors (10 authors)"""
-        o = googlebooks_sfn_cit_ref(
+        o = googlebooks_scr(
             'http://books.google.com/books?id='
             'U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false')
         self.assertIn(
@@ -163,7 +163,7 @@ class GooglebookTest(TestCase):
 
     def test_gb3(self):
         """Non-ascii characters in title"""
-        o = googlebooks_sfn_cit_ref(
+        o = googlebooks_scr(
             'http://books.google.com/books?'
             'id=icMEAAAAQBAJ&pg=PA588&dq=%22a+Delimiter+is%22&hl='
             'en&sa=X&ei=oNKSUrKeDovItAbO_4CoBA&ved=0CC4Q6AEwAA#v='
@@ -190,7 +190,7 @@ class GooglebookTest(TestCase):
 
     def test_gb4(self):
         """Non-ascii characters in author's name."""
-        o = googlebooks_sfn_cit_ref(
+        o = googlebooks_scr(
             'http://books.google.com/books?id='
             'i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa='
             'X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q='
@@ -226,7 +226,7 @@ class NoormagsTest(TestCase):
             ' ژورنال=شعر | شماره=62 | سال=1387 | صفحه=17–19 |'
             ' پیوند=https://www.noormags.ir/view/fa/articlepage/454096 |'
             ' زبان=fa | تاریخ بازبینی=',
-            noormags_sfn_cit_ref(
+            noormags_scr(
                 'http://www.noormags.com/view/fa/ArticlePage/454096'
             )[1],
         )
@@ -236,7 +236,7 @@ class NoorlibTest(TestCase):
 
     def test_nl1(self):
         i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/3232'
-        o = noorlib_sfn_cit_ref(i)
+        o = noorlib_scr(i)
         e = (
             '* {{یادکرد کتاب '
             '| نام خانوادگی=ابن اثیر '
@@ -267,7 +267,7 @@ class DoiTest(TestCase):
             " سال=2002 | ماه=7 | issn=1474-1776 | doi=10.1038/nrd842 |"
             " صفحه=491–492 |"
             " زبان=da}}",
-            doi_sfn_cit_ref('http://dx.doi.org/10.1038/nrd842')[1],
+            doi_scr('http://dx.doi.org/10.1038/nrd842')[1],
         )
 
 
@@ -283,7 +283,7 @@ class IsbnTest(TestCase):
             ' شابک=978-0-349-11916-8 '
             '| oclc=137313052 '
             '| زبان=en}}',
-            isbn_sfn_cit_ref('9780349119168', pure=True)[1])
+            isbn_scr('9780349119168', pure=True)[1])
 
     def test_is2(self):
         """not found in ottobib"""
@@ -294,7 +294,7 @@ class IsbnTest(TestCase):
             ' عنوان=دیوان خاقانی شروانی |'
             ' ناشر=موسسه انتشارات نگاه | مکان=تهران - تهران |'
             ' سال=۱۳۹۶ | ماه=۰۵ | شابک=978-964-6736-71-9 | زبان=fa}}',
-            isbn_sfn_cit_ref('978-964-6736-71-9', pure=True)[1]
+            isbn_scr('978-964-6736-71-9', pure=True)[1]
         )
 
     def test_is3(self):
@@ -306,7 +306,7 @@ class IsbnTest(TestCase):
             ' ناشر=موسسه انتشارات نگاه | مکان=تهران - تهران |'
             ' سال=۱۳۸۱ | ماه=۰۶ | شابک=964-6736-34-3 | oclc=53446327 '
             '| زبان=fa}}',
-            isbn_sfn_cit_ref('964-6736-34-3 ')[1],
+            isbn_scr('964-6736-34-3 ')[1],
         )
 
     def test_is4(self):
@@ -317,7 +317,7 @@ class IsbnTest(TestCase):
             ' عنوان=دیوان کامل حافظ همراه با فالنامه |'
             ' ناشر=دیوان | مکان=قم - قم |'
             ' سال=۱۳۸۵ | ماه=۰۹ | شابک=964-92962-6-3 | زبان=fa}}',
-            isbn_sfn_cit_ref('choghondar 964-92962-6-3 شلغم')[1]
+            isbn_scr('choghondar 964-92962-6-3 شلغم')[1]
         )
 
     def test_2letter_langcode(self):
@@ -333,7 +333,7 @@ class IsbnTest(TestCase):
             '| ژورنال=Wei sheng yan jiu = Journal of hygiene research '
             '| جلد=28 | شماره=2 | تاریخ=1999-03-30 | issn=1000-8020 '
             '| pmid=11938998 | صفحه=115–6 | زبان=zh}}',
-            pmid_sfn_cit_ref('11938998')[1],
+            pmid_scr('11938998')[1],
         )
 
 
