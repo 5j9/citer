@@ -46,7 +46,10 @@ else:
 
 
 def google_com_scr(url, parsed_url, date_format):
-    if parsed_url[2][:7] == '/books/':
+    if parsed_url[2][:6] == '/books':
+        # examples:
+        # https://www.google.com/books?id=bwfoCAAAQBAJ&pg=PA32
+        # https://www.google.com/books/edition/The_Formative_Years_of_R_G_Collingwood/bwfoCAAAQBAJ?gbpv=1&pg=PA32
         return googlebooks_scr(parsed_url, date_format)
     return urls_scr(url, date_format)
 
