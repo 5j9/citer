@@ -10,11 +10,12 @@ import test
 
 from lib.ketabir import ketabir_scr
 from lib.doi import doi_scr
-from lib.googlebooks import googlebooks_scr
 from lib.isbn_oclc import isbn_scr
 from lib.noormags import noormags_scr
 from lib.noorlib import noorlib_scr
 from lib.pubmed import pmid_scr
+
+from test.googlebooks_test import googlebooks_scr
 
 
 class KetabirTest(TestCase):

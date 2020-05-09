@@ -5,19 +5,19 @@
 
 
 from unittest import main, TestCase
+from urllib.parse import urlparse
 
-from lib.googlebooks import googlebooks_scr
+from lib.googlebooks import googlebooks_scr as _googlebooks_scr
+
+
+def googlebooks_scr(url):
+    return _googlebooks_scr(urlparse(url))
 
 
 class GooglebooksTest(TestCase):
 
     def test_gb1(self):
-        i = (
-            'http://books.google.com/books?'
-            'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library'
-        )
-        o = googlebooks_scr(i)
-        e = (
+        self.assertIn(
             '* {{cite book '
             '| last=Arms '
             '| first=W.Y. '
@@ -27,27 +27,24 @@ class GooglebooksTest(TestCase):
             '| year=2001 '
             '| isbn=978-0-262-26134-0 '
             '| url=https://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 '
-            '| access-date='
-        )
-        self.assertIn(e, o[1])
+            '| access-date=', googlebooks_scr(
+                'http://books.google.com/books?'
+                'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library')[1])
 
     def test_gb2(self):
         """a book with more than 4 authors (10 authors)"""
-        i = (
+        o = googlebooks_scr(
             'http://books.google.com/books?'
-            'id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
-        )
-        o = googlebooks_scr(i)
-        e1 = (
+            'id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false')
+        self.assertIn(
             '{{sfn '
             '| Anderson '
             '| DeBolt '
             '| Featherstone '
             '| Gunther '
             '| 2010 '
-            '| p=57}}'
-        )
-        e2 = (
+            '| p=57}}', o[0])
+        self.assertIn(
             '* {{cite book '
             '| last=Anderson '
             '| first=E. '
@@ -76,21 +73,16 @@ class GooglebooksTest(TestCase):
             '| year=2010 '
             '| isbn=978-0-13-270490-8 '
             '| url=https://books.google.com/books?id=U46IzqYLZvAC&pg=PT57 '
-            '| access-date='
-        )
-        self.assertIn(e1, o[0])
-        self.assertIn(e2, o[1])
+            '| access-date=', o[1])
 
     def test_gb3(self):
         """Non-ascii characters in title (Some of them where removed later)"""
-        i = (
+        o = googlebooks_scr(
             'http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588&dq=%22a+'
             'Delimiter+is%22&hl=en&sa=X&ei=oNKSUrKeDovItAbO_4CoBA&ved='
-            '0CC4Q6AEwAA#v=onepage&q=%22a%20Delimiter%20is%22&f=false'
-        )
-        o = googlebooks_scr(i)
-        e1 = '{{sfn | Farrell | 2009 | p=588}}'
-        e2 = (
+            '0CC4Q6AEwAA#v=onepage&q=%22a%20Delimiter%20is%22&f=false')
+        self.assertIn('{{sfn | Farrell | 2009 | p=588}}', o[0])
+        self.assertIn(
             '* {{cite book '
             '| last=Farrell '
             '| first=J. '
@@ -100,22 +92,17 @@ class GooglebooksTest(TestCase):
             '| year=2009 '
             '| isbn=978-1-111-78619-9 '
             '| url=https://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588 '
-            '| access-date='
-        )
-        self.assertIn(e1, o[0])
-        self.assertIn(e2, o[1])
+            '| access-date=', o[1])
 
     def test_gb4(self):
         """Non-ascii characters in author's name."""
-        i = (
+        o = googlebooks_scr(
             'https://books.google.com/books?id='
             'i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa='
             'X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q='
-            '%22legal%20translation%20is%22&f=false'
-        )
-        o = googlebooks_scr(i)
-        e1 = '{{sfn | Šarčević | 1997 | p=229}}'
-        e2 = (
+            '%22legal%20translation%20is%22&f=false')
+        self.assertIn('{{sfn | Šarčević | 1997 | p=229}}', o[0])
+        self.assertIn(
             '* {{cite book '
             '| last=Šarčević '
             '| first=S. '
@@ -124,20 +111,15 @@ class GooglebooksTest(TestCase):
             '| year=1997 '
             '| isbn=978-90-411-0401-4 '
             '| url=https://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 '
-            '| access-date='
-        )
-        self.assertIn(e1, o[0])
-        self.assertIn(e2, o[1])
+            '| access-date=', o[1])
 
     def test_gb5(self):
         """ref checking"""
-        i = (
+        o = googlebooks_scr(
             'https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378&'
             'dq=density+of+granite&hl=en&sa=X&ei=YBHIU-qCBIyX0QXusoDgAg&ved='
-            '0CEIQ6AEwBjgK#v=onepage&q=density%20of%20granite&f=false'
-        )
-        o = googlebooks_scr(i)
-        ctnt = (
+            '0CEIQ6AEwBjgK#v=onepage&q=density%20of%20granite&f=false')
+        self.assertIn(
             '* {{cite book '
             '| last=Serway '
             '| first=R.A. '
@@ -150,9 +132,8 @@ class GooglebooksTest(TestCase):
             '| isbn=978-1-4390-4838-2 '
             '| url=https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378'
             ' '
-            '| access-date='
-        )
-        reft = (
+            '| access-date=', o[1])
+        self.assertIn(
             '&lt;ref name="Serway Jewett 2009 p. 378"&gt;'
             '{{cite book '
             '| last=Serway '
@@ -166,10 +147,7 @@ class GooglebooksTest(TestCase):
             '| isbn=978-1-4390-4838-2 '
             '| url=https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378'
             ' '
-            '| access-date='
-        )
-        self.assertIn(ctnt, o[1])
-        self.assertIn(reft, o[2])
+            '| access-date=', o[2])
         self.assertIn(' | page=378}}&lt;/ref&gt;', o[2])
 
 
