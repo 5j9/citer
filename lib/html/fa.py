@@ -27,24 +27,24 @@ HTML_SUBST = Template(
     )).substitute
 
 # Predefined responses
-DEFAULT_SFN_CIT_REF = ('یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '')
-HTTPERROR_SFN_CIT_REF = (
+DEFAULT_SCR = ('یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '')
+HTTPERROR_SCR = (
     'خطای اچ‌تی‌تی‌پی:',
     'یک یا چند مورد از منابع اینترنتی مورد '
     'نیاز برای ساخت این یادکرد در این لحظه '
     'در دسترس نیستند و یا ورودی نامعتبر است.',
     '')
-OTHER_EXCEPTION_SFN_CIT_REF = (
+OTHER_EXCEPTION_SCR = (
     'خطای ناشناخته‌ای رخ داد..',
     'اطلاعات خطا در سیاهه ثبت شد.',
     '')
-UNDEFINED_INPUT_SFN_CIT_REF = (
+UNDEFINED_INPUT_SCR = (
     'ورودی تجزیه‌ناپذیر',
     'پوزش، ورودی قابل پردازش نبود. خطا در سیاهه ثبت شد.',
     '')
 
 
-def sfn_cit_ref_to_html(sfn_cit_ref: tuple, date_format: str, input_type: str):
+def scr_to_html(sfn_cit_ref: tuple, date_format: str, input_type: str):
     """Insert sfn_cite_ref into the HTML template and return response_body."""
     sfn, cit, ref = sfn_cit_ref
     return HTML_SUBST(sfn=sfn, cit=cit, ref=ref).replace(

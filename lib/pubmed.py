@@ -29,7 +29,7 @@ class NCBIError(Exception):
     pass
 
 
-def pmid_sfn_cit_ref(pmid: str, date_format='%Y-%m-%d') -> tuple:
+def pmid_scr(pmid: str, date_format='%Y-%m-%d') -> tuple:
     """Return the response namedtuple."""
     pmid = NON_DIGITS_SUB('', pmid)
     dictionary = ncbi('pmid', pmid)
@@ -37,7 +37,7 @@ def pmid_sfn_cit_ref(pmid: str, date_format='%Y-%m-%d') -> tuple:
     return dict_to_sfn_cit_ref(dictionary)
 
 
-def pmcid_sfn_cit_ref(pmcid: str, date_format='%Y-%m-%d') -> tuple:
+def pmcid_scr(pmcid: str, date_format='%Y-%m-%d') -> tuple:
     """Return the response namedtuple."""
     pmcid = NON_DIGITS_SUB('', pmcid)
     dictionary = ncbi('pmcid', pmcid)

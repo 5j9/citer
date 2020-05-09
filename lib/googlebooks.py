@@ -4,8 +4,7 @@
 """All things specifically related to the Google Books website."""
 
 
-from urllib.parse import parse_qs
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 
 from langid import classify
 
@@ -14,11 +13,17 @@ from lib.ris import parse as ris_parse
 from lib.commons import dict_to_sfn_cit_ref
 
 
-def googlebooks_sfn_cit_ref(url, date_format='%Y-%m-%d') -> tuple:
+def googlebooks_scr(url, date_format='%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     parsed_url = urlparse(url)
     parsed_query = parse_qs(parsed_url.query)
-    book_id = parsed_query["id"][0]
+
+    id_ = parsed_query.get('id')
+    if id_ is not None:
+        book_id = id_[0]
+    else:  # the new URL format
+        book_id = parsed_url.path.rpartition('/')[2]
+
     dictionary = ris_parse(request(
         f'http://books.google.com/books/download/?id={book_id}'
         f'&output=ris', spoof=True).content.decode('utf8'))

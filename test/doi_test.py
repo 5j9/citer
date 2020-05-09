@@ -6,7 +6,7 @@
 
 from unittest import main, TestCase
 
-from lib.doi import doi_sfn_cit_ref
+from lib.doi import doi_scr
 
 
 class DoiTest(TestCase):
@@ -18,7 +18,7 @@ class DoiTest(TestCase):
             "Selective anticancer drugs | journal=Nature Reviews Drug "
             "Discovery | publisher=Springer Nature | volume=1 | issue=7 | "
             "year=2002 | issn=1474-1776 | doi=10.1038/nrd842 | pages=491–492}}",
-            doi_sfn_cit_ref('https://doi.org/10.1038%2Fnrd842')[1],
+            doi_scr('https://doi.org/10.1038%2Fnrd842')[1],
         )
 
     def test_doi2(self):
@@ -31,7 +31,7 @@ class DoiTest(TestCase):
             '| pages=272–281 '
             '| ref={{sfnref | University of Chicago Press | 2014}}'
             '}}',
-            doi_sfn_cit_ref(
+            doi_scr(
                 'http://www.jstor.org/stable/info/10.1086/677379'
             )[1],
         )
@@ -45,7 +45,7 @@ class DoiTest(TestCase):
             '| publisher=American Psychological Association (APA) '
             '| volume=30 | issue=9 | year=1939 | issn=0022-0663 '
             '| doi=10.1037/h0063404 | pages=641–656}}',
-            doi_sfn_cit_ref('https://doi.org/10.1037%2Fh0063404')[1],
+            doi_scr('https://doi.org/10.1037%2Fh0063404')[1],
         )
 
     def test_doi4(self):
@@ -61,7 +61,7 @@ class DoiTest(TestCase):
             '| publisher=Informa UK Limited '
             '| volume=31 | issue=4 | year=2005 | issn=0095-2990 '
             '| doi=10.1081/ada-200068110 | pages=537–553}}',
-            doi_sfn_cit_ref('10.1081%2Fada-200068110')[1],
+            doi_scr('10.1081%2Fada-200068110')[1],
         )
 
     def test_incollection(self):
@@ -79,7 +79,7 @@ class DoiTest(TestCase):
             '| isbn=978-3-540-07155-6 '
             '| issn=0075-8434 '
             '| doi=10.1007/bfb0064872}}',
-            doi_sfn_cit_ref('DOI 10.1007/BFb0064872')[1]
+            doi_scr('DOI 10.1007/BFb0064872')[1]
         )
 
     def test_doi_isbn_no_year(self):
@@ -90,7 +90,7 @@ class DoiTest(TestCase):
             ' a space-time approach '
             '| publisher=University Library/University of Twente '
             '| isbn=978-90-365-2632-6 | doi=10.3990/1.9789036526326}}',
-            doi_sfn_cit_ref('10.3990/1.9789036526326')[1]
+            doi_scr('10.3990/1.9789036526326')[1]
         )
 
     def test_conference_location(self):
@@ -106,7 +106,7 @@ class DoiTest(TestCase):
             "| doi=10.1145/1117278 "
             "| ref={{sfnref | ACM Press | 2006}}"
             "}}",
-            doi_sfn_cit_ref('10.1145/1117278')[1]
+            doi_scr('10.1145/1117278')[1]
         )
 
     def test_non_numeric_volume(self):
@@ -119,7 +119,7 @@ class DoiTest(TestCase):
             '| publisher=Institute of Electrical and Electronics Engineers '
             '(IEEE) | volume=IM-34 | issue=2 | year=1985 | issn=0018-9456 '
             '| doi=10.1109/tim.1985.4315297 | pages=185–187}}',
-            doi_sfn_cit_ref('10.1109/TIM.1985.4315297')[1]
+            doi_scr('10.1109/TIM.1985.4315297')[1]
         )
 
     def test_bad_author_name(self):
@@ -132,8 +132,9 @@ class DoiTest(TestCase):
             '| journal=Journal of High Energy Physics '
             '| publisher=Springer Nature | volume=2017 | issue=10 '
             '| year=2017 | issn=1029-8479 | doi=10.1007/jhep10(2017)157}}',
-            doi_sfn_cit_ref('10.1007/JHEP10(2017)157')[1]
+            doi_scr('10.1007/JHEP10(2017)157')[1]
         )
+
 
 if __name__ == '__main__':
     main()

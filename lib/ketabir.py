@@ -28,7 +28,7 @@ AUTHORS_FINDALL = regex_compile(
 LOCATION_SEARCH = regex_compile(r'محل نشر:</b>([^<]++)<').search
 
 
-def ketabir_sfn_cit_ref(url: str, date_format='%Y-%m-%d') -> tuple:
+def ketabir_scr(url: str, date_format='%Y-%m-%d') -> tuple:
     """Return the response namedtuple."""
     dictionary = url2dictionary(url)
     dictionary['date_format'] = date_format

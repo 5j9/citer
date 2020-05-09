@@ -6,7 +6,7 @@
 
 from unittest import main, TestCase
 
-from lib.noormags import noormags_sfn_cit_ref
+from lib.noormags import noormags_scr
 
 
 class NoormagsTest(TestCase):
@@ -23,7 +23,7 @@ class NoormagsTest(TestCase):
             '%da%86%d8%a7%d8%b1%da%86%d9%88%d8%a8-%d9%87%d8%a7%db%8c-' \
             '%d8%b1%d9%88%d8%b4-%d8%b4%d9%86%d8%a7%d8%ae%d8%aa%db%8c?q=' \
             '%D8%A8%D8%B1%D9%82&score=21.639421&rownumber=1'
-        o = noormags_sfn_cit_ref(i)
+        o = noormags_scr(i)
         e = (
             '* {{cite journal '
             '| last=فتح\u200cالله\u200cزاده\u200cاقدم '
@@ -42,7 +42,7 @@ class NoormagsTest(TestCase):
 
     def test_nm3(self):
         """Reftag check."""
-        o = noormags_sfn_cit_ref(
+        o = noormags_scr(
             'http://www.noormags.ir/view/fa/articlepage/'
             '692447?sta=%D8%AF%D8%B9%D8%A7%DB%8C%20%D8%A7%D8%A8%D9%88%D8%AD%'
             'D9%85%D8%B2%D9%87%20%D8%AB%D9%85%D8%A7%D9%84%DB%8C'

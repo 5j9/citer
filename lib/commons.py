@@ -130,7 +130,7 @@ def dict_to_sfn_cit_ref(dictionary) -> tuple:
     return sfn_cit_ref(dictionary)
 
 
-def sfn_cit_ref_to_json(response) -> str:
+def scr_to_json(response) -> str:
     """Generate api JSON response containing sfn, cite and ref."""
     return json_dumps({
         'reference_tag': response.ref,

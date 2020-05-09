@@ -232,7 +232,7 @@ class StatusCodeError(ValueError):
     pass
 
 
-def urls_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
+def urls_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     try:
         dictionary = url2dict(url)

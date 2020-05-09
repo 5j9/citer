@@ -16,7 +16,7 @@ BIBTEX_ARTICLE_ID_SEARCH = regex_compile(r'(?<=/citation/bibtex/)\d+').search
 RIS_ARTICLE_ID_SEARCH = regex_compile(r'(?<=/citation/ris/)\d+').search
 
 
-def noormags_sfn_cit_ref(url: str, date_format: str = '%Y-%m-%d') -> tuple:
+def noormags_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     ris_collection = {}
     ris_thread = Thread(target=ris_fetcher_thread, args=(url, ris_collection))
