@@ -14,6 +14,7 @@ from lib.isbn_oclc import isbn_scr
 from lib.noormags import noormags_scr
 from lib.noorlib import noorlib_scr
 from lib.pubmed import pmid_scr
+from lib.urls import urls_scr
 
 from test.googlebooks_test import googlebooks_scr
 
@@ -336,6 +337,20 @@ class IsbnTest(TestCase):
             '| pmid=11938998 | صفحه=115–6 | زبان=zh}}',
             pmid_scr('11938998')[1],
         )
+
+
+class URLSTest(TestCase):
+
+    def test_either_year_or_date(self):
+        self.assertEqual(
+            urls_scr(
+                'https://www.shora-gc.ir/fa/news/1815/'
+                '%D8%A7%D8%B5%D9%84-%D9%87%D9%81%D8%AA%D8%A7%D8%AF-'
+                '%D9%88-%D8%B3%D9%88%D9%85')[1],
+            '* {{یادکرد وب | عنوان=اصل هفتاد و سوم |'
+            ' وبگاه=پایگاه اطلاع رسانی شورای نگهبان - shora-gc.ir '
+            '| تاریخ=2020-06-07 | پیوند=http://www.shora-gc.ir/fa/news/1815 '
+            '| کد زبان=fa | تاریخ بازبینی=2020-06-07}}')
 
 
 if __name__ == '__main__':

@@ -18,7 +18,7 @@ CACHE_PATH = abspath(__file__ + '/../.tests_cache')
 
 # noinspection PyDecorator
 @staticmethod
-def fake_request(method, url, data=None, **kwargs):
+def fake_request(self, url, data=None, stream=False, **kwargs):
     global CHACHE_CHANGE
     if data:
         cache_key = url + repr(sorted(data))
@@ -29,9 +29,14 @@ def fake_request(method, url, data=None, **kwargs):
         print('Downloading ' + url)
         with real_request():
             response = Session().request(
-                method, url, data=data, **kwargs)
+                self, url, data=data, **kwargs)
         cache[cache_key] = response
         CHACHE_CHANGE = True
+    if stream is True:
+        def iter_content(*_):
+            # this closure over response will simulate a bound method
+            return iter((response.content,))
+        response.iter_content = iter_content
     return response
 
 
@@ -74,6 +79,6 @@ Session.request = fake_request
 
 
 cache = load_cache()
-# invalidate_cache('adine')
+# invalidate_cache('shora')
 print('len(cache) ==', len(cache))
 atexit_register(save_cache, cache)
