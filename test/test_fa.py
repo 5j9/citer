@@ -1,9 +1,12 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
-
+from datetime import date
 from unittest import TestCase, main
 
-import config; config.LANG = 'fa'
+import config;
+from lib.commons import find_any_date
+
+config.LANG = 'fa'
 # load .tests_cache
 # noinspection PyUnresolvedReferences
 import test
@@ -351,6 +354,14 @@ class URLSTest(TestCase):
             ' وبگاه=پایگاه اطلاع رسانی شورای نگهبان - shora-gc.ir '
             '| تاریخ=2020-06-07 | پیوند=http://www.shora-gc.ir/fa/news/1815 '
             '| کد زبان=fa | تاریخ بازبینی=2020-06-07}}')
+
+
+class Commons(TestCase):
+
+    def test_arabic_ya(self):
+        self.assertEqual(
+            find_any_date('تاریخ انتشار : جمعه ۳ ارديبهشت ۱۳۸۹ ساعت ۱۶:۴۸'),
+            date(2010, 4, 23))
 
 
 if __name__ == '__main__':
