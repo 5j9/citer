@@ -24,7 +24,6 @@ else:
 b_TO_NUM = {name.lower(): num for num, name in enumerate(month_abbr) if num}
 B_TO_NUM = {name.lower(): num for num, name in enumerate(month_name) if num}
 
-# jB_TO_NUM contains entries for both ی and ي
 jB_TO_NUM = {
     'فروردین': 1,
     'اردیبهشت': 2,
@@ -227,7 +226,7 @@ def find_any_date(str_or_match) -> datetime.date or None:
     groupdict = match.groupdict()
     day = int(groupdict['d'])
     year = int(groupdict['Y'])
-    month = groupdict.get('jB')
+    month = groupdict.get('jB')  # ?.replace('ي', 'ی')
     today = datetime.today().date()
     if month:
         date = jdate(year, jB_TO_NUM[month], day).togregorian()

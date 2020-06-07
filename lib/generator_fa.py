@@ -109,8 +109,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     editors = d['editors']
     if editors:
         cit += names2para(
-            editors, 'نام ویراستار', 'نام خانوادگی ویراستار', 'ویراستار'
-        )
+            editors, 'نام ویراستار', 'نام خانوادگی ویراستار', 'ویراستار')
 
     translators = d['translators']
     if translators:
@@ -184,13 +183,11 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             cit += ' | تاریخ=' + ddate
         else:
             cit += ' | تاریخ=' + date.isoformat(ddate)
-
-    if year:
+    elif year:
         cit += ' | سال=' + year
-
-    month = d['month']
-    if month:
-        cit += ' | ماه=' + month
+        month = d['month']
+        if month:
+            cit += ' | ماه=' + month
 
     isbn = d['isbn']
     if isbn:
@@ -235,8 +232,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         cit += (
             ' | پیوند بایگانی=' + archive_url +
             ' | تاریخ بایگانی=' + d['archive-date'].isoformat() +
-            ' | پیوند مرده=' + ('آری' if d['url-status'] == 'yes' else 'نه')
-        )
+            ' | پیوند مرده=' + ('آری' if d['url-status'] == 'yes' else 'نه'))
 
     language = d['language']
     if language:
@@ -253,8 +249,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     randseed(cit)
     ref_name = (
         randchoice(ascii_lowercase)  # it should contain at least one non-digit
-        + ''.join(randchoice(LOWER_ALPHA_DIGITS) for _ in range(4))
-    )
+        + ''.join(randchoice(LOWER_ALPHA_DIGITS) for _ in range(4)))
     if url:
         cit += ' | تاریخ بازبینی=' + date.today().isoformat()
 
@@ -283,8 +278,7 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
             if first or not nofn_parameter:
                 s += (
                     ' | ' + ln_parameter + '=' + last +
-                    ' | ' + fn_parameter + '=' + first
-                )
+                    ' | ' + fn_parameter + '=' + first)
             else:
                 s += ' | ' + nofn_parameter + '=' + fullname(first, last)
         else:
@@ -293,13 +287,11 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
                     ' | ' + ln_parameter + str(c).translate(DIGITS_TO_FA)
                     + '=' + last +
                     ' | ' + fn_parameter + str(c).translate(DIGITS_TO_FA)
-                    + '=' + first
-                )
+                    + '=' + first)
             else:
                 s += (
                     ' | ' + nofn_parameter + str(c).translate(DIGITS_TO_FA)
-                    + '=' + fullname(first, last)
-                )
+                    + '=' + fullname(first, last))
     return s
 
 
