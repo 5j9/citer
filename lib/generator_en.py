@@ -145,9 +145,9 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         booktitle = None
 
     if booktitle:
-            cit += ' | title=' + booktitle
-            if title:
-                cit += ' | chapter=' + title
+        cit += ' | title=' + booktitle
+        if title:
+            cit += ' | chapter=' + title
     elif title:
         cit += ' | title=' + title
 
