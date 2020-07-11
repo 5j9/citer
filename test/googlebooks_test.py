@@ -23,7 +23,7 @@ class GooglebooksTest(TestCase):
             '| first=W.Y. '
             '| title=Digital Libraries '
             '| publisher=MIT Press '
-            '| series=Digital libraries and electronic publishing '
+            '| series=Digital Libraries and Electronic Publishing '
             '| year=2001 '
             '| isbn=978-0-262-26134-0 '
             '| url=https://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 '
@@ -130,7 +130,7 @@ class GooglebooksTest(TestCase):
             '| series=Physics for Scientists and Engineers '
             '| year=2009 '
             '| isbn=978-1-4390-4838-2 '
-            '| url=https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378'
+            '| url=https://books.google.com/books?id=6upvonUt0O8C&pg=PA378'
             ' '
             '| access-date=', o[1])
         self.assertIn(
@@ -145,7 +145,7 @@ class GooglebooksTest(TestCase):
             '| series=Physics for Scientists and Engineers '
             '| year=2009 '
             '| isbn=978-1-4390-4838-2 '
-            '| url=https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378'
+            '| url=https://books.google.com/books?id=6upvonUt0O8C&pg=PA378'
             ' '
             '| access-date=', o[2])
         self.assertIn(' | page=378}}&lt;/ref&gt;', o[2])

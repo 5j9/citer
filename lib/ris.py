@@ -14,32 +14,32 @@ RIS_FULLMATCH = regex_compile(
     (?: # this  group matches any line
         ^
         (?>
-            A[U\d]\ {2}-\ (?<author>.++)
-            |DA\ {2}-\ \d++/(?<month>\d++).*+
-            |EP\ {2}-\ (?<end_page>.++)
-            |IS\ {2}-\ (?<issue>.++)
-            |J[FA]\ {2}-\ (?<journal>.++)
-            |LA\ {2}-\ (?<language>.++)
+            A[U\d]\ {2}-\ (?<author>[^\r\n]++)
+            |DA\ {2}-\ \d++/(?<month>\d++)[^\r\n]*+
+            |EP\ {2}-\ (?<end_page>[^\r\n]++)
+            |IS\ {2}-\ (?<issue>[^\r\n]++)
+            |J[FA]\ {2}-\ (?<journal>[^\r\n]++)
+            |LA\ {2}-\ (?<language>[^\r\n]++)
             |P(?>
-                B\ {2}-\ (?<publisher>.++)
-                |Y\ {2}-\ (?<year>\d++).*+
+                B\ {2}-\ (?<publisher>[^\r\n]++)
+                |Y\ {2}-\ (?<year>\d++)[^\r\n]*+
             )
             |S(?>
-                N\ {2}-\ (?<isbn>\S*+).*+
-                |P\ {2}-\ (?<start_page>.++)
+                N\ {2}-\ (?<isbn>\S*+)[^\r\n]*+
+                |P\ {2}-\ (?<start_page>[^\r\n]++)
             )
             |T(?>
-                [1I]\ {2}-\ (?<title>.++)
-                |3\ {2}-\ (?<series>.++)
-                |Y\ {2}-\ (?<type>.++)
+                [1I]\ {2}-\ (?<title>[^\r\n]++)
+                |3\ {2}-\ (?<series>[^\r\n]++)
+                |Y\ {2}-\ (?<type>[^\r\n]++)
             )
-            |UR\ {2}-\ (?<url>.++)
-            |VL\ {2}-\ (?<volume>.++)
-            |Y1\ {2}-\ (?<year>\d++).*+
+            |UR\ {2}-\ (?<url>[^\r\n]++)
+            |VL\ {2}-\ (?<volume>[^\r\n]++)
+            |Y1\ {2}-\ (?<year>\d++)[^\r\n]*+
             # any other line
-            |[^\n]*+
+            |[^\r\n]*+
         )
-        \n
+        \r?\n
     )*
     ''',
     VERBOSE | MULTILINE,

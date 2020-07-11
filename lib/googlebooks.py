@@ -19,16 +19,14 @@ def googlebooks_scr(parsed_url, date_format='%Y-%m-%d') -> tuple:
 
     id_ = parsed_query.get('id')
     if id_ is not None:
-        book_id = id_[0]
+        volume_id = id_[0]
     else:  # the new URL format
-        book_id = parsed_url.path.rpartition('/')[2]
+        volume_id = parsed_url.path.rpartition('/')[2]
 
     dictionary = ris_parse(request(
-        f'http://books.google.com/books/download/?id={book_id}'
+        f'https://{parsed_url.netloc}/books/download/?id={volume_id}'
         f'&output=ris', spoof=True).content.decode('utf8'))
     dictionary['date_format'] = date_format
-    # default domain is prefered:
-    dictionary['url'] = f'https://{parsed_url.netloc}/books?id={book_id}'
     # manually adding page number to dictionary:
     pg = parsed_query.get('pg')
     if pg is not None:
