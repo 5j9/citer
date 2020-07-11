@@ -116,7 +116,7 @@ class GooglebookTest(TestCase):
         self.assertIn(
             '* {{یادکرد کتاب | نام خانوادگی=Arms |'
             ' نام=W.Y. | عنوان=Digital Libraries | ناشر=MIT Press |'
-            ' سری=Digital libraries and electronic publishing |'
+            ' سری=Digital Libraries and Electronic Publishing |'
             ' سال=2001 | شابک=978-0-262-26134-0 |'
             ' پیوند=https://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 |'
             ' زبان=en | تاریخ بازبینی=',
@@ -195,30 +195,13 @@ class GooglebookTest(TestCase):
     def test_gb4(self):
         """Non-ascii characters in author's name."""
         o = googlebooks_scr(
-            'http://books.google.com/books?id='
-            'i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa='
-            'X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q='
-            '%22legal%20translation%20is%22&f=false'
-        )
+            'http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa=X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q=%22legal%20translation%20is%22&f=false')
+        self.assertEqual(
+            '&lt;ref&gt;{{پک | Sarcevic | \x8aar?evi? | 1997 | ک=New Approach to Legal Translation | زبان=en | ص=229}}\u200f&lt;/ref&gt;',
+            o[0])
         self.assertIn(
-            '&lt;ref&gt;{{پک | Šarčević | 1997 '
-            '| ک=New Approach to Legal Translation |'
-            ' زبان=en | ص=229}}'
-            '\u200f&lt;/ref&gt;',
-            o[0],
-        )
-        self.assertIn(
-            '* {{یادکرد کتاب | نام خانوادگی=Šarčević |'
-            ' نام=S. |'
-            ' عنوان=New Approach to Legal Translation |'
-            ' ناشر=Springer Netherlands |'
-            ' سال=1997 |'
-            ' شابک=978-90-411-0401-4 |'
-            ' پیوند=https://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 |'
-            ' زبان=en |'
-            ' تاریخ بازبینی=',
-            o[1],
-        )
+            '* {{یادکرد کتاب | نام خانوادگی=Sarcevic | نام=S. | نام خانوادگی۲=\x8aar?evi? | نام۲=S. | عنوان=New Approach to Legal Translation | ناشر=Springer Netherlands | سال=1997 | شابک=978-90-411-0401-4 | پیوند=https://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 | زبان=en | تاریخ بازبینی=',
+            o[1])
 
 
 class NoormagsTest(TestCase):
