@@ -1,8 +1,8 @@
 # Citer
 
 A citation generator tool for Wikipedia. Currently accessible from:
-http://tools.wmflabs.org/citer/ (the English version)
-http://tools.wmflabs.org/yadfa/ (the Persian version)
+http://citer.toolforge.org/ (the English version)
+http://yadfa.toolforge.org/ (the Persian version)
 
 ## What does it do?
 
