@@ -3,10 +3,9 @@
 from datetime import date
 from unittest import TestCase, main
 
-import config;
+import config; config.LANG = 'fa'
 from lib.commons import find_any_date
 
-config.LANG = 'fa'
 # load .tests_cache
 # noinspection PyUnresolvedReferences
 import test
@@ -346,14 +345,8 @@ class URLSTest(TestCase):
 
     def test_either_year_or_date(self):
         self.assertEqual(
-            urls_scr(
-                'https://www.shora-gc.ir/fa/news/1815/'
-                '%D8%A7%D8%B5%D9%84-%D9%87%D9%81%D8%AA%D8%A7%D8%AF-'
-                '%D9%88-%D8%B3%D9%88%D9%85')[1],
-            '* {{یادکرد وب | عنوان=اصل هفتاد و سوم |'
-            ' وبگاه=پایگاه اطلاع رسانی شورای نگهبان - shora-gc.ir '
-            '| تاریخ=2020-06-07 | پیوند=http://www.shora-gc.ir/fa/news/1815 '
-            '| کد زبان=fa | تاریخ بازبینی=2020-06-07}}')
+            urls_scr('https://www.shora-gc.ir/fa/news/1815/%D8%A7%D8%B5%D9%84-%D9%87%D9%81%D8%AA%D8%A7%D8%AF-%D9%88-%D8%B3%D9%88%D9%85')[1][:-12],
+            '* {{یادکرد وب | عنوان=اصل هفتاد و سوم | وبگاه=پایگاه اطلاع رسانی شورای نگهبان - shora-gc.ir | تاریخ=2020-06-07 | پیوند=http://www.shora-gc.ir/fa/news/1815 | کد زبان=fa | تاریخ بازبینی=')
 
 
 class Commons(TestCase):
