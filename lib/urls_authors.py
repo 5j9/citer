@@ -1,7 +1,4 @@
-"""This module is used for finding the authors in a soup object.
-
-It is in urls.py.
-"""
+"""This module is used for finding the authors in a soup object."""
 
 
 from typing import List, Optional, Tuple
@@ -134,13 +131,12 @@ BYLINE_TAG_FINDITER = regex_compile(
         (?<id>authorName["\']?\s*+:\s*+["\'])(?<result>[^"\'>\n]++)["\']
         |
         # schema.org
-        (?<q>["'])author(?P=q)\s*+:\s*+{\s*+(?P=q)@type(?P=q)\s*+:\s*+(?P=q)
+        (?<q>["'])author(?P=q)\s*+:\s*+\[?{\s*+(?P=q)@type(?P=q)\s*+:\s*+(?P=q)
         (?<id>Person)
         (?P=q)\s*+,\s*+(?P=q)name(?P=q)\s*+:\s*+(?P=q)(?<result>[^"']*+)(?P=q)
     )
     ''',
-    VERBOSE | IGNORECASE | ASCII,
-).finditer
+    VERBOSE | IGNORECASE | ASCII).finditer
 
 
 BYLINE_HTML_PATTERN = regex_compile(
@@ -200,18 +196,24 @@ def find_authors(html) -> Optional[List[Tuple[str, str]]]:
     if names:
         return names
     match_id = None
+    results = set()
     for match in BYLINE_TAG_FINDITER(html):
         # Only match authors using the same search criteria.
-        if match_id and match_id != match['id']:
+        if match_id is not None and match_id != match['id']:
             break
+        result = match['result']
+        if result in results:
+            break  # avoid duplicate results
+        results.add(result)
         if match['tag']:
-            tag_text = TAGS_SUB('', match['result'])
+            results.add(result)
+            tag_text = TAGS_SUB('', result)
             ns = byline_to_names(tag_text)
             if ns:
                 match_id = match['id']
                 names.extend(ns)
                 continue
-            for m in BYLINE_AUTHOR(match['result']):
+            for m in BYLINE_AUTHOR(result):
                 author = m['result']
                 ns = byline_to_names(author)
                 if ns:
@@ -220,8 +222,8 @@ def find_authors(html) -> Optional[List[Tuple[str, str]]]:
                 return names
         else:
             # not containing tags.
-            ns = byline_to_names(match['result'])
-            if ns:
+            ns = byline_to_names(result)
+            if ns is not None:
                 match_id = match['id']
                 names.extend(ns)
     if names:

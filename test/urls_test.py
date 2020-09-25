@@ -952,6 +952,20 @@ class Others(TestCase):
             )[1],
         )
 
+    def test_abc_author(self):
+        self.assertIn(
+            '* {{cite web | last=Ferguson | first=Kathleen '
+            '| title=Glow worms in Wollemi National Park survived Gospers '
+            'Mountain bushfire - ABC News '
+            '| website=ABC (Australian Broadcasting Corporation) '
+            '| date=2020-09-06 | url=https://www.abc.net.au/news/2020-09-06/'
+            'glow-worms-in-wollemi-national-park-survived-summer-bushfire/'
+            '12634762 | access-date=',
+            urls_scr(
+                'https://www.abc.net.au/news/2020-09-06/'
+                'glow-worms-in-wollemi-national-park-survived-summer-bushfire/'
+                '12634762')[1])
+
 
 if __name__ == '__main__':
     main()

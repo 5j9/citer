@@ -102,6 +102,30 @@ class BylineToNames(TestCase):
         self.assertEqual(first, '')
         self.assertEqual(last, 'The Editorial Board')
 
+    def test_schema_author(self):
+        # https://www.abc.net.au/news/2020-09-06/glow-worms-in-wollemi-national-park-survived-summer-bushfire/12634762
+        self.assertEqual(next(BYLINE_TAG_FINDITER(
+            '<script data-react-helmet="true" type="application/ld+json">'
+            '{"@context":"http://schema.org","@type":"NewsArticle","author":'
+            '[{"@type":"Person","name":"Kathleen Ferguson"}],'
+            '"dateModified":"2020-09-07T06:34:18+00:00",'
+            '"datePublished":"2020-09-06T05:26:48+00:00",'
+            '"description":"An ancient species of bug, glowing on the roof of '
+            'an abandoned railway tunnel deep in a remote forest, somehow '
+            'managed to survive the horror Gospers Mountain bushfire and '
+            'locals could not be happier.","headline":"Glow worms in Wollemi '
+            'National Park survived Gospers Mountain bushfire",'
+            '"image":{"@type":"ImageObject","height":485,'
+            '"url":"https://www.abc.net.au/cm/rimage/12634712-16x9-xlarge.jpg?'
+            'v=2","width":862},'
+            '"keywords":"glow worms,wollemi national park,bushfires",'
+            '"mainEntityOfPage":"https://www.abc.net.au/news/2020-09-06/glow-'
+            'worms-in-wollemi-national-park-survived-summer-bushfire/12634762",'
+            '"publisher":{"@type":"Organization","name":"ABC News",'
+            '"logo":{"@type":"ImageObject","height":60,"url":"https://'
+            'www.abc.net.au/res/abc/logos/amp-news-logo-60x240.png",'
+            '"width":240}}}</script>'))['result'], 'Kathleen Ferguson')
+
 
 if __name__ == '__main__':
     main()
