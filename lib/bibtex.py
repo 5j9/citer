@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """This module is used for parsing BibTeX entries.
 
 The goal of this code is to parse BibTeX entries from a number of known sites

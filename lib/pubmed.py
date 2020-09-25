@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """Codes specifically related to PubMed inputs."""
 
 from collections import defaultdict

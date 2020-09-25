@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """HTML skeleton of the predefined fa responses."""
 
 

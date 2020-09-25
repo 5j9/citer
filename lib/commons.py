@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """Common variables, functions, and classes used in string conversions, etc."""
 
 from calendar import month_abbr, month_name

@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """Test urls_authors.BYLINE_PATTERN."""
 
 

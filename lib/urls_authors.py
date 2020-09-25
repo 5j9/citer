@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """This module is used for finding the authors in a soup object.
 
 It is in urls.py.

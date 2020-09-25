@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 from collections import defaultdict
 
 from regex import compile as regex_compile, MULTILINE, VERBOSE

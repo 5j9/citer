@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """Codes specifically related to Noormags website."""
 
 from threading import Thread
