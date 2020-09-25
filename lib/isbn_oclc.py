@@ -1,5 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
 """Define functions to process ISBNs and OCLC numbers."""
 
 # from collections import defaultdict

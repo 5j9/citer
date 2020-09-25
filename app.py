@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 from collections import defaultdict
 from html import unescape
 from logging import getLogger, Formatter, WARNING, INFO

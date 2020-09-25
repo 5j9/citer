@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """Discover all tests (except the ones inside test_fa.py) and run them."""
 
 

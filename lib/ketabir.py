@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """All things that are specifically related to adinebook website"""
 
 from collections import defaultdict

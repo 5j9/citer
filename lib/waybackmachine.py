@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """Define related tools for web.archive.org (aka Wayback Machine)."""
 
 import logging

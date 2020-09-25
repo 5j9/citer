@@ -1,5 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
 from atexit import register as atexit_register
 from contextlib import contextmanager
 from pickle import dump, load

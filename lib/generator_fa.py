@@ -1,6 +1,3 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
-
 """Codes required to create citation templates for wikifa."""
 
 
