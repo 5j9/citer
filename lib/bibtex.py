@@ -8,7 +8,7 @@ not intended to parse TeX.
 Some of the known issues:
     * Currently it does not detect special symbols and many TeX escape
         sequences (more information: http://www.bibtex.org/SpecialSymbols/)
-    * String concatinatins are not recognized. (e.g. "str1" # "str2")
+    * String concatenations are not recognized. (e.g. "str1" # "str2")
     * Abbreviations are not supported (e.g. @string { foo = "Mrs. Foo" })
 """
 
