@@ -75,7 +75,7 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
         elif role == 'ويراستار':
             editors.append(first_last(name))
         else:
-            others.append(('', name + ' (' + role + ')'))
+            others.append(('', f'{name} ({role})'))
     if authors:
         d['authors'] = authors
     if others:
