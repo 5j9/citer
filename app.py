@@ -2,7 +2,7 @@ from collections import defaultdict
 from html import unescape
 from logging import getLogger, Formatter, WARNING, INFO
 from logging.handlers import RotatingFileHandler
-from os.path import dirname, join as pathjoin
+from os.path import dirname
 from urllib.parse import parse_qs, urlparse, unquote
 from wsgiref.headers import Headers
 
@@ -81,7 +81,7 @@ def get_root_logger():
     custom_logger.setLevel(INFO)
     srcdir = dirname(__file__)
     handler = RotatingFileHandler(
-        filename=pathjoin(srcdir, 'citer.log'),
+        filename=f'{srcdir}/citer.log',
         mode='a',
         maxBytes=20000,
         backupCount=0,
