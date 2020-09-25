@@ -30,13 +30,13 @@ OTHER_EXCEPTION_SCR = (
     '',
     '')
 
-CSS = open(htmldir + '/en.css', 'rb').read()
+CSS = open(f'{htmldir}/en.css', 'rb').read()
 CSS_HEADERS = [
     ('Content-Type', 'text/css; charset=UTF-8'),
     ('Content-Length', str(len(CSS))),
     ('Cache-Control', 'immutable, public, max-age=31536000')]
 
-JS = open(htmldir + '/en.js', 'rb').read()
+JS = open(f'{htmldir}/en.js', 'rb').read()
 # Invalidate cache after css change.
 JS_HEADERS = [
     ('Content-Type', 'application/javascript; charset=UTF-8'),
@@ -46,7 +46,7 @@ JS_HEADERS = [
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
 HTML_SUBST = Template(
-    open(htmldir + '/en.html', encoding='utf8').read().replace(
+    open(f'{htmldir}/en.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
         '"stylesheet" href="./static/en',
         '"stylesheet" href="' + STATIC_PATH + str(adler32(CSS)),
@@ -66,5 +66,5 @@ def scr_to_html(sfn_cit_ref: tuple, date_format: str, input_type: str):
     sfn, cit, ref = sfn_cit_ref
     return HTML_SUBST(
         sfn=sfn, cit=cit, ref=ref,
-    ).replace(date_format + '"', date_format + '" checked', 1).replace(
-        '="' + input_type + '"', '="' + input_type + '" selected', 1)
+    ).replace(f'{date_format}"', f'{date_format}" checked', 1).replace(
+        f'="{input_type}"', f'="{input_type}" selected', 1)

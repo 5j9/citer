@@ -8,7 +8,7 @@ from lib.urls_authors import byline_to_names, BYLINE_PATTERN, \
     BYLINE_TAG_FINDITER
 
 BYLINE_PATTERN_REGEX = regex_compile(
-    '^' + BYLINE_PATTERN + '$',
+    fr'^{BYLINE_PATTERN}$',
     IGNORECASE | VERBOSE)
 
 

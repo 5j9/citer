@@ -227,28 +227,28 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     archive_url = d['archive-url']
     if archive_url:
         cit += (
-            ' | پیوند بایگانی=' + archive_url +
-            ' | تاریخ بایگانی=' + d['archive-date'].isoformat() +
-            ' | پیوند مرده=' + ('آری' if d['url-status'] == 'yes' else 'نه'))
+            f' | پیوند بایگانی={archive_url}'
+            f' | تاریخ بایگانی={d["archive-date"].isoformat()}'
+            f" | پیوند مرده={('آری' if d['url-status'] == 'yes' else 'نه')}")
 
     language = d['language']
     if language:
         language = TO_TWO_LETTER_CODE(language.lower(), language)
         if cite_type == 'وب':
-            cit += ' | کد زبان=' + language
+            cit += f' | کد زبان={language}'
         else:
-            cit += ' | زبان=' + language
-        sfn += ' | زبان=' + language
+            cit += f' | زبان={language}'
+        sfn += f' | زبان={language}'
 
     if pages:
-        sfn += ' | ص=' + pages
+        sfn += f' | ص={pages}'
     # Seed the random generator before adding today's date.
     randseed(cit)
     ref_name = (
         randchoice(ascii_lowercase)  # it should contain at least one non-digit
         + ''.join(randchoice(LOWER_ALPHA_DIGITS) for _ in range(4)))
     if url:
-        cit += ' | تاریخ بازبینی=' + date.today().isoformat()
+        cit += f' | تاریخ بازبینی={date.today().isoformat()}'
 
     if not pages and cite_type != 'وب':
         sfn += ' | ص='
@@ -258,10 +258,10 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     # Finally create the ref tag.
     ref = cit[2:]
     if pages and ' | صفحه=' not in ref:
-        ref = ref[:-2] + ' | صفحه=' + pages + '}}'
+        ref = f'{ref[:-2]} | صفحه={pages}}}'
     elif not url:
-        ref = ref[:-2] + ' | صفحه=}}'
-    ref = '&lt;ref name="' + ref_name + '"&gt;' + ref + '\u200F&lt;/ref&gt;'
+        ref = f'{ref[:-2]} | صفحه=}}'
+    ref = f'&lt;ref name="{ref_name}"&gt;{ref}\u200F&lt;/ref&gt;'
     return sfn, cit, ref
 
 
@@ -274,36 +274,35 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
         if c == 1:
             if first or not nofn_parameter:
                 s += (
-                    ' | ' + ln_parameter + '=' + last +
-                    ' | ' + fn_parameter + '=' + first)
+                    f' | {ln_parameter}=' + last +
+                    f' | {fn_parameter}=' + first)
             else:
-                s += ' | ' + nofn_parameter + '=' + fullname(first, last)
+                s += f' | {nofn_parameter}=' + fullname(first, last)
         else:
             if first or not nofn_parameter:
                 s += (
-                    ' | ' + ln_parameter + str(c).translate(DIGITS_TO_FA)
-                    + '=' + last +
-                    ' | ' + fn_parameter + str(c).translate(DIGITS_TO_FA)
-                    + '=' + first)
+                    f' | {ln_parameter}{str(c).translate(DIGITS_TO_FA)}'
+                    f'={last} | {fn_parameter}{str(c).translate(DIGITS_TO_FA)}'
+                    f'={first}')
             else:
                 s += (
-                    ' | ' + nofn_parameter + str(c).translate(DIGITS_TO_FA)
-                    + '=' + fullname(first, last))
+                    f' | {nofn_parameter}{str(c).translate(DIGITS_TO_FA)}'
+                    f'={fullname(first, last)}')
     return s
 
 
 def names1para(translators, para):
     """Take list of names. Return the string to be appended to citation."""
-    s = ' | ' + para + '='
+    s = f' | {para}='
     c = 0
     for first, last in translators:
         c += 1
         if c == 1:
             s += fullname(first, last)
         elif c == len(translators):
-            s += ' و ' + fullname(first, last)
+            s += f' و {fullname(first, last)}'
         else:
-            s += '، ' + fullname(first, last)
+            s += f'، {fullname(first, last)}'
     return s
 
 

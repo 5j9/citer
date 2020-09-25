@@ -291,7 +291,7 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
             first.startswith(('The ', 'خبرگزار'))
             or last.islower()
         ):
-            first, last = '', first + ' ' + last
+            first, last = '', f'{first} {last}'
         names.append((first, last))
     if not names:
         return None

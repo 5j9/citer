@@ -58,10 +58,7 @@ B = (
     (?:(?:(?:Sept|Nov|Dec)em)|Octo)ber))
     ''')
 # فروردین|اردیبهشت|خرداد...
-jB = (
-    '(?>(?<jB>'
-    + '|'.join([jm for jm in jB_TO_NUM]).replace('ی', '[یي]')
-    + '))')
+jB = f"(?>(?<jB>{'|'.join([jm for jm in jB_TO_NUM]).replace('ی', '[یي]')}))"
 # Month abbreviations:
 b = r'(?>(?<b>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)).?'
 # Month numbers 0?1-12
@@ -75,12 +72,8 @@ zd = r'(?<d>0[1-9]|[12][0-9]|3[01])'
 # Gregorian year pattern 1900-2099
 Y = r'(?<Y>(?:19|20)\d\d)'
 ANYDATE_PATTERN = (
-    '(?:(?:' + B + '|' + b + r')\ ' + d + r',?\ ' + Y
-    + '|' + d + r'\ (?:' + B + '|' + b + r')\ ' + Y
-    + '|' + Y + '(?<sep>[-/])' + zm + '(?P=sep)' + zd
-    + '|' + r'(?<d>\d\d?)\ ' + jB + r'\ (?<Y>\d\d\d\d)'
-    + r'|\b' + Y + zm + zd
-    + ')')
+    fr'(?:(?:{B}|{b})\ {d},?\ {Y}|{d}\ (?:{B}|{b})\ {Y}|{Y}(?<sep>[-/]){zm}'
+    fr'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d)|\b{Y}{zm}{zd})')
 ANYDATE_SEARCH = regex_compile(ANYDATE_PATTERN, VERBOSE).search
 DIGITS_FINDALL = regex_compile(r'\d').findall
 MC_SUB = regex_compile(r'MC(\w)', IGNORECASE).sub
@@ -90,7 +83,7 @@ AGENT_HEADER = {
     'User-Agent': USER_AGENT,
     # Not required but recommended by
     # https://meta.wikimedia.org/wiki/User-Agent_policy
-    'Api-User-Agent': NCBI_TOOL + '/' + NCBI_EMAIL}
+    'Api-User-Agent': f'{NCBI_TOOL}/{NCBI_EMAIL}'}
 SPOOFED_AGENT_HEADER = {'User-Agent': SPOOFED_USER_AGENT}
 
 

@@ -114,8 +114,8 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         # the same order should be used in citation_template:
         sfn += ' | ' + (
             publisher or
-            "''" + journal + "''" if journal else
-            "''" + website + "''" if website else
+            f"''{journal}''" if journal else
+            f"''{website}''" if website else
             title or 'Anon.'
         )
 
@@ -125,7 +125,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     translators = d['translators']
     if translators:
         for i, (first, last) in enumerate(translators):
-            translators[i] = first, last + ' (مترجم)'
+            translators[i] = first, f'{last} (مترجم)'
         # Todo: add a 'Translated by ' before name of translators?
         others = d['others']
         if others:
@@ -142,100 +142,100 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         booktitle = None
 
     if booktitle:
-        cit += ' | title=' + booktitle
+        cit += f' | title={booktitle}'
         if title:
-            cit += ' | chapter=' + title
+            cit += f' | chapter={title}'
     elif title:
-        cit += ' | title=' + title
+        cit += f' | title={title}'
 
     if journal:
-        cit += ' | journal=' + journal
+        cit += f' | journal={journal}'
     elif website:
-        cit += ' | website=' + website
+        cit += f' | website={website}'
 
     chapter = d['chapter']
     if chapter:
-        cit += ' | chapter=' + chapter
+        cit += f' | chapter={chapter}'
 
     publisher = d['publisher'] or d['organization']
     if publisher:
-        cit += ' | publisher=' + publisher
+        cit += f' | publisher={publisher}'
 
     address = d['address'] or d['publisher-location']
     if address:
-        cit += ' | publication-place=' + address
+        cit += f' | publication-place={address}'
 
     edition = d['edition']
     if edition:
-        cit += ' | edition=' + edition
+        cit += f' | edition={edition}'
 
     series = d['series']
     if series:
-        cit += ' | series=' + series
+        cit += f' | series={series}'
 
     volume = d['volume']
     if volume:
-        cit += ' | volume=' + volume.translate(DIGITS_TO_EN)
+        cit += f' | volume={volume.translate(DIGITS_TO_EN)}'
 
     issue = d['issue'] or d['number']
     if issue:
-        cit += ' | issue=' + issue
+        cit += f' | issue={issue}'
 
     date = d['date']
     if date:
         if not isinstance(date, str):
             date = date.strftime(date_format)
-        cit += ' | date=' + date
+        cit += f' | date={date}'
 
     year = d['year']
     if year:
         year = str(int(year))  # convert any non-Latin digits to English ones
         if not date or year not in date:
-            cit += ' | year=' + year
-        sfn += ' | ' + year
+            cit += f' | year={year}'
+        sfn += f' | {year}'
 
     isbn = d['isbn']
     if isbn:
-        cit += ' | isbn=' + isbn
+        cit += f' | isbn={isbn}'
 
     issn = d['issn']
     if issn:
-        cit += ' | issn=' + issn
+        cit += f' | issn={issn}'
 
     pmid = d['pmid']
     if pmid:
-        cit += ' | pmid=' + pmid
+        cit += f' | pmid={pmid}'
 
     pmcid = d['pmcid']
     if pmcid:
-        cit += ' | pmc=' + pmcid
+        cit += f' | pmc={pmcid}'
 
     doi = d['doi']
     if doi:
-        cit += ' | doi=' + doi
+        cit += f' | doi={doi}'
 
     oclc = d['oclc']
     if oclc:
-        cit += ' | oclc=' + oclc
+        cit += f' | oclc={oclc}'
 
     pages = d['page']
     if pages:
         if '–' in pages:
-            sfn += ' | pp=' + pages
+            sfn += f' | pp={pages}'
         else:
-            sfn += ' | p=' + pages
+            sfn += f' | p={pages}'
     if cite_type == 'journal':
         if pages:
             if '–' in pages:
-                cit += ' | pages=' + pages
+                cit += f' | pages={pages}'
             else:
-                cit += ' | page=' + pages
+                cit += f' | page={pages}'
 
     url = d['url']
     if url:
         # Don't add a DOI URL if we already have added a DOI.
         if not doi or not DOI_URL_MATCH(url):
-            cit += ' | url=' + url
+            cit += f' | url={url}'
         else:
             # To prevent addition of access date
             url = None
@@ -246,10 +246,9 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     archive_url = d['archive-url']
     if archive_url:
         cit += (
-            ' | archive-url=' + archive_url +
-            ' | archive-date=' + d['archive-date'].strftime(date_format) +
-            ' | url-status=' + d['url-status']
-        )
+            f' | archive-url={archive_url}'
+            f' | archive-date={d["archive-date"].strftime(date_format)}'
+            f' | url-status={d["url-status"]}')
 
     language = d['language']
     if language:
@@ -259,14 +258,14 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
 
     if not authors:
         # order should match sfn_template
-        cit += ' | ref={{sfnref | ' +\
-             (publisher or journal or website or title or 'Anon.')
+        cit += ' | ref={{sfnref | ' \
+            f'{publisher or journal or website or title or "Anon."}'
         if year:
-            cit += ' | ' + year
+            cit += f' | {year}'
         cit += '}}'
 
     if url:
-        cit += ' | access-date=' + datetime_date.today().strftime(date_format)
+        cit += f' | access-date={datetime_date.today().strftime(date_format)}'
 
     cit += '}}'
     sfn += '}}'
@@ -276,14 +275,14 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if ' p=' in name and ' | page=' not in text:
         name = name.replace(' p=', ' p. ')
         if pages:
-            text = text[:-2] + ' | page=' + pages + '}}'
+            text = f'{text[:-2]} | page={pages}}}}}'
         else:
-            text = text[:-2] + ' | page=}}'
+            text = f'{text[:-2]} | page=}}}}'
     elif ' pp=' in name:
         name = name.replace(' pp=', ' pp. ')
         if pages and ' | pages=' not in text:
-            text = text[:-2] + ' | pages=' + pages + '}}'
-    ref = '&lt;ref name="' + name + '"&gt;' + text + '&lt;/ref&gt;'
+            text = f'{text[:-2]} | pages={pages}}}}}'
+    ref = f'&lt;ref name="{name}"&gt;{text}&lt;/ref&gt;'
     return sfn, cit, ref
 
 
@@ -295,38 +294,35 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
         c += 1
         if c == 1:
             if first or not nofn_parameter:
-                s += (' | ' + ln_parameter + '=' + last
-                      + ' | ' + fn_parameter + '=' + first)
+                s += f' | {ln_parameter}={last} | {fn_parameter}={first}'
             else:
-                s += ' | ' + nofn_parameter + '=' + fullname(first, last)
+                s += f' | {nofn_parameter}={fullname(first, last)}'
         else:
             if first or not nofn_parameter:
-                s += (' | ' + ln_parameter + str(c) + '=' + last
-                      + ' | ' + fn_parameter + str(c) + '=' + first)
+                s += f' | {ln_parameter}{c}={last} | {fn_parameter}{c}={first}'
             else:
-                s += ' | ' + nofn_parameter + str(c) + '=' + \
-                     fullname(first, last)
+                s += f' | {nofn_parameter}{c}={fullname(first, last)}'
     return s
 
 
 def names1para(translators, para):
     """Take list of names. Return the string to be appended to citation."""
-    s = ' | ' + para + '='
+    s = f' | {para}='
     c = 0
     for first, last in translators:
         c += 1
         if c == 1:
             s += fullname(first, last)
         elif c == len(translators):
-            s += ', and ' + fullname(first, last)
+            s += f', and {fullname(first, last)}'
         else:
-            s += ', ' + fullname(first, last)
+            s += f', {fullname(first, last)}'
     return s
 
 
 def fullname(first: str, last: str) -> str:
     if first:
-        return first + ' ' + last
+        return f'{first} {last}'
     return last
 
 
