@@ -966,6 +966,17 @@ class Others(TestCase):
                 'glow-worms-in-wollemi-national-park-survived-summer-bushfire/'
                 '12634762')[1])
 
+    def test_indaily(self):
+        self.assertIn(
+            "* {{cite web | last=Siebert | first=Bension "
+            "| title=Epidemics expert questions Marshall's schools advice "
+            "| website=InDaily | date=2020-03-19 "
+            "| url=https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/ "
+            "| access-date=",
+            urls_scr(
+                'https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/'
+            )[1])
+
 
 if __name__ == '__main__':
     main()
