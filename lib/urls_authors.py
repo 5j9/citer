@@ -153,7 +153,7 @@ TAGS_SUB = regex_compile(r'</?[a-z][^>]*+>', IGNORECASE).sub
 # http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876
 #  .byline > .author
 BYLINE_AUTHOR = regex_compile(
-    r'<[a-z]++[^c]*+[^>]*?class=(?<q>["\']?)author(?P=q)'
+    r'<[a-z]++[^c]*+[^>]*?class=(?<q>["\']?)author\b(?P=q)'
     r'[^>]*+>(?<result>[^<>]++)',
     IGNORECASE | ASCII
 ).finditer
