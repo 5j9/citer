@@ -34,15 +34,19 @@ Some other tested and supported Persian web-sites:
 
 To run Citer on your local computer:
 
-1. Install Python 3.7+.
-2. Clone the project.
-3. Install the dependencies using `pip install -r requirements.txt`.
-3. Make sure that `flup` is __not__ installed in your environment.
-5. Copy `config.py.example` to `config.py`. (You might want to get an NCBI API key and add it to the config file if you're going to use its services.)
-4. Run `python3 app.py`.
+1. Install Python 3.7+
+2. Clone the project
+3. Install the dependencies using `pip install --user -r requirements.txt`
+4. Copy `config.py.example` to `config.py` (You might want to get an NCBI API key and add it to the config file if you're going to use its services)
+5. Run `python3 app.py`
 
-If everything goes fine, the main page will be accessible from:\
+If you see html output to your console, this probably means you have
+flup installed. You'll need to uninstall it for Citer to run.
+
+If there are no warnings or error messages (and no html is displayed), the main page will be accessible from:\
     http://localhost:5000/
+
+If you experience any problems or have questions, please open a ticket on this repo.
 
 ## Language Setting
 The default language is English and can be changed to Persian using the setting in the config.py file.
