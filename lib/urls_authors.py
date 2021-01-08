@@ -112,7 +112,7 @@ BYLINE_TAG_FINDITER = regex_compile(
         <(?<tag>[a-z]\w++)\s++[^>]*?
         (?<id>
             (?>class|id|rel)=
-            (?<q>["\'])
+            (?<q>["\']?)
             (?>
                 author(?>_byline|Inline|-title)?
                 |by(?>
@@ -123,7 +123,7 @@ BYLINE_TAG_FINDITER = regex_compile(
                 |story-byline
             )
         )
-        (?P=q)[^>]*+>
+        \b(?P=q)[^>]*+>
         (?<result>[^<]*+[\s\S]*?)
         </(?P=tag)[^>]*+>
         |
@@ -153,7 +153,7 @@ TAGS_SUB = regex_compile(r'</?[a-z][^>]*+>', IGNORECASE).sub
 # http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876
 #  .byline > .author
 BYLINE_AUTHOR = regex_compile(
-    r'<[a-z]++[^c]*+[^>]*?class=(?<q>["\'])author(?P=q)'
+    r'<[a-z]++[^c]*+[^>]*?class=(?<q>["\']?)author(?P=q)'
     r'[^>]*+>(?<result>[^<>]++)',
     IGNORECASE | ASCII
 ).finditer
@@ -254,11 +254,11 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
     ... )
     [RawName("Erika Solomon"), RawName("Borzou Daragahi")]
     """
-    byline = byline.partition('|')[0]
-    if ':' in byline or ':' in byline:
+    byline = byline.partition('|')[0].strip()
+    if ':' in byline:
         return None
     m = ANYDATE_SEARCH(byline)
-    if m:
+    if m is not None:
         # Removing the date part
         byline = byline[:m.start()]
     if not byline:

@@ -1,8 +1,6 @@
-"""Common variables, functions, and classes used in string conversions, etc."""
-
 from calendar import month_abbr, month_name
-from datetime import datetime
-from datetime import date as datetime_date
+from datetime import datetime, date as datetime_date
+from functools import partial
 from json import dumps as json_dumps
 
 from isbnlib import mask as isbn_mask, NotValidISBNError
@@ -77,6 +75,7 @@ ANYDATE_PATTERN = (
 ANYDATE_SEARCH = regex_compile(ANYDATE_PATTERN, VERBOSE).search
 DIGITS_FINDALL = regex_compile(r'\d').findall
 MC_SUB = regex_compile(r'MC(\w)', IGNORECASE).sub
+LAST_FIRST = partial(regex_compile(r'[,،]').split, maxsplit=1)
 
 
 AGENT_HEADER = {
@@ -85,6 +84,7 @@ AGENT_HEADER = {
     # https://meta.wikimedia.org/wiki/User-Agent_policy
     'Api-User-Agent': f'{NCBI_TOOL}/{NCBI_EMAIL}'}
 SPOOFED_AGENT_HEADER = {'User-Agent': SPOOFED_USER_AGENT}
+REQUEST = partial(Session().request, timeout=10)
 
 
 class InvalidNameError(ValueError):
@@ -94,15 +94,14 @@ class InvalidNameError(ValueError):
 
 class NumberInNameError(InvalidNameError):
 
-    """Raise when a RawName() contains digits.."""
+    """Raise when a RawName() contains digits."""
 
 
 def request(url, spoof=False, method='get', **kwargs):
-    with Session() as session:
-        return session.request(
-            method, url, timeout=10,
-            headers=SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER,
-            **kwargs)
+    return REQUEST(
+        method, url,
+        headers=SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER,
+        **kwargs)
 
 
 def dict_to_sfn_cit_ref(dictionary) -> tuple:
@@ -147,7 +146,10 @@ def first_last(fullname, separator=None) -> tuple:
     >>> first_last('DeBolt, V.', ',')
     ('V.', 'DeBolt')
 
-    >>> first_last('BBC', None)
+    The function is more strict if the separator is None:
+
+    >>> first_last('BBC', None)  # InvalidNameError
+    >>> first_last('BBC', ',')
     ('', 'BBC')
     """
     fullname = fullname.strip()
@@ -163,29 +165,26 @@ def first_last(fullname, separator=None) -> tuple:
         fullname = fullname[:-4]
     else:
         suffix = None
-    if not separator:
-        if ',' in fullname:
-            separator = ','
-        elif '،' in fullname:
-            separator = '،'
-    if separator:
+    if separator is None:
+        try:
+            lastname, firstname = LAST_FIRST(fullname)
+        except ValueError:   # not enough values to unpack, use whitespace
+            sname = fullname.split()
+            if len(sname) == 1:  # single word first-last with None separator
+                raise InvalidNameError
+            lastname = sname.pop()
+            firstname = ' '.join(sname)
+    else:
         if separator in fullname:
             lastname, _, firstname = fullname.partition(separator)
         else:
             lastname, firstname = fullname, ''
-    else:
-        sname = fullname.split()
-        lastname = sname.pop()
-        firstname = ' '.join(sname)
     firstname = firstname.strip()
     if (firstname.isupper() and lastname.isupper()) or \
        (firstname.islower() and lastname.islower()):
         firstname = firstname.title()
         lastname = lastname.title()
-        lastname = MC_SUB(
-            lambda mtch: 'Mc' + mtch[1].upper(),
-            lastname,
-        )
+        lastname = MC_SUB(lambda m: 'Mc' + m[1].upper(), lastname)
     if suffix:
         firstname += suffix.title()
     return firstname, lastname
