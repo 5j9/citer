@@ -1,4 +1,3 @@
-flup6
 isbnlib
 jdatetime
 langid
