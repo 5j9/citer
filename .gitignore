@@ -2,4 +2,6 @@
 *.log
 .docs
 __pycache__/
+test/.tests_cache
 config.py
+
