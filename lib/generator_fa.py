@@ -258,9 +258,9 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     # Finally create the ref tag.
     ref = cit[2:]
     if pages and ' | صفحه=' not in ref:
-        ref = f'{ref[:-2]} | صفحه={pages}}}'
+        ref = f'{ref[:-2]} | صفحه={pages}}}}}'
     elif not url:
-        ref = f'{ref[:-2]} | صفحه=}}'
+        ref = f'{ref[:-2]} | صفحه=}}}}'
     ref = f'&lt;ref name="{ref_name}"&gt;{ref}\u200F&lt;/ref&gt;'
     return sfn, cit, ref
 
