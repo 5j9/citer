@@ -110,6 +110,11 @@ class KetabirTest(TestCase):
 
 class GooglebookTest(TestCase):
 
+    def test_ending_page(self):  #
+        self.assertEqual(googlebooks_scr(
+            'https://www.google.com/books/edition/So_You_Want_to_Sing_World_Music/OlCwDwAAQBAJ?hl=en&gbpv=1&dq=Darya+Dadvar&pg=PA293&printsec=frontcover'
+        )[2][-25:], '| صفحه=293}}‏&lt;/ref&gt;')
+
     def test_gb1(self):
         self.assertIn(
             '* {{یادکرد کتاب | نام خانوادگی=Arms |'
