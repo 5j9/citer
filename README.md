@@ -1,8 +1,8 @@
 # Citer
 
 A citation generator tool for Wikipedia. Currently accessible from:\
-http://citer.toolforge.org/ (the English version)\
-http://yadfa.toolforge.org/ (the Persian version)
+[https://citer.toolforge.org/](https://citer.toolforge.org/) (the English version)\
+[https://yadfa.toolforge.org/](https://yadfa.toolforge.org/) (the Persian version)
 
 ## What does it do?
 
@@ -23,7 +23,7 @@ Additionally, URLs of many major news websites are supported, including:
 
 Special support for the URLs of the [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) is also implemented.
 
-Some other tested and supported Persian web-sites:
+Some other tested and supported Persian websites:
 * http://www.noormags.ir (نورمگز)
 * http://www.noorlib.ir (کتابخانه دیجیتال نور)
 * http://www.ketab.ir (خانه كتاب)
@@ -40,13 +40,13 @@ To run Citer on your local computer:
 4. Copy `config.py.example` to `config.py` (You might want to get an NCBI API key and add it to the config file if you're going to use its services)
 5. Run `python3 app.py`
 
-If you see html output to your console, this probably means you have
+If you see HTML output to your console, this probably means you have
 flup installed. You'll need to uninstall it for Citer to run.
 
-If there are no warnings or error messages (and no html is displayed), the main page will be accessible from:\
-    http://localhost:5000/
+If there are no warnings or error messages (and no HTML is displayed), the main page will be accessible from:\
+    [http://localhost:5000/](http://localhost:5000/)
 
-If you experience any problems or have questions, please open a ticket on this repo.
+If you experience any problems or have questions, please open an issue on this repo.
 
 ## Language Setting
 The default language is English and can be changed to Persian using the setting in the config.py file.
