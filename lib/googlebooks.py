@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 from langid import classify
 
 from lib.commons import request
-from lib.ris import parse as ris_parse
+from lib.ris import ris_parse
 from lib.commons import dict_to_sfn_cit_ref
 
 

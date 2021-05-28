@@ -6,7 +6,7 @@ from regex import compile as regex_compile
 
 from lib.commons import dict_to_sfn_cit_ref, request
 from lib.bibtex import parse as bibtex_parse
-from lib.ris import parse as ris_parse
+from lib.ris import ris_parse
 
 
 BIBTEX_ARTICLE_ID_SEARCH = regex_compile(r'(?<=/citation/bibtex/)\d+').search

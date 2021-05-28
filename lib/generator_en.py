@@ -67,6 +67,7 @@ TYPE_TO_CITE = {
     'reference-entry': '',
     'proceedings-article': 'conference',
     'journal': 'journal',
+    'jour': 'journal',
     # https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=22368089&retmode=json&tool=my_tool&email=my_email@example.com
     'Journal Article': 'journal',
     'component': '',
@@ -82,6 +83,7 @@ TYPE_TO_CITE = {
     'book-series': 'book',
     'edited-book': 'book',
     'standard-series': '',
+    'rprt': 'report',
 }.get
 
 
@@ -92,7 +94,9 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if not cite_type:
         logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
         cite_type = ''
-    cit = '* {{cite ' + cite_type
+        cit = '* {{cite'
+    else:
+        cit = '* {{cite ' + cite_type
     sfn = '{{sfn'
 
     authors = d['authors']
