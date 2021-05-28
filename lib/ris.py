@@ -27,6 +27,7 @@ RIS_FULLMATCH = regex_compile(
             )
             |T(?>
                 [1I]\ {2}-\ (?<title>[^\r\n]++)
+                |2\ {2}-\ (?<t2>[^\r\n]++)
                 |3\ {2}-\ (?<series>[^\r\n]++)
                 |Y\ {2}-\ (?<type>[^\r\n]++)
             )
@@ -50,6 +51,10 @@ def ris_parse(ris_text):
     d.update(match.groupdict())
     # cite_type: (book, journal, . . . )
     cite_type = d['type'].lower()
+    if cite_type == 'jour':
+        t2 = d['t2']
+        if t2 is not None:
+            d['journal'] = t2
     url = d['url']
     if cite_type == 'elec' and url:
         d['cite_type'] = 'web'
