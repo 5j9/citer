@@ -85,10 +85,10 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
     if translators:
         d['translators'] = translators
     m = PUBLISHER_SEARCH(html)
-    if m:
+    if m is not None:
         d['publisher'] = m[1]
     m = DATE_SEARCH(html)
-    if m:
+    if m is not None:
         if LANG != 'fa':
             d['month'] = m['month']
             d['year'] = '۱۳' + m['year']
@@ -96,13 +96,13 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
             d['month'] = m['month']
             d['year'] = '۱۳' + m['year']
     m = ISBN_SEARCH(html)
-    if m:
+    if m is not None:
         d['isbn'] = m[1]
     m = VOLUME_SEARCH(html)
-    if m:
+    if m is not None:
         d['volume'] = m[1]
     m = LOCATION_SEARCH(html)
-    if m:
+    if m is not None:
         d['publisher-location'] = m[1]
     return d
 
