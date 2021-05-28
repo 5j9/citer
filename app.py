@@ -15,6 +15,7 @@ from lib.doi import doi_scr, DOI_SEARCH
 from lib.googlebooks import googlebooks_scr
 from lib.isbn_oclc import (
     ISBN_10OR13_SEARCH, IsbnError, isbn_scr, oclc_scr)
+from lib.jstor import jstor_scr
 from lib.noorlib import noorlib_scr
 from lib.noormags import noormags_scr
 from lib.pubmed import pmcid_scr, pmid_scr
@@ -67,6 +68,8 @@ TLDLESS_NETLOC_RESOLVER = {
 
     'google': google_encrypted_scr,
     'encrypted.google': google_encrypted_scr,
+
+    'jstor': jstor_scr,
 }.get
 
 RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
@@ -112,6 +115,7 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
         parsed_url = urlparse(url)
         # TLD stands for top-level domain
         tldless_netloc = parsed_url[1].rpartition('.')[0]
+        # todo: make lazy?
         resolver = TLDLESS_NETLOC_RESOLVER(
             tldless_netloc[4:] if tldless_netloc.startswith('www.')
             else tldless_netloc)

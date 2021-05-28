@@ -13,7 +13,7 @@ from lib.ketabir import url2dictionary as ketabir_url2dictionary
 from lib.ketabir import isbn2url as ketabir_isbn2url
 from lib.bibtex import parse as bibtex_parse
 from lib.commons import dict_to_sfn_cit_ref, request  # , Name
-from lib.ris import parse as ris_parse
+from lib.ris import ris_parse
 
 
 # original regex from:

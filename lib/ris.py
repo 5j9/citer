@@ -43,7 +43,7 @@ RIS_FULLMATCH = regex_compile(
 ).fullmatch
 
 
-def parse(ris_text):
+def ris_parse(ris_text):
     """Parse RIS_text data and return the result as a dictionary."""
     d = defaultdict(lambda: None)
     match = RIS_FULLMATCH(ris_text)
