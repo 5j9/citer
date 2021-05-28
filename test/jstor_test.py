@@ -12,6 +12,7 @@ class JSTORTest(TestCase):
         ae(c[:c.index('| access-date=')], (
             '* {{cite journal | last=Lloyd | first=Humphrey '
             '| title=On a New Case of Interference of the Rays of Light '
+            '| journal=The Transactions of the Royal Irish Academy '
             '| publisher=Royal Irish Academy | volume=17 | year=1831 '
             '| issn=07908113 | pages=171–177 '
             '| url=http://www.jstor.org/stable/30078788 '))
