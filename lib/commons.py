@@ -89,6 +89,29 @@ SPOOFED_AGENT_HEADER = {
 }
 REQUEST = partial(Session().request, timeout=10)
 
+# original regex from:
+# https://www.debuggex.com/r/0Npla56ipD5aeTr9
+# https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
+ISBN_10OR13_SEARCH = regex_compile(
+    r'97[89]([ -]?+)(?=\d{1,5}\1?+\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*){9}\d'
+    r'|(?=\d{1,5}([ -]?+)\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}[\dX]'
+).search
+
+ISBN10_SEARCH = regex_compile(
+    r'(?=\d{1,5}([ -]?+)\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}[\dX]'
+).search
+
+ISBN13_SEARCH = regex_compile(
+    r'97[89]([ -]?+)(?=\d{1,5}\1?+\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}\d'
+).search
+
+
+# original regex from: http://stackoverflow.com/a/14260708/2705757
+# ISBN_REGEX = regex_compile(
+#     r'(?=[-0-9 ]{17}|[-0-9X ]{13}|[0-9X]{10})(?:97[89][- ]?)'
+#     r'?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
+# )
+
 
 class InvalidNameError(ValueError):
 

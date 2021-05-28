@@ -13,7 +13,7 @@ class JSTORTest(TestCase):
             '* {{cite journal | last=Lloyd | first=Humphrey '
             '| title=On a New Case of Interference of the Rays of Light '
             '| publisher=Royal Irish Academy | volume=17 | year=1831 '
-            '| pages=171–177 '
+            '| issn=07908113 | pages=171–177 '
             '| url=http://www.jstor.org/stable/30078788 '))
 
     def test_2(self):

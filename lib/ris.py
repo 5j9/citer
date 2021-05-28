@@ -3,7 +3,7 @@ from collections import defaultdict
 from regex import compile as regex_compile, MULTILINE, VERBOSE
 
 from lib.doi import DOI_SEARCH
-from lib.commons import first_last, InvalidNameError
+from lib.commons import first_last, InvalidNameError, ISBN_10OR13_SEARCH
 
 
 RIS_FULLMATCH = regex_compile(
@@ -22,7 +22,7 @@ RIS_FULLMATCH = regex_compile(
                 |Y\ {2}-\ (?<year>\d++)[^\r\n]*+
             )
             |S(?>
-                N\ {2}-\ (?<isbn>\S*+)[^\r\n]*+
+                N\ {2}-\ (?<sn>\S*+)[^\r\n]*+
                 |P\ {2}-\ (?<start_page>[^\r\n]++)
             )
             |T(?>
@@ -55,6 +55,12 @@ def ris_parse(ris_text):
         d['cite_type'] = 'web'
     else:
         d['cite_type'] = cite_type
+    sn = d['sn']
+    if sn:  # determine if it is ISBN or ISSN according to the cite_type
+        if ISBN_10OR13_SEARCH(sn):
+            d['isbn'] = sn
+        else:
+            d['issn'] = sn
     # author:
     # d['authors'] should not be created unless there are some authors
     authors = match.captures('author')
