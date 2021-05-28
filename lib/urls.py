@@ -245,7 +245,7 @@ def find_journal(html: str) -> Optional[str]:
     """Return journal title as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = JOURNAL_TITLE_SEARCH(html)
-    if m:
+    if m is not None:
         return m['result']
 
 
@@ -253,7 +253,7 @@ def find_url(html: str, url: str) -> str:
     """Return og:url or url as a string."""
     # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
     m = URL_SEARCH(html)
-    if m:
+    if m is not None:
         ogurl = m['result']
         if urlparse(ogurl).path:
             return ogurl
@@ -269,7 +269,7 @@ def find_issn(html: str) -> Optional[str]:
     m = ISSN_SEARCH(html)
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     # http://psycnet.apa.org/journals/edu/30/9/641/
-    if m:
+    if m is not None:
         return m['result']
 
 
@@ -277,7 +277,7 @@ def find_pmid(html: str) -> Optional[str]:
     """Return pmid as a string."""
     # http://jn.physiology.org/content/81/1/319
     m = PMID_SEARCH(html)
-    if m:
+    if m is not None:
         return m['result']
 
 
@@ -285,7 +285,7 @@ def find_doi(html: str) -> Optional[str]:
     """Return DOI as a string."""
     # http://jn.physiology.org/content/81/1/319
     m = DOI_SEARCH(html)
-    if m:
+    if m is not None:
         return m['result']
 
 
@@ -293,7 +293,7 @@ def find_volume(html: str) -> Optional[str]:
     """Return citatoin volume number as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = VOLUME_SEARCH(html)
-    if m:
+    if m is not None:
         return m['result']
 
 
@@ -301,7 +301,7 @@ def find_issue(html: str) -> Optional[str]:
     """Return citation issue number as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     m = ISSUE_SEARCH(html)
-    if m:
+    if m is not None:
         return m['result']
 
 
@@ -336,7 +336,7 @@ def find_site_name(
     Returns site's name as a string.
     """
     m = SITE_NAME_SEARCH(html)
-    if m:
+    if m is not None:
         return m['result']
     # search the title
     site_name = parse_title(
@@ -376,7 +376,7 @@ def find_title(
 ) -> Optional[str]:
     """Return (title_string, where_info)."""
     m = TITLE_SEARCH(html)
-    if m:
+    if m is not None:
         return parse_title(
             html_unescape(m['result']), url, authors, home_title, thread,
         )[1]

@@ -41,7 +41,7 @@ def parse(bibtex):
     d = search_for_tag(bibtex)
     # cite_type: book, journal, incollection, etc.
     m = TYPE_SEARCH(bibtex)
-    if m:
+    if m is not None:
         d['cite_type'] = m[1].strip().lower()
     # author
     author = d['author']

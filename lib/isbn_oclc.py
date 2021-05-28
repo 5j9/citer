@@ -63,7 +63,7 @@ def isbn_scr(
     else:
         # search for isbn13
         m = ISBN13_SEARCH(isbn_container_str)
-        if m:
+        if m is not None:
             isbn = m[0]
         else:
             # search for isbn10
@@ -179,7 +179,7 @@ def ottobib(isbn):
     """Convert ISBN to bibtex using ottobib.com."""
     m = OTTOBIB_SEARCH(
         request('http://www.ottobib.com/isbn/' + isbn + '/bibtex').text)
-    if m:
+    if m is not None:
         return m[1]
 
 

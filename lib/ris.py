@@ -75,7 +75,7 @@ def parse(ris_text):
             d['authors'].append(author)
     # DOIs may be in N1 (notes) tag, search for it in any tag
     m = DOI_SEARCH(ris_text)
-    if m:
+    if m is not None:
         d['doi'] = m[0]
     start_page = d['start_page']
     if start_page:

@@ -17,11 +17,11 @@ from config import LANG
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 DOI_SEARCH = regex_compile(
     r'''
-    \b(
-        10\.[0-9]{4,}+
-        (?:\.[0-9]++)*+
-        /[^"&\'\s]++
-    )\b
+    \b
+    10\.[0-9]{4,}+
+    (?:\.[0-9]++)*+
+    /[^"&\'\s]++
+    \b
     ''',
     VERBOSE,
 ).search
@@ -35,7 +35,7 @@ def doi_scr(doi_or_url, pure=False, date_format='%Y-%m-%d') -> tuple:
         # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
         # decode percent encodings
         decoded_url = unquote(unescape(doi_or_url))
-        doi = DOI_SEARCH(decoded_url)[1]
+        doi = DOI_SEARCH(decoded_url)[0]
     dictionary = get_crossref_dict(doi)
     dictionary['date_format'] = date_format
     if LANG == 'fa':

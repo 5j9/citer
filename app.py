@@ -115,7 +115,7 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
         resolver = TLDLESS_NETLOC_RESOLVER(
             tldless_netloc[4:] if tldless_netloc.startswith('www.')
             else tldless_netloc)
-        if resolver:
+        if resolver is not None:
             if resolver is googlebooks_scr:
                 return resolver(parsed_url, date_format)
             elif resolver is google_encrypted_scr:
@@ -123,14 +123,14 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
             return resolver(url, date_format)
         # DOIs contain dots
         m = DOI_SEARCH(unescape(en_user_input))
-        if m:
-            return doi_scr(m[1], True, date_format)
+        if m is not None:
+            return doi_scr(m[0], True, date_format)
         return urls_scr(url, date_format)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
         # error prone.
         m = ISBN_10OR13_SEARCH(en_user_input)
-        if m:
+        if m is not None:
             try:
                 return isbn_scr(m[0], True, date_format)
             except IsbnError:
