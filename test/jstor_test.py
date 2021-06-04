@@ -14,7 +14,7 @@ class JSTORTest(TestCase):
             '| title=On a New Case of Interference of the Rays of Light '
             '| journal=The Transactions of the Royal Irish Academy '
             '| publisher=Royal Irish Academy | volume=17 | year=1831 '
-            '| issn=07908113 | pages=171–177 '
+            '| issn=07908113 | jstor=30078788 | pages=171–177 '
             '| url=http://www.jstor.org/stable/30078788 '))
 
     def test_2(self):
@@ -23,7 +23,8 @@ class JSTORTest(TestCase):
             '* {{cite techreport | last=Singh | first=Spandana | last2=Blase '
             '| first2=Margerite '
             '| title=Protecting the Vote: How Internet Platforms Are Addressing Election and Voter Suppression-Related Misinformation and Disinformation '
-            '| year=2020 | url=http://www.jstor.org/stable/resrep26363.7 '))
+            '| year=2020 | jstor=resrep26363.7 | jstor-access=free '
+            '| url=http://www.jstor.org/stable/resrep26363.7 '))
 
 
 if __name__ == '__main__':

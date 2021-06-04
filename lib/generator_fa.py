@@ -211,6 +211,13 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if oclc:
         cit += ' | oclc=' + oclc
 
+    jstor = d['jstor']
+    if jstor:
+        cit += f' | jstor={jstor}'
+        jstor_access = d['jstor-access']
+        if jstor_access:
+            cit += f' | jstor-access=free'
+
     pages = d['page']
     if cite_type == 'ژورنال':
         if pages:
