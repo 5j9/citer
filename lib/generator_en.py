@@ -222,6 +222,13 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if oclc:
         cit += f' | oclc={oclc}'
 
+    jstor = d['jstor']
+    if jstor:
+        cit += f' | jstor={jstor}'
+        jstor_access = d['jstor-access']
+        if jstor_access:
+            cit += f' | jstor-access=free'
+
     pages = d['page']
     if pages:
         if '–' in pages:
