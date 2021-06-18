@@ -26,6 +26,16 @@ class JSTORTest(TestCase):
             '| year=2020 | jstor=resrep26363.7 | jstor-access=free '
             '| url=http://www.jstor.org/stable/resrep26363.7 '))
 
+    def test_encoding(self):  # 25
+        s, c, r = jstor_scr('https://www.jstor.org/stable/40991855')
+        self.assertEqual(c[:c.index('| access-date=')], (
+            '* {{cite journal | last=Monteiro '
+            '| first=Carlos Augusto de Figueiredo '
+            '| title=“Calamidades Meteorológicas no Brasil Meridional, em Agôsto de 1965” '
+            '| journal=Revista Geográfica | publisher=Pan American Institute of Geography and History '
+            '| volume=35 | issue=63 | year=1965 | issn=00310581 | jstor=40991855 '
+            '| pages=173–178 | url=http://www.jstor.org/stable/40991855 '))
+
 
 if __name__ == '__main__':
     main()
