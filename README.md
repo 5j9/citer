@@ -50,3 +50,7 @@ If you experience any problems or have questions, please open an issue on this r
 
 ## Language Setting
 The default language is English and can be changed to Persian using the setting in the config.py file.
+
+
+## Known issues
+* The bookmarklet does not work on archive.org (issue #26) or any other website that does not allow opening external links. One needs to use Citer directly in such cases.
