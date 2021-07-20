@@ -94,7 +94,7 @@ REQUEST = partial(Session().request, timeout=10)
 # https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
 ISBN_10OR13_SEARCH = regex_compile(
     r'97[89]([ -]?+)(?=\d{1,5}\1?+\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*){9}\d'
-    r'|(?=\d{1,5}([ -]?+)\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}[\dX]'
+    r'|(?=\d{1,5}([ -]?+)\d{1,7}\2?+\d{1,6}\2?+\d)(?:\d\2*+){9}[\dX]'
 ).search
 
 ISBN10_SEARCH = regex_compile(
