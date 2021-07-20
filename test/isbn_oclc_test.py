@@ -1,9 +1,7 @@
-"""Test isbn.py module."""
-
-
 from unittest import TestCase, main
 
 from lib.isbn_oclc import isbn_scr, oclc_scr
+from lib.commons import ISBN_10OR13_SEARCH
 
 
 class IsbnTest(TestCase):
@@ -99,6 +97,9 @@ class OCLCTest(TestCase):
             '| oclc=24680975 '
             '| language=pt}}'
         ), oclc_scr('24680975')[1])
+
+    def test_hyphened_isbn_match(self):  # 30
+        self.assertTrue(ISBN_10OR13_SEARCH('2-253-00422-7'))
 
 
 if __name__ == '__main__':
