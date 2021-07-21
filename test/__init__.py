@@ -10,14 +10,14 @@ from requests import Session
 
 
 FORCE_CACHE_OVERWRITE = False  # Use for updating cache entries
-CHACHE_CHANGE = False
+CACHE_CHANGE = False
 CACHE_PATH = abspath(__file__ + '/../.tests_cache')
 
 
 # noinspection PyDecorator
 @staticmethod
 def fake_request(self, url, data=None, stream=False, **kwargs):
-    global CHACHE_CHANGE
+    global CACHE_CHANGE
     if data:
         cache_key = url + repr(sorted(data))
     else:
@@ -29,7 +29,7 @@ def fake_request(self, url, data=None, stream=False, **kwargs):
             response = Session().request(
                 self, url, data=data, **kwargs)
         cache[cache_key] = response
-        CHACHE_CHANGE = True
+        CACHE_CHANGE = True
     if stream is True:
         def iter_content(*_):
             # this closure over response will simulate a bound method
@@ -40,7 +40,7 @@ def fake_request(self, url, data=None, stream=False, **kwargs):
 
 def save_cache(cache_dict):
     """Save cache as pickle."""
-    if not CHACHE_CHANGE:
+    if not CACHE_CHANGE:
         return
     print('saving new cache')
     with open(CACHE_PATH, 'wb') as f:
@@ -57,12 +57,12 @@ def load_cache():
 
 
 def invalidate_cache(in_url):
-    global CHACHE_CHANGE
+    global CACHE_CHANGE
     lower_url = in_url.lower()
     for k in cache.copy():
         if lower_url in k:
             del cache[k]
-            CHACHE_CHANGE = True
+            CACHE_CHANGE = True
 
 
 @contextmanager
