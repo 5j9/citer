@@ -9,8 +9,7 @@ from regex import compile as regex_compile
 from requests import RequestException
 from mechanicalsoup import StatefulBrowser
 
-from lib.commons import first_last, dict_to_sfn_cit_ref, request, USER_AGENT,\
-    LANG
+from lib.commons import first_last, dict_to_sfn_cit_ref, request, USER_AGENT
 
 
 ISBN_SEARCH = regex_compile(r'ISBN: </b> ([-\d]++)').search
@@ -89,12 +88,8 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
         d['publisher'] = m[1]
     m = DATE_SEARCH(html)
     if m is not None:
-        if LANG != 'fa':
-            d['month'] = m['month']
-            d['year'] = '۱۳' + m['year']
-        else:
-            d['month'] = m['month']
-            d['year'] = '۱۳' + m['year']
+        d['month'] = m['month']
+        d['year'] = '۱۳' + m['year']
     m = ISBN_SEARCH(html)
     if m is not None:
         d['isbn'] = m[1]

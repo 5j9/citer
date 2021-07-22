@@ -85,7 +85,7 @@ DIGITS_TO_FA = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
 
 
 def sfn_cit_ref(d: defaultdict) -> tuple:
-    """Create citation templates using the given dictionary."""
+    """Return sfn, citation, and ref."""
     cite_type = TYPE_TO_CITE(d['cite_type'])
     if not cite_type:
         logger.warning('Unknown citation type: %s, d: %s', cite_type, d)

@@ -88,7 +88,7 @@ TYPE_TO_CITE = {
 
 
 def sfn_cit_ref(d: defaultdict) -> tuple:
-    """Create citation templates according to the given dictionary."""
+    """Return sfn, citation, and ref."""
     date_format = d['date_format']
     cite_type = TYPE_TO_CITE(d['cite_type'])
     if not cite_type:
