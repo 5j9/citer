@@ -1,12 +1,10 @@
 from datetime import date
 
-import config; config.LANG = 'fa'
+
+from unittest.mock import patch
+
+from lib.generator_fa import sfn_cit_ref
 from lib.commons import find_any_date
-
-# load .tests_cache
-# noinspection PyUnresolvedReferences
-import test
-
 from lib.ketabir import ketabir_scr
 from lib.doi import doi_scr
 from lib.isbn_oclc import isbn_scr
@@ -16,6 +14,17 @@ from lib.pubmed import pmid_scr
 from lib.urls import urls_scr
 
 from test.googlebooks_test import googlebooks_scr
+
+
+sfn_cit_ref_patcher = patch('lib.commons.sfn_cit_ref', sfn_cit_ref)
+doi_patcher = patch('lib.doi.LANG', 'fa')
+isbn_oclc_patcher = patch('lib.isbn_oclc.LANG', 'fa')
+
+
+def setup_module():
+    sfn_cit_ref_patcher.start()
+    doi_patcher.start()
+    isbn_oclc_patcher.start()
 
 
 def test_ketabir1():
@@ -308,3 +317,9 @@ def test_either_year_or_date():
 def test_arabic_ya():
     assert find_any_date('تاریخ انتشار : جمعه ۳ ارديبهشت ۱۳۸۹ ساعت ۱۶:۴۸') == \
         date(2010, 4, 23)
+
+
+def teardown_module():
+    sfn_cit_ref_patcher.stop()
+    doi_patcher.stop()
+    isbn_oclc_patcher.stop()
