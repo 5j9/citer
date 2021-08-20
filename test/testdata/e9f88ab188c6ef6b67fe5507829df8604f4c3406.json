@@ -1,16 +1,16 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "no-cache",
-  "Content-Length": "52541",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Tue, 23 May 2017 18:53:08 GMT",
-  "Expires": "-1",
-  "Pragma": "no-cache",
-  "Server": "Microsoft-IIS/7.0",
-  "X-AspNet-Version": "2.0.50727",
-  "X-Powered-By": "ASP.NET"
- },
- "status_code": 200,
- "url": "http://www.ensani.ir/"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "no-cache",
+		"Content-Length": "52541",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Tue, 23 May 2017 18:53:08 GMT",
+		"Expires": "-1",
+		"Pragma": "no-cache",
+		"Server": "Microsoft-IIS/7.0",
+		"X-AspNet-Version": "2.0.50727",
+		"X-Powered-By": "ASP.NET"
+	},
+	"status_code": 200,
+	"url": "http://www.ensani.ir/"
 }

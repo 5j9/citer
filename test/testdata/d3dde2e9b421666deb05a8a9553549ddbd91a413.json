@@ -1,20 +1,20 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Connection": "Keep-Alive",
-  "Content-Encoding": "gzip",
-  "Content-Length": "3980",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Thu, 01 Jun 2017 05:16:38 GMT",
-  "ETag": "\"Wed, 28 Sep 2016 00:06:36 GMT\"",
-  "Expires": "Fri, 02 Jun 2017 00:00:00 GMT",
-  "Keep-Alive": "timeout=8, max=100",
-  "Last-Modified": "Wed, 28 Sep 2016 00:06:36 GMT",
-  "Server": "Apache",
-  "Set-Cookie": "browser=151.246.252.117.1496294198851786; path=/; max-age=946080000; domain=.arxiv.org",
-  "Strict-Transport-Security": "max-age=31536000",
-  "Vary": "Accept-Encoding,User-Agent"
- },
- "status_code": 200,
- "url": "https://arxiv.org/abs/1608.05006?utm_medium=email&utm_source=other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.4xDVKzx5EeeJjRJrkGD1dA"
+	"encoding": "utf-8",
+	"headers": {
+		"Connection": "Keep-Alive",
+		"Content-Encoding": "gzip",
+		"Content-Length": "3980",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Thu, 01 Jun 2017 05:16:38 GMT",
+		"ETag": "\"Wed, 28 Sep 2016 00:06:36 GMT\"",
+		"Expires": "Fri, 02 Jun 2017 00:00:00 GMT",
+		"Keep-Alive": "timeout=8, max=100",
+		"Last-Modified": "Wed, 28 Sep 2016 00:06:36 GMT",
+		"Server": "Apache",
+		"Set-Cookie": "browser=151.246.252.117.1496294198851786; path=/; max-age=946080000; domain=.arxiv.org",
+		"Strict-Transport-Security": "max-age=31536000",
+		"Vary": "Accept-Encoding,User-Agent"
+	},
+	"status_code": 200,
+	"url": "https://arxiv.org/abs/1608.05006?utm_medium=email&utm_source=other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.4xDVKzx5EeeJjRJrkGD1dA"
 }

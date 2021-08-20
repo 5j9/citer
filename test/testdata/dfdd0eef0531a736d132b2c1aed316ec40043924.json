@@ -1,19 +1,19 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "max-age=300",
-  "Content-Encoding": "gzip",
-  "Content-Length": "39632",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Tue, 23 May 2017 17:53:22 GMT",
-  "Expires": "Tue, 23 May 2017 18:03:22 GMT",
-  "P3P": "CP='NO P3P'",
-  "Server": "Apache",
-  "Vary": "Accept-Encoding",
-  "X-EC-Lua": "19365-geo",
-  "X-Mobile-URL": "http://m.huffpost.com/ca/entry/3686306",
-  "X-UA-Compatible": "IE=edge,chrome=1"
- },
- "status_code": 200,
- "url": "http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "max-age=300",
+		"Content-Encoding": "gzip",
+		"Content-Length": "39632",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Tue, 23 May 2017 17:53:22 GMT",
+		"Expires": "Tue, 23 May 2017 18:03:22 GMT",
+		"P3P": "CP='NO P3P'",
+		"Server": "Apache",
+		"Vary": "Accept-Encoding",
+		"X-EC-Lua": "19365-geo",
+		"X-Mobile-URL": "http://m.huffpost.com/ca/entry/3686306",
+		"X-UA-Compatible": "IE=edge,chrome=1"
+	},
+	"status_code": 200,
+	"url": "http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html"
 }

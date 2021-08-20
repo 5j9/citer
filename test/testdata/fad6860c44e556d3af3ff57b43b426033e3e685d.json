@@ -1,21 +1,21 @@
 {
- "encoding": null,
- "headers": {
-  "Alt-Svc": "h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
-  "Cache-Control": "private, max-age=0",
-  "Content-Disposition": "attachment; filename=Digital_Libraries.ris",
-  "Content-Length": "218",
-  "Content-Type": "application/x-research-info-systems",
-  "Date": "Sat, 11 Jul 2020 09:16:20 GMT",
-  "Expires": "Sat, 11 Jul 2020 09:16:20 GMT",
-  "P3P": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
-  "Server": "OFE/0.1",
-  "Set-Cookie": "NID=204=ysOqCE5rx0PsbAIuFkeT39dkk2wDv7b2RMY4zKeraSXJGEo8k4O5pXNewMnYxhou4FM80yasF9WzA4a602B9WlAE0k1Eyc0eXGC4ALIoNpEN7DThVyxTSWVVKA8jJdIugFQHrb9sWFNl1B5U_BSL3EbAhmw2hysWjXzFC5n-uOw; expires=Sun, 10-Jan-2021 09:16:20 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none",
-  "Strict-Transport-Security": "max-age=604800",
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "SAMEORIGIN",
-  "X-XSS-Protection": "1; mode=block"
- },
- "status_code": 200,
- "url": "https://books.google.com/books/download/?id=pzmt3pcBuGYC&output=ris"
+	"encoding": null,
+	"headers": {
+		"Alt-Svc": "h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
+		"Cache-Control": "private, max-age=0",
+		"Content-Disposition": "attachment; filename=Digital_Libraries.ris",
+		"Content-Length": "218",
+		"Content-Type": "application/x-research-info-systems",
+		"Date": "Sat, 11 Jul 2020 09:16:20 GMT",
+		"Expires": "Sat, 11 Jul 2020 09:16:20 GMT",
+		"P3P": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
+		"Server": "OFE/0.1",
+		"Set-Cookie": "NID=204=ysOqCE5rx0PsbAIuFkeT39dkk2wDv7b2RMY4zKeraSXJGEo8k4O5pXNewMnYxhou4FM80yasF9WzA4a602B9WlAE0k1Eyc0eXGC4ALIoNpEN7DThVyxTSWVVKA8jJdIugFQHrb9sWFNl1B5U_BSL3EbAhmw2hysWjXzFC5n-uOw; expires=Sun, 10-Jan-2021 09:16:20 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none",
+		"Strict-Transport-Security": "max-age=604800",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-XSS-Protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "https://books.google.com/books/download/?id=pzmt3pcBuGYC&output=ris"
 }

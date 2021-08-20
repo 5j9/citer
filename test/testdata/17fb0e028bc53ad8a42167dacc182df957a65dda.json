@@ -1,21 +1,21 @@
 {
- "encoding": "UTF-8",
- "headers": {
-  "Cache-Control": "max-age=600, must-revalidate",
-  "Connection": "keep-alive",
-  "Content-Encoding": "gzip",
-  "Content-Type": "text/html; charset=UTF-8",
-  "Date": "Fri, 08 Jan 2021 12:55:28 GMT",
-  "Keep-Alive": "timeout=20",
-  "Link": "<https://indaily.com.au/wp-json/>; rel=\"https://api.w.org/\", <https://indaily.com.au/wp-json/wp/v2/posts/307652>; rel=\"alternate\"; type=\"application/json\", <https://indaily.co/307652>; rel=shortlink",
-  "Server": "nginx",
-  "Transfer-Encoding": "chunked",
-  "Vary": "Accept-Encoding, Accept-Encoding, Accept-Encoding,Cookie",
-  "X-Cache": "HIT: 1",
-  "X-Cache-Group": "normal",
-  "X-Cacheable": "SHORT",
-  "X-Powered-By": "WP Engine"
- },
- "status_code": 200,
- "url": "https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/"
+	"encoding": "UTF-8",
+	"headers": {
+		"Cache-Control": "max-age=600, must-revalidate",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html; charset=UTF-8",
+		"Date": "Fri, 08 Jan 2021 12:55:28 GMT",
+		"Keep-Alive": "timeout=20",
+		"Link": "<https://indaily.com.au/wp-json/>; rel=\"https://api.w.org/\", <https://indaily.com.au/wp-json/wp/v2/posts/307652>; rel=\"alternate\"; type=\"application/json\", <https://indaily.co/307652>; rel=shortlink",
+		"Server": "nginx",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding, Accept-Encoding, Accept-Encoding,Cookie",
+		"X-Cache": "HIT: 1",
+		"X-Cache-Group": "normal",
+		"X-Cacheable": "SHORT",
+		"X-Powered-By": "WP Engine"
+	},
+	"status_code": 200,
+	"url": "https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/"
 }

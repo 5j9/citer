@@ -1,16 +1,16 @@
 {
- "encoding": "ISO-8859-1",
- "headers": {
-  "Cache-Control": "private,no-cache",
-  "Content-Length": "88209",
-  "Content-Type": "text/html",
-  "Date": "Tue, 23 May 2017 17:54:18 GMT",
-  "Expires": "Mon, 22 May 2017 17:54:16 GMT",
-  "Pragma": "no-cache",
-  "Server": "Microsoft-IIS/7.5",
-  "Set-Cookie": "ASPSESSIONIDSCSDQDTD=PFKEHIBCHOOOOOBNGLBAFIEE; path=/",
-  "X-Powered-By": "ASP.NET"
- },
- "status_code": 200,
- "url": "http://www.magiran.com/"
+	"encoding": "ISO-8859-1",
+	"headers": {
+		"Cache-Control": "private,no-cache",
+		"Content-Length": "88209",
+		"Content-Type": "text/html",
+		"Date": "Tue, 23 May 2017 17:54:18 GMT",
+		"Expires": "Mon, 22 May 2017 17:54:16 GMT",
+		"Pragma": "no-cache",
+		"Server": "Microsoft-IIS/7.5",
+		"Set-Cookie": "ASPSESSIONIDSCSDQDTD=PFKEHIBCHOOOOOBNGLBAFIEE; path=/",
+		"X-Powered-By": "ASP.NET"
+	},
+	"status_code": 200,
+	"url": "http://www.magiran.com/"
 }

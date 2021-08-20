@@ -1,21 +1,21 @@
 {
- "encoding": "ISO-8859-1",
- "headers": {
-  "Cache-Control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
-  "Connection": "close",
-  "Content-Encoding": "gzip",
-  "Content-Length": "8966",
-  "Content-Type": "text/html",
-  "Date": "Sun, 28 May 2017 05:54:52 GMT",
-  "Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
-  "Pragma": "no-cache",
-  "Server": "Apache/2.4.7 (Ubuntu)",
-  "Set-Cookie": "juFirstLang=fa; expires=Tue, 27-Jun-2017 05:46:07 GMT; Max-Age=2592000; path=/; httponly, juSecondLang=en; expires=Tue, 27-Jun-2017 05:46:07 GMT; Max-Age=2592000; path=/; httponly, PHPSESSID=e84214a3gdhku7fov1mdmscjj6; path=/; HttpOnly",
-  "Vary": "Accept-Encoding",
-  "X-Cache": "MISS from google.com",
-  "X-Cache-Lookup": "MISS from google.com:85",
-  "X-Powered-By": "PHP/5.5.9-1ubuntu4.5"
- },
- "status_code": 200,
- "url": "http://socialhistory.ihcs.ac.ir/"
+	"encoding": "ISO-8859-1",
+	"headers": {
+		"Cache-Control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
+		"Connection": "close",
+		"Content-Encoding": "gzip",
+		"Content-Length": "8966",
+		"Content-Type": "text/html",
+		"Date": "Sun, 28 May 2017 05:54:52 GMT",
+		"Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+		"Pragma": "no-cache",
+		"Server": "Apache/2.4.7 (Ubuntu)",
+		"Set-Cookie": "juFirstLang=fa; expires=Tue, 27-Jun-2017 05:46:07 GMT; Max-Age=2592000; path=/; httponly, juSecondLang=en; expires=Tue, 27-Jun-2017 05:46:07 GMT; Max-Age=2592000; path=/; httponly, PHPSESSID=e84214a3gdhku7fov1mdmscjj6; path=/; HttpOnly",
+		"Vary": "Accept-Encoding",
+		"X-Cache": "MISS from google.com",
+		"X-Cache-Lookup": "MISS from google.com:85",
+		"X-Powered-By": "PHP/5.5.9-1ubuntu4.5"
+	},
+	"status_code": 200,
+	"url": "http://socialhistory.ihcs.ac.ir/"
 }

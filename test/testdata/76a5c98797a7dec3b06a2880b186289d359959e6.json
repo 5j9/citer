@@ -1,17 +1,17 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "no-cache",
-  "Content-Length": "30446",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Tue, 23 May 2017 18:53:14 GMT",
-  "Expires": "-1",
-  "Pragma": "no-cache",
-  "Server": "Microsoft-IIS/7.0",
-  "Set-Cookie": "ASP.NET_SessionId=c1jpxy45h3okhazjvm45pi45; path=/; HttpOnly",
-  "X-AspNet-Version": "2.0.50727",
-  "X-Powered-By": "ASP.NET"
- },
- "status_code": 200,
- "url": "http://www.ensani.ir/fa/content/326173/default.aspx"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "no-cache",
+		"Content-Length": "30446",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Tue, 23 May 2017 18:53:14 GMT",
+		"Expires": "-1",
+		"Pragma": "no-cache",
+		"Server": "Microsoft-IIS/7.0",
+		"Set-Cookie": "ASP.NET_SessionId=c1jpxy45h3okhazjvm45pi45; path=/; HttpOnly",
+		"X-AspNet-Version": "2.0.50727",
+		"X-Powered-By": "ASP.NET"
+	},
+	"status_code": 200,
+	"url": "http://www.ensani.ir/fa/content/326173/default.aspx"
 }

@@ -1,16 +1,16 @@
 {
- "encoding": "UTF-8",
- "headers": {
-  "Cache-Control": "private",
-  "Content-Disposition": "attachment; filename=\"noorlib-3232.bib\"",
-  "Content-Length": "339",
-  "Content-Type": "application/x-bibtex; charset=UTF-8",
-  "Date": "Fri, 13 Apr 2018 07:57:53 GMT",
-  "Server": "Microsoft-IIS/7.5",
-  "Set-Cookie": "ASP.NET_SessionId=40ppz5uynio5hhaf5xq5opww; path=/; HttpOnly",
-  "X-AspNet-Version": "4.0.30319",
-  "X-Powered-By": "ASP.NET"
- },
- "status_code": 200,
- "url": "https://www.noorlib.ir/View/HttpHandler/CitationHandler.ashx?id=3232&format=BibTex"
+	"encoding": "UTF-8",
+	"headers": {
+		"Cache-Control": "private",
+		"Content-Disposition": "attachment; filename=\"noorlib-3232.bib\"",
+		"Content-Length": "339",
+		"Content-Type": "application/x-bibtex; charset=UTF-8",
+		"Date": "Fri, 13 Apr 2018 07:57:53 GMT",
+		"Server": "Microsoft-IIS/7.5",
+		"Set-Cookie": "ASP.NET_SessionId=40ppz5uynio5hhaf5xq5opww; path=/; HttpOnly",
+		"X-AspNet-Version": "4.0.30319",
+		"X-Powered-By": "ASP.NET"
+	},
+	"status_code": 200,
+	"url": "https://www.noorlib.ir/View/HttpHandler/CitationHandler.ashx?id=3232&format=BibTex"
 }

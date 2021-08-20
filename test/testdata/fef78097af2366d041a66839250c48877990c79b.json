@@ -1,14 +1,14 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "private",
-  "Connection": "keep-alive",
-  "Content-Encoding": "gzip",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Tue, 23 May 2017 18:06:45 GMT",
-  "Server": "nginx",
-  "Transfer-Encoding": "chunked"
- },
- "status_code": 200,
- "url": "http://www.farsnews.com/"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "private",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Tue, 23 May 2017 18:06:45 GMT",
+		"Server": "nginx",
+		"Transfer-Encoding": "chunked"
+	},
+	"status_code": 200,
+	"url": "http://www.farsnews.com/"
 }

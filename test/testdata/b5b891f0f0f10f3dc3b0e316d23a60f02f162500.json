@@ -1,17 +1,17 @@
 {
- "encoding": "UTF-8",
- "headers": {
-  "Cache-Control": "max-age=1",
-  "Connection": "keep-alive, Transfer-Encoding",
-  "Content-Encoding": "gzip",
-  "Content-Security-Policy": "frame-ancestors 'self' www.stumbleupon.com stumbleupon.com;",
-  "Content-Type": "text/html; charset=UTF-8",
-  "Date": "Tue, 23 May 2017 17:53:16 GMT",
-  "Server": "nginx",
-  "Transfer-Encoding": "chunked",
-  "Vary": "Accept-Encoding",
-  "X-Mod-Pagespeed": "Powered By mod_pagespeed"
- },
- "status_code": 200,
- "url": "http://www.telegraph.co.uk/"
+	"encoding": "UTF-8",
+	"headers": {
+		"Cache-Control": "max-age=1",
+		"Connection": "keep-alive, Transfer-Encoding",
+		"Content-Encoding": "gzip",
+		"Content-Security-Policy": "frame-ancestors 'self' www.stumbleupon.com stumbleupon.com;",
+		"Content-Type": "text/html; charset=UTF-8",
+		"Date": "Tue, 23 May 2017 17:53:16 GMT",
+		"Server": "nginx",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding",
+		"X-Mod-Pagespeed": "Powered By mod_pagespeed"
+	},
+	"status_code": 200,
+	"url": "http://www.telegraph.co.uk/"
 }

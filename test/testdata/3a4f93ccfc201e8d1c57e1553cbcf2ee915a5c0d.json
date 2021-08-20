@@ -1,14 +1,14 @@
 {
- "encoding": "ISO-8859-1",
- "headers": {
-  "Cache-Control": "private",
-  "Content-Length": "70269",
-  "Content-Type": "text/html",
-  "Date": "Tue, 23 May 2017 17:54:48 GMT",
-  "Server": "Microsoft-IIS/7.5",
-  "Set-Cookie": "ASPSESSIONIDSCSDQDTD=OFKEHIBCFGCNAKEIAFDKJCPL; path=/",
-  "X-Powered-By": "ASP.NET"
- },
- "status_code": 200,
- "url": "http://www.magiran.com/npview.asp?ID=1410487"
+	"encoding": "ISO-8859-1",
+	"headers": {
+		"Cache-Control": "private",
+		"Content-Length": "70269",
+		"Content-Type": "text/html",
+		"Date": "Tue, 23 May 2017 17:54:48 GMT",
+		"Server": "Microsoft-IIS/7.5",
+		"Set-Cookie": "ASPSESSIONIDSCSDQDTD=OFKEHIBCFGCNAKEIAFDKJCPL; path=/",
+		"X-Powered-By": "ASP.NET"
+	},
+	"status_code": 200,
+	"url": "http://www.magiran.com/npview.asp?ID=1410487"
 }

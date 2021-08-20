@@ -1,22 +1,22 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "max-age=0, private, must-revalidate",
-  "Connection": "close",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Fri, 15 Mar 2019 04:41:53 GMT",
-  "Etag": "\"e3f130e0547acb983a600db559d0c2ea\"",
-  "Server": "Cowboy",
-  "Set-Cookie": "_ottobib_session=MUFnMDJ5NVJzNXorNWdLNC9HZUxxU2pLZlA3eVYxbSt5bjJHRnJHdUhnUTh5cHpWZTVkTXo1SGlDV1Jld2FKbVlXVFpNL3g5VVhJYzRZbkk4KzNJV3o3Y0EyNGJFTUdES0lTRzNTcWd2TWx1SXA3VmZaNUJicElaK1plOUZHZ1MyVWNmM3kzNDA3MjRHOUpHSkthNzR5bnYrWmN2WGRmcEdJMjdrYnNrUHNvUEZWOEdMUUVmRVhTSVNvUXlIL0NYQkdZTlMySGliODhYcVlUZXlNUEE0emxibW85YVFiQU94S3FMRUxiK2cxTE1vTWR6Yi9Da2t3bzRIM2NYZnhkNGdQRGxzSjNWM1FOeFBIcGRzdjlNZ3puazM3OU1CRm92MkNxbnZqNnhrUlE9LS1qeURuZ1ZRaDRqb1B5L1NuZkJkZldnPT0%3D--9e947c05893dd5fcbd90e375b6a7b2d9b9b8e5da; path=/; HttpOnly",
-  "Status": "200 OK",
-  "Via": "1.1 vegur",
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "SAMEORIGIN",
-  "X-Request-Id": "37834776-f2ac-44cb-9836-b646ef22de44",
-  "X-Runtime": "0.116551",
-  "X-Ua-Compatible": "chrome=1",
-  "X-Xss-Protection": "1; mode=block"
- },
- "status_code": 200,
- "url": "http://www.ottobib.com/isbn/964-92962-6-3/bibtex"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "max-age=0, private, must-revalidate",
+		"Connection": "close",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Fri, 15 Mar 2019 04:41:53 GMT",
+		"Etag": "\"e3f130e0547acb983a600db559d0c2ea\"",
+		"Server": "Cowboy",
+		"Set-Cookie": "_ottobib_session=MUFnMDJ5NVJzNXorNWdLNC9HZUxxU2pLZlA3eVYxbSt5bjJHRnJHdUhnUTh5cHpWZTVkTXo1SGlDV1Jld2FKbVlXVFpNL3g5VVhJYzRZbkk4KzNJV3o3Y0EyNGJFTUdES0lTRzNTcWd2TWx1SXA3VmZaNUJicElaK1plOUZHZ1MyVWNmM3kzNDA3MjRHOUpHSkthNzR5bnYrWmN2WGRmcEdJMjdrYnNrUHNvUEZWOEdMUUVmRVhTSVNvUXlIL0NYQkdZTlMySGliODhYcVlUZXlNUEE0emxibW85YVFiQU94S3FMRUxiK2cxTE1vTWR6Yi9Da2t3bzRIM2NYZnhkNGdQRGxzSjNWM1FOeFBIcGRzdjlNZ3puazM3OU1CRm92MkNxbnZqNnhrUlE9LS1qeURuZ1ZRaDRqb1B5L1NuZkJkZldnPT0%3D--9e947c05893dd5fcbd90e375b6a7b2d9b9b8e5da; path=/; HttpOnly",
+		"Status": "200 OK",
+		"Via": "1.1 vegur",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-Request-Id": "37834776-f2ac-44cb-9836-b646ef22de44",
+		"X-Runtime": "0.116551",
+		"X-Ua-Compatible": "chrome=1",
+		"X-Xss-Protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "http://www.ottobib.com/isbn/964-92962-6-3/bibtex"
 }

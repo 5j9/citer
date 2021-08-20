@@ -1,7 +1,4 @@
 from contextlib import contextmanager
-# todo
-from pickle import load as pload
-from os.path import abspath
 from hashlib import sha1
 from json import dump, loads, load
 from typing import Optional
@@ -14,13 +11,13 @@ from requests import Session, Response, ConnectionError as RConnectionError
 
 
 FORCE_CACHE_OVERWRITE = False  # Use for updating cache entries
-TESTDATA = abspath(__file__ + '/../testdata')
+PREVENT_WRITING = True
+TESTDATA = __file__ + '/../testdata'
 
-# todo:
-CACHE_PATH = abspath(__file__ + '/../.tests_cache')
 
 json_dump = partial(
-    dump, ensure_ascii=False, check_circular=False, sort_keys=True, indent=1)
+    dump, ensure_ascii=False, check_circular=False, sort_keys=True,
+    indent='\t')
 
 
 class FakeResponse:
@@ -105,12 +102,10 @@ def fake_request(self, url, data=None, stream=False, **kwargs):
         response = None
     else:
         response = load_response(sha1_hex)
-        # todo: remove
-        # response = cache.get(cache_key)
-        # end remove
 
     if response is None:  # either FileNotFoundError or FORCE_CACHE_OVERWRITE
-        raise  # todo: remove
+        if PREVENT_WRITING:
+            raise RuntimeError('PREVENT_WRITING is True')
         print('Downloading ' + url)
         with real_request():
             try:
@@ -119,8 +114,6 @@ def fake_request(self, url, data=None, stream=False, **kwargs):
             except RConnectionError:
                 dump_connection_error(sha1_hex)
         dump_response(sha1_hex, response)
-    # todo: remove
-    # dump_response(sha1_hex, response)
 
     if stream is True:
         def iter_content(*_):
@@ -140,7 +133,3 @@ def real_request():
 
 original_request = Session.request
 Session.request = fake_request
-
-# todo:
-with open(CACHE_PATH, 'rb') as f:
-    cache = pload(f)

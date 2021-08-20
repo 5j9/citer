@@ -1,21 +1,21 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "no-cache, no-store, must-revalidate",
-  "Content-Encoding": "gzip",
-  "Content-Length": "14139",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Tue, 23 May 2017 17:54:03 GMT",
-  "Expires": "-1",
-  "Pragma": "no-cache",
-  "Server": "Microsoft-IIS/8.5",
-  "Set-Cookie": "ASP.NET_SessionId=tsb3df03uw4bkkq0qp00dmpj; path=/; secure; HttpOnly, FirstVisit=repeat; domain=highbeam.com; expires=Sun, 19-Nov-2017 18:54:04 GMT; path=/; secure, RVI=RVI1=[a href=/doc/1P3-3372742961.html]Article: Dynamometers Explained[/a]; domain=highbeam.com; expires=Sun, 19-Nov-2017 18:54:04 GMT; path=/; secure",
-  "Vary": "Accept-Encoding",
-  "X-AspNet-Version": "4.0.30319",
-  "X-AspNetMvc-Version": "4.0",
-  "X-FRAME-OPTIONS": "SAMEORIGIN",
-  "X-Powered-By": "ASP.NET"
- },
- "status_code": 200,
- "url": "https://www.highbeam.com/doc/1P3-3372742961.html"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "no-cache, no-store, must-revalidate",
+		"Content-Encoding": "gzip",
+		"Content-Length": "14139",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Tue, 23 May 2017 17:54:03 GMT",
+		"Expires": "-1",
+		"Pragma": "no-cache",
+		"Server": "Microsoft-IIS/8.5",
+		"Set-Cookie": "ASP.NET_SessionId=tsb3df03uw4bkkq0qp00dmpj; path=/; secure; HttpOnly, FirstVisit=repeat; domain=highbeam.com; expires=Sun, 19-Nov-2017 18:54:04 GMT; path=/; secure, RVI=RVI1=[a href=/doc/1P3-3372742961.html]Article: Dynamometers Explained[/a]; domain=highbeam.com; expires=Sun, 19-Nov-2017 18:54:04 GMT; path=/; secure",
+		"Vary": "Accept-Encoding",
+		"X-AspNet-Version": "4.0.30319",
+		"X-AspNetMvc-Version": "4.0",
+		"X-FRAME-OPTIONS": "SAMEORIGIN",
+		"X-Powered-By": "ASP.NET"
+	},
+	"status_code": 200,
+	"url": "https://www.highbeam.com/doc/1P3-3372742961.html"
 }

@@ -1,21 +1,21 @@
 {
- "encoding": null,
- "headers": {
-  "Alt-Svc": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
-  "Cache-Control": "private, max-age=0",
-  "Content-Disposition": "attachment; filename=So_You_Want_to_Sing_World_Music.ris",
-  "Content-Length": "252",
-  "Content-Type": "application/x-research-info-systems",
-  "Date": "Wed, 05 May 2021 15:22:52 GMT",
-  "Expires": "Wed, 05 May 2021 15:22:52 GMT",
-  "P3P": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
-  "Server": "OFE/0.1",
-  "Set-Cookie": "NID=215=H4Gem5lKvx1QoS3hzHx6-q2VT5zzhxMQrCfTM60mPj8IPzPsdAHQK6cXI7UOlCsyg5iEzLe-uBiXcxtgRwI8AC5JemyLyWZOR0DU2vIYXtwdBvyuVyZPgUl58EpeG5BIMeXzq5H4Q4_HaRQYMGjbuJaD7oCrzdTxjW30zt3Bv5Q; expires=Thu, 04-Nov-2021 15:22:52 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none",
-  "Strict-Transport-Security": "max-age=604800",
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "SAMEORIGIN",
-  "X-XSS-Protection": "1; mode=block"
- },
- "status_code": 200,
- "url": "https://books.google.com/books/download/?id=OlCwDwAAQBAJ&output=ris"
+	"encoding": null,
+	"headers": {
+		"Alt-Svc": "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
+		"Cache-Control": "private, max-age=0",
+		"Content-Disposition": "attachment; filename=So_You_Want_to_Sing_World_Music.ris",
+		"Content-Length": "252",
+		"Content-Type": "application/x-research-info-systems",
+		"Date": "Wed, 05 May 2021 15:22:52 GMT",
+		"Expires": "Wed, 05 May 2021 15:22:52 GMT",
+		"P3P": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
+		"Server": "OFE/0.1",
+		"Set-Cookie": "NID=215=H4Gem5lKvx1QoS3hzHx6-q2VT5zzhxMQrCfTM60mPj8IPzPsdAHQK6cXI7UOlCsyg5iEzLe-uBiXcxtgRwI8AC5JemyLyWZOR0DU2vIYXtwdBvyuVyZPgUl58EpeG5BIMeXzq5H4Q4_HaRQYMGjbuJaD7oCrzdTxjW30zt3Bv5Q; expires=Thu, 04-Nov-2021 15:22:52 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none",
+		"Strict-Transport-Security": "max-age=604800",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-XSS-Protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "https://books.google.com/books/download/?id=OlCwDwAAQBAJ&output=ris"
 }

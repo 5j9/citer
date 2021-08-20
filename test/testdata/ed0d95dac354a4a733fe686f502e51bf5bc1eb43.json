@@ -1,19 +1,19 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
-  "Connection": "Keep-Alive",
-  "Content-Encoding": "gzip",
-  "Content-Length": "17544",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Sun, 07 Jun 2020 08:03:40 GMT",
-  "Expires": "Mon, 26 Jul 1997 05:00:00 GMT",
-  "Keep-Alive": "timeout=15",
-  "Pragma": "no-cache",
-  "Server": "Apache",
-  "Vary": "Accept-Encoding",
-  "X-Powered-By": "PHP/5.6.21"
- },
- "status_code": 200,
- "url": "https://www.shora-gc.ir/fa/news/1815/%D8%A7%D8%B5%D9%84-%D9%87%D9%81%D8%AA%D8%A7%D8%AF-%D9%88-%D8%B3%D9%88%D9%85"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
+		"Connection": "Keep-Alive",
+		"Content-Encoding": "gzip",
+		"Content-Length": "17544",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Sun, 07 Jun 2020 08:03:40 GMT",
+		"Expires": "Mon, 26 Jul 1997 05:00:00 GMT",
+		"Keep-Alive": "timeout=15",
+		"Pragma": "no-cache",
+		"Server": "Apache",
+		"Vary": "Accept-Encoding",
+		"X-Powered-By": "PHP/5.6.21"
+	},
+	"status_code": 200,
+	"url": "https://www.shora-gc.ir/fa/news/1815/%D8%A7%D8%B5%D9%84-%D9%87%D9%81%D8%AA%D8%A7%D8%AF-%D9%88-%D8%B3%D9%88%D9%85"
 }
