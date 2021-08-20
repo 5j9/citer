@@ -1,18 +1,18 @@
 {
- "encoding": "UTF-8",
- "headers": {
-  "Cache-Control": "max-age=31",
-  "Connection": "close",
-  "Content-Encoding": "gzip",
-  "Content-Type": "text/html;charset=UTF-8",
-  "Date": "Tue, 23 May 2017 17:53:10 GMT",
-  "Vary": "User-Agent, Accept-Encoding",
-  "X-MOL-GEORESP": "us",
-  "X-rs-ops": "10.250.203.249:6081",
-  "x-rs-ben": "cljfe-a6:8181",
-  "x-rs-time": "Tue, 23 May 2017 17-50-06 GMT",
-  "x-storage": "channels"
- },
- "status_code": 200,
- "url": "http://www.dailymail.co.uk/ushome/index.html"
+	"encoding": "UTF-8",
+	"headers": {
+		"Cache-Control": "max-age=31",
+		"Connection": "close",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html;charset=UTF-8",
+		"Date": "Tue, 23 May 2017 17:53:10 GMT",
+		"Vary": "User-Agent, Accept-Encoding",
+		"X-MOL-GEORESP": "us",
+		"X-rs-ops": "10.250.203.249:6081",
+		"x-rs-ben": "cljfe-a6:8181",
+		"x-rs-time": "Tue, 23 May 2017 17-50-06 GMT",
+		"x-storage": "channels"
+	},
+	"status_code": 200,
+	"url": "http://www.dailymail.co.uk/ushome/index.html"
 }

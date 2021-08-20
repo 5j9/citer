@@ -1,18 +1,18 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "max-age=30",
-  "Content-Encoding": "gzip",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Tue, 23 May 2017 17:53:22 GMT",
-  "Expires": "Tue, 23 May 2017 17:53:52 GMT",
-  "P3P": "CP='NO P3P'",
-  "Server": "Apache",
-  "Transfer-Encoding": "chunked",
-  "Vary": "Accept-Encoding",
-  "X-EC-Lua": "19365-geo",
-  "X-Mobile-URL": "http://m.huffpost.com/ca"
- },
- "status_code": 200,
- "url": "http://www.huffingtonpost.ca/"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "max-age=30",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Tue, 23 May 2017 17:53:22 GMT",
+		"Expires": "Tue, 23 May 2017 17:53:52 GMT",
+		"P3P": "CP='NO P3P'",
+		"Server": "Apache",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding",
+		"X-EC-Lua": "19365-geo",
+		"X-Mobile-URL": "http://m.huffpost.com/ca"
+	},
+	"status_code": 200,
+	"url": "http://www.huffingtonpost.ca/"
 }

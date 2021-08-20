@@ -1,20 +1,20 @@
 {
- "encoding": "ISO-8859-1",
- "headers": {
-  "Accept-Ranges": "bytes",
-  "Access-Control-Allow-Origin": "http://live.aljazeera.com",
-  "Cache-Control": "max-age=180, public",
-  "Connection": "keep-alive",
-  "Content-Encoding": "gzip",
-  "Content-Length": "14054",
-  "Content-Type": "text/html",
-  "Date": "Tue, 30 May 2017 04:57:45 GMT",
-  "Expires": "Tue, 30 May 2017 05:00:45 GMT",
-  "Publisher": "Al Jazeera (ORYX CMS) - ZUB",
-  "Server": "Microsoft-IIS/10.0",
-  "X-Method": "GET",
-  "X-Powered-By": "VSH-Z-2"
- },
- "status_code": 200,
- "url": "http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html"
+	"encoding": "ISO-8859-1",
+	"headers": {
+		"Accept-Ranges": "bytes",
+		"Access-Control-Allow-Origin": "http://live.aljazeera.com",
+		"Cache-Control": "max-age=180, public",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Length": "14054",
+		"Content-Type": "text/html",
+		"Date": "Tue, 30 May 2017 04:57:45 GMT",
+		"Expires": "Tue, 30 May 2017 05:00:45 GMT",
+		"Publisher": "Al Jazeera (ORYX CMS) - ZUB",
+		"Server": "Microsoft-IIS/10.0",
+		"X-Method": "GET",
+		"X-Powered-By": "VSH-Z-2"
+	},
+	"status_code": 200,
+	"url": "http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html"
 }

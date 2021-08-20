@@ -1,23 +1,23 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "max-age=0, private, must-revalidate",
-  "Connection": "keep-alive",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Fri, 13 Apr 2018 07:58:16 GMT",
-  "ETag": "\"c12e70391facba35d29f383b3ee6a839\"",
-  "Server": "Cowboy",
-  "Set-Cookie": "_ottobib_session=UjhONkdtY3JOM2I1clhFM3Vvd2NKeG9RamJENzVoVVNxWGtUckNSQWNITGFJQ08zbU05eFNIK1k1M1JuRlpjdU9vRTZCa0xULytqQkhHZU1BWUsrWldrZTN3dVJDM1pSaTVtTUk2ZUpaM0M0UVp4c05vY2ZxSEFmcWhBVWR2Zkh4WlNaQm5zaDZxQ2kzYmY0Y3d4SGovNEF6NndFQU9wbTljYlJmbUJIanNTMXROZVFlNStDNW9NT3F0Ymd6SzRzLS1qSWJNV1FZVE9WdDNxdHNmRVlseWNnPT0%3D--103c4516df0cbc8cac807191e4e991bc0a305299; path=/; HttpOnly",
-  "Status": "200 OK",
-  "Transfer-Encoding": "chunked",
-  "Via": "1.1 vegur",
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "SAMEORIGIN",
-  "X-Request-Id": "e807028b-0b9b-4859-95bf-7019081e6504",
-  "X-Runtime": "0.019032",
-  "X-Ua-Compatible": "chrome=1",
-  "X-Xss-Protection": "1; mode=block"
- },
- "status_code": 200,
- "url": "http://www.ottobib.com/isbn/9780349119168/bibtex"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "max-age=0, private, must-revalidate",
+		"Connection": "keep-alive",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Fri, 13 Apr 2018 07:58:16 GMT",
+		"ETag": "\"c12e70391facba35d29f383b3ee6a839\"",
+		"Server": "Cowboy",
+		"Set-Cookie": "_ottobib_session=UjhONkdtY3JOM2I1clhFM3Vvd2NKeG9RamJENzVoVVNxWGtUckNSQWNITGFJQ08zbU05eFNIK1k1M1JuRlpjdU9vRTZCa0xULytqQkhHZU1BWUsrWldrZTN3dVJDM1pSaTVtTUk2ZUpaM0M0UVp4c05vY2ZxSEFmcWhBVWR2Zkh4WlNaQm5zaDZxQ2kzYmY0Y3d4SGovNEF6NndFQU9wbTljYlJmbUJIanNTMXROZVFlNStDNW9NT3F0Ymd6SzRzLS1qSWJNV1FZVE9WdDNxdHNmRVlseWNnPT0%3D--103c4516df0cbc8cac807191e4e991bc0a305299; path=/; HttpOnly",
+		"Status": "200 OK",
+		"Transfer-Encoding": "chunked",
+		"Via": "1.1 vegur",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-Request-Id": "e807028b-0b9b-4859-95bf-7019081e6504",
+		"X-Runtime": "0.019032",
+		"X-Ua-Compatible": "chrome=1",
+		"X-Xss-Protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "http://www.ottobib.com/isbn/9780349119168/bibtex"
 }

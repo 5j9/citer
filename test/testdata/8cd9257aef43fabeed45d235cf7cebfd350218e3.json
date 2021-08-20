@@ -1,17 +1,17 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Cache-Control": "private",
-  "Content-Encoding": "gzip",
-  "Content-Length": "15641",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Tue, 23 May 2017 17:51:50 GMT",
-  "Server": "Microsoft-IIS/7.5",
-  "Set-Cookie": "ASP.NET_SessionId=j4r143dsyn3nxit12mahdp1m; path=/; HttpOnly",
-  "Vary": "Accept-Encoding",
-  "X-AspNet-Version": "4.0.30319",
-  "X-Powered-By": "ASP.NET"
- },
- "status_code": 200,
- "url": "http://www.noorlib.ir/View/fa/Book/BookView/Image/6120"
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "private",
+		"Content-Encoding": "gzip",
+		"Content-Length": "15641",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Tue, 23 May 2017 17:51:50 GMT",
+		"Server": "Microsoft-IIS/7.5",
+		"Set-Cookie": "ASP.NET_SessionId=j4r143dsyn3nxit12mahdp1m; path=/; HttpOnly",
+		"Vary": "Accept-Encoding",
+		"X-AspNet-Version": "4.0.30319",
+		"X-Powered-By": "ASP.NET"
+	},
+	"status_code": 200,
+	"url": "http://www.noorlib.ir/View/fa/Book/BookView/Image/6120"
 }

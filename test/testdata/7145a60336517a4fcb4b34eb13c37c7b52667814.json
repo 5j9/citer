@@ -1,19 +1,19 @@
 {
- "encoding": "UTF-8",
- "headers": {
-  "Accept-Ranges": "bytes",
-  "Age": "0",
-  "Connection": "keep-alive",
-  "Content-Encoding": "gzip",
-  "Content-Type": "text/html;charset=UTF-8",
-  "Date": "Tue, 23 May 2017 17:54:10 GMT",
-  "Server": "Apache-Coyote/1.1",
-  "Transfer-Encoding": "chunked",
-  "Vary": "Accept-Encoding",
-  "Via": "1.1 varnish-v4",
-  "X-Varnish": "288057294",
-  "grace": "none"
- },
- "status_code": 200,
- "url": "http://www.isna.ir/news/95110603890/%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84-%DA%A9%D8%B1%D8%AF"
+	"encoding": "UTF-8",
+	"headers": {
+		"Accept-Ranges": "bytes",
+		"Age": "0",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html;charset=UTF-8",
+		"Date": "Tue, 23 May 2017 17:54:10 GMT",
+		"Server": "Apache-Coyote/1.1",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding",
+		"Via": "1.1 varnish-v4",
+		"X-Varnish": "288057294",
+		"grace": "none"
+	},
+	"status_code": 200,
+	"url": "http://www.isna.ir/news/95110603890/%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84-%DA%A9%D8%B1%D8%AF"
 }

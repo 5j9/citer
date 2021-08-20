@@ -1,21 +1,21 @@
 {
- "encoding": null,
- "headers": {
-  "Alt-Svc": "h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
-  "Cache-Control": "private, max-age=0",
-  "Content-Disposition": "attachment; filename=Microsoft_Visual_C_2008_Comprehensive_An.ris",
-  "Content-Length": "244",
-  "Content-Type": "application/x-research-info-systems",
-  "Date": "Sat, 11 Jul 2020 09:16:23 GMT",
-  "Expires": "Sat, 11 Jul 2020 09:16:23 GMT",
-  "P3P": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
-  "Server": "OFE/0.1",
-  "Set-Cookie": "NID=204=WJ0VgfbjPrRR64N4eplf3XvDEnHKRJjuYdlLkK6sKA5g4RiI3fkmJcbLqkj7PPh9kTUgesZqywMEhUfckAYeBBhPURmEjEmtvHMyvjpRuMNARyzhaW5io-8i44zbubKOXmgiKtrLHbP_yxhKOLJeJ7C_HWMG8E2KeTgf1o2pSRY; expires=Sun, 10-Jan-2021 09:16:23 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none",
-  "Strict-Transport-Security": "max-age=604800",
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "SAMEORIGIN",
-  "X-XSS-Protection": "1; mode=block"
- },
- "status_code": 200,
- "url": "https://books.google.com/books/download/?id=icMEAAAAQBAJ&output=ris"
+	"encoding": null,
+	"headers": {
+		"Alt-Svc": "h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
+		"Cache-Control": "private, max-age=0",
+		"Content-Disposition": "attachment; filename=Microsoft_Visual_C_2008_Comprehensive_An.ris",
+		"Content-Length": "244",
+		"Content-Type": "application/x-research-info-systems",
+		"Date": "Sat, 11 Jul 2020 09:16:23 GMT",
+		"Expires": "Sat, 11 Jul 2020 09:16:23 GMT",
+		"P3P": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
+		"Server": "OFE/0.1",
+		"Set-Cookie": "NID=204=WJ0VgfbjPrRR64N4eplf3XvDEnHKRJjuYdlLkK6sKA5g4RiI3fkmJcbLqkj7PPh9kTUgesZqywMEhUfckAYeBBhPURmEjEmtvHMyvjpRuMNARyzhaW5io-8i44zbubKOXmgiKtrLHbP_yxhKOLJeJ7C_HWMG8E2KeTgf1o2pSRY; expires=Sun, 10-Jan-2021 09:16:23 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none",
+		"Strict-Transport-Security": "max-age=604800",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-XSS-Protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "https://books.google.com/books/download/?id=icMEAAAAQBAJ&output=ris"
 }

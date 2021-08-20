@@ -1,21 +1,21 @@
 {
- "encoding": "UTF-8",
- "headers": {
-  "Cache-Control": "max-age=0, no-cache",
-  "Connection": "close",
-  "Content-Encoding": "gzip",
-  "Content-Type": "text/html;charset=UTF-8",
-  "Date": "Tue, 23 May 2017 17:53:13 GMT",
-  "Expires": "Tue, 23 May 2017 17:53:13 GMT",
-  "Pragma": "no-cache",
-  "Vary": "User-Agent, Accept-Encoding",
-  "X-MOL-GEORESP": "us",
-  "X-rs-ops": "10.250.203.249:6081",
-  "x-rs-ben": "cljfe-a6:8181",
-  "x-rs-ctime": "1800",
-  "x-rs-time": "Tue, 23 May 2017 17-53-13 GMT",
-  "x-storage": "dmoldarticles"
- },
- "status_code": 200,
- "url": "http://www.dailymail.co.uk/tvshowbiz/article-2834145/I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html"
+	"encoding": "UTF-8",
+	"headers": {
+		"Cache-Control": "max-age=0, no-cache",
+		"Connection": "close",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html;charset=UTF-8",
+		"Date": "Tue, 23 May 2017 17:53:13 GMT",
+		"Expires": "Tue, 23 May 2017 17:53:13 GMT",
+		"Pragma": "no-cache",
+		"Vary": "User-Agent, Accept-Encoding",
+		"X-MOL-GEORESP": "us",
+		"X-rs-ops": "10.250.203.249:6081",
+		"x-rs-ben": "cljfe-a6:8181",
+		"x-rs-ctime": "1800",
+		"x-rs-time": "Tue, 23 May 2017 17-53-13 GMT",
+		"x-storage": "dmoldarticles"
+	},
+	"status_code": 200,
+	"url": "http://www.dailymail.co.uk/tvshowbiz/article-2834145/I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html"
 }

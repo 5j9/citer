@@ -1,17 +1,17 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Connection": "Keep-Alive",
-  "Content-Encoding": "gzip",
-  "Content-Length": "4891",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Thu, 01 Jun 2017 05:16:38 GMT",
-  "Keep-Alive": "timeout=8, max=100",
-  "Server": "Apache",
-  "Set-Cookie": "browser=151.246.252.117.1496294198871567; path=/; max-age=946080000; domain=.arxiv.org",
-  "Strict-Transport-Security": "max-age=31536000",
-  "Vary": "Accept-Encoding,User-Agent"
- },
- "status_code": 200,
- "url": "https://arxiv.org/"
+	"encoding": "utf-8",
+	"headers": {
+		"Connection": "Keep-Alive",
+		"Content-Encoding": "gzip",
+		"Content-Length": "4891",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Thu, 01 Jun 2017 05:16:38 GMT",
+		"Keep-Alive": "timeout=8, max=100",
+		"Server": "Apache",
+		"Set-Cookie": "browser=151.246.252.117.1496294198871567; path=/; max-age=946080000; domain=.arxiv.org",
+		"Strict-Transport-Security": "max-age=31536000",
+		"Vary": "Accept-Encoding,User-Agent"
+	},
+	"status_code": 200,
+	"url": "https://arxiv.org/"
 }

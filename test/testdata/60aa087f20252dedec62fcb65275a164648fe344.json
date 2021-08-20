@@ -1,21 +1,21 @@
 {
- "encoding": "utf-8",
- "headers": {
-  "Accept-Ranges": "bytes",
-  "Cache-Control": "max-age=0,private",
-  "Connection": "keep-alive",
-  "Content-Encoding": "gzip",
-  "Content-Length": "61030",
-  "Content-Type": "text/html; charset=utf-8",
-  "Date": "Tue, 23 May 2017 17:53:53 GMT",
-  "ETag": "W/\"74ca8-ayznDhyBSd6BIkGfacl29w\"",
-  "Expires": "Tue, 23 May 2017 17:53:53 GMT",
-  "Pragma": "no-cache",
-  "Set-Cookie": "ak_bmsc=E5A85E39B477E2CF8661D6AB4B0441DDB833657DCA340000317724594BF20204~plMNXsXa2LfQpwa98FmX1lU0TALNOcXs29cWZCnGaUSJicXuLLmJEHpIyflXOQa9qxT3BzP7m9vo/nSSyTnrlq+9yn42C2cQ/szabxifIeTwGOCyon4rrseORVAtScS3AU6M3VuaMfa0Lf6YH2rl6r5LGfUEqhXhZJ9Y2abRYog//yZ9t71ZwNWgA/U6zWzccyklDkVA8v/1Kicz8XgrIQk257WIDhGm0q8e+PTDWxR5g=; expires=Tue, 23 May 2017 19:53:53 GMT; max-age=7200; path=/; domain=.thetimes.co.uk; HttpOnly",
-  "Vary": "Accept-Encoding",
-  "X-NU-AKA-ACS-Version": "2.0, 2.0",
-  "X-Varnish": "1054357"
- },
- "status_code": 200,
- "url": "https://www.thetimes.co.uk/"
+	"encoding": "utf-8",
+	"headers": {
+		"Accept-Ranges": "bytes",
+		"Cache-Control": "max-age=0,private",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Length": "61030",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Tue, 23 May 2017 17:53:53 GMT",
+		"ETag": "W/\"74ca8-ayznDhyBSd6BIkGfacl29w\"",
+		"Expires": "Tue, 23 May 2017 17:53:53 GMT",
+		"Pragma": "no-cache",
+		"Set-Cookie": "ak_bmsc=E5A85E39B477E2CF8661D6AB4B0441DDB833657DCA340000317724594BF20204~plMNXsXa2LfQpwa98FmX1lU0TALNOcXs29cWZCnGaUSJicXuLLmJEHpIyflXOQa9qxT3BzP7m9vo/nSSyTnrlq+9yn42C2cQ/szabxifIeTwGOCyon4rrseORVAtScS3AU6M3VuaMfa0Lf6YH2rl6r5LGfUEqhXhZJ9Y2abRYog//yZ9t71ZwNWgA/U6zWzccyklDkVA8v/1Kicz8XgrIQk257WIDhGm0q8e+PTDWxR5g=; expires=Tue, 23 May 2017 19:53:53 GMT; max-age=7200; path=/; domain=.thetimes.co.uk; HttpOnly",
+		"Vary": "Accept-Encoding",
+		"X-NU-AKA-ACS-Version": "2.0, 2.0",
+		"X-Varnish": "1054357"
+	},
+	"status_code": 200,
+	"url": "https://www.thetimes.co.uk/"
 }
