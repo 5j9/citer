@@ -1,0 +1,30 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Age": "156",
+  "Cache-Control": "no-cache",
+  "Connection": "close",
+  "Content-Encoding": "gzip",
+  "Content-Length": "51336",
+  "Content-Security-Policy": "default-src data: 'unsafe-inline' 'unsafe-eval' https:; script-src data: 'unsafe-inline' 'unsafe-eval' https: blob:; style-src data: 'unsafe-inline' https:; img-src data: https: blob:; font-src data: https:; connect-src https: wss:; media-src https: blob:; object-src https:; child-src https: data: blob:; form-action https:; block-all-mixed-content;",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Tue, 23 May 2017 17:53:30 GMT",
+  "Server": "Apache",
+  "Set-Cookie": "nyt-a=7fa51849d1553600c660c351c80a912910cb1686763bb2e8d61ebb4b6adeb687; Expires=Wed, 23 May 2018 17:53:30 GMT; Path=/; Domain=.nytimes.com",
+  "Vary": "Host, Accept-Encoding, Fastly-SSL",
+  "X-API-Version": "F-5-5",
+  "X-Age": "3",
+  "X-Cache": "HIT",
+  "X-Cache-Hits": "43",
+  "X-ESI": "1",
+  "X-Frame-Options": "DENY",
+  "X-Origin-Time": "2017-05-23 13:50:54 EDT",
+  "X-PageType": "homepage",
+  "X-Served-By": "cache-iad2139-IAD",
+  "X-Timer": "S1495562011.960848,VS0,VE0",
+  "ntCoent-Length": "235547"
+ },
+ "status_code": 200,
+ "url": "https://www.nytimes.com/"
+}

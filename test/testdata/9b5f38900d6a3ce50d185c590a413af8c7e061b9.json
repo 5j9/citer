@@ -1,0 +1,15 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Connection": "Keep-Alive",
+  "Content-Type": "text/html; charset=UTF-8",
+  "Date": "Tue, 23 May 2017 18:00:22 GMT",
+  "Keep-Alive": "timeout=1, max=100",
+  "Server": "Apache",
+  "Transfer-Encoding": "chunked",
+  "X-Pad": "avoid browser bug",
+  "X-Pingback": "http://www.londondevelopmentcentre.org/xmlrpc.php"
+ },
+ "status_code": 200,
+ "url": "http://www.londondevelopmentcentre.org/"
+}

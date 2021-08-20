@@ -1,0 +1,18 @@
+{
+ "encoding": "ISO-8859-1",
+ "headers": {
+  "Cache-control": "",
+  "Connection": "Keep-Alive",
+  "Content-Disposition": "attachment; filename=\"WorldCat_24680975.ris\"",
+  "Content-Length": "216",
+  "Content-Type": "application/x-research-info-systems;charset=ISO-8859-1",
+  "Date": "Sun, 15 Apr 2018 09:23:42 GMT",
+  "Expires": "-1",
+  "Keep-Alive": "timeout=5, max=99",
+  "P3P": "CP=\"OCLC\"",
+  "Server": "Apache",
+  "Set-Cookie": "owcFirstDiscoveryRedir=promptUserFirstTime; Expires=Mon, 15-Apr-2019 09:23:42 GMT; Path=/, owcLocRedirectSession=_nr.no_inst; Path=/, JSESSIONID=18AF96FA2DA15F1CD5C11616B8ECD113; Path=/"
+ },
+ "status_code": 200,
+ "url": "https://www.worldcat.org/title/universidade-do-brasil-1948-1966/oclc/24680975?client=worldcat.org-detailed_record&page=endnote"
+}

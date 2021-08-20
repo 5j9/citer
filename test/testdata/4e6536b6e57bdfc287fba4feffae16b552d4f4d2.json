@@ -1,0 +1,21 @@
+{
+ "encoding": null,
+ "headers": {
+  "Alt-Svc": "h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
+  "Cache-Control": "private, max-age=0",
+  "Content-Disposition": "attachment; filename=InterACT_with_Web_Standards.ris",
+  "Content-Length": "423",
+  "Content-Type": "application/x-research-info-systems",
+  "Date": "Sat, 11 Jul 2020 09:16:22 GMT",
+  "Expires": "Sat, 11 Jul 2020 09:16:22 GMT",
+  "P3P": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
+  "Server": "OFE/0.1",
+  "Set-Cookie": "NID=204=JFJcDxX9bEhvmrlahiwvTMYFHDZj1JXAvq3Euiwv95dIK5LbiGs-0UZEJB2_4ORZs-MOmRv20iFbozI4CIH6ZX2n8tLbT2Wt6izFnYlGVWFfAwjQ5iLVRs1IFQB8T352oN-Jme3cqxnrhqZfXpqQtbu7nZanw-bD5XG0wRZ3150; expires=Sun, 10-Jan-2021 09:16:22 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none",
+  "Strict-Transport-Security": "max-age=604800",
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-XSS-Protection": "1; mode=block"
+ },
+ "status_code": 200,
+ "url": "https://books.google.com/books/download/?id=U46IzqYLZvAC&output=ris"
+}

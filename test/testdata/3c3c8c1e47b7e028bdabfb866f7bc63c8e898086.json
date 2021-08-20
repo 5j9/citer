@@ -1,0 +1,25 @@
+{
+ "encoding": "ISO-8859-1",
+ "headers": {
+  "Cache-Control": "max-age=1800",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Type": "text/html",
+  "Date": "Wed, 24 May 2017 04:23:42 GMT",
+  "Link": "<http://www.londondevelopmentcentre.org:80/page.php?s=1&amp;p=2462>; rel=\"original\", <https://web.archive.org/web/timemap/link/http://www.londondevelopmentcentre.org:80/page.php?s=1&amp;p=2462>; rel=\"timemap\"; type=\"application/link-format\", <https://web.archive.org/web/http://www.londondevelopmentcentre.org:80/page.php?s=1&amp;p=2462>; rel=\"timegate\", <https://web.archive.org/web/20060215003434/http://www.londondevelopmentcentre.org:80/page.php?s=1&amp;p=2462>; rel=\"first memento\"; datetime=\"Wed, 15 Feb 2006 00:34:34 GMT\", <https://web.archive.org/web/20070216083857/http://www.londondevelopmentcentre.org:80/page.php?s=1&amp;p=2462>; rel=\"prev memento\"; datetime=\"Fri, 16 Feb 2007 08:38:57 GMT\", <https://web.archive.org/web/20070429193849/http://www.londondevelopmentcentre.org:80/page.php?s=1&amp;p=2462>; rel=\"memento\"; datetime=\"Sun, 29 Apr 2007 19:38:49 GMT\", <https://web.archive.org/web/20071211234446/http://www.londondevelopmentcentre.org:80/page.php?s=1&amp;p=2462>; rel=\"next memento\"; datetime=\"Tue, 11 Dec 2007 23:44:46 GMT\", <https://web.archive.org/web/20160816043725/http://www.londondevelopmentcentre.org/page.php?s=1&amp;p=2462>; rel=\"last memento\"; datetime=\"Tue, 16 Aug 2016 04:37:25 GMT\"",
+  "Memento-Datetime": "Sun, 29 Apr 2007 19:38:49 GMT",
+  "Server": "Tengine/2.1.0",
+  "Transfer-Encoding": "chunked",
+  "X-Archive-Guessed-Content-Type": "text/html",
+  "X-Archive-Guessed-Encoding": "ASCII",
+  "X-Archive-Orig-connection": "close",
+  "X-Archive-Orig-date": "Sun, 29 Apr 2007 19:38:49 GMT",
+  "X-Archive-Orig-server": "Apache/2.0.52 (Red Hat)",
+  "X-Archive-Orig-x-powered-by": "PHP/5.2.0",
+  "X-Archive-Playback": "0",
+  "X-Page-Cache": "HIT",
+  "X-location": "All"
+ },
+ "status_code": 200,
+ "url": "https://web.archive.org/web/20070429193849id_/http://www.londondevelopmentcentre.org/page.php?s=1&p=2462"
+}

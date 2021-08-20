@@ -1,0 +1,21 @@
+{
+ "encoding": null,
+ "headers": {
+  "Alt-Svc": "h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-25=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
+  "Cache-Control": "private, max-age=0",
+  "Content-Disposition": "attachment; filename=Physics_for_Scientists_and_Engineers_Vol.ris",
+  "Content-Length": "284",
+  "Content-Type": "application/x-research-info-systems",
+  "Date": "Sat, 11 Jul 2020 09:16:27 GMT",
+  "Expires": "Sat, 11 Jul 2020 09:16:27 GMT",
+  "P3P": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
+  "Server": "OFE/0.1",
+  "Set-Cookie": "NID=204=TP3EIbIif056oh2e9nOCOCJEQqGa07TN75x7shjkzvf-jzqXh0NwbDZkjoESrZYAo3EgP2WddlbF6bBK-CqCm2IkA58Mxbt43YFQMAGhprzGfvTuEpR0KS9dN9HuOzs-HDagr-0ytUXK8uNOqPk5XTvwQEI4I6tXdP21V7ETTZM; expires=Sun, 10-Jan-2021 09:16:27 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none",
+  "Strict-Transport-Security": "max-age=604800",
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-XSS-Protection": "1; mode=block"
+ },
+ "status_code": 200,
+ "url": "https://books.google.com/books/download/?id=6upvonUt0O8C&output=ris"
+}

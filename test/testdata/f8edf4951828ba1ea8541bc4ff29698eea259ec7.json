@@ -1,0 +1,25 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Age": "0",
+  "Cache-Control": "max-age=300, public, must_revalidate=false",
+  "Content-Encoding": "gzip",
+  "Content-Length": "53989",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Tue, 23 May 2017 17:53:25 GMT",
+  "Server": "ECD (iad/B9C2)",
+  "Vary": "Accept-Encoding",
+  "X-Content-Type-Options": "nosniff",
+  "X-EC-Lua": "19365-geo",
+  "X-Frame-Options": "ALLOWALL",
+  "X-HP-Trace-ID": "kJfNhGD3",
+  "X-HP-Trace-Project": "HPMW/production/70604bb",
+  "X-Mobile-URL": "http://m.huffpost.com/us/entry/5427656",
+  "X-Request-Id": "1f2e7809-bdfa-4f9c-8df5-63879a4f206f",
+  "X-Runtime": "0.216315",
+  "X-XSS-Protection": "1; mode=block"
+ },
+ "status_code": 200,
+ "url": "http://www.huffingtonpost.com/jeremy-rifkin/obamas-climate-change-plan_b_5427656.html"
+}

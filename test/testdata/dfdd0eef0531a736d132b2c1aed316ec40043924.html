@@ -1,0 +1,2814 @@
+<!DOCTYPE html>
+	
+<!--  Mobile redirect: 80 -->
+<!--esi
+
+<esi:assign name="is_mobile" value="0" />
+<esi:choose>
+  <esi:when test="$(done)!='1'">
+    <esi:assign name="done" value="0"/>
+  </esi:when>
+</esi:choose>
+
+<esi:assign name="query_param" value="''"/>
+<esi:choose>
+    <esi:when test="$(QUERY_STRING)">
+        <esi:assign name="query_param">'?'+$(QUERY_STRING)</esi:assign>
+    </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(HTTP_USER_AGENT) matches_i '''SCH-I535|SPH-L710|SGH-N064|SGH-N035|SGH-T999|SGH-I747|GT-I9305|GT-I9300|android.+mobile|iphone|ipod|webos|blackberry.+webkit.+mobile|htc|opera\ mini|operamini|iemobile|opera\ mobi|lge|lg|palm|samsung|nokia|windows\ phone|windows\ ce|bb10|blackberry|Mobile.+Firefox|tizen.+mobile'''">
+    <esi:assign name="is_mobile" value="1" />
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(HTTP_USER_AGENT) matches_i '''SAMSUNG\ SM-T'''">
+    <esi:assign name="is_mobile" value="0" />
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(is_mobile) == '1' && $(HTTP_HOST) has 'huffingtonpost.com' && $(REQUEST_PATH) matches_i '/jobs'">
+    <esi:assign name="done" value="1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(is_mobile) == '1' && $(HTTP_HOST) has 'huffingtonpost.com' && $(REQUEST_PATH) matches_i '/hill/signup\.html'">
+    <esi:assign name="done" value="1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="($exists($(QUERY_STRING{'m'})) && $(QUERY_STRING{'m'}) == 'false')
+                    && $(is_mobile)=='1'">
+      $add_header('Set-Cookie','mobileview=false; path=/;')
+      $set_redirect('http://www.huffingtonpost.ca'+$(REQUEST_PATH))
+      <esi:assign name="done" value="1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="($exists($(QUERY_STRING{'m'})) && $(QUERY_STRING{'m'}) == 'true')
+                    && $(is_mobile)=='1'">
+      $add_header('Set-Cookie','mobileview=true; path=/;')
+      <esi:assign name="ignore_mobile_cookie" value="1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="($exists($(QUERY_STRING{'tm'})) && $(QUERY_STRING{'tm'}) == 'false')
+                    && $(is_mobile)=='1'">
+      <esi:assign name="done" value="1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(is_mobile) == '1' && $(HTTP_HOST) has 'huffingtonpost.com' && $(REQUEST_PATH) matches_i 'special\/disney_travel'">
+    $set_redirect('http://m.news.travel.aol.com/disney/')
+    <esi:assign name="done" value="1"/>
+  </esi:when>
+</esi:choose>
+<esi:choose>
+  <esi:when test="( $(ignore_mobile_cookie) == '1' || !$exists($(HTTP_COOKIE{'mobileview'}) ) || $(HTTP_COOKIE{'mobileview'})=='true' ) && $(is_mobile) == '1' && $(done)=='0'">
+    <esi:choose>
+      <esi:when test="!$exists($(HTTP_COOKIE{'mobileview'}))">
+        $add_header('Set-Cookie','mobileview=true; path=/;')
+      </esi:when>
+    </esi:choose>
+    <esi:choose>
+      <esi:when test="$(REQUEST_PATH) matches_i '/?([0-9]+)/([0-9]+)/([0-9]+)/([^/]+)_([0-9]+)\.html#(.+)$' ">
+        <esi:assign name="redirect_to">'http://m.huffpost.com/ca/entry/'+$(MATCHES{5})+'#$(MATCHES{6})'+$(query_param)</esi:assign>
+      </esi:when>
+      <esi:when test="$(REQUEST_PATH) matches_i '/?([0-9]+)/([0-9]+)/([0-9]+)/([^/]+)_([0-9]+)\.html' ">
+        <esi:assign name="redirect_to">'http://m.huffpost.com/ca/entry/'+$(MATCHES{5})+$(query_param)</esi:assign>
+      </esi:when>
+      <esi:when test="$(REQUEST_PATH) matches_i '/([^/]+)/([^/]+)_([0-9]+)\.html'">
+        <esi:assign name="redirect_to">'http://m.huffpost.com/ca/entry/'+$(MATCHES{3})+$(query_param)</esi:assign>
+      </esi:when>
+      <esi:when test="$(REQUEST_PATH) matches_i '/(news|tag|actualites)/([a-z0-9-_]+)' ">
+        <esi:assign name="redirect_to">'http://m.huffpost.com/ca/news/'+$(MATCHES{2})+'/'+$(query_param)</esi:assign>
+      </esi:when>
+      <esi:when test="$(REQUEST_PATH) matches_i '/newsletter/([a-z0-9-_]+)'">
+        <esi:assign name="redirect_to">'http://m.huffpost.com/ca/?pop=nls&nls='+ $(MATCHES{1})</esi:assign>
+      </esi:when>
+      <esi:when test="$(REQUEST_PATH) matches_i '/imageblog'">
+        <esi:assign name="redirect_to">'http://m.huffpost.com/ca/news/imageblog/'+$(query_param)</esi:assign>
+      </esi:when>
+      <esi:when test="$(REQUEST_PATH) matches_i '/thirdmetric'">
+        <esi:assign name="redirect_to">'http://m.huffpost.com/ca/news/third-metric/'+$(query_param)</esi:assign>
+      </esi:when>
+      <esi:when test="$(REQUEST_PATH) matches_i '/p/horoscopos-([a-z]+)\.html' ">
+        <esi:assign name="redirect_to">'http://m.huffpost.com/ca/horoscopos/'+$(MATCHES{1})+$(query_param)</esi:assign>
+      </esi:when>
+      <esi:when test="$(REQUEST_PATH) matches_i '^\/(subscription|users\/notifications|terms)' ">
+        <esi:assign name="done" value="1"/>
+      </esi:when>
+      <esi:when test="$(REQUEST_PATH) matches_i '^\/([a-z0-9-_]{2,})' ">
+                  <esi:assign name="redirect_to">'http://m.huffpost.com/ca/vertical/'+$(MATCHES{1})+'/'+$(query_param)</esi:assign>
+              </esi:when>
+      <esi:when test="$is_empty($(REQUEST_PATH)) || $(REQUEST_PATH) =='/'">
+        <esi:choose>
+          <esi:when test="($(GEO{'country_code'}) == 'AU')">
+            <esi:assign name="redirect_to">'http://m.huffpost.com/au'+$(query_param)</esi:assign>
+          </esi:when>
+          <esi:otherwise>
+            <esi:assign name="redirect_to">'http://m.huffpost.com/ca'+$(query_param)</esi:assign>
+          </esi:otherwise>
+        </esi:choose>
+      </esi:when>
+    </esi:choose>
+    <esi:choose>
+      <esi:when test="$exists($(redirect_to)) && !$is_empty($(redirect_to))">
+        $set_redirect($(redirect_to))
+      </esi:when>
+    </esi:choose>
+    <esi:assign name="done" value="1"/>
+  </esi:when>
+</esi:choose>
+-->
+<!--esi
+<esi:assign name="ads_ord" value="$rand()" />
+<esi:assign name="is_aol_referer" value="0" />
+<esi:choose>
+  <esi:when test="$(HTTP_REFERER) has '.aol.com'">
+    <esi:assign name="is_aol_referer" value="1" />
+  </esi:when>
+</esi:choose>
+-->
+<!--esi
+
+<esi:assign name="IS_US" value="$(HTTP_HOST) has 'huffingtonpost.com'" />
+
+<esi:choose>
+        <esi:when test="$(IS_US) && $(GEO{'country_code'}) == 'IN' && $(done)!='1'">
+        <esi:choose>
+                <esi:when test="!$(QUERY_STRING)">
+                        <esi:assign name="done" value="1"/>
+                        $set_redirect('http://' + $(HTTP_HOST) + $(REQUEST_PATH) + '?ir=India&adsSiteOverride=in')
+                </esi:when>
+                <esi:when test="!$(QUERY_STRING{'ir'})">
+                        <esi:assign name="done" value="1"/>
+                        $set_redirect('http://' + $(HTTP_HOST) + $(REQUEST_PATH) + '?' + $(QUERY_STRING) + '&ir=India&adsSiteOverride=in')
+                </esi:when>
+        </esi:choose>
+        </esi:when>
+</esi:choose>
+
+-->
+
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8 ie7"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9 ie8"> <![endif]-->
+<!--[if IE 9]>         <html lang="en" class="no-js modern ie9"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en" class="no-js modern"> <!--<![endif]-->
+<head>
+    <title>When Killer Whales Kill: Why the movie "Blackfish" Should Sink Captive Whale Programs&nbsp;|&nbsp;Annelise Sorg</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="keywords" content="vancouver aquarium,blackfish review,blackfish,Blackfish movie review,blackfish movie,orlando,seworld,victoria,vancouver,no whales in captivity,capiive whales,tilikum,sealand"/>
+<meta name="description" content="Remember Tilikum, the orca that was shipped from Victoria's Sealand to Orlando's SeaWorld after the death of a trainer? &quot;Blackfish&quot; shows us that wasn't the last tragedy associated with this killer whale. I watched the whole movie with a big stupid grin on my face, because I know this whale tale all too well, and there it was unfolding beautifully for public consumption on the big screen. Sitting in the theatre, I couldn't help but think of the reaction that &quot;Blackfish&quot; will cause within the industry, the public and the government. And that made me smile. I figure if all goes well, &quot;Blackfish&quot; will sink SeaWorld's captive orca whale program, just like &quot;Free Willy&quot; sank the program at the Vancouver Aquarium."/>
+<meta name="category" content="Canada British Columbia" />
+<meta http-equiv="Content-Language" content="en_CA" />
+<meta name="robots" content="noodp,noydir" />
+<meta property="twitter:card" value="summary_large_image"/>
+<meta property="twitter:site" value="@huffpostbc"/>
+<meta name="twitter:description" content="Remember Tilikum, the orca that was shipped from Victoria's Sealand to Orlando's SeaWorld after the death of a trainer? &quot;Blackfish&quot; shows us that wasn't the last tragedy associated with this killer whale. I watched the whole movie with a big stupid grin on my face, because I know this whale tale all too well, and there it was unfolding beautifully for public consumption on the big screen. Sitting in the theatre, I couldn't help but think of the reaction that &quot;Blackfish&quot; will cause within the industry, the public and the government. And that made me smile. I figure if all goes well, &quot;Blackfish&quot; will sink SeaWorld's captive orca whale program, just like &quot;Free Willy&quot; sank the program at the Vancouver Aquarium.">
+<meta property="fb:app_id" content="100792273348438"/>
+<meta property="og:site_name" content="The Huffington Post"/>
+<meta property="og:title" content="When Killer Whales Kill: Why the movie &quot;Blackfish&quot; Should Sink Captive Whale Programs"/>
+<meta property="og:type" content="blog"/>
+<meta property="og:url" content="http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html"/>
+<meta property="og:image" content="http://i.huffpost.com/gen/1269435/images/o-ORCA-VANCOUVER-AQUARIUM-facebook.jpg" />
+<meta property="og:description" content="Remember Tilikum, the orca that was shipped from Victoria's Sealand to Orlando's SeaWorld after the death of a trainer? &quot;Blackfish&quot; shows us that wasn't the last tragedy associated with this killer whale. I watched the whole movie with a big stupid grin on my face, because I know this whale tale all too well, and there it was unfolding beautifully for public consumption on the big screen. Sitting in the theatre, I couldn't help but think of the reaction that &quot;Blackfish&quot; will cause within the industry, the public and the government. And that made me smile. I figure if all goes well, &quot;Blackfish&quot; will sink SeaWorld's captive orca whale program, just like &quot;Free Willy&quot; sank the program at the Vancouver Aquarium."/>
+<meta property="og:locale" content="en_CA"/>
+<meta name="sailthru.date" content="Thu, 01 Aug 2013 02:02:06 -0400">
+<meta name="sailthru.expire_date" content="Fri, 02 Aug 2013 02:02:06 -0400">
+<meta name="sailthru.image.thumb" content="http://i.huffpost.com/gen/1269435/images/s-ORCA-VANCOUVER-AQUARIUM-small.jpg">
+<meta name="sailthru.tags" content="vancouver aquarium,blackfish review,blackfish,Blackfish movie review,blackfish movie,orlando,seworld,victoria,vancouver,no whales in captivity,capiive whales,tilikum,sealand">
+<meta property="article:publisher" content="https://www.facebook.com/HuffPostBC"/>
+<meta property="article:section" content="Canada British Columbia"/>
+<link rel="image_src" href="http://i.huffpost.com/gen/1269435/images/s-ORCA-VANCOUVER-AQUARIUM-large.jpg" />
+<meta name="image" content="http://i.huffpost.com/gen/1269435/images/s-ORCA-VANCOUVER-AQUARIUM-small.jpg" />
+<meta name="thumbnail" content="http://i.huffpost.com/gen/1269435/images/o-ORCA-VANCOUVER-AQUARIUM-facebook.jpg" />
+    <meta name="og:see_also" content="http://www.huffingtonpost.ca/2017/05/22/mentally-ill-dad-who-killed-three-kids-up-for-review-in-british-columbia_n_16752254.html" />
+    <link rel="shortcut icon" href="/favicon.ico?v=2">
+    <link rel="alternate" hreflang="en" href="http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html"/>
+    <link rel="alternate" href="android-app://com.huffingtonpost.android/http/www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html"/>
+    <link rel="alternate" href="ios-app://306621789/huffpostnews/?editionID=ca&entryID=3686306"/>
+    <link rel="alternate" media="only screen and (max-width: 640px)" href="http://m.huffpost.com/ca/entry/3686306" >
+    <link rel="stylesheet" href="http://s0.huffpost.com/assets/css.php?v=1493310047&f=phoenix%2Fapp.css" type="text/css">
+    <link rel="stylesheet" href="http://s0.huffpost.com/assets/css.php?v=1493310047&f=phoenix%2Fcore.css%2Cphoenix%2Fpageheader.css%2Cphoenix%2Frightrail.css%2Cphoenix%2Fauthor_article.css%2Cphoenix%2Fted.css%2Cphoenix%2Fcolorbox.css%2Cphoenix%2Femail_form.css%2Cphoenix%2Fslideshow%2Fflexslider.css%2Cphoenix%2Fslideshow%2Fstyles.css" type="text/css">
+    <link rel="stylesheet" href="http://s1.huffpost.com/assets/css.php?v=1493310047&f=liveblog.css%2Cbasic.css%2Csailthru_concierge.css%2Crecipe_gadget.css%2Chp_modules%2Fmodule.sponsor-widgets.css%2Chp_modules%2Fmodule.apps_feeds.css%2C_slideshows%2Finline.css%2C_slideshows%2Fmodules%2Finline.css%2C_slideshows%2Fmodules%2Fparticipation.css%2C_slideshows%2Fmodules%2Fparticipation_new.css%2Ccommercial.css%2Cadd%2Finner.css%2Cemail_share.css%2Cbuttons.css" type="text/css">
+    <link rel="stylesheet" href="http://s1.huffpost.com/assets/css.php?v=1493310047&f=" type="text/css">
+    <link rel="stylesheet" href="http://s0.huffpost.com/assets/css.php?v=1493310047&f=phoenix%2Fverticals%2Fcanada-british-columbia.css%2Cphoenix%2Fverticals%2Fpolitics.css%2Cphoenix%2Fverticals%2Fbusiness.css%2Cphoenix%2Fverticals%2Fworld.css%2Cphoenix%2Fverticals%2Fparents.css%2Cphoenix%2Fverticals%2Fliving.css%2Cphoenix%2Fverticals%2Fstyle.css%2Cphoenix%2Fverticals%2Fentertainment.css%2Cphoenix%2Fverticals%2Farts.css%2Cphoenix%2Fverticals%2F.css%2Cphoenix%2Fverticals%2Fcanada-common.css" type="text/css">
+	    <link rel="canonical" href="http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html">
+
+    <!--[if lt IE 9]><link rel="stylesheet" href="http://s1.huffpost.com/assets/js.php?v=1493310047&f=conversations%2Fstylesheets%2Fapp.css" /><![endif]-->
+    <!--[if lte IE 7]><link rel="stylesheet" href="http://s1.huffpost.com/assets/css.php?v=1493310047&f=phoenix%2Fie7.css" type="text/css" /><![endif]-->
+    <!--[if IE 8]><link rel="stylesheet" href="http://s1.huffpost.com/assets/css.php?v=1493310047&f=phoenix%2Fie8.css" type="text/css" /><![endif]-->
+	
+    <script type="text/javascript" src="http://s1.huffpost.com/assets/js.php?v=1493310047&f=jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://s1.huffpost.com/assets/js.php?v=1493310047&f=jquery%2Fjquery.I18N.js%2Clocale%2Fen_CA%2Fpublic.js%2Csprintf-0.7.js"></script>
+    <script type="text/javascript" src="http://s0.huffpost.com/assets/js.php?v=1493310047&f=huff.js%2Chp_config.js%2Clazyload-min.js%2Chp_util.js%2Chp_track.js%2Cyui_sub.js%2Chp_liveblog.js%2Chptwitter_anywhere.js%2Cphoenix%2Fcustom.modernizr.js%2Cphoenix%2Ffoundation.min.js%2C_tmp%2Fquick_fan.js%2C_tmp%2Fhp_ads.js%2C_tmp%2Fcommon.js%2Chp_browser.js%2Csubmissions.js%2Cphoenix%2Funderscore.js%2Cphoenix%2Fbackbone.js%2Cphoenix%2Fthreeup.js%2Crecipe_gadget.js%2Clivebetteramerica%2Fmodule.jquerydl.js%2Cphoenix%2Ffollow-huffpost.js%2Cphoenix%2Fsocial-sidebar.js%2Cposts.js%2Cphoenix%2Fnumeral.js%2Cphoenix%2Fsocial_widget_views.js%2Cconversations%2Fbootstrap.js%2Cscroll-track.js%2Cphoenix%2Fjquery.colorbox.js%2Cphoenix%2Fthreeup-carousel.js%2Cphoenix%2Flightbox.js%2Cphoenix%2Fjquery.formparams.js%2Cphoenix%2Fsubmit_correction.js%2C_tmp%2Fquick_subscribe_user.js%2Cphoenix%2Fnewsletter.js%2Chptwitter.js%2Cphoenix%2Flogin.js%2C_tmp%2Fclick_tracker.js%2Cphoenix%2Fimage_loader.js%2Cphoenix%2Fcaption.js%2Cconnect_overview.js%2Cimage_embed.js%2Cswfobject.js%2Cphoenix%2Fhulu_to_5min.js%2C_tmp%2Fevent_module.js%2Cphoenix%2Fslideshow%2Fjquery.flexslider.js%2Cphoenix%2Fslideshow%2Fhp-slideshow-html.js%2Cphoenix%2Fslideshow%2Fhp-slideshow-tracking.js%2Cphoenix%2Fslideshow%2Fhp-slideshow-share.js%2Cphoenix%2Fslideshow%2Fhp-slideshow-main.js%2Cphoenix%2Fslideshow%2Fhp-slideshow-participation.js%2Cphoenix%2Fslideshow%2Fhp-slideshow-participation_new.js%2Cphoenix%2Fyoutube_to_5min.js%2Con-hover-pinterest.js"></script>
+    <script type="text/javascript" src="http://s0.huffpost.com/assets/js.php?v=1493310047&f=facebook.js%2Ccookiesmin.js%2Csnproject.js%2C_tmp%2Fquick_login.js%2Chuffconnect.js%2Cprovider.js%2Cpopup_manager.js%2C_util%2Fuser.js%2Cuser.js"></script>
+        <script type="text/javascript">
+        huff.v({"last_deploy_commit_id":"bd531b28aa1fa630f73f61e3ca505cf66e43dd59","deploy_commit_id":"34970198340dae5222c991b1faa6b6036df172cd","deploy_seq":1493310047,"last_deploy_seq":1493101120,"deploy_date":"Thu, 27 Apr 2017 12:20:47 -0400","last_deploy_date":"Tue, 25 Apr 2017 02:18:40 -0400"});
+    </script>
+
+    <script type="text/javascript">
+// common modules
+huff.use('conf', 'modal', 'image', 'layout', 'cookies', 'user', 'track', 'common', 'promo');
+</script>
+    <!-- modulous header -->
+    <script type="text/javascript">
+window.adTechCallback = function() {
+  
+  
+  window.adSetAdURL('http://' + (document.domain || 'www.huffingtonpost.com') + (location.port?':'+location.port:'') + '/_uac/adpage.html');
+  window.tacProp={tags:"kvpagetype=blog:bpage;kventryid=3686306;kvcmsid=hpo:3686306;kveditags=blackfish-movie-review:vancouver-aquarium:tilikum:blackfish:seworld:blackfish-review:capiive-whales:victoria:vancouver:sealand:blackfish-movie:no-whales-in-captivity:orlando;kvvert=british-columbia;kvblogger=annelise-sorg"};
+  window.tacProp.tags += ( (typeof window.HPAds!=="undefined") && (typeof window.HPAds.adtech_client_side_inf=="function") ) ? window.HPAds.adtech_client_side_inf() : "";
+  window.tacProp.tags += ";kvrefd="+window.location.href;
+  if (typeof window.adSetOthAT=="function") window.adSetOthAT(window.tacProp.tags);
+  
+};
+</script>
+
+<script src="http://o.aolcdn.com/ads/adsWrapper.js" ></script>
+<script>
+  
+    window.adTechCallback();
+  
+</script>
+
+<meta name="taboola.category" content="canada-british-columbia" />
+<script>
+window.commercial_video = {
+  "site_and_category":"ca.canada-british-columbia",
+  "package":null
+};
+
+</script>
+<script>
+if (typeof HPAds !== 'undefined') {
+  HPAds.ad_reload_old = HPAds.ad_reload;
+  HPAds.ad_reload = function(placement, id) {
+    jQuery(document).trigger('reloadAd', document.getElementById(id));
+    HPAds.ad_reload_old.apply(this, arguments);
+  };
+}
+</script>
+
+<script type="text/javascript">
+    function doTaboola(taboolaParams) {
+        if (typeof taboolaParams == 'undefined') return;
+        
+        window._taboola = window._taboola || [];
+        if (!doTaboola.loaded) {
+            _taboola.push({ article:'auto' });
+            var _async_script = !function (e, f, u) {
+                e.async = 1;
+                e.src = u;
+                f.parentNode.insertBefore(e, f);
+            }(document.createElement('script'), document.getElementsByTagName('script')[0], taboolaParams.loader);
+            doTaboola.loaded = true;
+        }
+        _taboola.push({
+            "listenTo": 'render',
+            "handler": function(e) {
+                var detail = e.detail;
+                var i = 0;
+                while ( window.jQuery && window.JSON && detail.items[i] ) {
+                    var dataItemId = detail.items[i].id;
+                    var itemUrl = detail.items[i].url;
+                    var taboolaDomNode = window.jQuery("[data-item-id='" + dataItemId + "']");
+                    var dataBeacon = {
+                        "p": {
+                            "mpid": (i+1).toString(),
+                            "plid": itemUrl,
+                            "mlid": "taboola"
+                        }
+                    };
+                    taboolaDomNode.attr('data-beacon', window.JSON.stringify(dataBeacon));
+                    i++;
+                }
+            }
+        });
+        var cb = function(o){}; // function(o){ o.container.removeAttribute('id'); }
+        _taboola.push({onrender: cb, mode:taboolaParams.mode, container:taboolaParams.container, placement:taboolaParams.placement, target_type:taboolaParams.target_type});
+        
+    }
+</script>
+<style>.trc-auto-size { height: auto !important; }</style>
+<script>
+var _HPJS = (function (_mod) {
+  "use strict";
+
+  _mod.loadJS = function (src, options) {
+    var options = options || {};
+    var ref = window.document.getElementsByTagName("script")[0];
+    var script = window.document.createElement("script");
+    script.src = src;
+    script.async = options.async;
+    script.defer = options.defer;
+    ref.parentNode.insertBefore(script, ref);
+    return script;
+  }
+
+  _mod.loadJSLater = function (url, timeout) {
+    var ran = false;
+    var loader = function () {
+      if (ran) {
+        return;
+      }
+      ran = true;
+      _mod.loadJS(url, {async:true});
+    }
+    window.addEventListener ?
+      window.addEventListener("load",loader,false) :
+      window.attachEvent && window.attachEvent("onload",loader);
+    // in case the load event never fires
+    setTimeout(loader, timeout || 15000);
+  }
+
+  _mod.waitForGlobal = function(identifier, cb, poll) {
+    var test = typeof identifier === "function" ? identifier : function() { return !!window[identifier]; };
+    var interval;
+    if(test()) {
+      cb();
+    } else {
+      interval = setInterval(function(){
+        if(test()) {
+          cb();
+          clearInterval(interval);
+        }
+      }, poll || 50);
+    }
+  };
+
+  return _mod;
+
+}(_HPJS || {}));
+</script>
+<!-- debugadcode -->
+<style>
+.debugadcode-box { z-index:10000; position:relative; }
+.debugadcode { position:absolute; padding:5px; background-color:rgba(232, 212, 244, 0.85); font-size:0.8rem; color:black; }
+</style>
+<script>
+window.debugadcode = function(title, properties, div) {
+  if (window.location.search.indexOf('debug_ad_code') < 0) return;
+  var head = '<div><strong>'+title+'</strong></div>'; var body = '';
+  for (key in properties) { body += '<div><em>'+key+'</em>: '+properties[key]+'</div>'; }
+
+  var s = document.getElementsByTagName('script');
+  var sLast = div || s[s.length - 1];
+  var d = document.createElement('div');
+  d.className = 'debugadcode-box';
+  d.innerHTML = '<div class="debugadcode">'+head+body+'</div>';
+  sLast.parentNode.insertBefore(d, sLast);
+}
+</script>
+<!-- /debugadcode -->    <!-- END modulous header -->
+            <!-- ads_adtech_header -->
+    
+    <!-- ads_init_functions -->
+    
+    <!-- ads_commercial_video -->
+    
+    <!-- ads_asset_insert -->
+    <div id="modulous_asset_inserts" class="ad_spot">
+    <script type="text/javascript">
+window.adSetMOAT && adSetMOAT("1");
+</script></div>
+
+            
+	<script type="text/javascript">
+        var ads_ext_ref_sig = '';
+    </script>
+<!--esi
+    <esi:choose>
+        <esi:when test="$(HTTP_REFERER) has '|dl' || $(QUERY_STRING) has '|dl' || $(HTTP_REFERER) has 'fundrace.' || $(QUERY_STRING) has 'fundrace.'">
+            <esi:choose>
+                            <esi:when test="($(HTTP_REFERER) has '|dl') || ($(QUERY_STRING) has '|dl')">
+                	<esi:text>
+                    <script type="text/javascript">
+                        var ads_ext_ref_sig = 'aol_welcome_screen';
+                    </script>
+                    </esi:text>
+                </esi:when>
+                            <esi:when test="($(HTTP_REFERER) has 'fundrace.') || ($(QUERY_STRING) has 'fundrace.')">
+                	<esi:text>
+                    <script type="text/javascript">
+                        var ads_ext_ref_sig = 'fundrace';
+                    </script>
+                    </esi:text>
+                </esi:when>
+                        </esi:choose>
+        </esi:when>
+    </esi:choose>   
+-->
+<!--esi
+	<esi:choose>
+		<esi:when test="($exists($(HTTP_COOKIE{'ad_ops_bookmarklet'})) && !($(HTTP_HOST) has 'editorial'))">
+            <script type="text/javascript" src="/ads/bookmarklet/bookmarklet.js"></script>
+		</esi:when>
+	</esi:choose>
+-->
+    <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js" async defer></script>
+	
+	<!-- Parsely tracking params start -->
+	<script type="application/ld+json">
+				{
+					"@context": "http://schema.org",
+					"@type": "NewsArticle",
+                    "mainEntityOfPage":{
+                        "@type":"URL",
+                        "@id":"http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html"
+                    },
+                    "headline": "When Killer Whales Kill: Why the movie \"Blackfish\" Should Sink Captive Whale Programs",
+                    "author": {
+                "@type":"Person",
+                "name":"Annelise Sorg"
+                },
+					"image":
+                    {
+                        "@type":"ImageObject",
+                        "url":"http://i.huffpost.com/gen/1269435/images/o-ORCA-VANCOUVER-AQUARIUM-facebook.jpg",
+                        "width":2000,"height":1000
+                    },
+					
+                    "dateCreated": "2013-08-01T14:02:21Z",
+                    "datePublished": "2013-08-01T14:02:21Z",
+				"dateModified": "2013-09-30T05:12:01Z",
+                    "publisher":{
+                        "@type":"Organization",
+                        "name":"The Huffington Post",
+                        "logo":{
+                            "@type":"ImageObject","url":"http://s.huffpost.com/images/v/logos/v4/homepage.gif",
+                            "width":497,
+                            "height":60
+                        }
+                    },
+                    "description": "Remember Tilikum, the orca that was shipped from Victoria's Sealand to Orlando's SeaWorld after the death of a trainer? &quot;Blackfish&quot; shows us that wasn't the last tragedy associated with this killer whale. I watched the whole movie with a big stupid grin on my face, because I know this whale tale all too well, and there it was unfolding beautifully for public consumption on the big screen. Sitting in the theatre, I couldn't help but think of the reaction that &quot;Blackfish&quot; will cause within the industry, the public and the government. And that made me smile. I figure if all goes well, &quot;Blackfish&quot; will sink SeaWorld's captive orca whale program, just like &quot;Free Willy&quot; sank the program at the Vancouver Aquarium.",
+                    "articleSection": "Canada British Columbia",
+                    "keywords": ["vancouver aquarium","blackfish review","blackfish","Blackfish movie review","blackfish movie","orlando","seworld","victoria","vancouver","no whales in captivity","capiive whales","tilikum","sealand","type:blog"],
+                    "thumbnailUrl": "http://i.huffpost.com/gen/1269435/images/s-ORCA-VANCOUVER-AQUARIUM-small.jpg",
+                    "url": "http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html"
+				}
+			</script>	<!-- Parsely tracking params end -->
+
+	<!-- Google Json Markup start -->
+		<!-- Google Json Markup end -->
+	
+	
+	
+</head>
+<body>
+    <!-- Newsletter ads popup -->
+    <style>
+.nl_subscribe_popup{width:724px;background:#2C8F77 !important;z-index:1;position:absolute;color:#fff;font-family:Helvetica;}
+.nl_subscribe_popup a {color:#fff;}
+.news_title{font-size:22px;font-weight:bold;margin-bottom:50px;}
+.news_vertical_line{font-size:36px;font-weight:bold;margin-bottom:50px;}
+#news_email{box-shadow:none;font-family:Georgia,"Times New Roman",Times,serif;font-style:italic;font-size:20px;width:305px;background: #2C8F77;border: 0px #2C8F77;color: #fff;} 
+#new_signup{font-family:Georgia,"Times New Roman",Times,serif;font-style:italic;font-size:16px;margin-left: 184px}
+#news_submit{background:#fff;color:#2C8F77;font-weight:bold;font-size:17px;border: 2px solid #fff;
+border-radius: 3px;width:150px;height: 41px;
+margin-top:35px;}
+.news_form{float:left;width:676px;}
+.news_notice{margin-top: 17px;
+float: left;
+margin-left: -9px;
+font-size: 10px;}
+.news_submit_div{margin-left:auto;
+margin-right:auto;width:150px;}
+.qr_close{background:none;font-size: 34px;font-weight: bold;}
+#email_icon{width: 325px;margin-left: auto;margin-right: auto;border-bottom: 1px solid #fff;height: 47px;
+margin-bottom: 27px;
+} 
+
+</style>
+<div style="position: fixed;z-index: 7000002;">
+ <div id="nl_subscribe_popup" class="nl_subscribe_popup" style="display:none" >
+   <div class="qr_close close cursor_pointer" >&#215;</div>
+     <div id="iframe_content" >
+	   <div class="news_title"><center>Like what you're reading?</center> </div>
+	   <div class="news_vertical_line">
+	     <center>Never miss a thing with the HuffPost Canada British Columbia newsletter! </center> 
+	   </div>
+	   <div class="news_form">
+	        <div id="email_icon"><img src="/images/mail_icon.png"  style="float: left;margin-top: 16px;"/>
+	        <input type="text" name="email" id="news_email" placeholder="Please enter your email address" />
+	        </div>
+	   </div>
+	   <div class="news_form">
+	   <input type="hidden" id="vertical_title" value=canada-british-columbia />
+	     	     
+	    </div>	    
+	     <input type="hidden" name="parent_vertical" id="parent_vertical" value="canada-" />
+	        
+	    <div class="news_submit_div">
+	    <input type="button" name="news_submit" id="news_submit" value="Subscribe" data-beacon='{"p":{"mnid":"news_ads_popup","mlid":"ads","lnid":"canada-british-columbia"}}' />
+	    </div>
+	 
+	 <span class="news_notice">Newsletter may include personalized content.<a href="http://www.huffingtonpost.ca/p/huffingtonpostca-privacy-policy.html" target="_blank">
+	   Learn more</a>.</span> 
+     </div>
+  </div>
+  <div class="close qr_close_frame" style="display:none;"></div>
+</div>
+
+<script>
+(function($){ // no Conflict
+    $(function() { // dom ready
+  //window.onload=testSp(); 
+  
+	 
+   
+  $(document.body).on('click','.qr_close',function(){  
+       $('#frame_qr').hide();
+       $('.qr_close_frame').hide();
+       $('#frame_qr').attr("id", "nl_subscribe_popup");
+    });
+    
+    var heightarry = [90,66,250];
+    var timerId = top.readCookie('timerId'); 
+    var newuser = top.readCookie('newsletter_popup');
+	var sailthru = top.readCookie('sailthru_hid');
+	var nads = window.adsDevilAd || {};	 
+	 
+	  nads.adinfo = function(n,d,w,h) {   
+	      if((nads.ad[1].aolFormat == "Wallpaper") || 
+	      (nads.ad[1].width == "970" && $.inArray(nads.ad[1].height,heightarry)>= 0 ) ){        	        
+	      }	        
+	      else{ 
+			
+							if (timerId == 1) {		 
+					top.createCookie('timerId',2,14);
+					$(window).load(function () {   
+					    setTimeout(function () {
+					       top.showAdsPopup('nl_subscribe_popup','qr_close_frame',0,0,'frame_qr');
+					    }, 10000);			
+					});
+				    top.createCookie('newsletter_popup',Date.now(),14);
+				} 	 
+				else if ((newuser) || (sailthru)){
+				}
+				else {	 	
+				 top.createCookie('timerId',1,14);
+				} 
+						 
+        }
+	 };
+	 $(document.body).on('click','.subscribe_me',function(){
+	 
+	 var element_id=$(this).attr('id');
+	 var databecaon;
+	 var vertical_title=$('#vertical_title').val();
+	 var parent_vertical = $('#parent_vertical').val();
+	 if(element_id == "signupme"){
+	   if($('#signupme').is(':checked')==true){
+         databeacon='{"p":{"mnid":"news_ads_popup","mlid":"ads","lnid":"'+vertical_title+','+parent_vertical+'daily"}}';
+       }
+      else{
+         databeacon='{"p":{"mnid":"news_ads_popup","mlid":"ads","lnid":"'+vertical_title+'"}}';
+       }
+	 }
+	 else{
+	   if($('#lifestyle').is(':checked')==true){
+        databeacon='{"p":{"mnid":"news_ads_popup","mlid":"ads","lnid":"'+vertical_title+',lifestyle"}}';
+      }
+      else{
+        databeacon='{"p":{"mnid":"news_ads_popup","mlid":"ads","lnid":"'+vertical_title+'"}}';
+       }
+	 }
+	  $('#news_submit').attr('data-beacon',databeacon);
+	  
+	 });
+    $(document.body).on('click','#news_submit',function(){  
+      var is_morning;
+      var htmlstring;
+      var is_lifestyle;
+      var email = $('#news_email').val();
+      if($('#signupme').is(':checked')==true){
+       is_morning='1';
+      }
+      else{
+       is_morning='0';
+       }
+      if($('#lifestyle').is(':checked')==true){
+       is_lifestyle='1';
+      }
+      else{
+       is_lifestyle='0';
+       }
+     $.post('/subscription/set_email_popup.php', {
+          email:email,
+          daily_brief :is_morning,     
+          is_lifestyle: is_lifestyle,    
+          vertical:'canada-british-columbia'
+        }, 
+       function(data){        
+         top.createCookie('sailthru_hid',data.sailthru_hid,14);
+         htmlstring='<div style="font-size:20px;width: 383px;margin-left: auto;margin-top: 4px;height: 60px;margin-right: auto;">'+data+'</div>';
+        $('#iframe_content').html(htmlstring);
+       }, 'html');
+       
+    });
+    
+  });
+   
+})(jQuery);
+
+ 
+</script>
+    <!-- END Newsletter ads popup -->
+    <!-- Pinterest follow popup -->
+        <!-- END Pinterest follow popup -->
+    <!--modulous_debug_header -->
+        <!-- END modulous_debug_header -->
+    <div id="view_mobile_banner" style="display: none; min-width: 1000px; width: 100%; height: 105px; background: url(/images/mobile/view-mobile-bkg.png);background-size: cover; text-align: center;">
+	<a href="http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html?m=true" style="color: #FFF; font-size: 40px; display: inline-block; padding-top: 18px; text-transform: uppercase; width: 100%; height: 105px;">
+		<img src="/images/mobile/view-mobile-icon.png" style="height: 68px; margin-bottom: -16px;"/>
+		View mobile site	</a>
+</div>
+<script> if(window.navigator.userAgent.match(/SCH-I535|SPH-L710|SGH-N064|SGH-N035|SGH-T999|SGH-I747|GT-I9305|GT-I9300|android.+mobile|iphone|ipod|webos|blackberry.+webkit.+mobile|htc|opera\ mini|operamini|iemobile|opera\ mobi|lge|lg|palm|samsung|nokia|windows\ phone|windows\ ce|bb10|blackberry|Mobile.+Firefox/i)) {
+	document.getElementById("view_mobile_banner").style.display = 'block';
+}
+</script>
+    <!-- RUM header -->
+    <script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"Vg4HV1FADAMCXFhRDw=="};window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o||n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({1:[function(t,n,e){function r(t){try{s.console&&console.log(t)}catch(n){}}var o,i=t("ee"),a=t(15),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,n,e){r(e.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,n){return t}).join(", ")))},{}],2:[function(t,n,e){function r(t,n,e,r,o){try{d?d-=1:i("err",[o||new UncaughtException(t,n,e)])}catch(s){try{i("ierr",[s,c.now(),!0])}catch(u){}}return"function"==typeof f&&f.apply(this,a(arguments))}function UncaughtException(t,n,e){this.message=t||"Uncaught error with no additional information",this.sourceURL=n,this.line=e}function o(t){i("err",[t,c.now()])}var i=t("handle"),a=t(16),s=t("ee"),c=t("loader"),f=window.onerror,u=!1,d=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(l){"stack"in l&&(t(8),t(7),"addEventListener"in window&&t(5),c.xhrWrappable&&t(9),u=!0)}s.on("fn-start",function(t,n,e){u&&(d+=1)}),s.on("fn-err",function(t,n,e){u&&(this.thrown=!0,o(e))}),s.on("fn-end",function(){u&&!this.thrown&&d>0&&(d-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,n,e){t("loader").features.ins=!0},{}],4:[function(t,n,e){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(8),s=t(7),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",l="resource",p="-start",h="-end",m="fn"+p,w="fn"+h,v="bstTimer",y="pushState",g=t("loader");g.features.stn=!0,t(6);var b=NREUM.o.EV;o.on(m,function(t,n){var e=t[0];e instanceof b&&(this.bstStart=g.now())}),o.on(w,function(t,n){var e=t[0];e instanceof b&&i("bst",[e,n,this.bstStart,g.now()])}),a.on(m,function(t,n,e){this.bstStart=g.now(),this.bstType=e}),a.on(w,function(t,n){i(v,[n,this.bstStart,g.now(),this.bstType])}),s.on(m,function(){this.bstStart=g.now()}),s.on(w,function(t,n){i(v,[n,this.bstStart,g.now(),"requestAnimationFrame"])}),o.on(y+p,function(t){this.time=g.now(),this.startPath=location.pathname+location.hash}),o.on(y+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],5:[function(t,n,e){function r(t){for(var n=t;n&&!n.hasOwnProperty(u);)n=Object.getPrototypeOf(n);n&&o(n)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,n){return t[1]}var a=t("ee").get("events"),s=t(18)(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";n.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,n){var e=t[1],r=c(e,"nr@wrapped",function(){function t(){if("function"==typeof e.handleEvent)return e.handleEvent.apply(e,arguments)}var n={object:t,"function":e}[typeof e];return n?s(n,"fn-",null,n.name||"anonymous"):e});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],6:[function(t,n,e){var r=t("ee").get("history"),o=t(18)(r);n.exports=r,o.inPlace(window.history,["pushState","replaceState"],"-")},{}],7:[function(t,n,e){var r=t("ee").get("raf"),o=t(18)(r),i="equestAnimationFrame";n.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],8:[function(t,n,e){function r(t,n,e){t[0]=a(t[0],"fn-",null,e)}function o(t,n,e){this.method=e,this.timerDuration="number"==typeof t[1]?t[1]:0,t[0]=a(t[0],"fn-",this,e)}var i=t("ee").get("timer"),a=t(18)(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";n.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],9:[function(t,n,e){function r(t,n){d.inPlace(n,["onreadystatechange"],"fn-",s)}function o(){var t=this,n=u.context(t);t.readyState>3&&!n.resolved&&(n.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,w,"fn-",s)}function i(t){v.push(t),h&&(g=-g,b.data=g)}function a(){for(var t=0;t<v.length;t++)r([],v[t]);v.length&&(v=[])}function s(t,n){return n}function c(t,n){for(var e in t)n[e]=t[e];return n}t(5);var f=t("ee"),u=f.get("xhr"),d=t(18)(u),l=NREUM.o,p=l.XHR,h=l.MO,m="readystatechange",w=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],v=[];n.exports=u;var y=window.XMLHttpRequest=function(t){var n=new p(t);try{u.emit("new-xhr",[n],n),n.addEventListener(m,o,!1)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}return n};if(c(p,y),y.prototype=p.prototype,d.inPlace(y.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,n){r(t,n),i(n)}),u.on("open-xhr-start",r),h){var g=1,b=document.createTextNode(g);new h(a).observe(b,{characterData:!0})}else f.on("fn-end",function(t){t[0]&&t[0].type===m||a()})},{}],10:[function(t,n,e){function r(t){var n=this.params,e=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<d;r++)t.removeEventListener(u[r],this.listener,!1);if(!n.aborted){if(e.duration=a.now()-this.startTime,4===t.readyState){n.status=t.status;var i=o(t,this.lastSize);if(i&&(e.rxSize=i),this.sameOrigin){var c=t.getResponseHeader("X-NewRelic-App-Data");c&&(n.cat=c.split(", ").pop())}}else n.status=0;e.cbTime=this.cbTime,f.emit("xhr-done",[t],t),s("xhr",[n,e,this.startTime])}}}function o(t,n){var e=t.responseType;if("json"===e&&null!==n)return n;var r="arraybuffer"===e||"blob"===e||"json"===e?t.response:t.responseText;return h(r)}function i(t,n){var e=c(n),r=t.params;r.host=e.hostname+":"+e.port,r.pathname=e.pathname,t.sameOrigin=e.sameOrigin}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(11),f=t("ee"),u=["load","error","abort","timeout"],d=u.length,l=t("id"),p=t(14),h=t(13),m=window.XMLHttpRequest;a.features.xhr=!0,t(9),f.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=r,n.ended=!1,n.xhrGuids={},n.lastSize=null,p&&(p>34||p<10)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),f.on("open-xhr-start",function(t){this.params={method:t[0]},i(this,t[1]),this.metrics={}}),f.on("open-xhr-end",function(t,n){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&n.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),f.on("send-xhr-start",function(t,n){var e=this.metrics,r=t[0],o=this;if(e&&r){var i=h(r);i&&(e.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"===t.type&&(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof n.onload))&&o.end(n)}catch(e){try{f.emit("internal-error",[e])}catch(r){}}};for(var s=0;s<d;s++)n.addEventListener(u[s],this.listener,!1)}),f.on("xhr-cb-time",function(t,n,e){this.cbTime+=t,n?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof e.onload||this.end(e)}),f.on("xhr-load-added",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&!this.xhrGuids[e]&&(this.xhrGuids[e]=!0,this.totalCbs+=1)}),f.on("xhr-load-removed",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&this.xhrGuids[e]&&(delete this.xhrGuids[e],this.totalCbs-=1)}),f.on("addEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-added",[t[1],t[2]],n)}),f.on("removeEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-removed",[t[1],t[2]],n)}),f.on("fn-start",function(t,n,e){n instanceof m&&("onload"===e&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),f.on("fn-end",function(t,n){this.xhrCbStart&&f.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,n],n)})}},{}],11:[function(t,n,e){n.exports=function(t){var n=document.createElement("a"),e=window.location,r={};n.href=t,r.port=n.port;var o=n.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=n.hostname||e.hostname,r.pathname=n.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!n.protocol||":"===n.protocol||n.protocol===e.protocol,a=n.hostname===document.domain&&n.port===e.port;return r.sameOrigin=i&&(!n.hostname||a),r}},{}],12:[function(t,n,e){function r(){}function o(t,n,e){return function(){return i(t,[f.now()].concat(s(arguments)),n?null:this,e),n?void 0:this}}var i=t("handle"),a=t(15),s=t(16),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,n){u[n]=o(l+n,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),n.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,n){var e={},r=this,o="function"==typeof n;return i(p+"tracer",[f.now(),t,e],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],e),o)try{return n.apply(this,arguments)}finally{c.emit("fn-end",[f.now()],e)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,n){h[n]=o(p+n)}),newrelic.noticeError=function(t){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now()])}},{}],13:[function(t,n,e){n.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(n){return}}}},{}],14:[function(t,n,e){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),n.exports=r},{}],15:[function(t,n,e){function r(t,n){var e=[],r="",i=0;for(r in t)o.call(t,r)&&(e[i]=n(r,t[r]),i+=1);return e}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],16:[function(t,n,e){function r(t,n,e){n||(n=0),"undefined"==typeof e&&(e=t?t.length:0);for(var r=-1,o=e-n||0,i=Array(o<0?0:o);++r<o;)i[r]=t[n+r];return i}n.exports=r},{}],17:[function(t,n,e){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],18:[function(t,n,e){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(16),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;n.exports=function(t,n){function e(t,n,e,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof e?e(r,a):e||{}}catch(f){l([f,"",[r,a,o],s])}u(n+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(n+"err",[r,a,d],s),d}finally{u(n+"end",[r,a,c],s)}}return r(t)?t:(n||(n=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function u(e,r,o){if(!c||n){var i=c;c=!0;try{t.emit(e,r,o,n)}catch(a){l([a,e,r,o])}c=i}}function d(t,n){if(Object.defineProperty&&Object.keys)try{var e=Object.keys(t);return e.forEach(function(e){Object.defineProperty(n,e,{get:function(){return t[e]},set:function(n){return t[e]=n,n}})}),n}catch(r){l([r])}for(var o in t)s.call(t,o)&&(n[o]=t[o]);return n}function l(n){try{t.emit("internal-error",n)}catch(e){}}return t||(t=o),e.inPlace=f,e.flag=a,e}},{}],ee:[function(t,n,e){function r(){}function o(t){function n(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function e(e,r,o,i){if(!l.aborted||i){t&&t(e,r,o);for(var a=n(o),s=h(e),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[y[e]];return d&&d.push([g,e,r,a]),a}}function p(t,n){v[t]=h(t).concat(n)}function h(t){return v[t]||[]}function m(t){return d[t]=d[t]||o(e)}function w(t,n){f(t,function(t,e){n=n||"feature",y[e]=n,n in u||(u[n]=[])})}var v={},y={},g={on:p,emit:e,get:m,listeners:h,context:n,buffer:w,abort:a,aborted:!1};return g}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(15),u={},d={},l=n.exports=o();l.backlog=u},{}],gos:[function(t,n,e){function r(t,n,e){if(o.call(t,n))return t[n];var r=e();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(t,n,e){function r(t,n,e,r){o.buffer([t],r),o.emit(t,n,e)}var o=t("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(t,n,e){function r(t){var n=typeof t;return!t||"object"!==n&&"function"!==n?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");n.exports=r},{}],loader:[function(t,n,e){function r(){if(!x++){var t=b.info=NREUM.info,n=l.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&n))return u.abort();f(y,function(n,e){t[n]||(t[n]=e)}),c("mark",["onload",a()+b.offset],null,"api");var e=l.createElement("script");e.src="https://"+t.agent,n.parentNode.insertBefore(e,n)}}function o(){"complete"===l.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(15),u=t("ee"),d=window,l=d.document,p="addEventListener",h="attachEvent",m=d.XMLHttpRequest,w=m&&m.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:m,REQ:d.Request,EV:d.Event,PR:d.Promise,MO:d.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1026.min.js"},g=m&&w&&w[p]&&!/CriOS/.test(navigator.userAgent),b=n.exports={offset:s,now:a,origin:v,features:{},xhrWrappable:g};t(12),l[p]?(l[p]("DOMContentLoaded",i,!1),d[p]("load",r,!1)):(l[h]("onreadystatechange",o),d[h]("onload",r)),c("mark",["firstbyte",s],null,"api");var x=0,E=t(17)},{}]},{},["loader",2,10,4,3]);</script>    <!-- GA, Data Layer and Omniture -->
+    <script type="text/javascript">
+var _gaq = _gaq || [];
+HPTrack.async = true;
+HPTrack.getTracker('UA-71081-1');
+HPTrack.setCustomVar("blog", "default");
+HPTrack.setCustomVar("vertical", "Canada British Columbia");
+           
+HPTrack.trackPageview();
+    
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+})();
+
+bN_cfg = {
+  h: location.hostname,
+  p: {"dL_ch":"ca.hpmgbritcol","dL_flid":"_","dL_dpt":"default","dL_cmsID":"hpo:3686306","dL_author":"Annelise Sorg","dL_crtdt":"2013-08-01 02:02:06","dL_pubts":1375380141000,"dL_blogID":3,"dL_tags":"vancouver aquarium,blackfish review,blackfish,Blackfish movie review,blackfish movie,orlando,seworld,victoria,vancouver,no whales in captivity,capiive whales,tilikum,sealand","cobrand":"HuffPost","dL_vid":"video_novideo"}
+};
+
+
+function runOmni() {
+ 
+ if(typeof HuffPoUtil != "undefined"){
+  if (HuffPoUtil.getCookie('huffpost_user_id') != '')
+    s_265.eVar17 = 'huffpost_' + HuffPoUtil.getCookie('huffpost_user_id');
+  }
+
+  s_265.prop54 = 'huffpost';
+  s_265.pfxID = 'hpo';
+  s_265.channel = 'ca.hpmgbritcol';
+  s_265.linkInternalFilters = 'javascript:,huffingtonpost.ca';
+  s_265.prop16 = 'blog';
+  s_265.prop1 = 'default';
+  s_265.prop62 = 'video_novideo';
+  s_265.prop65 = 'blogger_content';
+  s_265.pageName = 'When Killer Whales Kill: Why the movie \"Blackfish\" Should Sink Captive Whale Programs';
+  s_265.prop9 = 'hpo:3686306';
+  s_265.prop22 = 'annelise-sorg';
+  s_265.prop23 = '08-01-2013';
+  s_265.prop12 = "" + document.URL.split('?')[0];
+  s_265.prop19 = '|vancouver-aquarium|blackfish-review|blackfish|blackfish-movie-review|blackfish-movie|orlando|seworld|victoria|vancouver|no-whales-in-captivity|capiive-whales|tilikum|sealand|';
+  s_265.t();
+}
+
+s_265_account ="aolcahuffpo,aolcaglobal";
+
+(function(d){
+var s = d.createElement('script');
+s.src = "http://o.aolcdn.com/os/aol/beacon.min.js";
+d.getElementsByTagName('head')[0].appendChild(s);
+s = d.createElement('script');
+s.src = "http://o.aolcdn.com/os/aol/omniture-intl.min.js";
+d.getElementsByTagName('head')[0].appendChild(s);
+})(document);
+
+
+</script>
+    <!-- comScore Tag -->
+    <script type="text/javascript">
+    document.write(unescape("%3Cscript src='" + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js' %3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript">
+    var comscore_data = {
+        c1:2,
+        c2:6723616,
+        c3:"",
+        c4:"",
+        c5:"canada-british-columbia",
+        c6:"",
+        c15:"",
+        options: {
+            url_append: "comscorekw=canada-british-columbia"
+        }
+    }
+    COMSCORE.beacon(comscore_data);
+</script>
+<noscript>
+    <img src="http://b.scorecardresearch.com/p?c1=2&c2=6723616&c3=&c4=&c5=canada-british-columbia&c6=&c15=&cj=1" width="1" height="1" alt="" />
+</noscript>
+    <!-- end Rum -->
+
+    <!-- ads_top_1x1 -->
+    <div id="modulous_top_1x1" class="ad_spot">
+    <style type="text/css">.shares .email{display: none !important;}</style><script async src="//plugin.mediavoice.com/mediaconductor/mc.js"></script>
+<script>
+  window.mediaconductor=window.mediaconductor||function(){(mediaconductor.q=mediaconductor.q||[]).push(arguments);}
+  mediaconductor("init", "96f8e6ae1cb24f16a194fcc21a0ff8de");
+  mediaconductor("exec");
+</script></div>
+        
+    <!-- Facebook stuff -->
+    <div id="fb-root"></div>
+    <script type="text/javascript">
+        HPFB.app_id = "100792273348438";
+        HPFB.api_key = "b90a14ab587d62d3c63e8f06a0e3e901";
+        HPFB.app_namespace = "FACEBOOK_APP_NAMESPACE";
+        HPFB.init();
+        // modal form that encourages user to like HP FB page
+    	huff.use('yahoofacebook', function(y) { y.likesFromYahoo(); });
+    </script>
+
+    <!--User auth stuff -->
+    <script type="text/javascript">
+        HPConfig.locale = "en_CA";
+        HPConfig.enable_fb_widgets = 1;
+        HPVertical = "";
+    </script>
+
+                 <script type="text/javascript">
+        var zone_info = "canada.british-columbia";
+        HPConfig.current_vertical_name = "canada-british-columbia";
+        HPConfig.current_vertical_id = 120;
+        HPConfig.current_web_address = "www.huffingtonpost.ca";
+        HPConfig.current_uri = "/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html";
+        HPConfig.entry_bitly_url = "http://huff.to/1eeaLCZ";
+        HPConfig.entry_seo_title = "When Killer Whales Kill: Why the movie &quot;Blackfish&quot; Should Sink Captive Whale Programs&amp;nbsp;|&amp;nbsp;Annelise Sorg";
+        HPConfig.hp_static_domain = "s.huffpost.com";
+        HPConfig.inst_type = "prod";
+        HPConfig.timestamp_for_clearing_js = "0";
+        HPConfig.wide_format = 0;
+        HPConfig.entry_id = 3686306;
+        HPConfig.blog_id = 3;
+        HPConfig.display_domain = "";
+        HPConfig.page_type = "bpage";
+        HPConfig.twitter_signature = "@huffpostbc";
+        HPConfig.current_vertical_color = "#058b7b";
+        HPConfig.current_vertical_color_light = "#015e50";
+        HPConfig.entry_tags = new Array('');
+        HPConfig.huffsite = "www.huffingtonpost.com";
+        HPConfig.fb_lang = "en_CA";
+        HPConfig.googleplus_lang = "en-US";
+        HPConfig.image = "http:\/\/i.huffpost.com\/gen\/1269435\/images\/s-ORCA-VANCOUVER-AQUARIUM-large.jpg";
+        HPConfig.fb_page_id = "";
+        HPConfig.fb_vertical_name = "Canada British Columbia";
+        HPConfig.fb_vertical_handle = "HuffPostBC";
+        
+        HPConfig.site='canada';
+        HPConfig.recaptcha_key = "6Lf2QMUSAAAAAMVQnsh2CaAzDonVlHc8Toz1pIK-";
+        HPConfig.bit_ly_key = {"_Note":"bit.ly public key, will generate huff.to links only for whitelisted domains","user_name":"huffpostapi","user_key":"R_d7766e99c939e9f2b0c074c155e98b83"};
+
+        
+
+
+        
+        HPConfig.terms_link = "http://www.huffingtonpost.com/p/huffingtonpostca-terms-and-con.html";
+        HPConfig.privacy_link = "http://www.huffingtonpost.com/p/huffingtonpostca-privacy-policy.html";
+                HPConfig.slideshow_video_interstitial = "";
+            </script>
+
+    <!-- ads_pushdown -->
+    
+    <!-- / working -->
+        <script>
+        jQuery(window).bind( 'load', function() {
+
+            //Twitter
+            window.twttr = (function (d,s,id) {
+                var t, js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
+                js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+                return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
+            }(document, "script", "twitter-wjs"));
+            //Google+
+            (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+            })();
+            //StumbleUpon
+            (function() {
+                var li = document.createElement('script'); li.type = 'text/javascript'; li.async = true;
+                li.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//platform.stumbleupon.com/1/widgets.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(li, s);
+            })();
+            //LinkedIn
+            jQuery.getScript( '//platform.linkedin.com/in.js', function() { lang: 'en_us' } );
+            //Pintrest
+            /* jQuery.getScript( '//assets.pinterest.com/js/pinit.js', function() {}); */
+        });
+    </script>
+ 
+
+     <!-- Tuenti
+    <script type="text/javascript" src="http://widgets.tuenti.com/widgets.js"></script>
+    -->
+    <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- ads_pushdown -->
+        <!-- ads_quickread -->
+        <!-- ads_quickread_most_popular -->
+    
+    <!-- page_wrapper -->
+    <!-- classes for page wrapper: wrapper bpage [[entry/blog], wide] -->
+    <div id="wrapper" class="wrapper bpage entry canada-british-columbia blog">
+        <!-- ads_sponsored_content_logo -->
+                <!-- Phoenix buglist -->
+                <!-- page_header -->
+		<section class="header">
+    <!-- AOL navbar for UK -->
+        <!-- visual_header_area -->
+    <header class="masthead group">
+        <!-- ads_leaderboard_flex -->
+        <div id="modulous_leaderboard_flex" class="ad_spot">
+    <style type="text/css"> #topnav_margin_btm { margin: 0 !important; } </style>
+<div id="ad_leaderboard_flex" class="ad_wrapper_"><div id="adtech_leaderboard_flex" class="adtech-adspot ad-leaderboard_flex"></div>
+<script type="text/javascript">
+
+(function(){
+
+var adsDiv = document.getElementById('adtech_leaderboard_flex');
+adsDiv.id = adsDiv.id + Math.round(Math.random()*1e16);
+var adId = '93328190';
+
+// Override adtech_call_type
+var delivery_type = "" || "";
+var adtech_call_type = "";
+switch (delivery_type) {
+	case "by_request": adtech_call_type = "ajax"; break;
+	case "text": adtech_call_type = "text"; break;
+  case "iframe": adtech_call_type = "iframe"; break;
+	case "iframe_proxy": adtech_call_type = "f"; break;
+  case "collapsed": adtech_call_type = "fc"; break;
+	default: adtech_call_type = "fc"; break;
+}
+
+
+
+var args = [adId, 'lb', 'lb'
+, adtech_call_type];
+if (typeof debugadcode == 'function') { debugadcode('AdTech', {placement: 'leaderboard_flex', args: args}, adsDiv); }
+args.push(adsDiv);
+
+
+htmlAdWH.apply(this, args);
+
+
+adSetInView('0');
+
+}());
+
+</script></div>
+<script type="text/javascript">if (typeof HPAds !== 'undefined') { 
+HPAds.ad_onload('div[id^="ad_leaderboard_flex"] iframe','HPAds.ad_uac_onload_handler(\' iframe[class^="uac_"]\',this,\'bottom_ad_border_div\',10)');
+}</script></div>
+        <!-- ads_leaderboard_top -->
+                <!-- page branding and current date -->
+		        <div class="tophead_wrapper">
+            <div class="branding" style="padding-bottom:20px !important;">
+                                    <a href="http://www.huffingtonpost.ca/canada-british-columbia">
+                                                                                <img class="masthead-logo width_300px" src="http://s.huffpost.com/images/v/logos/v5/logos-hero-blk-small.png" alt="Huffpost Canada British Columbia" />
+						                                                <div class="masthead-tagline">Canada British Columbia</div>
+                                                            </a>
+            </div>
+
+            <!-- edition dropdown -->
+            
+<!-- edition dropdown -->
+<div class="edition geo_dropdown">
+	<span class="current">
+		Edition: <strong class="this-region">ca</strong>
+		<span class="arrow-down"></span>
+		<button class="show-hide" data-target=".editions">Show/Hide</button>
+	</span>
+	<menu class="editions inner off">
+		<ul>
+                     <li>
+			      <a href="http://www.huffingtonpost.com/?country=AR">
+				       <span>عربي (Arabic) </span> <strong>AR</strong>
+			            </a>
+			</li>
+                                          <li>
+				<a href="http://www.huffingtonpost.com/?country=AU">
+					<span>Australia</span> <strong>AU</strong>
+				</a>
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=BR">
+					<span>Brasil</span> <strong>BR</strong>
+				</a>
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=CA">
+					<span>Canada</span> <strong>CA</strong>
+				</a>
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=DE">
+					<span>Deutschland</span> <strong>DE</strong>
+				</a>
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=ES">
+					<span>Espa&ntilde;a</span> <strong>ES</strong>
+				</a>        
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=FR">
+					<span>France</span> <strong>FR</strong> 
+				</a>        
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=GR">
+					<span>Ελλάδα (Greece)</span> <strong>GR</strong> 
+				</a>        
+			</li>
+                     <li>
+				<a href="http://www.huffingtonpost.com/?country=IN">
+					<span>India</span> <strong>IN</strong> 
+				</a>        
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=IT">
+					<span>Italia</span> <strong>IT</strong>
+				</a>        
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=JP">
+					<span>&#26085;&#26412; (Japan)</span> <strong>JP</strong>
+				</a>		
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=KR">
+					<span>&#54620;&#44397; (Korea)</span> <strong>KR</strong>
+				</a>		
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=MG">
+					<span>Maghreb</span> <strong>MG</strong>
+				</a>		
+			</li>
+            <li>
+               <a href="http://www.huffingtonpost.com.mx/">
+                	<span>M&eacute;xico</span> <strong>MX</strong>
+               </a>
+            </li>                                               
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=ZA">
+					<span>South Africa</span> <strong>ZA</strong>
+				</a>
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=UK">
+					<span>United Kingdom</span> <strong>UK</strong>
+				</a>
+			</li>
+			<li>
+				<a href="http://www.huffingtonpost.com/?country=US">
+					<span>United States</span> <strong>US</strong>
+				</a>
+			</li>
+		</ul>
+	</menu>	
+</div>
+
+<div class="region geo_dropdown">
+	<span class="current">
+		Region: <strong class="this-region">BC</strong>
+		<span class="arrow-down"></span>
+		<button class="show-hide" data-target=".regions">Show/Hide</button>
+	</span>
+	<menu class="regions inner off">
+        <ul>
+            <li>
+                <a href="http://www.huffingtonpost.ca/?country=CA&region=ALL">
+                    All Canada                </a>
+            </li>
+            <li>
+                <a href="http://www.huffingtonpost.ca/alberta/?country=CA&region=CA-AL">
+                    Alberta                </a>		
+            </li>
+            <li>
+                <a href="http://www.huffingtonpost.ca/british-columbia/?country=CA&region=CA-BC">
+                    British Columbia                </a>		
+            </li>
+            <li>
+                <a href="http://quebec.huffingtonpost.ca/?country=CA&region=CA-QB">
+                    Qu&#233;bec (en fran&#231;ais)                </a>		
+            </li>
+        </ul>
+	</menu>
+</div>
+	
+
+            <!-- wrapper of line of social, newsletter  -->
+            <div id="social-subscribe-search" class="social-subscribe-search group">
+                <ul class="group">
+                    <li class="facebook">
+                        <div class="content like">
+                            <!-- facebook button code -->
+                                <div class="fb-like" data-href="http://www.facebook.com/HuffPostBC/" data-send="false" data-layout="button_count" data-width="40" data-show-faces="false" data-colorscheme="light" data-font="trebuchet ms" data-action="like" ref="" style="width: 40px" ></div>                        </div>
+                    </li>
+                    <li class="twitter">
+                        <div class="content tweet">
+                            <!-- twitter button code -->
+                                
+
+<a href="https://twitter.com/huffpostbc" class="twitter-follow-button" data-show-screen-name="false" data-show-count="false" data-lang="en" data-width="220px">Follow</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+                        </div>
+                    </li>
+                    <li class="newsletters" data-fx="hover">
+                        <div class="content">
+                            <strong>Newsletters</strong>
+                            <div class="form">
+                                <!-- sign up for vertical newsletter -->
+                                 <div class="newsletters"  >
+                                  <form action="#">
+                                      <fieldset>
+					                                                 <legend>Get Canada British ColumbiaNewsletters</legend>
+                                          <label for="newsletter-email">Email address</label>
+                                          <input class="input-email" placeholder="Enter email" id="newsletter-email" type="text" />
+                                          <input type="checkbox" value="1" name="email_subscribe_check" class="email_subscribe_check" style="display:none;" />
+                                          <label for="newsletter-submit">Enter Email Address</label>
+						                                              <input data-vertical="canada-british-columbia" class="submit" id="newsletter-submit" type="submit" value="Go"  />
+						                                      </fieldset>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                    </li>
+		        </ul>
+			</div>
+			            <div class="clear"></div>
+        </div><!-- .tophead_wrapper ENDS -->
+    </header>
+    <!-- line of links that sit on top of the visual header and user account controls -->
+    <div class="topnav">
+        <!-- line of links that sit on top of the visual header   -->
+        <div class="links-products" >
+    <!-- big news links that are vertical specific -->
+    <div class="big-news-links">
+        <ul>
+          <li class="commercial_big_news_links">
+            <!-- ads_big_news_link -->
+                      </li>
+        </ul>
+    </div>
+    <!-- links to HP products that are the same across all verticals -->
+    <div class="products" >
+        <ul>
+          <li><a href="http://itunes.apple.com/ca/app/the-huffington-post/id306621789?mt=8"  >iOS app</a></li>
+          <li><a href="https://play.google.com/store/apps/details?id=com.huffingtonpost.android&hl=cn"  >Android app</a></li>
+          <li><a href="/big-news/#canada-british-columbia"  >More</a></li>
+        </ul>
+    </div>
+</div>
+        <!-- user account controls -->
+        					<!-- user account controls -->
+					<div id="wendybird_user" class="user">
+					    <div class="not-logged-in">
+                            <ul class="group">
+                      <li><span class="hidden"><a href="javascript:void(0);" onclick="return false;" class="hp_desktop_alerts">Desktop Alerts</button></span></li>
+					            
+                            </ul>
+					    </div>
+					    <div class="logged-in off">
+					        				            <div id="wendybird_user_data" class="account vcard">
+				                <div class="top group">
+				                	<figure>
+									    <img src="" alt="" width="20" height="20" />
+									</figure>
+								    <span class="username">$USERNAME</span>
+				                </div>
+				                <menu class="controls">
+                                    <ul>
+                                        <li>
+                                        <span class="hidden"><a href="javascript:void(0);" onclick="return false;" class="hp_desktop_alerts">Desktop Notifications</button></span>
+                                        </li>
+                                        <li>
+                                            <a href="/social/" class="profile">Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="/users/preferences/">Settings</a></li>
+                                        <li>
+                                            <a href="/users/logout/?referer=%2F" onclick="QuickLogin.SocialLogout('/users/logout/?referer=%2F'); return false;">
+                                                Logout                                            </a>
+                                         </li>
+                                    </ul>
+                                </menu>
+				            </div>
+					    </div>
+					</div>
+                    <script type="text/javascript">
+                        HPUtil.initUserNavStatus(false);
+                        //SocialNotifications.setEvents();
+                        //huff.use('desktop_stream');
+                    </script>
+
+    </div>
+    <!-- large banner ad -->
+    </section>
+<script>
+(function($){ // no Conflict
+    $(function() { // dom ready
+    var socialSubSearch = $('#social-subscribe-search'),
+        newsletter = socialSubSearch.find('.newsletters'),
+        rollout = socialSubSearch.find('[data-fx="hover"]'),
+        liContent = socialSubSearch.find('.content');
+        var searchcheck="Huffington Post Search";
+        var checkInputContent = function(evt){
+        
+    };
+
+    newsletter.find('.content').hover(
+      function(){
+        var inputVal = "";
+        if (inputVal != searchcheck && inputVal != "") {
+
+        }
+      },
+      function(){
+        var inputVal = "";
+        if (inputVal != searchcheck && inputVal != "") {
+
+        }
+      }
+    );
+
+    // rollover effects
+    liContent
+      .on('mouseenter', function() {
+        var that = $(this),
+            thatParent = that.parent('li'),
+            inputField = that.find('input[type="text"]');
+
+        if(thatParent.data('fx') === 'hover') {
+          thatParent.addClass('hover');
+          inputField.focus();
+        }
+      })
+      .on('mouseleave', function() {
+            var that = $(this),
+                thatParent = that.parent('li'),
+                inputField = that.find('input[type="text"]');
+
+            thatParent.removeClass('hover');
+            inputField.blur();
+          });
+        // end liContent
+    });
+})(jQuery);
+</script>
+        <!-- END page_header -->
+        <!-- page_navigation -->
+        <nav class="main group">
+    <!-- top nav bar -->
+    <section class="verticals canada-british-columbia group"  data-beacon='{"p":{"mnid":"topnav_first_row","mlid":"topnav"}}'  >
+        <ul class="verticals-ul">
+            <li class="front-page toplevel"  data-beacon='{"p":{"lnid":"homepage"}}'  >
+	                             <a class="toplevel-a" href="http://www.huffingtonpost.ca" title="Home" tabindex="1" class="link">FRONT PAGE</a>
+		  	
+            </li>
+                                                <li class="canada-politics toplevel"  data-beacon='{"p":{"lnid":"canada-politics"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.ca/politics/" tabindex="2" class="link">Politics</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16760426"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.ca/2017/05/22/manchester-explosion-canada_n_16760426.html?ir=Canada+Politics">Canadian Officials Respond To 'Brutal Attacks' In Manchester After Explosion</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.ca/2017/05/22/manchester-explosion-canada_n_16760426.html?ir=Canada+Politics#comments">0</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.ca/politics/">Go to Politics</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                    <section class="more-in">
+                                <strong>More in Politics</strong>
+                                <ul  data-beacon='{"p":{"lnid":"more_in"}}'  > 
+                                                                    <li><a href="http://www.huffingtonpost.ca/althia-raj/">Althia Raj</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/bill-c-51/">Bill C-51</a></li>
+                                                                    <li><a href="http://projects.huffingtonpost.ca/salute/">Salute</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/politics-video/">Politics Videos</a></li>
+                                										
+                                </ul>
+                            </section>
+                                                                            <section class="might-like">
+                                <strong>You Might Also Like</strong>
+                                <ul  data-beacon='{"p":{"lnid":"like_list"}}'  >
+                                                                    <li><a href="http://www.huffingtonpost.com/politics/">US Politics</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.co.uk/politics/">UK Politics</a></li>
+                                                                </ul>
+                            </section>
+                                                </div>
+                    </menu>
+                </div>
+                            </li>
+                        <li class="canada-business toplevel"  data-beacon='{"p":{"lnid":"canada-business"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.ca/business/" tabindex="3" class="link">Business</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16756762"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.ca/2017/05/22/eight-revenue-agency-workers-fired-for-roles-in-privacy-breaches-cra-says_n_16756762.html?ir=Canada+Business">Largest Privacy Breach In CRA History Was The Work Of An Employee</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.ca/2017/05/22/eight-revenue-agency-workers-fired-for-roles-in-privacy-breaches-cra-says_n_16756762.html?ir=Canada+Business#comments">19</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.ca/business/">Go to Business</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                    <section class="more-in">
+                                <strong>More in Business</strong>
+                                <ul  data-beacon='{"p":{"lnid":"more_in"}}'  > 
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/working-poor/">Working Poor</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/joint-venture/">Joint Venture</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/sunny-freeman/">Sunny Freeman</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/business-video/">Business Videos</a></li>
+                                										
+                                </ul>
+                            </section>
+                                                                            <section class="might-like">
+                                <strong>You Might Also Like</strong>
+                                <ul  data-beacon='{"p":{"lnid":"like_list"}}'  >
+                                                                    <li><a href="http://www.huffingtonpost.com/technology/">Tech</a></li>
+                                                                    <li><a href="http://www.techcrunch.com/">TechCrunch</a></li>
+                                                                </ul>
+                            </section>
+                                                </div>
+                    </menu>
+                </div>
+                            </li>
+                        <li class="world toplevel"  data-beacon='{"p":{"lnid":"world"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.com/world/" tabindex="4" class="link">WorldPost</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16671156"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/17/syrian-women-have-a-message-drop-earrings-not-bombs_n_16671156.html?ir=WorldPost">Syrian Women Have A Message: Drop Earrings, Not Bombs</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/17/syrian-women-have-a-message-drop-earrings-not-bombs_n_16671156.html?ir=WorldPost#comments">0</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.com/world/">Go to WorldPost</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                    <section class="more-in">
+                                <strong>More in WorldPost</strong>
+                                <ul  data-beacon='{"p":{"lnid":"more_in"}}'  > 
+                                                                    <li><a href="http://www.huffingtonpost.com/news/foreign-affairs/">Foreign Affairs</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/news/world-elections-2012/">World Elections</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/news/arab-spring/">Arab Uprising</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/news/afghanistan-war-blog/">Afghanistan War</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/news/syria/">Syria Crisis</a></li>
+                                										
+                                </ul>
+                            </section>
+                                                                            <section class="might-like">
+                                <strong>You Might Also Like</strong>
+                                <ul  data-beacon='{"p":{"lnid":"like_list"}}'  >
+                                                                    <li><a href="http://www.huffingtonpost.ca/travel/">Travel</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/impact/">Impact</a></li>
+                                                                </ul>
+                            </section>
+                                                </div>
+                    </menu>
+                </div>
+                            </li>
+                        <li class="canada-parents toplevel"  data-beacon='{"p":{"lnid":"canada-parents"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.ca/parents/" tabindex="5" class="link">Parents</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16722530"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.ca/2017/05/20/prince-george-princess-charlotte-pippa-middleton-wedding_n_16722530.html?ir=Canada+Parents">Prince George And Princess Charlotte Look Adorable At Pippa Middleton's Wedding</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.ca/2017/05/20/prince-george-princess-charlotte-pippa-middleton-wedding_n_16722530.html?ir=Canada+Parents#comments">0</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.ca/parents/">Go to Parents</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                    <section class="more-in">
+                                <strong>More in Parents</strong>
+                                <ul  data-beacon='{"p":{"lnid":"more_in"}}'  > 
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/apparently/">Apparently</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/parents-video/">Parents Videos</a></li>
+                                										
+                                </ul>
+                            </section>
+                                                                            <section class="might-like">
+                                <strong>You Might Also Like</strong>
+                                <ul  data-beacon='{"p":{"lnid":"like_list"}}'  >
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/weight-lost/">Healthy Inspiration</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/delicious-recipes/">Recipes</a></li>
+                                                                    <li><a href="http://huffingtonpost.ca/news/canadian-women">Women</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/canada-sex/">Sex & Relationships</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/weddings-canada/">Weddings</a></li>
+                                                                </ul>
+                            </section>
+                                                </div>
+                    </menu>
+                </div>
+                            </li>
+                        <li class="canada-living toplevel"  data-beacon='{"p":{"lnid":"canada-living"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.ca/living/" tabindex="6" class="link">Living</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16764272"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.ca/2017/05/23/ariana-grande-manchester-attack_n_16764272.html?ir=Canada+Living">Ariana Grande 'Broken' After Manchester Arena Attack</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.ca/2017/05/23/ariana-grande-manchester-attack_n_16764272.html?ir=Canada+Living#comments">0</a>
+                                    </article>
+                                </li>
+                                                                <li data-id="16764000"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.ca/2017/05/23/shawn-mendes-manchester-attack_n_16764000.html?ir=Canada+Living">Shawn Mendes, Drake, Other Young Canadian Musicians Express Grief Over Manchester Attack</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.ca/2017/05/23/shawn-mendes-manchester-attack_n_16764000.html?ir=Canada+Living#comments">0</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.ca/living/">Go to Living</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                    <section class="more-in">
+                                <strong>More in Living</strong>
+                                <ul  data-beacon='{"p":{"lnid":"more_in"}}'  > 
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/2-minutes-to-transform/">2 Minutes To Transform</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/apparently/">Apparently</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/i-am-sold-canada/">I'm Sold Canada</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/say-it-make-it-eat-it/">Say it. Make it. Eat it.</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/like-a-tourist/">Like A Tourist</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/living-video/">Living Videos</a></li>
+                                										
+                                </ul>
+                            </section>
+                                                                            <section class="might-like">
+                                <strong>You Might Also Like</strong>
+                                <ul  data-beacon='{"p":{"lnid":"like_list"}}'  >
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/weight-lost/">Healthy Inspiration</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/delicious-recipes/">Recipes</a></li>
+                                                                    <li><a href="http://huffingtonpost.ca/news/canadian-women">Women</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/canada-sex/">Sex & Relationships</a></li>
+                                                                </ul>
+                            </section>
+                                                </div>
+                    </menu>
+                </div>
+                            </li>
+                        <li class="canada-style toplevel"  data-beacon='{"p":{"lnid":"canada-style"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.ca/style/" tabindex="7" class="link">Style</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16751252"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.ca/2017/05/22/2017-billboard-music-awards-red-carpet_n_16751252.html?ir=Canada+Style">The 2017 Billboard Music Awards <strike>Red</strike> Pink Carpet Had Plenty Of Surprises</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.ca/2017/05/22/2017-billboard-music-awards-red-carpet_n_16751252.html?ir=Canada+Style#comments">0</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.ca/style/">Go to Style</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                    <section class="more-in">
+                                <strong>More in Style</strong>
+                                <ul  data-beacon='{"p":{"lnid":"more_in"}}'  > 
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/style-video/">Style Videos</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/beauty-canada/">Beauty</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/fashion-canada/">Fashion</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/celebrity-style-canada/">Celeb Style</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/wedding-style/">Wedding Style</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/worst-dressed/">Best And Worst Dressed</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/skincare/">Skincare</a></li>
+                                										
+                                </ul>
+                            </section>
+                                                                            <section class="might-like">
+                                <strong>You Might Also Like</strong>
+                                <ul  data-beacon='{"p":{"lnid":"like_list"}}'  >
+                                                                    <li><a href="http://www.huffingtonpost.com/style/">Style (U.S.)</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/weddings/">Weddings</a></li>
+                                                                </ul>
+                            </section>
+                                                </div>
+                    </menu>
+                </div>
+                            </li>
+                        <li class="entertainment toplevel"  data-beacon='{"p":{"lnid":"entertainment"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.com/entertainment/" tabindex="8" class="link">Entertainment</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16746230"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/21/cher-believe-billboard-music-awards_n_16746230.html?ir=Entertainment">Cher Makes Us 'Believe' At The Billboard Music Awards</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/21/cher-believe-billboard-music-awards_n_16746230.html?ir=Entertainment#comments">0</a>
+                                    </article>
+                                </li>
+                                                                <li data-id="16740802"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/21/backpack-kid-upstaged-katy-perry-on-snl-and-mesmerized-the-internet_n_16740802.html?ir=Entertainment">'Backpack Kid' Upstaged Katy Perry On 'SNL' And Mesmerized The Internet</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/21/backpack-kid-upstaged-katy-perry-on-snl-and-mesmerized-the-internet_n_16740802.html?ir=Entertainment#comments">0</a>
+                                    </article>
+                                </li>
+                                                                <li data-id="16751166"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/22/drake-reaction-to-vanessa-hudgens-rapping-says-it-all_n_16751166.html?ir=Entertainment">Drake's Reaction To Vanessa Hudgens Rapping Says It All</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/22/drake-reaction-to-vanessa-hudgens-rapping-says-it-all_n_16751166.html?ir=Entertainment#comments">0</a>
+                                    </article>
+                                </li>
+                                                                <li data-id="16749544"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/22/sasheer-zamata-joins-saturday-night-live-exodus_n_16749544.html?ir=Entertainment">Sasheer Zamata Joins 'Saturday Night Live' Exodus</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/22/sasheer-zamata-joins-saturday-night-live-exodus_n_16749544.html?ir=Entertainment#comments">0</a>
+                                    </article>
+                                </li>
+                                                                <li data-id="16753384"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/22/please-dont-make-us-watch-ellens-interview-with-jessica-simpson-again_n_16753384.html?ir=Entertainment">Please Don't Make Us Watch Ellen's Interview With Jessica Simpson Again</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/22/please-dont-make-us-watch-ellens-interview-with-jessica-simpson-again_n_16753384.html?ir=Entertainment#comments">0</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.com/entertainment/">Go to Entertainment</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                                            <section class="might-like">
+                                <strong>You Might Also Like</strong>
+                                <ul  data-beacon='{"p":{"lnid":"like_list"}}'  >
+                                                                    <li><a href="http://www.huffingtonpost.ca/music/">Music</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/celebrity/">Celebrity</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/tv/">TV</a></li>
+                                                                    <li><a href="http://news.moviefone.ca/">Moviefone</a></li>
+                                                                </ul>
+                            </section>
+                                                </div>
+                    </menu>
+                </div>
+                            </li>
+                        <li class="arts toplevel"  data-beacon='{"p":{"lnid":"arts"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.com/arts/" tabindex="9" class="link">Arts</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16754428"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/22/robin-bell-jeff-sessions_n_16754428.html?ir=Arts">Artist Projects Image Of Jeff Sessions In KKK Hood Across Department Of Justice</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/22/robin-bell-jeff-sessions_n_16754428.html?ir=Arts#comments">0</a>
+                                    </article>
+                                </li>
+                                                                <li data-id="16752972"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/22/in-2017-casting-a-black-actor-derailed-a-staging-of-this-famous-play_n_16752972.html?ir=Arts">In 2017, Casting A Black Actor Derailed A Staging Of This Famous Play</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/22/in-2017-casting-a-black-actor-derailed-a-staging-of-this-famous-play_n_16752972.html?ir=Arts#comments">0</a>
+                                    </article>
+                                </li>
+                                                                <li data-id="16755682"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/22/katy-perry-bon-appetit-whitney_n_16755682.html?ir=Arts">Watch Katy Perry's Head Terrify Innocent Museumgoers In NYC</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/22/katy-perry-bon-appetit-whitney_n_16755682.html?ir=Arts#comments">0</a>
+                                    </article>
+                                </li>
+                                                                <li data-id="16756404"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/11/women-photograph-database-of-female-photojournalists_n_16756404.html?ir=Arts">'Women Photograph' Honors The Female Photojournalists Documenting Our World</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/11/women-photograph-database-of-female-photojournalists_n_16756404.html?ir=Arts#comments">0</a>
+                                    </article>
+                                </li>
+                                                                <li data-id="16758838"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.com/2017/05/22/neil-gaiman-reads-cheesecake-factory-menu_n_16758838.html?ir=Arts">Let's Make Neil Gaiman Dramatically Read The Entire Cheesecake Factory Menu</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.com/2017/05/22/neil-gaiman-reads-cheesecake-factory-menu_n_16758838.html?ir=Arts#comments">0</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.com/arts/">Go to Arts</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                                            <section class="might-like">
+                                <strong>You Might Also Like</strong>
+                                <ul  data-beacon='{"p":{"lnid":"like_list"}}'  >
+                                                                    <li><a href="http://www.huffingtonpost.com/books/">Books</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/black-voices/">Black Voices</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/latino-voices/">Latino Voices</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/gay-voices/">Gay Voices</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.com/religion/">Religion</a></li>
+                                                                </ul>
+                            </section>
+                                                </div>
+                    </menu>
+                </div>
+                            </li>
+                        <li class="canada-alberta toplevel"  data-beacon='{"p":{"lnid":"canada-alberta"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.ca/alberta/" tabindex="10" class="link">Alberta</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16756664"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.ca/2017/05/22/calgary-shooting_n_16756664.html?ir=Canada+Alberta">Calgary Shooting Leaves 2 Dead</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.ca/2017/05/22/calgary-shooting_n_16756664.html?ir=Canada+Alberta#comments">0</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.ca/alberta/">Go to Alberta</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                    <section class="more-in">
+                                <strong>More in Alberta</strong>
+                                <ul  data-beacon='{"p":{"lnid":"more_in"}}'  > 
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/alberta-politics">Alberta Politics</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/alberta-business">Alberta Business</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/rachel-notley">Rachel Notley</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/calgary">Calgary</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/edmonton">Edmonton</a></li>
+                                										
+                                </ul>
+                            </section>
+                                                                        </div>
+                    </menu>
+                </div>
+                            </li>
+                        <li class="canada-british-columbia toplevel"  data-beacon='{"p":{"lnid":"canada-british-columbia"}}' >
+                            <a class="toplevel-a" href="http://www.huffingtonpost.ca/british-columbia/" tabindex="11" class="link">BC</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="group">
+                        <!-- left colum -->
+                        <section class="more-stories trending"  >
+                            <ul>
+                                                                                            <li data-id="16752254"  >
+                                    <article>
+                                        <a href="http://www.huffingtonpost.ca/2017/05/22/mentally-ill-dad-who-killed-three-kids-up-for-review-in-british-columbia_n_16752254.html?ir=Canada+British+Columbia">Allan Schoenborn, Mentally Ill B.C. Dad Who Killed His 3 Kids, Up For Review</a>
+                                                                                <a data-anchor="#comments" class="comments" href="http://www.huffingtonpost.ca/2017/05/22/mentally-ill-dad-who-killed-three-kids-up-for-review-in-british-columbia_n_16752254.html?ir=Canada+British+Columbia#comments">26</a>
+                                    </article>
+                                </li>
+                                                            							
+                            </ul>
+                            <!-- ads_top_nav_edit_promo -->
+                                                        <a class="goto" href="http://www.huffingtonpost.ca/british-columbia/">Go to BC</a>
+                        </section>
+                        <!-- right column -->
+                        <div class="more-vertical">
+                                                    <section class="more-in">
+                                <strong>More in BC</strong>
+                                <ul  data-beacon='{"p":{"lnid":"more_in"}}'  > 
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/bc-politics">B.C. Politics</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/bc-business">B.C. Business</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/bc-good-news/">B.C. Good News</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/bc-rcmp/">B.C. RCMP</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/vancouver">Vancouver</a></li>
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/vancouver-housing/">Vancouver Housing</a></li>
+                                										
+                                </ul>
+                            </section>
+                                                                            <section class="might-like">
+                                <strong>You Might Also Like</strong>
+                                <ul  data-beacon='{"p":{"lnid":"like_list"}}'  >
+                                                                    <li><a href="http://www.huffingtonpost.ca/news/bc-video/">B.C.Videos</a></li>
+                                                                </ul>
+                            </section>
+                                                </div>
+                    </menu>
+                </div>
+                            </li>
+            
+            <!-- START UK BLOGS DROP DOWN -->
+            										
+            <!-- END UK BLOGS DROP DOWN -->
+            
+            
+                        <li class="all-sections toplevel" id="all-sections"  >
+                <a class="toplevel-a" href="#" tabindex="12" class="link">All Sections</a>
+                <!-- dropdown for this item -->
+                <div class="menu-container">
+                    <menu class="off">
+                        <!-- top half, sections and links under each section -->
+                        <ul class="verticals group">
+                                                    <li class="verticals-li">							
+                                <strong>News</strong>
+                                <ul>
+                                                                                                          <li><a href="http://www.huffingtonpost.ca/politics/">Canada Politics</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/business/">Canada Business</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/politics/">US Politics</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/business/">US Business</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/world/?ir=Canada">World</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/media/?ir=Canada">Media</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/sports/?ir=Canada">Sports</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/education/?ir=Canada">Education</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/crime/?ir=Canada">Crime</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/weird-news/?ir=Canada">Weird News</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/good-news/?ir=Canada">Good News</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.dailyfinance.com/">Daily Finance</a></li>  
+                                      
+                                                                                                    </ul>
+                            </li>
+                                                    <li class="verticals-li">							
+                                <strong>Entertainment</strong>
+                                <ul>
+                                                                                                          <li><a href="http://www.huffingtonpost.com/entertainment/?ir=Canada">Entertainment</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/music/">Music</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/tv/">TV</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/celebrity/?ir=Canada">Celebrity</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/comedy/?ir=Canada">Comedy</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/arts/?ir=Canada">Arts</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/books/?ir=Canada">Books</a></li>  
+                                      
+                                                                                                            <li><a href="http://news.moviefone.ca/">Moviefone</a></li>  
+                                      
+                                                                                                    </ul>
+                            </li>
+                                                    <li class="verticals-li">							
+                                <strong>Life & Style</strong>
+                                <ul>
+                                                                                                          <li><a href="http://www.huffingtonpost.ca/living/">Living</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/style/">Style</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/home/?ir=Canada">Home</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/healthy-living/?ir=Canada">Healthy Living</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/taste/?ir=Canada">Taste</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/weddings/?ir=Canada">Weddings</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/travel/">Travel</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/parents/?ir=Canada">Parents</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/divorce/?ir=Canada">Divorce</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/50/?ir=Canada">HuffPost 50</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/own/?ir=Canada">OWN</a></li>  
+                                      
+                                                                                                          <li><a href="http://www.huffingtonpost.com/news/quiet-revolution/">Quiet Revolution</a></li> 
+                                                                  </ul>
+                            </li>
+                                                    <li class="verticals-li">							
+                                <strong>Tech & Science</strong>
+                                <ul>
+                                                                                                          <li><a href="http://www.huffingtonpost.com/tech/?ir=Canada">Tech</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/science/?ir=Canada">Science</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/green/?ir=Canada">Green</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.techcrunch.com/">Techcrunch</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.engadget.com/">Engadget</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.tuaw.com/">TUAW</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.joystiq.com/">Joystiq</a></li>  
+                                      
+                                                                                                    </ul>
+                            </li>
+                                                    <li class="verticals-li">							
+                                <strong>Voices</strong>
+                                <ul>
+                                                                                                          <li><a href="http://www.huffingtonpost.ca/impact/">Impact</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/women/?ir=Canada">Women</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/black-voices/?ir=Canada">Black Voices</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/latino-voices/?ir=Canada">Latino Voices</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/queer-voices/?ir=Canada">Queer Voices</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/religion/?ir=Canada">Religion</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/college/?ir=Canada">College</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/teen/?ir=Canada">Teen</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.com/news/outspeak/?ir=Canada">Outspeak</a></li>  
+                                      
+                                                                                                    </ul>
+                            </li>
+                                                    <li class="verticals-li">							
+                                <strong>Local</strong>
+                                <ul>
+                                                                                                          <li><a href="http://quebec.huffingtonpost.ca/">Quebec (French)</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/news/calgary/">Calgary</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/news/montreal/">Montreal</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/news/ottawa/">Ottawa</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/news/toronto/">Toronto</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/news/vancouver/">Vancouver</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.huffingtonpost.ca/news/winnipeg/">Winnipeg</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.mapquest.ca/">Mapquest</a></li>  
+                                      
+                                                                                                            <li><a href="http://www.patch.com/">Patch.com</a></li>  
+                                      
+                                                                                                    </ul>
+                            </li>
+                                                </ul>
+                                                <!-- mobile apps buttons at the bottom -->
+                        <div class="mobile-apps">
+                            <strong>Our Mobile Apps:</strong>
+                            <ul>
+                                                            <li><a href="http://itunes.apple.com/us/app/the-huffington-post/id306621789?mt=8">iPhone</a></li>
+                                                            <li><a href="https://itunes.apple.com/us/app/the-huffington-post/id306621789">iPad</a></li>
+                                                            <li><a href="https://play.google.com/store/apps/details?id=com.huffingtonpost.android&hl=en">Android Phone</a></li>
+                                                            <li><a href="https://play.google.com/store/apps/details?id=com.huffingtonpost.android&hl=cn">Android Tablet</a></li>
+                                                        </ul>
+                        </div>
+                                            </menu>
+                </div>
+            </li>
+                    </ul>
+    </section>
+        <!-- bottom nav bar -->
+    <section class="stories group"  data-beacon='{"p":{"mnid":"topnav_subnav","mlid":"topnav"}}'  >
+        <ul class="group">
+                            <li class="this-vertical">
+                <a href="http://www.huffingtonpost.ca/british-columbia/">British Columbia</a>
+            </li>
+                                         
+            <li>
+                <a href="http://www.huffingtonpost.ca/news/vancouver-housing/">Vancouver Housing</a>
+            </li>
+             
+            <li>
+                <a href="http://www.huffingtonpost.ca/news/bc-first-nations/">B.C. First Nations</a>
+            </li>
+             
+            <li>
+                <a href="http://www.huffingtonpost.ca/news/bc-good-news/">B.C. Good News</a>
+            </li>
+             
+            <li>
+                <a href="http://www.huffingtonpost.ca/news/bc-politics">B.C. Politics</a>
+            </li>
+             
+            <li>
+                <a href="http://www.huffingtonpost.ca/news/bc-business">B.C. Business</a>
+            </li>
+             
+            <li>
+                <a href="http://www.huffingtonpost.ca/news/vancouver">Vancouver</a>
+            </li>
+             
+            <li>
+                <a href="http://www.huffingtonpost.ca/news/bc-rcmp/">B.C. RCMP</a>
+            </li>
+                                                    <li class="network">
+                <a href="http://www.huffingtonpost.ca/news/bc-video/">B.C.Videos</a>
+            </li>
+            	
+        	
+        </ul>
+    </section>
+    </nav>
+<!-- ads_leaderboard_below_nav -->
+<!-- ads_curtain -->
+<div id="curtain_wrapper">
+    <div id="curtainunit"></div>
+</div>
+<!-- ads_status_bar -->
+
+<!-- ads_edit_banner -->
+
+        <!-- END page_navigation -->
+        <!-- page_content -->
+        <section class="content">
+            <!-- breaking_news module -->
+<!-- 3up carousel module -->
+<!-- ads_threeup_edit_promo -->
+<section id="carousel" class="three-up"  data-beacon='{"p":{"mnid":"threeup_top_wrapper","mlid":"threeup"}}' >
+    <div class="group three-up-list">
+        <ul class="three-up-holder">
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16764272","mpid":0}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/23/ariana-grande-manchester-attack_n_16764272.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i1.huffpost.com/gen/5320180/images/r-ARIANA-GRANDE-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for Ariana Grande 'Broken' After Manchester Arena Attack" class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/23/ariana-grande-manchester-attack_n_16764272.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">Ariana Grande 'Broken' After Manchester Arena Attack</a></strong>
+            </article>
+        </li>
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16764098","mpid":1}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/23/summer-temperatures_n_16764098.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i0.huffpost.com/gen/5320104/images/r-SEESAW-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for Summer Temperatures Will Feel Like A Teeter-Totter: Meteorologist" class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/23/summer-temperatures_n_16764098.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">Summer Temperatures Will Feel Like A Teeter-Totter: Meteorologist</a></strong>
+            </article>
+        </li>
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16764000","mpid":2}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/23/shawn-mendes-manchester-attack_n_16764000.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i1.huffpost.com/gen/5320084/images/r-SHAWN-MENDES-DRAKE-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for Shawn Mendes, Drake And Other Young Canadian Stars Grieve For Manchester" class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/23/shawn-mendes-manchester-attack_n_16764000.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">Shawn Mendes, Drake And Other Young Canadian Stars Grieve For Manchester</a></strong>
+            </article>
+        </li>
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16763816","mpid":3}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/23/ariana-grande-concert-attack_n_16763816.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i0.huffpost.com/gen/5319862/images/r-ARIANA-GRANDE-CONCERT-ATTACK-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for Islamic State Claims Responsibility For Ariana Grande Concert Attack" class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/23/ariana-grande-concert-attack_n_16763816.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">Islamic State Claims Responsibility For Ariana Grande Concert Attack</a></strong>
+            </article>
+        </li>
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16760426","mpid":4}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/22/manchester-explosion-canada_n_16760426.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i0.huffpost.com/gen/5318936/images/r-ARIANA-GRANDE-CONCERT-EXPLOSION-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for Canadian Officials Respond To 'Brutal Attacks' In Manchester" class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/22/manchester-explosion-canada_n_16760426.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">Canadian Officials Respond To 'Brutal Attacks' In Manchester</a></strong>
+            </article>
+        </li>
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16759806","mpid":5}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/22/room-for-manchester_n_16759806.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i1.huffpost.com/gen/5318858/images/r-ROOM-FOR-MANCHESTER-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for #RoomForManchester Emerges On Twitter To Help Stranded Concert-Goers" class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/22/room-for-manchester_n_16759806.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">#RoomForManchester Emerges On Twitter To Help Stranded Concert-Goers</a></strong>
+            </article>
+        </li>
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16759382","mpid":6}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/22/manchester-arena-explosion_n_16759382.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i0.huffpost.com/gen/5318754/images/r-MANCHESTER-ARENA-EXPLOSION-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for Several Killed After Explosion At Ariana Grande Concert In U.K." class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/22/manchester-arena-explosion_n_16759382.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">Several Killed After Explosion At Ariana Grande Concert In U.K.</a></strong>
+            </article>
+        </li>
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16756762","mpid":7}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/22/eight-revenue-agency-workers-fired-for-roles-in-privacy-breaches-cra-says_n_16756762.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i0.huffpost.com/gen/4683298/images/r-CANADA-REVENUE-AGENCY-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for Largest Privacy Breach In CRA History Was The Work Of An Employee" class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/22/eight-revenue-agency-workers-fired-for-roles-in-privacy-breaches-cra-says_n_16756762.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">Largest Privacy Breach In CRA History Was The Work Of An Employee</a></strong>
+            </article>
+        </li>
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16756664","mpid":8}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/22/calgary-shooting_n_16756664.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i1.huffpost.com/gen/2806298/images/r-CALGARY-POLICE-CAR-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for 2 Shot To Death In Calgary Superstore Parking Lot" class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/22/calgary-shooting_n_16756664.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">2 Shot To Death In Calgary Superstore Parking Lot</a></strong>
+            </article>
+        </li>
+            <li class="three-up-item">
+            <article  data-beacon='{"p":{"plid":"16752254","mpid":9}}' >
+                <figure>
+                    <a href="http://www.huffingtonpost.ca/2017/05/22/mentally-ill-dad-who-killed-three-kids-up-for-review-in-british-columbia_n_16752254.html"  data-beacon='{"p":{"lnid":"img"}}'  onclick="HPTrack.trackPageview('');"><img data-img-path="http://i1.huffpost.com/gen/2661468/images/r-ALLAN-SCHOENBORN-medium260.jpg" src="http://s1.huffpost.com/images/blank.gif" alt="Image for Mentally Ill B.C. Dad Who Killed His 3 Kids Up For Review" class="async-img-load" /></a>
+                </figure>
+                <strong><a href="http://www.huffingtonpost.ca/2017/05/22/mentally-ill-dad-who-killed-three-kids-up-for-review-in-british-columbia_n_16752254.html"  data-beacon='{"p":{"lnid":"hdln"}}'  onclick="HPTrack.trackPageview('');">Mentally Ill B.C. Dad Who Killed His 3 Kids Up For Review</a></strong>
+            </article>
+        </li>
+            </ul>
+    </div>
+    <button class="previous">Previous Story</button>
+    <button class="next">Next Story</button>
+</section>
+<script>
+    (function($){
+        $('.lnid-threeup_left_nav').on('click', function(){
+            HPTrack.trackPageview('/t/a/threeupnav.v6/left.v2/Canada British Columbia');
+        });
+        $('.lnid-threeup_right_nav').on('click', function(){
+            HPTrack.trackPageview('/t/a/threeupnav.v6/right.v2/Canada British Columbia');
+        });
+    })(jQuery);
+</script>
+<!-- blog_banner module -->
+<section class="blog-banner group">
+	<a class="title" href="/the-blog/">THE BLOG</a>
+	<p>
+        
+           Featuring fresh takes and real-time analysis from HuffPost's signature lineup of contributors           </p>
+    </section>
+<!-- main entry body -->
+<section class="main group">
+            <!-- Breaking news bar -->
+        <!-- main entry body -->
+    <div class="column entry">
+        <!-- Article content -->
+        <!-- entry header -->
+	<article class="entry" id="printable">
+		<header>
+                                                        <!-- ads_entry_body_top-->
+                            
+                            <!-- Author Information -->
+                
+    <div class="author blog">
+                <figure>
+            <img src="http://s.huffpost.com/contributors/annelise-sorg/headshot.jpg" alt="Annelise Sorg Headshot" />
+        </figure>
+                <div class="byline vcard group ">
+            <div class="info">
+
+                            <a rel="author" href="/annelise-sorg/" ><span class="name fn">Annelise Sorg</a>
+                  
+                                                        <a class="fan" href="/users/becomeFan.php?of=hp_blogger_Annelise Sorg">Become a fan</a>
+                                    </span>
+                                    <span class="teaser"><p>Dolphin Defender</p></span>
+                
+                        </div>
+                        <!-- author social buttons -->
+            <ul class="social group">
+            	                
+		    		        <li class="email">
+			     <a href="/users/login/" onclick="QuickFan.emailAlerts('hp_blogger_Annelise Sorg', 'Annelise Sorg');return false;" >
+                              <button>Email</button>
+                          </a>
+			 </li>	
+		                    				                    				                <li class="facebook like">
+					
+                    	                 <a href="#" class="fb-tooltip-320022 fb-tooltip" sl-processed="1"></a>
+	                    <script type="text/javascript">
+		                 (function($){
+		                     huff.js('jquery/jquery.tooltip.hp.js', function(){
+		                         $('.fb-tooltip-320022').toolTip({
+		                             toolTipWidth : 250,
+		                             namespacevlaue: '.aol_tooltip_320022 .aol_tooltip',
+		                                html : '<div class="fb-follow-tooltip"><b>Get updates from Annelise Sorg</b><div class="fb-like-container"><div class="fb-like" data-href="http://www.huffingtonpost.ca/annelise-sorg/" data-send="false" data-layout="button_count" data-width="40" data-show-faces="false" data-colorscheme="light" data-font="trebuchet ms" data-action="like" ref="" style="width: 40px" ></div></div></div>'
+		                           });
+		                     });
+		                  }(jQuery));
+		             </script>
+	        	    		                    </li>
+            </ul>
+                    </div>
+    </div>
+                                                                <!-- Title -->
+                <h1 class="title">When Killer Whales Kill: Why the movie "Blackfish" Should Sink Captive Whale Programs</h1>
+                        <!-- Article Byline Information -->
+            <div class="headline group">
+                
+<div class="times"  >
+    <span class="posted">
+        Posted: <time datetime="2013-08-01T14:02:21-04:00">
+            08/01/2013  2:02 pm EDT        </time>
+    </span>
+    <span class="updated">
+        Updated: <time datetime="2013-09-30T05:12:01-04:00">
+            09/30/2013  5:12 am EDT        </time>
+    </span>
+</div>
+            </div>
+                  
+                            <!-- Article Main Image -->
+                    <!-- article image/video (if applicable) -->
+    <div class="main-visual group embedded-image">
+        </div>
+
+                        
+            <!-- Imageblog Social Share Bar -->
+            
+            <!-- Social Share Bar -->
+            <menu id="social_badges" class="social_badges_ social-bar group floating">
+        <section class="social-badge" data-url="/ajax/social/phoenix_social_badge_json.php?badges=facebook_like%2Cfacebook%2Ctwitter%2Cgoogleshare%2Cpinterest%2Cstumbleupon%2Cemail%2Ccomments&id=3686306&url=http%3A%2F%2Fwww.huffingtonpost.ca%2Fannelise-sorg%2Fblackfish-killer-whale-seaworld_b_3686306.html" data-entry-id="3686306"> 
+      <ul class="shares group">
+        <li class='share facebook_like VERB_LIKE' data-type='fblike'><a href='javscript:void(0)'><div class="fb-like" data-href="http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html" data-send="false" data-layout="box_count" data-width="450" data-show-faces="false" data-colorscheme="light" data-font="arial" data-action="like" ref="" style="width: 450px" ></div></a></li><li class="share facebook" data-type="facebook">
+	<a class="social-fb-share-btn" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.huffingtonpost.ca%2Fannelise-sorg%2Fblackfish-killer-whale-seaworld_b_3686306.html" data-url="http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html" data-title="When Killer Whales Kill: Why the movie &quot;Blackfish&quot; Should Sink Captive Whale Programs" data-caption="www.huffingtonpost.ca" data-image="http://i.huffpost.com/gen/1269435/images/o-ORCA-VANCOUVER-AQUARIUM-facebook.jpg">
+	  <span class="facebook-share-btn label">Share</span>
+	  <span class="facebook-share-count count"></span>
+	</a>
+</li>
+<li class="share twitter" data-type="twitter">
+	<div class="social-twitter-btn" data-size="171" data-account="huffpostbc">
+    <a class="twitter-tweet-btn" href="https://twitter.com/intent/tweet?lang=en&text=Why+the+movie+%22Blackfish%22+should+sink+captive+whale+programs%2C+blogs+Annelise+Sorg+http%3A%2F%2Fwww.huffingtonpost.ca%2Fannelise-sorg%2Fblackfish-killer-whale-seaworld_b_3686306.html">
+      <span class="twitter-tweet-btn label">Tweet</span>
+      <span class="twitter-tweet-count count"></span>
+    </a>
+	</div>
+</li>
+<li class="share googleshare" data-type="googleshare"><div class="g-plus" data-action="share" data-annotation="vertical-bubble" data-href="http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html"></div>
+</li>
+<li class="share pinterest" data-type="pinterest">
+<div class="social-pinterest-btn" >
+    <a class="pinterest-pinit-btn" data-url="http://www.huffingtonpost.ca/annelise-sorg/blackfish-killer-whale-seaworld_b_3686306.html" href="http://www.pinterest.com/pin/create/button/?media=&description=When+Killer+Whales+Kill%3A+Why+the+movie+%22Blackfish%22+Should+Sink+Captive+Whale+Programs" target="_blank" data-pin-do="skipLink" data-pin-config="above">
+        <span class="pinterest-pinit-count count"></span>
+    </a>
+</div>
+</li>
+ 
+<li class="share stumbleupon" data-type="stumbleupon">
+   <!-- Place this tag where you want the su badge to render -->
+<su:badge layout="5"></su:badge>
+
+<!-- Place this snippet wherever appropriate -->
+<script type="text/javascript">
+  (function() {
+    var li = document.createElement('script'); li.type = 'text/javascript'; li.async = true;
+    li.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//platform.stumbleupon.com/1/widgets.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(li, s);
+  })();
+</script>
+
+</li>
+<li class="share email" data-type="email">
+	<div class="social-email-btn">
+	    <a href="#" class="hp-email-btn label">Email</a>
+	    <span class="hp-email-count count"></span>
+	</div>
+</li>
+<li class="share comment" data-type="comments">
+	<div class="social-comment-btn">
+	    <span class="hp-comment-btn label">Comment</span>
+	    <span class="hp-comment-count count"></span>
+	</div>
+</li>
+      </ul>  
+      
+    </section>
+            <section class="chicklets">
+        <ul class="group">
+            
+<li class="tumblr" data-type="tumblr">
+<a target="chicklet" title="Share on Tumblr" href="http://www.tumblr.com/share/link?url=http%3A%2F%2Fwww.huffingtonpost.ca%2Fannelise-sorg%2Fblackfish-killer-whale-seaworld_b_3686306.html&amp;name=When Killer Whales Kill: Why the movie &quot;Blackfish&quot; Should Sink Captive Whale Programs&amp;description=">
+    <span class="hidden">tumblr</span>
+</a>
+</li><li class="reddit" data-type="reddit">
+<a target="chicklet" title="Share on Reddit" href="http://reddit.com/submit?url=http%3A%2F%2Fwww.huffingtonpost.ca%2Fannelise-sorg%2Fblackfish-killer-whale-seaworld_b_3686306.html&amp;title=When Killer Whales Kill: Why the movie &quot;Blackfish&quot; Should Sink Captive Whale Programs">
+    <span class="hidden">reddit</span>
+</a>
+</li>        </ul>
+    </section>
+    </menu>
+            <!-- Print Icon for Canada and Quebect verticals in permalink page -->
+                        	<a href="javascript:window.print()" title="Print" class="print_btn" ><img src="http://www.huffingtonpost.com/images/v/print.gif" width="52" height="17" alt="Print"/></a>
+            
+            <div style="clear:both"></div>
+        </header>
+
+                <!-- Article Text Body -->
+                <div class="float_right padding_left_10">
+                    </div>
+
+    <!-- Entry main text -->
+    <div class="content" id="mainentrycontent">
+      <div class="float_left">
+        <!-- AD ads_sharebox_260x60 -->
+        <div class="ad_share_box">
+                    <script type="text/javascript">
+            if ( 'undefined' != typeof(HPAds.ad_sharebox_260x60_fix) ) {
+              HPAds.ad_sharebox_260x60_fix();
+            }
+          </script>
+        </div>
+        
+          <figure class="embedded-image">
+            <img src="http://i1.huffpost.com/gen/1269435/images/s-ORCA-VANCOUVER-AQUARIUM-large.jpg" alt="Getty" />
+            <figcaption class="large-image-caption">Getty</figcaption>
+          </figure>
+              </div>
+            
+        <!-- Entry Text -->
+        		  
+        <p>I watched the whole <a href="http://blackfishmovie.com/" target="_hplink">"Blackfish"</a>movie with a big stupid grin on my face.</p><p>I just couldn't help it. I smiled as I watched trainer after trainer get injured, even killed. I kept smiling watching whales drown during capture and hearing the desperate cries of helpless whale mothers as their babies were torn away from them -- not only in the wild, but also in captivity. I watched frustrated captive whales attacking each other and bleeding profusely. It was all so sad and cruel, but I just kept on smiling right through it all.  I was aware that anybody in the theatre watching me would think I was a total psychopath who cared nothing about whales or people... But I couldn't stop smiling!</p><p>The reason for my goofy grinning was that I know this whale tale all too well, and there it was unfolding beautifully for public consumption on the big screen. Remember Tilikum, the orca that was shipped from Victoria's Sealand to Orlando's SeaWorld after the death of a trainer? "Blackfish" ( which opens August 2 in Vancouver at the <a href="http://viff.org" target="_hplink">Vancity Theatre</a>) shows us that wasn't the last tragedy associated with this killer whale.</p><p>Sitting in the theatre, I couldn't help but think of the reaction that "Blackfish" will cause within the industry, the public and the government. And that made me smile. I figure if all goes well, "Blackfish" will sink SeaWorld's captive orca whale program, just like "Free Willy" sank the program at the Vancouver Aquarium.</p><p>The reason I know this whale of a story so intimately is that I volunteer for the Vancouver-based registered non-profit society called <a href="http://www.vcn.bc.ca/cmeps/" target="_hplink">No Whales In Captivity</a>. I have helped organize hundreds of protests outside the Vancouver Aquarium, lobbied seven different elected boards of commissioners at the Vancouver Park Board, and done thousands of hours of media interviews, school chats and public presentations about the cruel practice of keeping whales in captivity.</p><p>The first "Free Willy" movie was released in 1993. It told the story of a captive orca who is reunited with his family in the ocean. The amazing thing is that this fictional tale became a true story when Keiko, the "Free Willy" whale, was rehabilitated and released back to his family in the North Atlantic. (Watch out for the new documentary, "Keiko: The Untold Story".)</p><p>When the movie "Free Willy" was released in Vancouver, our group was granted permission to set up display tables at all the movie theatres where it was screened. Volunteers collected many signatures on petitions and recruited new protestors at these screenings. Finally in 2001, after many years of protests and meetings, the Vancouver Aquarium closed the orca whale tank forever, shipping the last surviving orca called Bjossa to Sea World in San Diego. Bjossa died at SeaWorld four months later, alone and forgotten in a reserve tank.</p><p>There are still two beluga whales and two dolphins left at the Vancouver Aquarium and we are asking that no more be imported to restock those tanks once these animals die or are sold to another facility.  We are calling for a complete phase-out of whale exhibits in Stanley Park and we will continue to protest and lobby government until we stop the importation of new whales and dolphins.</p><p>Orcas, belugas and dolphins are all cetaceans, which means that they all feel and suffer just like we do. Even the American Association for the Advancement of Science (AAAS) -- with a membership of 8,000 -- agrees that cetaceans should be given the right to live free of human intervention, and that includes no captivity for whales.</p><p>However, the Vancouver Aquarium has other plans right now. Aquarium press releases have announced that bigger tanks are to be built and kept stocked with eight beluga whales and eight dolphins for breeding, performing and for the big money maker, the one-on-one with a whale. For a couple of hundred bucks, you too can spend 15 minutes patting the head of a captive whale who scientists believe is more intelligent than any human, solely for that perfect Facebook photo op. </p><p>The good news is that there's still time to stop the Vancouver Aquarium's plans. We checked with the Vancity Theatre and were told that tickets to "Blackfish" are selling like hotcakes. So be sure to get your movie tickets quick and join the growing movement to end dolphin captivity and empty the whale and dolphin tanks in Stanley Park. </p><p>The orca whales are long gone from the Vancouver Aquarium; the beluga whales and the dolphins are next! </p><p>And that's why I just can't stop smiling.</p>
+        </div>
+                        <!-- Follow Tag Links Bottom -->
+        
+<div class="follow bottom-tags"  >
+    <h2>More:</h2>
+    <span class="group">
+                <span class="entrytag">
+            <a href="/news/vancouver-aquarium/">vancouver aquarium</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/blackfish-review/">blackfish review</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/blackfish/">blackfish</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/blackfish-movie-review/">Blackfish movie review</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/blackfish-movie/">blackfish movie</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/orlando/">orlando</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/seworld/">seworld</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/victoria/">victoria</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/vancouver/">vancouver</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/no-whales-in-captivity/">no whales in captivity</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/capiive-whales/">capiive whales</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/tilikum/">tilikum</a>
+        </span>
+                <span class="entrytag">
+            <a href="/news/sealand/">sealand</a>
+        </span>
+            </span>
+</div>
+        <!-- Books By Author -->
+                                <!-- article_foot ad -->
+            <div class="margin_10_0">
+                            </div>
+            <footer>
+                                <!-- article_bottom ad -->
+                                                 
+		        <!--end of content-->
+                    </footer>
+        </article>	
+                                <!-- ads_below_entry_recirc -->
+        <div id="modulous_below_entry_recirc" class="ad_spot">
+    <div id="taboola-below-article-thumbnails" class="taboola hp-entry-you_may_like"></div>
+<div id="hp-more-gravity"></div>
+<script>
+    (function(){
+        var c = document.getElementById('taboola-below-article-thumbnails');
+        c.id += '-' + Math.round(Math.random()*1e16);
+        
+        var taboolaParams = {
+            loader: "http://cdn.taboola.com/libtrc/huffingtonpost-ca/loader.js",
+            mode: "alternating-thumbs-3r",
+            container: c.id,
+            placement: "Below Article Thumbnails",
+            
+        };
+        
+        
+        doTaboola(taboolaParams);
+        
+    }());
+</script></div>
+		
+				
+        <!-- Orbitz Module -->
+                <!-- 4Wnet_feed Module -->
+                <!-- ads_bottom_article_text -->
+                    <!-- ads_related_content_top -->
+                    <!-- Sailthru flyout -->
+                <!-- Around the web -->
+                        <!-- Conversations -->
+        <div id="floaterTarget">
+                  </div>
+                    </div>
+            <!-- right rail -->
+    	    <section class="rail"  data-beacon='{"p":{"mlid":"sidebar_right"}}' >
+	        <!-- ads_right_rail_flex -->
+<div id="modulous_right_rail_flex" class="ad_spot">
+    <script type="text/javascript">
+  if ( "function" === typeof(adSetSyncDelay) ) {
+    adSetSyncDelay('125');
+  }
+</script>
+<div id="ad_right_rail_flex" class="ad_wrapper_top"><div id="adtech_right_rail_flex" class="adtech-adspot ad-right_rail_flex"></div>
+<script type="text/javascript">
+
+(function(){
+
+var adsDiv = document.getElementById('adtech_right_rail_flex');
+adsDiv.id = adsDiv.id + Math.round(Math.random()*1e16);
+var adId = '93328187';
+
+// Override adtech_call_type
+var delivery_type = "" || "";
+var adtech_call_type = "";
+switch (delivery_type) {
+	case "by_request": adtech_call_type = "ajax"; break;
+	case "text": adtech_call_type = "text"; break;
+  case "iframe": adtech_call_type = "iframe"; break;
+	case "iframe_proxy": adtech_call_type = "f"; break;
+  case "collapsed": adtech_call_type = "fc"; break;
+	default: adtech_call_type = "f"; break;
+}
+
+
+
+var args = [adId, 'RR', 'RR'
+, adtech_call_type];
+if (typeof debugadcode == 'function') { debugadcode('AdTech', {placement: 'right_rail_flex', args: args}, adsDiv); }
+args.push(adsDiv);
+
+
+htmlAdWH.apply(this, args);
+
+
+adSetInView('0');
+
+}());
+
+</script></div></div>
+<!-- ads_text_sponsorship -->
+<!-- ads_right_rail_edit_promo -->
+<!-- HPIN unit --><section class="most-popular"  >
+    <div id="modulous_gravity_most_popular" class="ad_spot">
+    <h2 class="mp_title">Suggested For You</h2>
+<div class="mp_cycle">
+<div id="grv-personalization-200"></div>
+</div>
+
+<script type='text/javascript'>
+//<![CDATA[
+(function() {
+  window.gravityInsightsParams = {
+    'type': 'content',
+    'action': '',
+    'site_guid': '72ef14275a4db480ac8010c74ede260c'
+  };
+  var adServerReq, bUrl, cburl, doUseGravityUserGuid, includeJs, jq, pfurl, type, ug, wlPrefix, wlUrl, _ref, _ref1, _ref2;
+  includeJs = function(a) {
+    var b;
+    b = document.createElement("script");
+    b.async = !0;
+    b.src = a;
+    a = document.getElementsByTagName("script")[0];
+    return a.parentNode.insertBefore(b, a)
+  };
+  bUrl = "";
+  ug = (doUseGravityUserGuid = !0 === gravityInsightsParams.useGravityUserGuid ? 1 : 0) ? "" : gravityInsightsParams.user_guid || (null != (_ref = /grvinsights=([^;]+)/.exec(document.cookie)) ? _ref[1] : void 0) || "";
+  wlUrl = (wlPrefix = "https:" === location.protocol ? "https://secure-api.gravity.com/v1/api/intelligence" : "http://rma-api.gravity.com/v1/api/intelligence", 
+  jq = (null != (_ref1 = window.jQuery) ? null != (_ref2 = _ref1.fn) ? _ref2.jquery : void 0 : void 0) || "", 
+  type = "iframe", 
+  adServerReq = gravityInsightsParams.ad || "", 
+  cburl = gravityInsightsParams.cburl || "", 
+  pfurl = gravityInsightsParams.pfurl || "", "" + wlPrefix + "/wl?jq=" + jq + "&sg=" + gravityInsightsParams.site_guid + "&ug=" + ug + "&ugug=" + doUseGravityUserGuid + "&id=grv-personalization-200&pl=200" +
+    ("&type=" + type + "&ad=" + adServerReq + "&cburl=") + encodeURIComponent(cburl) + "&pfurl=" + encodeURIComponent(pfurl) + ("&x=" + (new Date).getTime()) + ("undefined" !== typeof forceArticleIds && null !== forceArticleIds && forceArticleIds.join ? "&ai=" + forceArticleIds.join(",") : "") + ("undefined" !== typeof apids && null !== apids && "" !== apids ? "&apids=" + encodeURIComponent(apids) : ""));
+  bUrl && includeJs(bUrl);
+  wlUrl && (window.gravityInsightsParams.sidebar && (window.gravityInsightsParams.wlStartTime = (new Date).getTime()), includeJs(wlUrl));
+})();
+//]]>
+</script></div>
+</section>
+					<section class="follow-huffpost"  data-beacon='{"p":{"mnid":"mod-follow"}}'  >
+						<h2>FOLLOW HUFFPOST</h2>
+						<ul class="untouched follow-links group">
+							<li class="email selected"  data-beacon='{"p":{"lnid":"email"}}'  >
+								<button>Email</button>
+								<div class="content">
+									<form class="subscribe">
+										<fieldset class="email">
+											<legend>Email Address</legend>
+											<input id="subscribe_user_email" class="text" name="email" onfocus="if(this.value=='Email Address')this.value=''" value="Email Address" type="text">
+											<input type="checkbox" value="1" name="email_subscribe_check" class="email_subscribe_check" style="display:none;" />
+	                                        <input type="hidden" name="vertical" value="canada-british-columbia">
+                                            <input class="button right_rail_signup" type="submit" value="Sign me up!">
+                                            <label class="signup_error" style="display:none;">Please check the checkbox to indicate your consent</label>
+                                            <fieldset class="options">
+                                                <legend>Options</legend>
+                                                                                                <div class="item">
+                                                    <input type="checkbox" class="list" id="daily-brief"  >
+                                                                                                                <label for="daily-brief">HuffPost Daily Brief</label>
+                                                                                                        </div>
+                                                                                                                                                                                                
+                                                                                                                                                                                                
+                                                                                                	<div class="item">
+                                                    	                                                    		<input type="checkbox" class="list" id="vertical-brief">
+                                                    		<label for="vertical-brief">British Columbia</label>
+                                                    	                                                	</div>
+                                            	                                            	
+                                            </fieldset>
+                                      </fieldset>
+                                                                              <p class="instructions">
+                                          Get top stories and blog posts emailed to me each day..
+                                        </p>
+                                                                                                                </form>
+                                </div>
+                            </li>
+
+                            <li class="facebook"  data-beacon='{"p":{"lnid":"fb"}}'  > 
+                                <button>Facebook</button>
+                                <div class="content off">
+                                    <ul>
+                                    <li class="group">
+                                                                               <strong class="name">HuffPost</strong>
+                                            <div class="share-button">
+                                                <div class="fb-like" data-href="http://www.facebook.com/HuffPostCanada" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false" data-colorscheme="light" data-font="arial" data-action="like" ref="" style="width: 100px" ></div>                                                
+                                            </div>
+                                                                                        <br> <br>
+                                            <strong class="name">British Columbia</strong>
+                                            <div class="share-button">
+                                                <div class="fb-like" data-href="http://www.facebook.com/HuffPostBC" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false" data-colorscheme="light" data-font="trebuchet ms" data-action="like" ref="" style="width: 100px" ></div>                                            </div>
+                                                                                                                            
+                                          </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="twitter"  data-beacon='{"p":{"lnid":"twitter"}}'  > 
+                                <button>Twitter</button>
+                                <div class="content off">
+                                    <ul>
+                                        <li class="group">
+                                            <div class="share-button">
+																						<strong class="name">HuffPost</strong>
+											 <div class="share-button">
+                                              
+
+<a href="https://twitter.com/HuffPostCanada" class="twitter-follow-button" data-show-screen-name="false" data-show-count="false" data-lang="en" data-width="100px">Follow</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+                                             </div><br>
+                                             <strong class="name">British Columbia</strong>
+                                             <div class="share-button">
+                                              
+
+<a href="https://twitter.com/huffpostbc" class="twitter-follow-button" data-show-screen-name="false" data-show-count="false" data-lang="en" data-width="100px">Follow</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+                                             </div>
+                                              
+											  											
+                                              
+                                            </li>
+                                    </ul>
+                                </div>
+                            </li>
+                                                        <li class="google"  data-beacon='{"p":{"lnid":"gplus"}}'  >
+                                <button>Google Plus</button>
+                                <div class="content off">
+                                    <ul>    
+                                        <li class="group">
+                                                                                            <strong class="name">HuffPost</strong>
+                                                <div class="share-button">
+                                                 
+<div class="g-plusone" data-annotation="bubble" data-size="medium" data-width="32" data-href="http://www.huffingtonpost.ca/"></div>
+                                                </div><br>
+                                                <strong class="name">British Columbia</strong>
+                                                 <div class="share-button">
+                                                  
+<div class="g-plusone" data-annotation="bubble" data-size="medium" data-width="32" data-href="http://www.huffingtonpost.ca/canada-british-columbia"></div>
+                                                 </div>
+                                             
+                                               
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                                                        
+							<li class="rss no-ad"  data-beacon='{"p":{"lnid":"rss"}}'  >
+								<button>RSS</button>
+								<div class="content off">
+									<ul>
+									                                    																				
+																																														<li>
+			                                            <a href="/feeds/verticals/canada/blog.xml" class="name sprite">The Huffington Post</a>
+													</li>
+																								<li>
+		                                            <a href="/feeds/verticals/canada-british-columbia/blog.xml" class="name sprite">British Columbia</a>
+												</li>
+																					                                    										<li>
+                                            <a class="more" href="/syndication/">All RSS / Feeds</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li class="phone no-ad"  data-beacon='{"p":{"lnid":"mobile"}}'  >
+								<button>Phone</button>
+								<div class="content off">
+									<ul>
+										<li>
+											<a class="ios sprite" href="http://itunes.apple.com/us/app/the-huffington-post/id306621789?mt=8" target="_blank">Available on the App Store</a>
+										</li>
+										<li>
+											<a class="android sprite" href="https://play.google.com/store/apps/details?id=com.huffingtonpost.android&hl=en" target="_blank">Android App on Google Play</a>
+										</li>
+                                        <li>
+                                            <a class="blackberry sprite" href="http://appworld.blackberry.com/webstore/content/19143/?countrycode=US&lang=en" target="_blank">Get it at Blackberry App World</a>
+                                        </li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+                        					</section>
+ <!-- ads_text_sponsorship -->
+<!-- ads_snn_234x60 -->
+<!-- ads_most_popular_edit_promo -->
+<!-- ads_sponsorship_2 -->
+<div id="modulous_sponsorship_2" class="ad_spot">
+    <div id="taboola-right-rail-thumbnails" class="taboola hp-entry-you_may_like"></div>
+<div id="hp-more-gravity"></div>
+<script>
+    (function(){
+        var c = document.getElementById('taboola-right-rail-thumbnails');
+        c.id += '-' + Math.round(Math.random()*1e16);
+        
+        var taboolaParams = {
+            loader: "http://cdn.taboola.com/libtrc/huffingtonpost-ca/loader.js",
+            mode: "alternating-thumbs-2r",
+            container: c.id,
+            placement: "Right Rail Thumbnails",
+            
+        };
+        
+        
+        doTaboola(taboolaParams);
+        
+    }());
+</script></div>
+<!-- ads_lower_promo -->
+<!-- ads_right_rail_300x100_upper -->
+<!-- ads_right_rail_lower -->
+<!-- ads_btf_300x100 -->
+<div class="ad_lower_right_commercials_wrapper">
+    <!-- ads_right_rail_300x100_lower -->
+        <!-- ads_text_sponsorship_2 -->
+        <!-- ads_commercial_module -->
+    	<!-- ads_right_rail_300x250_lower -->
+    </div>
+<script type="text/javascript">
+    try {
+        var ad_els = jQuery("#ad_right_rail_300x250_lower");
+        var right_rail_el = jQuery(".rail");
+        
+        if ( ad_els.length && right_rail_el.length ) {
+            ad_els.bind("mouseover", function(){
+                if ( right_rail_el.hasClass("fix") ) {
+                    window.scrollTo(window.scrollX, window.scrollY - 1);   
+                }
+                return;
+            });
+        }
+    } catch (e) {
+        
+    }
+</script>
+ <script type="text/javascript">
+jQuery( document ).ready(function( $ ) {
+    jQuery('#ad_right_rail_flex').prepend("<span class='adflex'></span>");
+   jQuery('.adflex').append( __('Advertisement'));
+}
+);
+</script>
+<style>
+#ad_right_rail_flex .adflex {
+color: #999;
+text-transform: uppercase;
+font-size: 9px;
+font-family: arial;
+padding-bottom: 4px;
+display: inline-block;
+padding-left: 2px;
+}
+.ad_wrapper_top {
+background: none !important;
+}
+</style>
+	    </section>
+    
+    </section>
+        </section>
+        <!-- END page_content -->
+        <!-- page_footer -->
+        <section class="footer">
+    <!-- Served from: production-mt-wfe-54-47.use1 -->
+    <!-- ads_leaderboard_bottom --> 
+        <!-- visual footer -->
+    <footer>
+        <!-- Search Box -->
+        <div class="search">
+
+</div>
+        <!-- Legal and Informational Links -->
+        <menu class="links">
+			            															<ul class="group row1">
+													<li>
+								<a href="http://advertising.aol.com/brands/huffington-post">advertise</a>
+							</li>
+													<li>
+								<a href="http://www.huffingtonpost.ca/makehome/">make HuffPost your home page</a>
+							</li>
+													<li>
+								<a href="http://www.huffingtonpost.ca/syndication/">RSS</a>
+							</li>
+													<li>
+								<a href="https://careers.smartrecruiters.com/Aol/huffington-post/">careers</a>
+							</li>
+													<li>
+								<a href="http://www.huffingtonpost.com/p/frequently-asked-question.html">FAQ</a>
+							</li>
+													<li>
+								<a href="http://www.huffingtonpost.com/p/huffingtonpostca-terms-and-con.html">user agreement</a>
+							</li>
+											</ul>	
+									<ul class="group row2">
+													<li>
+								<a href="http://www.huffingtonpost.com/p/huffingtonpostca-privacy-policy.html">privacy policy</a>
+							</li>
+													<li>
+								<a href="http://www.huffingtonpost.com/p/community-guidelines-ca.html">comment policy</a>
+							</li>
+													<li>
+								<a href="http://www.huffingtonpost.com/p/huffingtonpostca-about-us.html">about us</a>
+							</li>
+													<li>
+								<a href="http://adinfo.aol.com/about-our-ads/">about our ads</a>
+							</li>
+													<li>
+								<a href="http://www.huffingtonpost.ca/contact/">contact us</a>
+							</li>
+													<li>
+								<a href="http://www.huffingtonpost.ca/archive/">Archive</a>
+							</li>
+											</ul>	
+							                 </menu>
+                <!-- Legal Disclaimers -->
+        <div class="legal">
+		                                               
+                                           <span class="copyright">Copyright &copy;2017 TheHuffingtonPost.com, Inc.</span>
+                                                                                  <span class="trademark"> &quot;The Huffington Post&quot; is a registered trademark of TheHuffingtonPost.com, Inc. All rights reserved. 2017&copy; </span>
+		   	   
+        </div>
+        			<div class="part-of">Part of <span class="part-of-group">HPMG News</span></div>
+            </footer>
+</section>
+        <!-- END page_footer -->
+        <div id="tfm_skyscraper" class="top_right_skyscraper"></div>
+    </div>
+    <!-- ads_bottom_code_blocks -->
+        <!-- ads_bottom_1x1 -->
+    <div id="modulous_bottom_1x1" class="ad_spot">
+    <script type="text/javascript">
+
+  try {
+     // Make sure the adsDevilAd object exists before putting your function on it
+     window.adsDevilAd=window.adsDevilAd||{};
+
+     adsDevilAd.adinfo=function(n,d,w,h){
+       // n will be the ad number, we assume the LB ad is #1. 
+       // NOTE: d=divName if you'd rather use that.  And w,h are width and height respectively.
+
+         if (window.adsDevilAd.ad[1].aolFormat == "Wallpaper") {
+           window.floater.destroy();
+           jQuery('#badges_v2_1').css('display','none !important');
+         }
+
+     };
+   }
+   catch (e) {}
+
+</script></div>
+
+    <!--modulous footer -->
+    
+<script>
+// Restrict Most Popular title to 2 lines
+(function() {
+if (!window.jQuery) { return; }
+var $mpt = jQuery('.mp_title');
+if ($mpt.length == 0) return;
+function numLines($elem) {
+  lh = parseFloat($elem.css('line-height').replace('px', ''));
+  return Math.round($elem.height()/lh);
+}
+for (i=0; i<10 && numLines($mpt)>2; i++) {
+  $mpt.css('font-size', '-=1');
+}
+})();
+</script>
+<script>
+    window._taboola = window._taboola || [];
+    _taboola.push({flush:true});
+</script>    <!-- END modulous footer -->
+
+    
+    <!-- Aol Universal Navbar module -->
+        <!-- correction -->
+    
+<style type="text/css">
+span.error {
+	 margin-top: 0;
+	 display: none;
+}
+  
+span.error.show {
+	display: block;
+}
+.hp_blue_lb_head_subimage {
+    text-align: center;
+}
+</style>
+
+<div style="display: none;">
+	<div id="lightbox">
+        <div class="content">        
+            
+            <div class="social_modal_content">
+                <div id="submissions_modal" class="sbm_modal">
+                    <h4 id="submission_header" class="sbm_heading hd_title">Use this form to alert a HuffPost editor about a factual or typographical error in this story.</h4>
+                <div id="submission_notify" class="sbm_notify">Notify message</div>
+                <span class="required">* Required</span>
+                <form id="submissions_form" method="post">
+                    <input type="hidden" name="entry_id" value="3686306">
+                    <div class="smb-line clearfix group">
+                        <span class="sbm_asterisk ar_right">*</span>
+                        <input class="bordered" type="text" placeholder="Name" name="submission_name" id="submission_name" value="">
+                        <span class="sbm_asterisk ar_right">*</span>
+                        <input class="bordered nomargin" type="text" placeholder="Email Address" name="submission_email" id="submission_email" value="">
+                    </div>
+                    <div class="smb-line clearfix">
+                          <span class="submission_name error"></span>
+                          <span class="submission_email error"></span>
+                    </div>
+                    <div class="sbm_fc">
+                        <span class="sbm_l"><span class="sbm_asterisk">*</span> <strong>What kind of error is this?</strong></span>
+                        <select name="submission_error_kind" id="submission_error_kind" class="sbm_koe sbm_r">
+                            <option value="">Choose an option</option>
+                            <option value="Factual or typographical">Factual or typographical</option>
+                            <option value="Comment moderation problem">Comment moderation problem</option>
+                            <option value="Rights and permissions">Rights and permissions</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="smb-line clearfix">
+                          <span class="submission_error_kind error"></span>
+                    </div>
+                    <div class="sbm_fc">
+                            <span class="sbm_l float_left"><span class="sbm_asterisk">*</span> What is the correction?</span>
+                            <span class="sbm_counter" id="sbm_counter">0 count</span>
+                        <div class="clear_first"></div>
+                        <textarea id="submission_body" class="basic sbm_textarea sbm_r arial_12" name="submission_body" rows="9" cols="22">Describe the error here (1,000 character limit)</textarea>
+                    </div>
+                    <div class="smb-line clearfix">
+                        <span class="submission_body error"></span>
+                    </div>
+                    <div class="bottom_block clearfix">
+                        <p class="small smb_note">
+                        	<span class="sbm_asterisk">*</span> Type the words below so we know you are not a cyborg                        </p>
+                        <!--captcha-->
+                        <div class="float_left recaptcha_nothad_incorrect_sol recaptcha_isnot_showing_audio" id="submission_recaptcha">
+                           <!-- Insert PHP captcha code here -->
+                        </div>
+                        <!-- end captcha -->
+                        <div class="float_left" style="padding:20px; width: 227px;">
+                            <input id="submission_opt_in" class="sbm_checkbox" name="submission_opt_in" type="checkbox">
+                                                        <label for="submission_opt_in">Sign me up for The Huffington Post's Daily Brief</label>
+                                                        <br>
+                            <br>
+                            <div class="centered" id="submissions_bottom_area">
+                                <input type="submit" value="Send" id="submission_submit" href="javascript:void(0);" class="button double-extra-large light-blue sbm_send">
+                            </div>
+                            <div id="submission_ajax_loader" class="submission_ajax_loader"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="submission_thanks" class="sbm_thanks">Thanks for your report!</div>
+    </div>
+</div>
+    <!-- Tracking -->
+    <!-- Nielson Feed -->
+    <!-- BEGIN Nielsen Tracking -->
+<script type="text/javascript">
+  HPTrack.Services.trackTo(['Nielsen']);
+</script>
+<noscript>
+   <img src="//secure-us.imrworldwide.com/cgi-bin/m?ci=us-703240h&amp;cg=0&amp;cc=1&amp;ts=noscript" width="1" height="1" alt="" />
+</noscript>
+
+<!-- END Nielsen Tracking -->
+     <!-- Webtrekk Feed -->
+        <!-- Xiti Tracking -->
+        <!-- VGWort Tracking -->
+        
+    <!-- quantcast Tracking -->
+        <!-- Parsely Tracking -->
+    <!-- START Parse.ly Include: Standard -->
+
+<div id="parsely-root" style="display: none">
+  <div id="parsely-cfg" data-parsely-site="huffingtonpost.ca"></div>
+</div>
+<script>
+(function(s, p, d) {
+  var h=d.location.protocol, i=p+"-"+s,
+      e=d.getElementById(i), r=d.getElementById(p+"-root"),
+      u=h==="https:"?"d1z2jf7jlzjs58.cloudfront.net"
+      :"static."+p+".com";
+  if (e) return;
+  e = d.createElement(s); e.id = i; e.async = true;
+  e.src = h+"//"+u+"/p.js"; r.appendChild(e);
+})("script", "parsely", document);
+</script>
+<!-- END Parse.ly Include -->    <!-- END page_wrapper -->
+
+    <!-- end RUM -->
+    <script type="text/javascript">huff.use('conf', function(c){ c.set({"mtime":1495562002,"entry":"3686306","vertical":"canada-british-columbia","vertical-id":"120","vertical-name":"Canada British Columbia","ads\/zone":"","topnav\/version":"2","cookie\/domain":"huffingtonpost.ca","websocket\/enabled":false,"websocket\/url":"fiji-production-ws.use1.huffpo.net","websocket\/init":false,"site_blog_id":22,"auth_secure_domain":"secure.huffingtonpost.com","auth_secure_protocol":"https","auth_method":"frame","static_secure_domain":"s-s.huffpost.com","images_secure_domain":"s-i.huffpost.com","images_secure_www_domain":"s-i.huffpost.com","social_tracking":true,"primary_vertical_id":-1,"primary_vertical_name":false,"primary_vertical_facebook_name":"HuffingtonPost","primary_vertical_twitter_name":"HuffingtonPost","current_vertical_facebook_name":"HuffingtonPost","current_vertical_twitter_name":"HuffingtonPost"}); });</script>    <!-- RUM footer -->
+    <script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"a2134792db","applicationID":"4028938","transactionName":"YFIDbEBYVhJYURBaXFkYIk1BTVcMFkIMXFZZXhkXaVxWFUtLORxQVhgiWVxYXAAZcBZaR15ECRhxVlQUVFANUg==","queueTime":0,"applicationTime":205,"ttGuid":"","agentToken":"","atts":"TBUAGghCRRw=","errorBeacon":"bam.nr-data.net","agent":""}</script>    <script type="text/javascript" src="http://s0.huffpost.com/assets/js.php?v=1493310047&f=phoenix%2Feditions.js%2Clayouts%2F13.js%2Cphoenix%2Ffloating_share.js" async></script>
+    
+    <script> jQuery(document).foundation(); </script>
+
+</body>
+</html>

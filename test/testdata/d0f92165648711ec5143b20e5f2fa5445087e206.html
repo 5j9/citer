@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"a2134792db","applicationID":"36240457","transactionName":"dFgPTEBWVA1cQEtXVkRcFVdCFl0PTUANVkAYRAlXRQ==","queueTime":2,"applicationTime":58,"agent":"","atts":"TBUUGghCGgRdWxBaXFkVWxpHShpNG0QBQUdeVABUEAMaIlxeAVFBXkMYGk9E"}</script>
+<script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1026.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script>
+<meta content="97Mj-wW7u8U1NOnkW1rfH-I1kgO0-a9YsgoesOk41R8" name="google-site-verification">
+<meta content="18468761129" property="fb:pages">
+
+<title>Man Undergoes Extensive Plastic Surgery To Look Like Justin Bieber, Spends $100,000 In 5 Years | HuffPost</title>
+<meta charset="utf-8">
+<meta content="width=1000" name="viewport">
+<meta content="Not only is songwriter Toby Sheldon a 33-..." name="description">
+<meta content="33 year old bieber fan,toby sheldon plastic surgery,plastic surgery justin bieber,bieber plastic surgery,33 year old justin bieber,toby sheldon justin bieber,video,$100000 plastic surgery,$100000 justin bieber surgery,toby sheldon songwriter,toby sheldon 33,Justin Bieber" name="keywords">
+<meta content="LOOK: Bieber Fan Had $100K Worth Of Plastic Surgery To Look Like His Idol" property="og:title">
+<meta content="article" property="og:type">
+<meta content="http://i.huffpost.com/gen/1416109/images/o-PLASTIC-SURGERY-BIEBER-facebook.jpg" property="og:image">
+<meta content="http://i.huffpost.com/gen/1416109/images/o-PLASTIC-SURGERY-BIEBER-facebook.jpg" property="og:image:url">
+<meta content="image/jpeg" property="og:image:type">
+<meta content="http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html" property="og:url">
+<meta content="The Huffington Post" property="og:site_name">
+<meta content="en_US" property="og:locale">
+<meta content="Not only is songwriter Toby Sheldon a 33-..." property="og:description">
+<meta content="33 year old bieber fan,toby sheldon plastic surgery,plastic surgery justin bieber,bieber plastic surgery,33 year old justin bieber,toby sheldon justin bieber,video,$100000 plastic surgery,$100000 justin bieber surgery,toby sheldon songwriter,toby sheldon 33,Justin Bieber" property="article:tag">
+<meta content="Celebrity" property="article:section">
+<meta content="summary_large_image" name="twitter:card">
+<meta content="@HuffPostCeleb" name="twitter:site">
+<meta content="LOOK: Bieber Fan Had $100K Worth Of Plastic Surgery To Look Like His Idol" property="twitter:title">
+<meta content="http://i.huffpost.com/gen/1416109/images/o-PLASTIC-SURGERY-BIEBER-facebook.jpg" property="twitter:image">
+<meta content="Not only is songwriter Toby Sheldon a 33-..." property="twitter:description">
+<meta content="hoont" property="twitter:creator">
+<meta content="2013-10-19 13:00:35 -0400" property="sailthru.date">
+<meta content="2013-10-20 13:00:35 -0400" property="sailthru.expire_date">
+<meta content="2013-10-19 13:00:35 -0400" property="article:published_time">
+<meta content="2013-10-21 11:18:41 -0400" property="article:modified_time">
+<meta content="huffpostnews:///?editionID=us&amp;entryID=4128563" property="al:ios:url">
+<meta content="306621789" property="al:ios:app_store_id">
+<meta content="The Huffington Post" property="al:ios:app_name">
+<link href="ios-app://306621789/huffpostnews/?editionID=us&amp;entryID=4128563" rel="alternate">
+
+<meta content="46744042133" property="fb:app_id">
+<meta content="text/html" http-equiv="Content-Type">
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible">
+<link rel="shortcut icon" type="image/x-icon" href="http://s.m.huffpost.com/assets/favicon-2020e123c064086aad150fe909c53771f862d7c76cd62f6146e81d533845fd7d.ico" />
+<link href="http://m.huffpost.com/us/entry/4128563?utm_hp_ref=mostpopular" media="handheld" rel="alternate">
+<link href="http://m.huffpost.com/us/entry/4128563?utm_hp_ref=mostpopular" media="only screen and (max-width: 640px)" rel="alternate">
+<link href="http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html" rel="canonical">
+<style>
+html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{margin:0}div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}code,kbd,pre,samp{font-family:monospace, serif;font-size:1em}pre{white-space:pre-wrap}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:0.35em 0.625em 0.75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="search"]{-webkit-appearance:textfield;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}img{border-style:none}svg:not(:root){overflow:hidden}@font-face{font-family:"huffington-icons";font-style:normal;font-weight:normal;src:url(//s.m.huffpost.com/assets/huffington-icons-68621b24df29361650b7bfbb6131314c3dd882982252d8e3d7d7d2bee01ff79d.eot?#iefix) format("embedded-opentype"),url(//s.m.huffpost.com/assets/huffington-icons-db58091c16f38ee604b37c7482628f656c410daee19b728f2c3574a17c0b4a8d.woff) format("woff"),url(//s.m.huffpost.com/assets/huffington-icons-2eb23bdbca31a787408fe67de648f0629b1b6809bd7a945e1882700e6dbaa297.svg#huffington-icons) format("svg")}body{width:100%;box-sizing:border-box}body.mapi{background:#ffffff}body #recaptcha-container{display:none}body.recaptcha-open #recaptcha-container{position:fixed;top:0;bottom:0;left:0;right:0;z-index:9000000;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;background-color:rgba(111,111,111,0.6)}img{max-width:100%;height:auto}center img+em{display:block}html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}.fyre{box-sizing:initial}.clearfix:after{content:"";display:table;clear:both}.row{width:100%;position:relative}.row:after{content:"";display:table;clear:both}.col{float:left}.col:nth-child(n+2){padding-left:5px}.col-full{padding-left:0;float:left;width:100%}.col-half{padding-left:0;float:left;width:50%}.col-third{padding-left:0;float:left;width:33.33%}.col-two-thirds{padding-left:0;float:left;width:66.66%}.seperator{border-bottom:1px solid #2e7061;padding-left:5px;padding-right:5px}.hidden{display:none !important;visibility:hidden !important}.flex-video{position:relative;padding-bottom:56.55%;height:0;overflow:hidden}.flex-video iframe,.flex-video object,.flex-video embed,.flex-video video{position:absolute;top:0;left:0;width:100%;height:100%}.flex-video.wapo{padding-bottom:50%}.flex-video.vimeo{padding-top:0}.flex-video.msnbc{padding-bottom:91%}.no-scroll{overflow:hidden}.sponsor-container{border:1px solid #dbdbdb;border-left:none;border-right:none}html{font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif}h1,h2,h3,h4,h5{font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;line-height:1.4em;font-weight:normal}ul,ol{padding-top:5px;padding-bottom:5px}blockquote{padding-top:15px;padding-bottom:15px;padding-left:15px;padding-right:15px;margin-top:15px;margin-bottom:15px;color:#444444;border:1px solid #dbdbdb;line-height:1.5em}p{font-size:1.0625rem}a{color:#2e7061}[role=main]{width:100%;position:relative}[role=main]:after{content:"";display:table;clear:both}body{max-width:none;min-width:767px;width:100%;margin-left:auto;margin-right:auto;position:relative}body.locked{overflow:hidden}.main{position:relative}body[data-locale=en_GB] .main{max-width:600px;margin:0 auto}.blogs{border-right:1px solid #dbdbdb;padding-right:12px}.wide .below-entry__content{width:100%;max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto;margin:0 auto}.b-page .right-rail{display:none}@media (min-width: 1024px){.b-page .right-rail{display:block;-webkit-box-flex:0;-ms-flex:0 0 300px;flex:0 0 300px;margin-top:5px;padding-left:0}}.b-page .right-rail .below_right_rail_flex{margin-top:30px;margin-bottom:30px}.static .right-rail{margin-top:5px}.right-rail{max-width:303px}:target:before{content:"";display:block;height:78px;margin:-78px 0 0;pointer-events:none}.header{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;background-color:#000000;width:100%;margin-bottom:40px;position:static;top:0;height:78px;-webkit-transition:height 0.3s;transition:height 0.3s;z-index:5000005}.header__content{max-width:1440px;min-width:768px;width:100%;margin-left:auto;margin-right:auto;width:100%;height:78px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch}.header__content-left,.header__content-right{-webkit-box-flex:0;-ms-flex:0 0 300px;flex:0 0 300px;display:-webkit-box;display:-ms-flexbox;display:flex}.header__content-left{padding-left:20px;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-ordinal-group:1;-ms-flex-order:0;order:0}.header__content-right{padding-right:20px;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2}.header__hamburger-link{width:30px;height:20px;cursor:pointer;position:relative}.header__hamburger-link:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:20px;color:#666;position:absolute;display:block;width:30px}.header__hamburger-link.open:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:24px;color:#666}.header__hamburger-link.open:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:24px;color:#0DBE98}.header__hamburger-link:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:20px;color:#0DBE98;position:absolute;display:block;width:30px}.header__editions{color:#ffffff;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-ms-flex-item-align:center;align-self:center;font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.6875rem;cursor:pointer;padding:15px;color:#888;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.header__editions::-moz-selection{background-color:transparent}.header__editions::selection{background-color:transparent}.header__editions:hover,.header__editions.open{color:#0DBE98}.header__editions__label{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;font-size:0.625rem;letter-spacing:1.3px}.header__editions__edition{-webkit-box-ordinal-group:1;-ms-flex-order:0;order:0;font-size:1.25rem;font-style:italic;font-weight:normal;text-align:center;letter-spacing:1px}.header__logo{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.header__logo::-moz-selection{background-color:transparent}.header__logo::selection{background-color:transparent}.header__social-list{-webkit-box-ordinal-group:1;-ms-flex-order:0;order:0;display:-webkit-box;display:-ms-flexbox;display:flex;height:100%;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.header__social-list__item{font-size:1.25rem;color:#ffffff;background-color:#242424;text-decoration:none;width:38px;height:38px;border-radius:50%;margin-right:12px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.header__social-list__item::-moz-selection{background-color:transparent}.header__social-list__item::selection{background-color:transparent}.header__social-list__item--facebook:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1.125rem;color:#ffffff;position:relative;top:8px;left:10px}.header__social-list__item--facebook:hover{background-color:#3b5999}.header__social-list__item--twitter:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1.125rem;color:#ffffff;position:relative;top:8px;left:11px}.header__social-list__item--twitter:hover{background-color:#55acef}.header__social-list__item--snapchat{background-image:url(//s.m.huffpost.com/assets/icon-snapchat-d9b47ee21b08668c392280c07aad41ba94f55ec741cb085253e419c2377d77f8.png);background-repeat:no-repeat;background-position:center center;background-size:26px}.header__social-list__item--snapchat:hover{background-color:#fffb00}.header__social-list__item--instagram:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1.125rem;color:#ffffff;position:relative;top:9px;left:10px}.header__social-list__item--instagram:hover{background:-webkit-radial-gradient(circle farthest-corner at 32% 106%, #ffe17d 0%, #ffcd69 10%, #fa9137 28%, #eb4141 42%, transparent 82%),-webkit-linear-gradient(315deg, #234bd7 12%, #c33cbe 58%);background:radial-gradient(circle farthest-corner at 32% 106%, #ffe17d 0%, #ffcd69 10%, #fa9137 28%, #eb4141 42%, transparent 82%),linear-gradient(135deg, #234bd7 12%, #c33cbe 58%)}@media (max-width: 981px){.header__social-list--sticky{display:none}}@media (max-width: 980px){.header .header__social-list{display:none}.header__content-left,.header__content-right{-webkit-box-flex:0;-ms-flex:0 0 150px;flex:0 0 150px}}.header--sticky{height:48px;background-color:rgba(0,0,0,0.9)}.header--sticky .logo__img{height:22px}.header--sticky .header__hamburger-link{width:24px;height:16px}.header--sticky .header__hamburger-link:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:16px;color:#666}.header--sticky .header__hamburger-link.open:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:16px;color:#666}.header--sticky .header__hamburger-link.open:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:16px;color:#0DBE98}.header--sticky .header__hamburger-link:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:16px;color:#0DBE98}.header--sticky .header__social-list__item{height:30px;width:30px;margin-right:9px}.header--sticky .header__social-list__item--facebook:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1rem;color:#ffffff;position:relative;top:5px;left:7px}.header--sticky .header__social-list__item--twitter:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1rem;color:#ffffff;position:relative;top:5px;left:7px}.header--sticky .header__social-list__item--snapchat{background-size:19px}.header--sticky .header__social-list__item--instagram:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1rem;color:#ffffff;position:relative;top:5px;left:7px}.header--sticky .header__editions{display:none}.header--sticky .header__editions .editions__current-edition{padding:9px 15px}.header--transition{-webkit-transition-timing-function:ease;transition-timing-function:ease;-webkit-transition:height 0.2s, width 0.2s;transition:height 0.2s, width 0.2s}.logo{text-decoration:none;width:300px;display:block}.logo__img{height:28px;width:100%;display:block}.a-page:not(.section-video) .header{position:fixed;top:0;margin-bottom:0}.a-page:not(.section-video) .header__placeholder{background-color:#000000;height:78px;margin-bottom:40px}.a-page.front-page .header__placeholder{margin-bottom:0}.dropdown--closed{max-height:0;-webkit-transition:none;transition:none}.dropdown--closed .dropdown__container{display:none}.a-page .dropdown{top:78px}.a-page .dropdown.sticky{top:48px}.b-page .dropdown{top:78px;position:absolute}.b-page .dropdown.sticky{position:fixed;top:65px}.hamburger.dropdown{position:fixed;width:100%;top:78px}.hamburger__container{background-color:#000000;border-style:solid;border-color:#0DBE98;border-width:0 0 3px 0;overflow-y:scroll;background-image:url(//s.m.huffpost.com/assets/nav-bg-28c233db98f59d940f56847243216ef7150f6bb94f4f629dbc22eb551e9c5954.svg);background-repeat:no-repeat;background-position:center top;background-size:1452px 550px;max-height:inherit}.hamburger__wrapper{min-width:1024px;max-width:1024px;padding:20px;margin:0 auto;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.hamburger__block{width:280px;margin-bottom:20px}.hamburger__block.partial-block .hamburger__section{float:left;width:50%}.hamburger__block.partial-block .hamburger__section-title{margin-bottom:20px}.hamburger__block.partial-block .hamburger__list-item{float:none;width:auto}@media (max-width: 1024px){.hamburger__inner-container{width:100%}.hamburger__block{width:270px;margin-left:10px;margin-right:10px}.hamburger__wrapper{-ms-flex-pack:distribute;justify-content:space-around;padding:20px 80px;min-width:768px}}.hamburger__section-title{display:inline-block;font-family:"ProximaNovaCond-Bold";font-size:1.125rem;letter-spacing:0.09375em;line-height:1.25rem;text-decoration:none;color:#ffffff;font-style:italic;border-style:solid;border-color:#0DBE98;border-width:0 0 3px 0;margin-bottom:15px;padding-top:4px;padding-left:2px;padding-right:2px}.hamburger__section-content{margin-bottom:10px}.hamburger__list{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;list-style:none;-ms-flex-flow:wrap;flex-flow:wrap}.hamburger__list-item{width:50%;margin-bottom:15px}.hamburger__link{font-size:1rem;text-decoration:none;line-height:1.0625rem;letter-spacing:0.01875em;color:#ffffff}.hamburger__link:hover{text-decoration:underline;color:#0DBE98}a.hamburger__section-title:hover{background-color:#0dbe98;padding-bottom:3px;border-bottom:none;-webkit-transition:background-color 350ms ease-out;transition:background-color 350ms ease-out}.footer{background-color:#000000;padding:40px 20px 0 20px;display:none}.department--politics-news .follow-us--right .follow-us__header__text{border-top:2px solid #203CDB}.department--entertainment .follow-us--right .follow-us__header__text{border-top:2px solid #E33224}.department--impact .follow-us--right .follow-us__header__text{border-top:2px solid #7810D0}.department--lifestyle .follow-us--right .follow-us__header__text{border-top:2px solid #00AFC5}.department--voices .follow-us--right .follow-us__header__text{border-top:2px solid #00A117}.follow-us--right,.follow-us--wide{display:none}.text{line-height:1.5em}.text p{white-space:pre-wrap}.text p iframe{max-width:100%}.text{width:100%;margin:0}@media (min-width: 1024px){.text{max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}}.text p{white-space:normal}.text .link-out-link{font-style:italic}.text h3{color:#444444;font-size:1.75rem;line-height:1em;margin-top:20px;margin-bottom:20px}.text h4{color:#444444;font-size:1.375rem;line-height:1.1em;margin-top:20px;margin-bottom:20px}.wide .text{max-width:730px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.embed-asset{max-width:630px;min-width:initial;width:100%;margin-left:auto;margin-right:auto;margin-top:40px;margin-bottom:40px}.embed-asset embed,.embed-asset iframe,.embed-asset video,.embed-asset object{max-width:100%}.embed-asset iframe{display:block;margin:0 auto}.embed-asset:first-child{margin-top:0}.embed-asset iframe.twitter-tweet,.embed-asset iframe.instagram-media{margin:0 auto !important}.embed-asset blockquote{border:none;background-color:initial}.embed-asset .fb-post,.embed-asset .fb-video{display:block;margin:0 auto}.embed-asset .fb-post span,.embed-asset .fb-video span{display:block;margin:0 auto}.embed-asset .five-min-container .fmvps-wrapper div{margin:0 auto}.embed-asset .five-min-container a.back-to-original{display:block;padding-top:5px;text-decoration:none;color:#000000;box-shadow:inset 0 -2px 0 #0DBE98}.embed-asset .five-min-container a.back-to-original:hover{background-color:rgba(13,190,152,0.7);padding-top:2px;padding-bottom:0;border-bottom:none;-webkit-transition:background-color 350ms ease-out;transition:background-color 350ms ease-out;box-shadow:none}.embed-code>div:not([itemprop="video"])>.flex-video,.embed-code .flex-video>.flex-video{position:static}.unsupported-content{margin-top:5px;margin-bottom:5px;height:250px;width:100%;background:url(//s.m.huffpost.com/assets/notsupported-6c5dc5d5a2a21057b23669d70a1351a401d2c813866c8ec67ce8ab0b31d0e6a3.png) no-repeat center center}.embed-asset{max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.wide .embed-asset{max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.wide .embed-asset.full-width-embed{max-width:970px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.share-bar{display:none}.share-bar__item{float:left;display:block;font-size:1.875rem;height:3.125rem;width:3.125rem;line-height:3.125rem;text-decoration:none;text-align:center;color:#ffffff;overflow:hidden}.share-bar__item:before{display:inline-block}.share-bar__item-link{display:block;font-size:1.875rem;height:3.125rem;width:3.125rem;line-height:3.125rem;text-decoration:none;text-align:center;color:#ffffff;overflow:hidden}.share-bar__item-link:before{display:inline-block}.share-bar__social-counts{float:left;width:58px;height:45px;font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1.5em;text-align:center;margin-right:1px}.share-bar__social-counts__number{line-height:2.25em;vertical-align:middle;line-height:45px}
+
+.entry__header{margin-top:15px;margin-bottom:15px}.entry__body{color:#000000;word-wrap:break-word}@media (max-width: 580px){.entry__body div[style],.entry__body iframe[style],.entry__body img[style]{max-width:100%}}.entry__body .content-list-component{padding-left:0px;padding-right:0px}.entry__body p{font-size:1.125rem;line-height:1.75rem;margin-bottom:20px}.entry__body ul,.entry__body ol{padding-left:2em;padding-top:0;padding-bottom:0;margin-bottom:20px}.entry__body li{margin-bottom:5px}.entry__body ul li{font-size:16px;line-height:24px}.entry__body blockquote{margin-top:5px;margin-bottom:25px;background-color:transparent;border:none;color:#757575;padding-left:30px;font-size:15px;font-style:italic}.entry__body blockquote p:last-child{margin-bottom:0}.entry__text .text a,.entry__text p a{text-decoration:none;color:#000000;box-shadow:inset 0 -2px 0 #0DBE98}.entry__text .text a:hover,.entry__text p a:hover{background-color:rgba(13,190,152,0.7);padding-top:2px;padding-bottom:0;border-bottom:none;-webkit-transition:background-color 350ms ease-out;transition:background-color 350ms ease-out;box-shadow:none}.entry-static{width:66%}@media (min-width: 1024px){.entry{max-width:900px;min-width:767px;width:100%;margin-left:auto;margin-right:auto}}@media (min-width: 1280px){.entry{max-width:1080px;min-width:767px;width:100%;margin-left:auto;margin-right:auto}}@media (max-width: 1300px){.entry{padding-left:20px;padding-right:20px}}.entry__content{display:-webkit-box;display:-ms-flexbox;display:flex}.entry__header{margin-top:0;margin-bottom:0}.entry__body{width:100%;font-size:1.125rem;line-height:1.75rem;margin-top:3px}@media (min-width: 1024px){.entry__body{-webkit-box-flex:0;-ms-flex:0 1 552px;flex:0 1 552px;max-width:552px;margin-right:36px}}@media (min-width: 1280px){.entry__body{-webkit-box-flex:0;-ms-flex:0 1 720px;flex:0 1 720px;max-width:720px;margin-right:65px}}.entry__body ::-moz-selection{background-color:#dbdbdb}.entry__body ::selection{background-color:#dbdbdb}.entry__mc-content{display:-webkit-box;display:-ms-flexbox;display:flex}.entry__mc-content__rail--left{-webkit-box-flex:0;-ms-flex:0 1 220px;flex:0 1 220px}.entry__mc-content__rail--main{-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto}.entry__comments{max-width:1170px;min-width:initial;width:100%;margin-left:auto;margin-right:auto;margin-bottom:50px}@media (max-width: 1300px){.entry__comments{padding-left:10px;padding-right:10px}}.entry__comments .comments{max-width:700px}.entry__comments-pane{position:fixed;width:500px;height:100%;top:0;right:0;background-color:#ffffff;padding:5px 10px 10px 10px;box-shadow:-1px 0px 10px 1px rgba(0,0,0,0.35);z-index:5000006;-webkit-transition:-webkit-transform .5s;transition:-webkit-transform .5s;transition:transform .5s;transition:transform .5s, -webkit-transform .5s;-webkit-transform:translateX(0);transform:translateX(0);-webkit-overflow-scrolling:touch}.entry__comments-pane__close{position:absolute;cursor:pointer;background-color:#ffffff;z-index:5000007;width:35px;height:65px;top:0;right:20px;text-align:center;line-height:65px;border-right:1px solid #ffffff}.entry__comments-pane__close:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:17px;color:#000000}.entry__comments-pane .comments{overflow:scroll;height:100%}.entry__comments-pane.hide{-webkit-transform:translateX(108%);transform:translateX(108%)}.entry--contributor .entry__body{width:100%}@media (max-width: 980px){.entry--contributor .entry__body{padding-right:0}}.entry--contributor .right-rail{width:300px}.wide .entry{max-width:970px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.wide .entry__header{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;text-align:center;margin:0 auto 20px auto}@media (min-width: 1024px){.wide .entry__header{min-width:767px;max-width:930px}}@media (min-width: 1280px){.wide .entry__header{max-width:930px}}.wide .entry__header .entry-eyebrow{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}.wide .entry__header .headline{-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2;max-width:none;margin-bottom:20px}.wide .entry__header .headline__title{max-width:none}.wide .entry__header .headline__subtitle{max-width:none;width:auto}.wide .entry__header .wide_stroke{width:140px;height:5px;margin:0 auto 20px auto;-webkit-box-ordinal-group:4;-ms-flex-order:3;order:3}.wide .entry__header .byline{-webkit-box-ordinal-group:5;-ms-flex-order:4;order:4;height:auto;margin-bottom:4px}.wide .entry__header .byline__authors{max-width:none;width:auto}.wide .entry__header .byline .author-card{padding:0}.wide .entry__header .byline .author-card__details{margin:0 auto;padding:0;line-height:normal}.wide .entry__header .byline .author-card__details__link{line-height:normal}.wide .entry__header .byline .author-card__details__name{font-size:0.875rem}.wide .entry__header .timestamp{font-size:0.8125rem;-webkit-box-ordinal-group:6;-ms-flex-order:5;order:5;margin-top:0;margin-left:0}.wide .entry__body .extra-content__title{text-align:left;max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}@media (min-width: 1024px){.wide .entry__body{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;min-width:767px;max-width:930px;margin-right:0}}@media (min-width: 1280px){.wide .entry__body{-webkit-box-flex:0;-ms-flex:0 1 930px;flex:0 1 930px;max-width:930px;margin-right:0}}.wide .entry__content{max-width:none;margin:0 auto}.department--politics-news .entry--wide .wide_stroke{background-color:#203CDB}.department--entertainment .entry--wide .wide_stroke{background-color:#E33224}.department--impact .entry--wide .wide_stroke{background-color:#7810D0}.department--lifestyle .entry--wide .wide_stroke{background-color:#00AFC5}.department--voices .entry--wide .wide_stroke{background-color:#203CDB}
+.card__link{color:inherit;text-decoration:none}.card{display:block;margin-bottom:20px;width:100%}.card:first-child{margin-top:0}.card__content{display:-webkit-box;display:-ms-flexbox;display:flex;overflow:hidden}.card__label{color:#2e7061}.card__headline{font-family:"ProximaNovaCond-Bold";color:#000000;margin-bottom:0;padding-right:5px;font-size:1.375rem;line-height:1.1em}.card__video{margin-bottom:15px;padding-bottom:15px;border-bottom:1px solid #eee}.card__video .video-image{float:right;width:100px}.card__video .video-title{font-family:"ProximaNovaCond-Bold";color:#000000;text-decoration:none;font-size:1.5rem;margin-right:10px}.card__image__cover-bg{width:100%;height:0;position:relative;padding-bottom:56.26%;display:block}.card__image__cover-bg .card__image__src{background-size:cover;background-position:50% 50%;width:100%;height:100%;position:absolute}.card--invert{background:#191919}.card--invert .card__label__text{background:#191919}.card--invert .card__headline{color:#ffffff}.card--no-label .card__label{display:none}.a-page .a-page__content__rail .card__label{color:#0DBE98}.a-page .a-page__content__rail .card__label::after{border-color:#0DBE98}.a-page .a-page__content__rail .card--section .card__headline{color:#0DBE98}.a-page .a-page__content__rail .card--section .card__headline .card__link{color:inherit}.middle-rail .card{border-bottom:1px solid #dbdbdb;margin-bottom:30px;padding-bottom:30px}.middle-rail .card:last-child{border-bottom:none;padding-bottom:0}.card__content{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.card__label{font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.875rem;margin-bottom:8px;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}.card__label__text{letter-spacing:1.4px}.card__headlines{-webkit-box-ordinal-group:4;-ms-flex-order:3;order:3}.card__pill-text{font-size:0.75rem;line-height:1.125rem;letter-spacing:-0.01em;color:#757575}.card__date{min-width:100%}.card__headline{font-size:1.625rem;line-height:1.75rem;margin-top:12px;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-flow:row wrap;flex-flow:row wrap}.card__headline.hover{text-decoration:underline}.card__link{color:inherit;text-decoration:none;-webkit-box-ordinal-group:4;-ms-flex-order:3;order:3}.card__video{margin-bottom:15px;padding-bottom:15px;border-bottom:1px solid #eee}.card__video .video-image{float:right;width:100px}.card__video .video-title{font-family:"ProximaNovaCond-Bold";color:#000000;text-decoration:none;font-size:1.5rem;margin-right:10px}.card__image{-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2;display:block;position:relative}.card__image__wrapper{line-height:0;position:relative}.card__image__credit{position:absolute;bottom:0;right:0;height:13px;opacity:0.5;background-color:#000000;font-family:Arial, sans-serif;font-size:8px;line-height:14px;vertical-align:middle;padding:0 5px;letter-spacing:0.025rem;text-align:right;color:#ffffff;text-transform:uppercase}.card__image__credit.hide{display:none}.card .author-card{padding-top:12px}.card .author-card__details__name{font-size:12px}.card--embed.card--media-right .card__image:before{left:40px}.middle-rail .card--media-right .card__details{width:50%}.middle-rail .card--media-right .card__headline{font-size:1.375rem;line-height:1.5rem}.card--media-right .card__content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap}.card--media-right .card__label{width:100%}.card--media-right .card__headlines{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;-webkit-box-flex:1;-ms-flex:1 0 50%;flex:1 0 50%;max-width:100%}.card--media-right .card__headline:first-of-type{margin-top:0}.card--media-right .card__image{-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2;-webkit-box-flex:1;-ms-flex:1 1 50%;flex:1 1 50%;max-width:50%;padding-left:10px}.card--media-right .card__image__src{width:100%}.card--light .card__headline{font-size:1.5rem}.card--media-right.card--light .card__details{width:65%}.card--media-right.card--light .card__headlines{-webkit-box-flex:1;-ms-flex:1 0 65%;flex:1 0 65%}.card--media-right.card--light .card__date{-webkit-box-flex:1;-ms-flex:1 0 65%;flex:1 0 65%}.card--media-right.card--light .card__image{-webkit-box-flex:1;-ms-flex:1 1 35%;flex:1 1 35%;max-width:35%}.card--about .card__description{-webkit-box-ordinal-group:4;-ms-flex-order:3;order:3;font-size:0.875rem;line-height:1.125rem;color:#757575;font-family:"Helvetica Neue";padding-top:10px}.card--embed .card__embed{-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2}.card--embed .sigil--video.sigil--centered:before{width:60px;height:60px;font-size:1.375rem;padding-left:10px}.card--multi-headline .card__headline{font-size:1.375rem;line-height:1.375rem;padding-bottom:12px;border-bottom:1px dotted #dbdbdb}.card--multi-headline .card__headline:last-of-type{border:none;padding-bottom:0;margin-bottom:0}.card--multi-headline .card__image__cover-bg{padding-bottom:100%}.card--multi-headline .card__byline{display:none}.card--multi-headline.card--media-right .card__headline:first-of-type{margin-top:0}.card--multi-headline.card--media-right .card__image__cover-bg{padding-bottom:100%}.card--section .card__label{olor:#2e7061;position:relative}.card--section .card__label__text{background:#ffffff;padding-right:10px;position:relative;z-index:2}.card--section .card__label:after{content:'';border-bottom:3px solid #2e7061;position:absolute;top:50%;left:0;margin-top:-2px;width:100%;z-index:1}.card--section .card__headline{display:block;border-bottom:1px solid #dbdbdb;padding-top:7px;padding-bottom:7px;font-size:1.375rem;color:#0DBE98}.card--section .card__headline:last-child{border:none}.recirc--bottom-trending .card__label,.recirc--most-shared .card__label{olor:#2e7061;position:relative}.recirc--bottom-trending .card__label__text,.recirc--most-shared .card__label__text{background:#ffffff;padding-right:10px;position:relative;z-index:2}.recirc--bottom-trending .card__label:after,.recirc--most-shared .card__label:after{content:'';border-bottom:3px solid #2e7061;position:absolute;top:50%;left:0;margin-top:-2px;width:100%;z-index:1}.recirc--horizontal .card--big_title .card__headline{font-size:1.625rem;line-height:1.625rem}.card--video-hub{padding-bottom:20px;margin-bottom:40px}.a-page__content__rail .card--video-hub .card__content{max-width:initial;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.card--video-hub .sigil--video.sigil--centered:before{width:100px;height:100px;font-size:2.75rem;padding-left:20px;border-width:3px}.card--video-hub .card__content{max-width:1280px;min-width:600px;width:100%;margin-left:auto;margin-right:auto;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;width:100%;-ms-flex-flow:row;flex-flow:row;padding:0 20px}.card--video-hub .card__embed{max-width:800px;min-width:570px;width:100%;margin-left:auto;margin-right:auto;width:100%;padding:0}.card--video-hub .card__details{-webkit-box-flex:0;-ms-flex:0 0 300px;flex:0 0 300px;margin-right:30px;position:relative;min-height:450px}.card--video-hub .card__label{font-size:1.125rem;line-height:1.25rem;margin-top:0;margin-bottom:5px;-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2}.card--video-hub .card__label:after{display:none}.card--video-hub .card__label__text{padding-left:0;color:#0DBE98}.card--video-hub .card__headlines{-webkit-box-ordinal-group:4;-ms-flex-order:3;order:3}.card--video-hub .card__headline{border:0;color:#ffffff;font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1.375rem;font-weight:bold;letter-spacing:0.04em;line-height:1.5rem;margin-top:0;margin-bottom:5px;max-width:720px;padding:0}.card--video-hub .card__content__ad{position:relative;bottom:0}.card--video-hub .card__image{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-flex:1;-ms-flex:1 0 600px;flex:1 0 600px;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}.card--video-hub .card__image:before{bottom:50%;left:50%;-webkit-transform:translate(-50%, 50%);transform:translate(-50%, 50%);width:100px;height:100px;border-radius:50%;margin:0;font-size:44px;line-height:100px;padding-left:22px}.card--video-hub .card__headline:hover{opacity:1}.card--video-show-splash{padding-bottom:30px}.card--video-show-splash .card__content{max-width:600px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.card--video-show-card .card__headline{margin-bottom:5px}.card--video-show-card .card__image{padding-right:20px;max-width:250px;max-height:140px}.card--originals{-webkit-box-flex:1;-ms-flex:1 0 220px;flex:1 0 220px;margin-left:10px;margin-right:10px;margin-bottom:60px;max-width:280px}.card--originals .card__headline{font-family:"ProximaNovaCond-Bold";font-size:1.25rem;line-height:1.5rem}.card--autopilot-video-show .card__row{display:-webkit-box;display:-ms-flexbox;display:flex;margin-top:20px}.card--autopilot-video-show .card__label__text__link{color:#0DBE98;text-decoration:none}@media (max-width: 980px){.card--originals{-webkit-box-flex:1;-ms-flex:1 0 180px;flex:1 0 180px;max-width:220px}}@media (min-width: 1210px){.card--originals{-webkit-box-flex:1;-ms-flex:1 0 280px;flex:1 0 280px;max-width:280px}}.originals__content .card .card__content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.originals__content .card .card__content .card__image{-webkit-box-ordinal-group:1;-ms-flex-order:0;order:0;padding-left:0;padding-right:0}.originals__content .card .card__content .card__details{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}.originals__content .card .card__content .card__headlines{-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2;font-size:1.375rem;line-height:1.5rem}.originals__content .card .card__content .card__headline{border-bottom:none;margin-top:10px;margin-bottom:8px;padding:0}
+.recirc__item__image{width:100%}.recirc__item__image--external{height:0;position:relative;padding-bottom:56.26%}.recirc__item__image--external .recirc__item__image__src{background-size:cover;background-position:50% 50%;width:100%;height:100%;position:absolute}.recirc__item__author__name{color:#2e7061;font-weight:bold;font-size:0.75rem;line-height:0.9375rem;letter-spacing:-0.01em}.recirc__item__author__name:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;margin-right:3px}.recirc__item__author__teaser{font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;margin-bottom:10px;color:#757575;font-size:0.75rem;line-height:0.9375rem;letter-spacing:-0.01em;display:inline-block}.a-page .a-page__content__rail .recirc--vertical .recirc__title{color:#0DBE98}.a-page .a-page__content__rail .recirc--vertical .recirc__title::after{border-bottom:3px solid #0DBE98}.recirc{display:none}.recirc .author-card{line-height:0.9375rem;letter-spacing:-0.01em;color:#757575}.recirc--vertical{border-bottom:1px solid #dbdbdb;margin-bottom:20px}.recirc--vertical:last-child{border:0}.recirc--vertical .recirc__title{text-align:center}.recirc--vertical .card{border-bottom:1px solid #dbdbdb;padding-bottom:20px}.recirc--vertical .card__headline{font-size:1.125rem;line-height:1.25rem;margin:0}.recirc--vertical .card:last-child{border:none;margin:0}.recirc--vertical .card--multi-headline{border-bottom:none}.recirc--vertical .author-card{margin:0;padding:8px 0}.recirc--right-rail .card{padding:0}.recirc--right-rail .zone__title{padding:0}.recirc--left-rail{display:inherit}.recirc--left-rail .card{padding-bottom:20px;position:relative}.recirc--left-rail .card__label{display:none}.recirc--left-rail .card__headline{margin-top:10px;font-size:1.125rem}.recirc--left-rail .card .author-card{margin-bottom:8px;padding:0}.recirc--left-rail .card .author-card:first-of-type{padding-top:8px;padding-bottom:0;margin-bottom:0}.recirc--left-rail .card--headshot{padding-bottom:12px;margin-bottom:12px}.recirc--left-rail .card:first-of-type.card--autopilot .card__label,.recirc--left-rail .card:first-of-type.card--normal .card__label{display:block}.recirc--left-rail .card:first-of-type.card--autopilot .card__label__text,.recirc--left-rail .card:first-of-type.card--normal .card__label__text{visibility:hidden}.recirc--left-rail .card--postit{padding:0;margin-bottom:12px;border:none}.recirc--left-rail .card--postit .card__label{display:block}.recirc--left-rail-b-page{display:inherit}.recirc--left-rail-b-page .recirc__title{position:relative;font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.875rem;margin-bottom:10px}.recirc--left-rail-b-page .recirc__title__text{position:relative;padding-right:10px;letter-spacing:1.4px}.recirc--left-rail-b-page .recirc__title:after{content:'';border-bottom:3px solid #000000;position:absolute;top:50%;left:78px;margin-top:-2px;width:59%;z-index:1}.recirc--left-rail-b-page .card{padding-bottom:12px;padding-top:2px;margin-bottom:0;border-bottom:1px solid #dbdbdb}.recirc--left-rail-b-page .card__headline{margin-top:10px;margin-bottom:0;font-size:1.125rem;line-height:20px}.recirc--left-rail-b-page .card .author-card{padding-top:6px;padding-bottom:0}.recirc--suggested-story .recirc__title{font-family:Arial, Helvetica, sans-serif;font-size:0.875rem;line-height:22px;color:#999;margin-bottom:0px}.recirc--suggested-story .card__headline{font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1.75rem;line-height:30px;color:#2e7062;text-decoration:none}.wide .recirc--suggested-story{max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}
+.entry-eyebrow{color:#000000;font-size:1.125rem;line-height:1.1875rem;letter-spacing:0.11875em;font-style:italic;font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;margin-bottom:3px}.entry-eyebrow__link{color:#000000;text-decoration:none}.entry-eyebrow--sponsored .entry-eyebrow__link{color:#3d3d3d}.entry-eyebrow--sponsored .entry-eyebrow__link:hover{color:#3d3d3d}.entry-eyebrow--world{font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.8125rem;color:#757575;border-bottom:1px solid #cccccc;font-style:initial;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;margin-bottom:15px}.entry-eyebrow--world .entry-eyebrow__sponsor__text{display:inline-block;vertical-align:middle;line-height:13px;padding-bottom:9px}
+.timestamp{padding-top:10px;padding-bottom:10px;color:#757575;font-size:0.75rem;line-height:2em}.timestamp{margin-top:5px;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.8125rem;line-height:1.375rem;padding-top:0;padding-bottom:0;display:inline-block;margin-left:6px;height:20px}.timestamp--contributor{margin-left:0;margin-bottom:7px}
+.headline__title{margin-right:10px;color:#000000;font-size:3.25rem;line-height:1.1em;letter-spacing:0.5px;max-width:900px;word-wrap:break-word;margin:15px 0}.headline__subtitle{margin-top:5px;color:#313131;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-weight:normal;font-size:1.25rem;line-height:1.5rem;max-width:630px}.headline__subtitle .emoji{font-weight:normal;font-family:helvetica}.headline{margin-top:8px}.headline__title{margin-top:0;margin-bottom:0;line-height:3.25rem;max-width:1024px;letter-spacing:0.5px}@media (max-width: 1023px){.headline__title{font-size:2.625rem}}.headline__subtitle{margin-top:7px;line-height:1.5rem;width:720px;max-width:720px}.wide .headline{max-width:900px}
+.byline{padding-top:15px;margin-bottom:15px;padding-left:0;padding-bottom:0;list-style:none;padding-top:10px;margin-bottom:10px}.byline{padding-top:0;padding-bottom:0;margin-bottom:0;display:-webkit-box;display:-ms-flexbox;display:flex}.byline__authors{max-width:630px;width:50%;-webkit-box-flex:1;-ms-flex:1 0 50%;flex:1 0 50%}.byline__share-bar{width:50%;-webkit-box-flex:1;-ms-flex:1 1 50%;flex:1 1 50%}.byline--contributor{margin-bottom:9px;height:auto}.byline--multiple{height:auto}.byline--left-rail{border-top:none;padding-right:20px}.byline--left-rail .author-card{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-flex:0;-ms-flex:0 1 100%;flex:0 1 100%}.byline--left-rail .author-card__headshot{width:50px;height:50px;border-radius:7%;margin-bottom:4px}.byline--left-rail .author-card__details-container{margin:4px 0}.byline--left-rail .author-card__details{padding:0;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.byline--left-rail .author-card__microbio{margin:4px 0;color:#666;-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2}.byline--left-rail .author-card__social-container{margin:4px 0;-webkit-box-ordinal-group:4;-ms-flex-order:3;order:3}.byline--left-rail .author-card__social--facebook{background-color:transparent;color:#3b5999}.byline--left-rail .author-card__social--facebook:before{font-size:1rem}.byline--left-rail .author-card__social--twitter{background-color:transparent;color:#55acef}.byline--left-rail .author-card__social--twitter:before{font-size:1rem}.byline--left-rail .author-card__social--googleplus{background-color:transparent;color:#dd4b34}.byline--left-rail .author-card__social--googleplus:before{font-size:1rem}
+.author-card{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-ms-flex-line-pack:stretch;align-content:stretch;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;font-size:0.75rem;line-height:1.125rem;width:100%;text-align:left}.author-card:last-child{margin-bottom:0}.author-card__headshot{background-repeat:no-repeat;background-size:cover;background-position:center center;margin-right:15px;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:0 0 auto;border-radius:50%;border:solid 1px #cccccc;background-clip:content-box;height:50px;width:50px}.author-card__details{padding-right:15px;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto}.author-card__details__link{text-decoration:none;color:inherit}.author-card__details__name{font-size:1rem;color:#444444;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-weight:bold;white-space:pre-wrap}.author-card--full{display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-ms-flex-line-pack:stretch;align-content:stretch;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;color:#444444;font-size:0.75rem;line-height:1.125rem;width:100%;text-align:left;margin-bottom:20px}.author-card--full .author-card:last-child{margin-bottom:0}.author-card--full .author-card__headshot{background-repeat:no-repeat;background-size:cover;background-position:center center;margin-right:15px;-webkit-box-flex:0;-ms-flex:0 0 auto;flex:0 0 auto;border-radius:50%;background-clip:content-box;height:50px;width:50px}.author-card--full .author-card__details{padding-right:15px;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto}.author-card--full .author-card__details__link{text-decoration:none;color:inherit}.author-card--full .author-card__details__name{font-weight:bold;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif}.author-card--full .author-card__social-container{padding-left:7px;top:0}.author-card--full .author-card__social{-ms-flex-negative:0;flex-shrink:0;font-size:1.0625rem;text-decoration:none}.author-card--full .author-card__social--twitter{color:#55acef;position:relative;display:inline-block;background-color:initial;width:14px}.author-card--full .author-card__social--twitter:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:14px}.author-card--full .author-card__microbio{font-size:0.875rem;display:block}.author-card--byline .author-card__details__link{display:inline-block}.author-card--byline .author-card__details__name{padding-right:0}.author-card--contributor .author-card__headshot{width:40px;height:40px;border-radius:15%;margin-right:10px}.author-card--contributor .author-card__details__name{font-size:1rem}.author-card--contributor .author-card__microbio{font-size:0.875rem;color:#757575}.author-card--multiple{margin-bottom:10px}.author-card--multiple .author-card__headshot{width:30px;height:30px;border-radius:7%;margin-bottom:0}.author-card--multiple .author-card__microbio{display:inline}.author-card--contributor.author-card--full:last-child{margin-bottom:0}.author-card--contributor.author-card--byline .author-card__details{margin-top:0}.author-card--mega-phone .author-card__details__name{color:#2e7061}.author-card--mega-phone .author-card__details__name:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;margin-right:3px}.author-page .author-card{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.author-page .author-card__headshot{width:100px;height:100px}.author-page .author-card__microbio,.author-page .author-card__minibio{font-family:Arial, sans-serif;font-size:1.125rem;color:#757575;margin-top:10px;display:block}.author-page .author-card__details{font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;margin-bottom:30px;padding:0}.author-page .author-card__details__name{color:#000000;display:inline-block;font-size:2.375rem}.author-page .author-card__social-container{display:inline-block;top:-8px;padding-left:5px}.author-page .author-card__social{-ms-flex-negative:0;flex-shrink:0;font-size:1.0625rem;text-decoration:none;margin-left:5px;margin-right:5px}.author-page .author-card__social--twitter{position:relative;top:1px;margin-left:0;margin-right:5px}.author-page .author-card__social--facebook{margin-left:0;margin-right:5px}.author-page .author-card__social--googleplus{color:#dd4b34;font-size:2rem}.author-page .author-card__social--googleplus:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:22px}.author-card__social--twitter,.author-card__social--facebook{border-radius:50%;width:22px;height:22px;line-height:19px;text-align:center;vertical-align:middle;margin-left:0;margin-right:3px}.author-list{width:630px}.author-list:after{content:"";display:table;clear:both}.author-card{padding:8px 0;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.author-card__headshot{height:40px;width:40px;border:1px solid #cccccc;margin-right:10px}.author-card__details{-webkit-box-flex:0;-ms-flex:0 1 auto;flex:0 1 auto;margin-top:9px}.author-card__details-container{display:block}.author-card__details-container:after{content:"";display:table;clear:both}.author-card__details__name{font-size:0.875rem;padding-right:2px}.author-card__social-container{position:relative;top:-3px}.author-card__social{-ms-flex-negative:0;flex-shrink:0;font-size:1.0625rem;text-decoration:none}.author-card__social--twitter{background-color:#55acef;color:#ffffff;position:relative;display:inline-block}.author-card__social--twitter:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:11px}.author-card__social--facebook{background-color:#3b5999;color:#ffffff;display:inline-block;line-height:20px}.author-card__social--facebook:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:11px}.author-card__social--googleplus{color:#dd4b34;font-size:2rem}.author-card__social--googleplus:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:22px}.author-card__microbio{display:block}.author-card--byline{padding-bottom:12px}.author-card--byline .author-card__details{margin-top:4px}.author-card--no-teaser{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.wide .author-list{width:980px}.wide .author-list-container .author-card{width:33%}
+.top-media .slideshow-thumb__credits{padding-left:15px;padding-right:15px}.top-media iframe{max-width:100%;display:block;margin:0 auto}.top-media--image{margin-top:0;margin-bottom:30px}.top-media--image .image{margin-bottom:30px}.top-media--image .image__credit,.top-media--image .image__caption{padding-left:0px;padding-right:0px}.top-media--image .image__caption{border-bottom:1px dotted #cccccc}.top-media--video{margin:0 auto 30px}.top-media--video .back-to-original{text-decoration:none;color:#000000;box-shadow:inset 0 -2px 0 #0DBE98}.top-media--video .back-to-original:hover{background-color:rgba(13,190,152,0.7);padding-top:2px;padding-bottom:0;border-bottom:none;-webkit-transition:background-color 350ms ease-out;transition:background-color 350ms ease-out;box-shadow:none}.wide .top-media{max-width:970px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.wide .top-media--image,.wide .top-media .image{max-width:970px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.top-media{margin-bottom:15px}.top-media--image .image{margin-top:0}.top-media .instagram-media{margin:0 auto !important}
+.image{max-width:630px;min-width:initial;width:100%;margin-left:auto;margin-right:auto;margin-top:40px;margin-bottom:40px;line-height:0}.image:first-child{padding-top:0}.image__credit,.image__caption{line-height:1.4em;display:block;text-align:left}.image__credit{font-size:0.5625rem;color:#999999;margin-top:5px;text-transform:uppercase}.image__caption{font-size:0.75rem;border-bottom:1px dotted #cccccc;margin-top:7px;padding-bottom:8px;line-height:16px;color:#666}.image__caption p{padding-top:0;padding-bottom:0}.image{max-width:100%;display:block;text-align:center}.image__caption,.image__credit{max-width:100%;margin-left:auto;margin-right:auto}.image__caption{border-bottom:1px dotted #cccccc}
+.text{line-height:1.5em}.text p{white-space:pre-wrap}.text p iframe{max-width:100%}.extra-content{margin-top:30px;margin-bottom:30px}.extra-content .slideshow-thumb,.extra-content .slideshow{margin-top:0px}.extra-content .slideshow-thumb-title{max-width:630px;min-width:initial;width:100%;margin-left:auto;margin-right:auto;line-height:22px}.extra-content .slideshow-thumb-title--amp{padding-left:15px}.extra-content__title{font-size:1rem;letter-spacing:0.0625em;font-weight:bold;line-height:1rem;color:#838383}.extra-content__media{margin-top:8px}.extra-content__media>div>div.slideshow-default__icon{margin-left:10px;margin-right:5px}.mobileweb .extra-content__title{padding:0 15px;max-width:630px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}
+.share-text{color:#888}.slideshow{max-width:630px;background-color:#000000;color:#ffffff;width:560px;height:315px;background-size:cover;background-repeat:no-repeat;background-position:center;margin:0;cursor:pointer}.slideshow.vertical{background-size:contain}.slideshow.dynamic-preview{-webkit-transition:background-image 1s;transition:background-image 1s}.slideshow__preview{position:relative;top:210px;left:20px;border-radius:40px;vertical-align:middle;line-height:70px;height:70px;width:390px;border:1px solid #ffffff;background:rgba(13,13,13,0.7);font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif}.slideshow__preview__icon{float:left;width:10%;margin-left:30px}.slideshow__preview__icon:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:25px;color:#ffffff}.slideshow__preview__text{height:70px}.slideshow__preview__text__title{font-size:1.25rem;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;width:82%;height:50px}.slideshow__preview__text__count{height:20px;font-family:Arial;font-size:0.75rem}.wide .slideshow{max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.wide .listicle__slide-caption{width:720px;margin:0 auto;text-align:left}.slideshow-default{cursor:pointer;max-width:630px;background:none;width:auto;height:auto}.slideshow-default__title{font-size:1.5rem;font-family:"ProximaNovaCond-Extrabld";line-height:24px;color:#333;float:left}.slideshow-default__icon{margin-left:5px}.slideshow-default__icon:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:23px;color:#333}.slideshow-default__slide-count{font-size:1.25rem;font-family:"ProximaNovaCond-Extrabld";color:#333;padding-top:2px;padding-left:3px}
+.tag-cloud__header{font-weight:bold;font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;letter-spacing:0.0625em;font-size:1rem;line-height:1rem;color:#838383;margin:8px 5px 8px 0}.tag-cloud .tag{position:relative;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;padding:6px 12px;margin:5px 5px 5px 0;text-decoration:none;font-size:0.9375rem;border-radius:50px;display:inline-block;color:#838383;border:1px solid #838383}.tag-cloud{display:none}
+.advertisement{display:none}
+.follow-us--legacy{width:100%;margin-bottom:30px}.follow-us--legacy__header{font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1.75rem;padding-bottom:5px;font-size:22px}
+.nav-sticky{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;width:100%;height:65px;box-shadow:0 0 10px 0 rgba(0,0,0,0.28);z-index:5000005;position:fixed;top:0;left:0;background-color:#000000;-webkit-transition:-webkit-transform .33s ease-in-out;transition:-webkit-transform .33s ease-in-out;transition:transform .33s ease-in-out;transition:transform .33s ease-in-out, -webkit-transform .33s ease-in-out}.nav-sticky.hide{-webkit-transform:translateY(-100%);transform:translateY(-100%);box-shadow:none}.nav-sticky__bar{width:100%;height:60px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.nav-sticky__item{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%}.nav-sticky__hamburger{margin:0 20px}.nav-sticky__hamburger-link{width:27px;height:24px;text-decoration:none;cursor:pointer;overflow:hidden}.nav-sticky__hamburger-link:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:18px;color:#666;position:relative;top:2px}.nav-sticky__hamburger-link:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:18px;color:#0DBE98;position:relative;top:2px}.nav-sticky__hamburger-link.open:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:18px;color:#666;position:relative;top:2px;left:2px}.nav-sticky__hamburger-link.open:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:18px;color:#0DBE98;position:relative;top:2px}.nav-sticky__logo{width:30px;height:30px;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;text-decoration:none;-ms-flex-negative:0;flex-shrink:0}.nav-sticky__logo:hover{text-decoration:none}.nav-sticky__logo-img{border:0;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.nav-sticky__logo-img::-moz-selection{background-color:transparent}.nav-sticky__logo-img::selection{background-color:transparent}.nav-sticky__title{padding-top:2px;display:inline-block;text-overflow:ellipsis;overflow:hidden;line-height:60px;white-space:nowrap;font-size:1.375rem;color:#ffffff;font-family:"ProximaNovaCond-Medium";letter-spacing:0.04375em;padding-left:20px;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1}@media (min-width: 1024px){.nav-sticky__title{font-size:1.5rem}}.nav-sticky__sharebar{background-color:#000000;padding-left:20px;padding-right:10px;-ms-flex-negative:0;flex-shrink:0}.nav-sticky__progress-bar{width:100%;background:#000000;height:5px}.nav-sticky__progress-bar__fill{width:100%;background:-webkit-linear-gradient(right, #05f, #7201b2 50%, #f83371);background:linear-gradient(to left, #05f, #7201b2 50%, #f83371);height:100%;max-width:100%}.nav-sticky--b-page{overflow:hidden;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}
+.below-entry-recirc__conversations-header{display:none}
+
+</style>
+<script>
+  (function(){
+    window.HP || (window.HP = {});
+    HP.params = {"device":"desktop","is_front":null,"page_type":"b-page","entryId":"4128563","entryIds":["4128563"],"noRecirc":null,"recircTag":"33 year old bieber fan","topic":"33 year old bieber fan","commentsType":"facebook","dontFilterViewed":false,"social":{"newsletter":{"id":"9aa81fd6beaf5655b6969727d3f63bf5","slug":"entertainment","name":"Entertainment","display_name":"Entertainment","custom_toaster_text":null,"provider":"cm"}},"section":{"slug":"celebrity","newsletter":{"id":"9aa81fd6beaf5655b6969727d3f63bf5","slug":"entertainment","name":"Entertainment","display_name":"Entertainment","custom_toaster_text":null,"provider":"cm"},"department":"entertainment"},"edition":{"id":"us","newsletter":{"id":"c1fb2d6bc59dbabb03c6369b73d9ece3","slug":"the-morning-email","name":"The Morning Email","display_name":"The Morning Email","custom_toaster_text":null,"provider":"cm"},"baseURL":"/"},"gravityJSON":{"siteGuid":"95ec266b244de718b80c652a08af06fa","personalization":"2302","title":"Suggested For You"},"gravityTrending":{"siteGuid":"95ec266b244de718b80c652a08af06fa","personalization":"7685","title":"Trending From Gravity"},"gravityVideos":{"siteGuid":"95ec266b244de718b80c652a08af06fa","personalization":"7689","title":"Videos From Gravity"},"ab_config":[{"name":"outstreamStyle","id":1002,"variant_names":"control,enabled","variant_ids":"11,12","variant_distributions":"0.75,0.25"},{"name":"outstreamParents","id":1001,"variant_names":"control,enabled","variant_ids":"9,10","variant_distributions":"0.75,0.25"},{"name":"outstreamPolitics","id":1000,"variant_names":"control,enabled","variant_ids":"7,8","variant_distributions":"0.75,0.25"},{"name":"videoBelowSplash100Percent","id":92,"variant_names":"video","variant_ids":"138","variant_distributions":"1.0"},{"name":"vidibleOnHomepage2","id":91,"variant_names":"noVideo,autoPlayWithoutSound","variant_ids":"136,137","variant_distributions":"0.8,0.2"},{"name":"homepageSplash","id":1008,"variant_names":"control,splash","variant_ids":"26,27","variant_distributions":"0.5,0.5"},{"name":"mfp1829","id":1010,"variant_names":"embed,embedFlip,autoPlayWithoutSound","variant_ids":"31,32,33","variant_distributions":"0.4,0.4,0.2"}],"beacons":[{"type":"mlid","name":"masthead","nodeSelector":".bn-masthead"},{"type":"mnid","name":"editions","nodeSelector":".bn-editions"},{"type":"lnid","name":"open","nodeSelector":".bn-editions-link","clickToggle":"close"},{"type":"lnid","nameFromAttribute":"data-edition","nodeSelector":".bn-edition-item","trackPosition":true},{"type":"mnid","name":"hamburger_menu","nodeSelector":".bn-hamburger-menu"},{"type":"lnid","name":"open","nodeSelector":".bn-hamburger-button","clickToggle":"close"},{"type":"lnid","nameFromTextNode":true,"nodeSelector":".bn-hamburger-link","trackLink":true},{"type":"mnid","name":"logo","nodeSelector":".bn-logo-link"},{"type":"lnid","name":"homepage","nodeSelector":".bn-logo-image"},{"type":"mlid","nameFromAttribute":"data-zone","nodeSelector":".bn-zone-common"},{"type":"mlid","name":"right","nodeSelector":".bn-zone-right"},{"type":"mlid","name":"department_feed","nodeSelector":".bn-zone-department-feed"},{"type":"lnid","name":"zone_title","nodeSelector":".bn-zone-title","postLoaded":true},{"type":"lnid","name":"more_link","nodeSelector":".bn-zone-more-link","postLoaded":true},{"type":"mnid","nameFromAttribute":"data-card-type","nodeSelector":".bn-splash-card-main","trackLink":true,"linkFromAttribute":"data-card-link"},{"type":"mnid","nameFromAttribute":"data-card-type","nodeSelector":".bn-splash-card","parentNodeSelector":".bn-zone","trackPosition":true},{"type":"lnid","name":"image","nodeSelector":".bn-splash-image","trackLink":true,"linkFromAttribute":"data-card-link"},{"type":"lnid","name":"headline","nodeSelector":".bn-splash-headline","trackLink":true,"linkFromAttribute":"data-card-link"},{"type":"mnid","nameFromAttribute":"data-card-type","nodeSelector":".bn-card","trackLink":true,"trackPosition":true,"linkFromAttribute":"data-link","parentNodeSelector":".bn-zone"},{"type":"mlid","name":"sticky-nav","nodeSelector":".bn-nav-sticky"},{"type":"mnid","name":"follow","nodeSelector":".bn-social-list"},{"type":"lnid","nameFromAttribute":"data-button-name","nodeSelector":".bn-follow-item","trackPosition":true},{"type":"mlid","name":"entry_header","nodeSelector":".bn-entry-header"},{"type":"mnid","name":"department_tag","nodeSelector":".bn-department-tag"},{"type":"lnid","nameFromAttribute":"data-linkname","nodeSelector":".bn-department-link","trackLink":true},{"type":"mnid","name":"byline","nodeSelector":".bn-byline"},{"type":"lnid","name":"author_image","nodeSelector":".bn-author-image"},{"type":"lnid","name":"author_name","nodeSelector":".bn-author-name"},{"type":"lnid","name":"twitter_follow","nodeSelector":".bn-author-twitter"},{"type":"mlid","name":"top_media","nodeSelector":".bn-top-media"},{"type":"mlid","name":"entry_text","nodeSelector":".bn-entry-text"},{"type":"mnid","name":"citation","nodeSelector":".bn-content-list-text"},{"type":"mnid","name":"entry_image","nodeSelector":".bn-content-list-image"},{"type":"lnid","nameFromTextNode":true,"nodeSelector":"a","excludeSelector":".bn-instream-share-link","parentNodeSelector":".bn-entry-text","trackPosition":true,"trackLink":true},{"type":"mnid","name":"share","nodeSelector":".bn-share"},{"type":"lnid","nameFromAttribute":"data-share-name","nodeSelector":".bn-instream-share-link","disableClickHandler":true},{"type":"lnid","name":"open","nodeSelector":".bn-read-more-link"},{"type":"mlid","name":"entry_footer","nodeSelector":".bn-entry-footer"},{"type":"mnid","name":"correction","nodeSelector":".bn-corrections"},{"type":"lnid","name":"contact","nodeSelector":".bn-correction-link"},{"type":"mnid","name":"topic_tag","nodeSelector":".bn-tag-cloud"},{"type":"lnid","nameFromAttribute":"data-slug","nodeSelector":".bn-tag","trackPosition":true,"trackLink":true},{"type":"mlid","name":"left_rail","nodeSelector":".bn-left-rail"},{"type":"lnid","nameFromAttribute":"data-share-name","nodeSelector":".bn-share-item","disableClickHandler":true},{"type":"mlid","name":"right_rail","nodeSelector":".bn-right-rail"},{"type":"mnid","nodeSelector":".bn-recirc","nameFromAttribute":"data-recirc-name","postLoaded":true},{"type":null,"nodeSelector":".bn-recirc-item","trackPosition":true,"parentNodeSelector":".bn-recirc","trackLink":true,"linkFromAttribute":"data-recirc-link","postLoaded":true},{"type":"mnid","name":"trending","nodeSelector":".bn-trending"},{"type":"mnid","name":"suggested-trending","nodeSelector":".bn-suggested-trending"},{"type":"mnid","name":"bottom-trending","nodeSelector":".bn-bottom-trending"},{"type":"lnid","name":"headline","nodeSelector":".bn-card-headline","trackLink":true,"linkFromAttribute":"data-card-link","postLoaded":true},{"type":"lnid","name":"image","nodeSelector":".bn-card-image","trackLink":true,"linkFromAttribute":"data-card-link","postLoaded":true},{"type":"lnid","name":"description","nodeSelector":".bn-card-description","trackLink":true,"linkFromAttribute":"data-card-link","postLoaded":true},{"type":"lnid","name":"author_name","nodeSelector":".bn-card-author"},{"type":"mnid","name":"follow","nodeSelector":".bn-follow-us"},{"type":"lnid","name":"subscribe","nodeSelector":".bn-signup-submit"},{"type":"mlid","name":"below_entry","nodeSelector":".bn-below-entry"},{"type":"mnid","name":"taboola","nodeSelector":".bn-taboola","trackPosition":true},{"type":"mlid","name":"footer","nodeSelector":".bn-footer"},{"type":"mnid","name":"corp-links","nodeSelector":".bn-footer-links"},{"type":"lnid","nameFromTextNode":true,"nodeSelector":".bn-footer-link-item","trackLink":true},{"type":"mnid","name":"slideshow-preview","nodeSelector":".bn-slideshow-preview"},{"type":"mlid","name":"extra-content","nodeSelector":".bn-slideshow-preview"},{"type":"mlid","name":"slideshow-header","nodeSelector":".bn-slideshow-header"},{"type":"mlid","name":"slideshow-body","nodeSelector":".bn-slideshow-body"},{"type":"lnid","name":"open","nodeSelector":".bn-slideshow-open","extra":{"dL_sDpt":"gallery"}},{"type":"lnid","name":"close","nodeSelector":".bn-close"},{"type":"mnid","name":"nav","nodeSelector":".bn-slideshow-nav"},{"type":"lnid","name":"prev","nodeSelector":".bn-slideshow-prev","extra":{"dL_sDpt":"gallery"}},{"type":"lnid","name":"next","nodeSelector":".bn-slideshow-next","extra":{"dL_sDpt":"gallery"}},{"type":"mlid","name":"comments-pane","nodeSelector":".bn-comments-pane"},{"type":"mnid","name":"comments","nodeSelector":".bn-comments-container"},{"type":"mlid","name":"modal","nodeSelector":".bn-modal","postLoaded":true},{"type":"mnid","name":"body","nodeSelector":".bn-modal-body","postLoaded":true},{"type":"lnid","name":"submit","nodeSelector":".bn-submit"},{"type":"lnid","name":"cancel","nodeSelector":".bn-cancel"},{"type":"mlid","name":"highlight","nodeSelector":".bn-highlight"},{"type":"mlid","name":"overlay","nodeSelector":".bn-overlay"},{"type":"mnid","name":"snapchat","nodeSelector":".bn-snapchat"},{"type":"lnid","name":"qr","nodeSelector":".bn-snapchat-qr"},{"type":"lnid","nameFromTextNode":true,"nodeSelector":".bn-card-link-text","trackLink":true}]};
+  }());
+</script>
+
+<script>
+  // critical desktop
+  window.microAjax=function(e,t){if(this.getRequest=function(){return!!window.XMLHttpRequest&&new XMLHttpRequest},this.postBody=arguments[2]||"",this.callbackFunction=t,this.url=e,this.request=this.getRequest(),this.request){var n=this.request;n.onreadystatechange=function(){4==n.readyState&&t(n.responseText)},""!==this.postBody?(n.open("POST",e,!0),n.setRequestHeader("X-Requested-With","XMLHttpRequest"),n.setRequestHeader("Content-type","application/x-www-form-urlencoded"),n.setRequestHeader("Connection","close")):n.open("GET",e,!0),n.send(this.postBody)}},window.HP=window.HP||{},HP.modules=HP.modules||{},HP.functions=HP.functions||{},HP.elements=HP.elements||{},HP.params=HP.params||{},HP.modules.ads={banner:"",square:"",promotion:""},window.HP.functions.getQueryStringParameter=function(e,t){var n=new RegExp("([?|&])"+t+"=(.*?)(&|$)","i"),i=e.match(n)||["","",void 0];return i[2]},window.HP.functions.isEmpty=function(e){for(var t in e)if(e.hasOwnProperty(t))return!1;return!0},window.MW=HP,window.Mobileweb=HP.modules,function(){window.HP.functions.getCookie=function(e){var t,n,i=e+"=",r=document.cookie.split(";"),o=0;for(n=r.length;o<n;o++)if(t=r[o],t=t.trim(),0===t.indexOf(i))return t.substring(i.length,t.length);return""},window.HP.functions.setCookie=function(e,t,n){if(n=n||{},void 0!==e){var i=void 0===t||null===t||""===t;i&&(t=0);var r=e+"="+t;void 0!==n.domain&&(r+="; domain="+n.domain),void 0!==n.expires?(n.expires===parseInt(n.expires,10)&&(n.expires=new Date(n.expires).toString()),r+="; expires="+n.expires):i&&(r+="; expires=Thu, 01 Jan 1970 00:00:01 GMT"),void 0!==n.path&&(r+="; path="+n.path),document.cookie=r}},window.HP.functions.cookiesEnabled=function(){return window.document.cookie="huffposttestcookie",window.document.cookie.indexOf("huffposttestcookie")!==-1}}(),HP.modules.storage=function(){var e,t,n,i,r,o,s,a,l,c;return o=function(){try{var e="test";return a=window.localStorage,a.setItem(e,"1"),a.removeItem(e),!0}catch(e){return!1}}(),c=function(e){if("string"==typeof e)try{return JSON.parse(e)}catch(t){return e||void 0}},l=function(e){return JSON.stringify(e)},s=function(){},o?(e=function(e){return c(a.getItem(e))},t=function(e,t){try{a.setItem(e,l(t))}catch(e){}},n=function(e){a.removeItem(e)},i=function(){a.clear()},r=function(e){return void 0!==a.getItem(e)},e("lastPurge")<=1430758101108&&(i(),t("lastPurge",Date.now()))):(e=t=n=i=s,r=function(){return!1}),{enabled:o,get:e,set:t,remove:n,clear:i,has:r}}(),HP.functions.loadCSS=function(e,t,n){var i=window.document.createElement("link"),r=window.document.getElementsByTagName("script");t=t||r[r.length-1],i.rel="stylesheet",i.href=e,i.media="only x",t.parentNode.insertBefore(i,t),setTimeout(function(){i.media=n||"all"})},HP.functions.loadFont=function(){function e(e){var t=document.getElementsByTagName("head")[0],n=document.createElement("style");n.appendChild(document.createTextNode(e)),t.appendChild(n)}var t,n;return n=HP.modules.storage,t=function(t,i,r,o){var s=!1,a=setTimeout(function(){void 0!==r&&e(r.after),s=!0},o||500);void 0!==r&&e(r.before),n.get("file-"+t)===i&&n.get("font-"+t)?(e(n.get("font-"+t)),void 0!==r&&e(r.after),clearTimeout(a)):(n.remove("file-"+t),n.remove("font-"+t),microAjax(i,function(o){n.set("file-"+t,i),n.set("font-"+t,o),s||(e(o),void 0!==r&&e(r.after),clearTimeout(a))}))}}(),window.waitForGlobal=function(e,t,n){var i,r="function"==typeof e?e:function(){return!!window[e]};r()?t():i=setInterval(function(){r()&&(t(),clearInterval(i))},n||50)},window.modulousQueue=function(){function e(e){setTimeout(function(){try{e()}catch(e){}},0)}var t=[],n=!1;return{add:function(i){!n&&t.push(i),n&&e(i)},runAll:function(){var i=0;for(n=!0;i<t.length;i++)e(t[i]);t=[]}}}(),setTimeout(function(){waitForGlobal("jQuery",modulousQueue.runAll)},5e3),function(){function e(e){var t="",n=window.location.href,i=window.HP.functions.getQueryStringParameter(window.location.href,"ab"),r=window.HP.functions.getQueryStringParameter(window.location.href,"g");return void 0===i||void 0===r||i!==e||n.indexOf("staging")===-1&&n.indexOf("local")===-1&&n.indexOf("design")===-1||l[i]&&l[i].variants[r]&&(t=r),t}function t(e,t){if(l[e]){var n=l[e].id,i=l[e].variants[t];void 0===i&&console.error("Could not find AB test variant for value",t),a(e,n,t,i)}else console.error("Could not find AB test",e)}function n(e){var t=Object.keys(l[e].variants),n=l[e].distribution;return n?i(t,n):t[Math.floor(Math.random()*t.length)]}function i(e,t){for(var n=0,i=Math.random(),r=0;r<e.length;r++)if(n+=t[r],n=+n.toFixed(2),i<=n)return e[r]}function r(e){if(localStorage.getItem("abTest-"+e))return JSON.parse(localStorage.getItem("abTest-"+e)).value}function o(e,t){p[e]=t;var n=localStorage["abTest-"+e];("undefined"==typeof n||n.date+f<Date.now())&&d.set("abTest-"+e,{value:t,date:Date.now()})}function s(e){var t=r(e);return void 0===t&&(t=n(e),o(e,t)),t}function a(e,t,n,i){c.push([t,i].join(":")),u.push([e,n].join(":")),o(e,n),window.HP.devMode&&console.log("AB test",e,"set to",n)}var l={},c=[],u=[],d=window.HP.modules.storage,p={};window.HP.modules.AB={set:t,testMap:function(){return c},userGroupTestMap:function(){var e=Object.keys(l).map(function(e){var t=l[e].id,n=l[e].variants[s(e)];if(void 0!==t&&void 0!==n)return t+":"+n});return e},namedTestMap:function(){return u},registerTest:function(e,t,n,i){if(i=i||{},!(i.platforms&&i.platforms.indexOf(HP.params.device)===-1||i.editions&&i.editions.indexOf(HP.params.edition.id)===-1))return l[e]={id:t,variants:n},i.distribution&&(l[e].distribution=i.distribution),l[e]},sample:function(i,r){if(l[i]){var o=r;if(p[i])return p[i];var s=e(i);if(""!==s)o=s;else if(d.enabled||void 0===r){var a="abTest-"+i,c=d.get(a);o=c&&Date.now()<c.date+f?c.value:n(i)}return t(i,o),o}},sampleAnonymous:function(e,t){var n="anonymous-"+e;if(p[n])return p[n];var i=t[Math.floor(Math.random()*t.length)];if(d.enabled){var r="abTest-"+n,o=d.get(r);o&&Date.now()<o.date+f&&(i=parseInt(o.value,10))}return a(n,e,i,i),i}};var f=6048e5,h=HP.modules.AB;HP.params&&HP.params.ab_config&&HP.params.ab_config.forEach(function(e){var t={},n=e.variant_ids.split(","),i=e.variant_distributions.split(",").map(function(e){return parseFloat(e)});e.variant_names.split(",").forEach(function(e,i){t[e]=parseInt(n[i])}),h.registerTest(e.name,parseInt(e.id),t,{distribution:i})})}(),function(){var e=window.HP.modules.AB;e.registerTest("valenciaGroup",1003,{experiment:13,control:14}),e.registerTest("bingKeywordsNew",1005,{no_module:21,with_search:22,reserve:23},{distribution:[.2,.2,.6]}),e.registerTest("dynamicPreview",1022,{enabled:76,control:77})}(),HP.modules.smarten=function(){function e(e){return e.replace(/(^|[-\u2014\s(\["])'/g,"$1\u2018").replace(/'/g,"\u2019").replace(/(^|[-\u2014/\[(\u2018\s])"/g,"$1\u201c").replace(/"/g,"\u201d").replace(/--/g,"\u2014")}function t(e){n(document.querySelectorAll(e))}function n(t){var n=[].reduce.call(t,function(e,t){return e.concat([].slice.call(t.querySelectorAll(":not(script):not(style)")))},[]),i=n.filter(function(e){return e.hasChildNodes()}).reduce(function(e,t){return e.concat([].slice.call(t.childNodes))},[]).filter(function(e){return e.nodeType===document.TEXT_NODE});i.forEach(function(t){t.textContent=e(t.textContent)})}return{selector:t,nodeList:n}}(),function(){window.getVidiblePlayer=function(e){var t=window.fbq,n=window.vidible;e.addEventListener(n.VIDEO_PAUSE,function(){t&&t("trackCustom","Vidible Pause")}),e.addEventListener(n.VIDEO_PLAY,function(){t&&t("trackCustom","Vidible Play")})}}();
+</script>
+<script>
+  window.HP.functions.loadFont('ProximaNovaCond', 'http://s.m.huffpost.com/assets/fonts/proxima-nova-condensed-00413bf3c406df7a1c9b6218d92f311ced4bc12564bede72e457e7963bf16f44.css', {
+    before: "h1,h2,h3,h4,h5{visibility:hidden;}",
+    after: "h1,h2,h3,h4,h5{visibility:visible;}"
+  }, 1000);
+</script>
+<script>
+  window.HP.functions.loadFont('ProximaNova', 'http://s.m.huffpost.com/assets/fonts/proxima-nova-ecb8d1091c7381b106b2e5ef8cb8b1f39236ba05d1d26e5479c511a5d10abcd2.css', {
+    before: "h1,h2,h3,h4,h5{visibility:hidden;}",
+    after: "h1,h2,h3,h4,h5{visibility:visible;}"
+  }, 500);
+</script>
+
+<script type="application/ld+json">
+{"@type":"NewsArticle","headline":"Man Undergoes Extensive Plastic Surgery To Look Like Justin Bieber, Spends $100,000 In 5 Years","articleSection":"Celebrity","image":{"@type":"ImageObject","url":"http://i.huffpost.com/gen/1416109/images/o-PLASTIC-SURGERY-BIEBER-facebook.jpg","width":2000,"height":1000},"mainEntityOfPage":{"@type":"URL","@id":"http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html"},"@context":"http://schema.org","dateCreated":"2013-10-19T17:00:35Z","datePublished":"2013-10-19T17:00:35Z","dateModified":"2013-10-21T15:18:41Z","author":{"@type":"Person","name":"Hunter Stuart"},"creator":{"@type":"Person","name":"Hunter Stuart"},"publisher":{"@type":"Organization","name":"The Huffington Post","logo":{"@type":"ImageObject","url":"https://s.m.huffpost.com/assets/hp-amp-101ecf8047b044dce5f3122c63056162580f1c26994c73ae90dbd1c5d1545a71.gif","width":600,"height":60}},"description":"Not only is songwriter Toby Sheldon a 33-...","keywords":["33-year-old-bieber-fan","toby-sheldon-plastic-surgery","plastic-surgery-justin-bieber","bieber-plastic-surgery","33-year-old-justin-bieber","toby-sheldon-justin-bieber","video","$100000-plastic-surgery","$100000-justin-bieber-surgery","toby-sheldon-songwriter","toby-sheldon-33","justin-bieber","@tmz","@noad_mid_article","@ent","@celebrity","@people","type: news"],"inLanguage":"en_US","thumbnailUrl":"http://i.huffpost.com/gen/1416109/images/n-PLASTIC-SURGERY-BIEBER-200x150.jpg","url":"http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html"}
+
+</script>
+
+<!-- Ad Header -->
+<script type="text/javascript">
+window.adTechCallback = function() {
+  
+  
+  window.adSetAdURL('http://' + (document.domain || 'www.huffingtonpost.com') + (location.port?':'+location.port:'') + '/_uac/2014adpage.html');
+  window.tacProp={tags:"kvpagetype=atf:bpage:news:news:slideshow;kvcommref=mostpopular;kventryid=4128563;kvcmsid=hpo:4128563;kveditags=33-year-old-justin-bieber:33-year-old-bieber-fan:100000-plastic-surgery:bieber-plastic-surgery:@people:toby-sheldon-justin-bieber:plastic-surgery-justin-bieber:@tmz:video:toby-sheldon-songwriter:100000-justin-bieber-surgery:@ent:justin-bieber:@celebrity:toby-sheldon-33:@noad_mid_article:toby-sheldon-plastic-surgery;kvvert=celebrity;kvblogger=hunter-stuart"};
+  window.tacProp.tags += ( (typeof window.HPAds!=="undefined") && (typeof window.HPAds.adtech_client_side_inf=="function") ) ? window.HPAds.adtech_client_side_inf() : "";
+  window.tacProp.tags += ";kvrefd="+window.location.href;
+  if (typeof window.adSetOthAT=="function") window.adSetOthAT(window.tacProp.tags);
+  
+  window.adSetMOAT('1');
+  
+};
+</script>
+
+<script src="http://o.aolcdn.com/ads/adsWrapper.js" async></script>
+<script>
+  
+  window.waitForGlobal('adSetAdURL', function(){
+  
+    window.adTechCallback();
+  
+  });
+  
+</script>
+
+<meta name="taboola.category" content="celebrity" />
+
+<script type="text/javascript">
+    function doTaboola(taboolaParams) {
+        if (typeof taboolaParams == 'undefined') return;
+        
+        window._taboola = window._taboola || [];
+        if (!doTaboola.loaded) {
+            _taboola.push({ article:'auto' });
+            var _async_script = !function (e, f, u) {
+                e.async = 1;
+                e.src = u;
+                f.parentNode.insertBefore(e, f);
+            }(document.createElement('script'), document.getElementsByTagName('script')[0], taboolaParams.loader);
+            doTaboola.loaded = true;
+        }
+        _taboola.push({
+            "listenTo": 'render',
+            "handler": function(e) {
+                var detail = e.detail;
+                var i = 0;
+                while ( window.jQuery && window.JSON && detail.items[i] ) {
+                    var dataItemId = detail.items[i].id;
+                    var itemUrl = detail.items[i].url;
+                    var taboolaDomNode = window.jQuery("[data-item-id='" + dataItemId + "']");
+                    var dataBeacon = {
+                        "p": {
+                            "mpid": (i+1).toString(),
+                            "plid": itemUrl,
+                            "mlid": "taboola"
+                        }
+                    };
+                    taboolaDomNode.attr('data-beacon', window.JSON.stringify(dataBeacon));
+                    i++;
+                }
+            }
+        });
+        var cb = function(o){}; // function(o){ o.container.removeAttribute('id'); }
+        _taboola.push({onrender: cb, mode:taboolaParams.mode, container:taboolaParams.container, placement:taboolaParams.placement, target_type:taboolaParams.target_type});
+        
+    }
+</script>
+<style>.trc-auto-size { height: auto !important; }</style>
+<script>
+var _HPJS = (function (_mod) {
+  "use strict";
+
+  _mod.loadJS = function (src, options) {
+    var options = options || {};
+    var ref = window.document.getElementsByTagName("script")[0];
+    var script = window.document.createElement("script");
+    script.src = src;
+    script.async = options.async;
+    script.defer = options.defer;
+    ref.parentNode.insertBefore(script, ref);
+    return script;
+  }
+
+  _mod.loadJSLater = function (url, timeout) {
+    var ran = false;
+    var loader = function () {
+      if (ran) {
+        return;
+      }
+      ran = true;
+      _mod.loadJS(url, {async:true});
+    }
+    window.addEventListener ?
+      window.addEventListener("load",loader,false) :
+      window.attachEvent && window.attachEvent("onload",loader);
+    // in case the load event never fires
+    setTimeout(loader, timeout || 15000);
+  }
+
+  _mod.waitForGlobal = function(identifier, cb, poll) {
+    var test = typeof identifier === "function" ? identifier : function() { return !!window[identifier]; };
+    var interval;
+    if(test()) {
+      cb();
+    } else {
+      interval = setInterval(function(){
+        if(test()) {
+          cb();
+          clearInterval(interval);
+        }
+      }, poll || 50);
+    }
+  };
+
+  return _mod;
+
+}(_HPJS || {}));
+</script>
+</head>
+<body class="desktop b-page department--entertainment section--celebrity legacy-a standard" data-locale="en_US">
+<div id="recaptcha-container"></div>
+
+<div class="advertisement asset_inserts">
+<script type="text/javascript">
+waitForGlobal("adSetMOAT", function() {
+  adSetMOAT("1");
+});
+</script>
+</div>
+
+
+
+<div class="main">
+
+<!-- Header -->
+<div class="header__placeholder"></div>
+<header class="header js-header">
+<div class="header__content bn-masthead">
+<div class="header__content-left">
+<div class="header__hamburger bn-hamburger-menu">
+<div class="header__hamburger-link header--transition bn-hamburger-button js-hamburger-link"></div>
+</div>
+</div>
+<div class="header__logo">
+<a class="logo bn-logo-link" href="/">
+<img alt="The Huffington Post" class="logo__img header--transition bn-logo-image" src="http://s.m.huffpost.com/assets/HuffPostHero-d783f680fb974e80346bdfa145131d058e596e1d32f791981875aa481702c770.svg">
+</a>
+</div>
+<div class="header__content-right">
+<div class="header__social-list bn-social-list">
+<a class="bn-follow-item header--transition header__social-list__item header__social-list__item--facebook" data-button-name="facebook" href="http://facebook.com/HuffPost" target="_blank"></a>
+<a class="bn-follow-item header--transition header__social-list__item header__social-list__item--twitter" data-button-name="twitter" href="https://twitter.com/HuffPost" target="_blank"></a>
+<a class="bn-follow-item header--transition header__social-list__item header__social-list__item--instagram" data-button-name="instagram" href="http://instagram.com/HuffPost" target="_blank"></a>
+<a class="bn-follow-item header--transition header__social-list__item header__social-list__item--snapchat js-snapchat-follow" data-button-name="snapchat" href="" target="_blank"></a>
+</div>
+<div class="header__editions bn-editions js-editions-button bn-editions-link bn-multiple">
+<span class="header__editions__label">EDITION</span>
+<div class="header__editions__edition us">US</div>
+</div>
+</div>
+</div>
+</header>
+<div class="dropdowns">
+<nav class="dropdown hamburger js-hamburger-menu bn-masthead dropdown--closed">
+<div class="hamburger__container js-hamburger-container dropdown__container bn-hamburger-menu">
+<div class="hamburger__wrapper">
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/" target="_top">
+NEWS
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://highline.huffingtonpost.com/" target="_blank">
+Highline
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/science" target="_top">
+Science
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/education" target="_top">
+Education
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/weird-news" target="_top">
+Weird News
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/business" target="_top">
+Business
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://testkitchen.huffingtonpost.com/" target="_blank">
+TestKitchen
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/technology" target="_top">
+Tech
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/college" target="_top">
+College
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/media" target="_top">
+Media
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/section/politics" target="_top">
+POLITICS
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://elections.huffingtonpost.com/pollster" target="_blank">
+Pollster
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/heroin-epidemic" target="_top">
+Heroin Epidemic
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/donald-trump" target="_top">
+Donald Trump
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/racial-inequality" target="_top">
+Racial Inequality
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/us-senate" target="_top">
+US Senate
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://elections.huffingtonpost.com/2016/results/president" target="_blank">
+Election Results
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/huffpost-hill" target="_top">
+HuffPost Hill
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/police-brutality" target="_top">
+Police Brutality
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/hate-crimes" target="_top">
+Hate Crimes
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/supreme-court" target="_top">
+Supreme Court
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/congress" target="_top">
+Congress
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/so-that-happened" target="_top">
+So That Happened
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/dept/entertainment" target="_top">
+ENTERTAINMENT
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/entertainment" target="_top">
+Entertainment
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/comedy" target="_top">
+Comedy
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/celebrity" target="_top">
+Celebrity
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/tv" target="_top">
+TV
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/arts" target="_top">
+Arts + Culture
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/backspace" target="_top">
+Backspace
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/movies" target="_top">
+Movies
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/dept/lifestyle" target="_top">
+LIFESTYLE
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/healthy-living" target="_top">
+Healthy Living
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/travel" target="_top">
+Travel
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/style" target="_top">
+Style
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/taste" target="_top">
+Taste
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/huffpost-home" target="_top">
+Home
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/relationships" target="_top">
+Relationships
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/sleep-wellness" target="_top">
+Sleep
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/dept/voices" target="_top">
+VOICES
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/black-voices" target="_top">
+Black Voices
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/latino-voices" target="_top">
+Latino Voices
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/women" target="_top">
+Women
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/fifty" target="_top">
+Fifty
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/queer-voices" target="_top">
+Queer Voices
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/parents" target="_top">
+Parents
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="hamburger__block partial-block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/dept/impact" target="_top">
+IMPACT
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/reclaim" target="_top">
+Reclaim
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/project-zero" target="_top">
+Project Zero
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/good-news" target="_top">
+Good News
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/section/video" target="_top">
+VIDEO
+</a>
+</div>
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="http://www.huffingtonpost.com/newsletters" target="_top">
+NEWSLETTERS
+</a>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<h3 class="hamburger__section-title">
+FEATURED
+</h3>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/own" target="_top">
+OWN
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/paving-the-way" target="_top">
+Paving the Way
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/power-of-humanity" target="_top">
+The Power Of Humanity
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/retire-well" target="_top">
+Retire Well
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/sleep-wellness" target="_top">
+Sleep + Wellness
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/purpose-profit" target="_top">
+What's Working: Purpose + Profit
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/theworldpost" target="_top">
+WorldPost
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<h3 class="hamburger__section-title">
+MORE
+</h3>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/books" target="_top">
+Books
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://www.huffingtonpost.com/news/candidate-confessional-podcast/" target="_top">
+Candidate Confessional
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/college" target="_top">
+College
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/crime" target="_top">
+Crime
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/divorce" target="_top">
+Divorce
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://www.huffingtonpost.com/news/la-dolce-vita/" target="_top">
+Dolce Vita
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://www.huffingtonpost.com/news/eat-the-press/" target="_top">
+Eat the Press
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/education" target="_top">
+Education
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/green" target="_top">
+Green
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/outspeak" target="_top">
+Outspeak
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/religion" target="_top">
+Religion
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/small-business" target="_top">
+Small Business
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/sports" target="_top">
+Sports
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/teen" target="_top">
+Teen
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/weddings" target="_top">
+Weddings
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="blank hamburger__block">
+</div>
+
+</div>
+</div>
+</nav>
+
+<div class="dropdown editions js-dropdown-editions bn-masthead dropdown--closed">
+<div class="dropdown__editions-container bn-editions dropdown__container">
+<div class="dropdown__editions-inner-container js-editions-container">
+<ul class="dropdown__editions-column">
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="ar" href="http://www.huffpostarabi.com/?country=AR">Arabi</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="au" href="http://www.huffingtonpost.com.au/?country=AU">Australia</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="br" href="http://www.huffpostbrasil.com/?country=BR">Brasil</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="ca" href="http://www.huffingtonpost.ca/?country=CA">Canada</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="de" href="http://www.huffingtonpost.de/?country=DE">Deutschland</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="es" href="http://www.huffingtonpost.es/?country=ES">España</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="fr" href="http://www.huffingtonpost.fr/?country=FR">France</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="gr" href="http://www.huffingtonpost.gr/?country=GR">Greece</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="in" href="http://www.huffingtonpost.in/?country=IN">India</a>
+</li>
+</ul>
+<ul class="dropdown__editions-column">
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="it" href="http://www.huffingtonpost.it/?country=IT">Italia</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="jp" href="http://www.huffingtonpost.jp/?country=JP">Japan</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="kr" href="http://www.huffingtonpost.kr/?country=KR">Korea</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="mg" href="http://www.huffpostmaghreb.com/?country=MG">Maghreb</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="mx" href="http://www.huffingtonpost.com.mx/?country=MX">México</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="qc" href="http://quebec.huffingtonpost.ca/?country=QC">Québec</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="za" href="http://www.huffingtonpost.co.za/?country=ZA">South Africa</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="uk" href="http://www.huffingtonpost.co.uk/?country=UK">United Kingdom</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="us" href="http://www.huffingtonpost.com/?country=US">United States</a>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="overlays">
+<div class="snapchat-overlay bn-overlay hidden">
+<div class="snapchat-overlay__container bn-snapchat">
+<div class="snapchat-overlay__container__close bn-close">
+<div class="snapchat-overlay__container__close__icon"></div>
+<span>Close</span>
+</div>
+<div class="snapchat-overlay__container__qr bn-snapchat-qr">
+<img src="http://s.m.huffpost.com/assets/snapchat-QR-a98b071227601c8bd787d668be38d7220002e41178fe4db1577c894b942534b3.png">
+</div>
+</div>
+</div>
+
+</div>
+
+
+<div class="advertisement leaderboard_flex">
+<style type="text/css"> #topnav_margin_btm { margin: 0 !important; } </style>
+<div id="ad_leaderboard_flex" class="ad_wrapper_"><div id="adtech_leaderboard_flex" class="adtech-adspot ad-leaderboard_flex"></div>
+<script>
+(function() {
+  var adsDiv = document.querySelector('#adtech_leaderboard_flex');
+  adsDiv.removeAttribute('id');
+  window.modulousQueue.add(function(){
+    
+      
+        waitForGlobal('htmlAdWH', function() {
+          adsDiv.reloadCount = 0;
+          var recoveryId = '';
+          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;
+          var adId = needsRecovery ? recoveryId : '93318034';
+          try { adId = io_c3sd.ads["leaderboard_flex"] || adId; } catch(e) {} 
+          
+          // Override adtech_call_type
+          var delivery_type = "" || "";
+          var adtech_call_type = "";
+          switch (delivery_type) {
+            case "by_request": adtech_call_type = "ajax"; break;
+            case "text": adtech_call_type = "text"; break;
+            case "iframe": adtech_call_type = "iframe"; break;
+            case "iframe_proxy": adtech_call_type = "f"; break;
+            case "collapsed": adtech_call_type = "fc"; break;
+            default: adtech_call_type = "fc"; break;
+          }
+
+          
+          
+          
+          var args = ['lb', 'lb'
+          ];
+          
+          
+
+          if(needsRecovery) {
+            waitForGlobal('readyToRecover', function() {
+              adsDiv = document.querySelector('.leaderboard_flex');
+              //htmlAdWH(adId, args[0], args[1], "fileless", adsDiv);
+            });
+          } else {
+            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);
+          }
+          
+          if (typeof debugadcode == 'function') { debugadcode('AdTech', {placement: 'leaderboard_flex', mnid: adId}, adsDiv); }
+          
+          jQuery(document).on('reloadAd', function(ev, elem) {
+            if (elem && !elem.contains(adsDiv)) { return; }
+            var refreshRate = 1;  
+            adsDiv.reloadCount++;
+            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === 'function') { adsReloadAd(adsDiv); }
+          });
+          
+          adSetInView('0');
+        }); // wFG:htmlAdWH
+      
+    
+  });
+}());
+</script></div>
+<script type="text/javascript">if (typeof HPAds !== 'undefined') { 
+HPAds.ad_onload('div[id^="ad_leaderboard_flex"] iframe','HPAds.ad_uac_onload_handler(\' iframe[class^="uac_"]\',this,\'bottom_ad_border_div\',10)');
+}</script>
+</div>
+
+
+
+<div id="main" role="main">
+
+
+
+
+<article class="entry js-entry component loaded entry--mt entry--standard" data-mobilepath="/us/entry/4128563" data-sharingimage="http://i.huffpost.com/gen/1416109/images/o-PLASTIC-SURGERY-BIEBER-facebook.jpg" data-sharingtitle="LOOK: Bieber Fan Had $100K Worth Of Plastic Surgery To Look Like His Idol" data-sharingtweetname="HuffPostCeleb" data-sharingtweettext="LOOK%3A+Bieber+Fan+Had+%24100K+Worth+Of+Plastic+Surgery+To+Look+Like+His+Idol" data-sharingurl="http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html" data-socialmessaging="{}" id="4128563" path="/us/entry/4128563" type="article">
+
+
+<header class="entry__header bn-entry-header">
+
+
+<span class="entry-eyebrow">
+<span class="bn-department-tag">
+<a class="entry-eyebrow__link bn-department-link" data-linkname="celebrity" href="/section/celebrity">CELEBRITY
+</a></span>
+</span>
+
+<div class="timestamp">
+<span class="timestamp__date--published">10/19/2013 01:00 pm ET</span>
+|
+<span class="timestamp__date--modified">
+<strong>Updated</strong>
+Oct 21, 2013
+</span>
+</div>
+
+
+
+
+
+
+<div class="headline js-headline">
+<h1 class="headline__title">Man Undergoes Extensive Plastic Surgery To Look Like Justin Bieber, Spends $100,000 In 5 Years</h1>
+</div>
+
+
+
+
+<div class="bn-byline byline">
+<div class="byline__authors">
+<div class="author-card">
+<div class="author-card__details">
+<span class="author-card__details__name">The Huffington Post</span>
+
+</div>
+</div>
+</div>
+</div>
+
+</header>
+<div class="entry__content js-entry-content">
+<div class="entry__body js-entry-body">
+
+
+<div class="top-media js-top-media bn-top-media">
+<div class="fivemin top-media--video">
+<script type="text/javascript"> var src_url="https://spshared.5min.com/Scripts/PlayerSeed.js?playList=517980341&height=381&width=570&sid=577&origin=undefined&videoGroupID=148829&relatedNumOfResults=100&relatedMode=2&relatedBottomHeight=60&companionPos=&hasCompanion=false&autoStart=false&colorPallet=%23FFEB00&videoControlDisplayColor=%23191919&shuffle=0&isAP=1&siteSection=us.celebrity&sponsorship="; src_url += "&amp;onVideoDataLoaded=HPTrack.Vid.DL&amp;onTimeUpdate=HPTrack.Vid.TC"; if (typeof(commercial_video) == "object") { src_url += "&amp;siteSection="+commercial_video.site_and_category; if (commercial_video.package) { src_url += "&amp;sponsorship="+commercial_video.package;  } } document.write('<scr' + 'ipt type="text/javascript" src="'+src_url+'"></scr' + 'ipt>');</script>
+</div>
+<script></script>
+<iframe style="display: none;"></iframe>
+
+</div>
+
+<div class="bn-left-rail js-sharebar share-bar share-bar--sticky" data-mobilepath="/us/entry/4128563" data-sharingimage="http://i.huffpost.com/gen/1416109/images/o-PLASTIC-SURGERY-BIEBER-facebook.jpg" data-sharingtitle="LOOK: Bieber Fan Had $100K Worth Of Plastic Surgery To Look Like His Idol" data-sharingtweetname="HuffPostCeleb" data-sharingtweettext="LOOK%3A+Bieber+Fan+Had+%24100K+Worth+Of+Plastic+Surgery+To+Look+Like+His+Idol" data-sharingurl="http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html">
+<ul class="share-bar__list bn-share">
+<div class="share-bar__social-counts">
+<span class="share-bar__social-counts__number">9.9k</span>
+</div>
+<li class="bn-share-item facebook js-sharebar-facebook share-bar__item" data-share-name="facebook" data-type="facebook">
+<a class="facebook share-bar__item-link" href="#" target="_blank"></a>
+</li>
+<li class="bn-share-item js-sharebar-twitter share-bar__item twitter" data-share-name="twitter" data-type="twitter">
+<a class="share-bar__item-link twitter" href="#" target="_blank"></a>
+</li>
+<li class="bn-share-item js-sharebar-pinterest pinterest share-bar__item" data-share-name="pinterest" data-type="pinterest">
+<a class="pinterest share-bar__item-link" data-pin-custom="true" href="#" target="_blank"></a>
+</li>
+<li class="bn-share-item email js-sharebar-email share-bar__item" data-share-name="email" data-type="email">
+<a class="email share-bar__item-link" href="#" target=""></a>
+</li>
+<div class="bn-share-item js-sharebar-comments share-bar__comments with-count" data-share-name="comments_open" data-type="comments">
+<div class="share-bar__comments__icon with-count"></div>
+<div class="share-bar__comments__count with-count">3k</div>
+</div>
+</ul>
+</div>
+
+
+<div class="share-bar-highlight js-highlight hidden bn-highlight">
+<div class="bn-share">
+<a class="share-bar-highlight__twitter js-highlight-share-button bn-share-item" data-share-name="twitter" data-type="twitter"></a>
+<a class="share-bar-highlight__facebook js-highlight-share-button bn-share-item" data-share-name="facebook" data-type="facebook"></a>
+</div>
+</div>
+
+<div class="entry__text js-entry-text bn-entry-text">
+<p>Not only is songwriter Toby Sheldon <a href="http://gawker.com/songwriter-spends-life-savings-on-surgeries-to-look-lik-1448039603" target="_hplink">a 33-year-old Justin Bieber fan</a>, his Bieber-devotion would <a href="http://www.uproxx.com/music/2013/10/meet-male-songwriter-spent-100000-plastic-surgery-look-like-justin-bieber/" target="_hplink">blow teeny-bopping Beliebers out of the water</a>. </p>
+<p>That's because Sheldon went so far as to spend almost $100,000 on <a href="http://www.complex.com/style/2013/10/justin-bieber-plastic-surgery" target="_hplink">five years worth of plastic surgery</a> to make him look like his idol, according to the British tabloid <a href="http://imgur.com/D39jcAz" target="_hplink">Closer</a>. </p>
+<p>This is what Sheldon looks like after all that plastic surgery he had done to resemble the 19-year-old Canadian crooner:</p>
+<p><a href="http://imgur.com/e4txRRU"><img src="http://i.imgur.com/e4txRRU.jpg" title="Hosted by imgur.com" /></a></p>
+<blockquote class="twitter-tweet">
+<p>Would You Spend $100,000 to Look Like <a href="https://twitter.com/justinbieber">@JustinBieber</a>? This Guy Did And You Wont Belieb The Results <a href="http://t.co/kZ8ZawghK6">http://t.co/kZ8ZawghK6</a></p>
+<p>— Maxine Page (@maxinepage) <a href="https://twitter.com/maxinepage/statuses/391293043652833280">October 18, 2013</a></p>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8">try{}catch(e){}</script>
+<p>On top of Botox injections and hair transplants, Sheldon had costly "smile surgery" done to <a href="http://www.thesun.co.uk/sol/homepage/features/5153510/tony-sheldon-has-smile-surgery-to-look-like-justin-bieber.html" target="_hplink">make his smile look just like Bieber's</a>, according to multiple reports. </p>
+<p>"It's Justin's smile that gives him his youthful look. So I had my upper lip lifted [and] my bottom lip plumped out," the musician told Closer.  </p>
+<p>(h/t <a href="http://www.reddit.com/r/WTF/comments/1opka9/well_got_to_admire_the_dedication/" target="_hplink">Reddit</a>) </p>
+
+<script class="entry-paragraph-1-ad-script-template" type="text/template">
+
+</script>
+<script class="sharebox-ad-script-template" type="text/template">
+
+</script>
+<script class="in-line-ad-unit-script-template" type="text/template">
+
+</script>
+<script class="mobileweb_transporter_mid_script-template" type="text/template">
+
+</script>
+<script class="mobileweb_transporter_mid_2_script-template" type="text/template">
+
+</script>
+<script class="entry-paragraph-3-ad-script-template" type="text/template">
+
+</script>
+
+</div>
+<script></script>
+<iframe style="display: none;"></iframe>
+
+
+<script class="article-bottom-ad-script-template" type="text/template">
+
+</script>
+
+
+
+<section class="extra-content">
+<h4 class="extra-content__title">ALSO ON HUFFPOST:</h4>
+<div class="extra-content__media">
+
+<div class="dynamic-preview-container slideshow-container">
+<div class="bn-slideshow-open dynamic-preview slideshow" data-data-url="/mapi/v2/us/entry/4128563/slideshow/283870.json?device=desktop" data-slides-srcs="http://i.huffpost.com/gadgets/slideshows/283870/slide_283870_2169122_free.jpg http://i.huffpost.com/gadgets/slideshows/283870/slide_283870_2169037_free.jpg http://i.huffpost.com/gadgets/slideshows/283870/slide_283870_2169038_free.jpg" data-slideshow-id="283870" id="slideshow-283870" style="background-image:url(http://i.huffpost.com/gadgets/slideshows/283870/slide_283870_2169122_free.jpg);">
+<div class="slideshow__preview">
+<div class="slideshow__preview__icon"></div>
+<div class="slideshow__preview__text">
+<div class="slideshow__preview__text__title">Justin Bieber through the years</div>
+</div>
+</div>
+</div>
+<div class="bn-slideshow-open hidden slideshow" data-data-url="/mapi/v2/us/entry/4128563/slideshow/283870.json?device=desktop" data-slideshow-id="283870" id="slideshow-283870" style="background-image:url(http://i.huffpost.com/gadgets/slideshows/283870/slide_283870_2169122_free.jpg);">
+<div class="slideshow__preview">
+<div class="slideshow__preview__icon"></div>
+<div class="slideshow__preview__text">
+<div class="slideshow__preview__text__title">Justin Bieber through the years</div>
+</div>
+</div>
+</div>
+</div>
+<div class="slideshow-overlay hidden" id="overlay-283870">
+<div class="slideshow-overlay__header bn-slideshow-header">
+<div class="slideshow-overlay__header__hp">
+<img alt="The Huffington Post" class="slideshow-overlay__header__hp-logo" src="http://s.m.huffpost.com/assets/H-icon-72fd5782b36a1a42ab82a4af65cbc6dd6ddc4d4a71190a91c5cfaab7c66fd836.svg">
+</div>
+<h2 class="slideshow-overlay__header__title">Justin Bieber through the years</h2>
+<div class="slideshow-overlay__header__share bn-share" data-sharingimage="http://i.huffpost.com/gadgets/slideshows/283870/slide_283870_2169122_free.jpg">
+<div class="js-sharebar share-bar share-bar--slideshow-top">
+<ul class="share-bar__list bn-share">
+<li class="bn-share-item facebook js-sharebar-facebook share-bar__item" data-share-name="facebook" data-type="facebook">
+<a class="facebook share-bar__item-link" href="#" target="_blank"></a>
+</li>
+<li class="bn-share-item js-sharebar-twitter share-bar__item twitter" data-share-name="twitter" data-type="twitter">
+<a class="share-bar__item-link twitter" href="#" target="_blank"></a>
+</li>
+<li class="bn-share-item email js-sharebar-email share-bar__item" data-share-name="email" data-type="email">
+<a class="email share-bar__item-link" href="#" target=""></a>
+</li>
+</ul>
+</div>
+
+</div>
+<div class="slideshow-overlay__header__close bn-close" data-slideshow-id="283870"></div>
+</div>
+<div class="slideshow-overlay__container__ad-con">
+<div class="slideshow-overlay__container__ad-con__top-ad"></div>
+</div>
+<div class="slideshow-overlay__container bn-slideshow-body">
+<div class="slideshow-overlay__container__left">
+<div class="slideshow-overlay__container__left__nav bn-slideshow-nav">
+<div class="slideshow-overlay__container__left__nav__prev bn-slideshow-prev" data-slideshow-id="283870"></div>
+<div class="slideshow-overlay__container__left__nav__current">1</div>
+<div class="slideshow-overlay__container__left__nav__of">
+<div class="slideshow-overlay__container__left__nav__of__line"></div>
+<div class="slideshow-overlay__container__left__nav__of__word">of</div>
+</div>
+<div class="slideshow-overlay__container__left__nav__total">29</div>
+<div class="slideshow-overlay__container__left__nav__next bn-slideshow-next" data-slideshow-id="283870"></div>
+</div>
+<div class="slideshow-overlay__container__left__info">
+<div class="slideshow-overlay__container__left__info__slide-title">Justin Bieber performs on the street August 20, 2007 in Stratford, Canada. (Photo by Irving Shuter/Getty Images)</div>
+<div class="slideshow-overlay__container__left__info__slide-caption">Justin Bieber performs on the street August 20, 2007 in Stratford, Canada. (Photo by Irving Shuter/Getty Images)</div>
+</div>
+<div class="slideshow-overlay__container__left__side-share" data-sharingimage="http://i.huffpost.com/gadgets/slideshows/283870/slide_283870_2169122_free.jpg">
+<p class="share-text">Share this slide:</p>
+<div class="js-sharebar share-bar share-bar--slideshow-top">
+<ul class="share-bar__list bn-share">
+<li class="bn-share-item facebook js-sharebar-facebook share-bar__item" data-share-name="facebook" data-type="facebook">
+<a class="facebook share-bar__item-link" href="#" target="_blank"></a>
+</li>
+<li class="bn-share-item js-sharebar-twitter share-bar__item twitter" data-share-name="twitter" data-type="twitter">
+<a class="share-bar__item-link twitter" href="#" target="_blank"></a>
+</li>
+<li class="bn-share-item email js-sharebar-email share-bar__item" data-share-name="email" data-type="email">
+<a class="email share-bar__item-link" href="#" target=""></a>
+</li>
+</ul>
+</div>
+
+</div>
+<div class="slideshow-overlay__container__left__side-ad"></div>
+</div>
+<div class="slideshow-overlay__container__content js-slideshow-content">
+<div class="slideshow-overlay__container__content__slide">
+<img src="http://i.huffpost.com/gadgets/slideshows/283870/slide_283870_2169122_free.jpg" itemprop="image"></img>
+
+</div>
+<div class="slideshow-overlay__container__content__credit"></div>
+</div>
+</div>
+<div class="slideshow-overlay__data">
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+<div class="slideshow-overlay__data__preload"></div>
+</div>
+</div>
+
+
+</div>
+</section>
+<script></script>
+<iframe style="display: none;"></iframe>
+
+
+
+<div class="entry_footer bn-entry-footer">
+
+<div class="byline-footer">
+<div class="entry-corrections js-entry-corrections bn-corrections">
+<a class="suggest-correction bn-correction-link" href="javascript:void(0)" id="suggest-correction-link">Suggest a correction</a>
+</div>
+
+<div class="byline-footer__authors">
+<div class="author-card--byline author-card--full bn-byline">
+<a href="/author/hunter-stuart"><div class="author-card__headshot bn-author-image" style="background-image: url(http://s.huffpost.com/contributors/hunter-stuart/headshot.jpg), url(http://s.huffpost.com/contributors/hunter-stuart/headshot_color.jpg);;"></div>
+</a><div class="author-card__details">
+<span class="author-card__details-container"><a class="author-card__details__link bn-author-name" href="/author/hunter-stuart"><span class="author-card__details__name">Hunter Stuart</span>
+</a><span class="author-card__social-container">
+<a class="author-card__social author-card__social--twitter bn-author-twitter" href="http://twitter.com/hoont" target="_blank"></a>
+</span>
+</span><span class="author-card__microbio">
+News Editor, The Huffington Post
+</span>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div class="tag-cloud js-tag-cloud bn-tag-cloud">
+<h2 class="tag-cloud__header">MORE:</h2>
+<a class="tag bn-tag" data-slug="33 year old bieber fan" href="/news/33 year old bieber fan/">33 Year Old Bieber Fan</a> <a class="tag bn-tag" data-slug="toby sheldon plastic surgery" href="/news/toby sheldon plastic surgery/">Toby Sheldon Plastic Surgery</a> <a class="tag bn-tag" data-slug="plastic surgery justin bieber" href="/news/plastic surgery justin bieber/">Plastic Surgery Justin Bieber</a> <a class="tag bn-tag" data-slug="bieber plastic surgery" href="/news/bieber plastic surgery/">Bieber Plastic Surgery</a> <a class="tag bn-tag" data-slug="33 year old justin bieber" href="/news/33 year old justin bieber/">33 Year Old Justin Bieber</a>
+</div>
+
+<div id="suggested-story"></div>
+
+
+</div>
+<div class="below-entry js-below-entry" data-beacon="{&quot;p&quot;:{&quot;mlid&quot;:&quot;below_entry&quot;}}">
+<div class="below-entry__content">
+
+
+<div class="advertisement below_entry_recirc">
+<div id="taboola-below-article-thumbnails" class="taboola hp-entry-you_may_like"></div>
+<div id="hp-more-gravity"></div>
+<script>
+    (function(){
+        var c = document.getElementById('taboola-below-article-thumbnails');
+        c.id += '-' + Math.round(Math.random()*1e16);
+        
+        var taboolaParams = {
+            loader: "http://cdn.taboola.com/libtrc/aol-huffingtonpost/loader.js",
+            mode: "thumbnails-o",
+            container: c.id,
+            placement: "Below Article Thumbnails",
+            target_type: "mix"
+        };
+        
+        
+        window.modulousQueue.add(function(){ doTaboola(taboolaParams); });
+        
+    }());
+</script>
+</div>
+
+
+
+<div class="advertisement bottom_article_text">
+<div id="zergnet-widget-49675"></div>
+
+<script language="javascript" type="text/javascript">
+    (function() {
+        var zergnet = document.createElement('script');
+        zergnet.type = 'text/javascript'; zergnet.async = true;
+        zergnet.src = (document.location.protocol == "https:" ? "https:" : "http:") + '//www.zergnet.com/zerg.js?id=49675';
+        var znscr = document.getElementsByTagName('script')[0];
+        znscr.parentNode.insertBefore(zergnet, znscr);
+    })();
+</script>
+</div>
+
+</div>
+</div>
+
+</div>
+<script>
+  window.HP.modules.smarten.selector('.js-entry');
+</script>
+<div class="js-right-rail right-rail bn-right-rail">
+
+<div class="advertisement right_rail_flex">
+<script type="text/javascript">
+  if ( "function" === typeof(adSetSyncDelay) ) {
+    adSetSyncDelay('125');
+  }
+</script>
+<div id="ad_right_rail_flex" class="ad_wrapper_top"><div id="adtech_right_rail_flex" class="adtech-adspot ad-right_rail_flex"></div>
+<script>
+(function() {
+  var adsDiv = document.querySelector('#adtech_right_rail_flex');
+  adsDiv.removeAttribute('id');
+  window.modulousQueue.add(function(){
+    
+      
+        waitForGlobal('htmlAdWH', function() {
+          adsDiv.reloadCount = 0;
+          var recoveryId = '';
+          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;
+          var adId = needsRecovery ? recoveryId : '93314397';
+          try { adId = io_c3sd.ads["right_rail_flex"] || adId; } catch(e) {} 
+          
+          // Override adtech_call_type
+          var delivery_type = "" || "";
+          var adtech_call_type = "";
+          switch (delivery_type) {
+            case "by_request": adtech_call_type = "ajax"; break;
+            case "text": adtech_call_type = "text"; break;
+            case "iframe": adtech_call_type = "iframe"; break;
+            case "iframe_proxy": adtech_call_type = "f"; break;
+            case "collapsed": adtech_call_type = "fc"; break;
+            default: adtech_call_type = "f"; break;
+          }
+
+          
+          
+          
+          var args = ['RR', 'RR'
+          ];
+          
+          
+
+          if(needsRecovery) {
+            waitForGlobal('readyToRecover', function() {
+              adsDiv = document.querySelector('.right_rail_flex');
+              //htmlAdWH(adId, args[0], args[1], "fileless", adsDiv);
+            });
+          } else {
+            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);
+          }
+          
+          if (typeof debugadcode == 'function') { debugadcode('AdTech', {placement: 'right_rail_flex', mnid: adId}, adsDiv); }
+          
+          jQuery(document).on('reloadAd', function(ev, elem) {
+            if (elem && !elem.contains(adsDiv)) { return; }
+            var refreshRate = 1;  
+            adsDiv.reloadCount++;
+            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === 'function') { adsReloadAd(adsDiv); }
+          });
+          
+          adSetInView('0');
+        }); // wFG:htmlAdWH
+      
+    
+  });
+}());
+</script></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Polar targeted placement -->
+<div class="placement-sponsorship"></div>
+<div class="bn-trending" id="right-rail-more-on"></div>
+
+<div class="snapchat-overlay bn-overlay hidden">
+<div class="snapchat-overlay__container bn-snapchat">
+<div class="snapchat-overlay__container__close bn-close">
+<div class="snapchat-overlay__container__close__icon"></div>
+<span>Close</span>
+</div>
+<div class="snapchat-overlay__container__qr bn-snapchat-qr">
+<img src="http://s.m.huffpost.com/assets/snapchat-QR-a98b071227601c8bd787d668be38d7220002e41178fe4db1577c894b942534b3.png">
+</div>
+</div>
+</div>
+
+<div class="bn-follow-us follow-us follow-us--b-page follow-us--legacy follow-us--right">
+<section class="follow-us__window">
+<div class="follow-us__header">SUBSCRIBE TO & FOLLOW ENTERTAINMENT</div>
+<div class="follow-us__form">
+<div class="follow-us__form__desc">
+<p>
+<span>Spilling the tea 24/7. Never miss a beat.</span>
+<a class="bn-privacy" href="http://privacy.aol.com" target="_blank">Learn more</a>
+</p>
+</div>
+<div class="follow-us__form__container">
+<div class="follow-us__form__header">Newsletter</div>
+<form class="newsletter-signup__form" id="follow-us">
+<input name="newsletter_source" type="hidden" value="RR Follow Module">
+<input name="newsletter_provider" type="hidden" value="cm">
+<input name="newsletter_id" type="hidden" value="9aa81fd6beaf5655b6969727d3f63bf5">
+<input name="newsletter_name" type="hidden" value="Entertainment">
+<input name="newsletter_display_name" type="hidden" value="Entertainment">
+<input name="newsletter_entry_list_tag" type="hidden" value="">
+<div class="newsletter-signup__email">
+<div class="newsletter-signup__email-input-container">
+<input class="newsletter-signup__email-input" name="email_address" placeholder="address@email.com" title="Enter your email" type="text">
+</div>
+<div class="newsletter-signup__submit-container">
+<input class="newsletter-signup__submit bn-signup-submit" type="submit" value="Subscribe Now">
+</div>
+</div>
+<div class="newsletter-signup__message"></div>
+</form>
+<div class="newsletter-signup__success-message"></div>
+
+</div>
+</div>
+<ul class="follow-us__networks">
+<li class="bn-follow-item facebook follow-us__networks__item" data-button-name="facebook">
+<a class="facebook follow-us__networks__item__link" data-href="http://facebook.com/HuffPostEntertainment" href="http://facebook.com/HuffPostEntertainment" target="_blank" title="1.14 M">
+<span class="follow-us__networks__item__link__text">1.14 M</span>
+</a>
+</li>
+<li class="bn-follow-item follow-us__networks__item twitter" data-button-name="twitter">
+<a class="follow-us__networks__item__link twitter" data-href="https://twitter.com/HuffPostEnt" href="https://twitter.com/HuffPostEnt" target="_blank" title="137 K">
+<span class="follow-us__networks__item__link__text">137 K</span>
+</a>
+</li>
+<li class="bn-follow-item follow-us__networks__item pinterest" data-button-name="pinterest">
+<a class="follow-us__networks__item__link pinterest" data-href="http://pinterest.com/huffingtonpost" href="http://pinterest.com/huffingtonpost" target="_blank" title="479 K">
+<span class="follow-us__networks__item__link__text">479 K</span>
+</a>
+</li>
+<li class="bn-follow-item follow-us__networks__item podcast" data-button-name="podcast">
+<a class="follow-us__networks__item__link podcast" data-href="https://itunes.apple.com/us/podcast/here-to-make-friends-bachelor/id995039015?mt=2" href="https://itunes.apple.com/us/podcast/here-to-make-friends-bachelor/id995039015?mt=2" target="_blank" title="Podcast">
+<span class="follow-us__networks__item__link__text">Podcast</span>
+</a>
+</li>
+<li class="bn-follow-item follow-us__networks__item snapchat" data-button-name="snapchat">
+<a class="follow-us__networks__item__link js-snapchat-follow snapchat" data-href="" href="" target="" title="Add us on Snapchat">
+<span class="follow-us__networks__item__link__text">Add us on Snapchat</span>
+</a>
+</li>
+</ul>
+</section>
+</div>
+
+
+
+
+<div class="advertisement right_rail_300x250_lower">
+<div id="ad_right_rail_300x250_lower" class="ad_wrapper_"><div id="adtech_right_rail_300x250_lower" class="adtech-adspot ad-right_rail_300x250_lower"></div>
+<script>
+(function() {
+  var adsDiv = document.querySelector('#adtech_right_rail_300x250_lower');
+  adsDiv.removeAttribute('id');
+  window.modulousQueue.add(function(){
+    
+      
+        waitForGlobal('htmlAdWH', function() {
+          adsDiv.reloadCount = 0;
+          var recoveryId = '';
+          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;
+          var adId = needsRecovery ? recoveryId : '93432924';
+          try { adId = io_c3sd.ads["right_rail_300x250_lower"] || adId; } catch(e) {} 
+          
+          // Override adtech_call_type
+          var delivery_type = "" || "";
+          var adtech_call_type = "";
+          switch (delivery_type) {
+            case "by_request": adtech_call_type = "ajax"; break;
+            case "text": adtech_call_type = "text"; break;
+            case "iframe": adtech_call_type = "iframe"; break;
+            case "iframe_proxy": adtech_call_type = "f"; break;
+            case "collapsed": adtech_call_type = "fc"; break;
+            default: adtech_call_type = "f"; break;
+          }
+
+          adSetInView('D');
+          
+          
+          var args = ['RR', 'RR'
+          ];
+          
+          
+
+          if(needsRecovery) {
+            waitForGlobal('readyToRecover', function() {
+              adsDiv = document.querySelector('.right_rail_300x250_lower');
+              //htmlAdWH(adId, args[0], args[1], "fileless", adsDiv);
+            });
+          } else {
+            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);
+          }
+          
+          if (typeof debugadcode == 'function') { debugadcode('AdTech', {placement: 'right_rail_300x250_lower', mnid: adId}, adsDiv); }
+          
+          jQuery(document).on('reloadAd', function(ev, elem) {
+            if (elem && !elem.contains(adsDiv)) { return; }
+            var refreshRate = 1;  
+            adsDiv.reloadCount++;
+            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === 'function') { adsReloadAd(adsDiv); }
+          });
+          
+          adSetInView('0');
+        }); // wFG:htmlAdWH
+      
+    
+  });
+}());
+</script></div>
+</div>
+
+
+</div>
+
+</div>
+
+<script class="taboola-ad-script-template" type="text/template">
+
+</script>
+</article>
+
+
+<div class="bn-nav-sticky hide js-nav-sticky nav-sticky nav-sticky--b-page" data-mobilepath="/us/entry/4128563" data-sharingimage="http://i.huffpost.com/gen/1416109/images/o-PLASTIC-SURGERY-BIEBER-facebook.jpg" data-sharingtitle="LOOK: Bieber Fan Had $100K Worth Of Plastic Surgery To Look Like His Idol" data-sharingtweetname="HuffPostCeleb" data-sharingtweettext="LOOK%3A+Bieber+Fan+Had+%24100K+Worth+Of+Plastic+Surgery+To+Look+Like+His+Idol" data-sharingurl="http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html">
+<div class="nav-sticky__bar">
+<div class="nav-sticky__item nav-sticky__hamburger bn-hamburger-menu">
+<div class="nav-sticky__hamburger-link bn-hamburger-button js-hamburger-link-sticky-b"></div>
+</div>
+<a class="nav-sticky__item nav-sticky__logo bn-logo-link" href="/">
+<img alt="The Huffington Post" class="nav-sticky__logo-img bn-logo-image" src="http://s.m.huffpost.com/assets/H-icon-72fd5782b36a1a42ab82a4af65cbc6dd6ddc4d4a71190a91c5cfaab7c66fd836.svg">
+</a>
+<div class="nav-sticky__item nav-sticky__title">Man Undergoes Extensive Plastic Surgery To Look Like Justin Bieber, Spends $100,000 In 5 Years</div>
+<div class="nav-sticky__item nav-sticky__sharebar">
+<div class="js-sharebar share-bar share-bar--nav-sticky" data-mobilepath="/us/entry/4128563" data-sharingimage="http://i.huffpost.com/gen/1416109/images/o-PLASTIC-SURGERY-BIEBER-facebook.jpg" data-sharingtitle="LOOK: Bieber Fan Had $100K Worth Of Plastic Surgery To Look Like His Idol" data-sharingtweetname="HuffPostCeleb" data-sharingtweettext="LOOK%3A+Bieber+Fan+Had+%24100K+Worth+Of+Plastic+Surgery+To+Look+Like+His+Idol" data-sharingurl="http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html">
+<ul class="share-bar__list bn-share">
+<div class="share-bar__social-counts">
+<span class="share-bar__social-counts__number">9.9k</span>
+</div>
+<li class="bn-share-item facebook js-sharebar-facebook share-bar__item" data-share-name="facebook" data-type="facebook">
+<a class="facebook share-bar__item-link" href="#" target="_blank"></a>
+</li>
+<li class="bn-share-item js-sharebar-twitter share-bar__item twitter" data-share-name="twitter" data-type="twitter">
+<a class="share-bar__item-link twitter" href="#" target="_blank"></a>
+</li>
+<li class="bn-share-item email js-sharebar-email share-bar__item" data-share-name="email" data-type="email">
+<a class="email share-bar__item-link" href="#" target=""></a>
+</li>
+<div class="bn-share-item js-sharebar-comments share-bar__comments with-count" data-share-name="comments_open" data-type="comments">
+<div class="share-bar__comments__icon with-count"></div>
+<div class="share-bar__comments__count with-count">3k</div>
+</div>
+</ul>
+</div>
+
+</div>
+</div>
+<div class="nav-sticky__progress-bar js-progress-bar">
+<div class="nav-sticky__progress-bar__fill js-progress-fill"></div>
+</div>
+</div>
+<script>
+  window.HP.modules.smarten.selector('.js-nav-sticky');
+</script>
+
+
+<div class="bn-below-entry">
+<div class="js-bottom-most-shared bn-suggested-trending" id="bottom-most-shared"></div>
+<div class="bottom-trending js-bottom-trending">
+<div class="bn-bottom-trending" id="bottom-trending"></div>
+
+</div>
+</div>
+<div class="entry__comments-pane js-comment-pane bn-comments-pane hide" id="comment-pane_4128563">
+<div class="bn-comments-container">
+<div class="entry__comments-pane__close js-comment-close bn-close" id="comment-close_4128563"></div>
+</div>
+<h2 class="below-entry-recirc__conversations-header">CONVERSATIONS</h2>
+<div class="comments" id="comments">
+<script>
+  (function(d, s, id, locale){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    locale = (locale == "ar_SA" ? "ar_AR" : locale);
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id; js.async = true;
+    js.src = "https://connect.facebook.net/"+locale+"/sdk.js#xfbml=1&version=v2.4";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk', 'en_US'));
+</script>
+
+<div class="fb-comments" data-colorscheme="light" data-href="http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html" data-numposts="10" data-width="100%"></div>
+</div>
+
+</div>
+
+
+</div>
+<script>
+  HP.modules.sharing = {
+    buttons: ["pinterest"]
+  };
+</script>
+<!-- Footer -->
+<footer class="footer bn-footer">
+
+<script>
+window.addEventListener('load', function() {
+  var ref = document.getElementsByTagName("script")[0];
+  var script = document.createElement("script");
+  script.src = 'http://s.skimresources.com/js/38395X1559799.skimlinks.js';
+  script.async = true;
+  ref.parentNode.insertBefore(script, ref);
+}, false);
+</script><script>
+window.addEventListener('load', function() {
+  var ref = document.getElementsByTagName("script")[0];
+  var script = document.createElement("script");
+  script.src = 'http://s.skimresources.com/js/38395X1559464.skimlinks.js';
+  script.async = true;
+  ref.parentNode.insertBefore(script, ref);
+}, false);
+</script><script src="//dc8xl0ndzn2cb.cloudfront.net/js/huffingtonpost/v0/keywee.min.js" type="text/javascript" async></script><script async src="http://plugin.mediavoice.com/mediaconductor/mc.js"></script>
+<script>
+window.mediaconductor = window.mediaconductor || function(){(mediaconductor.q=mediaconductor.q||[]).push(arguments);};
+mediaconductor("init", "d05ce97492f5478d864f1b629b02a278");
+mediaconductor("exec");
+</script><!-- AD highlights module tracking -->
+<script type="text/javascript">
+HPAds = typeof HPAds !== "undefined" ? HPAds : {};
+HPAds.highlightstracker = {
+	exec : function(){
+		var img = document.createElement("img");img.width=1;img.height=1;img.alt="";img.border=0;img.style.display="none";
+		img.src = "http://at.atwola.com/adserv/3.0/5113.1/2583061/1/16/AdId=3495516;BnId=1";
+		document.getElementById("ad_bottom_1x1").appendChild(img);
+	},
+	init : function(){
+		if(document.getElementById("ad_bottom_1x1") && document.getElementById("huffhighlights"))
+		{
+			this.exec();
+		}
+	}
+}
+HPAds.highlightstracker.init();
+</script><script type='text/javascript'>
+  //<![CDATA[
+    (function(){
+    window.gravityInsightsParams = {
+      'type': 'content',
+      'action': '',
+      'site_guid': '95ec266b244de718b80c652a08af06fa'
+    };
+    var adServerReq,bUrl,doUseGravityUserGuid,includeJs,jq,type,ug,wlPrefix,wlUrl,_ref,_ref1,_ref2;bUrl="https:"===document.location.protocol?"https://b-ssl.grvcdn.com/moth-min.js":"http://b.grvcdn.com/moth-min.js";ug=(doUseGravityUserGuid=!0===gravityInsightsParams.useGravityUserGuid?1:0)?"":gravityInsightsParams.user_guid||(null!=(_ref=/grvinsights=([^;]+)/.exec(document.cookie))?_ref[1]:void 0)||"";wlUrl=(wlPrefix="","");
+    includeJs=function(a){var b;b=document.createElement("script");b.async=!0;b.src=a;a=document.getElementsByTagName("script")[0];return a.parentNode.insertBefore(b,a)};bUrl&&includeJs(bUrl);wlUrl&&(window.gravityInsightsParams.sidebar&&(window.gravityInsightsParams.wlStartTime=(new Date).getTime()),includeJs(wlUrl));})();
+  //]]>
+</script><script>
+(function(d, s, id) {
+  var src = 'http://cdn.pubexchange.com/modules/partner/huffpost_entertainment';
+  if (window._HPJS && _HPJS.loadJSLater) {
+    _HPJS.loadJSLater(src);
+  } else {
+    var js, pjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id; js.async = true; js.src = src;
+    pjs.parentNode.insertBefore(js, pjs);
+  }
+}(document, 'script', 'pubexchange-jssdk'));
+</script><script src="http://ar.voicefive.com/bmx3/node.pli?pub=aol2"></script>
+<script>
+// interfering with omniture
+//_HPJS.loadJSLater('http://ar.voicefive.com/bmx3/node.pli?pub=aol2');
+</script>
+
+
+<script async type="text/javascript">
+    var assetname = "celebrity";
+    var _nolParams = {
+        nol_sfcode: 'dcr',
+        nol_ci: 'us-500136',              
+        nol_apid: 'P6987AC99-4DBA-45C3-BFE4-9CD649BA8C46',   
+        nol_assetname: assetname,
+        nol_apn: 'huffingtonpostCOM',     
+        nol_vc: 'c29',
+        nol_segA: 'HPMG News',
+        nol_segB: '',
+        nol_segC:''
+    };
+
+    (function (params) {
+        var url = 'http://cdn-gl.imrworldwide.com/novms/js/2/nlsDcrLite510.min.js#';
+        var query = [];
+        for (var param in params) {query.push(param + '=' + params[param]);}
+        url += query.join('&');
+        var script = window.document.createElement("script");
+        script.async = true;
+        script.src = url;
+        window.document.getElementsByTagName('head')[0].appendChild(script);
+    })(_nolParams);
+
+</script>
+<script>
+// Restrict Most Popular title to 2 lines
+(function() {
+if (!window.jQuery) { return; }
+var $mpt = jQuery('.mp_title');
+if ($mpt.length == 0) return;
+function numLines($elem) {
+  lh = parseFloat($elem.css('line-height').replace('px', ''));
+  return Math.round($elem.height()/lh);
+}
+for (i=0; i<10 && numLines($mpt)>2; i++) {
+  $mpt.css('font-size', '-=1');
+}
+})();
+</script>
+<script>
+    window._taboola = window._taboola || [];
+    _taboola.push({flush:true});
+</script>
+<div class="footer__top">
+<div class="footer__logo">
+<a class="bn-logo-link" href="/">
+<img alt="The Huffington Post" class="footer__img bn-logo-image" src="http://s.m.huffpost.com/assets/HuffPostHero-d783f680fb974e80346bdfa145131d058e596e1d32f791981875aa481702c770.svg">
+</a>
+</div>
+<div class="footer__lists bn-footer-links">
+<ul class="footer__list">
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/p/huffington-post.html">ABOUT US</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://advertising.aol.com/properties#huffington-post" target="_blank">ADVERTISE</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://adinfo.aol.com/about-our-ads/" target="_blank">ABOUT OUR ADS</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/contact/">CONTACT US</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/syndication/">RSS</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/p/frequently-asked-question.html">FAQ</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="https://careers.smartrecruiters.com/Aol/huffington-post/" target="_blank">CAREERS</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/archive/">ARCHIVE</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/terms.html">USER AGREEMENT</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://privacy.aol.com">PRIVACY POLICY</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/comment/policy/">COMMENT POLICY</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer__bottom">
+<span class="footer__copyright">Copyright &copy 2017 TheHuffingtonPost.com, Inc. &nbsp;&nbsp; &quot;The Huffington Post&quot; is a registered trademark of TheHuffingtonPost.com, Inc.  All rights reserved.</span>
+<span class="footer__rights">Part of HuffPost &bull; HPMG News</span>
+</div>
+<script>
+  // if we don't need ad recovery, we need to define this
+  // global variable because something is waiting for it
+  window.kraken__adBlock = { active: false };
+</script>
+
+<script>
+  //sp bootstrap
+  !function(e){function t(i){if(n[i])return n[i].exports;var r=n[i]={exports:{},id:i,loaded:!1};return e[i].call(r.exports,r,r.exports,t),r.loaded=!0,r.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}({0:function(e,t,n){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}function r(){if(!M){M=!0,window._sp_=window._sp_||{},O=window._sp_.config=window._sp_.config||{},I=O.content_control_callback||window._sp_lock,R=O.account_id||O.client_id||window.sp_cid;for(var e in O)$[e]=O[e]}}function o(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"",i=new Image;i.src="//"+x+"/cct?v="+encodeURIComponent(b)+"&ct=1&cid="+encodeURIComponent(R)+"&l="+encodeURIComponent(e.toString())+"&rc="+encodeURIComponent(t)+"&d0="+encodeURIComponent(n)}function s(e,t,n,i){var r=arguments.length>4&&void 0!==arguments[4]?arguments[4]:{},o=arguments.length>5&&void 0!==arguments[5]&&arguments[5],a=function(){return s(e,t,n,i,r,!0)},l=o?n:a;e(t,l,i,r)}function a(e,t,n,i){var r=document.createElement("script");r.src=e,r.onload=function(){try{if(window._sp_&&window._sp_.bootstrap===p&&window.spBootstrap===d&&window._sp_.config===O){for(var e in $)if($[e]!==O[e]){y&&y();break}}else y&&y()}catch(e){y&&y()}i.onLoad&&i.onLoad()},r.onerror=function(){function r(e,t){n(e,t),i.onError&&i.onError(t)}function o(e){return s.indexOf(e)>-1}var s=(navigator.userAgent||navigator.vendor||window.opera).toLowerCase();o("mobi")||o("ipad")||o("android")||o("iphone")?r(P):o("exabot")?r(A):o("bingbot")||o("bingpreview")?r(j):o("googlebot")||o("adsbot-google")||o("mediapartners-google")?r(k):o("googleweblight")?r(S):window.location.host===g?r(C):window.location.host.indexOf(w)>-1?r(L):o("msie 10")||o("msie 9")||o("msie 8")?r(E):l(e,t,r)},document.head.appendChild(r),document.querySelector('script[src="'+e+'"]')||window.location.host.indexOf(w)!==-1||t(H,e)}function l(e,t,n){(0,v["default"])(e,function(i,r,o,s){var a=i||r?t:n;a(s,e+"::"+o)})}function c(e,t){return D?void u(N+"::"+e,t):(o(T,e,t),void(I&&setTimeout(function(){I()},250)))}function u(e,t){o(_,e,t)}function d(e,t){r(),t&&(I=window._sp_lock=t),s(a,e,c,u)}function p(e,t){r(),s(a,e,c,u,t)}var f=n(381),h=i(f),m=n(102),v=i(m),g=["w","e","b","c","a","c","h","e",".","g","o","o","g","l","e","u","s","e","r","c","o","n","t","e","n","t",".","c","o","m"].join(""),w=["o","p","t","i","m","i","z","e","l","y","p","r","e","v","i","e","w",".","c","o","m"].join(""),y=void 0;try{y=window._sp_&&window._sp_.config&&window._sp_.config.spid_control_callback}catch(e){}var x=h["default"].be.join(""),b=h["default"].bv,_=0,T=1,H="s",P="m",k="g",C="gw",S="gl",E="i",j="b",A="e",N="n",L="o",$={},M=!1,D=!1,O=void 0,I=void 0,R=void 0;window.addEventListener("beforeunload",function(){D=!0});try{window._sp_=window._sp_||{},window._sp_.bootstrap=p,window.spBootstrap=d,window._sp_.bootstrap===p&&window.spBootstrap===d||y&&y()}catch(e){y&&y()}},102:function(e,t){"use strict";function n(e,t){function n(e){try{return e&&e.timeStamp?e.timeStamp:window.performance.now()}catch(e){return Date.now()}}var l=document.createElement("a");if(l.href=e,"https:"===window.location.protocol&&l.protocol!==window.location.protocol)return void t(!1,!1,l.protocol,a);var c=new XMLHttpRequest;try{c.open("GET",e)}catch(e){return void t(!0,!1,e.toString(),o,c)}var u=void 0,d=void 0;c.onloadstart=function(e){u=n(e)},c.onreadystatechange=function(e){if(4===this.readyState){d=n(e)-u;var o=0===this.status,s="2"===this.status.toString()[0],a=s?r:i;return void t(o,s,this.status+"::"+d,a,c)}};try{c.send()}catch(e){return void t(!0,!1,e.toString(),s,c)}}Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=n;var i=t.NETWORK_FAILURE="n",r=t.XHR_SUCCEEDED="nx",o=t.OPEN_BLOCKED="xo",s=t.SEND_BLOCKED="xs",a=t.PROTOCOL_MISMATCH="p"},381:function(e){"use strict";e.exports={be:["w","w","w",".","r","o","o","s","t","e","r","f","i","r","e","w","o","r","k",".","c","o","m"],bv:"1.7.620"}}});
+  //sp messaging config
+  (function() {
+    window._sp_ = window._sp_ || {};
+    window._sp_.config = window._sp_.config || {};
+    window._sp_.config.account_id =  313;
+    window._sp_.config.enable_rid = true;
+    window._sp_.config.mms_domain =  'mms.huffingtonpost.com';
+    window._sp_.config.content_control_callback = function() {
+      //window.location.href = '/static/sp-block';
+    };
+    // messaging-specific configuration  
+    window._sp_.mms = window._sp_.mms || {};
+    window._sp_.mms.cmd = window._sp_.mms.cmd || [];
+    // add a K/V pair for targeting purposes
+    window._sp_.mms.cmd.push(function() { 
+      window._sp_.mms.setTargeting("x", "y");
+    });
+    // tell the messaging library that all params are set and it can proceed
+    window._sp_.mms.cmd.push(function() {
+      window._sp_.mms.startMsg();
+    });
+    window._sp_.config.mms_client_data_callback = function(dataObject) {
+      // do something useful with the dataObject
+    };
+    // magic points these to sourcepoint hosted files
+    window._sp_.bootstrap('/cr3wc89sw3-m.js');
+    window._sp_.bootstrap('/cr3wc89sw3-c.js');
+  }());
+</script>
+
+</footer>
+
+<script>
+  HP.functions.loadCSS('http://s.m.huffpost.com/assets/desktop-0cf061c1341b1d95e71ba41106975af2d72d411e9177e215b8b6a4fb1eba7ba5.css');
+</script>
+<div class="tracking-data">
+<script>
+  window.comscore_data = {"c1":2,"c2":6723616,"c3":"","c4":"/us/entry/4128563","c5":"celebrity","c6":"","c15":"","options":{"url_append":"comscorekw=celebrity"}};
+  window.comscore_data.c4 = location.protocol+"//"+location.host+window.comscore_data.c4;
+</script>
+
+<script>
+  var s_265_account ="aolhuffpostceleb,aolsvc";
+  var s_265_config = {"pfxID":"hpo","channel":"us.hpmgceleb","linkInternalFilters":"javascript:,huffingtonpost.com,m.huffpost.com/us","prop1":"slides_ajax","prop2":"","prop6custom":"","prop9":"hpo:4128563","prop16":"news","prop17":"","prop18":"mostpopular","prop19":"","prop21":"","prop22":"hunter-stuart","prop23":"10-19-2013","prop53":"","prop54":"huffpost","prop59":"","prop62":"video_novideo","prop63":"","prop65":"original_content","prop66":"","prop69":"","prop70":"","prop74":"","pageName":"Man Undergoes Extensive Plastic Surgery To Look Like Justin Bieber, Spends $100,000 In 5 Years"};
+  waitForGlobal(function() {
+    return !!window.extendOmniVars && !!window.s_265;
+  }, function() {
+    window.omnitureVarsExtended = true;
+    extendOmniVars(s_265_config);
+  });
+</script>
+
+<script>
+  bN_cfg = {
+    h: location.hostname,
+    b: "b.huffingtonpost.com",
+    p: {"t":"Man Undergoes Extensive Plastic Surgery To Look Like Justin Bieber, Spends $100,000 In 5 Years","dL_ch":"us.hpmgceleb","dL_dpt":"slides_ajax","dL_sDpt":"","dL_flid":"_","dL_cmsID":"hpo:4128563","dL_author":"Hunter Stuart","author-id":"hunter-stuart","dL_pubts":"1382202035000","dL_blogID":"2","dL_tags":"33-year-old-bieber-fan,toby-sheldon-plastic-surgery,plastic-surgery-justin-bieber,bieber-plastic-surgery,33-year-old-justin-bieber,toby-sheldon-justin-bieber,video,$100000-plastic-surgery,$100000-justin-bieber-surgery,toby-sheldon-songwriter,toby-sheldon-33,justin-bieber,@tmz,@noad_mid_article,@ent,@celebrity,@people","dL_url":"http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html","dL_vid":"video_novideo","cms_src":"","cobrand":"HuffPost","edition":"us","publishEdition":"us","platform":"desktop","sectionId":"54be429fe4b03c5abe892b70","sectionName":"Celebrity","renderingEngine":"kraken","publishSectionId":"54be429fe4b03c5abe892b70","publishSectionName":"Celebrity","a_type":"","a_value":"","pageVersion":"","engagement":"25","ad_presence":"[\"gravity_most_popular\", \"bottom_1x1\", \"slideshow_end_card\", \"gravity_api_json\", \"bottom_article_text\", \"slideshow_300x250_req\", \"gravity_trending_json\", \"below_entry_recirc\", \"leaderboard_flex\", \"gravity_videos_json\", \"sourcepoint\", \"pub_exchange_json\", \"asset_inserts\", \"ab_config\", \"right_rail_300x250_lower\", \"right_rail_flex\", \"commercial_video\", \"slideshow_728x90_req\"]"},
+    view: 0,
+    click: 0
+  };
+  if (typeof(io_c3sd) != 'undefined' && typeof(io_c3sd.omniture) != 'undefined') {
+    if (typeof(io_c3sd.omniture.s_account) != 'undefined') {
+      s_265_account = io_c3sd.omniture.s_account;
+    }
+    if (typeof(io_c3sd.omniture.prop17) != 'undefined') {
+      bN_cfg['p']['Custom02'] = io_c3sd.omniture.prop17;
+    }
+    if (typeof(io_c3sd.omniture.prop21) != 'undefined') {
+      bN_cfg['p']['Custom03'] = io_c3sd.omniture.prop21;
+    }
+  }
+  waitForGlobal(function() {
+    return !!window.HP.modules.Tracky;
+  }, function() {
+    window.HP.modules.Tracky.bN.set(bN_cfg.p);
+  });
+</script>
+
+
+
+
+
+
+
+<script>
+  window.pubExchangeData = {"partnerList":{"uuid":"c58811b4-27d9-46ab-907c-5f8ee624e840","partners":{"californiasunday.com":"66ea7305-3ce5-4727-8ed0-fa302a029e60","washingtonpost.com":"650ef44f-ff5d-4136-bebc-534b95cba45a","thoughtcatalog.com":"ceea86fb-52da-4e35-bd9a-649ddf2ac090","today.com/parents":"08f20451-bfa4-418b-aaba-6005019853d1","thedailybeast.com":"6d146e34-19e4-4f4e-b9b5-c2bb793e5c41","independent.co.uk":"fbc85be7-1aab-4a58-94d4-281ccd24959a","hellogiggles.com":"275e49d5-b249-461f-8bdf-dcf5350c6f0c","rollingstone.com":"821ed2c8-ec13-425e-a643-9c82c0ae3b45","quotecatalog.com":"ceea86fb-52da-4e35-bd9a-649ddf2ac090","mentalfloss.com":"3cb788e9-e23a-4032-886a-0fed4a5a6be8","theatlantic.com":"a609a62f-6b7f-4992-86c4-0775ebc1eede","refinery29.com":"f3dba870-f28d-4754-babe-3f5ae47a8e9f","ozymandias.com":"ba01aa22-1f98-4907-bba2-e22ec3d2abfb","usmagazine.com":"75f4174d-bf89-4ed0-9e72-504951e013e6","elitedaily.com":"789bf049-7148-4c34-9565-19b1f2978f22","refinery29.uk":"f3dba870-f28d-4754-babe-3f5ae47a8e9f","thrillist.com":"b42dabce-1c93-4b54-9f14-5feea2cd789b","themighty.com":"f50cde02-1df8-41fa-887a-5b858a07dfd9","247wallst.com":"d7f22066-9321-40d9-9ca6-d4c1e5ff86a3","cbssports.com":"fed32433-c4de-43b8-80a2-cf94119ab010","policymic.com":"150ed8f4-f7cc-478f-ba16-440b250b49eb","mashable.com":"e8a7b73e-ef71-4201-b3fa-3e238018733f","cbslocal.com":"6d1b4bb8-18f0-4c25-85c7-14fcd4c47209","upworthy.com":"05edf495-4131-4ac3-9038-8adef5049a05","politico.com":"26bb8b8a-5f5d-4a1e-80ce-6bcf0a385e49","usatoday.com":"b8410b85-b0fe-42f1-b8bc-63ff8c4f21d1","www.vice.com":"4ae62cbe-18b3-4dd7-87c3-bd81d34abd61","playboy.com":"03223df3-4f32-41c3-a6f8-8e7c426fecb3","purewow.com":"09b6d385-9e93-4a0f-ab6a-f69527008a31","vocativ.com":"067346be-84c5-433d-9d93-be4ebda4fcde","nytimes.com":"9a4ed94e-c5d7-4086-979f-0661aacb18a7","esquire.com":"bb49f945-63f5-4ee0-8b32-cfa30f9adbb3","weather.com":"89954016-705f-4e77-b1e3-9e794f2f5dd8","variety.com":"2e853453-5ffd-49a3-ab68-9538eb06bb19","fusion.net":"06b78857-8bf7-43f5-a9b3-cd94ddc4cbb2","today.com":"08f20451-bfa4-418b-aaba-6005019853d1","diply.com":"c1029b13-888e-4dee-8a57-686a3705ebda","newsy.com":"2913116c-3b91-47db-a8c0-7a3dbe178d30","slate.com":"0403ab71-bc02-499c-b3b8-392b0485ff70","time.com":"e17f268c-d9ad-404b-b2f1-07b54e3cb7a6","mtv.com":"d96cadd0-373a-4c60-ae71-25be48c41de9","tnr.com":"05edf495-4131-4ac3-9038-8adef5049a05","wsj.com":"0c145e1c-338b-4d30-8d2c-1e57266bb439","mic.com":"150ed8f4-f7cc-478f-ba16-440b250b49eb","tmz.com":"1cb4b488-47f6-40a4-8227-669e4788399c","ozy.com":"ba01aa22-1f98-4907-bba2-e22ec3d2abfb","cnn.com":"d92ecaea-3fb8-468b-832f-6a251aa0c77c","si.com":"82df3225-3e09-4223-b11d-d2da1537641f","qz.com":"8a8391f4-09d7-44ef-83ed-08dec42f96b7"}},"url":"http://traffic.pubexchange.com/a/"};
+</script>
+
+
+</div>
+<div class="tracking">
+<script>
+  waitForGlobal(function() {
+    return window.PARSELY && window.PARSELY.beacon;
+  }, function() {
+    PARSELY.beacon.trackPageView({
+      url: window.location.href,
+      urlref: HP.params.original_url,
+      js: 1
+    });
+  });
+</script>
+
+<script>
+  waitForGlobal(function() {
+    return !!window.HP.modules.Tracky;
+  }, function() {
+    window.HP.modules.Tracky.comscore(window.comscore_data);
+  })
+</script>
+
+<script>
+  waitForGlobal(function() {
+    return !!window.HP.modules && !!window.HP.modules.Tracky && !!window.extendOmniVars && !!window.s_265 && !!window.omnitureVarsExtended;
+  }, function() {
+    window.HP.modules.Tracky.omniture();
+  });
+</script>
+
+<script>
+  waitForGlobal(function() {
+    return !!window.HP.modules.Tracky;
+  }, function() {
+    window.HP.modules.Tracky.bN.view();
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+</div>
+<script>
+  HP.modules.ads.slideshowLeft = "\n<div class=\"advertisement slideshow_300x250_req\">\n<div id=\"adtech_slideshow_300x250_req\" class=\"adtech-adspot ad-slideshow_300x250_req\"><\/div>\n<script>\n(function() {\n  var adsDiv = document.querySelector(\'#adtech_slideshow_300x250_req\');\n  adsDiv.removeAttribute(\'id\');\n  window.modulousQueue.add(function(){\n    \n      \n        waitForGlobal(\'htmlAdWH\', function() {\n          adsDiv.reloadCount = 0;\n          var recoveryId = \'\';\n          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;\n          var adId = needsRecovery ? recoveryId : \'93315569\';\n          try { adId = io_c3sd.ads[\"slideshow_300x250_req\"] || adId; } catch(e) {} \n          \n          // Override adtech_call_type\n          var delivery_type = \"\" || \"\";\n          var adtech_call_type = \"\";\n          switch (delivery_type) {\n            case \"by_request\": adtech_call_type = \"ajax\"; break;\n            case \"text\": adtech_call_type = \"text\"; break;\n            case \"iframe\": adtech_call_type = \"iframe\"; break;\n            case \"iframe_proxy\": adtech_call_type = \"f\"; break;\n            case \"collapsed\": adtech_call_type = \"fc\"; break;\n            default: adtech_call_type = \"ajax\"; break;\n          }\n\n          \n          \n          \n          var args = [\'300\', \'250\'];\n          \n          \n\n          if(needsRecovery) {\n            waitForGlobal(\'readyToRecover\', function() {\n              adsDiv = document.querySelector(\'.slideshow_300x250_req\');\n              //htmlAdWH(adId, args[0], args[1], \"fileless\", adsDiv);\n            });\n          } else {\n            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);\n          }\n          \n          if (typeof debugadcode == \'function\') { debugadcode(\'AdTech\', {placement: \'slideshow_300x250_req\', mnid: adId}, adsDiv); }\n          \n          jQuery(document).on(\'reloadAd\', function(ev, elem) {\n            if (elem && !elem.contains(adsDiv)) { return; }\n            var refreshRate = 1;  \n            adsDiv.reloadCount++;\n            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === \'function\') { adsReloadAd(adsDiv); }\n          });\n          \n          adSetInView(\'0\');\n        }); // wFG:htmlAdWH\n      \n    \n  });\n}());\n<\/script>\n<\/div>\n";
+  HP.modules.ads.slideshowTop = "\n<div class=\"advertisement slideshow_728x90_req\">\n<div id=\"adtech_slideshow_728x90_req\" class=\"adtech-adspot ad-slideshow_728x90_req\"><\/div>\n<script>\n(function() {\n  var adsDiv = document.querySelector(\'#adtech_slideshow_728x90_req\');\n  adsDiv.removeAttribute(\'id\');\n  window.modulousQueue.add(function(){\n    \n      \n        waitForGlobal(\'htmlAdWH\', function() {\n          adsDiv.reloadCount = 0;\n          var recoveryId = \'\';\n          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;\n          var adId = needsRecovery ? recoveryId : \'93407309\';\n          try { adId = io_c3sd.ads[\"slideshow_728x90_req\"] || adId; } catch(e) {} \n          \n          // Override adtech_call_type\n          var delivery_type = \"\" || \"\";\n          var adtech_call_type = \"\";\n          switch (delivery_type) {\n            case \"by_request\": adtech_call_type = \"ajax\"; break;\n            case \"text\": adtech_call_type = \"text\"; break;\n            case \"iframe\": adtech_call_type = \"iframe\"; break;\n            case \"iframe_proxy\": adtech_call_type = \"f\"; break;\n            case \"collapsed\": adtech_call_type = \"fc\"; break;\n            default: adtech_call_type = \"ajax\"; break;\n          }\n\n          \n          \n          \n          var args = [\'728\', \'90\'];\n          \n          \n\n          if(needsRecovery) {\n            waitForGlobal(\'readyToRecover\', function() {\n              adsDiv = document.querySelector(\'.slideshow_728x90_req\');\n              //htmlAdWH(adId, args[0], args[1], \"fileless\", adsDiv);\n            });\n          } else {\n            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);\n          }\n          \n          if (typeof debugadcode == \'function\') { debugadcode(\'AdTech\', {placement: \'slideshow_728x90_req\', mnid: adId}, adsDiv); }\n          \n          jQuery(document).on(\'reloadAd\', function(ev, elem) {\n            if (elem && !elem.contains(adsDiv)) { return; }\n            var refreshRate = 1;  \n            adsDiv.reloadCount++;\n            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === \'function\') { adsReloadAd(adsDiv); }\n          });\n          \n          adSetInView(\'0\');\n        }); // wFG:htmlAdWH\n      \n    \n  });\n}());\n<\/script>\n<\/div>\n";
+  HP.modules.ads.slideshowEndCard = "\n<div class=\"advertisement slideshow_end_card\">\n<div id=\"taboola-endslate-thumbnails\" class=\"taboola hp-entry-you_may_like\"><\/div>\n<div id=\"hp-more-gravity\"><\/div>\n<script>\n    (function(){\n        var c = document.getElementById(\'taboola-endslate-thumbnails\');\n        c.id += \'-\' + Math.round(Math.random()*1e16);\n        \n        var taboolaParams = {\n            loader: \"//cdn.taboola.com/libtrc/aol-huffingtonpost/loader.js\",\n            mode: \"thumbnails-b\",\n            container: c.id,\n            placement: \"Endslate Thumbnails\",\n            target_type: \"mix\"\n        };\n        \n        \n        window.modulousQueue.add(function(){ doTaboola(taboolaParams); });\n        \n    }());\n<\/script>\n<\/div>\n";
+  HP.modules.ads.rightRailRecircCards = [];
+  HP.modules.ads.rightRailVideoCards = [];
+  HP.modules.ads.categoriesBottom = "";
+</script>
+<script src="http://s.m.huffpost.com/assets/desktop-7e00867a17dab78911c56e6883251ae006db7c2939377980bd870d81cbf45561.js"></script>
+<script>
+  (function() {
+    window.HP.params.entry = {
+      id: "4128563",
+      tags: ["33-year-old-bieber-fan", "toby-sheldon-plastic-surgery", "plastic-surgery-justin-bieber", "bieber-plastic-surgery", "33-year-old-justin-bieber", "toby-sheldon-justin-bieber", "video", "$100000-plastic-surgery", "$100000-justin-bieber-surgery", "toby-sheldon-songwriter", "toby-sheldon-33", "justin-bieber", "@tmz", "@noad_mid_article", "@ent", "@celebrity", "@people"],
+      title: "Man Undergoes Extensive Plastic Surgery To Look Like Justin Bieber, Spends $100,000 In 5 Years",
+      excerpt: "Not only is songwriter Toby Sheldon a 33-year-old Justin Bieber fan , his Bieber-devotion would",
+      url: "http://www.huffingtonpost.com/2013/10/19/plastic-surgery-justin-bieber-100k_n_4128563.html",
+      author: "Hunter Stuart",
+      edition: "us"
+    };
+    window.HP.params.preview = ("" === "true");
+    window.HP.params.isWide = ("false" === "true");
+    window.HP.params.isAthena = ("false" === "true");
+    var isLong = 450 <= ($('.js-entry-body').height() / 2.5);
+    window.HP.events.publish("entry_opened", {entry: document.querySelector('article'), isLong: isLong});
+  }());
+</script>
+
+<script>
+  (function(d, s, id, locale){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    locale = (locale == "ar_SA" ? "ar_AR" : locale);
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id; js.async = true;
+    js.src = "https://connect.facebook.net/"+locale+"/sdk.js#xfbml=1&version=v2.4";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk', 'en_US'));
+</script>
+
+<script>
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id; js.async = true;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+  
+    return t;
+  }(document, "script", "twitter-wjs"));
+</script>
+<script async src="https://apis.google.com/js/platform.js"></script>
+
+<div class="tracking-init">
+<div id="parsely-root" style="display: none">
+<div data-parsely-site="huffingtonpost.com" id="parsely-cfg"></div>
+</div>
+<script>
+  (function(){
+    window.PARSELY = {autotrack: false};
+    (function(s, p, d) {
+      var h=d.location.protocol, i=p+"-"+s,
+          e=d.getElementById(i), r=d.getElementById(p+"-root"),
+          u=h==="https:"?"d1z2jf7jlzjs58.cloudfront.net"
+          :"static."+p+".com";
+      if (e) return;
+      e = d.createElement(s); e.id = i; e.async = true;
+      e.src = h+"//"+u+"/p.js"; r.appendChild(e);
+    })("script", "parsely", document);
+  }());
+</script>
+
+<div id="vanitydiv" style="visibility:hidden; height: 0px;"></div>
+<!-- Begin comScore Tag -->
+<script>
+  var prefix = (document.location.protocol == "https:" ? "https://sb" : "http://b");
+  var script = document.createElement("script");
+  script.src = prefix + ".scorecardresearch.com/beacon.js";
+  script.async = true;
+  script.onload = function() {
+    window.HP.events.publish('tracking_loaded_comscore');
+  };
+  document.querySelector('.tracking').appendChild(script);
+</script>
+<noscript>
+<img alt="" height="1" src="http://b.scorecardresearch.com/p?c1=2&amp;c2=6723616&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c15=&amp;cj=1" width="1">
+</noscript>
+<!-- End comScore Tag -->
+
+<script>
+  (function(d){
+    var s = d.createElement('script');
+    s.async = true;
+    s.src = "http://o.aolcdn.com/os/aol/omniture.min.js";
+    s.onload = function() {
+      window.HP.events.publish('tracking_loaded_omniture');
+    };
+    d.querySelector('.tracking').appendChild(s);
+  })(document);
+</script>
+
+<script>
+  (function(d){
+    var s = d.createElement('script');
+    s.async = true;
+    s.src = "http://o.aolcdn.com/os/aol/beacon.min.js";
+    s.onload = function() {
+      window.HP.events.publish('tracking_loaded_datalayer');
+    };
+    d.querySelector('.tracking').appendChild(s);
+  })(document);
+</script>
+
+<script>
+  
+  window.extendOmniVars=function(e){""!==window.HP.functions.getCookie("huffpost_user_id")&&(e.eVar17="huffpost_"+window.HP.functions.getCookie("huffpost_user_id")),e.prop12=document.location.origin+document.location.pathname,"undefined"!=typeof io_c3sd&&"undefined"!=typeof io_c3sd.omniture&&("undefined"!=typeof io_c3sd.omniture.prop17&&(e.prop17=io_c3sd.omniture.prop17),"undefined"!=typeof io_c3sd.omniture.prop21&&(e.prop21=io_c3sd.omniture.prop21)),waitForGlobal("s_265",function(){Object.keys(e).forEach(function(t){s_265[t]=e[t]})})};
+  !function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src=location.protocol+"//ak.sail-horizon.com/horizon/v1.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t),waitForGlobal(function(){return window.Sailthru&&"function"==typeof window.Sailthru.setup},function(){console.log("Sailthru setup call for horizon"),Sailthru.setup({domain:"horizon.huffingtonpost.com",useStoredTags:!1})})}();
+</script>
+
+
+
+
+<!-- Init Standard Include -->
+<!-- START Nielsen Online SiteCensus V6.0 -->
+<!-- COPYRIGHT 2012 Nielsen Online -->
+<script>
+  modulousQueue.add(function () {
+    var d = new Image(1, 1);
+    d.onerror = d.onload = function () {
+      d.onerror = d.onload = null;
+    };
+    d.src = ["//secure-us.imrworldwide.com/cgi-bin/m?ci=us-703240h&cg=0&cc=1&si=", escape(window.location.href), "&rp=", escape(document.referrer), "&ts=compact&rnd=", (new Date()).getTime()].join('');
+  });
+</script>
+<noscript>
+<div>
+<img alt="" height="1" src="//secure-us.imrworldwide.com/cgi-bin/m?ci=us-703240h&amp;cg=0&amp;cc=1&amp;ts=noscript" width="1">
+</div>
+</noscript>
+<!-- END Nielsen Online SiteCensus V6.0 -->
+
+
+
+
+
+<!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1621685564716533'); // Edition specific
+  fbq('init', '1043018625788392'); // Partner Studio
+  fbq('track', "PageView");
+  if (!!HP.params.entryId) {
+    fbq('trackCustom', 'EntryPage', {
+      section_name: "Celebrity",
+      tags: ["33-year-old-bieber-fan","toby-sheldon-plastic-surgery","plastic-surgery-justin-bieber","bieber-plastic-surgery","33-year-old-justin-bieber","toby-sheldon-justin-bieber","video","$100000-plastic-surgery","$100000-justin-bieber-surgery","toby-sheldon-songwriter","toby-sheldon-33","justin-bieber","@tmz","@noad_mid_article","@ent","@celebrity","@people"],
+      ncid: "",
+    });
+  } // custom event(s) for bpages
+  waitForGlobal(function() {
+    return HP.modules.Tracky;
+  }, function() {
+    $('body').on('click', function(event) {
+      HP.modules.Tracky.reportClick(event, function(data) {
+        fbq('track', "Click", data);
+      });
+    });
+  });
+</script>
+<noscript>
+<img height="1" src="https://www.facebook.com/tr?id=1621685564716533&amp;ev=PageView&amp;noscript=1" style="display:none" width="1">
+<img height="1" src="https://www.facebook.com/tr?id=10153394098876130&amp;ev=PageView&amp;noscript=1" style="display:none" width="1">
+</noscript>
+<!-- End Facebook Pixel Code -->
+
+<script>
+  (function() {
+    RegExp.escape = function(s) {
+      return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    };
+  
+    var data = window.pubExchangeData;
+    if (data) {
+      var PUBX = {};
+      PUBX.linksUrl = data.url;
+      PUBX.publicationUuid = data.partnerList.uuid;
+      PUBX.publicationPartners = {};
+      for (var key in data.partnerList.partners) {
+        PUBX.publicationPartners[key] = data.partnerList.partners[key];
+      }
+  
+      var partnerRegex = Object.keys(PUBX.publicationPartners).map(function(key) {
+        return RegExp.escape(key);
+      }).join("|");
+      var linkRegex = RegExp("^(?:https?:)?//(?:[^/]+\\.)?("+partnerRegex+")", "i");
+  
+      $('body').on('mousedown', 'a:not(.peskip)', function(event) {
+        var link = event.target;
+        if(!link.hasAttribute("onmousedown")) {
+          var match = link.href.match(linkRegex);
+          if (match && match.length) {
+            var partner = match[1]
+            link.setAttribute("data-url", link.href);
+            link.href = PUBX.linksUrl + PUBX.publicationUuid + "/" + PUBX.publicationPartners[partner] + "/" + encodeURIComponent(link.href);
+          }
+        }
+      });
+    }
+  })();
+</script>
+
+
+</div>
+<script>
+  HP.functions.init();
+  window.addEventListener('load', modulousQueue.runAll);
+</script>
+<!--[if IE]>
+<link rel="stylesheet" media="screen" href="http://s.m.huffpost.com/assets/ie-bddc3f1b9fb2f2d2c7c30f4b176a3829825fd1b1e93b16e5edac4c4745e150f5.css" />
+<![endif]-->
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Cache-Control": "private",
+  "Content-Encoding": "gzip",
+  "Content-Length": "50269",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Fri, 15 Mar 2019 08:32:47 GMT",
+  "Server": "Microsoft-IIS/7.5",
+  "Set-Cookie": "ASP.NET_SessionId=roy4x2xcuqpqu5yctjsk3alp; path=/; HttpOnly",
+  "Vary": "Accept-Encoding",
+  "X-AspNet-Version": "4.0.30319",
+  "X-Powered-By": "ASP.NET"
+ },
+ "status_code": 200,
+ "url": "http://www.ketab.ir/Search.aspx"
+}

@@ -1,0 +1,18 @@
+{
+ "encoding": "ISO-8859-1",
+ "headers": {
+  "Cache-control": "",
+  "Connection": "Keep-Alive",
+  "Content-Disposition": "attachment; filename=\"WorldCat_809771201.ris\"",
+  "Content-Length": "374",
+  "Content-Type": "application/x-research-info-systems;charset=ISO-8859-1",
+  "Date": "Sat, 14 Apr 2018 12:31:07 GMT",
+  "Expires": "-1",
+  "Keep-Alive": "timeout=5, max=99",
+  "P3P": "CP=\"OCLC\"",
+  "Server": "Apache",
+  "Set-Cookie": "owcFirstDiscoveryRedir=promptUserFirstTime; Expires=Sun, 14-Apr-2019 12:31:07 GMT; Path=/, owcLocRedirectSession=_nr.no_inst; Path=/, JSESSIONID=9CF14F5FC4CA4CAA08BBBD1C4B48EB52; Path=/"
+ },
+ "status_code": 200,
+ "url": "https://www.worldcat.org/title/mediawiki-administrators-tutorial-guide/oclc/809771201?client=worldcat.org-detailed_record&page=endnote"
+}

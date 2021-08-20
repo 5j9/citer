@@ -1,0 +1,28 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Age": "261",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Length": "36447",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Mon, 08 Jan 2018 15:09:45 GMT",
+  "Fastly-Debug-Digest": "554e4fad54bb5853b1037e3a815667d427fd15cefd389b688014e0ca50befa27",
+  "Set-Cookie": "countryCode=IR; Domain=.cnn.com; Path=/, geoData=tehran|07|0|IR|AS; Domain=.cnn.com; Path=/, tryThing00=0193; Domain=.cnn.com; Path=/; Expires=Sun Apr 01 2018 00:00:00 GMT",
+  "Vary": "Accept-Encoding, Fastly-SSL, Fastly-SSL",
+  "Via": "1.1 varnish, 1.1 varnish",
+  "X-Cache": "MISS, HIT",
+  "X-Cache-Hits": "0, 1",
+  "X-Served-By": "cache-iad2142-IAD, cache-hhn1537-HHN",
+  "X-Timer": "S1515424185.087869,VS0,VE1",
+  "access-control-allow-origin": "*",
+  "cache-control": "max-age=60",
+  "content-security-policy": "default-src 'self' blob: https://*.cnn.com:* http://*.cnn.com:* *.cnn.io:* *.cnn.net:* *.turner.com:* *.turner.io:* *.ugdturner.com:* courageousstudio.com *.vgtf.net:*; script-src 'unsafe-eval' 'unsafe-inline' 'self' *; style-src 'unsafe-inline' 'self' blob: *; child-src 'self' blob: *; frame-src 'self' *; object-src 'self' *; img-src 'self' data: blob: *; media-src 'self' data: blob: *; font-src 'self' data: *; connect-src 'self' *; frame-ancestors 'self' *.cnn.com:* *.turner.com:* courageousstudio.com;",
+  "x-content-type-options": "nosniff",
+  "x-servedByHost": "::ffff:172.17.46.18",
+  "x-xss-protection": "1; mode=block"
+ },
+ "status_code": 200,
+ "url": "https://edition.cnn.com/2014/02/09/us/north-carolina-coal-ash-spill/"
+}

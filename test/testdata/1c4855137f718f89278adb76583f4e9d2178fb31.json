@@ -1,0 +1,17 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Access-Control-Allow-Headers": "X-Requested-With",
+  "Access-Control-Allow-Origin": "*",
+  "Connection": "close",
+  "Content-Length": "1854",
+  "Content-Type": "application/json;charset=UTF-8",
+  "Date": "Sun, 02 Jun 2019 05:27:29 GMT",
+  "Server": "http-kit",
+  "Vary": "Accept",
+  "X-Rate-Limit-Interval": "1s",
+  "X-Rate-Limit-Limit": "50"
+ },
+ "status_code": 200,
+ "url": "http://api.crossref.org/v1/works/10.1109/TIM.1985.4315297"
+}

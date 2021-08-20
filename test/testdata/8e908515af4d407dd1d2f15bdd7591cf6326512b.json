@@ -1,0 +1,21 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Cache-Control": "max-age=0, no-cache",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Length": "12450",
+  "Content-Type": "text/html; charset=UTF-8",
+  "Date": "Tue, 23 May 2017 17:53:56 GMT",
+  "Expires": "Tue, 23 May 2017 17:53:56 GMT",
+  "Link": "<http://fonts.googleapis.com>;rel=preconnect, <http://w.sharethis.com>;rel=preconnect, <http://ads.servebom.com>;rel=preconnect, <http://ajax.googleapis.com>;rel=preconnect, <http://www.googletagmanager.com>;rel=preconnect, <https://connect.facebook.net>;rel=preconnect, <https://cse.google.com>;rel=preconnect, <http://1.assets.businessnewsdaily.com>;rel=preconnect, <http://l.sharethis.com>;rel=preconnect, <https://cdn.perfdrive.com>;rel=preconnect",
+  "Pragma": "no-cache",
+  "Server": "nginx",
+  "Set-Cookie": "__uzma=592477349c7dc2.76321550; expires=Fri, 21-May-2027 17:53:56 GMT; Max-Age=315360000; path=/, __uzmd=1495562036; expires=Fri, 21-May-2027 17:53:56 GMT; Max-Age=315360000; path=/, __uzmc=623491073517; expires=Fri, 21-May-2027 17:53:56 GMT; Max-Age=315360000; path=/, __uzmb=1495562036; expires=Fri, 21-May-2027 17:53:56 GMT; Max-Age=315360000; path=/",
+  "Surrogate-Control": "content=\"ESI/1.0\"",
+  "Vary": "Accept-Encoding, User-Agent",
+  "X-Akamai-Transformed": "c 9552 0 -"
+ },
+ "status_code": 200,
+ "url": "http://www.businessnewsdaily.com/"
+}

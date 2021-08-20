@@ -1,0 +1,24 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Cache-Control": "max-age=30, stale-while-revalidate",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Language": "en-GB",
+  "Content-Length": "46532",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Tue, 23 May 2017 17:52:58 GMT",
+  "Server": "Apache",
+  "Vary": "X-CDN,X-BBC-Edge-Cache,Accept-Encoding",
+  "Warning": "110 varnish 'Response is stale'",
+  "X-Cache-Action": "HIT",
+  "X-Cache-Age": "40",
+  "X-Cache-Hits": "89",
+  "X-LB-NoCache": "true",
+  "X-News-Cache-Id": "78741",
+  "X-News-Data-Centre": "telhc",
+  "X-PAL-Host": "pal1104.back.live.telhc.local:80"
+ },
+ "status_code": 200,
+ "url": "http://www.bbc.co.uk/news"
+}

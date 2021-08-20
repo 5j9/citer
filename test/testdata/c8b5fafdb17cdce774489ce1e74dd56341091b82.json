@@ -1,0 +1,19 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Cache-Control": "max-age=0, no-cache",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Length": "30237",
+  "Content-Type": "text/html; charset=UTF-8",
+  "Date": "Tue, 23 May 2017 17:54:15 GMT",
+  "Expires": "Tue, 23 May 2017 17:54:15 GMT",
+  "Pragma": "no-cache",
+  "Server": "nginx",
+  "Set-Cookie": "__uzma=59247747035b40.04506070; expires=Fri, 21-May-2027 17:54:15 GMT; Max-Age=315360000; path=/, __uzmd=1495562055; expires=Fri, 21-May-2027 17:54:15 GMT; Max-Age=315360000; path=/, __uzmc=857111084218; expires=Fri, 21-May-2027 17:54:15 GMT; Max-Age=315360000; path=/, __uzmb=1495562055; expires=Fri, 21-May-2027 17:54:15 GMT; Max-Age=315360000; path=/",
+  "Surrogate-Control": "content=\"ESI/1.0\"",
+  "Vary": "Accept-Encoding"
+ },
+ "status_code": 200,
+ "url": "http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936"
+}

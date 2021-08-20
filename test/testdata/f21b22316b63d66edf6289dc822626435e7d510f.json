@@ -1,0 +1,19 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Cache-Control": "max-age=0, no-cache",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Length": "18491",
+  "Content-Type": "text/html; charset=UTF-8",
+  "Date": "Tue, 23 May 2017 17:53:57 GMT",
+  "Expires": "Tue, 23 May 2017 17:53:57 GMT",
+  "Pragma": "no-cache",
+  "Server": "nginx",
+  "Set-Cookie": "__uzma=59247735090a24.83809983; expires=Fri, 21-May-2027 17:53:57 GMT; Max-Age=315360000; path=/, __uzmd=1495562037; expires=Fri, 21-May-2027 17:53:57 GMT; Max-Age=315360000; path=/, __uzmc=345991097772; expires=Fri, 21-May-2027 17:53:57 GMT; Max-Age=315360000; path=/, __uzmb=1495562037; expires=Fri, 21-May-2027 17:53:57 GMT; Max-Age=315360000; path=/",
+  "Surrogate-Control": "content=\"ESI/1.0\"",
+  "Vary": "Accept-Encoding"
+ },
+ "status_code": 200,
+ "url": "http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876"
+}

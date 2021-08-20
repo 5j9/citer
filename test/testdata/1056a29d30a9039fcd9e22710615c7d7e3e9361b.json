@@ -1,0 +1,21 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Fri, 04 Jun 2021 11:13:18 GMT",
+  "Server": "Apache/2.4.29 (Ubuntu)",
+  "Set-Cookie": "AccessSession=H4sIAAAAAAAAAK1Ry27UQBC85yssnzNR97yH22aRAXFMbgihds8MGDnJam0jQZR_x89dLZAb0lymqrpU3fV8VRRlE8viTVH6GKxL0WsArdlbn8kqTmjBSGMwl9eTmFd1QyyICOQCf99MwFVgtdyjfYuyAumq3W3Qzhgvla9gUR83tQGtoq2Vg6AxI0XKihJZK1EquaqHYZNnbZWTSiTQTmifUNSJk5AMYJxmhOiXERr6b9NIprZLM_KD2sUFrZQeTQhOGzNTzWF2V3iDenzuBt3qEh-ax0ubrnu6BHq-_BNz303Qp-J5_J_PiwAQZt8RW7OUegPSCoSga6WCETmQETpIEN7TuGKI2aPnrCJtM_3PQ5qH3h2fhsPJ-gTfUtfwBTeu0zw0v1LV0tdJ0h-HNDIv1__Iqv7MKv_Kmsa2Y2KRlauFZmcEsZcCGP2Ynmsg-P9Zi89LEf2pTDB4LrOl14jhFYL6_jg3tt5gv58T7e62JPv7GaibR2qH-OXc4t1CfLh_v_u4K6dwVy-_AWgjs21SAwAA; Path=/; SameSite=Lax; Secure, AccessSessionSignature=c25f82ddb13822abe6012161bdbaeae5985a921235fa2d68e91e664ea1b463b5; Path=/; SameSite=Lax; Secure, AccessSessionTimedSignature=366b26f6d8a1fbfebe86bf6450035cc5ce58a825abdc3b7ccbc8209466fc6746; Path=/; SameSite=Lax; Secure, UUID=8f463723-e047-48e1-bece-2c00574c10d8; expires=Mon, 03 Jun 2024 11:13:18 GMT; Max-Age=94608000; Path=/; SameSite=None; Secure, csrftoken=R3wgkxs9ydV1V3qZH8hyU99Uxs7IbOe9KLNXChiRX626wb8q2ZE56hwBbliMVyF1; expires=Fri, 03 Jun 2022 11:13:18 GMT; Max-Age=31449600; Path=/; SameSite=Lax; Secure, ReferringRequestId=excelsior:095c6972196af449d128fd7d2d4d4fca; Path=/; SameSite=Lax; Secure, _pxhd=bfc2588208f2eccf03ce709939a0ef3d1f7ddf2f12512797bdf9409a6c0feb64:dc2c88a1-c525-11eb-aa81-df9c70a9b390; Expires=Fri, 01 Jan 2021 00:00:00 GMT; path=/;",
+  "Vary": "Cookie,Accept-Encoding,Fastly-SSL,Origin,X-Requested-Host",
+  "Via": "1.1 varnish",
+  "X-Cache": "MISS",
+  "X-Cache-Hits": "0",
+  "X-JSTOR-Restarts": "2",
+  "X-Served-By": "cache-fra19126-FRA",
+  "transfer-encoding": "chunked"
+ },
+ "status_code": 200,
+ "url": "https://www.jstor.org/stable/30078788"
+}
