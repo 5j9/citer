@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"a2134792db","applicationID":"36240457","transactionName":"dFgPTEBWVA1cQEtXVkRcFVdCFksEWkYNXF0YRAlXRQ==","queueTime":1,"applicationTime":40,"agent":""}</script>
+<script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1026.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script>
+<meta content="97Mj-wW7u8U1NOnkW1rfH-I1kgO0-a9YsgoesOk41R8" name="google-site-verification">
+<meta content="18468761129" property="fb:pages">
+
+<link href="http://www.huffpostarabi.com/" hreflang="ar-sa" rel="alternate">
+<link href="http://www.huffingtonpost.com.au/" hreflang="en-au" rel="alternate">
+<link href="http://www.huffpostbrasil.com/" hreflang="pt-br" rel="alternate">
+<link href="http://www.huffingtonpost.ca/" hreflang="en-ca" rel="alternate">
+<link href="http://www.huffingtonpost.de/" hreflang="de-de" rel="alternate">
+<link href="http://www.huffingtonpost.es/" hreflang="es-es" rel="alternate">
+<link href="http://www.huffingtonpost.fr/" hreflang="fr-fr" rel="alternate">
+<link href="http://www.huffingtonpost.gr/" hreflang="el-gr" rel="alternate">
+<link href="http://www.huffingtonpost.in/" hreflang="en-in" rel="alternate">
+<link href="http://www.huffingtonpost.it/" hreflang="it-it" rel="alternate">
+<link href="http://www.huffingtonpost.jp/" hreflang="ja-jp" rel="alternate">
+<link href="http://www.huffingtonpost.kr/" hreflang="ko-kr" rel="alternate">
+<link href="http://www.huffpostmaghreb.com/" hreflang="fr-mb" rel="alternate">
+<link href="http://www.huffingtonpost.com.mx/" hreflang="es-mx" rel="alternate">
+<link href="http://quebec.huffingtonpost.ca/" hreflang="fr-ca" rel="alternate">
+<link href="http://www.huffingtonpost.co.za/" hreflang="en-za" rel="alternate">
+<link href="http://www.huffingtonpost.co.uk/" hreflang="en-gb" rel="alternate">
+<link href="http://www.huffingtonpost.com/" hreflang="en-us" rel="alternate">
+
+<title>HuffPost</title>
+<meta charset="utf-8">
+<meta content="width=1000" name="viewport">
+<meta content="Read the latest headlines, news stories, and opinion from Politics, Entertainment, Lifestyle, blogs, and more." name="description">
+<meta content="website" property="og:type">
+<meta content="HuffPost - Breaking News, U.S. and World News" property="og:title">
+<meta content="http://www.huffingtonpost.com/" property="og:url">
+<meta content="Read the latest headlines, news stories, and opinion from Politics, Entertainment, Lifestyle, blogs, and more." property="og:description">
+<meta content="Read the latest headlines, news stories, and opinion from Politics, Entertainment, Lifestyle, blogs, and more." name="twitter:description">
+
+<meta content="46744042133" property="fb:app_id">
+<meta content="text/html" http-equiv="Content-Type">
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible">
+<link rel="shortcut icon" type="image/x-icon" href="http://s.m.huffpost.com/assets/favicon-2020e123c064086aad150fe909c53771f862d7c76cd62f6146e81d533845fd7d.ico" />
+<link href="http://m.huffpost.com/" media="handheld" rel="alternate">
+<link href="http://m.huffpost.com/" media="only screen and (max-width: 640px)" rel="alternate">
+<link href="http://www.huffingtonpost.com/" rel="canonical">
+<style>
+html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{margin:0}div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}code,kbd,pre,samp{font-family:monospace, serif;font-size:1em}pre{white-space:pre-wrap}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:0.35em 0.625em 0.75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="search"]{-webkit-appearance:textfield;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}img{border-style:none}svg:not(:root){overflow:hidden}@font-face{font-family:"huffington-icons";font-style:normal;font-weight:normal;src:url(//s.m.huffpost.com/assets/huffington-icons-68621b24df29361650b7bfbb6131314c3dd882982252d8e3d7d7d2bee01ff79d.eot?#iefix) format("embedded-opentype"),url(//s.m.huffpost.com/assets/huffington-icons-db58091c16f38ee604b37c7482628f656c410daee19b728f2c3574a17c0b4a8d.woff) format("woff"),url(//s.m.huffpost.com/assets/huffington-icons-2eb23bdbca31a787408fe67de648f0629b1b6809bd7a945e1882700e6dbaa297.svg#huffington-icons) format("svg")}body{width:100%;box-sizing:border-box}body.mapi{background:#ffffff}body #recaptcha-container{display:none}body.recaptcha-open #recaptcha-container{position:fixed;top:0;bottom:0;left:0;right:0;z-index:9000000;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;background-color:rgba(111,111,111,0.6)}img{max-width:100%;height:auto}center img+em{display:block}html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}.fyre{box-sizing:initial}.clearfix:after{content:"";display:table;clear:both}.row{width:100%;position:relative}.row:after{content:"";display:table;clear:both}.col{float:left}.col:nth-child(n+2){padding-left:5px}.col-full{padding-left:0;float:left;width:100%}.col-half{padding-left:0;float:left;width:50%}.col-third{padding-left:0;float:left;width:33.33%}.col-two-thirds{padding-left:0;float:left;width:66.66%}.seperator{border-bottom:1px solid #2e7061;padding-left:5px;padding-right:5px}.hidden{display:none !important;visibility:hidden !important}.flex-video{position:relative;padding-bottom:56.55%;height:0;overflow:hidden}.flex-video iframe,.flex-video object,.flex-video embed,.flex-video video{position:absolute;top:0;left:0;width:100%;height:100%}.flex-video.wapo{padding-bottom:50%}.flex-video.vimeo{padding-top:0}.flex-video.msnbc{padding-bottom:91%}.no-scroll{overflow:hidden}.sponsor-container{border:1px solid #dbdbdb;border-left:none;border-right:none}html{font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif}h1,h2,h3,h4,h5{font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;line-height:1.4em;font-weight:normal}ul,ol{padding-top:5px;padding-bottom:5px}blockquote{padding-top:15px;padding-bottom:15px;padding-left:15px;padding-right:15px;margin-top:15px;margin-bottom:15px;color:#444444;border:1px solid #dbdbdb;line-height:1.5em}p{font-size:1.0625rem}a{color:#2e7061}[role=main]{width:100%;position:relative}[role=main]:after{content:"";display:table;clear:both}body{max-width:none;min-width:767px;width:100%;margin-left:auto;margin-right:auto;position:relative}body.locked{overflow:hidden}.main{position:relative}body[data-locale=en_GB] .main{max-width:600px;margin:0 auto}.blogs{border-right:1px solid #dbdbdb;padding-right:12px}.wide .below-entry__content{width:100%;max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto;margin:0 auto}.b-page .right-rail{display:none}@media (min-width: 1024px){.b-page .right-rail{display:block;-webkit-box-flex:0;-ms-flex:0 0 300px;flex:0 0 300px;margin-top:5px;padding-left:0}}.b-page .right-rail .below_right_rail_flex{margin-top:30px;margin-bottom:30px}.static .right-rail{margin-top:5px}.right-rail{max-width:303px}:target:before{content:"";display:block;height:78px;margin:-78px 0 0;pointer-events:none}.header{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;background-color:#000000;width:100%;margin-bottom:40px;position:static;top:0;height:78px;-webkit-transition:height 0.3s;transition:height 0.3s;z-index:5000005}.header__content{max-width:1440px;min-width:768px;width:100%;margin-left:auto;margin-right:auto;width:100%;height:78px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch}.header__content-left,.header__content-right{-webkit-box-flex:0;-ms-flex:0 0 300px;flex:0 0 300px;display:-webkit-box;display:-ms-flexbox;display:flex}.header__content-left{padding-left:20px;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-ordinal-group:1;-ms-flex-order:0;order:0}.header__content-right{padding-right:20px;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2}.header__hamburger-link{width:30px;height:20px;cursor:pointer;position:relative}.header__hamburger-link:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:20px;color:#666;position:absolute;display:block;width:30px}.header__hamburger-link.open:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:24px;color:#666}.header__hamburger-link.open:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:24px;color:#0DBE98}.header__hamburger-link:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:20px;color:#0DBE98;position:absolute;display:block;width:30px}.header__editions{color:#ffffff;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-ms-flex-item-align:center;align-self:center;font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.6875rem;cursor:pointer;padding:15px;color:#888;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.header__editions::-moz-selection{background-color:transparent}.header__editions::selection{background-color:transparent}.header__editions:hover,.header__editions.open{color:#0DBE98}.header__editions__label{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;font-size:0.625rem;letter-spacing:1.3px}.header__editions__edition{-webkit-box-ordinal-group:1;-ms-flex-order:0;order:0;font-size:1.25rem;font-style:italic;font-weight:normal;text-align:center;letter-spacing:1px}.header__logo{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.header__logo::-moz-selection{background-color:transparent}.header__logo::selection{background-color:transparent}.header__social-list{-webkit-box-ordinal-group:1;-ms-flex-order:0;order:0;display:-webkit-box;display:-ms-flexbox;display:flex;height:100%;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.header__social-list__item{font-size:1.25rem;color:#ffffff;background-color:#242424;text-decoration:none;width:38px;height:38px;border-radius:50%;margin-right:12px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.header__social-list__item::-moz-selection{background-color:transparent}.header__social-list__item::selection{background-color:transparent}.header__social-list__item--facebook:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1.125rem;color:#ffffff;position:relative;top:8px;left:10px}.header__social-list__item--facebook:hover{background-color:#3b5999}.header__social-list__item--twitter:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1.125rem;color:#ffffff;position:relative;top:8px;left:11px}.header__social-list__item--twitter:hover{background-color:#55acef}.header__social-list__item--snapchat{background-image:url(//s.m.huffpost.com/assets/icon-snapchat-d9b47ee21b08668c392280c07aad41ba94f55ec741cb085253e419c2377d77f8.png);background-repeat:no-repeat;background-position:center center;background-size:26px}.header__social-list__item--snapchat:hover{background-color:#fffb00}.header__social-list__item--instagram:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1.125rem;color:#ffffff;position:relative;top:9px;left:10px}.header__social-list__item--instagram:hover{background:-webkit-radial-gradient(circle farthest-corner at 32% 106%, #ffe17d 0%, #ffcd69 10%, #fa9137 28%, #eb4141 42%, transparent 82%),-webkit-linear-gradient(315deg, #234bd7 12%, #c33cbe 58%);background:radial-gradient(circle farthest-corner at 32% 106%, #ffe17d 0%, #ffcd69 10%, #fa9137 28%, #eb4141 42%, transparent 82%),linear-gradient(135deg, #234bd7 12%, #c33cbe 58%)}@media (max-width: 981px){.header__social-list--sticky{display:none}}@media (max-width: 980px){.header .header__social-list{display:none}.header__content-left,.header__content-right{-webkit-box-flex:0;-ms-flex:0 0 150px;flex:0 0 150px}}.header--sticky{height:48px;background-color:rgba(0,0,0,0.9)}.header--sticky .logo__img{height:22px}.header--sticky .header__hamburger-link{width:24px;height:16px}.header--sticky .header__hamburger-link:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:16px;color:#666}.header--sticky .header__hamburger-link.open:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:16px;color:#666}.header--sticky .header__hamburger-link.open:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:16px;color:#0DBE98}.header--sticky .header__hamburger-link:hover:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:16px;color:#0DBE98}.header--sticky .header__social-list__item{height:30px;width:30px;margin-right:9px}.header--sticky .header__social-list__item--facebook:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1rem;color:#ffffff;position:relative;top:5px;left:7px}.header--sticky .header__social-list__item--twitter:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1rem;color:#ffffff;position:relative;top:5px;left:7px}.header--sticky .header__social-list__item--snapchat{background-size:19px}.header--sticky .header__social-list__item--instagram:before{content:"";font-family:"huffington-icons";font-style:normal;text-rendering:optimizeLegibility;text-transform:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;font-size:1rem;color:#ffffff;position:relative;top:5px;left:7px}.header--sticky .header__editions{display:none}.header--sticky .header__editions .editions__current-edition{padding:9px 15px}.header--transition{-webkit-transition-timing-function:ease;transition-timing-function:ease;-webkit-transition:height 0.2s, width 0.2s;transition:height 0.2s, width 0.2s}.logo{text-decoration:none;width:300px;display:block}.logo__img{height:28px;width:100%;display:block}.a-page:not(.section-video) .header{position:fixed;top:0;margin-bottom:0}.a-page:not(.section-video) .header__placeholder{background-color:#000000;height:78px;margin-bottom:40px}.a-page.front-page .header__placeholder{margin-bottom:0}.dropdown--closed{max-height:0;-webkit-transition:none;transition:none}.dropdown--closed .dropdown__container{display:none}.a-page .dropdown{top:78px}.a-page .dropdown.sticky{top:48px}.b-page .dropdown{top:78px;position:absolute}.b-page .dropdown.sticky{position:fixed;top:65px}.hamburger.dropdown{position:fixed;width:100%;top:78px}.hamburger__container{background-color:#000000;border-style:solid;border-color:#0DBE98;border-width:0 0 3px 0;overflow-y:scroll;background-image:url(//s.m.huffpost.com/assets/nav-bg-28c233db98f59d940f56847243216ef7150f6bb94f4f629dbc22eb551e9c5954.svg);background-repeat:no-repeat;background-position:center top;background-size:1452px 550px;max-height:inherit}.hamburger__wrapper{min-width:1024px;max-width:1024px;padding:20px;margin:0 auto;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.hamburger__block{width:280px;margin-bottom:20px}.hamburger__block.partial-block .hamburger__section{float:left;width:50%}.hamburger__block.partial-block .hamburger__section-title{margin-bottom:20px}.hamburger__block.partial-block .hamburger__list-item{float:none;width:auto}@media (max-width: 1024px){.hamburger__inner-container{width:100%}.hamburger__block{width:270px;margin-left:10px;margin-right:10px}.hamburger__wrapper{-ms-flex-pack:distribute;justify-content:space-around;padding:20px 80px;min-width:768px}}.hamburger__section-title{display:inline-block;font-family:"ProximaNovaCond-Bold";font-size:1.125rem;letter-spacing:0.09375em;line-height:1.25rem;text-decoration:none;color:#ffffff;font-style:italic;border-style:solid;border-color:#0DBE98;border-width:0 0 3px 0;margin-bottom:15px;padding-top:4px;padding-left:2px;padding-right:2px}.hamburger__section-content{margin-bottom:10px}.hamburger__list{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;list-style:none;-ms-flex-flow:wrap;flex-flow:wrap}.hamburger__list-item{width:50%;margin-bottom:15px}.hamburger__link{font-size:1rem;text-decoration:none;line-height:1.0625rem;letter-spacing:0.01875em;color:#ffffff}.hamburger__link:hover{text-decoration:underline;color:#0DBE98}a.hamburger__section-title:hover{background-color:#0dbe98;padding-bottom:3px;border-bottom:none;-webkit-transition:background-color 350ms ease-out;transition:background-color 350ms ease-out}.footer{background-color:#000000;padding:40px 20px 0 20px;display:none}.department--politics-news .follow-us--right .follow-us__header__text{border-top:2px solid #203CDB}.department--entertainment .follow-us--right .follow-us__header__text{border-top:2px solid #E33224}.department--impact .follow-us--right .follow-us__header__text{border-top:2px solid #7810D0}.department--lifestyle .follow-us--right .follow-us__header__text{border-top:2px solid #00AFC5}.department--voices .follow-us--right .follow-us__header__text{border-top:2px solid #00A117}.follow-us--right,.follow-us--wide{display:none}.text{line-height:1.5em}.text p{white-space:pre-wrap}.text p iframe{max-width:100%}.text{width:100%;margin:0}@media (min-width: 1024px){.text{max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}}.text p{white-space:normal}.text .link-out-link{font-style:italic}.text h3{color:#444444;font-size:1.75rem;line-height:1em;margin-top:20px;margin-bottom:20px}.text h4{color:#444444;font-size:1.375rem;line-height:1.1em;margin-top:20px;margin-bottom:20px}.wide .text{max-width:730px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.embed-asset{max-width:630px;min-width:initial;width:100%;margin-left:auto;margin-right:auto;margin-top:40px;margin-bottom:40px}.embed-asset embed,.embed-asset iframe,.embed-asset video,.embed-asset object{max-width:100%}.embed-asset iframe{display:block;margin:0 auto}.embed-asset:first-child{margin-top:0}.embed-asset iframe.twitter-tweet,.embed-asset iframe.instagram-media{margin:0 auto !important}.embed-asset blockquote{border:none;background-color:initial}.embed-asset .fb-post,.embed-asset .fb-video{display:block;margin:0 auto}.embed-asset .fb-post span,.embed-asset .fb-video span{display:block;margin:0 auto}.embed-asset .five-min-container .fmvps-wrapper div{margin:0 auto}.embed-asset .five-min-container a.back-to-original{display:block;padding-top:5px;text-decoration:none;color:#000000;box-shadow:inset 0 -2px 0 #0DBE98}.embed-asset .five-min-container a.back-to-original:hover{background-color:rgba(13,190,152,0.7);padding-top:2px;padding-bottom:0;border-bottom:none;-webkit-transition:background-color 350ms ease-out;transition:background-color 350ms ease-out;box-shadow:none}.embed-code>div:not([itemprop="video"])>.flex-video,.embed-code .flex-video>.flex-video{position:static}.unsupported-content{margin-top:5px;margin-bottom:5px;height:250px;width:100%;background:url(//s.m.huffpost.com/assets/notsupported-6c5dc5d5a2a21057b23669d70a1351a401d2c813866c8ec67ce8ab0b31d0e6a3.png) no-repeat center center}.embed-asset{max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.wide .embed-asset{max-width:720px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.wide .embed-asset.full-width-embed{max-width:970px;min-width:initial;width:100%;margin-left:auto;margin-right:auto}.share-bar{display:none}.share-bar__item{float:left;display:block;font-size:1.875rem;height:3.125rem;width:3.125rem;line-height:3.125rem;text-decoration:none;text-align:center;color:#ffffff;overflow:hidden}.share-bar__item:before{display:inline-block}.share-bar__item-link{display:block;font-size:1.875rem;height:3.125rem;width:3.125rem;line-height:3.125rem;text-decoration:none;text-align:center;color:#ffffff;overflow:hidden}.share-bar__item-link:before{display:inline-block}.share-bar__social-counts{float:left;width:58px;height:45px;font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1.5em;text-align:center;margin-right:1px}.share-bar__social-counts__number{line-height:2.25em;vertical-align:middle;line-height:45px}
+
+.zone{display:-webkit-box;display:-ms-flexbox;display:flex;position:relative}.zone__link{text-decoration:none;color:inherit}.zone__title{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;padding:0 15px;margin-bottom:25px;text-align:center}.zone__title__text{display:inline-block;font-size:1.0625rem;padding:0 15px;font-style:italic;background:#F83371;color:#ffffff;position:relative;font-family:"ProximaNovaCond-Bold";padding-top:3px;letter-spacing:.15em}.zone__title__text:before,.zone__title__text:after{content:'';position:absolute;width:0;height:0}.zone__title__text:before{top:-1px;left:-1px;border-top:1.9em solid #ffffff;border-right:0.4em solid transparent}.zone__title__text:after{bottom:-1px;right:-1px;border-bottom:1.9em solid #ffffff;border-left:0.4em solid transparent}.zone--main .zone__content{width:100%;padding:0;margin:0}.zone--twilight .zone__title__text{font-size:1.1875rem;background:#333333}.zone--bottom .zone__title__text,.zone--friend .zone__title__text{font-size:1.1875rem;background:#333333}.zone--trending .zone__title__text{font-size:1.25rem;background:#F83371}.zone--section-flat{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%}.zone--section-flat .zone__content{width:100%}.zone--section-flat .zone__title{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;padding:15px 0 0;margin:0 15px 20px;text-align:left;border-top:3px solid #0DBE98;text-decoration:none}@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi){.zone--section-flat .zone__title{border-top:4px solid #0DBE98}}.zone--section-flat .zone__title__text{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;letter-spacing:0.1em;font-size:1.25rem;padding:0;line-height:1;display:block;color:#000;background:transparent}.zone--section-flat .zone__title__text:before,.zone--section-flat .zone__title__text:after{content:initial}.zone--section-flat .zone__more-link{-webkit-box-flex:0;-ms-flex:0 0 auto;flex:0 0 auto;font-family:"ProximaNovaCond-Medium", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-style:normal;white-space:nowrap;text-decoration:none;padding-top:2px;color:#000}.zone__title__text{font-size:1.0625rem;letter-spacing:0.12em}.zone--main{margin-bottom:25px}.zone--left{-webkit-box-flex:0;-ms-flex:0 1 50%;flex:0 1 50%;-ms-flex-wrap:wrap;flex-wrap:wrap}@media (min-width: 1024px){.zone--left{-webkit-box-flex:0;-ms-flex:0 1 315px;flex:0 1 315px;max-width:315px}}.zone--center{-webkit-box-flex:1;-ms-flex:1 1 50%;flex:1 1 50%;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.zone--center.mediumDevil{min-height:630px}@media (min-width: 1024px){.zone--center{-webkit-box-flex:1;-ms-flex:1 0 315px;flex:1 0 315px}}@media (min-width: 1280px){.zone--center{-webkit-box-flex:1;-ms-flex:1 0 615px;flex:1 0 615px}}.zone--right{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-ms-flex-wrap:wrap;flex-wrap:wrap}@media (min-width: 1024px){.zone--right{-webkit-box-flex:0;-ms-flex:0 0 315px;flex:0 0 315px;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;padding:0}}.zone--right .zone__placement{display:none;margin-bottom:50px;padding:0 15px}@media (min-width: 1024px){.zone--right .zone__placement{display:block}}.zone--bottom,.zone--friend,.zone--twilight{margin-top:10px}@media (min-width: 1100px){.zone--bottom,.zone--friend,.zone--twilight{margin-top:40px}}.zone--bottom,.zone--friend,.zone--danger{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;width:100%}.zone--bottom .zone__content,.zone--friend .zone__content,.zone--danger .zone__content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap}.zone--twilight{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-ms-flex-wrap:wrap;flex-wrap:wrap}.zone--twilight .zone__title{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%}.zone--twilight .zone__content{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%}@media (min-width: 1024px){.zone--twilight{-webkit-box-flex:1;-ms-flex:1 1 675px;flex:1 1 675px}}.zone--trending{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-bottom:50px}@media (min-width: 1024px){.zone--trending{-webkit-box-flex:0;-ms-flex:0 0 330px;flex:0 0 330px}}.zone--trending .zone__title__text{font-size:1.0625rem}.zone--trending .zone__content{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%}.zone--section{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;position:relative}@media (min-width: 1024px){.zone--section{margin-right:315px;padding-right:15px}}@media (min-width: 1280px){.zone--section{padding-right:30px}}.zone--section .zone__title{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;text-align:left}.zone--section .zone__title__text{display:block;border-color:#000}@media (min-width: 1280px){.zone--section .zone__title{padding:0 0 0 15px}}.zone--section .zone__content{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%}@media (min-width: 1280px){.zone--section .zone__content{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;height:520px}}.zone--section .zone__placement{-webkit-box-flex:0;-ms-flex:0 1 300px;flex:0 1 300px;width:300px}@media (min-width: 1024px){.zone--section .zone__placement{position:absolute;right:-300px;top:0}}.zone--section-flat{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}@media (min-width: 1024px){.zone--section-flat{margin-right:330px}}.zone--section-flat .zone__content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-ms-flex-wrap:wrap;flex-wrap:wrap}.zone--section-flat .zone__title{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;text-align:left}.zone--section-flat .zone__title__text{display:block;border-color:#000}
+.section-name{padding-top:15px;padding-bottom:15px;text-align:center}.a-page__content{width:640px;margin:10px auto 0;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}@media (min-width: 1024px){.a-page__content{width:100%;max-width:1280px}}.a-page__content--separator{margin-bottom:20px;margin-top:25px}.a-page__content--separator.largeDevil{min-height:1080px}.a-page__content__splash{width:100%}.a-page__content__splash--advanced{max-width:1070px;min-width:600px;width:100%;margin-left:auto;margin-right:auto;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:nowrap;flex-wrap:nowrap;min-height:350px;margin-bottom:0;padding-bottom:0}.a-page__content__splash--advanced__video{margin-bottom:40px;min-height:247px}.a-page__content__splash--advanced__header{font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;text-transform:uppercase;font-size:21px;text-align:center;padding:10px 0;margin:0 20px}.a-page__content__splash__left{-webkit-box-flex:0;-ms-flex:0 0 665px;flex:0 0 665px}.a-page__content__splash__left .splash{min-width:inherit;max-width:inherit}.a-page__content__splash__right{-webkit-box-flex:1;-ms-flex:1 1 375px;flex:1 1 375px;padding-left:30px}.a-page__content__rail{padding-left:0;padding-right:0}.a-page__content__rail--left{-webkit-box-flex:1;-ms-flex:1 0 200px;flex:1 0 200px;margin-right:20px;max-width:250px}@media (max-width: 1024px){.a-page__content__rail--left{margin-right:10px}}.a-page__content__rail--left .recirc--vertical .recirc__title:first-child{margin-top:0}.a-page__content__rail--left .recirc p{margin-bottom:12px}.a-page__content__rail--middle{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex:1 0 400px;flex:1 0 400px;-ms-flex-wrap:wrap;flex-wrap:wrap;-ms-flex-line-pack:start;align-content:flex-start;max-width:562px;border-left:1px solid #dbdbdb;border-right:1px solid #dbdbdb;padding:0 20px}@media (max-width: 1024px){.a-page__content__rail--middle .card--multi-headline .card__headline{font-size:20px}.a-page__content__rail--middle .card__headline{font-size:24px}}.a-page__content__rail--right{margin-left:20px;max-width:300px}@media (max-width: 1024px){.a-page__content__rail--right{margin-left:10px}}.a-page__content__rail .card__byline{margin-top:5px;color:#F83371;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.8125rem}.a-page__content__rail .card__byline a{color:#F83371;text-decoration:none}.a-page__content__rail .card__byline a:hover{text-decoration:underline}.a-page__content__rail .card__microbio{font-style:italic;color:#757575}.a-page__content__pagination{font-family:"ProximaNovaCond-Extrabld", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1rem;text-align:center;margin-bottom:28px}.a-page__content__pagination__link{margin:0 5px;text-decoration:none;color:#0DBE98}.a-page__content__pagination__link:hover{text-decoration:underline}.a-page--two-col .a-page__content{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.a-page--two-col .a-page__content .middle-rail{border:none;max-width:none;-webkit-box-flex:1;-ms-flex:1 1 400px;flex:1 1 400px}.a-page--two-col .a-page__content .middle-rail .card{margin-bottom:20px;padding-bottom:20px}.a-page--two-col .topic-name-main{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;color:#ffffff;background-color:#191919;padding:20px 20px}.a-page--two-col .topic-name-body{left:30px;margin-left:40px;position:relative;-webkit-box-flex:0;-ms-flex:0 1 100%;flex:0 1 100%;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-wrap:nowrap;flex-wrap:nowrap;color:#2e7061;margin:10px 0px}.a-page--two-col .topic-name-body span.topic-name-body-text{background:#ffffff;padding-right:10px;position:relative;z-index:2}.a-page--two-col .topic-name-body:after{content:'';border-bottom:3px solid #2e7061;position:absolute;top:50%;left:0;margin-top:-2px;width:70%;z-index:1}.a-page__follow-us{max-width:1280px;min-width:600px;width:100%;margin-left:auto;margin-right:auto}.a-page__bottom__trending{max-width:1280px;min-width:600px;width:100%;margin-left:auto;margin-right:auto;display:-webkit-box;display:-ms-flexbox;display:flex}.a-page__bottom__trending .bottom_trending_flex{-webkit-box-flex:0;-ms-flex:0 0 300px;flex:0 0 300px}.a-page.section-video .header{margin:0}.a-page.section-video .header .nav{border-bottom:1px solid #191919}.a-page.section-video .leaderboard_flex,.a-page.section-video .video_leaderboard_flex{background:#191919;padding:30px 0;margin:0}.section-name{font-family:"ProximaNovaCond-Bold";color:#000000;font-size:1.875rem;font-style:italic;letter-spacing:0.125rem;padding-top:0}.section-name--splash{padding-bottom:0}.legacy-a .a-page__content .card{padding-left:0;padding-right:0}.legacy-a .a-page__content .card__microbio{margin-top:5px}.legacy-a .a-page__content__rail .card__headlines .card__label{color:#444444}.legacy-a .a-page__content__rail .card--section .card__headlines .card__label{color:#0DBE98}.legacy-a .a-page__content .author-card__details__name{color:#F83371;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.8125rem;font-weight:normal}.legacy-a .a-page__content .author-card__microbio{color:#757575;font-style:italic}
+.card__link{color:inherit;text-decoration:none}.card{padding:0 15px;margin-bottom:15px}.card__image__wrapper{line-height:0}.card__image__credit.hide{display:none}.card.card--standard .card__headline{font-family:"ProximaNovaCond-Bold";color:#000000;font-size:1.125rem;line-height:1.25rem}.card.card--standard .card__content{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row}.card.card--standard .card__byline,.card.card--standard .card__pill-text{color:#F83371;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.8125rem;display:block}.card.card--standard .card__byline a,.card.card--standard .card__pill-text a{color:inherit;text-decoration:none}.card.card--media-top .card__content{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;display:-webkit-box;display:-ms-flexbox;display:flex}.card.card--media-top .card__image,.card.card--media-top .card__embed{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}.card.card--media-top .card__headlines{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2}.card.card--media-left .card__content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap}.card.card--media-left .card__headlines{-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2;-webkit-box-flex:1;-ms-flex:1 0;flex:1 0;max-width:100%}.card.card--media-left .card__headline:first-of-type{margin-top:0}.card.card--media-left .card__image{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;-webkit-box-flex:1;-ms-flex:1 1;flex:1 1;margin-right:15px}.card.card--media-left .card__image__src{width:100%}.card.card--left .card__description,.card.card--left .card__author,.card.card--trending .card__description,.card.card--trending .card__author{display:none}.card.card--left .card__headline,.card.card--trending .card__headline{font-family:"ProximaNovaCond-Medium", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;letter-spacing:0.25px}.card.card--left .card__content,.card.card--trending .card__content{padding-bottom:15px;border-bottom:1px solid #dbdbdb}.card.card--left .card__image__cover-bg,.card.card--trending .card__image__cover-bg{padding-bottom:100%}.card.card--left:last-child .card__content,.card.card--trending:last-child .card__content{border:none}.card.card--center{-webkit-box-flex:0;-ms-flex:0 1 50%;flex:0 1 50%}.card.card--bottom .card__headline{font-size:1.5rem;line-height:1.625rem}.card.card--twilight .card__label{color:#444444;font-family:"ProximaNovaCond-Bold";letter-spacing:0.03125em}.card.card--twilight .card__headlines{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.card.card--twilight .card__byline{margin-top:10px;-webkit-box-ordinal-group:5;-ms-flex-order:4;order:4}.card.card--twilight .card__content{-ms-flex-wrap:nowrap;flex-wrap:nowrap}.card.card--twilight .card__microbio{color:#757575;font-size:0.8125rem;line-height:1rem;letter-spacing:0.01875em;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;font-style:italic}.card.card--section-flat{margin-bottom:50px}.card.card--section-flat .card__headline{font-family:"ProximaNovaCond-Medium", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1.125rem;line-height:1.25rem}.card.card--section-flat .card__byline{color:#F83371;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.8125rem;margin-top:10px}.card.card--section-flat .card__microbio{color:#757575;font-size:0.8125rem;line-height:1rem;letter-spacing:0.01875em;margin-top:2px;overflow:hidden;text-overflow:ellipsis;width:100%;font-style:italic}.card.card--standard .card__headline{margin:10px 0 0 0}.card.card--left{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;padding:0}@media (min-width: 1024px){.card.card--left{-webkit-box-flex:1;-ms-flex:1 1 330px;flex:1 1 330px;max-width:330px}}.card.card--left .card__content{margin:0 15px;padding-bottom:20px}.card.card--left .card__image__src--secondary{display:none}@media (min-width: 1280px){.card.card--left:first-child .card__headline{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%}.card.card--left:first-child .card__content{padding-bottom:15px}.card.card--left:first-child .card__image{margin:0 0 10px 0}.card.card--left:first-child .card__image__src{display:none}.card.card--left:first-child .card__image__src--secondary{display:block}}@media (min-width: 1280px){.card.card--left.card--media-left:first-child .card__image,.card.card--left.card--media-left:first-child .card__headlines{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;max-width:100%}.card.card--left.card--media-left:first-child .card__image{height:160px}}.card.card--left.card--media-left .card__image{-webkit-box-flex:0;-ms-flex:0 0 64px;flex:0 0 64px;max-width:64px;min-height:64px}.card.card--left.card--media-left.card--sponsored .card__headline{font-family:"ProximaNovaCond-Medium", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1.125rem;line-height:1.25rem}.card.card--left.card--media-left.card--sponsored .card__pill-text{font-size:0.8125rem}.card.card--center{margin-bottom:35px}@media (min-width: 1024px){.card.card--center{-webkit-box-flex:0;-ms-flex:0 1 33.33%;flex:0 1 33.33%}}@media (min-width: 1280px){.card.card--center{-webkit-box-flex:0;-ms-flex:0 0 33.33%;flex:0 0 33.33%}}.card.card--right{-webkit-box-flex:0;-ms-flex:0 1 50%;flex:0 1 50%}@media (min-width: 1024px){.card.card--right{-webkit-box-flex:0;-ms-flex:0 1 100%;flex:0 1 100%}}.card--right.card--media-top .card__headline{font-family:"ProximaNovaCond-Bold";font-weight:bold;font-size:1.125rem;margin-top:12px}@media (min-width: 1024px) and (max-width: 1280px){.card--right.card--media-top .card__content{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row}.card--right.card--media-top .card__image{-webkit-box-flex:0;-ms-flex:0 0 128px;flex:0 0 128px}.card--right.card--media-top .card__headline{font-family:"ProximaNovaCond-Medium", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1.1875rem;margin-left:10px;margin-top:0}}.card.card--trending.card--media-left .card__image{-webkit-box-flex:0;-ms-flex:0 0 64px;flex:0 0 64px;max-width:64px}.card.card--bottom{-webkit-box-flex:0;-ms-flex:0 1 50%;flex:0 1 50%;padding:0}.card.card--bottom .card__content{padding-right:15px;padding-left:15px}.card.card--friend{-webkit-box-flex:0;-ms-flex:0 1 50%;flex:0 1 50%;margin-bottom:40px}.card.card--friend .card__byline{margin-top:10px}.card.card--danger{-webkit-box-flex:0;-ms-flex:0 1 33.33%;flex:0 1 33.33%}.card.card--danger .card__headline{font-size:1.125rem;line-height:1.25rem}@media (min-width: 767px){.card.card--danger .card__headline{font-size:1.25rem;line-height:1.375rem}}@media (min-width: 1024px){.card.card--danger .card__headline{font-size:1.375rem;line-height:1.5rem}}.card.card--danger .card__byline{margin-top:10px}.card.card--twilight{-webkit-box-flex:1;-ms-flex:1 1 100%;flex:1 1 100%;margin-bottom:0;padding:0}.card.card--twilight .card__link{-webkit-box-ordinal-group:NaN;-ms-flex-order:initial;order:initial}.card.card--twilight .card__content{padding:0 0 25px 0;margin:0 15px 25px 15px;border-bottom:1px solid #dbdbdb;min-height:120px;max-width:800px}.card.card--twilight .card__label{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;font-size:0.8125rem;margin-bottom:10px}.card.card--twilight .card__headline{-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2;font-size:1.75rem;line-height:1.875rem;letter-spacing:0.01em}.card.card--twilight .card__byline{-webkit-box-ordinal-group:5;-ms-flex-order:4;order:4}.card.card--twilight .card__pill-text{-webkit-box-ordinal-group:6;-ms-flex-order:5;order:5}.card.card--twilight .card__byline,.card.card--twilight .card__pill-text{margin-top:8px}.card.card--twilight .card__image{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;-webkit-box-flex:0;-ms-flex:0 0 212px;flex:0 0 212px}.card.card--twilight .card__description{-webkit-box-ordinal-group:4;-ms-flex-order:3;order:3;font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:1rem;line-height:1.25rem;color:#000000;margin-top:6px}.card.card--twilight .card__author{font-family:"ProximaNovaCond-Medium", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;font-size:0.8125rem;color:#787878;margin-top:8px}.card.card--twilight .card__microbio{max-width:375px;margin-top:4px}@media (min-width: 1024px){.card.card--twilight .card__microbio{max-width:400px}}@media (min-width: 1280px){.card.card--twilight .card__microbio{max-width:570px}}.card.card--twilight:last-child .card__content{border:none;padding-bottom:0}.card.card--section{-webkit-box-flex:0;-ms-flex:0 1 50%;flex:0 1 50%}@media (min-width: 1280px){.card.card--section{-webkit-box-flex:0;-ms-flex:0 1 auto;flex:0 1 auto;max-width:300px}}.card.card--section-flat{-webkit-box-flex:0;-ms-flex:0 1 33.33%;flex:0 1 33.33%}
+.card.card--splash .card__headline{font-family:"ProximaNovaCond-Bold";font-size:1.375rem;line-height:1.5rem}.card.card--splash .card__headline:hover{text-decoration:underline}.card.card--splash .card__headlines{margin-bottom:10px}.card.card--splash .card__title{letter-spacing:1px}.card.card--splash .card__byline{border-right:1px solid #666;color:#F83371;margin-right:15px;padding-right:15px;display:inline}.card.card--splash .card__byline a{color:inherit;text-decoration:none}.card.card--splash .card__byline a:hover{text-decoration:underline}.card.card--splash .card__date{color:#666}.card.card--splash .card__splash__wrapper{position:relative;width:100%}.card.card--splash .card__splash__headlines{color:#ffffff}.card.card--splash .card__splash-dek{font-family:"ProximaNova", "Helvetica Neue", "Helvetica", Roboto, Arial, sans-serif;line-height:1.0;margin-top:27px}.card.card--splash .card__splash__meta{-webkit-box-ordinal-group:6;-ms-flex-order:5;order:5;font-size:0.8125rem}.card.card--splash.card--main{padding:0;margin:0;max-width:100%}.card.card--splash.card--main .card__content{background-color:#1a1a1a}.card.card--splash-full.card--splash .card__image__wrapper{position:relative;height:0;padding-bottom:56.26%}.card.card--splash-full.card--splash .card__image__wrapper .card__image__src{position:absolute;top:0}.card.card--splash-full.card--splash-north .card__splash__headlines{background-color:#000;background-color:rgba(0,0,0,0.4);background:-webkit-linear-gradient(bottom, rgba(0,0,0,0.4), transparent 100%);background:-webkit-linear-gradient(top, rgba(0,0,0,0.4), transparent 100%);background:linear-gradient(to bottom, rgba(0,0,0,0.4), transparent 100%);top:0;bottom:inherit;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.card.card--splash-full.card--splash-south .card__splash__headlines{background-color:#000;background-color:rgba(0,0,0,0.4);background:-webkit-linear-gradient(top, rgba(0,0,0,0.4), transparent 100%);background:-webkit-linear-gradient(bottom, rgba(0,0,0,0.4), transparent 100%);background:linear-gradient(to top, rgba(0,0,0,0.4), transparent 100%);bottom:0}.card.card--splash-full.card--splash-left .card__splash__headlines{text-align:left}.card.card--splash-full.card--splash-center .card__splash__headlines{text-align:center}.card.card--splash-full.card--splash-right .card__splash__headlines{text-align:right}.card.card--splash-full .card__splash__wrapper{background-color:#1a1a1a;position:relative;overflow:hidden;display:block}.card.card--splash-full .card__splash__headlines{position:absolute;text-align:left;text-decoration:none;text-shadow:0px 0px 50px rgba(0,0,0,0.5);z-index:10;width:100%}.card.card--splash-full .card__splash-title{text-decoration:none;letter-spacing:0.125rem;margin:0 auto}.card.card--splash-full .card__splash-title--wrapper{display:inline}.card.card--splash-full.card--main .card__image__wrapper{width:100%;max-width:1440px;margin:0 auto}.card.card--splash-full.card--main .card__image__src{background-position:center top;width:100%;height:100%;position:absolute;background-repeat:no-repeat;background-size:auto 100%}.card.card--splash-full.card--main .card__splash__headlines{text-shadow:0px 0px 10px rgba(0,0,0,0.5);text-align:center}.card.card--splash-full.card--main .card__splash-title{letter-spacing:0.125rem}.card.card--splash-text .card__splash-title{color:#000000}.card.card--splash-full.card--splash-normal .card__splash-title{font-size:1.625rem}.card.card--splash-full.card--splash-normal.card--main .card__splash-title{font-size:3rem}.card.card--splash-full.card--splash-large .card__splash-title{font-size:1.875rem}.card.card--splash-full.card--splash-large.card--main .card__splash-title{font-size:3.75rem}.card.card--splash-full.card--splash-extralarge .card__splash-title{font-size:2.125rem}.card.card--splash-full.card--splash-extralarge.card--main .card__splash-title{font-size:4.5rem}.card.card--splash-fiftyfifty.card--splash-normal .card__splash-title{font-size:1.5rem}.card.card--splash-fiftyfifty.card--splash-normal.card--main .card__splash-title{font-size:3rem}.card.card--splash-fiftyfifty.card--splash-large .card__splash-title{font-size:1.875rem}.card.card--splash-fiftyfifty.card--splash-large.card--main .card__splash-title{font-size:3.75rem}.card.card--splash-fiftyfifty.card--splash-extralarge .card__splash-title{font-size:2.25rem}.card.card--splash-fiftyfifty.card--splash-extralarge.card--main .card__splash-title{font-size:4.5rem}.card.card--splash .card__headline{margin-top:12px}.card.card--splash.card--main .card__content,.card.card--splash.card--main .card__image__wrapper{height:480px;padding-bottom:0}.card.card--splash-full .card__content .card__splash__headlines{padding:15px}.card.card--splash-full .card__content .card__splash__wrapper:hover .card__splash-title--wrapper{background-image:-webkit-linear-gradient(transparent 90%, #0DBE98 50%);background-image:linear-gradient(transparent 90%, #0DBE98 50%)}.card.card--splash-full .card__image__src{width:100%}.card.card--splash-full .card__splash-title{line-height:1.0}.card.card--splash-full.card--main .card__splash-title{width:720px}.card.card--splash-full.card--main .card__image__src{background-size:auto 480px}.card.card--splash-text .card__splash-title{color:#000000}.card.card--splash-fiftyfifty .card__image__wrapper{position:relative;overflow:hidden;width:52.4796%;padding-bottom:52.4796%;height:0;display:table}.card.card--splash-fiftyfifty .card__image__wrapper:after{background-image:url(//s.m.huffpost.com/assets/10-degrees-1a1a1a-ee67e390eb69d8decfd9d36b3a93e18fac1320f34d9d489fad0862a79b79cb19.png);background-repeat:no-repeat;background-size:contain;content:'';position:absolute;height:100%;width:100%;top:0;left:0}.card.card--splash-fiftyfifty .card__splash__wrapper{position:relative;background-color:#1a1a1a;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end}.card.card--splash-fiftyfifty .card__splash__wrapper:hover .card__splash-title{background-image:-webkit-linear-gradient(transparent 90%, #0DBE98 50%);background-image:linear-gradient(transparent 90%, #0DBE98 50%)}.card.card--splash-fiftyfifty .card__splash__headlines{top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);position:absolute;width:47.5204%;left:0;padding-left:26px;z-index:10}.card.card--splash-fiftyfifty .card__splash-title{display:inline;position:relative;text-decoration:none;letter-spacing:0.125rem;line-height:1.05;background-image:-webkit-linear-gradient(transparent 90%, #fff 50%);background-image:linear-gradient(transparent 90%, #fff 50%);background-repeat:repeat-x}.card.card--splash-fiftyfifty.card--main .card__image__cover-bg{height:100%;display:table}.card.card--splash-full-fallback .card__image__src{position:absolute;top:0}.card.card--splash-full-fallback .card__image__src--main{display:none}@media (min-width: 1024px){.card.card--splash-full-fallback .card__image__src--main{display:block}}.card.card--splash-full-fallback .card__image__src--fallback{display:block}@media (min-width: 1024px){.card.card--splash-full-fallback .card__image__src--fallback{display:none}}@media (min-width: 1024px){.card.card--splash-full.card--splash-normal .card__splash-title{font-size:2.5rem;font-size:calc(8.5vw - 60px)}.card.card--splash-full.card--splash-normal.card--main .card__splash-title{font-size:4rem;font-size:calc(11vw-60px)}.card.card--splash-full.card--splash-large .card__splash-title{font-size:2.75rem;font-size:calc(10.25vw - 75px)}.card.card--splash-full.card--splash-large.card--main .card__splash-title{font-size:5rem;font-size:calc(12vw - 60px)}.card.card--splash-full.card--splash-extralarge .card__splash-title{font-size:3.5625rem;font-size:calc(12.75vw - 95px)}.card.card--splash-full.card--splash-extralarge.card--main .card__splash-title{font-size:6rem;font-size:calc(13vw - 60px)}.card.card--splash-fiftyfifty.card--splash-normal .card__splash-title{font-size:2rem;font-size:calc(8vw - 70px)}.card.card--splash-fiftyfifty.card--splash-normal.card--main .card__splash-title{font-size:4rem;font-size:calc(11vw - 60px)}.card.card--splash-fiftyfifty.card--splash-large .card__splash-title{font-size:2.125rem;font-size:calc(9vw - 70px)}.card.card--splash-fiftyfifty.card--splash-large.card--main .card__splash-title{font-size:5rem;font-size:calc(12vw - 60px)}.card.card--splash-fiftyfifty.card--splash-extralarge .card__splash-title{font-size:3rem;font-size:calc(10vw - 70px)}.card.card--splash-fiftyfifty.card--splash-extralarge.card--main .card__splash-title{font-size:6rem;font-size:calc(13vw - 60px)}.card.card--splash-full .card__content .card__splash__headlines{padding:15px 30px}.card.card--splash.card--main.card--splash-full .card__splash-title{width:980px}}@media (min-width: 1280px){.card.card--splash-full.card--splash-normal .card__splash-title{font-size:3.125rem}.card.card--splash-full.card--splash-normal.card--main .card__splash-title{font-size:5rem}.card.card--splash-full.card--splash-large .card__splash-title{font-size:3.75rem}.card.card--splash-full.card--splash-large.card--main .card__splash-title{font-size:6.25rem}.card.card--splash-full.card--splash-extralarge .card__splash-title{font-size:4.5rem}.card.card--splash-full.card--splash-extralarge.card--main .card__splash-title{font-size:7.5rem}.card.card--splash-fiftyfifty.card--splash-normal .card__splash-title{font-size:2.5rem}.card.card--splash-fiftyfifty.card--splash-normal.card--main .card__splash-title{font-size:5rem}.card.card--splash-fiftyfifty.card--splash-large .card__splash-title{font-size:3.125rem}.card.card--splash-fiftyfifty.card--splash-large.card--main .card__splash-title{font-size:6.25rem}.card.card--splash-fiftyfifty.card--splash-extralarge .card__splash-title{font-size:3.75rem}.card.card--splash-fiftyfifty.card--splash-extralarge.card--main .card__splash-title{font-size:7.5rem}.card.card--splash.card--main.card--splash-fiftyfifty .card__content{width:100%;margin:0 auto}.card.card--splash.card--main.card--splash-fiftyfifty .card__content .card__splash__wrapper{width:1280px;margin:0 auto}}
+.lobby{display:none}.zone--shaft{position:relative}@media (min-width: 1024px){.zone--shaft{margin-right:330px}}.elevator{display:none}@media (min-width: 1024px){.elevator{display:block;position:absolute;right:-330px;top:0;width:330px}}.zone--twilight .elevator,.elevator .zone--bottom{margin-top:5px}@media (max-width: 1024px){.zone--twilight .elevator{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-ms-flex-wrap:wrap;flex-wrap:wrap;max-height:600px;-webkit-box-ordinal-group:0;-ms-flex-order:-1;order:-1;display:none}.zone--twilight .elevator #trending-zone,.zone--twilight .elevator .advertisement{width:50%}}.elevator .advertisement{margin-bottom:50px}#fake-fpo{margin:0 auto;width:300px;height:371px;background:magenta}@media (min-width: 1024px){.zone--shaft.mediumDevil{min-height:630px}}
+.advertisement{display:none}
+
+</style>
+<script>
+  (function(){
+    window.HP || (window.HP = {});
+    HP.params = {"device":"desktop","is_front":true,"page_type":"a-page","entryId":null,"entryIds":["us_5923aed7e4b034684b0f367a","us_592399fbe4b094cdba56e3b3","us_59245a35e4b094cdba57f744","us_592387cbe4b03b485cb4566e","us_59243975e4b094cdba578fcd","us_59243699e4b03b485cb5072a","us_59245f23e4b03b485cb58159","us_5923a45de4b03b485cb460fb","us_59244e02e4b094cdba57cfb1","us_59236cd9e4b03b485cb45199","us_59242a16e4b094cdba5782e0","us_59243ebce4b03b485cb5122b","us_59235f47e4b034684b0f0573","us_59243873e4b034684b0fd30b","us_59243455e4b094cdba578b3d","us_59243680e4b034684b0fd116","us_592449d8e4b034684b100247","us_59243bdee4b034684b0fd6f9","us_592444d4e4b034684b0ff460","us_5924430be4b034684b0feda4","us_59243525e4b094cdba578bc6","us_592448a6e4b034684b0fff93","us_592351f8e4b034684b0eeebf","us_59241923e4b094cdba576c13","us_59242418e4b03b485cb4f683","us_59243ad7e4b034684b0fd5a1","us_59244fa4e4b094cdba57d5ad"],"noRecirc":null,"recircTag":null,"topic":null,"commentsType":null,"dontFilterViewed":false,"social":{"newsletter":{"id":"c1fb2d6bc59dbabb03c6369b73d9ece3","slug":"the-morning-email","name":"The Morning Email","display_name":"The Morning Email","custom_toaster_text":null,"provider":"cm"}},"section":{"slug":"front-page","newsletter":{"id":"c1fb2d6bc59dbabb03c6369b73d9ece3","slug":"the-morning-email","name":"The Morning Email","display_name":"The Morning Email","custom_toaster_text":null,"provider":"cm"},"department":"politics-news"},"edition":{"id":"us","newsletter":{"id":"c1fb2d6bc59dbabb03c6369b73d9ece3","slug":"the-morning-email","name":"The Morning Email","display_name":"The Morning Email","custom_toaster_text":null,"provider":"cm"},"baseURL":"/"},"gravityJSON":{"siteGuid":"95ec266b244de718b80c652a08af06fa","personalization":"2302","title":"Suggested For You"},"gravityTrending":{"siteGuid":"95ec266b244de718b80c652a08af06fa","personalization":"7685","title":"Trending From Gravity"},"gravityVideos":{"siteGuid":"95ec266b244de718b80c652a08af06fa","personalization":"7689","title":"Videos From Gravity"},"ab_config":[{"name":"outstreamStyle","id":1002,"variant_names":"control,enabled","variant_ids":"11,12","variant_distributions":"0.75,0.25"},{"name":"outstreamParents","id":1001,"variant_names":"control,enabled","variant_ids":"9,10","variant_distributions":"0.75,0.25"},{"name":"outstreamPolitics","id":1000,"variant_names":"control,enabled","variant_ids":"7,8","variant_distributions":"0.75,0.25"},{"name":"videoBelowSplash100Percent","id":92,"variant_names":"video","variant_ids":"138","variant_distributions":"1.0"},{"name":"vidibleOnHomepage2","id":91,"variant_names":"noVideo,autoPlayWithoutSound","variant_ids":"136,137","variant_distributions":"0.8,0.2"},{"name":"homepageSplash","id":1008,"variant_names":"control,splash","variant_ids":"26,27","variant_distributions":"0.5,0.5"},{"name":"mfp1829","id":1010,"variant_names":"embed,embedFlip,autoPlayWithoutSound","variant_ids":"31,32,33","variant_distributions":"0.4,0.4,0.2"}],"beacons":[{"type":"mlid","name":"masthead","nodeSelector":".bn-masthead"},{"type":"mnid","name":"editions","nodeSelector":".bn-editions"},{"type":"lnid","name":"open","nodeSelector":".bn-editions-link","clickToggle":"close"},{"type":"lnid","nameFromAttribute":"data-edition","nodeSelector":".bn-edition-item","trackPosition":true},{"type":"mnid","name":"hamburger_menu","nodeSelector":".bn-hamburger-menu"},{"type":"lnid","name":"open","nodeSelector":".bn-hamburger-button","clickToggle":"close"},{"type":"lnid","nameFromTextNode":true,"nodeSelector":".bn-hamburger-link","trackLink":true},{"type":"mnid","name":"logo","nodeSelector":".bn-logo-link"},{"type":"lnid","name":"homepage","nodeSelector":".bn-logo-image"},{"type":"mlid","nameFromAttribute":"data-zone","nodeSelector":".bn-zone-common"},{"type":"mlid","name":"right","nodeSelector":".bn-zone-right"},{"type":"mlid","name":"department_feed","nodeSelector":".bn-zone-department-feed"},{"type":"lnid","name":"zone_title","nodeSelector":".bn-zone-title","postLoaded":true},{"type":"lnid","name":"more_link","nodeSelector":".bn-zone-more-link","postLoaded":true},{"type":"mnid","nameFromAttribute":"data-card-type","nodeSelector":".bn-splash-card-main","trackLink":true,"linkFromAttribute":"data-card-link"},{"type":"mnid","nameFromAttribute":"data-card-type","nodeSelector":".bn-splash-card","parentNodeSelector":".bn-zone","trackPosition":true},{"type":"lnid","name":"image","nodeSelector":".bn-splash-image","trackLink":true,"linkFromAttribute":"data-card-link"},{"type":"lnid","name":"headline","nodeSelector":".bn-splash-headline","trackLink":true,"linkFromAttribute":"data-card-link"},{"type":"mnid","nameFromAttribute":"data-card-type","nodeSelector":".bn-card","trackLink":true,"trackPosition":true,"linkFromAttribute":"data-link","parentNodeSelector":".bn-zone"},{"type":"mlid","name":"sticky-nav","nodeSelector":".bn-nav-sticky"},{"type":"mnid","name":"follow","nodeSelector":".bn-social-list"},{"type":"lnid","nameFromAttribute":"data-button-name","nodeSelector":".bn-follow-item","trackPosition":true},{"type":"mlid","name":"entry_header","nodeSelector":".bn-entry-header"},{"type":"mnid","name":"department_tag","nodeSelector":".bn-department-tag"},{"type":"lnid","nameFromAttribute":"data-linkname","nodeSelector":".bn-department-link","trackLink":true},{"type":"mnid","name":"byline","nodeSelector":".bn-byline"},{"type":"lnid","name":"author_image","nodeSelector":".bn-author-image"},{"type":"lnid","name":"author_name","nodeSelector":".bn-author-name"},{"type":"lnid","name":"twitter_follow","nodeSelector":".bn-author-twitter"},{"type":"mlid","name":"top_media","nodeSelector":".bn-top-media"},{"type":"mlid","name":"entry_text","nodeSelector":".bn-entry-text"},{"type":"mnid","name":"citation","nodeSelector":".bn-content-list-text"},{"type":"mnid","name":"entry_image","nodeSelector":".bn-content-list-image"},{"type":"lnid","nameFromTextNode":true,"nodeSelector":"a","excludeSelector":".bn-instream-share-link","parentNodeSelector":".bn-entry-text","trackPosition":true,"trackLink":true},{"type":"mnid","name":"share","nodeSelector":".bn-share"},{"type":"lnid","nameFromAttribute":"data-share-name","nodeSelector":".bn-instream-share-link","disableClickHandler":true},{"type":"lnid","name":"open","nodeSelector":".bn-read-more-link"},{"type":"mlid","name":"entry_footer","nodeSelector":".bn-entry-footer"},{"type":"mnid","name":"correction","nodeSelector":".bn-corrections"},{"type":"lnid","name":"contact","nodeSelector":".bn-correction-link"},{"type":"mnid","name":"topic_tag","nodeSelector":".bn-tag-cloud"},{"type":"lnid","nameFromAttribute":"data-slug","nodeSelector":".bn-tag","trackPosition":true,"trackLink":true},{"type":"mlid","name":"left_rail","nodeSelector":".bn-left-rail"},{"type":"lnid","nameFromAttribute":"data-share-name","nodeSelector":".bn-share-item","disableClickHandler":true},{"type":"mlid","name":"right_rail","nodeSelector":".bn-right-rail"},{"type":"mnid","nodeSelector":".bn-recirc","nameFromAttribute":"data-recirc-name","postLoaded":true},{"type":null,"nodeSelector":".bn-recirc-item","trackPosition":true,"parentNodeSelector":".bn-recirc","trackLink":true,"linkFromAttribute":"data-recirc-link","postLoaded":true},{"type":"mnid","name":"trending","nodeSelector":".bn-trending"},{"type":"mnid","name":"suggested-trending","nodeSelector":".bn-suggested-trending"},{"type":"mnid","name":"bottom-trending","nodeSelector":".bn-bottom-trending"},{"type":"lnid","name":"headline","nodeSelector":".bn-card-headline","trackLink":true,"linkFromAttribute":"data-card-link","postLoaded":true},{"type":"lnid","name":"image","nodeSelector":".bn-card-image","trackLink":true,"linkFromAttribute":"data-card-link","postLoaded":true},{"type":"lnid","name":"description","nodeSelector":".bn-card-description","trackLink":true,"linkFromAttribute":"data-card-link","postLoaded":true},{"type":"lnid","name":"author_name","nodeSelector":".bn-card-author"},{"type":"mnid","name":"follow","nodeSelector":".bn-follow-us"},{"type":"lnid","name":"subscribe","nodeSelector":".bn-signup-submit"},{"type":"mlid","name":"below_entry","nodeSelector":".bn-below-entry"},{"type":"mnid","name":"taboola","nodeSelector":".bn-taboola","trackPosition":true},{"type":"mlid","name":"footer","nodeSelector":".bn-footer"},{"type":"mnid","name":"corp-links","nodeSelector":".bn-footer-links"},{"type":"lnid","nameFromTextNode":true,"nodeSelector":".bn-footer-link-item","trackLink":true},{"type":"mnid","name":"slideshow-preview","nodeSelector":".bn-slideshow-preview"},{"type":"mlid","name":"extra-content","nodeSelector":".bn-slideshow-preview"},{"type":"mlid","name":"slideshow-header","nodeSelector":".bn-slideshow-header"},{"type":"mlid","name":"slideshow-body","nodeSelector":".bn-slideshow-body"},{"type":"lnid","name":"open","nodeSelector":".bn-slideshow-open","extra":{"dL_sDpt":"gallery"}},{"type":"lnid","name":"close","nodeSelector":".bn-close"},{"type":"mnid","name":"nav","nodeSelector":".bn-slideshow-nav"},{"type":"lnid","name":"prev","nodeSelector":".bn-slideshow-prev","extra":{"dL_sDpt":"gallery"}},{"type":"lnid","name":"next","nodeSelector":".bn-slideshow-next","extra":{"dL_sDpt":"gallery"}},{"type":"mlid","name":"comments-pane","nodeSelector":".bn-comments-pane"},{"type":"mnid","name":"comments","nodeSelector":".bn-comments-container"},{"type":"mlid","name":"modal","nodeSelector":".bn-modal","postLoaded":true},{"type":"mnid","name":"body","nodeSelector":".bn-modal-body","postLoaded":true},{"type":"lnid","name":"submit","nodeSelector":".bn-submit"},{"type":"lnid","name":"cancel","nodeSelector":".bn-cancel"},{"type":"mlid","name":"highlight","nodeSelector":".bn-highlight"},{"type":"mlid","name":"overlay","nodeSelector":".bn-overlay"},{"type":"mnid","name":"snapchat","nodeSelector":".bn-snapchat"},{"type":"lnid","name":"qr","nodeSelector":".bn-snapchat-qr"},{"type":"lnid","nameFromTextNode":true,"nodeSelector":".bn-card-link-text","trackLink":true}]};
+  }());
+</script>
+
+<script>
+  // critical desktop
+  window.microAjax=function(e,t){if(this.getRequest=function(){return!!window.XMLHttpRequest&&new XMLHttpRequest},this.postBody=arguments[2]||"",this.callbackFunction=t,this.url=e,this.request=this.getRequest(),this.request){var n=this.request;n.onreadystatechange=function(){4==n.readyState&&t(n.responseText)},""!==this.postBody?(n.open("POST",e,!0),n.setRequestHeader("X-Requested-With","XMLHttpRequest"),n.setRequestHeader("Content-type","application/x-www-form-urlencoded"),n.setRequestHeader("Connection","close")):n.open("GET",e,!0),n.send(this.postBody)}},window.HP=window.HP||{},HP.modules=HP.modules||{},HP.functions=HP.functions||{},HP.elements=HP.elements||{},HP.params=HP.params||{},HP.modules.ads={banner:"",square:"",promotion:""},window.HP.functions.getQueryStringParameter=function(e,t){var n=new RegExp("([?|&])"+t+"=(.*?)(&|$)","i"),i=e.match(n)||["","",void 0];return i[2]},window.HP.functions.isEmpty=function(e){for(var t in e)if(e.hasOwnProperty(t))return!1;return!0},window.MW=HP,window.Mobileweb=HP.modules,function(){window.HP.functions.getCookie=function(e){var t,n,i=e+"=",r=document.cookie.split(";"),o=0;for(n=r.length;o<n;o++)if(t=r[o],t=t.trim(),0===t.indexOf(i))return t.substring(i.length,t.length);return""},window.HP.functions.setCookie=function(e,t,n){if(n=n||{},void 0!==e){var i=void 0===t||null===t||""===t;i&&(t=0);var r=e+"="+t;void 0!==n.domain&&(r+="; domain="+n.domain),void 0!==n.expires?(n.expires===parseInt(n.expires,10)&&(n.expires=new Date(n.expires).toString()),r+="; expires="+n.expires):i&&(r+="; expires=Thu, 01 Jan 1970 00:00:01 GMT"),void 0!==n.path&&(r+="; path="+n.path),document.cookie=r}},window.HP.functions.cookiesEnabled=function(){return window.document.cookie="huffposttestcookie",window.document.cookie.indexOf("huffposttestcookie")!==-1}}(),HP.modules.storage=function(){var e,t,n,i,r,o,s,a,l,c;return o=function(){try{var e="test";return a=window.localStorage,a.setItem(e,"1"),a.removeItem(e),!0}catch(e){return!1}}(),c=function(e){if("string"==typeof e)try{return JSON.parse(e)}catch(t){return e||void 0}},l=function(e){return JSON.stringify(e)},s=function(){},o?(e=function(e){return c(a.getItem(e))},t=function(e,t){try{a.setItem(e,l(t))}catch(e){}},n=function(e){a.removeItem(e)},i=function(){a.clear()},r=function(e){return void 0!==a.getItem(e)},e("lastPurge")<=1430758101108&&(i(),t("lastPurge",Date.now()))):(e=t=n=i=s,r=function(){return!1}),{enabled:o,get:e,set:t,remove:n,clear:i,has:r}}(),HP.functions.loadCSS=function(e,t,n){var i=window.document.createElement("link"),r=window.document.getElementsByTagName("script");t=t||r[r.length-1],i.rel="stylesheet",i.href=e,i.media="only x",t.parentNode.insertBefore(i,t),setTimeout(function(){i.media=n||"all"})},HP.functions.loadFont=function(){function e(e){var t=document.getElementsByTagName("head")[0],n=document.createElement("style");n.appendChild(document.createTextNode(e)),t.appendChild(n)}var t,n;return n=HP.modules.storage,t=function(t,i,r,o){var s=!1,a=setTimeout(function(){void 0!==r&&e(r.after),s=!0},o||500);void 0!==r&&e(r.before),n.get("file-"+t)===i&&n.get("font-"+t)?(e(n.get("font-"+t)),void 0!==r&&e(r.after),clearTimeout(a)):(n.remove("file-"+t),n.remove("font-"+t),microAjax(i,function(o){n.set("file-"+t,i),n.set("font-"+t,o),s||(e(o),void 0!==r&&e(r.after),clearTimeout(a))}))}}(),window.waitForGlobal=function(e,t,n){var i,r="function"==typeof e?e:function(){return!!window[e]};r()?t():i=setInterval(function(){r()&&(t(),clearInterval(i))},n||50)},window.modulousQueue=function(){function e(e){setTimeout(function(){try{e()}catch(e){}},0)}var t=[],n=!1;return{add:function(i){!n&&t.push(i),n&&e(i)},runAll:function(){var i=0;for(n=!0;i<t.length;i++)e(t[i]);t=[]}}}(),setTimeout(function(){waitForGlobal("jQuery",modulousQueue.runAll)},5e3),function(){function e(e){var t="",n=window.location.href,i=window.HP.functions.getQueryStringParameter(window.location.href,"ab"),r=window.HP.functions.getQueryStringParameter(window.location.href,"g");return void 0===i||void 0===r||i!==e||n.indexOf("staging")===-1&&n.indexOf("local")===-1&&n.indexOf("design")===-1||l[i]&&l[i].variants[r]&&(t=r),t}function t(e,t){if(l[e]){var n=l[e].id,i=l[e].variants[t];void 0===i&&console.error("Could not find AB test variant for value",t),a(e,n,t,i)}else console.error("Could not find AB test",e)}function n(e){var t=Object.keys(l[e].variants),n=l[e].distribution;return n?i(t,n):t[Math.floor(Math.random()*t.length)]}function i(e,t){for(var n=0,i=Math.random(),r=0;r<e.length;r++)if(n+=t[r],n=+n.toFixed(2),i<=n)return e[r]}function r(e){if(localStorage.getItem("abTest-"+e))return JSON.parse(localStorage.getItem("abTest-"+e)).value}function o(e,t){p[e]=t;var n=localStorage["abTest-"+e];("undefined"==typeof n||n.date+f<Date.now())&&d.set("abTest-"+e,{value:t,date:Date.now()})}function s(e){var t=r(e);return void 0===t&&(t=n(e),o(e,t)),t}function a(e,t,n,i){c.push([t,i].join(":")),u.push([e,n].join(":")),o(e,n),window.HP.devMode&&console.log("AB test",e,"set to",n)}var l={},c=[],u=[],d=window.HP.modules.storage,p={};window.HP.modules.AB={set:t,testMap:function(){return c},userGroupTestMap:function(){var e=Object.keys(l).map(function(e){var t=l[e].id,n=l[e].variants[s(e)];if(void 0!==t&&void 0!==n)return t+":"+n});return e},namedTestMap:function(){return u},registerTest:function(e,t,n,i){if(i=i||{},!(i.platforms&&i.platforms.indexOf(HP.params.device)===-1||i.editions&&i.editions.indexOf(HP.params.edition.id)===-1))return l[e]={id:t,variants:n},i.distribution&&(l[e].distribution=i.distribution),l[e]},sample:function(i,r){if(l[i]){var o=r;if(p[i])return p[i];var s=e(i);if(""!==s)o=s;else if(d.enabled||void 0===r){var a="abTest-"+i,c=d.get(a);o=c&&Date.now()<c.date+f?c.value:n(i)}return t(i,o),o}},sampleAnonymous:function(e,t){var n="anonymous-"+e;if(p[n])return p[n];var i=t[Math.floor(Math.random()*t.length)];if(d.enabled){var r="abTest-"+n,o=d.get(r);o&&Date.now()<o.date+f&&(i=parseInt(o.value,10))}return a(n,e,i,i),i}};var f=6048e5,h=HP.modules.AB;HP.params&&HP.params.ab_config&&HP.params.ab_config.forEach(function(e){var t={},n=e.variant_ids.split(","),i=e.variant_distributions.split(",").map(function(e){return parseFloat(e)});e.variant_names.split(",").forEach(function(e,i){t[e]=parseInt(n[i])}),h.registerTest(e.name,parseInt(e.id),t,{distribution:i})})}(),function(){var e=window.HP.modules.AB;e.registerTest("valenciaGroup",1003,{experiment:13,control:14}),e.registerTest("bingKeywordsNew",1005,{no_module:21,with_search:22,reserve:23},{distribution:[.2,.2,.6]}),e.registerTest("dynamicPreview",1022,{enabled:76,control:77})}(),HP.modules.smarten=function(){function e(e){return e.replace(/(^|[-\u2014\s(\["])'/g,"$1\u2018").replace(/'/g,"\u2019").replace(/(^|[-\u2014/\[(\u2018\s])"/g,"$1\u201c").replace(/"/g,"\u201d").replace(/--/g,"\u2014")}function t(e){n(document.querySelectorAll(e))}function n(t){var n=[].reduce.call(t,function(e,t){return e.concat([].slice.call(t.querySelectorAll(":not(script):not(style)")))},[]),i=n.filter(function(e){return e.hasChildNodes()}).reduce(function(e,t){return e.concat([].slice.call(t.childNodes))},[]).filter(function(e){return e.nodeType===document.TEXT_NODE});i.forEach(function(t){t.textContent=e(t.textContent)})}return{selector:t,nodeList:n}}(),function(){window.getVidiblePlayer=function(e){var t=window.fbq,n=window.vidible;e.addEventListener(n.VIDEO_PAUSE,function(){t&&t("trackCustom","Vidible Pause")}),e.addEventListener(n.VIDEO_PLAY,function(){t&&t("trackCustom","Vidible Play")})}}();
+</script>
+<script>
+  window.HP.functions.loadFont('ProximaNovaCond', 'http://s.m.huffpost.com/assets/fonts/proxima-nova-condensed-00413bf3c406df7a1c9b6218d92f311ced4bc12564bede72e457e7963bf16f44.css', {
+    before: "h1,h2,h3,h4,h5{visibility:hidden;}",
+    after: "h1,h2,h3,h4,h5{visibility:visible;}"
+  }, 1000);
+</script>
+<script>
+  window.HP.functions.loadFont('ProximaNova', 'http://s.m.huffpost.com/assets/fonts/proxima-nova-ecb8d1091c7381b106b2e5ef8cb8b1f39236ba05d1d26e5479c511a5d10abcd2.css', {
+    before: "h1,h2,h3,h4,h5{visibility:hidden;}",
+    after: "h1,h2,h3,h4,h5{visibility:visible;}"
+  }, 500);
+</script>
+
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","publisher":{"@type":"Organization","name":"HuffPost","logo":{"@type":"ImageObject","url":"https://s.m.huffpost.com/assets/hp-amp-101ecf8047b044dce5f3122c63056162580f1c26994c73ae90dbd1c5d1545a71.gif","width":600,"height":60}},"headline":"HuffPost - Breaking News, U.S. and World News","description":"Read the latest headlines, news stories, and opinion from Politics, Entertainment, Lifestyle, blogs, and more.","inLanguage":"en-US","url":"http://www.huffingtonpost.com/"}
+
+</script>
+
+<!-- Ad Header -->
+<script type="text/javascript">
+window.adTechCallback = function() {
+  
+  
+  window.adSetAdURL('http://' + (document.domain || 'www.huffingtonpost.com') + (location.port?':'+location.port:'') + '/_uac/2014adpage.html');
+  window.tacProp={tags:"kvpagetype=atf:front:homepage;kvvert=premium"};
+  window.tacProp.tags += ( (typeof window.HPAds!=="undefined") && (typeof window.HPAds.adtech_client_side_inf=="function") ) ? window.HPAds.adtech_client_side_inf() : "";
+  window.tacProp.tags += ";kvrefd="+window.location.href;
+  if (typeof window.adSetOthAT=="function") window.adSetOthAT(window.tacProp.tags);
+  
+  window.adSetMOAT('1');
+  
+};
+</script>
+
+<script src="http://o.aolcdn.com/ads/adsWrapper.js" async></script>
+<script>
+  
+  window.waitForGlobal('adSetAdURL', function(){
+  
+    window.adTechCallback();
+  
+  });
+  
+</script>
+
+
+<script>
+var _HPJS = (function (_mod) {
+  "use strict";
+
+  _mod.loadJS = function (src, options) {
+    var options = options || {};
+    var ref = window.document.getElementsByTagName("script")[0];
+    var script = window.document.createElement("script");
+    script.src = src;
+    script.async = options.async;
+    script.defer = options.defer;
+    ref.parentNode.insertBefore(script, ref);
+    return script;
+  }
+
+  _mod.loadJSLater = function (url, timeout) {
+    var ran = false;
+    var loader = function () {
+      if (ran) {
+        return;
+      }
+      ran = true;
+      _mod.loadJS(url, {async:true});
+    }
+    window.addEventListener ?
+      window.addEventListener("load",loader,false) :
+      window.attachEvent && window.attachEvent("onload",loader);
+    // in case the load event never fires
+    setTimeout(loader, timeout || 15000);
+  }
+
+  _mod.waitForGlobal = function(identifier, cb, poll) {
+    var test = typeof identifier === "function" ? identifier : function() { return !!window[identifier]; };
+    var interval;
+    if(test()) {
+      cb();
+    } else {
+      interval = setInterval(function(){
+        if(test()) {
+          cb();
+          clearInterval(interval);
+        }
+      }, poll || 50);
+    }
+  };
+
+  return _mod;
+
+}(_HPJS || {}));
+</script>
+</head>
+<body class="desktop a-page front-page a-page--front " data-locale="en_US">
+<div id="recaptcha-container"></div>
+
+<div class="advertisement asset_inserts">
+<script type="text/javascript">
+waitForGlobal("adSetMOAT", function() {
+  adSetMOAT("1");
+});
+</script>
+</div>
+
+
+
+<div class="main">
+
+<!-- Header -->
+<div class="header__placeholder"></div>
+<header class="header js-header">
+<div class="header__content bn-masthead">
+<div class="header__content-left">
+<div class="header__hamburger bn-hamburger-menu">
+<div class="header__hamburger-link header--transition bn-hamburger-button js-hamburger-link"></div>
+</div>
+</div>
+<div class="header__logo">
+<a class="logo bn-logo-link" href="/">
+<img alt="The Huffington Post" class="logo__img header--transition bn-logo-image" src="http://s.m.huffpost.com/assets/HuffPostHero-d783f680fb974e80346bdfa145131d058e596e1d32f791981875aa481702c770.svg">
+</a>
+</div>
+<div class="header__content-right">
+<div class="header__social-list bn-social-list">
+<a class="bn-follow-item header--transition header__social-list__item header__social-list__item--facebook" data-button-name="facebook" href="http://facebook.com/HuffPost" target="_blank"></a>
+<a class="bn-follow-item header--transition header__social-list__item header__social-list__item--twitter" data-button-name="twitter" href="https://twitter.com/HuffPost" target="_blank"></a>
+<a class="bn-follow-item header--transition header__social-list__item header__social-list__item--instagram" data-button-name="instagram" href="http://instagram.com/HuffPost" target="_blank"></a>
+<a class="bn-follow-item header--transition header__social-list__item header__social-list__item--snapchat js-snapchat-follow" data-button-name="snapchat" href="" target="_blank"></a>
+</div>
+<div class="header__editions bn-editions js-editions-button bn-editions-link bn-multiple">
+<span class="header__editions__label">EDITION</span>
+<div class="header__editions__edition us">US</div>
+</div>
+</div>
+</div>
+</header>
+<div class="dropdowns">
+<nav class="dropdown hamburger js-hamburger-menu bn-masthead dropdown--closed">
+<div class="hamburger__container js-hamburger-container dropdown__container bn-hamburger-menu">
+<div class="hamburger__wrapper">
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/" target="_top">
+NEWS
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://highline.huffingtonpost.com/" target="_blank">
+Highline
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/science" target="_top">
+Science
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/education" target="_top">
+Education
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/weird-news" target="_top">
+Weird News
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/business" target="_top">
+Business
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://testkitchen.huffingtonpost.com/" target="_blank">
+TestKitchen
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/technology" target="_top">
+Tech
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/college" target="_top">
+College
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/media" target="_top">
+Media
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/section/politics" target="_top">
+POLITICS
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://elections.huffingtonpost.com/pollster" target="_blank">
+Pollster
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/heroin-epidemic" target="_top">
+Heroin Epidemic
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/donald-trump" target="_top">
+Donald Trump
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/racial-inequality" target="_top">
+Racial Inequality
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/us-senate" target="_top">
+US Senate
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://elections.huffingtonpost.com/2016/results/president" target="_blank">
+Election Results
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/huffpost-hill" target="_top">
+HuffPost Hill
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/police-brutality" target="_top">
+Police Brutality
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/hate-crimes" target="_top">
+Hate Crimes
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/supreme-court" target="_top">
+Supreme Court
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/congress" target="_top">
+Congress
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/so-that-happened" target="_top">
+So That Happened
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/dept/entertainment" target="_top">
+ENTERTAINMENT
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/entertainment" target="_top">
+Entertainment
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/comedy" target="_top">
+Comedy
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/celebrity" target="_top">
+Celebrity
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/tv" target="_top">
+TV
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/arts" target="_top">
+Arts + Culture
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/backspace" target="_top">
+Backspace
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/movies" target="_top">
+Movies
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/dept/lifestyle" target="_top">
+LIFESTYLE
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/healthy-living" target="_top">
+Healthy Living
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/travel" target="_top">
+Travel
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/style" target="_top">
+Style
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/taste" target="_top">
+Taste
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/huffpost-home" target="_top">
+Home
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/relationships" target="_top">
+Relationships
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/sleep-wellness" target="_top">
+Sleep
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/dept/voices" target="_top">
+VOICES
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/black-voices" target="_top">
+Black Voices
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/latino-voices" target="_top">
+Latino Voices
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/women" target="_top">
+Women
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/fifty" target="_top">
+Fifty
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/queer-voices" target="_top">
+Queer Voices
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/parents" target="_top">
+Parents
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="hamburger__block partial-block">
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/dept/impact" target="_top">
+IMPACT
+</a>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/reclaim" target="_top">
+Reclaim
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/project-zero" target="_top">
+Project Zero
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/good-news" target="_top">
+Good News
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="/section/video" target="_top">
+VIDEO
+</a>
+</div>
+<div class="hamburger__section">
+<a class="hamburger__section-title bn-hamburger-link" href="http://www.huffingtonpost.com/newsletters" target="_top">
+NEWSLETTERS
+</a>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<h3 class="hamburger__section-title">
+FEATURED
+</h3>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/own" target="_top">
+OWN
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/paving-the-way" target="_top">
+Paving the Way
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/power-of-humanity" target="_top">
+The Power Of Humanity
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/retire-well" target="_top">
+Retire Well
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/sleep-wellness" target="_top">
+Sleep + Wellness
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/purpose-profit" target="_top">
+What's Working: Purpose + Profit
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/theworldpost" target="_top">
+WorldPost
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="full-block hamburger__block">
+<div class="hamburger__section">
+<h3 class="hamburger__section-title">
+MORE
+</h3>
+<div class="hamburger__section-content">
+<ul class="hamburger__list">
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/books" target="_top">
+Books
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://www.huffingtonpost.com/news/candidate-confessional-podcast/" target="_top">
+Candidate Confessional
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/college" target="_top">
+College
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/crime" target="_top">
+Crime
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/divorce" target="_top">
+Divorce
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://www.huffingtonpost.com/news/la-dolce-vita/" target="_top">
+Dolce Vita
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="http://www.huffingtonpost.com/news/eat-the-press/" target="_top">
+Eat the Press
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/education" target="_top">
+Education
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/green" target="_top">
+Green
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/outspeak" target="_top">
+Outspeak
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/religion" target="_top">
+Religion
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/topic/small-business" target="_top">
+Small Business
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/sports" target="_top">
+Sports
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/teen" target="_top">
+Teen
+</a>
+</li>
+<li class="hamburger__list-item">
+<a class="hamburger__link bn-hamburger-link" href="/section/weddings" target="_top">
+Weddings
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="blank hamburger__block">
+</div>
+
+</div>
+</div>
+</nav>
+
+<div class="dropdown editions js-dropdown-editions bn-masthead dropdown--closed">
+<div class="dropdown__editions-container bn-editions dropdown__container">
+<div class="dropdown__editions-inner-container js-editions-container">
+<ul class="dropdown__editions-column">
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="ar" href="http://www.huffpostarabi.com/?country=AR">Arabi</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="au" href="http://www.huffingtonpost.com.au/?country=AU">Australia</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="br" href="http://www.huffpostbrasil.com/?country=BR">Brasil</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="ca" href="http://www.huffingtonpost.ca/?country=CA">Canada</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="de" href="http://www.huffingtonpost.de/?country=DE">Deutschland</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="es" href="http://www.huffingtonpost.es/?country=ES">España</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="fr" href="http://www.huffingtonpost.fr/?country=FR">France</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="gr" href="http://www.huffingtonpost.gr/?country=GR">Greece</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="in" href="http://www.huffingtonpost.in/?country=IN">India</a>
+</li>
+</ul>
+<ul class="dropdown__editions-column">
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="it" href="http://www.huffingtonpost.it/?country=IT">Italia</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="jp" href="http://www.huffingtonpost.jp/?country=JP">Japan</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="kr" href="http://www.huffingtonpost.kr/?country=KR">Korea</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="mg" href="http://www.huffpostmaghreb.com/?country=MG">Maghreb</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="mx" href="http://www.huffingtonpost.com.mx/?country=MX">México</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="qc" href="http://quebec.huffingtonpost.ca/?country=QC">Québec</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="za" href="http://www.huffingtonpost.co.za/?country=ZA">South Africa</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="uk" href="http://www.huffingtonpost.co.uk/?country=UK">United Kingdom</a>
+</li>
+<li class="dropdown__editions-list-item">
+<a class="dropdown__editions-item js-edition-item bn-edition-item" data-edition="us" href="http://www.huffingtonpost.com/?country=US">United States</a>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="overlays">
+<div class="snapchat-overlay bn-overlay hidden">
+<div class="snapchat-overlay__container bn-snapchat">
+<div class="snapchat-overlay__container__close bn-close">
+<div class="snapchat-overlay__container__close__icon"></div>
+<span>Close</span>
+</div>
+<div class="snapchat-overlay__container__qr bn-snapchat-qr">
+<img src="http://s.m.huffpost.com/assets/snapchat-QR-a98b071227601c8bd787d668be38d7220002e41178fe4db1577c894b942534b3.png">
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="main" role="main">
+
+<div class="a-page__splash">
+<div class="bn-zone-common zone zone--main" data-zone="main">
+<div class="zone__content bn-zone">
+<div class="bn-splash-card-main card card--main card--splash card--splash-center card--splash-extralarge card--splash-fiftyfifty card--splash-south" data-card-link="us_5923aed7e4b034684b0f367a" data-card-type="main_splash_fiftyfifty">
+<div class="card__content">
+<a class="card__splash__wrapper js-card-image bn-splash-image" href="http://www.huffingtonpost.com/entry/salman-abedi-manchester-attack_us_5923aed7e4b034684b0f367a?ncid=inblnkushpmg00000009&amp;ncid=inblnkushpmg00000009" target="">
+<div class="card__splash__headlines js-splash">
+<h2 class="card__splash-title">
+POLICE IDENTIFY BOMBER
+</h2>
+</div>
+<div class="card__image__wrapper">
+<div class="card__image__cover-bg"><div class="card__image__src" style="background-image: url(http://img.huffingtonpost.com/asset/960_720,prog,quality_75/592464b9200000290016e682.jpeg?cache=ctmx0bwyj9);"></div>
+</div><div class="card__image__credit hide js-card-image-credit">Getty Images</div>
+</div>
+</a>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+<div class="advertisement leaderboard_flex">
+<style type="text/css"> #topnav_margin_btm { margin: 0 !important; } </style>
+<div id="ad_leaderboard_flex" class="ad_wrapper_"><div id="adtech_leaderboard_flex" class="adtech-adspot ad-leaderboard_flex"></div>
+<script>
+(function() {
+  var adsDiv = document.querySelector('#adtech_leaderboard_flex');
+  adsDiv.removeAttribute('id');
+  window.modulousQueue.add(function(){
+    
+      
+        waitForGlobal('htmlAdWH', function() {
+          adsDiv.reloadCount = 0;
+          var recoveryId = '';
+          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;
+          var adId = needsRecovery ? recoveryId : '93317943';
+          try { adId = io_c3sd.ads["leaderboard_flex"] || adId; } catch(e) {} 
+          
+          // Override adtech_call_type
+          var delivery_type = "" || "";
+          var adtech_call_type = "";
+          switch (delivery_type) {
+            case "by_request": adtech_call_type = "ajax"; break;
+            case "text": adtech_call_type = "text"; break;
+            case "iframe": adtech_call_type = "iframe"; break;
+            case "iframe_proxy": adtech_call_type = "f"; break;
+            case "collapsed": adtech_call_type = "fc"; break;
+            default: adtech_call_type = "fc"; break;
+          }
+
+          
+          
+          
+          var args = ['lb', 'lb'
+          ];
+          
+          
+
+          if(needsRecovery) {
+            waitForGlobal('readyToRecover', function() {
+              adsDiv = document.querySelector('.leaderboard_flex');
+              //htmlAdWH(adId, args[0], args[1], "fileless", adsDiv);
+            });
+          } else {
+            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);
+          }
+          
+          if (typeof debugadcode == 'function') { debugadcode('AdTech', {placement: 'leaderboard_flex', mnid: adId}, adsDiv); }
+          
+          jQuery(document).on('reloadAd', function(ev, elem) {
+            if (elem && !elem.contains(adsDiv)) { return; }
+            var refreshRate = 1;  
+            adsDiv.reloadCount++;
+            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === 'function') { adsReloadAd(adsDiv); }
+          });
+          
+          adSetInView('0');
+        }); // wFG:htmlAdWH
+      
+    
+  });
+}());
+</script></div>
+<script type="text/javascript">if (typeof HPAds !== 'undefined') { 
+HPAds.ad_onload('div[id^="ad_leaderboard_flex"] iframe','HPAds.ad_uac_onload_handler(\' iframe[class^="uac_"]\',this,\'bottom_ad_border_div\',10)');
+}</script>
+</div>
+
+<div class="a-page__content a-page__content--separator">
+<div class="bn-zone-common zone zone--left" data-zone="left">
+<div class="zone__title">
+<h2 class="zone__title__text">TOP STORIES</h2>
+</div>
+<div class="zone__content bn-zone">
+<div class="bn-card card card--left card--media-left card--standard" data-card-type="top_stories">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_592387cbe4b03b485cb4566e" href="http://www.huffingtonpost.com/entry/manchester-bombing-victims_us_592387cbe4b03b485cb4566e?ncid=inblnkushpmg00000009" target="">These Are The Lives Cut Tragically Short In Manchester</a>
+</h2>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_592387cbe4b03b485cb4566e" href="http://www.huffingtonpost.com/entry/manchester-bombing-victims_us_592387cbe4b03b485cb4566e?ncid=inblnkushpmg00000009">"A true ray of sunshine [who] loved everyone for who they were."
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_592387cbe4b03b485cb4566e" href="http://www.huffingtonpost.com/entry/manchester-bombing-victims_us_592387cbe4b03b485cb4566e?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="96" src="http://img.huffingtonpost.com/asset/96_96,quality_75/59243a4d1600002100ddc54f.png" width="96">
+<img class="card__image__src card__image__src--secondary" src="http://img.huffingtonpost.com/asset/432_243,quality_75/59243a4d1600002100ddc54f.png">
+<div class="card__image__credit hide js-card-image-credit">Twitter/DarrenDuffy8</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--left card--media-left card--standard" data-card-type="top_stories">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59243975e4b094cdba578fcd" href="http://www.huffingtonpost.com/entry/ivankas-maternity-leave-plan-is-a-cruel-joke_us_59243975e4b094cdba578fcd?ncid=inblnkushpmg00000009" target="">Ivanka’s Maternity Leave Plan Is A Cruel Joke</a>
+</h2>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59243975e4b094cdba578fcd" href="http://www.huffingtonpost.com/entry/ivankas-maternity-leave-plan-is-a-cruel-joke_us_59243975e4b094cdba578fcd?ncid=inblnkushpmg00000009">A Republican president proposing paid leave, as Trump does in his budget, should be welcome news. It isn't.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59243975e4b094cdba578fcd" href="http://www.huffingtonpost.com/entry/ivankas-maternity-leave-plan-is-a-cruel-joke_us_59243975e4b094cdba578fcd?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="96" src="http://img.huffingtonpost.com/asset/96_96,quality_75/59243ad81600002100ddc556.jpeg?cache=l7frfsnmo7" width="96">
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--left card--media-left card--standard" data-card-type="top_stories">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59243699e4b03b485cb5072a" href="http://www.huffingtonpost.com/entry/sir-roger-moore-dead-dies_us_59243699e4b03b485cb5072a?ncid=inblnkushpmg00000009" target="">'James Bond' Actor Sir Roger Moore Dead At 89</a>
+</h2>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59243699e4b03b485cb5072a" href="http://www.huffingtonpost.com/entry/sir-roger-moore-dead-dies_us_59243699e4b03b485cb5072a?ncid=inblnkushpmg00000009">Moore's family announced his death with a statement on his Twitter account.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59243699e4b03b485cb5072a" href="http://www.huffingtonpost.com/entry/sir-roger-moore-dead-dies_us_59243699e4b03b485cb5072a?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="96" src="http://img.huffingtonpost.com/asset/96_96,quality_75/5924428e200000290016e5b7.jpeg?cache=ckrvkgwdmb" width="96">
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--left card--media-left card--standard" data-card-type="top_stories">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59245f23e4b03b485cb58159" href="http://www.huffingtonpost.com/entry/pete-souza-obamas-trumps-hand-holding_us_59245f23e4b03b485cb58159?ncid=inblnkushpmg00000009" target="">Obama Photographer Reminds The Trumps How Couples Hold Hands</a>
+</h2>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59245f23e4b03b485cb58159" href="http://www.huffingtonpost.com/entry/pete-souza-obamas-trumps-hand-holding_us_59245f23e4b03b485cb58159?ncid=inblnkushpmg00000009">Can you feel the burn?
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59245f23e4b03b485cb58159" href="http://www.huffingtonpost.com/entry/pete-souza-obamas-trumps-hand-holding_us_59245f23e4b03b485cb58159?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="96" src="http://img.huffingtonpost.com/asset/96_96,quality_75/582647ed1800002d00503a6a.jpeg?cache=mmcmj6jjyp" width="96">
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--left card--media-left card--standard" data-card-type="top_stories">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_5923a45de4b03b485cb460fb" href="http://www.huffingtonpost.com/entry/ariana-grande-broken-concert-explosion_us_5923a45de4b03b485cb460fb?k8l&amp;ncid=inblnkushpmg00000009&amp;ncid=inblnkushpmg00000009" target="">Ariana Grande 'Broken' After British Concert Horror</a>
+</h2>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_5923a45de4b03b485cb460fb" href="http://www.huffingtonpost.com/entry/ariana-grande-broken-concert-explosion_us_5923a45de4b03b485cb460fb?k8l&amp;ncid=inblnkushpmg00000009&amp;ncid=inblnkushpmg00000009">The rest of the singer's Dangerous Woman Tour is postponed "indefinitely."
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_5923a45de4b03b485cb460fb" href="http://www.huffingtonpost.com/entry/ariana-grande-broken-concert-explosion_us_5923a45de4b03b485cb460fb?k8l&amp;ncid=inblnkushpmg00000009&amp;ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="96" src="http://img.huffingtonpost.com/asset/96_96,quality_75/5923ab5d1600002100ddc480.jpeg?cache=tcjtfefcdu" width="96">
+</div>
+</a>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="bn-zone-common zone zone--center zone--shaft" data-zone="center">
+<div class="zone__content bn-zone">
+<div class="bn-splash-card card card--center card--media-top card--splash card--splash-center card--splash-full card--splash-large card--splash-south" data-card-type="splash_card_full">
+<div class="card__content">
+<a class="bn-splash-image card__splash__wrapper js-card-image" data-card-link="us_592399fbe4b094cdba56e3b3" href="http://www.huffingtonpost.com/entry/trump-budget-2018_us_592399fbe4b094cdba56e3b3?ncid=inblnkushpmg00000009" target="">
+<div class="card__splash__headlines js-splash">
+<h2 class="card__splash-title">
+<div class="card__splash-title--wrapper">TRUMP'S POISON PROPOSAL
+</div></h2>
+</div>
+<div class="card__image__wrapper">
+<img class="card__image__src" height="526" src="http://img.huffingtonpost.com/asset/936_526,prog,quality_75/59239ab81600002100ddc456.jpeg?cache=xprlr9tq3d" width="936">
+<div class="card__image__credit hide js-card-image-credit">Kevin Lamarque / Reuters</div>
+</div>
+</a>
+<div class="card__headlines bn-card-headlines">
+<h2 class="card__headline">
+<a class="card__link bn-card-headline" data-card-link="us_592399fbe4b094cdba56e3b3" href="http://www.huffingtonpost.com/entry/trump-budget-2018_us_592399fbe4b094cdba56e3b3?ncid=inblnkushpmg00000009" target="">White House Plans To Gut Safety Net In Favor Of The Military</a>
+</h2>
+
+</div>
+<div class="card__splash__meta">
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/arthur-delaney">Arthur Delaney</a></span>
+</div>
+
+</div>
+</div>
+</div>
+<div class="bn-splash-card card card--center card--media-top card--splash card--splash-center card--splash-full card--splash-large card--splash-south" data-card-type="splash_card_full">
+<div class="card__content">
+<a class="bn-splash-image card__splash__wrapper js-card-image" data-card-link="us_59245a35e4b094cdba57f744" href="http://www.huffingtonpost.com/entry/john-brennan-cia-intelligence-trump-associates-russia-fbi-investigation_us_59245a35e4b094cdba57f744?ncid=inblnkushpmg00000009" target="">
+<div class="card__splash__headlines js-splash">
+<h2 class="card__splash-title">
+<div class="card__splash-title--wrapper">EX-CIA CHIEF BURIES TRUMP
+</div></h2>
+</div>
+<div class="card__image__wrapper">
+<img class="card__image__src" height="526" src="http://img.huffingtonpost.com/asset/936_526,prog,quality_75/59245a922000003200cb2346.jpeg?cache=yq53qeskmw" width="936">
+<div class="card__image__credit hide js-card-image-credit">SAUL LOEB via Getty Images</div>
+</div>
+</a>
+<div class="card__headlines bn-card-headlines">
+<h2 class="card__headline">
+<a class="card__link bn-card-headline" data-card-link="us_59245a35e4b094cdba57f744" href="http://www.huffingtonpost.com/entry/john-brennan-cia-intelligence-trump-associates-russia-fbi-investigation_us_59245a35e4b094cdba57f744?ncid=inblnkushpmg00000009" target="">John Brennan Says Campaign Associates Did Have Contact With Russian Officials</a>
+</h2>
+
+</div>
+<div class="card__splash__meta">
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/jessica-schulberg">Jessica Schulberg</a></span>
+</div>
+
+<span class="card__date" datetime="1495556749386"></span>
+</div>
+</div>
+</div>
+
+</div>
+<div class="elevator bn-zone-right">
+
+<div class="advertisement right_rail_flex">
+<script type="text/javascript">
+  if ( "function" === typeof(adSetSyncDelay) ) {
+    adSetSyncDelay('125');
+  }
+</script>
+<div id="ad_right_rail_flex" class="ad_wrapper_top"><div id="adtech_right_rail_flex" class="adtech-adspot ad-right_rail_flex"></div>
+<script>
+(function() {
+  var adsDiv = document.querySelector('#adtech_right_rail_flex');
+  adsDiv.removeAttribute('id');
+  window.modulousQueue.add(function(){
+    
+      
+        waitForGlobal('htmlAdWH', function() {
+          adsDiv.reloadCount = 0;
+          var recoveryId = '';
+          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;
+          var adId = needsRecovery ? recoveryId : '93314234';
+          try { adId = io_c3sd.ads["right_rail_flex"] || adId; } catch(e) {} 
+          
+          // Override adtech_call_type
+          var delivery_type = "" || "";
+          var adtech_call_type = "";
+          switch (delivery_type) {
+            case "by_request": adtech_call_type = "ajax"; break;
+            case "text": adtech_call_type = "text"; break;
+            case "iframe": adtech_call_type = "iframe"; break;
+            case "iframe_proxy": adtech_call_type = "f"; break;
+            case "collapsed": adtech_call_type = "fc"; break;
+            default: adtech_call_type = "f"; break;
+          }
+
+          
+          
+          
+          var args = ['RR', 'RR'
+          ];
+          
+          
+
+          if(needsRecovery) {
+            waitForGlobal('readyToRecover', function() {
+              adsDiv = document.querySelector('.right_rail_flex');
+              //htmlAdWH(adId, args[0], args[1], "fileless", adsDiv);
+            });
+          } else {
+            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);
+          }
+          
+          if (typeof debugadcode == 'function') { debugadcode('AdTech', {placement: 'right_rail_flex', mnid: adId}, adsDiv); }
+          
+          jQuery(document).on('reloadAd', function(ev, elem) {
+            if (elem && !elem.contains(adsDiv)) { return; }
+            var refreshRate = 1;  
+            adsDiv.reloadCount++;
+            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === 'function') { adsReloadAd(adsDiv); }
+          });
+          
+          adSetInView('0');
+        }); // wFG:htmlAdWH
+      
+    
+  });
+}());
+</script></div>
+</div>
+
+<div id="trending-zone"></div>
+</div>
+</div>
+
+<div class="bn-zone-common zone zone--bottom zone--shaft" data-zone="bottom">
+<div class="zone__title">
+<h2 class="zone__title__text">TOP VIDEOS</h2>
+</div>
+<div class="zone__content bn-zone">
+<div class="bn-card card card--bottom card--media-top card--standard" data-card-type="video_cards">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59244e02e4b094cdba57cfb1" href="http://www.huffingtonpost.com/entry/survivors-of-manchester-attack-speak-out_us_59244e02e4b094cdba57cfb1?ncid=inblnkushpmg00000009" target="">Survivors Of Manchester Attack Speak Out</a>
+</h2>
+
+</div>
+<a class="bn-card-image card__image card__link js-card-image js-embed-flip untreated" data-card-link="us_59244e02e4b094cdba57cfb1" href="http://www.huffingtonpost.com/entry/survivors-of-manchester-attack-speak-out_us_59244e02e4b094cdba57cfb1?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper sigil sigil--bottom-right sigil--bottom-zone sigil--solid sigil--square sigil--video-valencia">
+<img class="card__image__src" height="378" src="http://img.huffingtonpost.com/asset/672_378,quality_75/59244f782000004700cb22f9.png?cache=lvz6bwtlbc" width="672">
+</div>
+</a>
+<script class="js-embed-template" type="text/template">
+<div class="vdb_58cff72fd85a100b9992c11256000e19e4b0e4e194b84b31 vdb_player" vdb_params="m.embeded=cms_video_plugin_us.edit.huffpost.net&amp;m.fwkeyvalues=sponsorship%3DSPONSORSHIP_NAME&amp;m.fwsitesection=composer&amp;m.onLoad=getVidiblePlayer&amp;m.playertype=html">
+<script async src="//delivery.vidible.tv/jsonp/pid=58cff72fd85a100b9992c112/vid=59244a8483b51f03db2f7d66/56000e19e4b0e4e194b84b31.js"></scr+ipt>
+</div>
+
+</script>
+
+</div>
+</div>
+<div class="bn-card card card--bottom card--media-top card--standard" data-card-type="video_cards">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59236cd9e4b03b485cb45199" href="http://www.huffingtonpost.com/entry/president-trump-is-the-flip-flopper-in-chief_us_59236cd9e4b03b485cb45199?ncid=inblnkushpmg00000009" target="">President Trump Is The Flip-Flopper-In-Chief</a>
+</h2>
+
+</div>
+<a class="bn-card-image card__image card__link js-card-image js-embed-flip untreated" data-card-link="us_59236cd9e4b03b485cb45199" href="http://www.huffingtonpost.com/entry/president-trump-is-the-flip-flopper-in-chief_us_59236cd9e4b03b485cb45199?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper sigil sigil--bottom-right sigil--bottom-zone sigil--solid sigil--square sigil--video-valencia">
+<img class="card__image__src" height="378" src="http://img.huffingtonpost.com/asset/672_378,quality_75/59242dac200000290016e55f.jpeg?cache=yirwyhripy" width="672">
+</div>
+</a>
+<script class="js-embed-template" type="text/template">
+<div class="vdb_58cff72fd85a100b9992c11256000e19e4b0e4e194b84b31 vdb_player" vdb_params="m.embeded=cms_video_plugin_us.edit.huffpost.net&amp;m.fwkeyvalues=sponsorship%3DSPONSORSHIP_NAME&amp;m.fwsitesection=composer&amp;m.onLoad=getVidiblePlayer&amp;m.playertype=html">
+<script async src="//delivery.vidible.tv/jsonp/pid=58cff72fd85a100b9992c112/vid=592364f685eb426399e56010/56000e19e4b0e4e194b84b31.js"></scr+ipt>
+</div>
+
+</script>
+
+</div>
+</div>
+
+</div>
+<div class="elevator bn-zone-right">
+</div>
+</div>
+
+<div class="bn-zone-common zone zone--friend zone--shaft" data-zone="friend">
+<div class="zone__title">
+<h2 class="zone__title__text">WHAT’S HOT</h2>
+</div>
+<div class="zone__content bn-zone">
+<div class="bn-splash-card card card--friend card--media-top card--splash card--splash-center card--splash-full card--splash-normal card--splash-south" data-card-type="splash_card_full">
+<div class="card__content">
+<a class="bn-splash-image card__splash__wrapper js-card-image" data-card-link="us_592351f8e4b034684b0eeebf" href="http://www.huffingtonpost.com/entry/monica-lewinsky-bids-roger-ailes-goodbye-in-scathing-nyt-column_us_592351f8e4b034684b0eeebf?ncid=inblnkushpmg00000009" target="">
+<div class="card__splash__headlines js-splash">
+<h2 class="card__splash-title">
+<div class="card__splash-title--wrapper">LEWINSKY TORCHES AILES
+</div></h2>
+</div>
+<div class="card__image__wrapper">
+<img class="card__image__src" height="526" src="http://img.huffingtonpost.com/asset/936_526,prog,quality_75/59235ee32000003200cb20fc.jpeg?cache=guml2bbwz7" width="936">
+<div class="card__image__credit hide js-card-image-credit">Jared Siskin via Getty Images</div>
+</div>
+</a>
+<div class="card__headlines bn-card-headlines">
+<h2 class="card__headline">
+<a class="card__link bn-card-headline" data-card-link="us_592351f8e4b034684b0eeebf" href="http://www.huffingtonpost.com/entry/monica-lewinsky-bids-roger-ailes-goodbye-in-scathing-nyt-column_us_592351f8e4b034684b0eeebf?ncid=inblnkushpmg00000009" target="">Monica Lewinsky: Fox News' Dream 'Was My Nightmare'</a>
+</h2>
+
+</div>
+<div class="card__splash__meta">
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/emma-gray">Emma Gray</a></span>
+</div>
+
+</div>
+</div>
+</div>
+<div class="bn-splash-card card card--friend card--media-top card--splash card--splash-center card--splash-full card--splash-normal card--splash-south" data-card-type="splash_card_full">
+<div class="card__content">
+<a class="bn-splash-image card__splash__wrapper js-card-image" data-card-link="us_59241923e4b094cdba576c13" href="http://www.huffingtonpost.com/entry/first-confirmed-manchester-victim-met-ariana-grande-and-was-devoted-fan_us_59241923e4b094cdba576c13?ncid=inblnkushpmg00000009" target="">
+<div class="card__splash__headlines js-splash">
+<h2 class="card__splash-title">
+<div class="card__splash-title--wrapper">'SO EXCITED TO SEE U'
+</div></h2>
+</div>
+<div class="card__image__wrapper">
+<img class="card__image__src" height="526" src="http://img.huffingtonpost.com/asset/936_526,prog,quality_75/592434802000004700cb225c.png?cache=8fbndlfyqe" width="936">
+<div class="card__image__credit hide js-card-image-credit">Instagram</div>
+</div>
+</a>
+<div class="card__headlines bn-card-headlines">
+<h2 class="card__headline">
+<a class="card__link bn-card-headline" data-card-link="us_59241923e4b094cdba576c13" href="http://www.huffingtonpost.com/entry/first-confirmed-manchester-victim-met-ariana-grande-and-was-devoted-fan_us_59241923e4b094cdba576c13?ncid=inblnkushpmg00000009" target="">First Confirmed Manchester Victim Met Ariana Grande And Was Devoted Fan</a>
+</h2>
+
+</div>
+<div class="card__splash__meta">
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/ron-dicker">Ron Dicker</a></span>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="elevator bn-zone-right">
+</div>
+</div>
+
+<div class="bn-zone-common zone zone--danger zone--shaft" data-zone="danger">
+<div class="zone__content bn-zone">
+<div class="bn-card card card--danger card--media-top card--standard" data-card-type="standard_entry">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59242418e4b03b485cb4f683" href="http://www.huffingtonpost.com/entry/katy-perry-blames-taylor-swift-for-all-their-bad-blood_us_59242418e4b03b485cb4f683?ncid=inblnkushpmg00000009" target="">Katy Perry Finally Explains Taylor Swift Feud: 'She Started It'</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/bill-bradley">Bill Bradley</a></span>
+</div>
+
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59242418e4b03b485cb4f683" href="http://www.huffingtonpost.com/entry/katy-perry-blames-taylor-swift-for-all-their-bad-blood_us_59242418e4b03b485cb4f683?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/59242812200000290016e553.jpeg?cache=xp7ucbv3yp" width="336">
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--danger card--media-top card--standard" data-card-type="standard_entry">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59243ad7e4b034684b0fd5a1" href="http://www.huffingtonpost.com/entry/pippa-middleton-wedding-something-old_us_59243ad7e4b034684b0fd5a1?ncid=inblnkushpmg00000009" target="">Pippa Middleton's 'Something Old' Was A Sweet Tribute To Sister Kate</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/carly-ledbetter">Carly Ledbetter</a></span>
+</div>
+
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59243ad7e4b034684b0fd5a1" href="http://www.huffingtonpost.com/entry/pippa-middleton-wedding-something-old_us_59243ad7e4b034684b0fd5a1?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/59243ef22000003a0016e599.jpeg?cache=hcz1ighzic" width="336">
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--danger card--media-top card--standard" data-card-type="standard_entry">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59244fa4e4b094cdba57d5ad" href="http://www.huffingtonpost.com/entry/ryan-getzlaf-gofundme-slur_us_59244fa4e4b094cdba57d5ad?t5&amp;ncid=inblnkushpmg00000009" target="">Bizarre GoFundMe Launched After Hockey Star Uses Homophobic Slur</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/noah-michelson">Noah Michelson</a></span>
+</div>
+
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59244fa4e4b094cdba57d5ad" href="http://www.huffingtonpost.com/entry/ryan-getzlaf-gofundme-slur_us_59244fa4e4b094cdba57d5ad?t5&amp;ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/59246a6c2000003a0016e69e.jpeg?cache=gcbspswdxf" width="336">
+</div>
+</a>
+
+</div>
+</div>
+
+</div>
+<div class="elevator bn-zone-right">
+</div>
+</div>
+
+</div>
+<div class="a-page__content">
+<div class="bn-zone-common zone zone--shaft zone--twilight" data-zone="twilight">
+<div class="zone__title">
+<h2 class="zone__title__text">IN THE NEWS</h2>
+</div>
+<div class="zone__content bn-zone">
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">GREEN</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59242a16e4b094cdba5782e0" href="http://www.huffingtonpost.com/entry/elon-musk-trump-paris-climate-pact_us_59242a16e4b094cdba5782e0?9us&amp;ncid=inblnkushpmg00000009" target="">Elon Musk 'Cautiously Optimistic' After Talking Paris Climate Pact With Trump</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/chris-dangelo">Chris D&#39;Angelo</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59242a16e4b094cdba5782e0" href="http://www.huffingtonpost.com/entry/elon-musk-trump-paris-climate-pact_us_59242a16e4b094cdba5782e0?9us&amp;ncid=inblnkushpmg00000009">The billionaire business magnate has said the U.S. should remain in the agreement.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59242a16e4b094cdba5782e0" href="http://www.huffingtonpost.com/entry/elon-musk-trump-paris-climate-pact_us_59242a16e4b094cdba5782e0?9us&amp;ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/5924385b2000003a0016e57c.jpeg" width="336">
+<div class="card__image__credit hide js-card-image-credit">Kevin Lamarque / Reuters</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">BLACK VOICES</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59243ebce4b03b485cb5122b" href="http://www.huffingtonpost.com/entry/mitch-landrieu-speech-confederate-monuments_us_59243ebce4b03b485cb5122b?ncid=inblnkushpmg00000009" target="">Watch The Speech That Should End The Confederate Monuments Debate For Good</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/christopher-mathias">Christopher Mathias</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59243ebce4b03b485cb5122b" href="http://www.huffingtonpost.com/entry/mitch-landrieu-speech-confederate-monuments_us_59243ebce4b03b485cb5122b?ncid=inblnkushpmg00000009">New Orleans Mayor Mitch Landrieu's address makes it even harder to defend statues honoring the "Cult of The Lost Cause."
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59243ebce4b03b485cb5122b" href="http://www.huffingtonpost.com/entry/mitch-landrieu-speech-confederate-monuments_us_59243ebce4b03b485cb5122b?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/592440c21600002100ddc578.png" width="336">
+<div class="card__image__credit hide js-card-image-credit">YouTube</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">THE WORLDPOST</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59235f47e4b034684b0f0573" href="http://www.huffingtonpost.com/entry/manchester-ariana-grande-explosion_us_59235f47e4b034684b0f0573?ncid=inblnkushpmg00000009" target="">ISIS Claims Responsibility For Attack At Ariana Grande Concert</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/mollie-reilly">Mollie Reilly</a></span>, <span class="bn-card-author"><a href="/author/nick-visser">Nick Visser</a></span>, <span class="bn-card-author"><a href="/author/eline-gordts">Eline Gordts</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59235f47e4b034684b0f0573" href="http://www.huffingtonpost.com/entry/manchester-ariana-grande-explosion_us_59235f47e4b034684b0f0573?ncid=inblnkushpmg00000009">A suspected suicide bomber killed 22 people and himself in Manchester, England. At least 59 people were injured.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59235f47e4b034684b0f0573" href="http://www.huffingtonpost.com/entry/manchester-ariana-grande-explosion_us_59235f47e4b034684b0f0573?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/592373232000004700cb2138.jpeg?cache=66aigmacg7" width="336">
+<div class="card__image__credit hide js-card-image-credit">Press Association</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">POLITICS</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59243873e4b034684b0fd30b" href="http://www.huffingtonpost.com/entry/trump-reflects-on-amazing-visit-to-a-holocaust-museum-he-barely-visited_us_59243873e4b034684b0fd30b?ncid=inblnkushpmg00000009" target="">Trump Reflects On 'Amazing' Visit To A Holocaust Museum He Barely Visited</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/carol-kuruvilla">Carol Kuruvilla</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59243873e4b034684b0fd30b" href="http://www.huffingtonpost.com/entry/trump-reflects-on-amazing-visit-to-a-holocaust-museum-he-barely-visited_us_59243873e4b034684b0fd30b?ncid=inblnkushpmg00000009">The president left an "odd" note in the guest book at Israel's Yad Vashem.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59243873e4b034684b0fd30b" href="http://www.huffingtonpost.com/entry/trump-reflects-on-amazing-visit-to-a-holocaust-museum-he-barely-visited_us_59243873e4b034684b0fd30b?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/5924558b2000003200cb2317.jpeg?cache=veqiowiyu0" width="336">
+<div class="card__image__credit hide js-card-image-credit">Raoul Wootliff / Twitter</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">ENTERTAINMENT</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59243455e4b094cdba578b3d" href="http://www.huffingtonpost.com/entry/stephen-colbert-burns-the-white-house-over-its-latest-typo_us_59243455e4b094cdba578b3d?ncid=inblnkushpmg00000009" target="">Colbert Won’t Ever Have ‘Lasting Peach’ With Trump After This Burn</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/bill-bradley">Bill Bradley</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59243455e4b094cdba578b3d" href="http://www.huffingtonpost.com/entry/stephen-colbert-burns-the-white-house-over-its-latest-typo_us_59243455e4b094cdba578b3d?ncid=inblnkushpmg00000009">Things aren't peachy for Donald Trump.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59243455e4b094cdba578b3d" href="http://www.huffingtonpost.com/entry/stephen-colbert-burns-the-white-house-over-its-latest-typo_us_59243455e4b094cdba578b3d?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/592435c22000004700cb2261.png?cache=wvzzflsa3h" width="336">
+<div class="card__image__credit hide js-card-image-credit">CBS</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59243680e4b034684b0fd116" href="http://www.huffingtonpost.com/entry/carlos-mariotti-hand-in-stomach_us_59243680e4b034684b0fd116?ncid=inblnkushpmg00000009" target="">Man Whose Hand Was Sewed Into Stomach Is On The Road To Recovery</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/david-moye">David Moye</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59243680e4b034684b0fd116" href="http://www.huffingtonpost.com/entry/carlos-mariotti-hand-in-stomach_us_59243680e4b034684b0fd116?ncid=inblnkushpmg00000009">"I could feel my fingers wiggling inside my body.”
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59243680e4b034684b0fd116" href="http://www.huffingtonpost.com/entry/carlos-mariotti-hand-in-stomach_us_59243680e4b034684b0fd116?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/592438002000003200cb226e.png" width="336">
+<div class="card__image__credit hide js-card-image-credit">Barcroft</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">POLITICS</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_592449d8e4b034684b100247" href="http://www.huffingtonpost.com/entry/trump-budget-environmental-protection-agency_us_592449d8e4b034684b100247?ncid=inblnkushpmg00000009" target="">White House Still Trying To Gut EPA</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/kate-sheppard">Kate Sheppard</a></span> and <span class="bn-card-author"><a href="/author/alexander-c-kaufman">Alexander C. Kaufman</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_592449d8e4b034684b100247" href="http://www.huffingtonpost.com/entry/trump-budget-environmental-protection-agency_us_592449d8e4b034684b100247?ncid=inblnkushpmg00000009">The president's proposal would cut the agency's budget by nearly a third.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_592449d8e4b034684b100247" href="http://www.huffingtonpost.com/entry/trump-budget-environmental-protection-agency_us_592449d8e4b034684b100247?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/592451782000003200cb2301.jpeg" width="336">
+<div class="card__image__credit hide js-card-image-credit">Getty Images</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">BLACK VOICES</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59243bdee4b034684b0fd6f9" href="http://www.huffingtonpost.com/entry/6-year-old-st-louis-video-violence_us_59243bdee4b034684b0fd6f9?xyw&amp;ncid=inblnkushpmg00000009" target="">6-Year-Old Makes Heartbreaking Plea To St. Louis: 'Stop Killing Each Other'</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/taryn-finley">Taryn Finley</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59243bdee4b034684b0fd6f9" href="http://www.huffingtonpost.com/entry/6-year-old-st-louis-video-violence_us_59243bdee4b034684b0fd6f9?xyw&amp;ncid=inblnkushpmg00000009">"I’m scared to die and I don’t want nothing to happen to my family."
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59243bdee4b034684b0fd6f9" href="http://www.huffingtonpost.com/entry/6-year-old-st-louis-video-violence_us_59243bdee4b034684b0fd6f9?xyw&amp;ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/592451621600002200ddc5c7.png" width="336">
+<div class="card__image__credit hide js-card-image-credit">Facebook</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">POLITICS</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_592444d4e4b034684b0ff460" href="http://www.huffingtonpost.com/entry/donald-trump-budget-social-security-disability_us_592444d4e4b034684b0ff460?ncid=inblnkushpmg00000009" target="">Trump Plans To Betray His Pledge Not To Cut Social Security</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/arthur-delaney">Arthur Delaney</a></span> and <span class="bn-card-author"><a href="/author/daniel-marans">Daniel Marans</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_592444d4e4b034684b0ff460" href="http://www.huffingtonpost.com/entry/donald-trump-budget-social-security-disability_us_592444d4e4b034684b0ff460?ncid=inblnkushpmg00000009">But cuts to Social Security disability do not count, according to Trump's budget director.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_592444d4e4b034684b0ff460" href="http://www.huffingtonpost.com/entry/donald-trump-budget-social-security-disability_us_592444d4e4b034684b0ff460?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/59245ae41600002200ddc600.jpeg?cache=sgj7kxbxwp" width="336">
+<div class="card__image__credit hide js-card-image-credit">Mohamad Torokman / Reuters</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--contributor card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_5924430be4b034684b0feda4" href="http://www.huffingtonpost.com/entry/what-putin-and-trump-believe_us_5924430be4b034684b0feda4?ncid=inblnkushpmg00000009" target="">What Putin And Trump Believe</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/nadya-tolokonnikova">Nadya Tolokonnikova</a></span>, Contributor
+<div class="card__microbio">
+Activist, founder of Pussy Riot
+</div>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_5924430be4b034684b0feda4" href="http://www.huffingtonpost.com/entry/what-putin-and-trump-believe_us_5924430be4b034684b0feda4?ncid=inblnkushpmg00000009">The leaders' philosophies are remarkably similar, and empty.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_5924430be4b034684b0feda4" href="http://www.huffingtonpost.com/entry/what-putin-and-trump-believe_us_5924430be4b034684b0feda4?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/59245c931600002200ddc603.jpeg?cache=h7yyctk1rb" width="336">
+<div class="card__image__credit hide js-card-image-credit">Spencer Platt via Getty Images</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">THE WORLDPOST</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_59243525e4b094cdba578bc6" href="http://www.huffingtonpost.com/entry/manchester-blood-banks-donors_us_59243525e4b094cdba578bc6?ncid=inblnkushpmg00000009" target="">Manchester Blood Banks Receive 'Overwhelming' Number Of Donors Following Attack</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/hayley-miller">Hayley Miller</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_59243525e4b094cdba578bc6" href="http://www.huffingtonpost.com/entry/manchester-blood-banks-donors_us_59243525e4b094cdba578bc6?ncid=inblnkushpmg00000009">By Tuesday morning, NHS Blood and Transport said they had "all the blood required for hospital patients."
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_59243525e4b094cdba578bc6" href="http://www.huffingtonpost.com/entry/manchester-blood-banks-donors_us_59243525e4b094cdba578bc6?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/592448b12000004700cb22c4.png?cache=vmkr8rkwre" width="336">
+<div class="card__image__credit hide js-card-image-credit">Press Association</div>
+</div>
+</a>
+
+</div>
+</div>
+<div class="bn-card card card--media-left card--standard card--twilight" data-card-type="in_the_news">
+<div class="card__content">
+<div class="card__headlines">
+<div class="card__label">
+<span class="card__label__text">BLACK VOICES</span>
+</div>
+<h2 class="card__headline js-card-headline" headline_index="0">
+<a class="card__link bn-card-headline" data-card-link="us_592448a6e4b034684b0fff93" href="http://www.huffingtonpost.com/entry/richard-collins-iii-honored-at-commencement-with-graduation-gown-on-empty-chair_us_592448a6e4b034684b0fff93?ncid=inblnkushpmg00000009" target="">Richard Collins III Honored At Commencement With Graduation Gown On Empty Chair</a>
+</h2>
+<div class="card__byline">
+By
+<span class="bn-card-author"><a href="/author/jenna-amatulli">Jenna Amatulli</a></span>
+</div>
+
+<div class="card__description js-card-headline">
+<a class="card__link bn-card-description" headline_index="0" data-card-link="us_592448a6e4b034684b0fff93" href="http://www.huffingtonpost.com/entry/richard-collins-iii-honored-at-commencement-with-graduation-gown-on-empty-chair_us_592448a6e4b034684b0fff93?ncid=inblnkushpmg00000009">The Bowie State University student was fatally stabbed on Saturday in a possible hate crime.
+</a></div>
+</div>
+<a class="bn-card-image card__image card__link js-card-image" data-card-link="us_592448a6e4b034684b0fff93" href="http://www.huffingtonpost.com/entry/richard-collins-iii-honored-at-commencement-with-graduation-gown-on-empty-chair_us_592448a6e4b034684b0fff93?ncid=inblnkushpmg00000009" target="">
+<div class="card__image__wrapper">
+<img class="card__image__src" height="189" src="http://img.huffingtonpost.com/asset/336_189,quality_75/592454fa1600002200ddc5d4.jpeg?cache=vy32ulksyo" width="336">
+<div class="card__image__credit hide js-card-image-credit">Twitter</div>
+</div>
+</a>
+
+</div>
+</div>
+
+</div>
+<div class="elevator bn-zone-right">
+</div>
+</div>
+
+</div>
+
+<div class="advertisement leaderboard_flex_middle">
+<div id="adtech_leaderboard_flex_middle" class="adtech-adspot ad-leaderboard_flex_middle"></div>
+<script>
+(function() {
+  var adsDiv = document.querySelector('#adtech_leaderboard_flex_middle');
+  adsDiv.removeAttribute('id');
+  window.modulousQueue.add(function(){
+    
+      
+        waitForGlobal('htmlAdWH', function() {
+          adsDiv.reloadCount = 0;
+          var recoveryId = '';
+          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;
+          var adId = needsRecovery ? recoveryId : '963863270';
+          try { adId = io_c3sd.ads["leaderboard_flex_middle"] || adId; } catch(e) {} 
+          
+          // Override adtech_call_type
+          var delivery_type = "default" || "";
+          var adtech_call_type = "";
+          switch (delivery_type) {
+            case "by_request": adtech_call_type = "ajax"; break;
+            case "text": adtech_call_type = "text"; break;
+            case "iframe": adtech_call_type = "iframe"; break;
+            case "iframe_proxy": adtech_call_type = "f"; break;
+            case "collapsed": adtech_call_type = "fc"; break;
+            default: adtech_call_type = "fc"; break;
+          }
+
+          
+          adSetInView('1');
+          
+          var args = ['lb', 'lb'
+          ];
+          
+          
+
+          if(needsRecovery) {
+            waitForGlobal('readyToRecover', function() {
+              adsDiv = document.querySelector('.leaderboard_flex_middle');
+              //htmlAdWH(adId, args[0], args[1], "fileless", adsDiv);
+            });
+          } else {
+            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);
+          }
+          
+          if (typeof debugadcode == 'function') { debugadcode('AdTech', {placement: 'leaderboard_flex_middle', mnid: adId}, adsDiv); }
+          
+          jQuery(document).on('reloadAd', function(ev, elem) {
+            if (elem && !elem.contains(adsDiv)) { return; }
+            var refreshRate = 1;  
+            adsDiv.reloadCount++;
+            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === 'function') { adsReloadAd(adsDiv); }
+          });
+          
+          adSetInView('0');
+        }); // wFG:htmlAdWH
+      
+    
+  });
+}());
+</script>
+</div>
+
+<div class="a-page__content bn-zone-department-feed" id="categories"></div>
+<script class="right_rail_300x250_lower_script-template" type="text/template">
+
+<div class="advertisement right_rail_300x250_lower">
+<div id="ad_right_rail_300x250_lower" class="ad_wrapper_"><div id="adtech_right_rail_300x250_lower" class="adtech-adspot ad-right_rail_300x250_lower"></div>
+<script>
+(function() {
+  var adsDiv = document.querySelector('#adtech_right_rail_300x250_lower');
+  adsDiv.removeAttribute('id');
+  window.modulousQueue.add(function(){
+    
+      
+        waitForGlobal('htmlAdWH', function() {
+          adsDiv.reloadCount = 0;
+          var recoveryId = '';
+          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;
+          var adId = needsRecovery ? recoveryId : '93436393';
+          try { adId = io_c3sd.ads["right_rail_300x250_lower"] || adId; } catch(e) {} 
+          
+          // Override adtech_call_type
+          var delivery_type = "" || "";
+          var adtech_call_type = "";
+          switch (delivery_type) {
+            case "by_request": adtech_call_type = "ajax"; break;
+            case "text": adtech_call_type = "text"; break;
+            case "iframe": adtech_call_type = "iframe"; break;
+            case "iframe_proxy": adtech_call_type = "f"; break;
+            case "collapsed": adtech_call_type = "fc"; break;
+            default: adtech_call_type = "f"; break;
+          }
+
+          adSetInView('D');
+          
+          
+          var args = ['RR', 'RR'
+          ];
+          
+          
+
+          if(needsRecovery) {
+            waitForGlobal('readyToRecover', function() {
+              adsDiv = document.querySelector('.right_rail_300x250_lower');
+              //htmlAdWH(adId, args[0], args[1], "fileless", adsDiv);
+            });
+          } else {
+            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);
+          }
+          
+          if (typeof debugadcode == 'function') { debugadcode('AdTech', {placement: 'right_rail_300x250_lower', mnid: adId}, adsDiv); }
+          
+          jQuery(document).on('reloadAd', function(ev, elem) {
+            if (elem && !elem.contains(adsDiv)) { return; }
+            var refreshRate = 1;  
+            adsDiv.reloadCount++;
+            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === 'function') { adsReloadAd(adsDiv); }
+          });
+          
+          adSetInView('0');
+        }); // wFG:htmlAdWH
+      
+    
+  });
+}());
+</scr+ipt></div>
+</div>
+
+</script>
+<script class="above_right_rail_300x250_lower_script-template" type="text/template">
+
+<div class="above_right_rail_300x250_lower advertisement">
+<style>
+ .fpo__text a {
+  text-decoration: none;
+  color: #000000;
+  box-shadow: inset 0 -2px 0 #0DBE98;
+}
+  
+.fpo__text a:hover {
+     background-color: rgba(13,190,152,.7);
+    padding-top: 2px;
+    padding-bottom: 0;
+    border-bottom: none;
+    transition: background-color 350ms ease-out;
+    box-shadow: none; 
+ }
+</style>
+<div class="fpo">
+<div class="fpo__title zone__title">
+  <h2 class="zone__title__text" style="background: #F83371; font-size: 17px;">GOT A TIP?</h2>
+</div>
+<p class="fpo__text" style="text-align: left; font-size: 19px; line-height: 28px; padding: 0 30px;">Do you have info to share with HuffPost reporters? <a href="#" id="open-secure-contact">Here’s how.</a></p>
+</div>
+<script>
+(function(){
+  document.getElementById('open-secure-contact').addEventListener('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    var html = "<h1>How To Leak To HuffPost</h1><p>We tell big stories on difficult subjects. We’ve reported on <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"http://projects.huffingtonpost.com/dying-to-be-free-heroin-treatment\">the inequities of the drug treatment system</a>, <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"http://highline.huffingtonpost.com/articles/en/sandra-bland-jail-deaths/\">deaths in police custody</a>, and <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"http://www.huffingtonpost.com/entry/unaoil-scandal-explained_us_56fbd2f0e4b0daf53aee0cff\">a massive bribery scandal</a> involving some of the world’s biggest corporations. To tell these stories, we must work with people who know what is really going on inside government and private institutions. That’s where you come in.  </p><p>Are you getting new directives that flout established practice? Are new rules making you uncomfortable? Is an important program on the chopping block? Are you being asked to do something unethical? We want to see whatever evidence and documentation you can provide. </p><p>Your employer, hackers and the government can all read your emails (or at least see that you contacted us). But if that doesn’t bother you, email us at <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"mailto:scoops@huffingtonpost.com\">scoops@huffingtonpost.com</a>.</p><h2>Need privacy?</h2><p>If you’re concerned that being a source for a story poses a significant risk, take precautions:</p><ul><li><strong>Know your risks</strong>. No form of communication is 100 percent safe from all observers. Make a plan about what you’ll do if the wrong person finds out you contacted us.</li><li><strong>Do not contact us from your work computer or phone</strong>. Your bosses can track your use of these devices. The same goes for your personal mobile phone, if you’ve ever installed apps from your employer — even if you later uninstalled them.</li><li>Consider using <strong>postal mail</strong>. We’re at “HuffPost, PO Box 28154, Washington, DC 20038-8154.” Send from a public mailbox and don’t write a return address. Only we can read your message (unless a court provides a warrant).</li><li>Use the same <strong>encrypted email</strong> service we do. Create a new <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"http://protonmail.com/\">protonmail.com</a> account — separate from your other email accounts — and use it to write us at <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"mailto:huffpostscoops@protonmail.com\">huffpostscoops@protonmail.com</a>. As long as you write to our Protonmail address from your Protonmail address, only we or someone who knows your password can read your message. <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://www.wired.com/2015/10/mr-robot-uses-protonmail-still-isnt-fully-secure/\">Read more about Protonmail</a>.</li><li><strong>Use your browser’s “incognito” or “private browsing” mode</strong>. Some sites (including, potentially, your employer’s) can access your browser history and see what websites you’ve visited. An incognito window masks this data. Open a new incognito browser window to contact us, and close it immediately afterward. If you don’t, your browser can display your online history to sites that ask for it.</li><li><strong>Do not contact us during work hours</strong>.<strong> </strong>You could get into trouble if your employer found out.</li><li>If you are concerned you are under active surveillance, <strong>do not contact us from home</strong> and <strong>do not contact us from your regular phone</strong>. Public wifi hotspots can help keep you anonymous. Use the <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://tails.boum.org/\">Tails</a> operating system to access ProtonMail at <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://protonirockerxow.onion/\">https://protonirockerxow.onion/</a> instead of the normal protonmail.com address. Start your Tails session immediately before contacting us, and close it immediately afterward.</li><li><strong>Do not tell others that you are a source</strong>, and <strong>do not contact us on social media</strong>.</li><li>If you email us documents,<strong> strip document metadata</strong>.<strong> </strong>Metadata can include evidence of where a document originated and who has handled it. Here are <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://www.cnet.com/how-to/remove-metadata-from-office-files-pdfs-and-images/\">removal instructions</a>.</li></ul><p>In most cases, our reporters or editors will need to know your identity so we can verify and authenticate the information you provide to us. Your identity will only be shared with HuffPost staff who absolutely need to know it.</p><p>We will do everything we can to protect your identity, but if you feel you must remain completely anonymous, we will ask you to provide us with sources or contacts who can corroborate the information you send us.</p><style>.popup-window__container.secure-contact .popup-window__inner-container{width:736px;position:relative;margin:0 auto;background-color:#fff}.popup-window__container.secure-contact .popup-window__modal-body-container{background-color:#fff;text-align:left;padding:30px;height:100vh;overflow:scroll}.secure-contact p,.secure-contact ul{line-height:28px;margin-bottom:20px;font-size:1.0625rem}.secure-contact ul{padding:0 30px}</style>";
+    var secureModal = new HP.modules.Modal({name: "secure-contact", closeColor: "black", html: html});
+    secureModal.attachEventListeners = function(){
+      this.$element.find('a').on('click', function(e){
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      });
+    };
+    secureModal.open();
+  });
+}());
+</scr+ipt>
+</div>
+
+</script>
+<script class="below_right_rail_300x250_lower_script-template" type="text/template">
+
+<div class="advertisement below_right_rail_300x250_lower">
+<div class="zone__title" style="margin-top: 200px;">
+  <h2 class="zone__title__text" style="background: #F83371; font-size: 17px;">
+    STORYBOOK
+  </h2>
+</div>
+<div style="padding: 0 15px;">
+  <span><div data-beacon="{'p':{'lnid':'image', 'mnid':'storybook', 'mlid':'mlid'}}" class="pym-widget storybook widget" data-pym-auto-initialized="" data-pym-src="https://widgets.huffpost.com/embeds/plastic-bag-life-cycle" id="widget-181" no-mw-resize></div><script src="https://widgets.huffpost.com/assets/widget/storybook/parent.js" defer></scr+ipt></span>
+  <div class="card__label" style="color: #444444; text-align: left; margin-top: 17px; font-family: ProximaNovaCond-Bold;">
+    <div class="card__label__text"></div>
+  </div>
+  <h2 class="card__headline" style="text-align: left; font-size: 22px; line-height: 24px; margin-top: 8px;">
+    
+  </h2>
+</div>
+</div>
+
+</script>
+<script>
+  window.HP.modules.smarten.selector('.js-splash');
+</script>
+
+</div>
+<script>
+  HP.modules.sharing = {
+    buttons: ["pinterest"]
+  };
+</script>
+<!-- Footer -->
+<footer class="footer bn-footer">
+
+<script type="text/javascript">
+	(function() {
+    modulousQueue.add(function() {
+      var $video = $('.zone--bottom .card').first();
+      var $flipper = $video.find('.js-embed-flip.untreated');
+      if ($flipper.length && Math.random() < 0.2) {
+        var $template = $video.find('.js-embed-template');
+				$template.text($template.text().replace(/58cff72fd85a100b9992c112/g, "58f8f84e85eb4216098b8e3a"));
+        HP.functions.embedFlip($flipper);
+      }
+    });
+  })();
+</script><script>
+  var rightRail = document.getElementById("right-rail-videos");
+  if ( rightRail ) {
+    rightRail.style.display="none";
+  }
+</script><script>
+window.addEventListener('load', function() {
+  var ref = document.getElementsByTagName("script")[0];
+  var script = document.createElement("script");
+  script.src = 'http://s.skimresources.com/js/38395X1559799.skimlinks.js';
+  script.async = true;
+  ref.parentNode.insertBefore(script, ref);
+}, false);
+</script><script src="//dc8xl0ndzn2cb.cloudfront.net/js/huffingtonpost/v0/keywee.min.js" type="text/javascript" async></script><script async src="http://plugin.mediavoice.com/mediaconductor/mc.js"></script>
+<script>
+window.mediaconductor = window.mediaconductor || function(){(mediaconductor.q=mediaconductor.q||[]).push(arguments);};
+mediaconductor("init", "d05ce97492f5478d864f1b629b02a278");
+mediaconductor("exec");
+</script><script type='text/javascript'>
+  //<![CDATA[
+    (function(){
+    window.gravityInsightsParams = {
+      'type': 'content',
+      'action': '',
+      'site_guid': '95ec266b244de718b80c652a08af06fa'
+    };
+    var adServerReq,bUrl,doUseGravityUserGuid,includeJs,jq,type,ug,wlPrefix,wlUrl,_ref,_ref1,_ref2;bUrl="https:"===document.location.protocol?"https://b-ssl.grvcdn.com/moth-min.js":"http://b.grvcdn.com/moth-min.js";ug=(doUseGravityUserGuid=!0===gravityInsightsParams.useGravityUserGuid?1:0)?"":gravityInsightsParams.user_guid||(null!=(_ref=/grvinsights=([^;]+)/.exec(document.cookie))?_ref[1]:void 0)||"";wlUrl=(wlPrefix="","");
+    includeJs=function(a){var b;b=document.createElement("script");b.async=!0;b.src=a;a=document.getElementsByTagName("script")[0];return a.parentNode.insertBefore(b,a)};bUrl&&includeJs(bUrl);wlUrl&&(window.gravityInsightsParams.sidebar&&(window.gravityInsightsParams.wlStartTime=(new Date).getTime()),includeJs(wlUrl));})();
+  //]]>
+</script>
+
+<script async type="text/javascript">
+    var assetname = "premium";
+    var _nolParams = {
+        nol_sfcode: 'dcr',
+        nol_ci: 'us-500136',              
+        nol_apid: 'P6987AC99-4DBA-45C3-BFE4-9CD649BA8C46',   
+        nol_assetname: assetname,
+        nol_apn: 'huffingtonpostCOM',     
+        nol_vc: 'c29',
+        nol_segA: 'HPMG News',
+        nol_segB: '',
+        nol_segC:''
+    };
+
+    (function (params) {
+        var url = 'http://cdn-gl.imrworldwide.com/novms/js/2/nlsDcrLite510.min.js#';
+        var query = [];
+        for (var param in params) {query.push(param + '=' + params[param]);}
+        url += query.join('&');
+        var script = window.document.createElement("script");
+        script.async = true;
+        script.src = url;
+        window.document.getElementsByTagName('head')[0].appendChild(script);
+    })(_nolParams);
+
+</script>
+<div class="footer__top">
+<div class="footer__logo">
+<a class="bn-logo-link" href="/">
+<img alt="The Huffington Post" class="footer__img bn-logo-image" src="http://s.m.huffpost.com/assets/HuffPostHero-d783f680fb974e80346bdfa145131d058e596e1d32f791981875aa481702c770.svg">
+</a>
+</div>
+<div class="footer__lists bn-footer-links">
+<ul class="footer__list">
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/p/huffington-post.html">ABOUT US</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://advertising.aol.com/properties#huffington-post" target="_blank">ADVERTISE</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://adinfo.aol.com/about-our-ads/" target="_blank">ABOUT OUR ADS</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/contact/">CONTACT US</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/syndication/">RSS</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/p/frequently-asked-question.html">FAQ</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="https://careers.smartrecruiters.com/Aol/huffington-post/" target="_blank">CAREERS</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/archive/">ARCHIVE</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/terms.html">USER AGREEMENT</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://privacy.aol.com">PRIVACY POLICY</a>
+</li>
+<li class="footer__list__item">
+<a class="footer__link bn-footer-link-item" href="http://www.huffingtonpost.com/comment/policy/">COMMENT POLICY</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer__bottom">
+<span class="footer__copyright">Copyright &copy 2017 TheHuffingtonPost.com, Inc. &nbsp;&nbsp; &quot;The Huffington Post&quot; is a registered trademark of TheHuffingtonPost.com, Inc.  All rights reserved.</span>
+<span class="footer__rights">Part of HuffPost &bull; HPMG News</span>
+</div>
+<script>
+  // if we don't need ad recovery, we need to define this
+  // global variable because something is waiting for it
+  window.kraken__adBlock = { active: false };
+</script>
+
+<script>
+  //sp bootstrap
+  !function(e){function t(i){if(n[i])return n[i].exports;var r=n[i]={exports:{},id:i,loaded:!1};return e[i].call(r.exports,r,r.exports,t),r.loaded=!0,r.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}({0:function(e,t,n){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}function r(){if(!M){M=!0,window._sp_=window._sp_||{},O=window._sp_.config=window._sp_.config||{},I=O.content_control_callback||window._sp_lock,R=O.account_id||O.client_id||window.sp_cid;for(var e in O)$[e]=O[e]}}function o(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"",i=new Image;i.src="//"+x+"/cct?v="+encodeURIComponent(b)+"&ct=1&cid="+encodeURIComponent(R)+"&l="+encodeURIComponent(e.toString())+"&rc="+encodeURIComponent(t)+"&d0="+encodeURIComponent(n)}function s(e,t,n,i){var r=arguments.length>4&&void 0!==arguments[4]?arguments[4]:{},o=arguments.length>5&&void 0!==arguments[5]&&arguments[5],a=function(){return s(e,t,n,i,r,!0)},l=o?n:a;e(t,l,i,r)}function a(e,t,n,i){var r=document.createElement("script");r.src=e,r.onload=function(){try{if(window._sp_&&window._sp_.bootstrap===p&&window.spBootstrap===d&&window._sp_.config===O){for(var e in $)if($[e]!==O[e]){y&&y();break}}else y&&y()}catch(e){y&&y()}i.onLoad&&i.onLoad()},r.onerror=function(){function r(e,t){n(e,t),i.onError&&i.onError(t)}function o(e){return s.indexOf(e)>-1}var s=(navigator.userAgent||navigator.vendor||window.opera).toLowerCase();o("mobi")||o("ipad")||o("android")||o("iphone")?r(P):o("exabot")?r(A):o("bingbot")||o("bingpreview")?r(j):o("googlebot")||o("adsbot-google")||o("mediapartners-google")?r(k):o("googleweblight")?r(S):window.location.host===g?r(C):window.location.host.indexOf(w)>-1?r(L):o("msie 10")||o("msie 9")||o("msie 8")?r(E):l(e,t,r)},document.head.appendChild(r),document.querySelector('script[src="'+e+'"]')||window.location.host.indexOf(w)!==-1||t(H,e)}function l(e,t,n){(0,v["default"])(e,function(i,r,o,s){var a=i||r?t:n;a(s,e+"::"+o)})}function c(e,t){return D?void u(N+"::"+e,t):(o(T,e,t),void(I&&setTimeout(function(){I()},250)))}function u(e,t){o(_,e,t)}function d(e,t){r(),t&&(I=window._sp_lock=t),s(a,e,c,u)}function p(e,t){r(),s(a,e,c,u,t)}var f=n(381),h=i(f),m=n(102),v=i(m),g=["w","e","b","c","a","c","h","e",".","g","o","o","g","l","e","u","s","e","r","c","o","n","t","e","n","t",".","c","o","m"].join(""),w=["o","p","t","i","m","i","z","e","l","y","p","r","e","v","i","e","w",".","c","o","m"].join(""),y=void 0;try{y=window._sp_&&window._sp_.config&&window._sp_.config.spid_control_callback}catch(e){}var x=h["default"].be.join(""),b=h["default"].bv,_=0,T=1,H="s",P="m",k="g",C="gw",S="gl",E="i",j="b",A="e",N="n",L="o",$={},M=!1,D=!1,O=void 0,I=void 0,R=void 0;window.addEventListener("beforeunload",function(){D=!0});try{window._sp_=window._sp_||{},window._sp_.bootstrap=p,window.spBootstrap=d,window._sp_.bootstrap===p&&window.spBootstrap===d||y&&y()}catch(e){y&&y()}},102:function(e,t){"use strict";function n(e,t){function n(e){try{return e&&e.timeStamp?e.timeStamp:window.performance.now()}catch(e){return Date.now()}}var l=document.createElement("a");if(l.href=e,"https:"===window.location.protocol&&l.protocol!==window.location.protocol)return void t(!1,!1,l.protocol,a);var c=new XMLHttpRequest;try{c.open("GET",e)}catch(e){return void t(!0,!1,e.toString(),o,c)}var u=void 0,d=void 0;c.onloadstart=function(e){u=n(e)},c.onreadystatechange=function(e){if(4===this.readyState){d=n(e)-u;var o=0===this.status,s="2"===this.status.toString()[0],a=s?r:i;return void t(o,s,this.status+"::"+d,a,c)}};try{c.send()}catch(e){return void t(!0,!1,e.toString(),s,c)}}Object.defineProperty(t,"__esModule",{value:!0}),t["default"]=n;var i=t.NETWORK_FAILURE="n",r=t.XHR_SUCCEEDED="nx",o=t.OPEN_BLOCKED="xo",s=t.SEND_BLOCKED="xs",a=t.PROTOCOL_MISMATCH="p"},381:function(e){"use strict";e.exports={be:["w","w","w",".","r","o","o","s","t","e","r","f","i","r","e","w","o","r","k",".","c","o","m"],bv:"1.7.620"}}});
+  //sp messaging config
+  (function() {
+    window._sp_ = window._sp_ || {};
+    window._sp_.config = window._sp_.config || {};
+    window._sp_.config.account_id =  313;
+    window._sp_.config.enable_rid = true;
+    window._sp_.config.mms_domain =  'mms.huffingtonpost.com';
+    window._sp_.config.content_control_callback = function() {
+      //window.location.href = '/static/sp-block';
+    };
+    // messaging-specific configuration  
+    window._sp_.mms = window._sp_.mms || {};
+    window._sp_.mms.cmd = window._sp_.mms.cmd || [];
+    // add a K/V pair for targeting purposes
+    window._sp_.mms.cmd.push(function() { 
+      window._sp_.mms.setTargeting("x", "y");
+    });
+    // tell the messaging library that all params are set and it can proceed
+    window._sp_.mms.cmd.push(function() {
+      window._sp_.mms.startMsg();
+    });
+    window._sp_.config.mms_client_data_callback = function(dataObject) {
+      // do something useful with the dataObject
+    };
+    // magic points these to sourcepoint hosted files
+    window._sp_.bootstrap('/cr3wc89sw3-m.js');
+    window._sp_.bootstrap('/cr3wc89sw3-c.js');
+  }());
+</script>
+
+</footer>
+
+<script>
+  HP.functions.loadCSS('http://s.m.huffpost.com/assets/desktop-0cf061c1341b1d95e71ba41106975af2d72d411e9177e215b8b6a4fb1eba7ba5.css');
+</script>
+<div class="tracking-data">
+<script>
+  window.comscore_data = {"c1":2,"c2":6723616,"c3":"","c4":"/us/section/front-page","c5":"front-page","c6":"","c15":"","options":{"url_append":"comscorekw=front-page"}};
+  window.comscore_data.c4 = location.protocol+"//"+location.host+window.comscore_data.c4;
+</script>
+
+<script>
+  var s_265_account ="aolhuffpo,aolsvc";
+  var s_265_config = {"linkInternalFilters":"javascript:,huffingtonpost.com,m.huffpost.com/us","prop54":"huffpost","channel":"us.hpmg","pfxID":"hpo","prop1":"front","prop16":"page","prop12":"http://www.huffingtonpost.com/section/front-page","prop2":"","prop6custom":"","prop9":"","prop17":"","prop18":"","prop19":"","prop21":"","prop22":"","prop23":"","prop53":"","prop59":"","prop62":"video_novideo","prop63":"","prop65":"","prop66":"","prop69":"","prop70":"","prop74":"","pageName":"Huffington Post"};
+  waitForGlobal(function() {
+    return !!window.extendOmniVars && !!window.s_265;
+  }, function() {
+    window.omnitureVarsExtended = true;
+    extendOmniVars(s_265_config);
+  });
+</script>
+
+<script>
+  bN_cfg = {
+    h: location.hostname,
+    b: "b.huffingtonpost.com",
+    p: {"p":"{\"dL_ch\"=>\"us.hpmg\", \"dL_flid\"=>\"_\", \"edition\"=>\"us\", \"platform\"=>\"desktop\", \"renderingEngine\"=>\"hyperion\", \"cobrand\"=>\"HuffPost\", \"sectionId\"=>\"54caa06de4b095974e122fb3\", \"sectionName\"=>\"Huffington Post\", \"dL_dpt\"=>\"front\"}","t":"HuffPost - Breaking News, U.S. and World News","dL_ch":"us.hpmg","dL_dpt":"front","dL_sDpt":"","dL_flid":"_","dL_cmsID":"","dL_author":"","author-id":"","dL_pubts":"","dL_blogID":"","dL_tags":"","dL_url":"","dL_vid":"video_novideo","cms_src":"","cobrand":"HuffPost","edition":"us","publishEdition":"us","platform":"desktop","sectionId":"54caa06de4b095974e122fb3","sectionName":"Huffington Post","renderingEngine":"kraken","publishSectionId":"54caa06de4b095974e122fb3","publishSectionName":"Huffington Post","a_type":"section","a_value":"front-page","pageVersion":"46999","engagement":"25","ad_presence":"[]"},
+    view: 0,
+    click: 0
+  };
+  if (typeof(io_c3sd) != 'undefined' && typeof(io_c3sd.omniture) != 'undefined') {
+    if (typeof(io_c3sd.omniture.s_account) != 'undefined') {
+      s_265_account = io_c3sd.omniture.s_account;
+    }
+    if (typeof(io_c3sd.omniture.prop17) != 'undefined') {
+      bN_cfg['p']['Custom02'] = io_c3sd.omniture.prop17;
+    }
+    if (typeof(io_c3sd.omniture.prop21) != 'undefined') {
+      bN_cfg['p']['Custom03'] = io_c3sd.omniture.prop21;
+    }
+  }
+  waitForGlobal(function() {
+    return !!window.HP.modules.Tracky;
+  }, function() {
+    window.HP.modules.Tracky.bN.set(bN_cfg.p);
+  });
+</script>
+
+
+
+
+
+
+
+
+
+</div>
+<div class="tracking">
+<script>
+  waitForGlobal(function() {
+    return window.PARSELY && window.PARSELY.beacon;
+  }, function() {
+    PARSELY.beacon.trackPageView({
+      url: window.location.href,
+      urlref: HP.params.original_url,
+      js: 1
+    });
+  });
+</script>
+
+<script>
+  waitForGlobal(function() {
+    return !!window.HP.modules.Tracky;
+  }, function() {
+    window.HP.modules.Tracky.comscore(window.comscore_data);
+  })
+</script>
+
+<script>
+  waitForGlobal(function() {
+    return !!window.HP.modules && !!window.HP.modules.Tracky && !!window.extendOmniVars && !!window.s_265 && !!window.omnitureVarsExtended;
+  }, function() {
+    window.HP.modules.Tracky.omniture();
+  });
+</script>
+
+<script>
+  waitForGlobal(function() {
+    return !!window.HP.modules.Tracky;
+  }, function() {
+    window.HP.modules.Tracky.bN.view();
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+</div>
+<script>
+  HP.modules.ads.slideshowLeft = "";
+  HP.modules.ads.slideshowTop = "";
+  HP.modules.ads.slideshowEndCard = "";
+  HP.modules.ads.rightRailRecircCards = [];
+  HP.modules.ads.rightRailVideoCards = [];
+  HP.modules.ads.categoriesBottom = "\n<div class=\"advertisement right_rail_bottom_flex\">\n<div id=\"adtech_right_rail_bottom_flex\" class=\"adtech-adspot ad-right_rail_bottom_flex\"><\/div>\n<script>\n(function() {\n  var adsDiv = document.querySelector(\'#adtech_right_rail_bottom_flex\');\n  adsDiv.removeAttribute(\'id\');\n  window.modulousQueue.add(function(){\n    \n      \n        waitForGlobal(\'htmlAdWH\', function() {\n          adsDiv.reloadCount = 0;\n          var recoveryId = \'\';\n          var needsRecovery = recoveryId && recoveryId.length && kraken__adBlock && kraken__adBlock.active;\n          var adId = needsRecovery ? recoveryId : \'963863271\';\n          try { adId = io_c3sd.ads[\"right_rail_bottom_flex\"] || adId; } catch(e) {} \n          \n          // Override adtech_call_type\n          var delivery_type = \"default\" || \"\";\n          var adtech_call_type = \"\";\n          switch (delivery_type) {\n            case \"by_request\": adtech_call_type = \"ajax\"; break;\n            case \"text\": adtech_call_type = \"text\"; break;\n            case \"iframe\": adtech_call_type = \"iframe\"; break;\n            case \"iframe_proxy\": adtech_call_type = \"f\"; break;\n            case \"collapsed\": adtech_call_type = \"fc\"; break;\n            default: adtech_call_type = \"f\"; break;\n          }\n\n          \n          adSetInView(\'1\');\n          \n          var args = [\'300\', \'250\'];\n          \n          \n\n          if(needsRecovery) {\n            waitForGlobal(\'readyToRecover\', function() {\n              adsDiv = document.querySelector(\'.right_rail_bottom_flex\');\n              //htmlAdWH(adId, args[0], args[1], \"fileless\", adsDiv);\n            });\n          } else {\n            htmlAdWH(adId, args[0], args[1], adtech_call_type, adsDiv);\n          }\n          \n          if (typeof debugadcode == \'function\') { debugadcode(\'AdTech\', {placement: \'right_rail_bottom_flex\', mnid: adId}, adsDiv); }\n          \n          jQuery(document).on(\'reloadAd\', function(ev, elem) {\n            if (elem && !elem.contains(adsDiv)) { return; }\n            var refreshRate = 1;  \n            adsDiv.reloadCount++;\n            if (adsDiv.reloadCount % refreshRate === 0 && typeof adsReloadAd === \'function\') { adsReloadAd(adsDiv); }\n          });\n          \n          adSetInView(\'0\');\n        }); // wFG:htmlAdWH\n      \n    \n  });\n}());\n<\/script>\n<\/div>\n";
+</script>
+<script src="http://s.m.huffpost.com/assets/desktop-7e00867a17dab78911c56e6883251ae006db7c2939377980bd870d81cbf45561.js"></script>
+
+<script>
+  (function(d, s, id, locale){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    locale = (locale == "ar_SA" ? "ar_AR" : locale);
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id; js.async = true;
+    js.src = "https://connect.facebook.net/"+locale+"/sdk.js#xfbml=1&version=v2.4";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk', 'en_US'));
+</script>
+
+<script>
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id; js.async = true;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+  
+    return t;
+  }(document, "script", "twitter-wjs"));
+</script>
+<script async src="https://apis.google.com/js/platform.js"></script>
+
+<div class="tracking-init">
+<div id="parsely-root" style="display: none">
+<div data-parsely-site="huffingtonpost.com" id="parsely-cfg"></div>
+</div>
+<script>
+  (function(){
+    window.PARSELY = {autotrack: false};
+    (function(s, p, d) {
+      var h=d.location.protocol, i=p+"-"+s,
+          e=d.getElementById(i), r=d.getElementById(p+"-root"),
+          u=h==="https:"?"d1z2jf7jlzjs58.cloudfront.net"
+          :"static."+p+".com";
+      if (e) return;
+      e = d.createElement(s); e.id = i; e.async = true;
+      e.src = h+"//"+u+"/p.js"; r.appendChild(e);
+    })("script", "parsely", document);
+  }());
+</script>
+
+<div id="vanitydiv" style="visibility:hidden; height: 0px;"></div>
+<!-- Begin comScore Tag -->
+<script>
+  var prefix = (document.location.protocol == "https:" ? "https://sb" : "http://b");
+  var script = document.createElement("script");
+  script.src = prefix + ".scorecardresearch.com/beacon.js";
+  script.async = true;
+  script.onload = function() {
+    window.HP.events.publish('tracking_loaded_comscore');
+  };
+  document.querySelector('.tracking').appendChild(script);
+</script>
+<noscript>
+<img alt="" height="1" src="http://b.scorecardresearch.com/p?c1=2&amp;c2=6723616&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c15=&amp;cj=1" width="1">
+</noscript>
+<!-- End comScore Tag -->
+
+<script>
+  (function(d){
+    var s = d.createElement('script');
+    s.async = true;
+    s.src = "http://o.aolcdn.com/os/aol/omniture.min.js";
+    s.onload = function() {
+      window.HP.events.publish('tracking_loaded_omniture');
+    };
+    d.querySelector('.tracking').appendChild(s);
+  })(document);
+</script>
+
+<script>
+  (function(d){
+    var s = d.createElement('script');
+    s.async = true;
+    s.src = "http://o.aolcdn.com/os/aol/beacon.min.js";
+    s.onload = function() {
+      window.HP.events.publish('tracking_loaded_datalayer');
+    };
+    d.querySelector('.tracking').appendChild(s);
+  })(document);
+</script>
+
+<script>
+  
+  window.extendOmniVars=function(e){""!==window.HP.functions.getCookie("huffpost_user_id")&&(e.eVar17="huffpost_"+window.HP.functions.getCookie("huffpost_user_id")),e.prop12=document.location.origin+document.location.pathname,"undefined"!=typeof io_c3sd&&"undefined"!=typeof io_c3sd.omniture&&("undefined"!=typeof io_c3sd.omniture.prop17&&(e.prop17=io_c3sd.omniture.prop17),"undefined"!=typeof io_c3sd.omniture.prop21&&(e.prop21=io_c3sd.omniture.prop21)),waitForGlobal("s_265",function(){Object.keys(e).forEach(function(t){s_265[t]=e[t]})})};
+  
+</script>
+
+
+
+
+<!-- Init Standard Include -->
+<!-- START Nielsen Online SiteCensus V6.0 -->
+<!-- COPYRIGHT 2012 Nielsen Online -->
+<script>
+  modulousQueue.add(function () {
+    var d = new Image(1, 1);
+    d.onerror = d.onload = function () {
+      d.onerror = d.onload = null;
+    };
+    d.src = ["//secure-us.imrworldwide.com/cgi-bin/m?ci=us-703240h&cg=0&cc=1&si=", escape(window.location.href), "&rp=", escape(document.referrer), "&ts=compact&rnd=", (new Date()).getTime()].join('');
+  });
+</script>
+<noscript>
+<div>
+<img alt="" height="1" src="//secure-us.imrworldwide.com/cgi-bin/m?ci=us-703240h&amp;cg=0&amp;cc=1&amp;ts=noscript" width="1">
+</div>
+</noscript>
+<!-- END Nielsen Online SiteCensus V6.0 -->
+
+
+
+
+
+<!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1621685564716533'); // Edition specific
+  fbq('init', '1043018625788392'); // Partner Studio
+  fbq('track', "PageView");
+  if (!!HP.params.entryId) {
+    fbq('trackCustom', 'EntryPage', {
+      section_name: "",
+      tags: null,
+      ncid: "",
+    });
+  } // custom event(s) for bpages
+  waitForGlobal(function() {
+    return HP.modules.Tracky;
+  }, function() {
+    $('body').on('click', function(event) {
+      HP.modules.Tracky.reportClick(event, function(data) {
+        fbq('track', "Click", data);
+      });
+    });
+  });
+</script>
+<noscript>
+<img height="1" src="https://www.facebook.com/tr?id=1621685564716533&amp;ev=PageView&amp;noscript=1" style="display:none" width="1">
+<img height="1" src="https://www.facebook.com/tr?id=10153394098876130&amp;ev=PageView&amp;noscript=1" style="display:none" width="1">
+</noscript>
+<!-- End Facebook Pixel Code -->
+
+
+
+</div>
+<script>
+  HP.functions.init();
+  window.addEventListener('load', modulousQueue.runAll);
+</script>
+<!--[if IE]>
+<link rel="stylesheet" media="screen" href="http://s.m.huffpost.com/assets/ie-bddc3f1b9fb2f2d2c7c30f4b176a3829825fd1b1e93b16e5edac4c4745e150f5.css" />
+<![endif]-->
+</div>
+</body>
+</html>

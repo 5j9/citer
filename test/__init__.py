@@ -1,68 +1,134 @@
-from atexit import register as atexit_register
 from contextlib import contextmanager
-from pickle import dump, load
+# todo
+from pickle import load as pload
 from os.path import abspath
+from hashlib import sha1
+from json import dump, loads, load
+from typing import Optional
+from functools import partial
 
-from requests import Session
+from requests import Session, Response, ConnectionError as RConnectionError
 
 # Do not import library parts here. commons.py should not be loaded
 # until LANG is set by test_fa and test_en.
 
 
 FORCE_CACHE_OVERWRITE = False  # Use for updating cache entries
-CACHE_CHANGE = False
+TESTDATA = abspath(__file__ + '/../testdata')
+
+# todo:
 CACHE_PATH = abspath(__file__ + '/../.tests_cache')
+
+json_dump = partial(
+    dump, ensure_ascii=False, check_circular=False, sort_keys=True, indent=1)
+
+
+class FakeResponse:
+
+    __slots__ = (
+        'content', 'iter_content', 'status_code', 'headers', 'encoding', 'url',
+        'soup'  # required by mechanicalsoup
+    )
+
+    request = None   # required by mechanicalsoup
+
+    def __init__(
+        self, url: str, content: bytes, status_code: int, headers: dict,
+        encoding: str
+    ):
+        self.url = url
+        self.content = content
+        self.status_code = status_code
+        self.encoding = encoding
+        self.headers = headers
+
+    def json(self):
+        return loads(self.content)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        return
+
+    @property
+    def text(self):
+        return self.content.decode(self.encoding)
+
+
+def load_response(hsh: str) -> Optional[FakeResponse]:
+    try:
+        with open(f'{TESTDATA}/{hsh}.json', 'rb') as f:
+            d = load(f)
+    except FileNotFoundError:
+        raise FileNotFoundError('no json file')
+
+    if 'raise' in d:
+        raise RConnectionError('per json data')
+
+    with open(f'{TESTDATA}/{hsh}.html', 'rb') as f:
+        content = f.read()
+
+    return FakeResponse(
+        d['url'], content, d['status_code'], d['headers'], d['encoding'])
+
+
+def dump_response(hsh, response: Response) -> None:
+    d = {
+        'status_code': response.status_code,
+        # CaseInsensitiveDict is not JSON serializable
+        'headers': {**response.headers},
+        'encoding': response.encoding,
+        'url': response.url}
+    with open(f'{TESTDATA}/{hsh}.json', 'w') as f:
+        json_dump(d, f)
+    with open(f'{TESTDATA}/{hsh}.html', 'wb') as f:
+        f.write(response.content)
+
+
+def dump_connection_error(hsh):
+    with open(f'{TESTDATA}/{hsh}.json', 'w') as f:
+        d = {'raise': True}
+        dump(d, f)
 
 
 # noinspection PyDecorator
 @staticmethod
 def fake_request(self, url, data=None, stream=False, **kwargs):
-    global CACHE_CHANGE
     if data:
         cache_key = url + repr(sorted(data))
     else:
         cache_key = url
-    response = cache.get(cache_key)
-    if FORCE_CACHE_OVERWRITE or response is None:
+    sha1_hex = sha1(cache_key.encode()).hexdigest()
+
+    if FORCE_CACHE_OVERWRITE is True:
+        response = None
+    else:
+        response = load_response(sha1_hex)
+        # todo: remove
+        # response = cache.get(cache_key)
+        # end remove
+
+    if response is None:  # either FileNotFoundError or FORCE_CACHE_OVERWRITE
+        raise  # todo: remove
         print('Downloading ' + url)
         with real_request():
-            response = Session().request(
-                self, url, data=data, **kwargs)
-        cache[cache_key] = response
-        CACHE_CHANGE = True
+            try:
+                response = Session().request(
+                    self, url, data=data, **kwargs)
+            except RConnectionError:
+                dump_connection_error(sha1_hex)
+        dump_response(sha1_hex, response)
+    # todo: remove
+    # dump_response(sha1_hex, response)
+
     if stream is True:
         def iter_content(*_):
             # this closure over response will simulate a bound method
             return iter((response.content,))
         response.iter_content = iter_content
+
     return response
-
-
-def save_cache(cache_dict):
-    """Save cache as pickle."""
-    if not CACHE_CHANGE:
-        return
-    print('saving new cache')
-    with open(CACHE_PATH, 'wb') as f:
-        dump(cache_dict, f)
-
-
-def load_cache():
-    """Return cache as a dict."""
-    try:
-        with open(CACHE_PATH, 'rb') as f:
-            return load(f)
-    except FileNotFoundError:
-        return {}
-
-
-def invalidate_cache(in_url):
-    global CACHE_CHANGE
-    lower_url = in_url.lower()
-    for k in cache.copy():
-        if lower_url in k:
-            del cache[k]
-            CACHE_CHANGE = True
 
 
 @contextmanager
@@ -75,8 +141,6 @@ def real_request():
 original_request = Session.request
 Session.request = fake_request
 
-
-cache = load_cache()
-# invalidate_cache('shora')
-print('len(cache) ==', len(cache))
-atexit_register(save_cache, cache)
+# todo:
+with open(CACHE_PATH, 'rb') as f:
+    cache = pload(f)

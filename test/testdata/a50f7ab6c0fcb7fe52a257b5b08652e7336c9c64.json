@@ -1,0 +1,17 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Access-Control-Allow-Headers": "X-Requested-With",
+  "Access-Control-Allow-Origin": "*",
+  "Connection": "keep-alive",
+  "Content-Length": "3390",
+  "Content-Type": "application/json;charset=UTF-8",
+  "Date": "Fri, 13 Apr 2018 12:42:46 GMT",
+  "Server": "http-kit",
+  "Vary": "Accept",
+  "X-Rate-Limit-Interval": "1s",
+  "X-Rate-Limit-Limit": "50"
+ },
+ "status_code": 200,
+ "url": "http://api.crossref.org/v1/works/10.1038/nrd842"
+}

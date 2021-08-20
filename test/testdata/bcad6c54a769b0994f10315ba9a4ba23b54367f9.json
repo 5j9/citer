@@ -1,0 +1,17 @@
+{
+ "encoding": "ISO-8859-1",
+ "headers": {
+  "Cache-Control": "max-age=0",
+  "Connection": "Keep-Alive",
+  "Content-Type": "text/html",
+  "Date": "Tue, 23 May 2017 17:52:58 GMT",
+  "Expires": "Tue, 23 May 2017 17:52:58 GMT",
+  "Keep-Alive": "timeout=5, max=730",
+  "Server": "Apache",
+  "Set-Cookie": "BBC-UID=b5e9d274a7b61f8ad51b19dea1e5f75dae4b53aa20108550a5a639ced60f93580Mozilla%2f5%2e0%20%28Windows%20NT%2010%2e0%3b%20Win64%3b%20x64%3b%20rv%3a50%2e0%29%20Gecko%2f20100101%20Firefox%2f50%2e0; expires=Wed, 23-May-18 17:52:58 GMT; path=/; domain=bbc.co.uk;, BBC-UID=b5e9d274a7b61f8ad51b19dea1e5f75dae4b53aa20108550a5a639ced60f93580Mozilla%2f5%2e0%20%28Windows%20NT%2010%2e0%3b%20Win64%3b%20x64%3b%20rv%3a50%2e0%29%20Gecko%2f20100101%20Firefox%2f50%2e0; expires=Wed, 23-May-18 17:52:58 GMT; path=/; domain=bbc.co.uk;",
+  "Transfer-Encoding": "chunked",
+  "Vary": "X-CDN"
+ },
+ "status_code": 200,
+ "url": "http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm"
+}

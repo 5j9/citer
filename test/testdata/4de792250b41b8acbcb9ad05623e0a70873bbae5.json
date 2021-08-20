@@ -1,0 +1,27 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Accept-Ranges": "bytes, bytes",
+  "Cache-Control": "no-cache",
+  "Connection": "close",
+  "Content-Encoding": "gzip",
+  "Content-Type": "text/html; charset=utf-8",
+  "Cteonnt-Length": "74622",
+  "Date": "Tue, 23 May 2017 17:53:42 GMT",
+  "Server": "Apache",
+  "Transfer-Encoding": "chunked",
+  "Vary": "Accept-Encoding, Fastly-SSL",
+  "X-API-Version": "F-5-5",
+  "X-Age": "0",
+  "X-Cache": "MISS",
+  "X-Cache-Hits": "0",
+  "X-ESI": "1",
+  "X-Frame-Options": "DENY",
+  "X-Origin-Time": "2017-05-23 13:53:42 EDT",
+  "X-PageType": "article",
+  "X-Served-By": "cache-iad2635-IAD",
+  "X-Timer": "S1495562023.615402,VS0,VE225"
+ },
+ "status_code": 200,
+ "url": "http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html"
+}

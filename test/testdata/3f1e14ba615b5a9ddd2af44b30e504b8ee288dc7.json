@@ -1,0 +1,25 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Access-Control-Allow-Origin": "*",
+  "Age": "44",
+  "Cache-Control": "s-maxage=120",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Length": "49526",
+  "Content-Security-Policy": "upgrade-insecure-requests",
+  "Content-Type": "text/html;charset=UTF-8",
+  "Date": "Tue, 23 May 2017 17:54:33 GMT",
+  "PB-PID": "pPcRfs1Puwpjmp",
+  "PB-RID": "rtxZn328UTjtkq",
+  "Server": "nginx",
+  "Set-Cookie": "de=;Expires=Thursday, 23-May-2019 17:55:17 GMT; path=/; domain=.washingtonpost.com, client_region=0;Expires=Tuesday, 23-May-2017 18:05:17 GMT; path=/; domain=.washingtonpost.com, X-WP-Split=X;Expires=Thursday, 01-January-1970 00:00:00 GMT; path=/; domain=.washingtonpost.com, devicetype=0;Expires=Friday, 23-June-2017 04:24:17 GMT; path=/; domain=.washingtonpost.com, osfam=0;Expires=Friday, 23-June-2017 04:24:17 GMT; path=/; domain=.washingtonpost.com, rpld1=0:wmflabs.org|20:usa|21:ca|22:san francisco|23:37.785591|24:-122.435661|;Expires=Tuesday, 23-May-2017 18:55:17 GMT; path=/; domain=.washingtonpost.com",
+  "X-Backend": "http://pagebuilder-app.wpprivate.com",
+  "X-Instart-Debug-Header": "auth_status:200, origin:origin-web.washingtonpost.com, cache key modifier:, num_auth_cookies:6",
+  "X-Instart-Request-ID": "9459106932934454950:VNQ01-NPPRY42:1495562117:165",
+  "X-Served-By": "pb",
+  "x-instart-cache-id": "29:620706499373658602::1495562073"
+ },
+ "status_code": 200,
+ "url": "https://www.washingtonpost.com/"
+}

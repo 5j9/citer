@@ -1,0 +1,1699 @@
+
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1026.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="http://news.mit.edu/sites/mit.edu.newsoffice/themes/mitnews/favicon.ico" type="image/vnd.microsoft.icon" />
+<meta name="description" content="MIT researchers develop an improved system for timing of urban lights to minimize commuting times. " />
+<meta name="keywords" content="Cities, Urban studies and planning, Traffic management, Computer science and technology, Transportation, Automobiles, Civil and environmental engineering, School of Engineering, Research" />
+<meta name="news_keywords" content="Cities, Urban studies and planning, Traffic management, Computer science and technology, Transportation, Automobiles, Civil and environmental engineering, School of Engineering, Research" />
+<link rel="image_src" href="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/article_cover_image_small/public/images/2014/MITnews_LausanneTraffic_Olivares_01_0.jpg" />
+<meta name="apple-itunes-app" content="app-id=353590319" />
+<meta property="twitter:title" content="Traffic lights: There’s a better way" />
+<meta property="twitter:image" content="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/og/public/images/2014/MITnews_LausanneTraffic_Olivares_01_0.jpg" />
+<meta name="twitter:site" content="@mit" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:site:id" content="15460048" />
+<meta property="og:author" content="David L. Chandler | MIT News Office" />
+<meta property="og:image" content="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/og/public/images/2014/MITnews_LausanneTraffic_Olivares_01_0.jpg" />
+<meta property="og:title" content="Traffic lights: There’s a better way" />
+<meta property="og:description" content="MIT researchers develop an improved system for timing of urban lights to minimize commuting times. " />
+<meta property="og:site_name" content="MIT News" />
+<meta property="fb:page_id" content="126533127390327" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://news.mit.edu/2014/traffic-lights-theres-a-better-way-0707" />
+
+            <link rel="canonical" href="http://news.mit.edu/2014/traffic-lights-theres-a-better-way-0707" />
+    
+        <title>Traffic lights: There’s a better way | MIT News</title>
+        <link type="text/css" rel="stylesheet" href="http://news.mit.edu/sites/mit.edu.newsoffice/files/css/css_lQaZfjVpwP_oGNqdtWCSpJT1EMqXdMiU84ekLLxQnc4.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://news.mit.edu/sites/mit.edu.newsoffice/files/css/css_u9Cn6xFPfn6NvRqMGUV6k10stVTR4AGT7eontS75hX4.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://news.mit.edu/sites/mit.edu.newsoffice/files/css/css_Zo1r09piXtl5JhJOMD7hQCiB0jhDpHLlkhIEB61cQvE.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://news.mit.edu/sites/mit.edu.newsoffice/files/css/css_502yvhEh6BvWPgq152oqjZLJjkC9qL9hgUh4mgEiyvQ.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://news.mit.edu/sites/mit.edu.newsoffice/files/css/css_zNjEyTXCUgBk3ONK7sNDw6HXxFbc1qFGL2hJ9UXp9Nw.css" media="print" />
+    <script type="text/javascript" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/js/js_ri60QNjcazMKdlAmWmDsmRb0iKaVkkXUQxH2MsgpmVo.js"></script>
+<script type="text/javascript" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/js/js_gPqjYq7fqdMzw8-29XWQIVoDSWTmZCGy9OqaHppNxuQ.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-1592615-17", {"cookieDomain":"auto"});ga('create', 'UA-1592615-30',{'name':'mitsitewide'});ga("send", "pageview");ga('mitsitewide.send','pageview');
+//--><!]]>
+</script>
+<script type="text/javascript" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/js/js_vnpVdvVVC3esFhe5pUFFpitcfPa22s6kgCid6sguM9g.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"mitnews","theme_token":"hSpGxRIBcs4y_Hoj2XbqSHQbT-_UEEfAt0kumqjJp9Y","js":{"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/contri\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/js\/vendor\/flexslider\/jquery.flexslider-min.js":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/js\/vendor\/fancybox\/source\/jquery.fancybox.pack.js":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/js\/vendor\/waypoints\/waypoints.min.js":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/js\/vendor\/waypoints\/waypoints-sticky.min.js":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/js\/vendor\/modernizr-2.6.2.min.js":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/js\/main.js":1},"css":{"modules\/system\/system.base.css":1,"sites\/all\/modules\/contri\/date\/date_api\/date.css":1,"sites\/all\/modules\/contri\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"sites\/all\/modules\/contri\/views\/css\/views.css":1,"sites\/all\/modules\/contri\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/contri\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/custom\/shib_auth\/shib_auth.css":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/js\/vendor\/flexslider\/flexslider.css":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/js\/vendor\/fancybox\/source\/jquery.fancybox.css":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/css\/main.css":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/css\/normalize.css":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/css\/site.css":1,"sites\/mit.edu.newsoffice\/themes\/mitnews\/css\/print.css":1}},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"}});
+//--><!]]>
+</script>
+    <script type="text/javascript" src="//use.typekit.net/tzb4pde.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body class="" >
+
+        
+
+
+<div itemscope itemtype="http://schema.org/Article" id="site-wrapper">
+        <header>
+    <div id="site-header-nav-wrapper">
+        <div id="site-header-nav" class="clearfix">
+            <ul id="top-menu-bar" class="clearfix">
+                <li class="logo-mit">
+                    <a href="http://web.mit.edu" target="_blank" onClick="ga('send', 'event', 'topbar', 'click', 'mit logo');">
+                        <span class="logo"></span>
+                        Massachusetts Institute of Technology
+                    </a>
+                </li>
+                            </ul>
+            <div id="follow-social-menu" class="clearfix">
+
+                <ul id="top-menu-items">
+                    <li><a href="/" onClick="ga('send', 'event', 'topbar', 'click', 'news');">News</a></li>
+                    <li><a href="https://www.youtube.com/mit" target="_blank" onClick="ga('send', 'event', 'topbar', 'click', 'video');">Video</a></li>
+                    <li><a href="http://connect.mit.edu" target="_blank" onClick="ga('send', 'event', 'topbar', 'click', 'social');">Social</a></li>
+                </ul>
+
+                <div class="label">Follow MIT</div>
+                <ul id="follow-social-items">
+                    <li><a class="rss" href="/rss" onClick="ga('send', 'event', 'topbar', 'click', 'rss');"><span>MIT News RSS</span></a></li>
+                    <li><a class="twitter" target="_blank" href="https://twitter.com/mit" onClick="ga('send', 'event', 'topbar', 'click', 'twiiter');"><span>Follow MIT on Twitter</span></a></li>
+                    <li><a class="facebook" target="_blank" href="https://www.facebook.com/MITnews" onClick="ga('send', 'event', 'topbar', 'click', 'facebook');"><span>Follow MIT on Facebook</span></a></li>
+                    <li><a class="googleplus" target="_blank" href="https://plus.google.com/+mit?rel=author" onClick="ga('send', 'event', 'topbar', 'click', 'google+');"><span>Follow MIT on Google+</span></a></li>
+                    <li><a class="instagram" target="_blank" href="http://instagram.com/mitpics" onClick="ga('send', 'event', 'topbar', 'click', 'instagram');"><span>Follow MIT on Instagram</span></a></li>
+                    <li><a class="flickr" target="_blank" href="http://www.flickr.com/photos/cpsphotolibrary" onClick="ga('send', 'event', 'topbar', 'click', 'flickr');"><span>Follow MIT on Flickr</span></a></li>
+                    <li><a class="youtube" target="_blank" href="https://www.youtube.com/mit" onClick="ga('send', 'event', 'topbar', 'click', 'youtube');"><span>Follow MIT on YouTube</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </header>
+    <nav>
+    <div id="site-header-area-wrapper">
+        <div id="site-header-area" class="clearfix">
+            <div id="site-header">
+                <a class="mit-logo-button" href="http://web.mit.edu" target="_blank"></a>
+                <img alt="MIT News Office" id="logo-mit-news-img" src="/sites/mit.edu.newsoffice/themes/mitnews/img/logo-mit-news-b.png" />
+                <a id="logo-mit-news" href="/">
+                                            <h2>MIT News Office</h2>
+                                    </a>
+                <a id="header-browse-button" href="#site-browse-area"></a>
+                <a id="search-button" href="#site-search-area"></a>
+            </div>
+
+            <div id="options-wrapper" class="clearfix">
+                <div id="site-browse-button-area">
+                    <a id="browse-button" href="#site-browse-area">Browse</a>
+                    <span class="text">or</span>
+                </div>
+                <div id="site-search-area">
+                    <div class="wrapper clearfix">
+                        <form action="/search" method="get" id="form-search" accept-charset="UTF-8">
+                            <input title="Enter the keyword you wish to search for." type="text" id="keyword" name="keyword" placeholder="Search"  />
+                            <input type="submit" id="submit-search" name="" value="Submit" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="site-browse-area">
+                <h2 class="title">Browse</h2>
+                <ul id="browse-options" class="clearfix">
+                    <li class="clearfix">
+                        <a class="browse-option" href="#"><h3>Most Popular</h3></a>
+                        <div class="browse-content">
+                        <div class="view view-browse-news-by-popularity view-id-browse_news_by_popularity view-display-id-block_browse_news_by_popularity view-dom-id-0810677e4922cd5f05eaa480b6001303">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-popular">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/cyeber-security-mit-csail-00.jpg?itok=2Ni961xM" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_popularity_item"><a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519">New funding enables work on Internet policy and cybersecurity for key infrastructure</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/creative-arts-competition-rewards-arts-entrepreneurship-at-mit-0516"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/creative-arts-competition-mit-roots-studio-2017.jpg?itok=bTKd95AH" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_popularity_item"><a href="/2017/creative-arts-competition-rewards-arts-entrepreneurship-at-mit-0516">Creative Arts Competition rewards arts entrepreneurship at MIT</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/3q-siqi-zheng-on-air-quality-and-urban-development-in-china-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/siqi-zheng-mit-dusp-2017.jpg?itok=fQm-CxdT" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_popularity_item"><a href="/2017/3q-siqi-zheng-on-air-quality-and-urban-development-in-china-0519">3Q: Siqi Zheng on air quality and urban development in China</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even clearfix">  
+          <a href="/2017/obituary-mit-corporation-life-member-biotech-pioneer-henri-termeer-dies-71-0517"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Termeer.jpg?itok=s9o_dyZJ" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_popularity_item"><a href="/2017/obituary-mit-corporation-life-member-biotech-pioneer-henri-termeer-dies-71-0517">MIT Corporation life member and biotech pioneer Henri Termeer dies at 71</a></span>  </li>
+          <li class="views-row views-row-5 views-row-odd clearfix">  
+          <a href="/2017/michale-fee-wins-science-investigator-award-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/michale-fee-mit-bcs-00.jpg?itok=cXSFqPRj" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_popularity_item"><a href="/2017/michale-fee-wins-science-investigator-award-0519">Michale Fee receives Fundamental Science Investigator Award</a></span>  </li>
+          <li class="views-row views-row-6 views-row-even clearfix">  
+          <a href="/2017/plan-great-challenges-global-strategy-international-engagement-0517"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Richard-Lester-01.jpg?itok=XMFUWoiF" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_popularity_item"><a href="/2017/plan-great-challenges-global-strategy-international-engagement-0517">For great challenges, a global strategy </a></span>  </li>
+          <li class="views-row views-row-7 views-row-odd clearfix">  
+          <a href="/2017/entering-the-animal-world-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/People-and-Other-Animals-MIT-History-00.jpg?itok=L5qe7W7O" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_popularity_item"><a href="/2017/entering-the-animal-world-0519">Entering the animal world</a></span>  </li>
+          <li class="views-row views-row-8 views-row-even views-row-last clearfix">  
+          <a href="/2017/sasha-soane-wins-ivec-best-student-paper-award-0517"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/sasha-soane-mit-psfc-2017.jpg?itok=c9DUr_Rg" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_popularity_item"><a href="/2017/sasha-soane-wins-ivec-best-student-paper-award-0517">Sasha Soane wins International Vacuum Electronics Conference best student paper award</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <a class="browse-option" href="/topics"><h3>By Topic</h3></a>
+                        <div class="browse-content">
+                            <div class="view view-browse-news-by-topics view-id-browse_news_by_topics view-display-id-block_browse_news_by_topics view-dom-id-85edb65b82ce152cfe6f52aaf8d63b7a">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-by-terms">          <li class="views-row views-row-1 views-row-odd views-row-first">  
+          <span class="browse-news-term"><a href="/topic/computer-science-and-artificial-intelligence-laboratory-csail">Computer Science and Artificial Intelligence Laboratory (CSAIL)</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-e96e079d625ae28e639a27f4afca00d8">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/cyeber-security-mit-csail-00.jpg?itok=2Ni961xM" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519">New funding enables work on Internet policy and cybersecurity for key infrastructure</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/camera-equipped-drones-cinematography-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Drone-Camerapeople.jpg?itok=oJLAGbe5" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/camera-equipped-drones-cinematography-0518">Cinematography on the fly</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/mit-csail-teaching-robots-to-teach-other-robots-0510"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/claudia-perez-darpino-teaching-robots-csail-mit-00.jpg?itok=vpBElgdN" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-csail-teaching-robots-to-teach-other-robots-0510">Teaching robots to teach other robots</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/eric-schmidt-visits-mit-to-discuss-computing-ai-future-of-technology-0504"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/eric-schmidt-mit-2017.jpg?itok=QWm8Baur" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/eric-schmidt-visits-mit-to-discuss-computing-ai-future-of-technology-0504">Eric Schmidt visits MIT to discuss computing, artificial intelligence, and the future of technology</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-2 views-row-even">  
+          <span class="browse-news-term"><a href="/topic/computer-vision">Computer vision</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-3b4d7221fe873099bfc6e1c1b88fb318">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2016/year-in-review-mit-csail-1216"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/16-in-16-mit-csail.jpeg?itok=JQ5baWdO" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/year-in-review-mit-csail-1216"> Ingestible robots, glasses-free 3-D, and computers that explain themselves</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2016/computer-learns-recognize-sounds-video-1202"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/MIT-SoundRec-1.jpg?itok=B6ODEcDs" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/computer-learns-recognize-sounds-video-1202">Computer learns to recognize sounds by watching video</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2016/creating-videos-of-the-future-1129"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/csail-video-generation.png?itok=AB8DEsZT" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/creating-videos-of-the-future-1129">Creating videos of the future</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2016/ramesh-raskar-awarded-lemelson-mit-prize-0913"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/ramesh-raskar-mit-spectrum.jpeg?itok=cQf7KKVF" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/ramesh-raskar-awarded-lemelson-mit-prize-0913">Ramesh Raskar awarded $500,000 Lemelson-MIT Prize</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-3 views-row-odd">  
+          <span class="browse-news-term"><a href="/topic/electrical-engineering-computer-science-eecs">Electrical Engineering &amp; Computer Science (eecs)</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-e17db5e5f4a9eca0fb0ace17cf53c041">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/nanofluidic-device-speeds-quality-control-biologics-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Quality-Control-A1.jpg?itok=zcCDU1GS" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/nanofluidic-device-speeds-quality-control-biologics-0522">Speeding up quality control for biologics</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/camera-equipped-drones-cinematography-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Drone-Camerapeople.jpg?itok=oJLAGbe5" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/camera-equipped-drones-cinematography-0518">Cinematography on the fly</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/sasha-soane-wins-ivec-best-student-paper-award-0517"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/sasha-soane-mit-psfc-2017.jpg?itok=c9DUr_Rg" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/sasha-soane-wins-ivec-best-student-paper-award-0517">Sasha Soane wins International Vacuum Electronics Conference best student paper award</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/newly-tenured-engineers-0512"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/tenured-mit-engineers-2017_1.jpeg?itok=Mtc67eHF" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/newly-tenured-engineers-0512">The tenured engineers of 2017</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-4 views-row-even">  
+          <span class="browse-news-term"><a href="/topic/imaging">Imaging</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-d14bf49a799c58c589219155cc7500fd">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/camera-equipped-drones-cinematography-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Drone-Camerapeople.jpg?itok=oJLAGbe5" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/camera-equipped-drones-cinematography-0518">Cinematography on the fly</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/earth-observing-1-satellite-retired-leaving-legacy-spectacular-imagery-0427"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/boston-eo-1-nasa-satellite-00.png?itok=Z6GYf5v9" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/earth-observing-1-satellite-retired-leaving-legacy-spectacular-imagery-0427">Earth Observing–1 satellite is retired, leaving a legacy of spectacular imagery </a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/high-resolution-imaging-conventional-microscopes-0417"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-more-expansion.jpg?itok=naVTf2Z_" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/high-resolution-imaging-conventional-microscopes-0417">High-resolution imaging with conventional microscopes</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/foliage-penetrating-ladar-technology-may-improve-border-surveillance-0227"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/FOPEN-1-MIT-Lincoln-Laboratory.jpg?itok=JqHCvmF5" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/foliage-penetrating-ladar-technology-may-improve-border-surveillance-0227">Foliage-penetrating ladar technology may improve border surveillance</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-5 views-row-odd views-row-last">  
+          <span class="browse-news-term"><a href="/topic/research">Research</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-5d5e7553a6683caa3429e793e39a3f6b">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/guidance-targeting-residual-ovarian-tumors-0523"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Ovarian-Cancer_1.jpg?itok=7AG0Uc-F" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/guidance-targeting-residual-ovarian-tumors-0523">Study offers guidance for targeting residual ovarian tumors</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/mit-assistant-professor-zach-hartwig-applying-diverse-skills-in-pursuit-of-nuclear-fusion-breakthrough-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-NSE-Assistant-Professor-Zach-Hartwig-researches-nuclear-fusion-power.jpg?itok=zydnNM2r" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-assistant-professor-zach-hartwig-applying-diverse-skills-in-pursuit-of-nuclear-fusion-breakthrough-0522">Zach Hartwig: Applying diverse skills in pursuit of a fusion breakthrough</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/nanofluidic-device-speeds-quality-control-biologics-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Quality-Control-A1.jpg?itok=zcCDU1GS" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/nanofluidic-device-speeds-quality-control-biologics-0522">Speeding up quality control for biologics</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/cyeber-security-mit-csail-00.jpg?itok=2Ni961xM" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519">New funding enables work on Internet policy and cybersecurity for key infrastructure</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>                            <div class="link-more">
+                            <a href="/topics">See All Topics</a>                            </div>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <a class="browse-option" href="#"><h3>By School</h3></a>
+                        <div class="browse-content">
+                        <div class="view view-browse-news-by-schools view-id-browse_news_by_schools view-display-id-block_browse_news_by_schools view-dom-id-db2c286d4cd4a969c5ddb379d6cc55a2">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-by-terms">          <li class="views-row views-row-1 views-row-odd views-row-first">  
+          <span class="browse-news-term"><a href="/architecture-and-planning">School of Architecture + Planning</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-ad6cc9affebfa5e24edcd25b50c9d822">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/3q-siqi-zheng-on-air-quality-and-urban-development-in-china-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/siqi-zheng-mit-dusp-2017.jpg?itok=fQm-CxdT" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/3q-siqi-zheng-on-air-quality-and-urban-development-in-china-0519">3Q: Siqi Zheng on air quality and urban development in China</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/cyeber-security-mit-csail-00.jpg?itok=2Ni961xM" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519">New funding enables work on Internet policy and cybersecurity for key infrastructure</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/moisture-responsive-workout-suit-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Sweat-Wearables-1.jpg?itok=zM7ZEVKs" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/moisture-responsive-workout-suit-0519">Researchers design moisture-responsive workout suit </a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/creative-arts-competition-rewards-arts-entrepreneurship-at-mit-0516"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/creative-arts-competition-mit-roots-studio-2017.jpg?itok=bTKd95AH" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/creative-arts-competition-rewards-arts-entrepreneurship-at-mit-0516">Creative Arts Competition rewards arts entrepreneurship at MIT</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-2 views-row-even">  
+          <span class="browse-news-term"><a href="/engineering">School of Engineering</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-24620081a97dff8ed4b1dfdaf7887b6a">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/guidance-targeting-residual-ovarian-tumors-0523"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Ovarian-Cancer_1.jpg?itok=7AG0Uc-F" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/guidance-targeting-residual-ovarian-tumors-0523">Study offers guidance for targeting residual ovarian tumors</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/future-of-sensory-technology-mit-nano-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/mit-nano-illustration-blackburn-00.jpg?itok=YyXf73Kj" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/future-of-sensory-technology-mit-nano-0522">The future of sensory technology</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/mit-assistant-professor-zach-hartwig-applying-diverse-skills-in-pursuit-of-nuclear-fusion-breakthrough-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-NSE-Assistant-Professor-Zach-Hartwig-researches-nuclear-fusion-power.jpg?itok=zydnNM2r" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-assistant-professor-zach-hartwig-applying-diverse-skills-in-pursuit-of-nuclear-fusion-breakthrough-0522">Zach Hartwig: Applying diverse skills in pursuit of a fusion breakthrough</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/mit-school-of-engineering-gives-infinite-mile-awards-to-exceptional-staff-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Engineering-staff-2017-Infinite-Mile-Award-winners.JPG?itok=aUuMvyCu" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-school-of-engineering-gives-infinite-mile-awards-to-exceptional-staff-0522">Spotlight on engineering staff</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-3 views-row-odd">  
+          <span class="browse-news-term"><a href="/humanities-arts-and-social-sciences">School of Humanities, Arts, and Social Sciences</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-6db4a47e5149fcd1a5ea69a424eb9a5b">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/3q-john-tirman-how-political-science-contributes-to-immigration-and-military-conflict-policy-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/refugee.jpg?itok=ZIOgyZW6" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/3q-john-tirman-how-political-science-contributes-to-immigration-and-military-conflict-policy-0522">3 Questions: How political science contributes to national policies on immigration and military conflict</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/mens-et-manus-america-examines-politics-of-misinformation-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/us-flag-true-false-lies-misinformation-politics-mit-00.jpeg?itok=FTKnRiKj" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mens-et-manus-america-examines-politics-of-misinformation-0522">Mens et Manus America examines the politics of misinformation</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/entering-the-animal-world-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/People-and-Other-Animals-MIT-History-00.jpg?itok=L5qe7W7O" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/entering-the-animal-world-0519">Entering the animal world</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/mens-et-manus-goes-global-0517"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/andrei-ivanov-grenoble-mit-misti-00.jpg?itok=5TkoX5dx" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mens-et-manus-goes-global-0517">&quot;Mens et manus&quot; goes global</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-4 views-row-even">  
+          <span class="browse-news-term"><a href="/management">Sloan School of Management</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-050a666e3f5d67637c210b8cf30f2016">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/mens-et-manus-america-examines-politics-of-misinformation-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/us-flag-true-false-lies-misinformation-politics-mit-00.jpeg?itok=FTKnRiKj" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mens-et-manus-america-examines-politics-of-misinformation-0522">Mens et Manus America examines the politics of misinformation</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/cyeber-security-mit-csail-00.jpg?itok=2Ni961xM" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519">New funding enables work on Internet policy and cybersecurity for key infrastructure</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/mit-100k-optical-chips-ai-computations-light-speed-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-100k-1.jpg?itok=EYb9hLwj" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-100k-optical-chips-ai-computations-light-speed-0518">MIT $100K winner’s optical chips perform AI computations at light speed</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/andrew-lo-book-financial-markets-evolutionary-lines-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Adaptive-Markets.jpg?itok=S1KDkuOv" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/andrew-lo-book-financial-markets-evolutionary-lines-0518">Darwin visits Wall Street</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-5 views-row-odd views-row-last">  
+          <span class="browse-news-term"><a href="/science">School of Science</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-c1fa15df36200cbc9759b0e139cd7c15">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/future-of-sensory-technology-mit-nano-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/mit-nano-illustration-blackburn-00.jpg?itok=YyXf73Kj" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/future-of-sensory-technology-mit-nano-0522">The future of sensory technology</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/michale-fee-wins-science-investigator-award-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/michale-fee-mit-bcs-00.jpg?itok=cXSFqPRj" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/michale-fee-wins-science-investigator-award-0519">Michale Fee receives Fundamental Science Investigator Award</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/tracy-slatyer-wins-future-of-science-award-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/tracy-slatyer-mit-physics-00.jpg?itok=39nkjuVf" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/tracy-slatyer-wins-future-of-science-award-0518">Tracy Slatyer wins Future of Science Award</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/rivers-titan-landscape-resembles-mars-not-earth-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-TitansRivers.jpg?itok=gOFsQuf5" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/rivers-titan-landscape-resembles-mars-not-earth-0518">Rivers on three worlds tell different tales</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>                        <!--<a href="/schools">See All Schools</a> -->
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <a class="browse-option" href="/departments"><h3>By Department</h3></a>
+                        <div class="browse-content">
+                            <div class="view view-browse-news-by-departments view-id-browse_news_by_departments view-display-id-block_browse_news_by_departments view-dom-id-f23bf79af638c73f0360c5ad765221e7">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-by-terms">          <li class="views-row views-row-1 views-row-odd views-row-first">  
+          <span class="browse-news-term"><a href="/department/health-sciences-and-technology">Health Sciences and Technology</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-2dcd03fcf8154e09a9d905a6ca850b51">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/eight-faculty-mit-elected-national-academy-engineering-0210"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/national-academy-of-engineering-00_0_0.jpg?itok=4IawSw78" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/eight-faculty-mit-elected-national-academy-engineering-0210">Eight MIT faculty elected to the National Academy of Engineering </a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2016/scene-at-mit-puppy-love-1026"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/scene-at-mit-stephanie-ku-puppy.jpg?itok=jfAD22yv" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/scene-at-mit-puppy-love-1026">Scene at MIT: Puppy love</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2016/seven-mit-elected-american-academy-arts-and-sciences-0421"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/LobbyWindows-Maia.jpg?itok=yaeSTK3-" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/seven-mit-elected-american-academy-arts-and-sciences-0421">Seven from MIT elected to American Academy of Arts and Sciences for 2016</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2016/forbes-30-under-30-lists-0107"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/2016-forbes-30-under-30_1.png?itok=5S8xz0Yi" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/forbes-30-under-30-lists-0107">25 from MIT named to Forbes 30 Under 30 lists in 2016</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-2 views-row-even">  
+          <span class="browse-news-term"><a href="/department/nuclear-science-and-engineering">Nuclear Science and Engineering</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-67d413bb259a43ae4e4d55935bdcf008">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/mit-assistant-professor-zach-hartwig-applying-diverse-skills-in-pursuit-of-nuclear-fusion-breakthrough-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-NSE-Assistant-Professor-Zach-Hartwig-researches-nuclear-fusion-power.jpg?itok=zydnNM2r" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-assistant-professor-zach-hartwig-applying-diverse-skills-in-pursuit-of-nuclear-fusion-breakthrough-0522">Zach Hartwig: Applying diverse skills in pursuit of a fusion breakthrough</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/mit-school-of-engineering-gives-infinite-mile-awards-to-exceptional-staff-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Engineering-staff-2017-Infinite-Mile-Award-winners.JPG?itok=aUuMvyCu" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-school-of-engineering-gives-infinite-mile-awards-to-exceptional-staff-0522">Spotlight on engineering staff</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/mit-researcher-david-carpenter-uses-campus-nuclear-reactor-to-make-power-plants-safer-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/David-Carpenter-Nuclear-Reactor-Laboratory-MIT-00_0.jpg?itok=JkOGaG5U" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-researcher-david-carpenter-uses-campus-nuclear-reactor-to-make-power-plants-safer-0519">David Carpenter: Purpose driven to the core</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/newly-tenured-engineers-0512"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/tenured-mit-engineers-2017_1.jpeg?itok=Mtc67eHF" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/newly-tenured-engineers-0512">The tenured engineers of 2017</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-3 views-row-odd">  
+          <span class="browse-news-term"><a href="/department/chemistry">Chemistry</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-7b8f70f2949a6f2cf3797bde9534da9e">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/richard-schrock-wins-killian-award-0517"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-schrock.jpg?itok=qzk_Tj4c" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/richard-schrock-wins-killian-award-0517">Richard Schrock wins faculty’s Killian Award</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/j-wafs-awards-14-million-in-third-round-of-seed-grant-funding-0510"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/Irrigated-Rice-Senegal-MIT-J-WAFS-00_0.jpeg?itok=S4L2erVc" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/j-wafs-awards-14-million-in-third-round-of-seed-grant-funding-0510">J-WAFS awards $1.4 million in third round of seed grant funding</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/electrochemical-clear-pollutants-water-0510"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-PurifyingWater-1.jpg?itok=w99dTKLo" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/electrochemical-clear-pollutants-water-0510">MIT researchers develop new way to clear pollutants from water</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/mit-professors-claudia-schlau-cohen-mircea-dinca-microscopic-answers-to-food-water-energy-0504"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/Gabriela-Schlau-Cohen-Mircea-Dinca-microscopic-chemistry-research-talk-MIT-00.jpg?itok=VJ7dQ9Da" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-professors-claudia-schlau-cohen-mircea-dinca-microscopic-answers-to-food-water-energy-0504">Microscopic answers to humanity’s looming questions about food, water, and energy</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-4 views-row-even">  
+          <span class="browse-news-term"><a href="/department/history">History</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-657fdf2025f85aeee94258413616b68d">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/entering-the-animal-world-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/People-and-Other-Animals-MIT-History-00.jpg?itok=L5qe7W7O" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/entering-the-animal-world-0519">Entering the animal world</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/book-pop-music-japanese-society-0427"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Japan-Pop.jpg?itok=aO104ybH" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/book-pop-music-japanese-society-0427">Big in Japan</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/exploring-the-impact-of-margaret-macvicar-legacy-urop-undergraduate-research-0406"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/mit-macvicar-day-2017.jpg?itok=e1UGxget" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/exploring-the-impact-of-margaret-macvicar-legacy-urop-undergraduate-research-0406">Exploring the impact of Margaret MacVicar’s legacy on education at MIT</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/3-questions-how-history-helps-solve-todays-issues-0228"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/1800x1200_Malick-Ghachem-2-29-16-3-B.jpeg?itok=4GLIs1iP" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/3-questions-how-history-helps-solve-todays-issues-0228">3 Questions: How history helps us solve today&#039;s issues</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-5 views-row-odd views-row-last">  
+          <span class="browse-news-term"><a href="/department/physics">Physics</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-a4c7502dbaca9592bae75032a96b1728">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/tracy-slatyer-wins-future-of-science-award-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/tracy-slatyer-mit-physics-00.jpg?itok=39nkjuVf" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/tracy-slatyer-wins-future-of-science-award-0518">Tracy Slatyer wins Future of Science Award</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/superconductors-graphene-exotic-electronic-states-quantum-computing-0505"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Graphene-Semiconductors.jpg?itok=gM3-hwRT" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/superconductors-graphene-exotic-electronic-states-quantum-computing-0505">Sandwiched between superconductors, graphene adopts exotic electronic states</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/nas-elects-six-mit-professors-0503"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-NAS-Members.jpg?itok=Pk1rRvg1" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/nas-elects-six-mit-professors-0503">National Academy of Sciences elects six MIT professors for 2017</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/another-new-potentially-habitable-planet-discovered-0421"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/potential-habitable-exoplanet-mit-00.jpg?itok=6coXUp76" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/another-new-potentially-habitable-planet-discovered-0421">Another potentially habitable extrasolar planet discovered</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>                            <div class="link-more">
+                            <a href="/departments">See All Departments</a>                            </div>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <a class="browse-option" href="/research-centers"><h3>By Center, Lab, & Program</h3></a>
+                        <div class="browse-content">
+                            <div class="view view-browse-news-by-research-centers view-id-browse_news_by_research_centers view-display-id-block_browse_news_by_research_centers view-dom-id-f18248f13721169bb4f0268b62f80f3a">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-by-terms">          <li class="views-row views-row-1 views-row-odd views-row-first">  
+          <span class="browse-news-term"><a href="/topic/csail">Computer Science and Artificial Intelligence Laboratory (CSAIL)</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-5f5388627b014ca51cd298c19d42a5da">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/cyeber-security-mit-csail-00.jpg?itok=2Ni961xM" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519">New funding enables work on Internet policy and cybersecurity for key infrastructure</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/camera-equipped-drones-cinematography-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Drone-Camerapeople.jpg?itok=oJLAGbe5" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/camera-equipped-drones-cinematography-0518">Cinematography on the fly</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/mit-csail-teaching-robots-to-teach-other-robots-0510"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/claudia-perez-darpino-teaching-robots-csail-mit-00.jpg?itok=vpBElgdN" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-csail-teaching-robots-to-teach-other-robots-0510">Teaching robots to teach other robots</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/eric-schmidt-visits-mit-to-discuss-computing-ai-future-of-technology-0504"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/eric-schmidt-mit-2017.jpg?itok=QWm8Baur" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/eric-schmidt-visits-mit-to-discuss-computing-ai-future-of-technology-0504">Eric Schmidt visits MIT to discuss computing, artificial intelligence, and the future of technology</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-2 views-row-even">  
+          <span class="browse-news-term"><a href="/topic/research-laboratory-electronics">Research Laboratory of Electronics</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-be8be81189706984e8bbdd46a99b6fa4">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/nanofluidic-device-speeds-quality-control-biologics-0522"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Quality-Control-A1.jpg?itok=zcCDU1GS" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/nanofluidic-device-speeds-quality-control-biologics-0522">Speeding up quality control for biologics</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/graphene-copy-machine-cheaper-semiconductor-wafers-0419"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Graphene-CopyPaste-1.jpg?itok=RiRK2mnC" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/graphene-copy-machine-cheaper-semiconductor-wafers-0419">Not stuck on silicon</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/sanity-of-the-long-distance-runner-polina-anikeeva-0413"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/polina-anikeeva-mit-dmse-boston-marathon-00.jpg?itok=2TFR9Vgv" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/sanity-of-the-long-distance-runner-polina-anikeeva-0413">The sanity of the long-distance runner</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/stretching-boundaries-neural-implants-0331"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Stretch-Fiber-1.jpg?itok=SL3uFlsk" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/stretching-boundaries-neural-implants-0331">Stretching the boundaries of neural implants</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-3 views-row-odd">  
+          <span class="browse-news-term"><a href="/centers-labs-programs/biomimetics-robotics-lab">Biomimetics Robotics Lab</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-ad5ef4858a56355098256ca556daa424">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2016/faculty-profile-sangbae-kim-1216"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/MIT-SangbaeKim-A1.jpg?itok=HmLH1Ckv" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/faculty-profile-sangbae-kim-1216">Taking a leap in bioinspired robotics</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2016/tenured-engineers-0510"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/tenured-mit-engineers-2016.png?itok=O6NkwKNt" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/tenured-engineers-0510"> The tenured engineers of 2016</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd views-row-last clearfix">  
+          <a href="/2014/mit-cheetah-robot-runs-jumps-0915"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2014/MIT-Cheetah-A1.jpg?itok=8ApGeKR1" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2014/mit-cheetah-robot-runs-jumps-0915">Bound for robotic glory</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-4 views-row-even">  
+          <span class="browse-news-term"><a href="/topic/csail">Computer Science and Artificial Intelligence Laboratory (CSAIL)</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-39d1b94213ba54d172a0aed274d5548c">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/cyeber-security-mit-csail-00.jpg?itok=2Ni961xM" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/funding-enables-internet-policy-and-cybersecurity-work-0519">New funding enables work on Internet policy and cybersecurity for key infrastructure</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2017/camera-equipped-drones-cinematography-0518"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/MIT-Drone-Camerapeople.jpg?itok=oJLAGbe5" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/camera-equipped-drones-cinematography-0518">Cinematography on the fly</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2017/mit-csail-teaching-robots-to-teach-other-robots-0510"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/claudia-perez-darpino-teaching-robots-csail-mit-00.jpg?itok=vpBElgdN" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/mit-csail-teaching-robots-to-teach-other-robots-0510">Teaching robots to teach other robots</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2017/eric-schmidt-visits-mit-to-discuss-computing-ai-future-of-technology-0504"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/eric-schmidt-mit-2017.jpg?itok=QWm8Baur" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/eric-schmidt-visits-mit-to-discuss-computing-ai-future-of-technology-0504">Eric Schmidt visits MIT to discuss computing, artificial intelligence, and the future of technology</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+          <li class="views-row views-row-5 views-row-odd views-row-last">  
+          <span class="browse-news-term"><a href="/centers-labs-programs/technology-and-policy-program">Technology and Policy Program</a></span>    
+          <div class="view view-browse-news-by-term view-id-browse_news_by_term view-display-id-default view-dom-id-0b0d88ca819d6c983f7bb5ae60731550">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+          <ul class="browse-news-items">          <li class="views-row views-row-1 views-row-odd views-row-first clearfix">  
+          <a href="/2017/clearing-old-smoke-0112"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2017/Nick%20Mabey%202016_v2.jpg?itok=HjI0-50j" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2017/clearing-old-smoke-0112">Clearing the Old Smoke</a></span>  </li>
+          <li class="views-row views-row-2 views-row-even clearfix">  
+          <a href="/2016/four-mit-students-named-schwarzman-scholars-1202"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/MIT-Schwarzman-Scholars.jpg?itok=zZnGKfAk" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/four-mit-students-named-schwarzman-scholars-1202">Four MIT students named Schwarzman Scholars</a></span>  </li>
+          <li class="views-row views-row-3 views-row-odd clearfix">  
+          <a href="/2016/eight-from-mit-awarded-fulbright-grants-0616"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/fulbright-logo-mit.png?itok=xEbKNTCX" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/eight-from-mit-awarded-fulbright-grants-0616">Eight from MIT awarded 2016 Fulbright grants</a></span>  </li>
+          <li class="views-row views-row-4 views-row-even views-row-last clearfix">  
+          <a href="/2016/mit-technology-policy-program-celebrates-40-years-0609"><img typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/browse_news_image/public/images/2016/campbell-karplus-mit-tpp.jpeg?itok=nx4GHWRa" width="90" height="60" alt="" /></a>    
+          <span class="browse_news_by_term_item"><a href="/2016/mit-technology-policy-program-celebrates-40-years-0609">Technology and Policy Program celebrates 40 years</a></span>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>  </li>
+      </ul>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>                            <div class="link-more">
+                            <a href="/research-centers">See All Centers, Labs, &amp; Programs</a>                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <p class="other-options">
+                                            <a href="/user/login">Login</a>
+                                        <span class="text">or</span>
+                    <a href="/subscribe-newsletter">Subscribe Newsletter</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+    </nav>
+
+<article>
+
+<div id="site-content-area-wrapper">
+    <div id="site-content-area">
+
+
+        
+        <div class="view view-news-article-top-slideshow-flexslider view-id-news_article_top_slideshow_flexslider view-display-id-block article-top-slideshow-flexslider view-dom-id-2b24e6e8a4560d79b9870989b0c86be0">
+
+    <div class="view-header-section">
+        <div class="view-header-section-wrapper">
+    
+        
+  
+    
+
+
+
+
+    
+        </div>
+    </div> <!-- end of view-header-section -->
+    
+    <div class="view-main-section">
+    
+      <div class="view-content">
+      <div class="flexslider">    <ul class="slides">          <li class="">  
+          <div class="slide-wrapper">    
+          <div class="image"><img src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/news_article_image_top_slideshow/public/images/2014/MITnews_LausanneTraffic_Olivares_01.jpg?itok=6H8UpzeX" title="" alt="" /></div>    
+          <div class="descr"><div class="text"><p class="credits">Photo: Jose-Luis Olivares/MIT</p></div><a class="top-slideshow-full" rel="top-slideshow" href="http://news.mit.edu/sites/mit.edu.newsoffice/files/images/2014/MITnews_LausanneTraffic_Olivares_01.jpg">Full Screen</a></div>    
+          </div>  </li>
+          <li class="">  
+          <div class="slide-wrapper">    
+          <div class="image"><img src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/news_article_image_top_slideshow/public/images/2014/MITnews_LausanneTraffic_02.jpg?itok=N9br5npg" title="" alt="This figure shows two maps with colored lines that represent the main roads in Lausanne, Switzerland. The three colors represent how long it takes to commute: red is the longest commute, yellow is average, and green is the shortest commute. The left map, with conventional traffic light programming, has many red lines that represent long commutes. The right map, which uses the researcher's improved system, has many green lines that represent short commutes.
+" /></div>    
+          <div class="descr"><div class="text"><p class="caption">This figure shows two maps with colored lines that represent the main roads in Lausanne, Switzerland. The three colors represent how long it takes to commute: red is the longest commute, yellow is average, and green is the shortest commute. The left map, with conventional traffic light programming, has many red lines that represent long commutes. The right map, which uses the researcher's improved system, has many green lines that represent short commutes.
+</p><p class="credits">Image courtesy of the researchers</p></div><a class="top-slideshow-full" rel="top-slideshow" href="http://news.mit.edu/sites/mit.edu.newsoffice/files/images/2014/MITnews_LausanneTraffic_02.jpg">Full Screen</a></div>    
+          </div>  </li>
+      </ul></div>    </div>
+  
+  
+  
+  
+  
+      </div>
+</div>
+        
+        <header>
+        <div class="content-sides-padding">
+
+            <div class="article-header">
+
+                                    <h1 itemprop="name headline" class="article-heading">Traffic lights: There’s a better way</h1>
+                
+                <img class="article-cover-image" itemprop="image" typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/article_cover_image_small/public/images/2014/MITnews_LausanneTraffic_Olivares_01_0.jpg?itok=xhg3CXps" width="228" height="152" alt="" title="" />
+                <p id="article-summary"><span itemprop="description">MIT researchers develop an improved system for timing of urban lights to minimize commuting times. </span>
+
+                                </p>
+            </div>
+        </div>
+        </header>
+
+        <div class="columns-container-1 clearfix">
+
+            <div class="column-1">
+
+                <div id="info-section" class="clearfix content-sides-padding">
+                <div class="left">
+                    <p>
+                        <span itemprop="author">David L. Chandler | MIT News Office</span>
+                        <br />
+                        <span itemprop="datePublished" content="2014-07-07">July 7, 2014</span>
+                    </p>
+                </div>
+
+                <div class="right">
+                    <div class="options">
+                                        <a id="button-press-inquiry" href="#press-inquiry-section">Press Inquiries</a>
+                                        <a id="button-share" href="#share-choices"><span>Share</span></a>
+                    </div>
+                </div>
+                </div>
+
+                                <div id="press-inquiry-section" class="clearfix">
+                                        <div class="column">
+                        <h3>Press Contact</h3>
+                        <p><strong>Andrew Carleen</strong><br />Email: <a href="mailto:expertrequests@mit.edu">expertrequests@mit.edu</a><br />Phone: 617-253-1682<br />MIT News Office<br /><br /></p>
+                    </div>
+                                                            <div class="column">
+                        <h3>Media Resources</h3>
+                        <p>2 images for download<p>
+                        <p><a id="show-media-download" href="/media-download?article=29321">Access Media</a></p>
+                        <p class="note">
+                            Media can only be downloaded from the desktop version of this website.
+                        </p>
+                    </div>
+                                                        </div>
+                
+                <div class="share-article">
+                    <h3>Share</h3>
+
+                    <div id="share-choices" class="clearfix">
+
+                                        <div class="addthis_toolbox addthis_default_style addthis_32x32_style"  addthis:url="http://news.mit.edu/2014/traffic-lights-theres-a-better-way-0707">
+                    <a class="addthis_button_facebook"></a>
+                    <a class="addthis_button_twitter"></a>
+                    <a class="addthis_button_google_plusone_share"></a>
+                    <a class="addthis_button_reddit"></a>
+                    <a class="addthis_button_stumbleupon"></a>
+                    <a class="addthis_button_linkedin"></a>
+                    <a class="addthis_button_email"></a>
+                    <a class="addthis_button_print"></a>
+                    <a class="addthis_button_compact"></a>
+                    </div>
+                    <h3 class="label comment">Comment</h3>
+                    <a class="button_commment" href="#separator-comments"><span>Leave a comment</span></a>
+
+                    </div>
+                    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4e43d5194319780c"></script>
+                </div>
+
+                <div itemprop="articleBody" id="article-body-main" class="content-sides-padding">
+                      <div class="region region-content">
+    <div id="block-system-main" class="block block-system">
+
+    
+  <div class="content">
+    
+
+<div class="field field-name-field-article-content field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>Anyone who has ever driven a city street and been frustrated by having to stop again and again for red lights has probably thought that there must be a better way. Now, researchers at MIT have developed a means of computing optimal timings for city stoplights that can significantly reduce drivers’ average travel times.</p>
+
+<p>Existing software for timing traffic signals has several limitations, says Carolina Osorio, an assistant professor of civil and environmental engineering at MIT. She is lead author of a forthcoming paper in the journal <em>Transportation Science </em>that describes the new system, based on a study of traffic in Lausanne, Switzerland.</p>
+
+<p>“Usually in practice, when you want to time traffic lights, traditionally it’s been done in a local way,” Osorio says. “You define one intersection, or maybe a set of intersections along an arterial, and you fine-tune or optimize the traffic lights there. What is less done, and is more difficult to do, is when you look at a broader scale, in this case the city of Lausanne, and you want to change signal times at intersections distributed across the entire city, with the objective of trying to improve conditions across the entire city.”</p>
+
+<p>Such an expansive aim triggers complications, such as the ripple effect that a change at one intersection can produce across the surrounding area, or changes in driver behavior following changes in traffic-light patterns: For example, if wait times on a particular route increase, drivers may seek alternative routes that feature fewer red lights.</p>
+
+<p>The new optimization process developed by Osorio and graduate student Linsen Chong can time traffic lights in large urban areas while accounting for the complex and diverse reactions of individual drivers. Their approach uses high-resolution traffic simulators that describe, in detail, the behavior of drivers in response to changes in travel conditions.</p>
+
+<p>In detailed simulations of Lausanne’s traffic, they found that the timings produced by their approach reduced the average travel time for commuters by 22 percent, compared with timings generated by commercial traffic-light timing software.</p>
+
+<p>Some cities currently make use of these high-resolution simulators, known as microscopic simulators: Behavior down to the level of individual drivers is simulated to estimate the impact of a given timing pattern. But the complexity of such models makes them computationally intensive. For instance, in the case of Lausanne, more than 12,000 individual drivers are simulated.</p>
+
+<p>The new approach allows these models to be used in a practical and computationally efficient way. Other citywide models can be used to help determine proposed timings, but they treat traffic flow simplistically and homogeneously, rather than as a collection of individual travelers with distinct and complex behavior.</p>
+
+<p>The new simulation-based optimization model proposed by Osorio and Chong aims to bridge these options, providing a detailed vehicle-level analysis but applying it to city-scale optimization.</p>
+
+<p>The system, Osorio says, starts with a modest premise: “What if we combine information from these microscopic simulations with [citywide] information from these simple traffic models that are very computationally efficient and run instantly, but have very low resolution?” The approach combines the accuracy of high-resolution models with the computational efficiency of low-resolution traffic models.</p>
+
+<p>The basic system, Osorio says, is also being applied toward different goals: Instead of just minimizing commuting times, it is also being used to minimize fuel consumption, and even to determine the optimal location for services such as vehicle-sharing hubs.</p>
+
+<p>The work is currently being extended to help in the design of timing systems that can adapt to changing traffic conditions. Work on this topic is ongoing in collaboration with officials in New York City’s Department of Transportation, focusing on peak-period traffic in areas of Manhattan.</p>
+
+<p>That agency’s Mohamad Talas, a deputy director of system engineering who was not involved in the research but is working with the MIT team on testing, says, “Such a model can validate our active traffic-management system in Manhattan, and allow us to fine-tune our processes and improve the network operation.”</p>
+
+<p>Talas adds, “I believe that this approach is economically viable, with cost savings for any jurisdiction that needs to assess and improve traffic conditions for a large area of the transportation network.”</p>
+</div></div></div>
+<hr id="separator-comments" />
+
+<section>
+    <div id="article-tags">
+        <p><strong class="label">Topics:</strong> <span class="tags"><a href="/topic/cities">Cities</a><span class="comma">, </span><a href="/topic/urban-studies">Urban studies and planning</a><span class="comma">, </span><a href="/topic/traffic-management">Traffic management</a><span class="comma">, </span><a href="/topic/computers">Computer science and technology</a><span class="comma">, </span><a href="/topic/transportation">Transportation</a><span class="comma">, </span><a href="/topic/automobiles">Automobiles</a><span class="comma">, </span><a href="/topic/civil-engineering">Civil and environmental engineering</a><span class="comma">, </span><a href="/topic/school-engineering">School of Engineering</a><span class="comma">, </span><a href="/topic/research">Research</a></span></p>
+    </div>
+</section>
+
+
+<section>
+    <div id="article-comments" />
+    <div class="comments">
+          <h2 class="title">Comments</h2>
+        
+  <a id="comment-17103"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        Norm_W      </p>
+      <p class="comment-time">
+        July 7, 2014       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The problem with such an approach for reducing car based commuting time in a city is that it will attract more traffic, until the very level that is prevalent right now (level of commuting time) is reached again. Cities do not have commuting times that are based on how well the traffic is guided. Cities have commuting times that are based on the local average commuter's individual will on how long to sit in a vehicle to commute. If it becomes easier, more people will fill in the resulting spaces because they will realize "hey this use to be 1 hour and now it's just 40 minutes, I'm ok with that" and they use their cars, buy houses/rent places further out, until all is back to the very same levels of wasting time (by commuting) as it is right now. It isn't the traffic light software. It's us.</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17104"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        Ted      </p>
+      <p class="comment-time">
+        July 7, 2014       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Optimizing traffic flow can really only be done in one direction at any one time since the timing of the lights for north bound traffic directly interferes with the traffic flow south bound  and the cross town traffic.     and traffic does not have constant volumes.   and distances between lights are not constant  ( even in cities with primarily a grid layout )</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17105"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        trafficdigger      </p>
+      <p class="comment-time">
+        July 8, 2014       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>What is so special with this work except a shiny re-branding with MIT's name?   Using microsimulator as the black box performance<br />evaluator for some (or whatever) objective functions, then find out the "best" timing plans that optimizes the objective function.  This is nothing but moot academic exercises. These type of ideas have been there for half century and tons of papers out there.    As a seasoned traffic engineer I cannot help but just chuckle for this type of academic exercise that knows little about how real-traffic controller works and how to perform signal optimization in real-life, except just putting together some hype term and start playing numbers in paper.</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17106"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        boo      </p>
+      <p class="comment-time">
+        July 9, 2014       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>interesting to watch streets all over taiwan at evening rush hour when police come and cycle lights manually depending on traffic</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17107"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        Pragmatist2014      </p>
+      <p class="comment-time">
+        July 10, 2014       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Optimization of signal timing for urban street networks is a more complex task than the simplified simulation models often used for academic research. For example, do these simulation models take into account that there are pedestrians that need adequate time to cross wide streets, there are buses and LRT routes on the same streets.  Then there are emergency vehicles that come through and disrupt any kind of optimizaiton routine that is being run.  Now, if someone has a areawide microscopic traffic simulation model that can realistically account for all that, and is also tied to a regional travel demand model I will take a look at that.  Otherwise, this too far removed from reality for any traffic engineer to take it seriously. However, I think efforts like this are good simplified exercises for training future traffic engineers in graduate schools.</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17108"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        Oscar Lopez      </p>
+      <p class="comment-time">
+        July 11, 2014       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Robotic cloud connected cars are the ultimate solution and will make traffic lights obsolete in a few decades. Automated taxi service will be the solution to commuters, parkings and urban mobility.</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17109"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        mitm      </p>
+      <p class="comment-time">
+        July 17, 2014       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The author assumes that city officials want to minimize commuting times.  Quite to the contrary.  In cities like Boston the goal is to reduce the number of cars in the city by making driving as uncomfortable as possible.  To this end, many streets in downtown Boston have a light at the next intersection turn red as soon one light turns green.  There are times when many seconds go by with not a pedestrian in sight and no car moving in any direction.</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17110"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        jsallen      </p>
+      <p class="comment-time">
+        July 21, 2014       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Only ordinary motorists are mentioned in the article, with the goal of minimizing commute times. One commenter suggested timing signals to discourage motorized travel -- though that might also, I'd suggest, increase pollution and <br />congestion. Pedestrians, buses and emergency vehicles are mentioned in the comments, so far. So, I'll comment about bicyclists, who are generally slower than motorists except during times of congestion.</p>
+<p>Timing traffic signals on some streets for typical bicyclist speed (say, 15 mph, but dependent on slope) can slow and calm motor traffic and establish preferred bicycle routes, also desirable design goals. This is done in Portland, Oregon, among other cities. Installing a special bicycle signal so bicyclists can merge into position for through travel or a left turn at the next intersection when a street is clear of motor traffic also is a valid design goal. Placing bicyclists on a separate bikeway in the street corridor requires special signals to avoid conflict with turning motor traffic, and inherently results in reduced throughput for either or both, see for example the discussion here: <a href="http://john-s-allen.com/blog/?p=6268" rel="nofollow">http://john-s-allen.com/blog/?...</a>.</p>
+<p>A sufficiently sophisticated analysis would account for the various design goals, some of which are in conflict with one another, and optimize accordingly. Determining what is considered optimal involves political as well as engineering decisions.</p>
+<p>John S. Allen, MIT '75</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17111"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        anyone101      </p>
+      <p class="comment-time">
+        April 30, 2015       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Some areas already have systems that do this. For example, in southeast <br />Denver, East Arapahoe Rd, east of the freeway, and connecting roads <br />north thereof, towards Aurora. Visiting in July 2013, i found that EVERY<br /> traffic signal in the area was timed to stop me just as I got to it. <br />For days straight, it NEVER failed. I had to wonder, is there a special <br />transmitter in my car, or do they do this to every car here? And Why? <br />Pull out fast or pull out slow, stop at the next signal. 10 mph below <br />the speed limit or 10 mph over the speed limit, stop at the next signal.<br /> (Seeing this, they'll probably mail me a ticket.) See a red light <br />ahead, so slow down a bit to avoid stopping; it turns green; speed up, <br />and it turns red as I get to it - DAMN! This is the new, moneyed side of<br /> town - is this a deterrent against outsiders even to tour or even visit<br /> the area? In the tireder, poorer northwest of the city (demonstrated by<br /> cheap motels and a rare closed McDonalds), the traffic lights did not <br />jam me up the same way. Yes I stopped, but it seemed about typical luck <br />basis, not Every Damn Time.</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17112"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        anyone101      </p>
+      <p class="comment-time">
+        April 30, 2015       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>We have known of most of these possibilities since the 1950s. We have had computers capable of helping since the 1970s. Some cities and suburbs have major computerized traffic signal coordination.<br />The dream improved when wireless emerged: If cars can declare their intended routes, the system can use that information to improve timing and economy for everyone. If cars can "listen" for advice, the system can suggest small adjustments to speed and route, yielding even better improvement. Safeguards are needed: Jamming can remove benefits. Hacking can cause huge problems (sabotage). Adding optical signalling (line-of-sight infrared) in parallel with radio could add robustness. (Optical jamming range is shorter.) The system can detect faulty GPS readings or reports, by their proximity to actual base stations.<br />Additional benefits are possible if cars can talk to each other, but cars are more hackable than "the system", so vastly more caution is needed (unbreakable encryption and identification, and central authentication with verification against a reputation blacklist). Cars could form ad-hoc wireless networks for connectivity to the system, greatly reducing infrastructure cost. (But the relayed signals must be impervious to man-in-the-middle attacks.) <br />Car-to-car declarations of emergency stops can be especially dangerous if forged, and present an opposite danger if they are omitted when relied upon. A car should identify the cars in front of it and authenticate before being ready to trust an emergency declaration from it.</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17113"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        anyone101      </p>
+      <p class="comment-time">
+        December 4, 2015       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Something crazy is going on on this site. Every comment and every edit gets "moderated" (okay), but moderation seems to damage many comments by inserting hard line-breaks that I did not put there. (Look at some comments here.)<br />SOME kinds of editing can accidentally add hard line-breaks. It happens to me when I copy my text from Disqus and then paste it back in. Soft line-breaks that are there for display somehow become hard line-breaks in the entry. To avoid this, I paste the text into Notepad (actually Notepad2-Mod), Select-all, and then Cut, just to strip the clipboard text of formatting. Then, when I paste it into Disqus, spurious hard line-breaks don't happen.<br />I don't think you edit every article, but I can't be sure you have not made some tiny edit. Whatever viewing or editing you do in the review process, please find a way not to mangle every posting that you look at or every posting that you adjust.<br />When I edited one of my damaged comments on this page (to remove the spurious hard line-breaks), the edited comment went back to "Hold on, this is waiting to be approved by MIT News", treated like any new comment. (Even though a machine could easily have detected that I only made white-space changes, and let the existing approval apply to the changed version.)</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+<a id="comment-17114"></a>
+<div class="comment-entry">
+
+    <div class="submitted">
+      <p class="commenter-name">
+        captainmike      </p>
+      <p class="comment-time">
+        December 18, 2015       </p>
+    </div>
+
+  <div class="comment-text">
+    <div class="comment-arrow"></div>
+    <!--
+        -->
+    <div class="content">
+      <span rel="sioc:reply_of" resource="/2014/traffic-lights-theres-a-better-way-0707" class="rdf-meta element-hidden"></span><div class="field field-name-comment-body field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>it is so sad that this country can't do anything right<br />our bridges are on the cusp of collapse<br />roads are full of potholes<br />and so on<br />infrastructure everywhere is falling apart</p>
+</div></div></div>    </div> <!-- /.content -->
+
+  </div> <!-- /.comment-text -->
+</div>
+    
+    </div>
+    </div>
+</section>
+  </div>
+</div>
+  </div>
+                </div>
+            </div>
+
+            <div class="column-2">
+
+
+                
+                                <section>
+                <div class="additional-info">
+                    <h3>Related</h3>
+                    <ul><li><a target="_blank" class="external" href="http://cee.mit.edu/osorio">Carolina Osorio</a></li><li><a target="_blank" class="external" href="http://cee.mit.edu/">Department of Civil and Environmental Engineering</a></li><li><a target="_blank" class="external" href="http://engineering.mit.edu">School of Engineering</a></li></ul>                </div>
+                </section>
+                
+                                <section>
+                <div class="additional-info">
+                    <h3>Archives</h3>
+                    <ul><li class="archive-item">
+                                          <a href="/2014/study-commuting-times-stay-constant-even-distances-change" class="clearfix"><img class="" typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/article_cover_image_small/public/images/2014/MITnews_CommutingPatterns_ThinkStock.jpg?itok=tCduIQcM" width="228" height="152" alt="" title="" /><span>Study: Commuting times stay constant even as distances change</span></a>
+                                          </li><li class="archive-item">
+                                          <a href="/2014/carolina-osorio-receives-nsf-early-career-award" class="clearfix"><img class="" typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/article_cover_image_small/public/images/2014/osorio1.jpg?itok=6aVVvyiC" width="228" height="152" alt="Carolina Osorio" title="" /><span>Carolina Osorio receives NSF Early Career Award</span></a>
+                                          </li><li class="archive-item">
+                                          <a href="/2012/cellphone-data-helps-pinpoint-source-of-traffic-tie-ups-1220" class="clearfix"><img class="" typeof="foaf:Image" src="http://news.mit.edu/sites/mit.edu.newsoffice/files/styles/article_cover_image_small/public/images/2012/20121219155533-0.jpg?itok=lfbl9gxa" width="228" height="152" alt="The color of the road segments in this image represents the number of neighborhoods that are major sources of drivers for that segment. Red is more than 100, yellow is 61 to 100, green is 41 to 60, dark blue is 1 to 20 and purple is none." title="Traffic patterns" /><span>Cellphone data helps pinpoint source of traffic tie-ups</span></a>
+                                          </li></ul>                </div>
+                </section>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+</article>
+
+  <div class="region region-content-footer">
+    <div id="block-mitnews-news-collection-block-latest-news-for-article" class="block block-mitnews-news-collection">
+
+    
+  <div class="content">
+    <div id="latest-news-content-block"></div>  </div>
+</div>
+  </div>
+
+    <footer>
+    
+    
+
+    <div id="site-footer-area-wrapper">
+    
+        <div id="site-footer-area">
+            
+            <div class="container clearfix">
+                <div id="site-footer-about">
+                    <h2>About This Website</h2>
+            
+                    <p>This Website is maintained by the MIT News Office, part of the <a href="http://comms.mit.edu" target="_blank">Office of Communications</a>.</p>
+                    
+                    <div class="clearfix">
+                    <ul class="column">
+                        <li><a href="/about">About the MIT News Office</a></li>
+                        <li><a href="/press">MIT News Press Center</a></li>
+                        <li><a href="/press/inquiries">Press Inquiries</a></li>
+                        <li><a href="/press/filming-guidelines">Filming Guidelines</a></li>
+                        <li><a href="http://comms.mit.edu" target="_blank">Office of Communications</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/terms-of-use">Terms of Use</a></li>
+                    </ul>
+            
+                    <ul class="column">
+                        <li><a href="/rss">RSS</a></li>
+                        <li><a href="https://twitter.com/mit" target="_blank">Twitter</a></li>
+                        <li><a href="https://www.facebook.com/MITnews" target="_blank">Facebook</a></li>
+                        <li><a href="https://plus.google.com/+mit/posts" target="_blank">Google+</a></li>
+                        <li><a href="http://instagram.com/mitpics" target="_blank">Instagram</a></li>
+                        <li><a href="http://www.flickr.com/photos/cpsphotolibrary" target="_blank">Flickr</a></li>
+                        <li><a href="https://www.youtube.com/mit" target="_blank">YouTube</a></li>
+                    </ul>
+            
+                    <ul class="column">
+                        <li><a href="http://web.mit.edu/" target="_blank">MIT Homepage</a></li>
+                        <li><a href="https://www.youtube.com/mit" target="_blank">MIT Video</a></li>
+                        <li><a href="http://connect.mit.edu/" target="_blank">MIT Connect</a></li>
+                        <li><a href="http://resources.mit.edu/" target="_blank">MIT Resources</a></li>
+                        <li><a href="http://events.mit.edu/" target="_blank">Events Calendar</a></li>
+                    </ul>  
+            
+                    <ul class="column">
+                        <li><a href="http://web.mit.edu/aboutmit/" target="_blank">About MIT</a></li>
+                        <li><a href="http://web.mit.edu/admissions/" target="_blank">Admissions</a></li>
+                        <li><a href="http://alum.mit.edu" target="_blank">Alumni</a></li>
+                        <li><a href="http://web.mit.edu/education/" target="_blank">Education</a></li>
+                        <li><a href="http://web.mit.edu/research/" target="_blank">Labs and Centers</a></li>                     
+                    </ul>
+                    </div>
+                </div>
+            
+                <div id="site-footer-resources">
+                    <h2>Resources</h2>
+                    <ul class="buttons">
+                        <li><a href="/user/login?destination=user/campus-news/submit">Submit Campus News</a></li>
+                        <li><a href="/user/login?destination=user/pitch-story/submit">Pitch a Story</a></li>
+                        <li><a href="/subscribe-newsletter">Sign Up for Newsletter</a></li>
+                        <li><a href="/press/subscribe-to-press-releases">Subscribe to Press Releases</a></li>
+                        <li><a href="/terms-of-use">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="container clearfix">
+                <div class="right">
+                    <a id="button-give-to-mit" href="/give-to-mit" target="_blank">GIVE TO MIT</a>
+                </div>            
+                <div class="left clearfix">
+                    <a class="footer-logo" href="http://web.mit.edu" target="_blank">Massachusetts Institute of Technology</a>
+                    <div class="footer-logo-text">
+                    <p>
+                    <a href="/about">MIT News Office</a> 
+                    &bull; 
+                    <a href="http://whereis.mit.edu/?go=11" target="_blank">Building 11-400</a><br />
+                    <a href="http://web.mit.edu" target="_blank">Massachusetts Institute of Technology</a> 
+                    &bull; 
+                    Cambridge, MA 02139-4307
+                    </p>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+
+    </div>
+    
+    </footer>
+
+</div>
+
+<div class="back-to-top"><a href="#"><span>Back to the top</span></a></div>
+    
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"ab0374a39e","applicationID":"35311724","transactionName":"Z1QGZBZQVkNYU0YNWV4eJVMQWFdeFl5dAFNvQQVXAW5OWVxH","queueTime":0,"applicationTime":1522,"atts":"SxMFEl5KRU0=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

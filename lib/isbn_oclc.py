@@ -155,8 +155,8 @@ def citoid_thread_target(isbn: str, result: list) -> None:
 
 def ottobib(isbn):
     """Convert ISBN to bibtex using ottobib.com."""
-    m = OTTOBIB_SEARCH(
-        request('http://www.ottobib.com/isbn/' + isbn + '/bibtex').text)
+    m = OTTOBIB_SEARCH(request(
+        'http://www.ottobib.com/isbn/' + isbn + '/bibtex').content.decode())
     if m is not None:
         return m[1]
 
@@ -164,7 +164,7 @@ def ottobib(isbn):
 def oclc_scr(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:
     text = request(
         'https://www.worldcat.org/oclc/' + oclc + '?page=endnote'
-        '&client=worldcat.org-detailed_record').text
+        '&client=worldcat.org-detailed_record').content.decode()
     if '<html' in text:  # invalid OCLC number
         return (
             'Error processing OCLC number: ' + oclc,

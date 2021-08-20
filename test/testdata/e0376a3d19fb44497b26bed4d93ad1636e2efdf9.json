@@ -1,0 +1,17 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Access-Control-Allow-Headers": "X-Requested-With",
+  "Access-Control-Allow-Origin": "*",
+  "Connection": "keep-alive",
+  "Content-Length": "1372",
+  "Content-Type": "application/json;charset=UTF-8",
+  "Date": "Thu, 25 May 2017 14:02:08 GMT",
+  "Server": "http-kit",
+  "Vary": "Accept",
+  "X-Rate-Limit-Interval": "1s",
+  "X-Rate-Limit-Limit": "50"
+ },
+ "status_code": 200,
+ "url": "http://api.crossref.org/v1/works/10.1145/1117278"
+}

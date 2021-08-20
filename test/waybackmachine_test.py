@@ -21,12 +21,12 @@ def test_live_og_link():
         '| archive-date=2013-10-21 '
         '| url-status=live '
         '| access-date='
-    ) in  waybackmachine_scr(
+    ) == waybackmachine_scr(
         'http://web.archive.org/web/20131021230444/'
         'http://www.huffingtonpost.com/2013/10/19/'
         'plastic-surgery-justin-bieber-100k_n_4128563.html?'
         'utm_hp_ref=mostpopular'
-    )[1]
+    )[1][:-12]
 
 
 def test_dead_url():
@@ -44,10 +44,9 @@ def test_dead_url():
         '| url-status=dead '
         '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
         '| access-date='
-    ) in waybackmachine_scr(
-        'https://web.archive.org/web/20070429193849id_/'
-        'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
-    )[1]
+    ) == waybackmachine_scr(
+        'https://web.archive.org/web/20070429193849id_/http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
+    )[1][:-12]
 
 
 def test_webless_url():

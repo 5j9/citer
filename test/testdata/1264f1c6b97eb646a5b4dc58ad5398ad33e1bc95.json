@@ -1,0 +1,16 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Cache-Control": "private",
+  "Content-Disposition": "attachment; filename=\"noorlib-18454.bib\"",
+  "Content-Length": "480",
+  "Content-Type": "application/x-bibtex; charset=UTF-8",
+  "Date": "Tue, 23 May 2017 17:51:52 GMT",
+  "Server": "Microsoft-IIS/7.5",
+  "Set-Cookie": "ASP.NET_SessionId=k05g1dakfu1kkooojtyzf5mr; path=/; HttpOnly",
+  "X-AspNet-Version": "4.0.30319",
+  "X-Powered-By": "ASP.NET"
+ },
+ "status_code": 200,
+ "url": "http://www.noorlib.ir/View/HttpHandler/CitationHandler.ashx?id=18454&format=BibTex"
+}

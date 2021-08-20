@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!--[if (gt IE 9)|!(IE)]> <!--> <html lang="en" class="no-js has-comments blog-dealbook section-business"  itemscope xmlns:og="http://opengraphprotocol.org/schema/"> <!--<![endif]-->
+<!--[if IE 9]> <html lang="en" class="no-js ie9 lt-ie10 has-comments blog-dealbook section-business" xmlns:og="http://opengraphprotocol.org/schema/"> <![endif]-->
+<!--[if IE 8]> <html lang="en" class="no-js ie8 lt-ie10 lt-ie9 has-comments blog-dealbook section-business" xmlns:og="http://opengraphprotocol.org/schema/"> <![endif]-->
+<!--[if (lt IE 8)]> <html lang="en" class="no-js lt-ie10 lt-ie9 lt-ie8 has-comments blog-dealbook section-business" xmlns:og="http://opengraphprotocol.org/schema/"> <![endif]-->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,t,n){function r(n){if(!t[n]){var o=t[n]={exports:{}};e[n][0].call(o.exports,function(t){var o=e[n][1][t];return r(o||t)},o,o.exports)}return t[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(e,t,n){function r(){}function o(e,t,n){return function(){return i(e,[(new Date).getTime()].concat(u(arguments)),t?null:this,n),t?void 0:this}}var i=e("handle"),a=e(2),u=e(3),c=e("ee").get("tracer"),f=NREUM;"undefined"==typeof window.newrelic&&(newrelic=f);var s=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit"],l="api-",p=l+"ixn-";a(s,function(e,t){f[t]=o(l+t,!0,"api")}),f.addPageAction=o(l+"addPageAction",!0),f.setCurrentRouteName=o(l+"routeName",!0),t.exports=newrelic,f.interaction=function(){return(new r).get()};var d=r.prototype={createTracer:function(e,t){var n={},r=this,o="function"==typeof t;return i(p+"tracer",[Date.now(),e,n],r),function(){if(c.emit((o?"":"no-")+"fn-start",[Date.now(),r,o],n),o)try{return t.apply(this,arguments)}finally{c.emit("fn-end",[Date.now()],n)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,t){d[t]=o(p+t)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,(new Date).getTime()])}},{}],2:[function(e,t,n){function r(e,t){var n=[],r="",i=0;for(r in e)o.call(e,r)&&(n[i]=t(r,e[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;t.exports=r},{}],3:[function(e,t,n){function r(e,t,n){t||(t=0),"undefined"==typeof n&&(n=e?e.length:0);for(var r=-1,o=n-t||0,i=Array(o<0?0:o);++r<o;)i[r]=e[t+r];return i}t.exports=r},{}],ee:[function(e,t,n){function r(){}function o(e){function t(e){return e&&e instanceof r?e:e?c(e,u,i):i()}function n(n,r,o){if(!p.aborted){e&&e(n,r,o);for(var i=t(o),a=v(n),u=a.length,c=0;c<u;c++)a[c].apply(i,r);var f=s[w[n]];return f&&f.push([y,n,r,i]),i}}function d(e,t){b[e]=v(e).concat(t)}function v(e){return b[e]||[]}function g(e){return l[e]=l[e]||o(n)}function m(e,t){f(e,function(e,n){t=t||"feature",w[n]=t,t in s||(s[t]=[])})}var b={},w={},y={on:d,emit:n,get:g,listeners:v,context:t,buffer:m,abort:a,aborted:!1};return y}function i(){return new r}function a(){(s.api||s.feature)&&(p.aborted=!0,s=p.backlog={})}var u="nr@context",c=e("gos"),f=e(2),s={},l={},p=t.exports=o();p.backlog=s},{}],gos:[function(e,t,n){function r(e,t,n){if(o.call(e,t))return e[t];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,t,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[t]=r,r}var o=Object.prototype.hasOwnProperty;t.exports=r},{}],handle:[function(e,t,n){function r(e,t,n,r){o.buffer([e],r),o.emit(e,t,n)}var o=e("ee").get("handle");t.exports=r,r.ee=o},{}],id:[function(e,t,n){function r(e){var t=typeof e;return!e||"object"!==t&&"function"!==t?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");t.exports=r},{}],loader:[function(e,t,n){function r(){if(!h++){var e=y.info=NREUM.info,t=l.getElementsByTagName("script")[0];if(setTimeout(f.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&t))return f.abort();c(b,function(t,n){e[t]||(e[t]=n)}),u("mark",["onload",a()],null,"api");var n=l.createElement("script");n.src="https://"+e.agent,t.parentNode.insertBefore(n,t)}}function o(){"complete"===l.readyState&&i()}function i(){u("mark",["domContent",a()],null,"api")}function a(){return(new Date).getTime()}var u=e("handle"),c=e(2),f=e("ee"),s=window,l=s.document,p="addEventListener",d="attachEvent",v=s.XMLHttpRequest,g=v&&v.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:v,REQ:s.Request,EV:s.Event,PR:s.Promise,MO:s.MutationObserver},e(1);var m=""+location,b={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-998.min.js"},w=v&&g&&g[p]&&!/CriOS/.test(navigator.userAgent),y=t.exports={offset:a(),origin:m,features:{},xhrWrappable:w};l[p]?(l[p]("DOMContentLoaded",i,!1),s[p]("load",r,!1)):(l[d]("onreadystatechange",o),s[d]("onload",r)),u("mark",["firstbyte",a()],null,"api");var h=0},{}]},{},["loader"]);</script>
+		<meta name="channels" content="NytNow" />
+<meta name="communityAssetLabels" content="NYT_Blogs" />
+<meta name="communityAssetTaxonomy" content="blogs/dealbook/Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters ( 20140530 )" />
+<meta name="communityAssetURL" content="https://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/" />
+<meta name="PT" content="Blogs" />
+<meta name="PST" content="Blog Post" />
+<meta name="sourceApp" content="blogs" />
+<meta itemprop="identifier" name="blogpostid" content="100000002912312"><meta name="author" content="Matthew Goldstein and Ben Protess" />
+<meta name="CLMST" content="Matthew Goldstein and Ben Protess" />
+<meta name="byl" content="Matthew Goldstein and Ben Protess" />
+<meta name="GBLC" content="Financial Services;Legal/Regulatory;Top Headline 1">
+<meta name="PUV" content="normal" />
+<meta property="article:published_time" itemprop="datePublished" content="1401494833" />
+<meta name="PUD" content="20140530" />
+<meta name="pdate" content="20140530" />
+<meta name="ptime" content="20140530200713" />
+<meta name="utime" content="20140612011625" />
+<meta property="article:modified_time" itemprop="dateModified" content="2014-06-12T01:16:25-04:00" />
+<meta name="DISPLAYDATE" content="May 30, 2014" />
+<meta name="dat" content="May 30, 2014" />
+<meta itemprop="articleSection" property="article:section" content="Business Day" />
+<meta name="CG" content="Business Day" />
+<meta name="SCG" content="Dealbook" />
+<meta name="BN" content="dealbook" />
+<meta name="robots" content="noodp">
+<meta name="per" content="Icahn, Carl C;Mickelson, Phil">
+<meta name="des" content="Insider Trading;Mergers, Acquisitions and Divestitures;Securities and Commodities Violations">
+<meta name="org" content="Clorox Company;Federal Bureau of Investigation;Financial Industry Regulatory Authority;Securities and Exchange Commission;Trans World Airlines (TWA)">
+<meta property="article:tag" content="Icahn Carl C" />
+<meta property="article:tag" content="Mickelson Phil" />
+<meta property="article:tag" content="Insider Trading" />
+<meta property="article:tag" content="Mergers Acquisitions and Divestitures" />
+<meta property="article:tag" content="Securities and Commodities Violations" />
+<meta property="article:tag" content="Clorox Company" />
+<meta property="article:tag" content="Federal Bureau of Investigation" />
+<meta property="article:tag" content="Financial Industry Regulatory Authority" />
+<meta property="article:tag" content="Securities and Exchange Commission" />
+<meta property="article:tag" content="Trans World Airlines (TWA)" />
+<meta property="article:tag" content="Financial Services" />
+<meta property="article:tag" content="Legal/Regulatory" />
+<meta property="article:tag" content="Top Headline 1" />
+<meta name="keywords" content="Icahn Carl C,Mickelson Phil,Insider Trading,Mergers Acquisitions and Divestitures,Securities and Commodities Violations,Clorox Company,Federal Bureau of Investigation,Financial Industry Regulatory Authority,Securities and Exchange Commission,Trans World Airlines (TWA),Financial Services,Legal/Regulatory,Top Headline 1" />
+<link rel="alternate" type="application/json+oembed" href="https://www.nytimes.com/svc/oembed/json/?url=https%3A%2F%2Fdealbook.nytimes.com%2F2014%2F05%2F30%2Finsider-trading-inquiry-includes-mickelson-and-icahn%2F" title="Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters" />
+<meta name="description" content="Federal authorities are examining a series of well-timed trades belonging to the golfer Phil Mickelson and the gambler William T. Walters." />
+<meta name="hdl_p" content="Investor, Bettor, Golfer: Inquiry Into Big Names" />
+<meta name="hdl" content="Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters" />
+<meta property="og:title" content="Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/" />
+<meta property="og:site_name" content="DealBook" />
+<meta property="og:description" content="Federal authorities are examining a series of well-timed trades belonging to the golfer Phil Mickelson and the gambler William T. Walters." />
+<meta property="og:image" content="https://static01.nyt.com/images/2014/05/31/business/Trading2/Trading2-videoSixteenByNine600.jpg"/>
+<meta name="thumbnail_150" content="https://static01.nyt.com/images/2014/05/31/business/Trading2/Trading2-thumbLarge.jpg"/>
+<meta name="twitter:card" value="summary"><meta name="twitter:title" content="Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters" />
+<meta name="twitter:url" content="https://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/" />
+<meta name="twitter:description" content="Federal authorities are examining a series of well-timed trades belonging to the golfer Phil Mickelson and the gambler William T. Walters." />
+<meta name="twitter:image" content="https://static01.nyt.com/images/2014/05/31/business/Trading2/Trading2-thumbLarge.jpg"/>
+<meta itemprop="thumbnailUrl" content="https://static01.nyt.com/images/2014/05/31/business/Trading2/Trading2-thumbLarge.jpg" name="thumbnail" />
+<meta name="twitter:site" content="@dealbook">
+<link rel='prev' title='After Fighting Insider Trading Charges for 10 Years, a Fund Manager Is Cleared' href='https://dealbook.nytimes.com/2014/05/30/fund-manager-found-not-liable-in-insider-trading-case/' />
+<link rel='next' title='Authorities Find Insider Trading Case Tied to Phil Mickelson Is Slow to Take Shape' href='https://dealbook.nytimes.com/2014/05/31/regulators-find-insider-trading-case-tied-to-phil-mickelson-is-slow-to-take-shape/' />
+<link rel='canonical' href='https://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/' />
+<link rel='shortlink' href='http://nyti.ms/1ptbxGn' />
+<link rel='https://github.com/WP-API/WP-API' href='https://dealbook.nytimes.com/json' />
+<meta name="adxPage" content="blog.nytimes.com/dealbook/post" />
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="https://dealbook.nytimes.com/feed/" />
+<meta property="article:collection" content="https://static01.nyt.com/services/json/sectionfronts/business/index.jsonp" />
+<link rel="alternate" href="//mobile.nytimes.comdealbook/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/" />
+<meta name="dfp-ad-unit-path" content="businessday/dealbook" />			<title>Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters - The New York Times</title>
+            <!--[if (gt IE 9)|!(IE)]> <!-->
+    <link rel="stylesheet" type="text/css" media="screen" href="https://a1.nyt.com/assets/blogs/20170519-195505/css/blogs/styles.css" />
+<!--<![endif]-->
+<!--[if lte IE 9]>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://a1.nyt.com/assets/blogs/20170519-195505/css/blogs/styles-ie.css" />
+<![endif]-->
+<link rel="stylesheet" type="text/css" media="screen" href="https://a1.nyt.com/assets/blogs/20170519-195505/css/blogs/dealbook.css" />
+<link rel="stylesheet" type="text/css" media="print" href="https://a1.nyt.com/assets/blogs/20170519-195505/css/blogs/styles-print.css" />
+<script>
+var NYT = NYT || {}, NYTD = NYTD || {};
+</script>
+                        	<script src="https://a1.nyt.com/assets/blogs/20170519-195505/js/blogs/layout.js"></script>
+	<script type="text/javascript">var googletag=googletag||{};googletag.cmd=googletag.cmd||[],function(){var t=document.createElement("script");t.async=!0,t.type="text/javascript";var e="https:"==document.location.protocol;t.src=(e?"https:":"http:")+"//www.googletagservices.com/tag/js/gpt.js";var o=document.getElementsByTagName("script")[0];o.parentNode.insertBefore(t,o)}();</script>
+<script id="magnum-feature-flags" type="application/json">["limitFabrikSave","facebookOauthButton","videoVHSCover","videoVHSShareTools","videoVHSEmbeddedOnly","removeInternationalEdition","piiBlockDFP"]</script>
+<script>
+var require = {
+    baseUrl: 'https://a1.nyt.com/assets/',
+    waitSeconds: 20,
+    paths: {
+        'foundation': 'blogs/20170519-195505/js/foundation',
+        'shared': 'blogs/20170519-195505/js/shared',
+        'blogs': 'blogs/20170519-195505/js/blogs',
+        'auth/mtr': 'https://static01.nyt.com/js/mtr',
+        'auth/growl': 'https://static01.nyt.com/js/auth/growl/default',
+        'vhs': 'https://static01.nyt.com/video/vhs/build/vhs-2.x.min'
+    }
+};
+</script>
+<!--[if (gte IE 9)|!(IE)]> <!-->
+<script data-main="foundation/main" src="https://a1.nyt.com/assets/blogs/20170519-195505/js/foundation/lib/framework.js"></script>
+<!--<![endif]-->
+<!--[if lt IE 9]>
+<script>
+require.map = { '*': { 'foundation/main': 'foundation/legacy_main' } };
+</script>
+<script data-main="foundation/legacy_main" src="https://a1.nyt.com/assets/blogs/20170519-195505/js/foundation/lib/framework.js"></script>
+<![endif]-->
+<script>
+require(['foundation/main'], function () {
+    require(['auth/mtr']);
+});
+</script>
+<!--esi
+<script id="user-info-data" type="application/json">
+<esi:include src="/svc/web-products/userinfo-v3.json" />
+</script>
+-->
+    	</head><body class="single single-post postid-613283 blog-universal nyt-blog-dealbook" id="" data-env="production" data-region="ewr1">
+	<div id="shell" class="shell">
+			<header id="masthead" class="masthead masthead-theme-standard" role="banner">
+    <div class="container">
+        <div class="quick-navigation button-group">
+            <button class="button sections-button"><i class="icon sprite-icon"></i><span class="button-text">Sections</span></button>
+            <button class="button home-button" data-href="http://www.nytimes.com/" title="Go to the home page to see the latest top stories."><i class="icon sprite-icon"></i>
+                <span class="button-text">Home</span>
+            </button>
+            <button class="button search-button"><i class="icon sprite-icon"></i><span class="button-text">Search</span></button>
+            <a class="button skip-button skip-to-content visually-hidden focusable" href="#main">Skip to content</a>
+                                </div><!-- close button-group -->
+        <div class="branding">
+            <h2 class="branding-heading">
+                <a id="branding-heading-link" href="http://www.nytimes.com/">
+                    <span class="visually-hidden">The New York Times</span>
+                </a>
+            </h2>
+            <script>window.magnum.writeLogo('small', 'https://a1.nyt.com/assets/blogs/20170519-195505/images/foundation/logos/', 'Business Day', 'masthead-theme-standard', 'standard', 'branding-heading-link', 'blogs');</script>
+        </div><!-- close branding -->
+        <div class="story-meta">
+    <h6 class="kicker">
+        <span class="kicker-label">
+			            <a href="https://dealbook.nytimes.com">
+                DealBook            </a>
+			        </span>
+
+                <span class="pipe">|</span>
+        Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters        
+    </h6>
+</div><!-- close story-meta -->
+
+
+        <div class="user-tools">
+            <div id="Bar1" class="ad bar1-ad nocontent robots-nocontent"></div>
+            <div id="sharetools-masthead" class="sharetools theme-classic"
+	 data-shares="email,facebook,twitter,show-all|More"
+	 data-url="https://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/"
+	 data-title="Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters"
+	 data-description="&lt;span class=&quot;excerpt-inner&quot;&gt;Federal authorities are examining a series of well-timed trades belonging to the golfer Phil Mickelson and the gambler William T. Walters. &lt;/span&gt;&lt;a href=&quot;https://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/&quot; class=&quot;more-link&quot;&gt;Read&nbsp;more...&lt;/a&gt;"
+	data-publish-date="May 30, 2014 8:07 pm">
+<div class="ad sharetools-inline-article-ad hidden"></div>
+</div><!-- close shareTools -->
+            <button class="button search-button"><i class="icon sprite-icon"></i><span class="button-text">Search</span></button>
+            <div class="user-tools-button-group button-group">
+                <button class="button subscribe-button hidden" data-href="http://www.nytimes.com/subscriptions/Multiproduct/lp3004.html?campaignId=4XUYF">Subscribe Now</button>
+                <button class="button login-button login-modal-trigger hidden">Log In</button>
+                <button class="button comments-button  button-masthead" data-skip-to-para-id="">
+</button>
+                                <button class="button notifications-button hidden"><i class="icon sprite-icon"></i><span class="button-text">0</span></button>
+                <button class="button user-settings-button"><i class="icon sprite-icon"></i><span class="button-text">Settings</span></button>
+            </div><!-- close user-tools-button-group -->
+        </div><!-- close user-tools -->
+    </div><!-- close container -->
+    <div class="search-flyout-panel flyout-panel">
+    <button class="button close-button" type="button"><i class="icon"></i><span class="visually-hidden">Close search</span></button>
+    <nav class="search-form-control form-control layout-horizontal">
+    <h2 class="visually-hidden">Site Search Navigation</h2>
+    <form class="search-form" role="search">
+        <div class="control">
+            <div class="label-container visually-hidden">
+                                <label for="search-input">Search NYTimes.com</label>
+                            </div>
+            <div class="field-container">
+                                <input id="search-input" name="search-input" type="text" class="search-input text" autocomplete="off" placeholder="Search NYTimes.com" />
+                
+                <button type="button" class="button clear-button" tabindex="-1" aria-describedby="clear-search-input"><i class="icon"></i><span id="clear-search-input" class="visually-hidden">Clear this text input</span></button>
+                <div class="auto-suggest" style="display: none;">
+                    <ol></ol>
+                </div>
+                <button class="button submit-button" type="submit">Go</button>
+            </div>
+        </div><!-- close control -->
+    </form>
+</nav>
+
+
+</div><!-- close flyout-panel -->
+    <div id="notification-modals" class="notification-modals"></div>
+</header>
+					<nav id="ribbon" class="ribbon ribbon-start nocontent robots-nocontent" aria-hidden="true">
+    <div class="nocontent robots-nocontent">
+        <ol class="ribbon-menu">
+            <li class="collection ribbon-loader">
+                <div class="loader "><span class="visually-hidden">Loading...</span></div>
+            </li>
+        </ol>
+        <div class="ribbon-navigation-container">
+            <nav class="ribbon-navigation next">
+                <span class="visually-hidden">See next articles</span>
+                <div class="arrow arrow-right">
+                    <div class="arrow-conceal"></div>
+                </div>
+            </nav>
+            <nav class="ribbon-navigation previous">
+                <span class="visually-hidden">See previous articles</span>
+                <div class="arrow arrow-left">
+                    <div class="arrow-conceal"></div>
+                </div>
+            </nav>
+        </div>
+    </div><!-- close nocontent -->
+</nav>
+						<nav id="navigation" class="navigation">
+    <h2 class="visually-hidden">Site Navigation</h2>
+</nav><!-- close navigation -->
+
+<nav id="mobile-navigation" class="mobile-navigation hidden">
+    <h2 class="visually-hidden">Site Mobile Navigation</h2>
+</nav><!-- close mobile-navigation -->
+
+    <div id="navigation-edge" class="navigation-edge"></div>
+				<main id="main" class="main" role="main">
+				<div id="TopAd" class="ad top-ad"></div>
+				<div id="mobilebanner" class="ad mobilebanner"></div>
+								<div id="story" class="story theme-main">
+		<div id="dealbook" class="spanAC blog">
+			<header id="blogs-masthead" class="wrap">
+	<div class="ad sponsortile-ad hidden nocontent robots-nocontent">
+		<div class="caption">Supported by</div>
+		<div id="sponsortile" class="ad sponsortile-ad-creative"></div>
+	</div>
+		<div class="element1">
+	<div id="logo" ><a href="https://dealbook.nytimes.com/?module=BlogMain&action=Click&region=Header&pgtype=Blogs&version=Blog Post&contentCollection=Business Day" title="Go to DealBook Home"><img src="https://static01.nyt.com/images/blogs_v5/dealbook/dealbook_post.png" alt="DealBook - A Financial News Service of The New York Times"/></a></div>    </div>
+    <div class="element2">
+    <div class="inlineSearchControl">
+	<form method="get" id="searchform" action="https://dealbook.nytimes.com/">
+		<input type="text" value="" name="s" id="s" class="text" placeholder="Search DealBook">
+		<button type="submit" class="searchsubmit">Search</button>
+	</form>
+</div>	</div>
+	<div class="clear"></div>
+		<div id="topic-nav">
+		<ul>
+			<li class="first"><a href="https://dealbook.nytimes.com/category/main-topics/mergers-acquisitions/">Mergers &amp; Acquisitions</a></li>
+			<li><a href="https://dealbook.nytimes.com/category/main-topics/investment-banking/">Investment Banking</a></li>
+			<li><a href="https://dealbook.nytimes.com/category/main-topics/private-equity/">Private Equity</a></li>
+			<li><a href="https://dealbook.nytimes.com/category/main-topics/hedge-funds/">Hedge Funds</a></li>
+			<li><a href="https://dealbook.nytimes.com/category/main-topics/ipoofferings/">I.P.O./Offerings</a></li>
+			<li><a href="https://dealbook.nytimes.com/category/main-topics/venture-capital/">Venture Capital</a></li>
+			<li class="last"><a href="https://dealbook.nytimes.com/category/main-topics/legal/">Legal/Regulatory</a></li>
+		</ul>
+	</div>
+		</header>
+	<div class="a-column " id="a-col">
+	<div id="content" class="hfeed">
+	<article class="post-613283 post type-post status-publish hentry category-financial-services category-legal tag-clorox-company tag-federal-bureau-of-investigation tag-financial-industry-regulatory-authority tag-icahn-carl-c tag-insider-trading tag-mergers-acquisitions-and-divestitures tag-mickelson-phil tag-securities-and-commodities-violations tag-securities-and-exchange-commission tag-trans-world-airlines-twa per-icahn-carl-c per-mickelson-phil des-insider-trading des-mergers-acquisitions-and-divestitures des-securities-and-commodities-violations org-clorox-company org-federal-bureau-of-investigation org-financial-industry-regulatory-authority org-securities-and-exchange-commission org-trans-world-airlines-twa" id="post-613283">
+	<header class="postHeader">
+				<div class="postKicker">
+					</div>
+				<h1 itemprop="headline" class="entry-title">Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters</h1>
+		<div class="story-meta-footer">
+			<address class="byline author vcard" itemprop="author creator" itemtype="http://schema.org/Person">
+				By <a href="https://dealbook.nytimes.com/author/matthew-goldstein/" class="url fn" title="More Posts by Matthew Goldstein" rel="author"><address class="vcard first-byline" itemscope itemprop="author creator" itemtype="http://schema.org/Person" itemid="Matthew Goldstein">
+					<span class="fn" itemprop="name">Matthew Goldstein</span>
+				</address></a> <span class="byline-separator">and</span> <a href="https://dealbook.nytimes.com/author/ben-protess/" class="url fn" title="More Posts by Ben Protess" rel="author"><address class="vcard second-byline" itemscope itemprop="author creator" itemtype="http://schema.org/Person" itemid="Ben Protess">
+					<span class="fn" itemprop="name">Ben Protess</span>
+				</address></a>			</address>
+			<!-- date published --><time class="dateline " datetime="2014-05-31T00:07:13+00:00" itemprop="datePublished">May 30, 2014 8:07 pm</time>
+			<!-- date updated --><span class="visually-hidden updated">May 30, 2014 8:07 pm</span><button class="button comments-button  theme-kicker" data-skip-to-para-id="">
+</button>
+		</div>
+			</header>
+		<div class="entry-content">
+	<div class="w592"><figure class="media photo promo" itemprop="associatedMedia" itemscope="" itemid="https://static01.nyt.com/images/2014/05/31/business/Trading2/Trading2-tmagArticle.jpg" itemtype="http://schema.org/ImageObject" role="group"><span class="visually-hidden">Photo</span><div class="image"><img itemprop="url" itemid="https://static01.nyt.com/images/2014/05/31/business/Trading2/Trading2-tmagArticle.jpg" src="https://static01.nyt.com/images/2014/05/31/business/Trading2/Trading2-tmagArticle.jpg" id="100000002912359" width="592" height="395" alt="The investigation is focusing on trading in two different stocks by Phil Mickelson, above, and the gambler William Walters."   /><meta itemprop="height" content="395"><meta itemprop="width" content="592"></div><figcaption class="caption" itemprop="description"><span class="caption-text">The investigation is focusing on trading in two different stocks by Phil Mickelson, above, and the gambler William Walters.</span><span class="credit" itemprop="copyrightHolder"><span class="visually-hidden">Credit</span> Sam Greenwood/Getty Images</span></figcaption></figure></div>
+<div id="sharetools-story" class="sharetools theme-classic sharetools-story" data-shares="email|Email,facebook|Share,twitter|Tweet,save|Save,show-all|More,ad" data-url="https://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/" data-title="Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters" data-description="Federal authorities are examining a series of well-timed trades belonging to the golfer Phil Mickelson and the gambler William T. Walters. ">
+				<div class="ad sharetools-inline-article-ad"></div>
+				<div id="MiddleLeft" class="ad middle-left-ad nocontent robots-nocontent"></div>
+				</div><p class="story-body-text" itemprop="articleBody">The divergent lives of a championship golfer, a high-rolling gambler and a billionaire investor have collided in a federal insider trading investigation.</p>
+<p class="story-body-text" itemprop="articleBody">Federal authorities are examining a series of well-timed trades made by the golfer <a class="tickerized" title="More articles about Phil Mickelson." href="http://topics.nytimes.com/top/reference/timestopics/people/m/phil_mickelson/index.html?inline=nyt-per">Phil Mickelson</a> and the gambler William T. Walters, people briefed on the investigation said, focusing on trading in two different stocks. The authorities are also questioning what role, if any, the investor <a class="tickerized" title="More articles about Carl C. Icahn." href="http://topics.nytimes.com/top/reference/timestopics/people/i/carl_c_icahn/index.html?inline=nyt-per">Carl C. Icahn</a> may have had in sharing information about one of the stocks: the consumer products company <a class="tickerized" title="More information about Clorox Company" href="http://dealbook.on.nytimes.com/public/overview?symbol=CLX&amp;inline=nyt-org">Clorox</a>.</p>
+<p class="story-body-text" itemprop="articleBody">Mr. Walters, an owner of golf courses who is often considered the most successful sports bettor in the country, placed his Clorox trade in 2011, the people briefed on the investigation said. Mr. Icahn, a 78-year-old billionaire and one of the best-known investors in the world, was mounting a takeover bid for Clorox around the time of that trade.</p>
+<p class="story-body-text" itemprop="articleBody">The F.B.I. and Securities and Exchange Commission, which are leading the inquiry along with federal prosecutors in Manhattan, are examining whether Mr. Icahn leaked details of his Clorox bid to Mr. Walters, the people briefed on the investigation said. One initial theory, the people said, is that Mr. Walters might have passed that information to Mr. Mickelson. But Mr. Mickelson, a three-time winner of the Masters golf tournament and one of the country’s highest-earning athletes, did not bet on Clorox, though he did trade in the stock of another company tied to Mr. Walters, the people added.</p>
+<p class="story-body-text" itemprop="articleBody">Aound the time of the Clorox trading, the S.E.C. sent Mr. Icahn a routine request for information about his dealings in the company, the people briefed on the matter said. Federal authorities, whose investigation has dragged on for more than two years without yielding definitive evidence of insider trading, are also examining phone records to see whether Mr. Walters spoke to Mr. Icahn shortly before the trades.</p>
+<p class="story-body-text" itemprop="articleBody">Mr. Icahn’s bid for Clorox ultimately failed. Mr. Mickelson, Mr. Walters and Mr. Icahn have not been accused of any wrongdoing. Mr. Icahn, even if he did leak secret information about his firm’s intentions with Clorox, may have done so legally. It would be illegal if he breached a duty of confidentiality to his own investors.</p>
+<p class="story-body-text" itemprop="articleBody">In a separate strand of the investigation, federal authorities are looking into trading in Dean Foods that has no apparent connection to Mr. Icahn, the people briefed on the matter said. Mr. Walters and Mr. Mickelson placed the trades around August 2012, according to the people, just before the food and beverage company announced its quarterly earnings and a public offering of stock for one of its subsidiaries. The authorities are investigating whether Mr. Walters had a source inside the company itself — and whether others who know Mr. Walters may have traded on the information as well.</p>
+<p class="story-body-text" itemprop="articleBody">Mr. Walters, reached on Friday evening, said, “While I don’t have any comment, pal, I’ll talk to you later.”</p>
+<p class="story-body-text" itemprop="articleBody">In an interview, Mr. Icahn said “I don’t give out inside information,” adding that “for 50 years I have had an unblemished record.” Mr. Icahn, who acknowledged knowing Mr. Walters but said he never met or spoke to Mr. Mickelson, argued that any suggestion he did anything wrong is “irresponsible.”</p>
+<p class="story-body-text" itemprop="articleBody">Representatives for Mr. Mickelson did not respond to a request for comment. Federal authorities declined to comment.</p>
+<p class="story-body-text" itemprop="articleBody">For two years, authorities had little to go on besides trading records and a hunch. Then last year, F.B.I. agents approached Mr. Mickelson at Teterboro Airport in New Jersey, one of the people briefed on the matter said, asking the celebrity golfer to discuss his trading.</p>
+<p class="story-body-text" itemprop="articleBody">It is unclear whether Mr. Mickelson knows Mr. Icahn or provided any evidence implicating him or Mr. Walters in the trading. It is possible that the investigations will not produce any charges.</p>
+<p class="story-body-text" itemprop="articleBody">But if the investigation proceeds, it could undermine the reputation of one of America’s most popular athletes in Mr. Mickelson, who has won five major championships over a two-decade career. And for Mr. Icahn, the investigation might complicate one of the longest running and most successful careers on Wall Street.</p>
+<p class="story-body-text" itemprop="articleBody">Mr. Icahn made his foray into finance as a stockbroker in the 1960s. He later became a professional agitator, haranguing the country’s biggest companies to give him a board seat.</p>
+<p class="story-body-text" itemprop="articleBody">Long before activist investing was in vogue, Mr. Icahn was waging war with executives at companies like Motorola, RJR Nabisco and <a class="tickerized" title="More information about United States Steel Corporation" href="http://dealbook.on.nytimes.com/public/overview?symbol=X&amp;inline=nyt-org">United States Steel</a>, pushing for corporate changes to increase shareholder value. In the 1980s, Mr. Icahn became synonymous with an era of corporate raiding, leading a hostile takeover of Trans World Airlines.</p>
+<p class="story-body-text" itemprop="articleBody">In recent years, his strategy has mellowed some. Mr. Icahn has become something of an elder statesman on Wall Street, often appearing on the CNBC business channel, at investing conferences and even on <a class="tickerized" title="More information about Twitter" href="http://dealbook.on.nytimes.com/public/overview?symbol=TWTR&amp;inline=nyt-org">Twitter</a>, though he continues to pursue headline-grabbing takeover bids for companies like Clorox.</p>
+<p class="story-body-text" itemprop="articleBody">Mr. Icahn laid the groundwork for a Clorox takeover in early 2011, when he disclosed in a regulatory filing that his various investment firms began amassing shares in the consumer goods manufacturer, thinking the stock was undervalued. Shares of Clorox rose about 6 percent in February 2011, after Mr. Icahn disclosed his stake.</p>
+<p class="story-body-text" itemprop="articleBody">The shares jumped again a few months later after he announced an unsolicited takeover bid for the company. In a letter to Clorox, Mr. Icahn proposed buying the company for $76.50 a share and noted that his firms were Clorox’s largest investor.</p>
+<p class="story-body-text" itemprop="articleBody">In the days leading up to Mr. Icahn’s bid, there was unusual trading activity in shares of Clorox and options to buy the stock, according to published reports at the time. Successful options trading that comes ahead of corporate deals can be a red flag for regulators.</p>
+<p class="story-body-text" itemprop="articleBody">The investigation into the Clorox trading began at the Financial Industry Regulatory Authority, or Finra, Wall Street’s self-regulatory group that monitors suspicious trades. In 2011, the people briefed on the matter said, Finra traced a series of well-timed Clorox trades to Mr. Walters and other investors, just as Mr. Icahn was aiming to gain a foothold on the company’s board.</p>
+<p class="story-body-text" itemprop="articleBody">Ultimately, Clorox rebuffed Mr. Icahn’s overture. By September 2011, Mr. Icahn withdrew the bid.</p>
+<p class="story-body-text" itemprop="articleBody">Because the bid failed, it is unclear what inside information, if any, Mr. Icahn may have been privy to other than the trading strategy of his own firm, Icahn Enterprises. If Mr. Icahn provided Mr. Walters a heads-up about his activities in connection with the takeover bid, it is not necessarily a violation. Under the laws that govern insider trading, it is not illegal to leak secret information about a future trade.</p>
+<p class="story-body-text" itemprop="articleBody">For such a leak to be illegal, Mr. Icahn most likely would have had to breach a duty to keep the information confidential. Since Mr. Icahn never joined the Clorox board, he probably owed no duty to the company or its shareholders.</p>
+<p class="story-body-text" itemprop="articleBody">Yet if any potential bidder for Clorox breached a duty of confidentiality to his or her own investors, then that could present a legal problem. And in certain cases, even if there is no duty of confidentiality, a little-known securities rule might prevent someone who is mounting a takeover bid to leak “material, nonpublic information” about the offer.</p>
+<p class="story-body-text" itemprop="articleBody">It is unclear how well acquainted Mr. Icahn and Mr. Walters are, but they have crossed paths in Las Vegas. Mr. Icahn is no stranger to the city. Over the years, Mr. Icahn has invested in Las Vegas real estate and is chairman of Tropicana Entertainment, a casino company based in the city. Regulatory filings also show that a small Nevada company controlled by Mr. Walters and his business partner was an early investor in the mobile data provider Voltari, whose largest shareholders include Mr. Icahn’s investment firms.</p>
+<p class="story-body-text" itemprop="articleBody">Mr. Mickelson and Mr. Walters have participated in the Pebble Beach Pro Am golf tournament during which professional golfers partner with amateurs and celebrities. Mr. Walters won the tournament in 2008.</p>
+<p class="story-body-text" itemprop="articleBody">Mr. Walters, better known as Billy, has drawn federal scrutiny off and on for years. In 1992, he was acquitted of illegal gambling charges. Years later, the Nevada attorney general charged Mr. Walters with money laundering stemming from his gambling operation. The case resulted in three indictments; courts dismissed each one.</p>
+<p class="story-body-text" itemprop="articleBody">Despite the scrutiny, Mr. Walters firmly belongs to the Las Vegas elite, a generous philanthropist who epitomizes the city’s unconventional brand of capitalism. He bought up golf courses — his Bali Hai Golf Club has hosted what it calls the “sexiest golf tournament” in the world, featuring female caddies — and auto dealerships. He also helped finance political campaigns.</p>
+<p class="story-body-text" itemprop="articleBody">In 2011, <a title="Sports Bettor Billy Walter's Winning Streak" href="http://www.cbsnews.com/news/sports-bettor-billy-walters-winning-streak-13-01-2011/">“60 Minutes”</a> captured Mr. Walters’s high-roller status. The anchor, <a class="tickerized" title="More articles about Lara Logan." href="http://topics.nytimes.com/top/reference/timestopics/people/l/lara_logan/index.html?inline=nyt-per">Lara Logan</a>, remarked that “It’s hard to find anyone better at winning than Billy Walters.”</p>
+<p class="story-body-text" itemprop="articleBody">But during the segment, Mr. Walters complained that his stock picks had not fared as well as his sports bets. He discussed how the worst “crooks” he met were on Wall Street, not in the casinos or betting parlors, mentioning that the most money he lost was on stocks like <a class="tickerized" title="More articles about Enron." href="http://topics.nytimes.com/top/news/business/companies/enron/index.html?inline=nyt-org">Enron</a>.</p>
+<p class="story-body-text" itemprop="articleBody"><em>Alexandra Stevenson, Azam Ahmed and Peter J. Henning contributed reporting. </em></p>
+<div id="addendums" class="addendums"><div class="story-addendum theme-correction"><strong>Correction: June 12, 2014</strong> <br>An article on May 31 about an insider trading investigation, using information from people briefed on the inquiry, overstated the scope of an investigation involving the golfer Phil Mickelson. While investigators are looking at his trading in some stocks, Clorox is not among them. The error was repeated in articles on June 1 and June 2 and in the Common Sense column on Saturday. An article about the latest developments in the investigation appears today on Page B1.
+
+ 
+</div></div><footer class="story-footer">
+    <div class="story-meta">
+	<p class="story-print-citation">A version of this article appears in print on 05/31/2014, on page <span itemprop="printSection">A</span><span itemprop="printPage">1</span> of the <span itemprop="printEdition">NewYork</span> edition with the headline: Investor, Bettor, Golfer: Inquiry Into Big Names.</p>    </div>
+</footer>
+	</div>
+		<footer class="entry-footer">
+			<button class="button comments-button theme-speech-bubble"></button>		<div id="sharetools-post-footer" class="sharetools theme-classic" data-shares="show-all|Share" data-url="https://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/" data-title="Investor, Bettor, Golfer: Insider Trading Inquiry Includes Mickelson, Icahn and William T. Walters" data-description="Federal authorities are examining a series of well-timed trades belonging to the golfer Phil Mickelson and the gambler William T. Walters. ">
+				<div class="ad sharetools-inline-article-ad hidden"></div>
+			</div>		<div class="footer-tags">
+			<span class="categories"><a href="https://dealbook.nytimes.com/category/by-industry/financial-services/" rel="category tag">Financial Services</a>, <a href="https://dealbook.nytimes.com/category/main-topics/legal/" rel="category tag">Legal/Regulatory</a>, </span>
+			<span class="tags"><a href="https://dealbook.nytimes.com/tag/clorox-company/" rel="tag">Clorox Company</a>, <a href="https://dealbook.nytimes.com/tag/federal-bureau-of-investigation/" rel="tag">Federal Bureau of Investigation</a>, <a href="https://dealbook.nytimes.com/tag/financial-industry-regulatory-authority/" rel="tag">Financial Industry Regulatory Authority</a>, <a href="https://dealbook.nytimes.com/tag/icahn-carl-c/" rel="tag">Icahn, Carl C</a>, <a href="https://dealbook.nytimes.com/tag/insider-trading/" rel="tag">Insider Trading</a>, <a href="https://dealbook.nytimes.com/tag/mergers-acquisitions-and-divestitures/" rel="tag">Mergers, Acquisitions and Divestitures</a>, <a href="https://dealbook.nytimes.com/tag/mickelson-phil/" rel="tag">Mickelson, Phil</a>, <a href="https://dealbook.nytimes.com/tag/securities-and-commodities-violations/" rel="tag">Securities and Commodities Violations</a>, <a href="https://dealbook.nytimes.com/tag/securities-and-exchange-commission/" rel="tag">Securities and Exchange Commission</a>, <a href="https://dealbook.nytimes.com/tag/trans-world-airlines-twa/" rel="tag">Trans World Airlines (TWA)</a> </span>
+		</div>
+		</footer>
+</article>		<section id="whats-next" class="whats-next nocontent robots-nocontent">
+    <h2 class="visually-hidden">What's Next</h2>
+    <div class="nocontent robots-nocontent">
+        <div class="loader-container">
+            <div class="loader loader-t-logo-32x32-ecedeb-ffffff"><span class="visually-hidden">Loading...</span></div>
+        </div>
+    </div><!-- close nocontent -->
+</section>
+
+			</div><!-- end content -->
+</div><!-- end .a-column -->
+<div class="cColumn nocontent robots-nocontent">
+	<aside>
+	<div class="postNavigation">
+	<ul class="opposingFloatControl wrap">
+		<li class="element1">
+						<span class="previous">Previous Post</span>
+			<div class="arrow arrow-left">
+				<div class="arrow-conceal"></div>
+			</div>
+			<a class="postTitle" href="https://dealbook.nytimes.com/2014/05/30/fund-manager-found-not-liable-in-insider-trading-case/" title="After Fighting Insider Trading Charges for 10 Years, a Fund Manager Is Cleared">
+				After Fighting Insider Trading Charges for 10 Years, a Fund Manager Is Cleared			</a>
+					</li>
+		<li class="element2">
+						<span class="next">Next Post</span>
+			<div class="arrow arrow-right">
+				<div class="arrow-conceal"></div>
+			</div>
+			<a class="postTitle" href="https://dealbook.nytimes.com/2014/05/31/regulators-find-insider-trading-case-tied-to-phil-mickelson-is-slow-to-take-shape/" title="Authorities Find Insider Trading Case Tied to Phil Mickelson Is Slow to Take Shape ">
+				Authorities Find Insider Trading Case Tied to Phil Mickelson Is Slow to Take Shape 			</a>
+					</li>
+	</ul>
+</div>
+		<div class="module ad" id="MiddleRight"></div>
+        	</aside>
+</div>		<div class="clear"></div>
+	</div><!-- end blog wrap -->
+	<div class="hideContent"></div>
+
+	
+<!-- Google Analytics start -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-4406282-12',  { 'alwaysSendReferrer': true } );
+ga('send', 'pageview');
+</script>
+<!-- Google Analytics end -->
+		<div id="mobilebanner2" class="ad mobilebanner2"></div>
+		<div class="accessibility-ad-header visually-hidden">
+    <p>Advertisement</p>
+</div>
+<div id="SponLink" class="text-ad bottom-left-ad nocontent robots-nocontent"></div>
+
+		<div id="Top5" class="ad top5-ad hidden nocontent robots-nocontent"></div>
+
+					</div>
+			<div class="search-overlay"></div>
+		</main><!-- close main -->
+						<footer id="page-footer" class="page-footer" role="contentinfo">
+    <nav>
+         <ul>
+             <li>
+                <a href="http://www.nytco.com" itemprop="copyrightNotice">
+                    &copy; <span itemprop="copyrightYear">2017</span>
+					<span itemprop="copyrightHolder provider sourceOrganization" itemscope
+						itemtype="http://schema.org/Organization"
+						itemid="http://www.nytimes.com">
+						<span itemprop="name"> The New York Times Company</span>
+						<meta itemprop="tickerSymbol" content="NYSE NYT"/>
+					</span>
+                </a>
+            </li>
+            <li><a href="http://www.nytimes.com/ref/membercenter/help/infoservdirectory.html">Contact Us</a></li>
+            <li><a href="http://www.nytco.com/careers/">Work With Us</a></li>
+            <li><a href="http://nytmediakit.com/">Advertise</a></li>
+            <li><a href="http://www.nytimes.com/content/help/rights/privacy/policy/privacy-policy.html#pp">Your Ad Choices</a></li>
+            <li><a href="http://www.nytimes.com/privacy">Privacy</a></li>
+            <li><a href="http://www.nytimes.com/ref/membercenter/help/agree.html" itemprop="usageTerms">Terms of Service</a></li>
+            <li class="last-item"><a href="http://www.nytimes.com/content/help/rights/sale/terms-of-sale.html">Terms of Sale</a></li>
+         </ul>
+    </nav>
+    <nav class="last-nav">
+        <ul>
+            <li><a href="http://spiderbites.nytimes.com">Site Map</a></li>
+            <li><a href="http://www.nytimes.com/membercenter/sitehelp.html">Help</a></li>
+            <li><a href="https://myaccount.nytimes.com/membercenter/feedback.html">Site Feedback</a></li>
+            <li class="last-item"><a href="http://www.nytimes.com/subscriptions/Multiproduct/lp5558.html?campaignId=37WXW">Subscriptions</a></li>
+        </ul>
+    </nav>
+</footer>		</div><!-- close shell -->
+	<script>
+require(['foundation/main'], function () {
+    require(['blogs/main']);
+    require(['jquery/nyt', 'foundation/views/page-manager'], function ($, pageManager) {
+        if (window.location.search.indexOf('disable_tagx') > 0) {
+            return;
+        }
+        $(document).ready(function () {
+            require(['https://a1.nyt.com/analytics/tagx-simple.min.js'], function () {
+                pageManager.trackingFireEventQueue();
+            });
+        });
+    });
+});
+</script>
+
+	<div id="Inv1" class="ad inv1-ad hidden"></div>
+<div id="Inv2" class="ad inv2-ad hidden"></div>
+<div id="Inv3" class="ad inv3-ad hidden"></div>
+<div id="ab1" class="ad ab1-ad hidden"></div>
+<div id="ab2" class="ad ab2-ad hidden"></div>
+<div id="ab3" class="ad ab3-ad hidden"></div>
+<div id="prop1" class="ad prop1-ad hidden"></div>
+<div id="prop2" class="ad prop2-ad hidden"></div>
+<div id="Anchor" class="ad anchor-ad hidden"></div>
+<div id="ADX_CLIENTSIDE" class="ad adx-clientside-ad hidden"></div>
+		<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"b5bcf2eba4","applicationID":"5164608","transactionName":"YwFXZhRYVhAEVUZcX1pLYEAPFlkTFRtQWV9TFxtCDkk=","queueTime":0,"applicationTime":41,"ttGuid":"","agentToken":"","userAttributes":"","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

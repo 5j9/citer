@@ -1,0 +1,26 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Cache-Control": "no-cache, must-revalidate, max-age=0, no-store",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Length": "19150",
+  "Content-Type": "text/html;charset=UTF-8",
+  "Date": "Tue, 23 May 2017 17:53:04 GMT",
+  "Eomportal-Instance": "216",
+  "Expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+  "Pragma": "no-cache",
+  "Server": "BostonGlobe.com Frontend",
+  "Set-Cookie": "JSESSIONID=E0C04C3E5C92D80A5F37F57EA16BE8EE; Path=/, pathUrl=/metro/2014/06/03/walsh-meets-with-college-leaders-off-campus-housing/lsxtLSGJMD86Gbkjay3D6J/story.html; Domain=.bostonglobe.com; Path=/, FM=20170523:1:3.2.4143921833; Domain=.bostonglobe.com; Expires=Fri, 07-Jul-2017 17:53:05 GMT; Path=/",
+  "Vary": "Origin, Accept-Encoding",
+  "Via": "1.1 varnish",
+  "X-Cache": "MISS",
+  "X-Cache-Hits": "0",
+  "X-Served-By": "cache-iad2620-IAD",
+  "X-TTL": "pass",
+  "X-Timer": "S1495561984.291190,VS0,VE521"
+ },
+ "status_code": 200,
+ "url": "http://www.bostonglobe.com/metro/2014/06/03/walsh-meets-with-college-leaders-off-campus-housing/lsxtLSGJMD86Gbkjay3D6J/story.html"
+}

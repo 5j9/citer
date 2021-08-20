@@ -1,0 +1,24 @@
+{
+ "encoding": "ISO-8859-1",
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Connection": "keep-alive",
+  "Content-Disposition": "attachment;filename=10.2307_40991855.txt;",
+  "Content-Encoding": "gzip",
+  "Content-Type": "text/plain",
+  "Date": "Fri, 18 Jun 2021 07:00:02 GMT",
+  "Server": "Apache/2.4.29 (Ubuntu)",
+  "Set-Cookie": "ReferringRequestId=citation-export:65fcfcb30d0706992bb44df127c97f9f; Path=/; SameSite=Lax; Secure",
+  "Vary": "Cookie,Accept-Encoding,Fastly-SSL,Origin,X-Requested-Host",
+  "Via": "1.1 varnish",
+  "X-Cache": "MISS",
+  "X-Cache-Hits": "0",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-JSTOR-Restarts": "0",
+  "X-Served-By": "cache-fra19158-FRA",
+  "X-Timer": "S1623999602.174007,VS0,VE426",
+  "transfer-encoding": "chunked"
+ },
+ "status_code": 200,
+ "url": "https://www.jstor.org/citation/text/40991855"
+}

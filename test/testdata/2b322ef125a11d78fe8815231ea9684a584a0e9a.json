@@ -1,0 +1,28 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Age": "398",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Length": "33925",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Mon, 08 Jan 2018 15:09:45 GMT",
+  "Fastly-Debug-Digest": "67f9f2e80720128694de4d55b6bd4871f6e8fb89010fb7129c4ddfb8175ec498",
+  "Set-Cookie": "countryCode=IR; Domain=.cnn.com; Path=/, geoData=tehran|07|0|IR|AS; Domain=.cnn.com; Path=/, tryThing00=2069; Domain=.cnn.com; Path=/; Expires=Sun Apr 01 2018 00:00:00 GMT",
+  "Vary": "Accept-Encoding, Fastly-SSL, Fastly-SSL",
+  "Via": "1.1 varnish, 1.1 varnish",
+  "X-Cache": "HIT, HIT",
+  "X-Cache-Hits": "1, 3",
+  "X-Served-By": "cache-iad2151-IAD, cache-hhn1539-HHN",
+  "X-Timer": "S1515424185.039635,VS0,VE0",
+  "access-control-allow-origin": "*",
+  "cache-control": "max-age=60",
+  "content-security-policy": "default-src 'self' blob: https://*.cnn.com:* http://*.cnn.com:* *.cnn.io:* *.cnn.net:* *.turner.com:* *.turner.io:* *.ugdturner.com:* courageousstudio.com *.vgtf.net:*; script-src 'unsafe-eval' 'unsafe-inline' 'self' *; style-src 'unsafe-inline' 'self' blob: *; child-src 'self' blob: *; frame-src 'self' *; object-src 'self' *; img-src 'self' data: blob: *; media-src 'self' data: blob: *; font-src 'self' data: *; connect-src 'self' *; frame-ancestors 'self' *.cnn.com:* *.turner.com:* courageousstudio.com;",
+  "x-content-type-options": "nosniff",
+  "x-servedByHost": "::ffff:172.17.47.18",
+  "x-xss-protection": "1; mode=block"
+ },
+ "status_code": 200,
+ "url": "https://edition.cnn.com/"
+}

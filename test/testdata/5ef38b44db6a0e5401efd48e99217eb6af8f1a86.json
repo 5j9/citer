@@ -1,0 +1,26 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Age": "4156",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Length": "61275",
+  "Content-Security-Policy": "upgrade-insecure-requests",
+  "Content-Type": "text/html; charset=UTF-8",
+  "Date": "Tue, 23 May 2017 17:53:02 GMT",
+  "Fastly-Debug-Digest": "583312a3eb81a4b4e4557aabbc3bf20c65443f6ee8de175c8d7e8f17bce912a4",
+  "Fastly-SSL": "1",
+  "Link": "<https://www.boston.com/wp-json/>; rel=\"https://api.w.org/\", <https://www.boston.com/>; rel=shortlink",
+  "Server": "Apache",
+  "Vary": "Accept-Encoding, Origin,Fastly-SSL,Fastly-SSL",
+  "Via": "1.1 varnish, 1.1 varnish",
+  "X-Cache": "HIT, HIT",
+  "X-Cache-Hits": "1166, 40",
+  "X-Served-By": "cache-jfk8129-JFK, cache-iad2121-IAD",
+  "X-TTL": "default",
+  "X-Timer": "S1495561983.579645,VS0,VE0"
+ },
+ "status_code": 200,
+ "url": "https://www.boston.com/"
+}

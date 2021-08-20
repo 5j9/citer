@@ -1,0 +1,23 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Access-Control-Allow-Credentials": "false",
+  "Access-Control-Allow-Headers": "Origin,X-Requested-With,Content-Type,Accept",
+  "Access-Control-Allow-Methods": "GET,POST",
+  "Access-Control-Max-Age": "86400",
+  "Cache-Control": "max-age=0, no-cache, no-store",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Length": "40852",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Wed, 21 Jul 2021 03:23:44 GMT",
+  "ETag": "W/\"3de5b-psU/VmrwnakCwgpTi98zhga2MRQ\"",
+  "Expires": "Wed, 21 Jul 2021 03:23:44 GMT",
+  "Pragma": "no-cache",
+  "Server": "nginx",
+  "Strict-Transport-Security": "max-age=86400",
+  "Vary": "Accept-Encoding"
+ },
+ "status_code": 200,
+ "url": "https://timesofindia.indiatimes.com/city/pune/UK-allows-working-visas-for-Indian-students/articleshow/1163528927.cms"
+}

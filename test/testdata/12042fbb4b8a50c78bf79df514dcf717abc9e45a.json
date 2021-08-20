@@ -1,0 +1,26 @@
+{
+ "encoding": "UTF-8",
+ "headers": {
+  "Access-Control-Allow-Origin": "*",
+  "Cache-Control": "private",
+  "Connection": "Keep-Alive",
+  "Content-Security-Policy": "upgrade-insecure-requests",
+  "Content-Type": "application/json; charset=UTF-8",
+  "Date": "Fri, 01 Mar 2019 07:22:40 GMT",
+  "Keep-Alive": "timeout=4, max=40",
+  "NCBI-PHID": "322CBF38DE76A3650000216D626F9372.1.1.m_1",
+  "NCBI-SID": "FA652BA6526DA676_5535SID",
+  "Server": "Finatra",
+  "Set-Cookie": "ncbi_sid=FA652BA6526DA676_5535SID; domain=.nih.gov; path=/; expires=Sun, 01 Mar 2020 07:22:41 GMT",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+  "Transfer-Encoding": "chunked",
+  "X-RateLimit-Limit": "3",
+  "X-RateLimit-Remaining": "3",
+  "X-UA-Compatible": "IE=Edge",
+  "X-XSS-Protection": "1; mode=block",
+  "content-encoding": "gzip",
+  "l5d-success-class": "1.0"
+ },
+ "status_code": 200,
+ "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?api_key=dad47b304cafdc0790b32d335e3e3a403c08&retmode=json&tool=5j9.citer@github.com&email=dalba.wiki@gmail.com&db=pmc&id=3538472"
+}

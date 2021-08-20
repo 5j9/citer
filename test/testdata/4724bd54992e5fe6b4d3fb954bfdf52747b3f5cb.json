@@ -1,0 +1,16 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Cache-Control": "private",
+  "Content-Encoding": "gzip",
+  "Content-Length": "12295",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Fri, 15 Mar 2019 08:35:51 GMT",
+  "Server": "Microsoft-IIS/7.5",
+  "Vary": "Accept-Encoding",
+  "X-AspNet-Version": "4.0.30319",
+  "X-Powered-By": "ASP.NET"
+ },
+ "status_code": 200,
+ "url": "http://www.ketab.ir/BookList.aspx"
+}

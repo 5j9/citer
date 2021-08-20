@@ -1,0 +1,22 @@
+{
+ "encoding": "utf-8",
+ "headers": {
+  "Accept-Ranges": "bytes",
+  "Connection": "keep-alive",
+  "Content-Encoding": "gzip",
+  "Content-Type": "text/html; charset=utf-8",
+  "Date": "Fri, 18 Jun 2021 07:00:03 GMT",
+  "Server": "Apache/2.4.29 (Ubuntu)",
+  "Set-Cookie": "AccessSession=H4sIAAAAAAAAAK1Sy27bMBC85ysEnUOD5JIUtzfFqJsix-RWFMVqSbYqlMSwpABNkH-vHnQMt82tR87MDoc7fLkoirINZfGhKL0lEzApCLoxjIyVIYfWNckgRR3Ky1nMWd0SCyKSaoV_ZrjW1Ud0NdS425odIuoKUKv6CsBor-2qPmQ1JQkKfONT8MZPtzlUCqyxlWanMF85jlmeApGCBEICs5jCekFGsZBWRzbeeVnpdYTG4cc8kqjr44I8Ube6KKeNVNJIAKcWqt0v7qA2ymyUrTZHk3DfPpy79P3jOTDw-ZmYh36GvhQv0_m0XSWlxMV3wnKU0hyBmAFE0wCgFQnJCoNaCu8pCo0heeU5QaDjzPBrH5ehT4fHcf9m_QZfUd_yGTc9p71vn-Ouo--zZDiMcWJeL_-RFf7Mqv_KGqd9h8giQdUIw5UVxF4LycpP6bmRJP9_1uLrWsSQu4Tpj7lTlx29R4zvEDQMh6WxvIPtdv3It8ck27sFaNoH6sbw7dTi7Up8vruub-pyDnfx-hvJXPziUQMAAA; Path=/; SameSite=Lax; Secure, AccessSessionSignature=0038919d19f718984d1a0332097cdc6f27bbe1cc7e3f51d7092ae2d570fd024c; Path=/; SameSite=Lax; Secure, AccessSessionTimedSignature=18d21b50ab389d17c819444086ee56d4059f9b63f2cf3840fff6735bc65528b5; Path=/; SameSite=Lax; Secure, UUID=fdaa13f3-03cc-4d98-a41c-052ec4868072; expires=Mon, 17 Jun 2024 07:00:03 GMT; Max-Age=94608000; Path=/; SameSite=None; Secure, csrftoken=4WAqVn3Y2fEnlzkb9Ux3akMvNiPn2clvSbmPc1z2xcqr4ckDtUE7WBJrDvhtpGEV; expires=Fri, 17 Jun 2022 07:00:03 GMT; Max-Age=31449600; Path=/; SameSite=Lax; Secure, ReferringRequestId=excelsior:76b2e94015eec5b5b884a16b2d726b40; Path=/; SameSite=Lax; Secure, _pxhd=DpK7p-9NvNIusm2g6WLVg7eHusJqej8ViIjXo0ZMJtvNiKoqmi2hCqvRhlrSBxtXp/xa/kqBc5bPXgv8uaB6Vg==:4sVaYTj-PAd/0nIrD6SnoeZSYdsyHXVHEmHAFjUWgIO-8BP3Nb0jN9RPahpLNupRy-M7DzjEwrB-J40mp3S1iMKyksFTDe1dXeSmV7afOfU=; Expires=Fri, 01 Jan 2021 00:00:00 GMT; path=/;",
+  "Vary": "Cookie,Accept-Encoding,Fastly-SSL,Origin,X-Requested-Host",
+  "Via": "1.1 varnish",
+  "X-Cache": "MISS",
+  "X-Cache-Hits": "0",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-JSTOR-Restarts": "2",
+  "X-Served-By": "cache-fra19171-FRA",
+  "transfer-encoding": "chunked"
+ },
+ "status_code": 200,
+ "url": "https://www.jstor.org/stable/40991855"
+}

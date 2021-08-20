@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- META TAGS -->
+    <meta charset="UTF-8"/>
+    <meta name="title" content="Male vs. Female Entrepreneurs: How Are They Different?">
+    <meta name="description" content="Bank of America's spring 2014 Small Business Owner Report found some interesting differences between male and female entrepreneurs.">
+    <title>Male vs. Female Entrepreneurs: How Are They Different?</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"VQcFVl5SDhABUVNXBAMAXg=="};window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o||n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({1:[function(t,n,e){function r(t){try{s.console&&console.log(t)}catch(n){}}var o,i=t("ee"),a=t(15),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,n,e){r(e.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,n){return t}).join(", ")))},{}],2:[function(t,n,e){function r(t,n,e,r,o){try{d?d-=1:i("err",[o||new UncaughtException(t,n,e)])}catch(s){try{i("ierr",[s,c.now(),!0])}catch(u){}}return"function"==typeof f&&f.apply(this,a(arguments))}function UncaughtException(t,n,e){this.message=t||"Uncaught error with no additional information",this.sourceURL=n,this.line=e}function o(t){i("err",[t,c.now()])}var i=t("handle"),a=t(16),s=t("ee"),c=t("loader"),f=window.onerror,u=!1,d=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(l){"stack"in l&&(t(8),t(7),"addEventListener"in window&&t(5),c.xhrWrappable&&t(9),u=!0)}s.on("fn-start",function(t,n,e){u&&(d+=1)}),s.on("fn-err",function(t,n,e){u&&(this.thrown=!0,o(e))}),s.on("fn-end",function(){u&&!this.thrown&&d>0&&(d-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,n,e){t("loader").features.ins=!0},{}],4:[function(t,n,e){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(8),s=t(7),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",l="resource",p="-start",h="-end",m="fn"+p,w="fn"+h,v="bstTimer",y="pushState",g=t("loader");g.features.stn=!0,t(6);var b=NREUM.o.EV;o.on(m,function(t,n){var e=t[0];e instanceof b&&(this.bstStart=g.now())}),o.on(w,function(t,n){var e=t[0];e instanceof b&&i("bst",[e,n,this.bstStart,g.now()])}),a.on(m,function(t,n,e){this.bstStart=g.now(),this.bstType=e}),a.on(w,function(t,n){i(v,[n,this.bstStart,g.now(),this.bstType])}),s.on(m,function(){this.bstStart=g.now()}),s.on(w,function(t,n){i(v,[n,this.bstStart,g.now(),"requestAnimationFrame"])}),o.on(y+p,function(t){this.time=g.now(),this.startPath=location.pathname+location.hash}),o.on(y+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],5:[function(t,n,e){function r(t){for(var n=t;n&&!n.hasOwnProperty(u);)n=Object.getPrototypeOf(n);n&&o(n)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,n){return t[1]}var a=t("ee").get("events"),s=t(18)(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";n.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,n){var e=t[1],r=c(e,"nr@wrapped",function(){function t(){if("function"==typeof e.handleEvent)return e.handleEvent.apply(e,arguments)}var n={object:t,"function":e}[typeof e];return n?s(n,"fn-",null,n.name||"anonymous"):e});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],6:[function(t,n,e){var r=t("ee").get("history"),o=t(18)(r);n.exports=r,o.inPlace(window.history,["pushState","replaceState"],"-")},{}],7:[function(t,n,e){var r=t("ee").get("raf"),o=t(18)(r),i="equestAnimationFrame";n.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],8:[function(t,n,e){function r(t,n,e){t[0]=a(t[0],"fn-",null,e)}function o(t,n,e){this.method=e,this.timerDuration="number"==typeof t[1]?t[1]:0,t[0]=a(t[0],"fn-",this,e)}var i=t("ee").get("timer"),a=t(18)(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";n.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],9:[function(t,n,e){function r(t,n){d.inPlace(n,["onreadystatechange"],"fn-",s)}function o(){var t=this,n=u.context(t);t.readyState>3&&!n.resolved&&(n.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,w,"fn-",s)}function i(t){v.push(t),h&&(g=-g,b.data=g)}function a(){for(var t=0;t<v.length;t++)r([],v[t]);v.length&&(v=[])}function s(t,n){return n}function c(t,n){for(var e in t)n[e]=t[e];return n}t(5);var f=t("ee"),u=f.get("xhr"),d=t(18)(u),l=NREUM.o,p=l.XHR,h=l.MO,m="readystatechange",w=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],v=[];n.exports=u;var y=window.XMLHttpRequest=function(t){var n=new p(t);try{u.emit("new-xhr",[n],n),n.addEventListener(m,o,!1)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}return n};if(c(p,y),y.prototype=p.prototype,d.inPlace(y.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,n){r(t,n),i(n)}),u.on("open-xhr-start",r),h){var g=1,b=document.createTextNode(g);new h(a).observe(b,{characterData:!0})}else f.on("fn-end",function(t){t[0]&&t[0].type===m||a()})},{}],10:[function(t,n,e){function r(t){var n=this.params,e=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<d;r++)t.removeEventListener(u[r],this.listener,!1);if(!n.aborted){if(e.duration=a.now()-this.startTime,4===t.readyState){n.status=t.status;var i=o(t,this.lastSize);if(i&&(e.rxSize=i),this.sameOrigin){var c=t.getResponseHeader("X-NewRelic-App-Data");c&&(n.cat=c.split(", ").pop())}}else n.status=0;e.cbTime=this.cbTime,f.emit("xhr-done",[t],t),s("xhr",[n,e,this.startTime])}}}function o(t,n){var e=t.responseType;if("json"===e&&null!==n)return n;var r="arraybuffer"===e||"blob"===e||"json"===e?t.response:t.responseText;return h(r)}function i(t,n){var e=c(n),r=t.params;r.host=e.hostname+":"+e.port,r.pathname=e.pathname,t.sameOrigin=e.sameOrigin}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(11),f=t("ee"),u=["load","error","abort","timeout"],d=u.length,l=t("id"),p=t(14),h=t(13),m=window.XMLHttpRequest;a.features.xhr=!0,t(9),f.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=r,n.ended=!1,n.xhrGuids={},n.lastSize=null,p&&(p>34||p<10)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),f.on("open-xhr-start",function(t){this.params={method:t[0]},i(this,t[1]),this.metrics={}}),f.on("open-xhr-end",function(t,n){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&n.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),f.on("send-xhr-start",function(t,n){var e=this.metrics,r=t[0],o=this;if(e&&r){var i=h(r);i&&(e.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"===t.type&&(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof n.onload))&&o.end(n)}catch(e){try{f.emit("internal-error",[e])}catch(r){}}};for(var s=0;s<d;s++)n.addEventListener(u[s],this.listener,!1)}),f.on("xhr-cb-time",function(t,n,e){this.cbTime+=t,n?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof e.onload||this.end(e)}),f.on("xhr-load-added",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&!this.xhrGuids[e]&&(this.xhrGuids[e]=!0,this.totalCbs+=1)}),f.on("xhr-load-removed",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&this.xhrGuids[e]&&(delete this.xhrGuids[e],this.totalCbs-=1)}),f.on("addEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-added",[t[1],t[2]],n)}),f.on("removeEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-removed",[t[1],t[2]],n)}),f.on("fn-start",function(t,n,e){n instanceof m&&("onload"===e&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),f.on("fn-end",function(t,n){this.xhrCbStart&&f.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,n],n)})}},{}],11:[function(t,n,e){n.exports=function(t){var n=document.createElement("a"),e=window.location,r={};n.href=t,r.port=n.port;var o=n.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=n.hostname||e.hostname,r.pathname=n.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!n.protocol||":"===n.protocol||n.protocol===e.protocol,a=n.hostname===document.domain&&n.port===e.port;return r.sameOrigin=i&&(!n.hostname||a),r}},{}],12:[function(t,n,e){function r(){}function o(t,n,e){return function(){return i(t,[f.now()].concat(s(arguments)),n?null:this,e),n?void 0:this}}var i=t("handle"),a=t(15),s=t(16),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,n){u[n]=o(l+n,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),n.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,n){var e={},r=this,o="function"==typeof n;return i(p+"tracer",[f.now(),t,e],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],e),o)try{return n.apply(this,arguments)}finally{c.emit("fn-end",[f.now()],e)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,n){h[n]=o(p+n)}),newrelic.noticeError=function(t){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now()])}},{}],13:[function(t,n,e){n.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(n){return}}}},{}],14:[function(t,n,e){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),n.exports=r},{}],15:[function(t,n,e){function r(t,n){var e=[],r="",i=0;for(r in t)o.call(t,r)&&(e[i]=n(r,t[r]),i+=1);return e}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],16:[function(t,n,e){function r(t,n,e){n||(n=0),"undefined"==typeof e&&(e=t?t.length:0);for(var r=-1,o=e-n||0,i=Array(o<0?0:o);++r<o;)i[r]=t[n+r];return i}n.exports=r},{}],17:[function(t,n,e){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],18:[function(t,n,e){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(16),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;n.exports=function(t,n){function e(t,n,e,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof e?e(r,a):e||{}}catch(f){l([f,"",[r,a,o],s])}u(n+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(n+"err",[r,a,d],s),d}finally{u(n+"end",[r,a,c],s)}}return r(t)?t:(n||(n=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function u(e,r,o){if(!c||n){var i=c;c=!0;try{t.emit(e,r,o,n)}catch(a){l([a,e,r,o])}c=i}}function d(t,n){if(Object.defineProperty&&Object.keys)try{var e=Object.keys(t);return e.forEach(function(e){Object.defineProperty(n,e,{get:function(){return t[e]},set:function(n){return t[e]=n,n}})}),n}catch(r){l([r])}for(var o in t)s.call(t,o)&&(n[o]=t[o]);return n}function l(n){try{t.emit("internal-error",n)}catch(e){}}return t||(t=o),e.inPlace=f,e.flag=a,e}},{}],ee:[function(t,n,e){function r(){}function o(t){function n(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function e(e,r,o,i){if(!l.aborted||i){t&&t(e,r,o);for(var a=n(o),s=h(e),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[y[e]];return d&&d.push([g,e,r,a]),a}}function p(t,n){v[t]=h(t).concat(n)}function h(t){return v[t]||[]}function m(t){return d[t]=d[t]||o(e)}function w(t,n){f(t,function(t,e){n=n||"feature",y[e]=n,n in u||(u[n]=[])})}var v={},y={},g={on:p,emit:e,get:m,listeners:h,context:n,buffer:w,abort:a,aborted:!1};return g}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(15),u={},d={},l=n.exports=o();l.backlog=u},{}],gos:[function(t,n,e){function r(t,n,e){if(o.call(t,n))return t[n];var r=e();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(t,n,e){function r(t,n,e,r){o.buffer([t],r),o.emit(t,n,e)}var o=t("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(t,n,e){function r(t){var n=typeof t;return!t||"object"!==n&&"function"!==n?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");n.exports=r},{}],loader:[function(t,n,e){function r(){if(!x++){var t=b.info=NREUM.info,n=l.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&n))return u.abort();f(y,function(n,e){t[n]||(t[n]=e)}),c("mark",["onload",a()+b.offset],null,"api");var e=l.createElement("script");e.src="https://"+t.agent,n.parentNode.insertBefore(e,n)}}function o(){"complete"===l.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(15),u=t("ee"),d=window,l=d.document,p="addEventListener",h="attachEvent",m=d.XMLHttpRequest,w=m&&m.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:m,REQ:d.Request,EV:d.Event,PR:d.Promise,MO:d.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1026.min.js"},g=m&&w&&w[p]&&!/CriOS/.test(navigator.userAgent),b=n.exports={offset:s,now:a,origin:v,features:{},xhrWrappable:g};t(12),l[p]?(l[p]("DOMContentLoaded",i,!1),d[p]("load",r,!1)):(l[h]("onreadystatechange",o),d[h]("onload",r)),c("mark",["firstbyte",s],null,"api");var x=0,E=t(17)},{}]},{},["loader",2,10,4,3]);</script>
+
+          <meta name="viewport" content="width=device-width">
+    
+          <!-- Google Tag Manager (Part1) -->
+<script>
+    // Main BI GTM pixel, uses `dataLayer`
+    (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l='+l : '';
+        j.async = true;
+        j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-T9NZXX');
+</script>
+<!-- End Google Tag Manager (Part1) -->    
+              
+          <link rel="canonical" href="http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html">
+       
+
+        <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+
+
+          <script type="text/javascript">
+        var image_server = 'http://www.businessnewsdaily.com';
+      </script>
+        
+          <link rel="stylesheet" href="/resources/css/grunt/bnd-site.article.css?2017-05-23-11" />
+
+  <link rel="stylesheet" href="http://cdn.buyerzone.com/apps/bz-rfq-widget/styles/style.css">
+
+              <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
+
+    <script type="text/javascript" src="http://www.businessnewsdaily.com/resources/js/sharethis.js?08ad2ec3"></script>
+
+    <script type="text/javascript" src="http://www.businessnewsdaily.com/resources/js/bnd-legacy.js?08ad2ec3"></script>
+    
+                    <script type="text/javascript" src="http://www.businessnewsdaily.com/resources/js/quiz.js?08ad2ec3"></script>
+          
+   
+    <script type="text/javascript" src="http://www.businessnewsdaily.com/resources/js/article.js?08ad2ec3"></script>
+  
+        <!--[if IE 8]>
+          <script type="text/javascript" src="http://www.businessnewsdaily.com/resources/js/ie8.js?08ad2ec3"></script>
+        <![endif]-->
+
+            
+            
+                    
+
+                                                                                                            
+
+<script type="text/javascript">
+    var pageAccount = '/10518929/tmn.bnd';
+    var pageAdZone = '/article/start-your-business/entrepreneurs';
+    var siteName = 'tmn.bnd';
+    var ccat = 'start-your-business/entrepreneurs';
+    var ctype = 'article';
+    var keywords = ["female entrepreneurs","small business owners","women","men"];
+</script>
+
+    
+                 
+      <script>
+        var tmntag = tmntag || {};
+        tmntag.cmd = tmntag.cmd || [];
+
+        (function() {
+          var tmnhead = document.createElement('script');
+          tmnhead.async = true;
+          tmnhead.type = 'text/javascript';
+          tmnhead.src = ('https:'==document.location.protocol ? 'https:' : 'http:')+'//ads.servebom.com/tmnhead.js';
+          var node = document.getElementsByTagName('script')[0];
+          node.parentNode.insertBefore(tmnhead, node);
+        })();
+
+        tmntag.cmd.push(function() {
+          if (document.location.hash.indexOf('#xtor=') != -1) tmntag.target(
+            {'xtor': document.location.hash.substr((document.location.hash.indexOf('#xtor=') + 6), document.location.hash.length)}
+          );
+          // In order to test in a local env you need to use tmntag.location . this should not be on prod
+          
+          var tag = {
+            'kw': (keywords || ''),
+            'ctype': (ctype || 'section-front'),
+            'ccat1': (ccat  || 'homepage')
+          };
+          tmntag.target(tag);
+          tmntag.account(pageAdZone);
+          tmntag.placement('2413');
+          tmntag.start();
+        });
+      </script>
+            
+                
+          <meta property="fb:app_id" content="161322983898800">
+<meta property="og:site_name" content="Business News Daily"/>
+<meta property="og:url" content="http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html">
+<meta property="og:type" content="article">
+
+                                        <meta property="og:title" content="Male vs. Female Entrepreneurs: How Are They Different?">
+                                                                        <meta property="og:image:height" content="667">
+                                                                                    <meta property="og:description" content="Bank of America&#039;s spring 2014 Small Business Owner Report found some interesting differences between male and female entrepreneurs.">
+                                                            <meta property="og:image" content="http://www.businessnewsdaily.com/images/i/000/006/348/original/menwomen.jpg?1405008951">
+                                                            <meta property="og:image:width" content="1000">
+                        
+<meta name="twitter:card" content="summary_large_image">
+                                        <meta name="twitter:creator" content="@brittneyplz">
+<meta name="twitter:site:id" content="166181690">
+<meta name="twitter:site" content="@BNDarticles">    
+    
+    
+          <script language="JavaScript" type="text/javascript">
+  if(typeof(s)=="undefined"){ var s = {}; }
+
+  s.pageName = "bnd:start-your-business:entrepreneurs:Article:6762";
+  s.server   = "";
+  s.channel  = "Editorial";          //Channel
+  s.eVar2    = "start-your-business";            //section
+  s.prop2    = "D=v2";
+  s.eVar3    = "entrepreneurs";            //sub-section
+  s.prop3    = "D=v3";
+  s.eVar4    = "article"; //Content Type
+  s.prop4    = "D=v4";
+  s.eVar5    = "male vs. female entrepreneurs: how are they different?"; //Content Title
+  s.prop5    = "D=v5";
+  s.eVar6    = "bnd-6762"; //Content ID
+  s.prop6    = "D=v6";
+  s.eVar7    = "";
+  s.prop7    = "";
+  s.eVar45   = "D=v6";
+  s.articleType  = "";
+  s.categoryTags = "";
+
+        s.prop44 = ""
+    
+  /* Hierarchy Variables */
+  s.hier1    = "";
+  s.eVar15   = s.prop15;
+  s.eVar16   = s.prop16;
+  s.eVar17   = s.prop17;
+  s.eVar18   = s.prop18;
+  </script>
+            
+    
+                        
+<style>  #billboard-atf{min-height:0px} @media only screen and (min-width:300px) {#billboard-atf{min-height:250px}}  #ad_leaderboard{min-height:50px} @media only screen and (min-width:728px) {#ad_leaderboard{min-height:90px}}</style>
+
+    
+  </head>
+
+  <body class="sect1 single"  data-article-slug="6762-male-female-entrepreneurs" >
+    <!-- Google Tag Manager (Part2 - noScript) -->
+    <noscript>
+      <iframe src="//www.googletagmanager.com/ns.html?id=GTM-T9NZXX" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+
+    <script>
+      // get all the omniture vars set
+      var omnVars = {};
+      for(var key in s) {
+        if(!s.hasOwnProperty(key)) continue;
+        var obj = s[key];
+        if(key.indexOf('prop')==0 || key.indexOf('eVar')==0 || key.indexOf('pageName')==0 || key.indexOf('channel')==0 || 
+           key.indexOf('pageType')==0 || key.indexOf('articleType')==0 || key.indexOf('categoryTags')==0) {
+            omnVars[key] = typeof(s[key]) !== 'undefined' ? s[key] : '';
+        }
+      }
+      // pre-populate the GTM dataLayer
+      var dataLayer = dataLayer || [];
+      dataLayer.push({'PurchOmnitureVars': omnVars });
+
+      // set the bzDataLayer to the existing dataLayer
+      var bzDataLayer = dataLayer;
+    </script>
+    <!-- End Google Tag Manager (Part2 - noScript) -->
+
+        <script>var __uzdbm_a = "d0509b84-ad08-7735-0979-042eeee15930";</script><div id="ss_098786_234239_238479_190541"></div><script src ="https://cdn.perfdrive.com/static/jscall_min.js" async="true"></script>
+    
+      <!-- Interstitial and skin ads -->
+      <div id="out-of-page">
+      <script type='text/javascript'>tmntag.cmd.push(function(){ tmntag.adTag('out-of-page', false); });</script>
+    </div>
+      
+    
+
+<header class="masthead cf">
+    <div class="wrap">
+        <div class="sectRule allColors spaceB10 mqMedOn"></div>
+        <div class="logo unit">
+                                                    <a placement="header" title="businessnewsdaily.com" href="http://www.businessnewsdaily.com/">
+                                        <img src="http://www.businessnewsdaily.com/resources/img/business-news-daily-logo-01.svg?08ad2ec3" alt="businessnewsdaily.com" class="mqMedOff">
+                                        
+                                        <img src="http://www.businessnewsdaily.com/resources/img/bnd-logo-mobile.svg?08ad2ec3" alt="businessnewsdaily.com" class="mqMedOn">
+                                    </a>
+                    </div>
+        <div class="menu unitExt">
+
+            <input class="menuToggle" type="checkbox" id="menuIcon">
+            <label for="menuIcon" class="menuIcon"></label>
+
+            <div class="menuPanel">
+                <nav class="siteNav unit">
+                    <ul>
+                        <li class="navItem selected">
+                            <a placement="header" class="navLink" href="http://www.businessnewsdaily.com/start-your-business">
+                                <div class="navTitle color1">START</div>
+                                <div class="navSubTitle color1">Your Business</div>
+                            </a>
+                                                        <ol class="subNav line">
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#business-ideas">Business Ideas</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#business-plans">Business Plans</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#startup-basics">Startup Basics</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#startup-funding">Startup Funding</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#franchising">Franchising</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#success-stories">Success Stories</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#entrepreneurs">Entrepreneurs</a></li>
+                                                            </ol>
+                        </li>
+                        <li class="navItem ">
+                            <a placement="header" class="navLink" href="http://www.businessnewsdaily.com/grow-your-business">
+                                <div class="navTitle">GROW</div>
+                                <div class="navSubTitle">Your Business</div>
+                            </a>
+                            <ol class="subNav line">
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#sales-marketing">Sales &amp; Marketing</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#finances">Finances</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#your-team">Your Team</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#technology">Technology</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#social-media">Social Media</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#security">Security</a></li>
+                                                            </ol>
+                        </li>
+                        <li class="navItem ">
+                            <a placement="header" class="navLink" href="http://www.businessnewsdaily.com/build-your-career">
+                                <div class="navTitle">BUILD</div>
+                                <div class="navSubTitle">Your Career</div>
+                            </a>
+                            <ol class="subNav line">
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#get-the-job">Get the Job</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#get-ahead">Get Ahead</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#office-life">Office Life</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#work-life-balance">Work-Life Balance</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#home-office">Home Office</a></li>
+                                                            </ol>
+                        </li>
+                        <li class="navItem ">
+                            <a placement="header" class="navLink" href="http://www.businessnewsdaily.com/lead-your-team">
+                                <div class="navTitle">LEAD</div>
+                                <div class="navSubTitle">Your Team</div>
+                            </a>
+                            <ol class="subNav line">
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#leadership">Leadership</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#women-in-business">Women in Business</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#managing">Managing</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#strategy">Strategy</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#personal-growth">Personal Growth</a></li>
+                                                            </ol>
+                        </li>
+                        <li class="navItem ">
+                            <a placement="header" class="navLink" href="http://www.businessnewsdaily.com/find-a-solution">
+                                <div class="navTitle">Find</div>
+                                <div class="navSubTitle">A Solution</div>
+                            </a>
+                            <ol class="subNav line">
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#hr-solutions">HR Solutions</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#financial-solutions">Financial Solutions</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#marketing-solutions">Marketing Solutions</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#security-solutions">Security Solutions</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#retail-solutions">Retail Solutions</a></li>
+                                                                    <li class="subItem"><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#technology-solutions">SMB Solutions</a></li>
+                                                            </ol>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="iconNav navSearch unit spaceR5">
+                    <div class="searchIcon fa fa-search circle circleAlt"></div>
+                    <div class="searchPanel">
+                        <form action="http://www.businessnewsdaily.com/search" class="inlineForm">
+                            <div class="searchBox">
+                                <input class="unit" type="text" name="q" required>
+                            </div>
+                            <button class="unit btn btnDark">SEARCH</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="iconNav navSocial unit">
+                    <a placement="header" href="https://www.facebook.com/BusinessNewsDaily?cmpid=556667" class="fa fa-facebook circle spaceR15" target="_blank"></a>
+                    <a placement="header" href="https://twitter.com/BNDarticles?cmpid=556668" class="fa fa-twitter circle spaceR15" target="_blank"></a>
+                    <a placement="header" href="https://www.linkedin.com/company/businessnews-daily?trk=biz-companies-cyf?cmpid=556669" class="fa fa-linkedin circle spaceR15" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="altNav unit">
+    <div class="wrap altNavLiner">
+               
+        <ol class="altNavList line mqMedOff bg1 ">
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#business-ideas">Business Ideas</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#business-plans">Business Plans</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#startup-basics">Startup Basics</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#startup-funding">Startup Funding</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#franchising">Franchising</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#success-stories">Success Stories</a></li>
+                            <li class="subItem selected"><a placement="header" href="http://www.businessnewsdaily.com/start-your-business#entrepreneurs">Entrepreneurs</a></li>
+                    </ol>
+        <ol class="altNavList line mqMedOff bg2 h">
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#sales-marketing">Sales &amp; Marketing</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#finances">Finances</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#your-team">Your Team</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#technology">Technology</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#social-media">Social Media</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/grow-your-business#security">Security</a></li>
+                    </ol>
+        <ol class="altNavList line mqMedOff bg3 h">
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#get-the-job">Get the Job</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#get-ahead">Get Ahead</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#office-life">Office Life</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#work-life-balance">Work-Life Balance</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/build-your-career#home-office">Home Office</a></li>
+                    </ol>
+        <ol class="altNavList line mqMedOff bg4 h">
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#leadership">Leadership</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#women-in-business">Women in Business</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#managing">Managing</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#strategy">Strategy</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/lead-your-team#personal-growth">Personal Growth</a></li>
+                    </ol>
+        <ol class="altNavList line mqMedOff bg5 h">
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#hr-solutions">HR Solutions</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#financial-solutions">Financial Solutions</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#marketing-solutions">Marketing Solutions</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#security-solutions">Security Solutions</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#retail-solutions">Retail Solutions</a></li>
+                            <li class="subItem  "><a placement="header" href="http://www.businessnewsdaily.com/find-a-solution#technology-solutions">SMB Solutions</a></li>
+                    </ol>
+    </div>
+</div>    <div id="ctBoc">
+      <!-- Start overAll -->
+      <div class="overAll">
+                                  <!-- Leaderboard -->
+<div class="adSlot leaderBoard clear">
+    <div id="ad_leaderboard">
+        <script type='text/javascript'>tmntag.cmd.push(function(){ tmntag.adTag('ad_leaderboard', false); }); </script>
+    </div>
+</div>                  
+    <div class="main wrap clear">      
+        <div class="header-wrapper line">
+            <div class="FTCdisclosure">
+              Product and service reviews are conducted independently by our editorial team, but we sometimes make money when you click on links. 
+              <a placement="content" href="http://purch.com/advertising-disclosure/" target="_blank">Learn more.</a>
+            </div>
+            <div class="crumbs mod topMod article-crumb">
+                <span class="crumb">
+                    <a placement="content" href="http://www.businessnewsdaily.com/start-your-business">Start Your Business</a>
+                </span>
+                                    <span class="crumb">
+                        <a placement="content" href="http://www.businessnewsdaily.com/start-your-business#entrepreneurs">Entrepreneurs</a>
+                    </span>
+                                           </div>
+
+            <header class="articleHeader">
+
+                <h1 class="h1 nolinks" itemprop="name">Male vs. Female Entrepreneurs: How Are They Different?</h1>
+                <div class="byline-wrapper">
+                    <div class="byline">
+                        By <span itemprop="author" class="author">Brittney Helmrich, Business News Daily Staff Writer</span> 
+
+                        <time datetime="July 10, 2014 10:50 am EST" itemprop="datePublished"> July 10, 2014 10:50 am EST</time>
+                    </div>
+                    <!-- Share Tools -->
+<div class="shareTools mod">
+    <ul>
+        <li class="st_facebook_custom fa fa-facebook">
+            <span id="fbCount" class="count"></span>
+        </li>
+        <li class="st_twitter_custom fa fa-twitter">
+            <span id="twtrCount" class="count"></span>
+        </li>
+        <li class="st_linkedin_custom fa fa-linkedin">
+            <span id="linkedInCount" class="count"></span>
+        </li>
+                <li class="st_reddit_custom fa fa-reddit">
+            <span id="redditCount" class="count"></span>
+        </li>
+        <li class="st_stumbleupon_custom fa fa-stumbleupon">
+            <span id="stumbleCount" class="count"></span>
+        </li> 
+        <li class="st_sharethis_custom stMore">MORE</li>
+    </ul>
+</div>
+
+
+<script type="text/javascript">
+  stLight.options({
+    publisher: "44826d50-86b3-4690-b68d-df4ee65d1526", 
+    doNotHash:false, 
+    doNotCopy:false,
+    hashAddressBar:false, 
+    onhover:false, 
+    publisherGA:"UA-72111741-4"
+  });
+
+  sharePage = "http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876";
+  
+  stButtons.getCount(sharePage, "facebook", document.getElementById('fbCount'));
+  stButtons.getCount(sharePage, "twitter", document.getElementById('twtrCount'));
+  stButtons.getCount(sharePage, "linkedin", document.getElementById('linkedInCount'));
+  //stButtons.getCount(sharePage, "googleplus", document.getElementById('gPlusCount'));
+  stButtons.getCount(sharePage, "stumbleupon", document.getElementById('stumbleCount'));
+  stButtons.getCount(sharePage, "reddit", document.getElementById('redditCount'));
+</script>
+
+
+
+
+
+                </div>
+            </header>
+
+        </div>
+        <div class="content line">
+            <article class="article   unitExt col2 article-text " itemscope itemtype="http://schema.org">
+                <!-- Article -->
+                <section class="articleBody">
+                              <figure class="thumbRight image300">
+          <div class="magnify-wrapper">
+        <a placement="content" href="https://img.purch.com/rc/816x500/aHR0cDovL3d3dy5idXNpbmVzc25ld3NkYWlseS5jb20vaW1hZ2VzL2kvMDAwLzAwNi8zNDgvb3JpZ2luYWwvbWVud29tZW4uanBn" data-overlay="image" class="enlarge-icon" title="Male vs. Female Entrepreneurs: How Are They Different?"></a>
+        <img src="https://img.purch.com/rc/300x200/aHR0cDovL3d3dy5idXNpbmVzc25ld3NkYWlseS5jb20vaW1hZ2VzL2kvMDAwLzAwNi8zNDgvb3JpZ2luYWwvbWVud29tZW4uanBn" alt="Male vs. Female Entrepreneurs: How Are They Different?">
+      </div>
+            
+                <span class="thumb-credit"> Credit: Brian A. Jackson/Shutterstock</span>
+        </figure>
+    <p>
+	Female entrepreneurs might be outdoing men when it comes to running successful businesses this year.</p>
+<p>
+	About 40 percent of women surveyed started running their business within the last five years, and nearly 70 percent of them expect their revenue to increase this year, according to <a placement="content" href="https://www.bankofamerica.com/">Bank of America</a>&#39;s spring 2014 Small Business Owner Report.</p>
+<p>
+	While nearly one-third of the women surveyed said they think they have less access to capital and new business opportunities than male small business owners do, 18 percent of women said they think they have more access to clients than men do.</p>
+<p>
+	Moreover, the survey found that women plan to hire more than men do: 56 percent of women plan to hire more employees this year, as opposed to 50 percent of men, and 68 percent of women expect their business to continue growing over the next five years. <strong>[<a placement="content" href="http://www.businessnewsdaily.com/5925-women-business-owners-outperform-men.html">5 Industries Where Women-Owned Businesses Survive Longer</a>  ]</strong></p>
+<p>
+	The survey also found some interesting differences between <a placement="content" href="http://www.businessnewsdaily.com/5268-women-entrepreneur-challenges.html">female entrepreneurs</a> and their male counterparts. When asked about their key character traits, 58 percent of women considered <a placement="content" href="http://www.businessnewsdaily.com/4019-multitasking-not-productive.html">multitasking</a> to be a strength, versus only 40 percent of men. Women were also 10 percent more likely to list creativity and 5 percent more likely to list empathy as key character traits for employees. On the other hand, 30 percent of men listed confidence as their strongest attribute, as opposed to only 24 percent of women.</p>
+<p>
+	While 72 percent of small business owners admitted they&#39;ve made significant personal sacrifices in order to run their business, the results showed that the sacrifices female entrepreneurs make are significantly different from those of their male counterparts.</p>
+<p>
+	According to the findings, women are more likely to sacrifice time for themselves and their social lives for their businesses, whereas men are more likely to sacrifice time with their spouse and time with their children. Women are also more likely to <a placement="content" href="http://www.businessnewsdaily.com/862-family-business-challenges.html">hire their children</a>, while 27 percent of men said that it would be better if their children did not work for their business.</p>
+<p>
+	Despite these differences, both men and women cited &quot;not spending enough time with my loved ones&quot; as their top regret. They were also in agreement about their greatest accomplishments: having enough money to support their families, being their own boss and doing what they love.</p>
+<p>
+	<em>Originally published on&nbsp;</em><a placement="content" href="http://businessnewsdaily.com/"><em>Business News Daily</em></a><em>.</em></p>
+
+                </section>
+
+                <!-- AUTHOR BIO START -->
+<!-- AUTHOR BIO END -->
+            </article>
+            
+             
+                                                      <aside class="unitExt col1 aside asideL sticky-me">
+    <div class="inner-ad">
+              <div class="mod">
+        <div id="zipsearch">
+          <div id="zipsearch_container"></div>
+          <a id="zipBtn" href="http://www.businessnewsdaily.com/ziprecruiter.html" target="_blank"></a> 
+        </div>      
+        <div id="billboard-atf">
+          <script type='text/javascript'>
+            tmntag.cmd.push(function(){ tmntag.adTag('billboard-btf-2', false); });
+          </script>
+        </div>
+      </div>
+    
+            <div class="sideBar">
+        <div class="sideHdr">You May Also Like</div>
+        <ul>
+                                          <li class="spaceB30">
+              <a placement="left-rail" href="/4629-business-ideas-women.html" title="Inspiring Women Entrepreneurs on How to Find Your Business Idea">
+                                  <img class="unit spaceR10" src="https://img.purch.com/rc/60x43/aHR0cDovL3d3dy5idXNpbmVzc25ld3NkYWlseS5jb20vaW1hZ2VzL2kvMDAwLzAxMS85MTEvb3JpZ2luYWwvd29tYW4tZW50ZXByZW5ldXIuanBn" alt="Inspiring Women Entrepreneurs on How to Find Your Business Idea">
+                  <div class="h2 lastUnit">Inspiring Women Entrepreneurs on How to Find Your Business Idea</div>
+                              </a>
+            </li>
+                      <li class="spaceB30">
+              <a placement="left-rail" href="/6342-female-leader-work-life-balance.html" title="Female Leaders on How to Achieve Work-Life Balance">
+                                  <img class="unit spaceR10" src="https://img.purch.com/rc/60x43/aHR0cDovL3d3dy5idXNpbmVzc25ld3NkYWlseS5jb20vaW1hZ2VzL2kvMDAwLzAwNS84MDkvb3JpZ2luYWwvZmVtYWxlLWxlYWRlcnMuanBn" alt="Female Leaders on How to Achieve Work-Life Balance">
+                  <div class="h2 lastUnit">Female Leaders on How to Achieve Work-Life Balance</div>
+                              </a>
+            </li>
+                      <li class="spaceB30">
+              <a placement="left-rail" href="/6760-biggest-challenge-female-entrepreneurs.html" title="7 Female Entrepreneurs Share Their Biggest Challenges">
+                                  <img class="unit spaceR10" src="https://img.purch.com/rc/60x43/aHR0cDovL3d3dy5idXNpbmVzc25ld3NkYWlseS5jb20vaW1hZ2VzL2kvMDAwLzAwNi8zNDQvb3JpZ2luYWwvYnVzaW5lc3N3b21hbi5qcGc=" alt="7 Female Entrepreneurs Share Their Biggest Challenges">
+                  <div class="h2 lastUnit">7 Female Entrepreneurs Share Their Biggest Challenges</div>
+                              </a>
+            </li>
+                  </ul>
+      </div>
+    </div>
+    <span class="stop-here" id="stop-here"></span>
+  </aside>
+<div class="mod relatedBlock">
+    
+        
+       
+    
+                <header class="modHeader">
+          <div class="modTitle">start-your-business</div>
+          <span><a placement="content" href="http://www.businessnewsdaily.com/latest?section=start-your-business" class="seeAll">See All</a></span>
+        </header>
+            
+        <ul class="relatedGrid">
+                                      <li class="item sectBdr">
+
+                  <div class="relatedTitle"><a placement="content" href="/4629-business-ideas-women.html">Inspiring Women Entrepreneurs on How to Find Your Business Idea</a></div>
+
+              </li>
+          
+                        <li class="item sectBdr">
+
+                  <div class="relatedTitle"><a placement="content" href="/6342-female-leader-work-life-balance.html">Female Leaders on How to Achieve Work-Life Balance</a></div>
+
+              </li>
+          
+                        <li class="item sectBdr">
+
+                  <div class="relatedTitle"><a placement="content" href="/6760-biggest-challenge-female-entrepreneurs.html">7 Female Entrepreneurs Share Their Biggest Challenges</a></div>
+
+              </li>
+          
+                
+                                    
+            <li class="adItem">
+                <div id='billboard-btf-2'>
+                    <script type='text/javascript'>tmntag.cmd.push(function(){ tmntag.adTag('billboard-btf-2', false); }); </script>
+                </div>
+            </li>
+        
+                    </ul>
+    
+    </div>
+
+                            
+        </div>
+
+        
+    </div>
+      </div>
+      <!-- end overAll -->
+    </div><!-- end ctBoc -->
+    <section class="preFooter">
+    <div class="wrap">
+        <div class="inner10">
+            <section class="mod line">
+                <div class="unit netLinks">
+                    <a placement="footer" href="http://www.businessnewsdaily.com/start-your-business">
+                        <header class="footerTitle color1">Start Your Business</header>
+                    </a>
+                    <ul>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=business-ideas">Business Ideas</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=business-plans">Business Plans</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=startup-basics">Startup Basics</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=startup-funding">Startup Funding</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=franchising">Franchising</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=success-stories">Success Stories</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=entrepreneurs">Entrepreneurs</a></li>
+                                            </ul>
+                </div>
+                <div class="unit netLinks">
+                    <a placement="footer" href="http://www.businessnewsdaily.com/grow-your-business">
+                        <header class="footerTitle color2">Grow Your Business</header>
+                    </a>
+                    <ul>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=sales-marketing">Sales &amp; Marketing</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=finances">Finances</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=your-team">Your Team</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=technology">Technology</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=social-media">Social Media</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=security">Security</a></li>
+                                            </ul>
+                </div>
+                <div class="unit netLinks">
+                    <a placement="footer" href="http://www.businessnewsdaily.com/build-your-career">
+                        <header class="footerTitle color3">Build Your Career</header>
+                    </a>
+                    <ul>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=get-the-job">Get the Job</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=get-ahead">Get Ahead</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=office-life">Office Life</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=work-life-balance">Work-Life Balance</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=home-office">Home Office</a></li>
+                                            </ul>
+                </div>
+                <div class="unit netLinks">
+                    <a placement="footer" href="http://www.businessnewsdaily.com/lead-your-team">
+                        <header class="footerTitle color4">Lead Your Team</header>
+                    </a>
+                    <ul>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=leadership">Leadership</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=women-in-business">Women in Business</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=managing">Managing</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=strategy">Strategy</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=personal-growth">Personal Growth</a></li>
+                                            </ul>
+                </div>
+                <div class="unit netLinks">
+                    <a placement="footer" href="http://www.businessnewsdaily.com/find-a-solution">
+                        <header class="footerTitle color5">Find A Solution</header>
+                    </a>
+                    <ul>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=hr-solutions">HR Solutions</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=financial-solutions">Financial Solutions</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=marketing-solutions">Marketing Solutions</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=security-solutions">Security Solutions</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=retail-solutions">Retail Solutions</a></li>
+                                                    <li class="netLink"><a placement="footer" href="http://www.businessnewsdaily.com/latest?subsection=technology-solutions">SMB Solutions</a></li>
+                                            </ul>
+                </div>
+            </section>
+            <section class="mod">
+                <a placement="footer" href="https://www.facebook.com/BusinessNewsDaily?cmpid=556667" class="fa fa-facebook circle spaceR15" target="_blank"></a>
+                <a placement="footer" href="https://twitter.com/BNDarticles?cmpid=556668" class="fa fa-twitter circle spaceR15" target="_blank"></a>
+                <a placement="footer" href="https://www.linkedin.com/company/businessnews-daily?trk=biz-companies-cyf?cmpid=556669" class="fa fa-linkedin circle spaceR15" target="_blank"></a>
+                <a placement="footer" href="https://plus.google.com/+Businessnewsdaily/posts?cmpid=556670" class="fa fa-google-plus circle spaceR15" target="_blank"></a>
+            </section>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+    <div class="wrap cf">
+        <div class="inner10">
+            <div class="mod mqMedOn">
+              <div class="corpLink"><a placement="footer" href="http://purch.com">Company Info</a></div>
+              <div class="corpLink"><a placement="footer" href="/about">About Us</a></div>
+              <div class="corpLink"><a placement="footer" href="http://purch.com/about/#contact">Contact Us</a></div>
+              <div class="corpLink"><a placement="footer" href="http://purch.com/advertise/">Advertise with Us</a></div>
+              <div class="corpLink"><a placement="footer" href="http://purch.com/#contact">Using Our Content</a></div>
+              <div class="corpLink"><a placement="footer" href="http://purch.com/#contact">Licensing &amp; Reprints</a></div>
+              <div class="corpLink"><a placement="footer" href="http://purch.com/copyright-policy/">Copyright Policy</a></div>
+              <div class="corpLink"><a placement="footer" href="http://purch.com/terms-of-use/">Terms of Use</a></div>
+              <div class="corpLink"><a placement="footer" href="http://purch.com/privacy-policy/">Privacy Policy</a></div>
+            </div>
+            <div class="mod">
+                <a placement="footer" href="http://purch.com">
+                                        <img src="http://www.businessnewsdaily.com/resources/img/purch-footer-logo.svg?08ad2ec3" width="135" height="42" alt="Purch">
+                                    </a>
+
+                <p class="copyRight">Copyright &copy;
+                    <script type="text/javascript">document.write(new Date().getFullYear());</script>
+                    All Rights Reserved.
+                </p>
+            </div>
+            <section class="line spaceB15 spaceT10 corpLinks">
+                <header class="corpLinksTitle unit">Company</header>
+                <ul>
+                    <li class="corpLink"><a placement="footer" href="http://purch.com" target="_blank">Company Info</a></li>
+                    <li class="corpLink"><a placement="footer" href="/about">About Us</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://purch.com/about/#contact" target="_blank">Contact Us</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://purch.com/advertise/" target="_blank">Advertise with Us</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://purch.com/#contact" target="_blank">Using Our Content</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://purch.com/#contact" target="_blank">Licensing &amp; Reprints</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://purch.com/copyright-policy/" target="_blank">Copyright Policy</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://purch.com/terms-of-use/" target="_blank">Terms of Use</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://purch.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
+                </ul>
+            </section>
+            <section class="line network corpLinks">
+                <header class="corpLinksTitle unit">Network</header>
+                <ul>
+                    <li class="corpLink"><a placement="footer" href="http://www.toptenreviews.com/">Top Ten Reviews</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://www.tomsguide.com/">Tom's Guide</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://www.laptopmag.com/">Laptop Mag</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://www.tomshardware.com/">Tom's Hardware</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://www.businessnewsdaily.com/">Business News Daily</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://www.tomsitpro.com/">Tom's IT Pro</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://www.space.com/">Space.com</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://www.livescience.com/">Live Science</a></li>
+                    <li class="corpLink"><a placement="footer" href="http://www.anandtech.com/">Anand Tech</a></li>
+										<li class="corpLink"><a placement="footer" href="http://activejunky.com/">Active Junky</a></li>
+										<li class="corpLink"><a placement="footer" href="http://shopsavvy.com/">ShopSavvy</a></li>
+								</ul>
+            </section>
+        </div>
+    </div>
+    <div class="mqCheck-med"></div>
+    <div class="mqCheck-lg"></div>
+</footer>
+
+
+
+
+
+    	<script type='text/javascript'>tmntag.cmd.push(function(){ tmntag.adTag('in-article-vca-1', false); });</script>
+	<script type='text/javascript'>tmntag.cmd.push(function(){ tmntag.adTag('in-article-vca-2', false); });</script>
+                    <script type="text/javascript">
+            var tmnramp = {"ts":1495562037045,"key_vals":[],"server":"us-east1-rtb-adserver7","pixels":[{"content":"\n\/* \/BZ Widget 1.0 *\/\/* BZ Widget 1.0 *\/\r\nvar sc1 = document.createElement(\"script\");\r\n  sc1.type = \"text\/javascript\";\r\n  sc1.async = true;\r\n  sc1.defer = true;\r\n  sc1.src = \"http:\/\/cdn.buyerzone.com\/apps\/bz-rfq-ui\/manifest.js\";\r\n  sc1.onload = function () {\r\n    var sc2 = document.createElement(\"script\");\r\n    sc2.type = \"text\/javascript\";\r\n    sc2.async = true;\r\n    sc2.defer = true;\r\n    sc2.src = \"http:\/\/cdn.buyerzone.com\/apps\/bz-rfq-ui\/vendor.js\";\r\n    sc2.onload = function () {\r\n      var sc3 = document.createElement(\"script\");\r\n      sc3.type = \"text\/javascript\";\r\n      sc3.async = true;\r\n      sc3.defer = true;\r\n      sc3.src = \"http:\/\/cdn.buyerzone.com\/apps\/bz-rfq-ui\/app.js\";\r\n      sc3.onload = function () {\r\n        \/\/var dataLayer = bzDataLayer;\r\n        var $total = $('.bz-form-widget');    \/\/ total widget divs on page\r\n        $('.bz-form-widget').html('');     \r\n        var contArr = [];                     \/\/ array of widget div Ids\r\n\r\n        if ($total.length > 0) {\r\n          var current = 0;\r\n          while (current < $total.length) {\r\n            var widget = $total.eq(current);                      \/\/ selects nth widget div\r\n            var categoryId = widget.attr(\"data-bz-category-id\");  \/\/ gets categoryID\r\n            if (categoryId==\"10740\") {\r\n              \/\/ experiment \"10740\":0, \"10144\":100\r\n              var r = Math.floor(Math.random() * 100);\r\n              if (r<=100) categoryId = \"10144\";\r\n              console.log(\"-RAMP- Selected BZ category \"+categoryId);\r\n            }\r\n            var contId = widget.attr('id');                       \/\/ gets current widget ID\r\n            contArr.push(contId);\r\n            current++;\r\n          };\r\n          \r\n          window._bzEventTracking = function(eventDesc) {\r\n            if (typeof(s_gi) === 'undefined'){ return; }\r\n            if (!s.t && !!s_gi && s_account) { s = s_gi(s_account) }\r\n            s.linkTrackVars = \"channel,pageName,eVar2,eVar4,eVar5,eVar6,eVar36,eVar37,eVar45,eVar18,events\";\r\n            s.eVar18 = BZ.categoryId;\r\n            if (eventDesc.indexOf(\"completed\") !== -1) {\r\n              s.linkTrackEvents = \"event10\";\r\n              s.events = \"event10\";\r\n              var pageIndex = parseInt(BZ.pageIndex) + 1;\r\n              s.tl(true, \"o\", \"next page \" + pageIndex)\r\n            } else if (eventDesc.indexOf(\"submit\") !== -1) {\r\n              s.linkTrackEvents = \"event20\";\r\n              s.events = \"event20\";\r\n              s.tl(true, \"o\", eventDesc)\r\n            };\r\n          };\r\n\r\n          var config = bzInit(categoryId, contArr);\r\n          BZ.init(config);    \/\/ initialize BZ.init\r\n        };    \/\/ end if statement\r\n\r\n      };\r\n      document.getElementsByTagName('head')[0].appendChild(sc3);\r\n    };\r\n    document.getElementsByTagName('head')[0].appendChild(sc2);\r\n  };\r\n  document.getElementsByTagName('head')[0].appendChild(sc1);\r\n\r\n\/\/\/\/\/\/\/\/\/ creates BZ.init object with contId(s) & categoryId\r\nfunction bzInit(categoryId, contArr) {\r\n  var contVal = contArr.length===1 ? contArr[0] : contArr;      \/\/ 1 = string, 2 = array\r\n  var contKey = contArr.length===1 ? \"contId\" : \"contIds\";      \/\/ 1 = contId, 2 = contIds\r\n\r\n  \/\/BZ INIT object\r\n  var config = {\r\n    animationType:\"filmstrip\",\r\n    catId: +(categoryId),\r\n    keywordId:\"\",\r\n    flowId:2278,\r\n    pubId:36189 \r\n  };              \r\n  config[contKey] = contVal;        \/\/ sets contId(s): str or array \r\n  return config\r\n}\r\nfunction tmn_experiment(experiments) {\r\n  var experiments = {\"10740\":40, \"10144\":60};\r\n  var r = Math.floor(Math.random() * 100);\r\n  if (r<40)\r\n  var selectedExperiment = r%experiments.length;\r\n}\n","onready":true,"donotrender":false,"campaign":"4017","refreshable":false},{"content":"\ntmntag.incontent = tmntag.incontent || function(divId, selector, position) {\r\n   if (!divId || !selector) { return false; }\r\n   var target = document.querySelector(selector);\r\n   if (target) {\r\n\t   var newDiv = document.getElementById(divId);\r\n       if (!newDiv) {\r\n          newDiv = document.createElement('div');\r\n          newDiv.id = divId;\r\n       }\r\n       if (typeof position=='undefined') position = 'afterend';\r\n       \r\n       if (position === 'prepend') {\r\n         target.insertBefore(newDiv, target.firstChild);\r\n       } else {     \r\n         target.insertAdjacentElement(position, newDiv);\r\n       }\r\n       return newDiv;\r\n   }\r\n   return false;\r\n};\n","onready":false,"donotrender":false,"campaign":"4873","refreshable":false},{"content":"\n\/* Viglink *\/\r\nvar vglnk = { key: '8612ca33e530afaf4fd379b93fe4a44d' };\r\n(function(d, t) {\r\n    if (vglnk['key']=='' || vglnk['key'].indexOf('$')>=0) return;\r\n    var s = d.createElement(t); s.type = 'text\/javascript'; s.async = true;\r\n    s.src = '\/\/cdn.viglink.com\/api\/vglnk.js';\r\n    var r = d.getElementsByTagName(t)[0]; r.parentNode.insertBefore(s, r);\r\n}(document, 'script'));\r\n\/* \/Viglink *\/\n","onready":false,"donotrender":false,"campaign":"5033","refreshable":false}],"placement":"2413","page":"http:\/\/www.businessnewsdaily.com\/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876","page_id":"","user_agent":{"device":"COMPUTER","os":"Windows","browser":"Firefox"},"ip":"208.80.155.132","geo":{"countryAlpha3":"USA","latitude":37.789795,"longitude":-122.394196,"ctr":"US","stt":"CA","dma":807,"ct":"San Francisco","pc":"94105","ac":415,"tz":"America\/Los_Angeles"},"creatives":[{"div":"out-of-page","width":0,"height":0,"iframe":false,"key_vals":{"_p":["1"],"_a":["1"]}},{"div":"in-article-vca-2","width":0,"height":0,"ad_params":{"ad_label_display":"report","ad_label_position":"top_center"},"iframe":false,"key_vals":{"_p":["2"],"_a":["0"]}},{"div":"1x1","width":0,"height":0,"iframe":false,"key_vals":{"_p":["1"],"_a":["1"]}},{"div":"billboard-atf","width":0,"height":0,"ad_params":{"ad_label_display":"report","ad_label_position":"bottom_center","sort_heights":"true"},"iframe":false,"key_vals":{"clone":["true"],"_p":["1"],"_a":["1"]}},{"div":"in-article-vca-1","width":0,"height":0,"ad_params":{"ad_label_display":"report","ad_label_position":"top_center"},"iframe":false,"key_vals":{"_p":["1"],"_a":["0"],"kw":["inarticlevideo"]}},{"div":"ad_leaderboard","width":0,"height":0,"ad_params":{"ad_label_position":"top_center","sort_heights":"true"},"iframe":false,"key_vals":{"_p":["1"],"_a":["1"]}},{"div":"billboard-btf-2","width":0,"height":0,"ad_params":{"ad_label_display":"report","ad_label_position":"bottom_center"},"iframe":false,"key_vals":{"_p":["2"],"_a":["0"]}}],"latency":3,"html_pre_body":"","html_post_body":"","id":"7014163221393335"};
+            /* RAAS JS Renderer 1.12 */
+var TMNRAAS_VERSION="1.12";
+var tmntag = tmntag || {};
+tmntag.isab = false;
+!function(t){function e(){if(!o){o=!0;for(var t=0;t<a.length;t++)a[t].fn.call(window,a[t].ctx);a=[]}}function n(){"complete"===document.readyState&&e()}baseObj=window;var a=[],o=!1,d=!1;baseObj[t]=function(t,c){return o?void setTimeout(function(){t(c)},1):(a.push({fn:t,ctx:c}),void("complete"===document.readyState||!document.attachEvent&&"interactive"===document.readyState?setTimeout(e,1):d||(document.addEventListener?(document.addEventListener("DOMContentLoaded",e,!1),window.addEventListener("load",e,!1)):(document.attachEvent("onreadystatechange",n),window.attachEvent("onload",e)),d=!0)))}}("tmntag_ready_2");
+tmntag.onAB = function(callback) {
+	if (typeof callback!=='function') return; 
+	var abcheck = document.createElement('div');
+	var KLASS = "adsbox";
+	abcheck.innerHTML = "&nbsp;"
+	abcheck.className = KLASS;
+	document.body.appendChild(abcheck);
+	window.setTimeout(function() {
+	  var isab = false;
+	  if (abcheck.offsetHeight === 0) {
+		  isab=true;
+		  abcheck.remove();
+	  } else {
+		  e = document.querySelector("."+KLASS);
+		  if (!e) {
+			  isab=true;
+		  } else {
+			  var found = false;
+			  for (var i in document.scripts) { 
+			    if (document.scripts[i].src && document.scripts[i].src.indexOf("googletagservices.com")>=0) {
+			    	found = true;
+			    	break;
+			    } 
+			  }
+			  if (!found) {
+				isab=true;
+			  } else {
+				  if (typeof jQuery!='undefined' && jQuery && jQuery('#header_leaderboard')) isab = 'none'==jQuery('#header_leaderboard').css('display');
+			  }
+		  }
+	  }
+	  if (isab) {
+		  tmntag.isab = true;
+		  callback();
+	  }
+	}, 2000);
+}
+var tmntag_raascallback = function() {
+  var p = ('https:'==document.location.protocol)?'https://':'http://';
+  var whenAB = function() {
+	console.log("-RAAS- "+TMNRAAS_VERSION+" AB detected");
+	/*if (document.location.href.indexOf("tomsguide.com")<0 
+		&& document.location.href.indexOf("tomsguide.fr")<0
+		&& document.location.href.indexOf("tomshardware.com")<0
+		&& document.location.href.indexOf("tomshardware.co.uk")<0
+		&& document.location.href.indexOf("tomshardware.de")<0
+		) {*/
+      var rnd = Math.floor(Math.random() * 11000);
+      var e   = document.createElement('script');
+      e.type  = 'text/javascript';
+      e.src = p+'ramp.purch.com/event.js?t=AB&id=0&bid=&cp=0&bdrid=&crid=&ad=&r='+rnd+'l='+encodeURIComponent(window.top.document.location.href);
+      var scripts = document.getElementsByTagName('script')[0];
+      if (scripts) scripts.parentNode.insertBefore(e, scripts);
+	/*}*/
+    if (typeof tmnramp!='undefined') {
+      window.top.tmntag_redirect = function(e, urlormacro, macro) {
+	   var joinKeys = function(macro){
+		      var ret = '';
+			  if (macro && keys) for (var k in keys) {
+		         if (keys.hasOwnProperty(k)) {
+				    if (macro.hasOwnProperty(keys[k])) {
+		               if (k==='pd') ret += '&'+k+'=|'+macro[keys[k]]+'|';
+		               else ret += '&'+k+'='+macro[keys[k]];
+		            }
+				 }
+		      }
+		      return ret;
+		   }
+		   if (!e) return false;
+		   var keys = {'cp':'__CP__', 'bdrid':'__BDRID__', 'crid':'__CRID__', 'ad':'__AD__', 'pd':'__PRODUCT_ID__', 'tid':'__TID__'};
+		   var url = ((typeof urlormacro)==='object')?e.href:urlormacro;
+		   macro = ((typeof urlormacro)==='object')?urlormacro:macro;
+		   var rnd = Math.floor(Math.random() * 11000);
+		   var proto = ('https:'==document.location.protocol)?'https://':'http://';
+		   var tr = proto+'ramp.purch.com/event.js?t=CL&id='+((top.window.requestid)?top.window.requestid:0)+'&r='+rnd+joinKeys(macro);
+		   var s = document.createElement('script');
+		   s.type = 'text/javascript';
+		   s.src = tr;
+		   var r = document.getElementsByTagName('script')[0];
+		   if (r) r.parentNode.insertBefore(s, r);
+		   var win = window.open(url, '_blank');
+		   win.focus();
+		   return false;
+		}
+      if(tmnramp.creatives) {
+        for (var i in tmnramp.creatives) {
+          var markupinfo = tmnramp.creatives[i];
+          if (markupinfo && markupinfo.div && markupinfo.markup) {
+            var markup = markupinfo.markup.replace(/\\n|\\r/g, '');
+			markup = markup.replace(/\\/g, '');
+			var div = markupinfo.div;
+			var e = document.getElementById(div);
+			if (typeof tmntag.incontent!='undefined' && markupinfo['ad_params'] && markupinfo['ad_params']['incontent_css_selector']) {
+				e = tmntag.incontent(div, markupinfo['ad_params']['incontent_css_selector'], markupinfo['ad_params']['incontent_position']);
+			};
+			if (!e) continue;
+			if (markupinfo['iframe']) {
+			  var iframe = document.createElement("iframe");
+				iframe.frameBorder=0;
+				iframe.name=markupinfo.campaign_id+"/"+markupinfo.creative_id;
+				iframe.scrolling="no";
+				iframe.marginwidth=0;
+				iframe.marginheight=0;
+				iframe.style.width=(markupinfo.width || 0)+"px";
+				iframe.style.height=(markupinfo.height || 0)+"px";
+				iframe.style.border="0pt none";
+				iframe.style.margin="0px 0 0";
+				iframe.width = markupinfo.width || 0;
+				iframe.height = markupinfo.height || 0;
+				e.appendChild(iframe);
+				var content = '<!DOCTYPE ht'+'ml><bo'+'dy marginheight="0" marginwidth="0">'+markup+'</bo'+'dy></ht'+'ml>';
+				iframe.contentWindow.contents = content;
+				iframe.src = 'javascript:window["contents"]';
+			} else {
+				var rnd = Math.floor(Math.random() * 11000);
+				e.id = btoa(rnd+div+rnd).replace(/[^a-zA-Z]/g, '');
+				e.innerHTML = markup;
+			}
+		  }
+		}
+      }
+  	}
+    if (typeof tmnramp!='undefined' && tmnramp.pixels) {
+      for (var i in tmnramp.pixels) {
+        var pixel = tmnramp.pixels[i];
+        if (pixel && !pixel.donotrender && pixel.content && pixel.onready) {
+          eval(pixel.content);
+        }
+      }
+    }
+  }
+  tmntag.onAB(whenAB);
+}
+tmntag_ready_2(tmntag_raascallback);
+(function() {
+	if (typeof tmnramp!='undefined' && tmnramp.pixels) {
+	  for (var i in tmnramp.pixels) {
+	    var pixel = tmnramp.pixels[i];
+	    if (pixel && !pixel.donotrender && pixel.content && !pixel.onready) {
+	      eval(pixel.content);
+	    }
+	  }
+	}
+})();
+/* /RAAS JS Renderer 1.12 */
+        </script>
+    
+    
+      <script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"6ef1e23532","applicationID":"15253278","transactionName":"YFRQMkdRDBZSBxJRDFkecwVBWQ0LHAYIXDxUXlwSUF4WOlIWElEAW1Q=","queueTime":0,"applicationTime":21,"atts":"TBNTRA9LHxg=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
