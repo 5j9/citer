@@ -85,8 +85,7 @@ def dump_response(hsh, response: Response) -> None:
 
 def dump_connection_error(hsh):
     with open(f'{TESTDATA}/{hsh}.json', 'w') as f:
-        d = {'raise': True}
-        dump(d, f)
+        json_dump({'raise': True}, f)
 
 
 # noinspection PyDecorator
