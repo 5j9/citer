@@ -39,8 +39,7 @@ def ketabir_scr(url: str, date_format='%Y-%m-%d') -> tuple:
 def isbn2url(isbn: str) -> Optional[str]:
     """Return the ketab.ir book-url for the given isbn."""
     browser = StatefulBrowser(user_agent=USER_AGENT)
-    # todo: check if this url still works
-    browser.open('http://www.ketab.ir/Search.aspx')
+    browser.open('http://db.ketab.ir/Search.aspx')
     browser.select_form()
     browser['ctl00$ContentPlaceHolder1$TxtIsbn'] = isbn
     browser.submit_selected()
