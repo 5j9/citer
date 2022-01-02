@@ -1,0 +1,20 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Access-Control-Allow-Origin": "*",
+		"Cache-Control": "max-age=15",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Length": "185028",
+		"Content-Security-Policy": "frame-ancestors 'self' *.cnbc.com *.acorns.com;",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Sun, 02 Jan 2022 14:59:11 GMT",
+		"Expires": "Sun, 02 Jan 2022 14:59:26 GMT",
+		"Link": "<https://sb.scorecardresearch.com>;rel=\"preconnect\",<https://www.google-analytics.com>;rel=\"preconnect\",<https://image.cnbcfm.com>;rel=\"preconnect\", <https://static-redesign.cnbcfm.com>;rel=\"preconnect\",<https://www.googleoptimize.com>;rel=\"preconnect\"",
+		"Vary": "Accept-Encoding, User-Agent",
+		"X-Aicache-OS": "xxx.xx.15.200:81, xx.x.211.57:80",
+		"X-Request-Id": "81ea3ce2-1767-45f3-a94d-946e8b591a55"
+	},
+	"status_code": 200,
+	"url": "https://www.cnbc.com/world/?region=world"
+}

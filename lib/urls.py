@@ -4,6 +4,7 @@
 from collections import defaultdict
 from datetime import date as datetime_date
 from difflib import get_close_matches
+from functools import partial
 from html import unescape as html_unescape
 from logging import getLogger
 from threading import Thread
@@ -11,7 +12,7 @@ from typing import Optional, List, Dict, Any, Tuple
 from urllib.parse import urlparse
 
 from langid import classify
-from regex import compile as regex_compile, VERBOSE, IGNORECASE
+from regex import compile as rc, VERBOSE, IGNORECASE
 from requests import Response as RequestsResponse
 from requests.exceptions import RequestException
 
@@ -24,7 +25,7 @@ from lib.urls_authors import find_authors, CONTENT_ATTR
 MAX_RESPONSE_LENGTH = 2000000
 
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
-CHARSET = regex_compile(
+CHARSET = rc(
     rb'''
     <meta(?!\s*+(?>name|value)\s*+=)[^>]*?charset\s*+=[\s"']*+([^\s"'/>]*)
     ''',
@@ -36,7 +37,7 @@ TITLE_META_NAME_OR_PROP = r'''
         (?>citation_title|title|Headline|og:title)
     (?P=q)
 '''
-TITLE_SEARCH = regex_compile(
+TITLE_SEARCH = rc(
     r'<meta\s++(?:'
     + TITLE_META_NAME_OR_PROP + r'\s++' + CONTENT_ATTR
     + '|'
@@ -47,7 +48,7 @@ TITLE_SEARCH = regex_compile(
     VERBOSE | IGNORECASE,
 ).search
 
-TITLE_TAG = regex_compile(
+TITLE_TAG = rc(
     r'''
     <title\b[^>]*+>
         (?P<result>[^<]*+[\s\S]*?)
@@ -69,7 +70,7 @@ DATE_META_NAME_OR_PROP = r'''
 '''
 DATE_CONTENT_ATTR =\
     r'content=(?<q>["\'])[^"\'<]*?' + ANYDATE_PATTERN + r'[^"\'<]*+(?P=q)'
-DATE_SEARCH = regex_compile(
+DATE_SEARCH = rc(
     r'<meta\s+[^\n<]*?(?:'
     + DATE_META_NAME_OR_PROP + r'\s++[^\n<]*?' + DATE_CONTENT_ATTR
     + '|'
@@ -85,7 +86,7 @@ DATE_SEARCH = regex_compile(
 JOURNAL_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_journal_title(?P=q)
 '''
-JOURNAL_TITLE_SEARCH = regex_compile(
+JOURNAL_TITLE_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + JOURNAL_META_NAME_OR_PROP
     + '|'
@@ -97,7 +98,7 @@ JOURNAL_TITLE_SEARCH = regex_compile(
 URL_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])og:url(?P=q)
 '''
-URL_SEARCH = regex_compile(
+URL_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + URL_META_NAME_OR_PROP
     + '|'
@@ -109,7 +110,7 @@ URL_SEARCH = regex_compile(
 ISSN_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_issn(?P=q)
 '''
-ISSN_SEARCH = regex_compile(
+ISSN_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + ISSN_META_NAME_OR_PROP
     + '|'
@@ -121,7 +122,7 @@ ISSN_SEARCH = regex_compile(
 PMID_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_pmid(?P=q)
 '''
-PMID_SEARCH = regex_compile(
+PMID_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + PMID_META_NAME_OR_PROP
     + '|'
@@ -133,7 +134,7 @@ PMID_SEARCH = regex_compile(
 DOI_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_doi(?P=q)
 '''
-DOI_SEARCH = regex_compile(
+DOI_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + DOI_META_NAME_OR_PROP
     + '|'
@@ -146,7 +147,7 @@ DOI_SEARCH = regex_compile(
 VOLUME_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_volume(?P=q)
 '''
-VOLUME_SEARCH = regex_compile(
+VOLUME_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + VOLUME_META_NAME_OR_PROP
     + '|'
@@ -158,7 +159,7 @@ VOLUME_SEARCH = regex_compile(
 ISSUE_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_issue(?P=q)
 '''
-ISSUE_SEARCH = regex_compile(
+ISSUE_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + ISSUE_META_NAME_OR_PROP
     + '|'
@@ -170,7 +171,7 @@ ISSUE_SEARCH = regex_compile(
 FIRST_PAGE_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_firstpage(?P=q)
 '''
-FIRST_PAGE_SEARCH = regex_compile(
+FIRST_PAGE_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + FIRST_PAGE_NAME_OR_PROP
     + '|'
@@ -183,7 +184,7 @@ FIRST_PAGE_SEARCH = regex_compile(
 LAST_PAGE_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])citation_lastpage(?P=q)
 '''
-LAST_PAGE_SEARCH = regex_compile(
+LAST_PAGE_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + LAST_PAGE_NAME_OR_PROP
     + '|'
@@ -196,7 +197,7 @@ LAST_PAGE_SEARCH = regex_compile(
 SITE_NAME_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])og:site_name(?P=q)
 '''
-SITE_NAME_SEARCH = regex_compile(
+SITE_NAME_SEARCH = rc(
     r'<meta\s++[^\n<]*?(?:'
     + CONTENT_ATTR + r'\s++[^\n<]*?' + SITE_NAME_NAME_OR_PROP
     + '|'
@@ -205,7 +206,8 @@ SITE_NAME_SEARCH = regex_compile(
     VERBOSE | IGNORECASE,
 ).search
 
-TITLE_SPLIT = regex_compile(r' - | — |\|').split
+TITLE_SPLIT = rc(r' - | — |\|').split
+LANG_SEARCH = rc('lang="(..)"').search
 
 
 class ContentTypeError(ValueError):
@@ -227,6 +229,11 @@ class StatusCodeError(ValueError):
     """Raise when status_code != 200."""
 
     pass
+
+
+# inaccurate but should be faster than bs4
+# https://stackoverflow.com/questions/14694482/converting-html-to-text-with-python
+to_text = partial(rc(r'<[^>]*+>').sub, '')
 
 
 def urls_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
@@ -584,7 +591,13 @@ def url2dict(url: str) -> Dict[str, Any]:
     if date:
         d['date'] = date
         d['year'] = str(date.year)
-    d['language'] = classify(html)[0]
+
+    lang_match = LANG_SEARCH(html)
+    if lang_match is not None:
+        d['language'] = lang_match[1]
+    else:
+        d['language'] = classify(html)[0]
+
     return d
 
 
