@@ -1,6 +1,3 @@
-"""This module is used for finding the authors in a soup object."""
-
-
 from typing import List, Optional, Tuple
 
 from regex import compile as regex_compile, VERBOSE, IGNORECASE, ASCII

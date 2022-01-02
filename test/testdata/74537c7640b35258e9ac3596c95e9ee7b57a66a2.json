@@ -1,0 +1,22 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Access-Control-Allow-Origin": "*",
+		"Cache-Control": "max-age=0, no-cache",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Length": "126204",
+		"Content-Security-Policy": "frame-ancestors 'self' *.cnbc.com *.acorns.com;",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Sun, 02 Jan 2022 14:59:10 GMT",
+		"Expires": "Sun, 02 Jan 2022 14:59:10 GMT",
+		"Link": "<https://static-redesign.cnbcfm.com>;rel=\"preconnect\",<https://www.googleoptimize.com>;rel=\"preconnect\"",
+		"Pragma": "no-cache",
+		"Set-Cookie": "region=WORLD; expires=Sat, 02-Apr-2022 14:59:10 GMT; path=/; domain=.cnbc.com, AKA_A2=A; expires=Sun, 02-Jan-2022 15:59:10 GMT; path=/; domain=cnbc.com; secure; HttpOnly, akaas_CNBC_Audience_Segmentation=1643727550~rv=16~id=4f27a49a9913465a00a5e4c501da67d3; path=/; Expires=Tue, 01 Feb 2022 14:59:10 GMT; Domain=.www.cnbc.com; Secure; SameSite=None",
+		"Vary": "Accept-Encoding, User-Agent",
+		"X-Aicache-OS": "xxx.x1.15.16:81, xx.xx.225.187:80",
+		"X-Request-Id": "7ee423c8-4171-4ccb-8dcd-6d836fd2f981"
+	},
+	"status_code": 200,
+	"url": "https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html"
+}

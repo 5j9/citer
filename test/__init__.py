@@ -58,7 +58,7 @@ def load_response(hsh: str) -> Optional[FakeResponse]:
         with open(f'{TESTDATA}/{hsh}.json', 'rb') as f:
             d = load(f)
     except FileNotFoundError:
-        raise FileNotFoundError('no json file')
+        return None
 
     if 'raise' in d:
         raise RConnectionError('per json data')

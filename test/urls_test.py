@@ -946,3 +946,18 @@ def test_indaily():
         "| access-date=") in urls_scr(
         'https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/'
     )[1]
+
+
+def test_language_not_de_csbc():
+    assert (
+        "{{cite web "
+        "| last=Martin "
+        "| first=Emmie "
+        "| title=In San Francisco, households earning $117,000 qualify as ‘low income’ "
+        "| website=CNBC "
+        "| date=2018-06-28 "
+        "| url=https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html "
+        "| access-date="
+    ) == urls_scr(
+        'https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html'
+    )[1][2:-12]
