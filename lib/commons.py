@@ -85,7 +85,7 @@ AGENT_HEADER = {
     'Api-User-Agent': f'{NCBI_TOOL}/{NCBI_EMAIL}'}
 SPOOFED_AGENT_HEADER = {
     'User-Agent': SPOOFED_USER_AGENT,
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'Accept': "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
 }
 REQUEST = partial(Session().request, timeout=10)
 
