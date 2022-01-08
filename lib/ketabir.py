@@ -14,7 +14,7 @@ from lib.commons import first_last, dict_to_sfn_cit_ref, request, USER_AGENT
 
 ISBN_SEARCH = regex_compile(r'ISBN: </b> ([-\d]++)').search
 DATE_SEARCH = regex_compile(
-    r'تاریخ نشر:</b>(?<year>\d\d)/(?<month>\d\d)/(?<day>\d\d)').search
+    r'تاریخ نشر:</b>(?<year>\d{4})/(?<month>\d\d)/(?<day>\d\d)').search
 PUBLISHER_SEARCH = regex_compile(
     r'Publisher_ctl00_NameLabel" class="linkk">(.*?)</span>').search
 VOLUME_SEARCH = regex_compile(r'\bجلد (\d+)').search
@@ -89,7 +89,7 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
     m = DATE_SEARCH(html)
     if m is not None:
         d['month'] = m['month']
-        d['year'] = '۱۳' + m['year']
+        d['year'] = m['year']
     m = ISBN_SEARCH(html)
     if m is not None:
         d['isbn'] = m[1]
