@@ -1,8 +1,11 @@
+import atexit
 from contextlib import contextmanager
 from hashlib import sha1
 from json import dump, loads, load
 from typing import Optional
 from functools import partial
+# noinspection PyPackageRequirements
+from path import Path
 
 from requests import Session, Response, ConnectionError as RConnectionError
 
@@ -12,8 +15,9 @@ from requests import Session, Response, ConnectionError as RConnectionError
 
 FORCE_OVERWRITE_TESTDATA = False  # Use for updating cache entries
 READONLY_TESTDATA = True
+REMOVE_UNUSED_TESTDATA = False
 
-TESTDATA = __file__ + '/../testdata'
+TESTDATA = Path(__file__).parent / 'testdata'
 
 json_dump = partial(
     dump, ensure_ascii=False, check_circular=False, sort_keys=True,
@@ -55,17 +59,25 @@ class FakeResponse:
 
 
 def load_response(hsh: str) -> Optional[FakeResponse]:
+    filename = f'{hsh}.json'
     try:
-        with open(f'{TESTDATA}/{hsh}.json', 'rb') as f:
+        with open(f'{TESTDATA}/{filename}', 'rb') as f:
             d = load(f)
     except FileNotFoundError:
         return None
 
+    if REMOVE_UNUSED_TESTDATA is True:
+        USED_TESTDATA.add(filename)
+
     if 'raise' in d:
         raise RConnectionError('per json data')
 
-    with open(f'{TESTDATA}/{hsh}.html', 'rb') as f:
+    filename = f'{hsh}.html'
+    with open(f'{TESTDATA}/{filename}', 'rb') as f:
         content = f.read()
+
+    if REMOVE_UNUSED_TESTDATA is True:
+        USED_TESTDATA.add(filename)
 
     return FakeResponse(
         d['url'], content, d['status_code'], d['headers'], d['encoding'])
@@ -133,3 +145,16 @@ def real_request():
 
 original_request = Session.request
 Session.request = fake_request
+
+
+if REMOVE_UNUSED_TESTDATA is True:
+    all_testdata_files = {f.name for f in TESTDATA.files()}
+    USED_TESTDATA = {*()}
+
+    def rm_unused_files():
+        unused_files = (all_testdata_files - USED_TESTDATA)
+        for f in unused_files:
+            (TESTDATA / f).remove()
+        print(f'removed {len(all_testdata_files - USED_TESTDATA)} unused testdata files')
+
+    atexit.register(rm_unused_files)
