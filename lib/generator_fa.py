@@ -183,9 +183,6 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             cit += ' | تاریخ=' + date.isoformat(ddate)
     elif year:
         cit += ' | سال=' + year
-        month = d['month']
-        if month:
-            cit += ' | ماه=' + month
 
     isbn = d['isbn']
     if isbn:
