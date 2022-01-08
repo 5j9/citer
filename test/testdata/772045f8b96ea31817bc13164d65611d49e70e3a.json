@@ -1,0 +1,16 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "private",
+		"Content-Length": "27774",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Sat, 08 Jan 2022 12:36:33 GMT",
+		"Server": "Microsoft-IIS/10.0",
+		"Set-Cookie": "ASP.NET_SessionId=cg3ccrwz4w1ahy4j31zgn2cw; path=/; HttpOnly; SameSite=Lax",
+		"Strict-Transport-Security": "max-age=0",
+		"X-AspNet-Version": "4.0.30319",
+		"X-Powered-By": "ASP.NET"
+	},
+	"status_code": 200,
+	"url": "https://db.ketab.ir/bookview.aspx?bookid=1676357"
+}
