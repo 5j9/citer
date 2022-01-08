@@ -1,8 +1,22 @@
 {
-	"encoding": null,
+	"encoding": "utf-8",
 	"headers": {
-		"Content-Length": "175"
+		"Cache-Control": "max-age=0, private, must-revalidate",
+		"Connection": "close",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Sat, 08 Jan 2022 15:50:55 GMT",
+		"Etag": "\"d51d228a4efd46e9b114f9bf7f0b47f2\"",
+		"Server": "Cowboy",
+		"Set-Cookie": "_ottobib_session=RmgrazF6cGVjOXJDeXhqT1VzV2ZEeW51TE5FVmtGT3Q0clNKanFzSFdUeVBVdExGQVRnSnlubWxTaitjN205eGVNcERtYmRJN1BhMXQzck55MjU4SWxTV0VEMDZZbkRHMm9pL0l6VFkrcFczSE5BSm9LRFVIaVllSXZjTVRSVUFHZTc3ZFArZ0JleWRRVmt0OEF3SkdDVjJBeDNGb0dPSFk1SDBEeEdIT1duUC9oRW1lS3pyN2NYWU5FcGhKSUdrLS1sZFowQVdKdUwvSG5OMzRwTHlwTEZBPT0%3D--163b20da80a2a820e9e7edc359aef0ea5bc275fa; path=/; HttpOnly",
+		"Status": "200 OK",
+		"Via": "1.1 vegur",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-Request-Id": "4663cd07-9d77-443e-bbf5-9c9937f6a77e",
+		"X-Runtime": "0.162082",
+		"X-Ua-Compatible": "chrome=1",
+		"X-Xss-Protection": "1; mode=block"
 	},
-	"status_code": 503,
+	"status_code": 200,
 	"url": "http://www.ottobib.com/isbn/964-6736-34-3/bibtex"
 }
