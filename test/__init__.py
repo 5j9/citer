@@ -10,10 +10,10 @@ from requests import Session, Response, ConnectionError as RConnectionError
 # until LANG is set by test_fa and test_en.
 
 
-FORCE_CACHE_OVERWRITE = False  # Use for updating cache entries
-PREVENT_WRITING = True
-TESTDATA = __file__ + '/../testdata'
+FORCE_OVERWRITE_TESTDATA = False  # Use for updating cache entries
+NO_OVERWRITE_TESTDATA = True
 
+TESTDATA = __file__ + '/../testdata'
 
 json_dump = partial(
     dump, ensure_ascii=False, check_circular=False, sort_keys=True,
@@ -97,13 +97,13 @@ def fake_request(self, url, data=None, stream=False, **kwargs):
         cache_key = url
     sha1_hex = sha1(cache_key.encode()).hexdigest()
 
-    if FORCE_CACHE_OVERWRITE is True:
+    if FORCE_OVERWRITE_TESTDATA is True:
         response = None
     else:
         response = load_response(sha1_hex)
 
     if response is None:  # either FileNotFoundError or FORCE_CACHE_OVERWRITE
-        if PREVENT_WRITING:
+        if NO_OVERWRITE_TESTDATA:
             raise RuntimeError('PREVENT_WRITING is True')
         print('Downloading ' + url)
         with real_request():
