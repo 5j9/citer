@@ -1,6 +1,4 @@
 from datetime import date
-
-
 from unittest.mock import patch
 
 from lib.generator_fa import sfn_cit_ref
@@ -36,19 +34,18 @@ def test_ketabir1():
         ' عنوان=101 راه برای اینکه پدر بهتری باشید |'
         ' ناشر=پیک ادبیات | مکان=تهران - تهران |'
         ' سال=۱۳۸۶ | ماه=۰۶ | شابک=978-964-8165-81-4 | زبان=fa}}'
-    ) == ketabir_scr('http://www.ketab.ir/bookview.aspx?bookid=1323394')[1]
+    ) == ketabir_scr('http://db.ketab.ir/bookview.aspx?bookid=1323394')[1]
 
 
 def test_ketabir2():
     """authors = 3, translators = 2, otheo = 0, isbn13"""
     assert (
-        '* {{یادکرد کتاب |'
-        ' نام خانوادگی=کرسول | نام=جان | نام خانوادگی۲=پلانو‌کلارک |'
-        ' نام۲=ویکی | ترجمه=عباس زارعی و محسن نیازی |'
-        ' عنوان=روش‌های تحقیق تلفیقی |'
-        ' ناشر=ثامن‌ الحجج‌(ع) | مکان=تهران - تهران | جلد=۱ |'
-        ' سال=۱۳۸۷ | ماه=۰۳ | شابک=978-964-2823-35-2 | زبان=fa}}'
-    ) == ketabir_scr('http://www.ketab.ir/bookview.aspx?bookid=1369975')[1]
+        '* {{یادکرد کتاب | نام خانوادگی=کرسول | نام=جان | نام '
+        'خانوادگی۲=پلانو\u200cکلارک | نام۲=ویکی | ترجمه=محسن نیازی و عباس زارعی | '
+        'عنوان=روش\u200cهای تحقیق تلفیقی | ناشر=ثامن\u200c الحجج\u200c(ع) | '
+        'مکان=تهران - تهران | جلد=۱ | سال=۱۳۸۷ | ماه=۰۳ | شابک=978-964-2823-35-2 | '
+        'زبان=fa}}'
+    ) == ketabir_scr('http://db.ketab.ir/bookview.aspx?bookid=1369975')[1]
 
 
 def test_ketabir3():
@@ -62,7 +59,7 @@ def test_ketabir3():
         ' به گام پیکربندی مسیریابهای میکروتیک: آمادگی آزمون MTCNA '
         '| ناشر=نشرگستر | مکان=تهران - تهران |'
         ' سال=۱۳۹۱ | ماه=۰۳ | شابک=978-600-5883-43-5 | زبان=fa}}'
-    ) == ketabir_scr('http://www.ketab.ir/bookview.aspx?bookid=1676357')[1]
+    ) == ketabir_scr('http://db.ketab.ir/bookview.aspx?bookid=1676357')[1]
 
 
 def test_ketabir4():
@@ -74,7 +71,7 @@ def test_ketabir4():
         ' نام۳=صفورا | عنوان=11 سپتامبر ... آرماگدون |'
         ' ناشر=حدیث راه عشق | مکان=اصفهان - اصفهان |'
         ' سال=۱۳۸۶ | ماه=۰۶ | شابک=978-964-95633-4-3 | زبان=fa}}'
-    ) == ketabir_scr('http://www.ketab.ir/bookview.aspx?bookid=1324978')[1]
+    ) == ketabir_scr('http://db.ketab.ir/bookview.aspx?bookid=1324978')[1]
 
 
 def test_ketabir5():
@@ -85,7 +82,7 @@ def test_ketabir5():
         ' مثنوی‌سرایی: بررسی قالب غزل - مثنوی در ادب فارسی |'
         ' ناشر=هنر رسانه اردی‌بهشت | مکان=تهران - تهران |'
         ' سال=۱۳۸۸ | ماه=۰۲ | شابک=978-964-2656-34-9 | زبان=fa}}'
-    ) == ketabir_scr('http://www.ketab.ir/bookview.aspx?bookid=1430801')[1]
+    ) == ketabir_scr('http://db.ketab.ir/bookview.aspx?bookid=1430801')[1]
 
 
 def test_ketabir6():
@@ -97,7 +94,7 @@ def test_ketabir6():
         '‌و تدوین‌ کتب‌ علوم ‌انسانی ‌دانشگاهها (سمت) |'
         ' مکان=خراسان رضوی - مشهد | جلد=۱ |'
         ' سال=۱۳۹۰ | ماه=۱۱ | شابک=978-964-530-036-2 | زبان=fa}}'
-    ) == ketabir_scr('http://www.ketab.ir/bookview.aspx?bookid=1643445')[1]
+    ) == ketabir_scr('http://db.ketab.ir/bookview.aspx?bookid=1643445')[1]
 
 
 def test_ketabir7():
@@ -110,7 +107,7 @@ def test_ketabir7():
         ' ناشر=سازمان‌ مطالعه ‌و تدوین‌ کتب‌ علوم'
         ' ‌انسانی ‌دانشگاهها (سمت) | مکان=تهران - تهران | جلد=۱ |'
         ' سال=۱۳۸۸ | ماه=۰۸ | شابک=978-964-459-398-7 | زبان=fa}}'
-    ) == ketabir_scr('http://www.ketab.ir/bookview.aspx?bookid=1459372')[1]
+    ) == ketabir_scr('http://db.ketab.ir/bookview.aspx?bookid=1459372')[1]
 
 
 def test_google_books_ending_page():
@@ -246,8 +243,7 @@ def test_doi1():
     ) in doi_scr('http://dx.doi.org/10.1038/nrd842')[1]
 
 
-def test_isbn1():
-    """not found in ketabir"""
+def test_isbn_exists_on_ottobib_not_ketabir():
     assert (
         '* {{یادکرد کتاب | نام خانوادگی=Adkins | نام=Roy |'
         ' عنوان=The war for all the oceans : '
@@ -258,31 +254,19 @@ def test_isbn1():
         '| زبان=en}}') in isbn_scr('9780349119168', pure=True)[1]
 
 
-def test_isbn2():
-    """not found in ottobib"""
+def test_isbn_exists_on_ketabir_not_ottobib():
     assert (
-        '* {{یادکرد کتاب | دیگران=بدیل‌بن‌علی خاقانی'
-        ' (شاعر)، جهانگیر منصور (به‌اهتمام) '
-        'و محمدحسن فروزانفر (مقدمه) |'
-        ' عنوان=دیوان خاقانی شروانی |'
-        ' ناشر=موسسه انتشارات نگاه | مکان=تهران - تهران |'
-        ' سال=۱۳۹۶ | ماه=۰۵ | شابک=978-964-6736-71-9 | زبان=fa}}'
+        '* {{یادکرد کتاب | دیگران=بدیل\u200cبن\u200cعلی خاقانی (شاعر)، جهانگیر منصور (به\u200cاهتمام) و محمدحسن فروزانفر (مقدمه) | عنوان=دیوان خاقانی شروانی | ناشر=موسسه انتشارات نگاه | مکان=تهران - تهران | سال=۱۳۹۶ | ماه=۰۵ | شابک=978-964-6736-71-9 | oclc=1176150182 | زبان=fa}}'
     ) == isbn_scr('978-964-6736-71-9', pure=True)[1]
 
 
-def test_isbn3():
-    """exists in both"""
+def test_isbn_exists_on_ketabir_and_ottobib():
     assert (
-        '* {{یادکرد کتاب |'
-        ' دیگران=سهراب سپهری (شاعر) و سحر معصومی (به‌اهتمام) |'
-        ' عنوان=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری |'
-        ' ناشر=موسسه انتشارات نگاه | مکان=تهران - تهران |'
-        ' سال=۱۳۸۱ | ماه=۰۶ | شابک=964-6736-34-3 | oclc=53446327 '
-        '| زبان=fa}}') == isbn_scr('964-6736-34-3 ')[1]
+        '* {{یادکرد کتاب | دیگران=سحر معصومی (به\u200cاهتمام) | عنوان=راز گل سرخ: نقد و گزیده شعرهای سهراب سپهری | ناشر=موسسه انتشارات نگاه | مکان=تهران - تهران | سال=۱۳۷۹ | ماه=۰۲ | شابک=964-6736-34-3 | oclc=53446327 | زبان=fa}}'
+    ) == isbn_scr('964-6736-34-3 ')[1]
 
 
-def test_isbn4():
-    """unpure isbn10"""
+def test_isbn_unpure_input():
     assert (
         '* {{یادکرد کتاب | نام خانوادگی=حافظ |'
         ' نام=شمس‌الدین‌محمد | دیگران=رضا نظرزاده (به‌اهتمام) |'

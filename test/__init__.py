@@ -22,6 +22,7 @@ json_dump = partial(
 
 class FakeResponse:
 
+    # todo: remove mechanicalsoup stuff
     __slots__ = (
         'content', 'iter_content', 'status_code', 'headers', 'encoding', 'url',
         'soup'  # required by mechanicalsoup
@@ -90,7 +91,7 @@ def dump_connection_error(hsh):
 
 # noinspection PyDecorator
 @staticmethod
-def fake_request(self, url, data=None, stream=False, **kwargs):
+def fake_request(method, url, data=None, stream=False, **kwargs):
     if data:
         cache_key = url + repr(sorted(data))
     else:
@@ -109,7 +110,7 @@ def fake_request(self, url, data=None, stream=False, **kwargs):
         with real_request():
             try:
                 response = Session().request(
-                    self, url, data=data, **kwargs)
+                    method, url, data=data, **kwargs)
             except RConnectionError:
                 dump_connection_error(sha1_hex)
         dump_response(sha1_hex, response)
