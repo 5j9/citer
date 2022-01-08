@@ -15,19 +15,24 @@ def test_is1():
         '| year=2007 '
         '| isbn=978-0-349-11916-8 '
         '| oclc=137313052}}'
-    ) in isbn_scr('9780349119168', pure=True)[1]
+    ) == isbn_scr('9780349119168', pure=True)[1]
 
 
 def test_is2():
     """not found in ottobib"""
     assert (
-        '* {{cite book | others=بدیل‌بن‌علی خاقانی (شاعر)'
-        ', جهانگیر منصور (به‌اهتمام), and محمدحسن فروزانفر (مقدمه) '
-        '| title=دیوان خاقانی شروانی | publisher=موسسه انتشارات نگاه '
-        '| publication-place=تهران - تهران | year=1396 '
-        '| isbn=978-964-6736-71-9 | language=fa | ref={{sfnref '
-        '| موسسه انتشارات نگاه |'
-        ' 1396}}}}') == isbn_scr('978-964-6736-71-9', pure=True)[1]
+        '* {{cite book '
+        '| others=بدیل\u200cبن\u200cعلی خاقانی (شاعر), جهانگیر منصور '
+        '(به\u200cاهتمام), and محمدحسن فروزانفر (مقدمه) '
+        '| title=دیوان خاقانی شروانی '
+        '| publisher=موسسه انتشارات نگاه '
+        '| publication-place=تهران - تهران '
+        '| year=1396 '
+        '| isbn=978-964-6736-71-9 '
+        '| oclc=1176150182 '
+        '| language=fa | ref={{sfnref | موسسه انتشارات نگاه | 1396}}'
+        '}}'
+    ) == isbn_scr('978-964-6736-71-9', pure=True)[1]
 
 
 def test_is3():

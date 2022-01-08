@@ -1,23 +1,8 @@
 {
-	"encoding": "utf-8",
+	"encoding": null,
 	"headers": {
-		"Cache-Control": "max-age=0, private, must-revalidate",
-		"Connection": "keep-alive",
-		"Content-Type": "text/html; charset=utf-8",
-		"Date": "Fri, 13 Apr 2018 07:58:21 GMT",
-		"ETag": "\"061dac8043ef6ab9a35e258ef060f580\"",
-		"Server": "Cowboy",
-		"Set-Cookie": "_ottobib_session=Nk5KSkFxMnk4V0M5WTB4dmNXc2Ywa1JJMTBta2UwcFpZL1EwaVR6cnpVVG5Da21MMHhVZDVKLy9XNEExeCtudTF1TWdmSUpob01KWENBZ084cDg0N1lWV3pmZ1QwMjBkRkVzQ0gxV1ArdWlOaHRCVms3ODAxVld4QlozSzlFVzFERVkxTDFQSG81NTBqYWJXRnNTcWpndDVjK01ML2o2NEhyRTd2cmV4TXhpS2pMREV5YWdpdkRyeHJFL200K1BYeVhTOGlabXVVNlJacXNvN053VHJKT25yQ1RkUHJCVWdlN3l3VUEyNzlOdmNoYjM4d2Eya0pMY0VGOUl5SzNpNFo5bFhRdWNJNkFlYllyY1BJbG9EdGVocUVjUEF2dzExaUFMWWVmK1Q3N1E9LS1FU2FPTHRXOVZ0RlFVbkFSOTBqbGZRPT0%3D--161df156f2e23ea318968eead31dbe860c40942a; path=/; HttpOnly",
-		"Status": "200 OK",
-		"Transfer-Encoding": "chunked",
-		"Via": "1.1 vegur",
-		"X-Content-Type-Options": "nosniff",
-		"X-Frame-Options": "SAMEORIGIN",
-		"X-Request-Id": "79130a82-66c0-41f0-9feb-d7a468156d25",
-		"X-Runtime": "0.148195",
-		"X-Ua-Compatible": "chrome=1",
-		"X-Xss-Protection": "1; mode=block"
+		"Content-Length": "175"
 	},
-	"status_code": 200,
+	"status_code": 503,
 	"url": "http://www.ottobib.com/isbn/978-964-6736-71-9/bibtex"
 }
