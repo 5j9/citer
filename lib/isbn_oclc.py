@@ -7,6 +7,7 @@ from typing import Optional
 
 from langid import classify
 from regex import compile as regex_compile, DOTALL
+from isbnlib import info as isbn_info
 
 from config import LANG
 from lib.ketabir import url2dictionary as ketabir_url2dictionary
@@ -48,11 +49,14 @@ def isbn_scr(
             m = ISBN10_SEARCH(isbn_container_str)
             isbn = m[0]
 
-    ketabir_result_list = []
-    ketabir_thread = Thread(
-        target=ketabir_thread_target,
-        args=(isbn, ketabir_result_list))
-    ketabir_thread.start()
+    iranian_isbn = isbn_info(isbn) == 'Iran'
+
+    if iranian_isbn is True:
+        ketabir_result_list = []
+        ketabir_thread = Thread(
+            target=ketabir_thread_target,
+            args=(isbn, ketabir_result_list))
+        ketabir_thread.start()
 
     citoid_result_list = []
     citoid_thread = Thread(
@@ -66,12 +70,18 @@ def isbn_scr(
     else:
         otto_dict = None
 
-    ketabir_thread.join()
-    if ketabir_result_list:
-        ketabir_dict = ketabir_result_list[0]
+    if iranian_isbn is True:
+        # noinspection PyUnboundLocalVariable
+        ketabir_thread.join()
+        # noinspection PyUnboundLocalVariable
+        if ketabir_result_list:
+            # noinspection PyUnboundLocalVariable
+            ketabir_dict = ketabir_result_list[0]
+        else:
+            ketabir_dict = None
+        dictionary = choose_dict(ketabir_dict, otto_dict)
     else:
-        ketabir_dict = None
-    dictionary = choose_dict(ketabir_dict, otto_dict)
+        dictionary = otto_dict
 
     citoid_thread.join()
     if citoid_result_list:
