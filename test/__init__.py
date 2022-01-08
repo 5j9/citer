@@ -11,7 +11,7 @@ from requests import Session, Response, ConnectionError as RConnectionError
 
 
 FORCE_OVERWRITE_TESTDATA = False  # Use for updating cache entries
-NO_OVERWRITE_TESTDATA = True
+READONLY_TESTDATA = True
 
 TESTDATA = __file__ + '/../testdata'
 
@@ -103,8 +103,8 @@ def fake_request(self, url, data=None, stream=False, **kwargs):
         response = load_response(sha1_hex)
 
     if response is None:  # either FileNotFoundError or FORCE_CACHE_OVERWRITE
-        if NO_OVERWRITE_TESTDATA:
-            raise RuntimeError('PREVENT_WRITING is True')
+        if READONLY_TESTDATA:
+            raise RuntimeError(f'{READONLY_TESTDATA=}')
         print('Downloading ' + url)
         with real_request():
             try:
