@@ -213,10 +213,7 @@ input_type_to_resolver = defaultdict(
 
 if __name__ == '__main__':
     # note that app.py is not run as '__main__' in kubernetes
-    try:
-        from flup.server.fcgi import WSGIServer
-        WSGIServer(app).run()
-    except ImportError:  # on local computer
-        from wsgiref.simple_server import make_server
-        httpd = make_server('localhost', 5000, app)
-        httpd.serve_forever()
+    # only for local computer
+    from wsgiref.simple_server import make_server
+    httpd = make_server('localhost', 5000, app)
+    httpd.serve_forever()
