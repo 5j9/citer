@@ -142,11 +142,9 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
 
 
 def app(environ: dict, start_response: callable) -> tuple:
-    query_dict_get = parse_qs(environ['QUERY_STRING']).get
-
     path_info = environ['PATH_INFO']
     if '/static/' in path_info:
-        if path_info.endswith('.css'):
+        if path_info[-4:] == '.css':
             start_response('200 OK', CSS_HEADERS)
             return CSS,
         else:
@@ -154,8 +152,8 @@ def app(environ: dict, start_response: callable) -> tuple:
             start_response('200 OK', JS_HEADERS)
             return JS,
 
+    query_dict_get = parse_qs(environ['QUERY_STRING']).get
     date_format = query_dict_get('dateformat', [''])[0].strip()
-
     input_type = query_dict_get('input_type', [''])[0]
 
     # Warning: input is not escaped!
