@@ -141,18 +141,18 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
         return UNDEFINED_INPUT_SCR
 
 
-def app(environ, start_response):
+def app(environ: dict, start_response: callable) -> tuple:
     query_dict_get = parse_qs(environ['QUERY_STRING']).get
 
     path_info = environ['PATH_INFO']
     if '/static/' in path_info:
         if path_info.endswith('.css'):
             start_response('200 OK', CSS_HEADERS)
-            return [CSS]
+            return CSS,
         else:
             # path_info.endswith('.js') and config.lang == 'en'
             start_response('200 OK', JS_HEADERS)
-            return [JS]
+            return JS,
 
     date_format = query_dict_get('dateformat', [''])[0].strip()
 
@@ -166,7 +166,7 @@ def app(environ, start_response):
         ).encode()
         RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
         start_response('200 OK', RESPONSE_HEADERS.items())
-        return [response_body]
+        return response_body,
 
     output_format = query_dict_get('output_format', [''])[0]  # apiquery
 
@@ -200,7 +200,7 @@ def app(environ, start_response):
     response_body = response_body.encode()
     RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
     start_response(status, RESPONSE_HEADERS.items())
-    return [response_body]
+    return response_body,
 
 
 input_type_to_resolver = defaultdict(
@@ -216,4 +216,5 @@ if __name__ == '__main__':
     # only for local computer
     from wsgiref.simple_server import make_server
     httpd = make_server('localhost', 5000, app)
+    print('serving on http://localhost:5000')
     httpd.serve_forever()
