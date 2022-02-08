@@ -131,7 +131,7 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
         return urls_scr(url, date_format)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
-        # error prone.
+        # error-prone.
         m = ISBN_10OR13_SEARCH(en_user_input)
         if m is not None:
             try:
