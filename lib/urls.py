@@ -547,7 +547,15 @@ def get_html(url: str) -> str:
         url, stream=True, spoof=True
     ) as r:
         check_response_headers(r)
-        content = next(r.iter_content(MAX_RESPONSE_LENGTH))
+        size = 0
+        chunks = []
+        a = chunks.append
+        for chunk in r.iter_content(MAX_RESPONSE_LENGTH):
+            size += len(chunk)
+            if size >= MAX_RESPONSE_LENGTH:
+                raise ValueError('response too large')
+            a(chunk)
+        content = b''.join(chunks)
     charset_match = CHARSET(content)
     return content.decode(
         charset_match[1].decode() if charset_match else r.encoding)
