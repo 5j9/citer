@@ -593,8 +593,10 @@ def url2dict(url: str) -> Dict[str, Any]:
         d['cite_type'] = 'web'
         d['website'] = find_site_name(
             html, html_title, url, authors, home_title_list, home_title_thread)
-    d['title'] = find_title(
+    title = find_title(
         html, html_title, url, authors, home_title_list, home_title_thread)
+    if title is not None:
+        d['title'] = title.strip()
     date = find_date(html, url)
     if date:
         d['date'] = date
