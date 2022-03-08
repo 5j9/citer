@@ -138,7 +138,7 @@ def dict_to_sfn_cit_ref(dictionary) -> tuple:
     all values will be encoded using encode_for_template() function.
     ISBN (if exist) will be hyphenated.
     """
-    value_encode(dictionary)
+    cleanup_values(dictionary)
     isbn = dictionary['isbn']
     if isbn:
         try:
@@ -296,17 +296,11 @@ def bidi_pop(string) -> str:
     return string + '\u202C' * diff
 
 
-def value_encode(dictionary) -> None:
-    """Cleanup dictionary values.
-
-    * Remove any key with False bool value.
-    * Replace special characters in dictionary values with their respective
-        HTML entities.
-    * Strip all values.
-    """
+def cleanup_values(dictionary) -> None:
+    """Replace special characters in dictionary values."""
     for k, v in dictionary.items():
-        if isinstance(v, str):
-            v = (
+        if type(v) is str:
+            dictionary[k] = (
                 bidi_pop(v.strip())
                 .replace('|', '&amp;#124;')
                 .replace('[', '&amp;#91;')
@@ -314,4 +308,3 @@ def value_encode(dictionary) -> None:
                 .replace('\r\n', ' ')
                 .replace('\n', ' ')
             )
-            dictionary[k] = v
