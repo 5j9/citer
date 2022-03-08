@@ -138,7 +138,6 @@ def dict_to_sfn_cit_ref(dictionary) -> tuple:
     all values will be encoded using encode_for_template() function.
     ISBN (if exist) will be hyphenated.
     """
-    cleanup_values(dictionary)
     isbn = dictionary['isbn']
     if isbn:
         try:
@@ -271,40 +270,3 @@ def find_any_date(str_or_match) -> datetime.date or None:
         if date <= today:
             return date
         return
-
-
-def bidi_pop(string) -> str:
-    """Makes sure all  LRE, RLE, LRO, or RLO chars are terminated with PDF."""
-    # Pop isolations
-    isolates = [
-        '\u2066',  # LRI
-        '\u2067',  # RLI
-        '\u2068',  # FSI
-    ]
-    diff = sum(string.count(c) for c in isolates) - \
-        string.count('\u2069')  # PDI
-    string += '\u2069' * diff
-    # Pop embeddings and overrides
-    diff = sum(
-        string.count(c) for c in (
-            '\u202A',  # LRE
-            '\u202B',  # RLE
-            '\u202D',  # LRO
-            '\u202E',  # RLO
-        )
-    ) - string.count('\u202C')  # PDF
-    return string + '\u202C' * diff
-
-
-def cleanup_values(dictionary) -> None:
-    """Replace special characters in dictionary values."""
-    for k, v in dictionary.items():
-        if type(v) is str:
-            dictionary[k] = (
-                bidi_pop(v.strip())
-                # .replace('|', '&amp;#124;')
-                # .replace('[', '&amp;#91;')
-                # .replace(']', '&amp;#93;')
-                .replace('\r\n', ' ')
-                .replace('\n', ' ')
-            )
