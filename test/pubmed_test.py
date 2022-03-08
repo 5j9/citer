@@ -28,8 +28,8 @@ def test_spanish_no_doi():
     """Test retrieval without doi."""
     assert (
         '* {{cite journal | last=Mendozo Hernández | first=P '
-        '| title=&amp;#91;Clinical diagnosis and therapy.'
-        ' Intravenous and oral rehydration&amp;#93;. '
+        '| title=[Clinical diagnosis and therapy.'
+        ' Intravenous and oral rehydration]. '
         '| journal=Boletin de la Oficina Sanitaria Panamericana.'
         ' Pan American Sanitary Bureau | volume=78 | issue=4 | year=1975 '
         '| issn=0030-0632 | pmid=123455 | pages=307–17 | language=es}}'

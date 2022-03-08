@@ -122,3 +122,16 @@ def test_bad_author_name():
         '| publisher=Springer Nature | volume=2017 | issue=10 '
         '| year=2017 | issn=1029-8479 | doi=10.1007/jhep10(2017)157}}'
     ) == doi_scr('10.1007/JHEP10(2017)157')[1]
+
+
+def test_contains_brackets():  # 33
+    assert (  # note `[zhu]` in doi, it should not be escaped
+        '* {{cite journal | last=Zhu | first=Liping | last2=Lin | first2=Xiao '
+        '| last3=Li | first3=Yuanfang | last4=Li | first4=Bingyuan '
+        '| last5=Xie | first5=Manping '
+        '| title=Ostracoda Assemblages in Core Sediments and Their '
+        'Environmental Significance in a Small Lake in Northwest Tibet, China '
+        '| journal=Arctic, Antarctic, and Alpine Research '
+        '| publisher=Informa UK Limited | volume=39 | issue=4 | year=2007 '
+        '| issn=1523-0430 | doi=10.1657/1523-0430(07-512)[zhu]2.0.co;2 '
+        '| pages=658–662}}') == doi_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1]
