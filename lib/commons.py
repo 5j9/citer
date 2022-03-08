@@ -302,9 +302,9 @@ def cleanup_values(dictionary) -> None:
         if type(v) is str:
             dictionary[k] = (
                 bidi_pop(v.strip())
-                .replace('|', '&amp;#124;')
-                .replace('[', '&amp;#91;')
-                .replace(']', '&amp;#93;')
+                # .replace('|', '&amp;#124;')
+                # .replace('[', '&amp;#91;')
+                # .replace(']', '&amp;#93;')
                 .replace('\r\n', ' ')
                 .replace('\n', ' ')
             )

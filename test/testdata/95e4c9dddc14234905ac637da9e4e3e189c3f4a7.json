@@ -1,0 +1,23 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"access-control-allow-headers": "X-Requested-With, Accept, Accept-Encoding, Accept-Charset, Accept-Language, Accept-Ranges, Cache-Control",
+		"access-control-allow-origin": "*",
+		"access-control-expose-headers": "Link",
+		"connection": "close",
+		"content-encoding": "gzip",
+		"content-length": "1699",
+		"content-type": "application/json",
+		"date": "Tue, 08 Mar 2022 23:11:34 GMT",
+		"permissions-policy": "interest-cohort=()",
+		"server": "Jetty(9.4.40.v20210413)",
+		"vary": "Accept-Encoding",
+		"x-api-pool": "public",
+		"x-rate-limit-interval": "1s",
+		"x-rate-limit-limit": "50",
+		"x-ratelimit-interval": "1s",
+		"x-ratelimit-limit": "50"
+	},
+	"status_code": 200,
+	"url": "http://api.crossref.org/v1/works/10.1657/1523-0430(07-512)%5BZHU%5D2.0.CO;2"
+}
