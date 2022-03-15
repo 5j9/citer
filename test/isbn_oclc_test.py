@@ -102,3 +102,12 @@ def test_fullname_in_ris():
 
 def test_hyphened_isbn_match():  # 30
     assert ISBN_10OR13_SEARCH('2-253-00422-7')
+
+
+def test_citoid_only():  # 31
+    assert (
+        '* {{cite book | last=Ramseier | first=Walter '
+        '| title=Münchenstein - Heimatkunde | publication-place=[Liestal] '
+        '| isbn=978-3-85673-522-7 | oclc=613273377 '
+        '| language=de}}'
+    ) == isbn_scr('3-85673-522-4')[1]
