@@ -10,7 +10,7 @@ NAME_PATTERN = r'\w[\w.-]++\ \w[\w.-]++(?>\ \w[\w.-]+)?'
 
 # BYLINE_PATTERN supports up to four names in a byline
 # names may be separated with "and", a "comma" or "comma and"
-BYLINE_PATTERN = r'''
+BYLINE_PATTERN = rf'''
     \s*+By\s++{NAME_PATTERN}(
         ,\ {NAME_PATTERN}(
             ,\ {NAME_PATTERN}(
@@ -40,7 +40,7 @@ BYLINE_PATTERN = r'''
             )?
         )?
     )?\s*
-'''.format_map(locals())
+'''
 BYLINE_PATTERN_SEARCH = regex_compile(BYLINE_PATTERN, VERBOSE | IGNORECASE)
 
 NORMALIZE_ANDS = regex_compile(r'\s++and\s++', IGNORECASE).sub
@@ -87,13 +87,13 @@ AUTHOR_META_NAME_OR_PROP = r'''
     (?P=q))
 '''
 META_AUTHOR_FINDITER = regex_compile(
-    r'''
+    rf'''
     <meta\s[^>]*?(?:
         {AUTHOR_META_NAME_OR_PROP}\s[^c]*+[^>]*?{CONTENT_ATTR}
         |
         {CONTENT_ATTR}\s[^>]*?{AUTHOR_META_NAME_OR_PROP}
     )
-    '''.format_map(locals()),
+    ''',
     VERBOSE | IGNORECASE
 ).finditer
 # id=byline
