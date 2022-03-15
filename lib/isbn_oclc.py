@@ -1,6 +1,4 @@
-"""Define functions to process ISBNs and OCLC numbers."""
-
-# from collections import defaultdict
+from collections import defaultdict
 from logging import getLogger
 from threading import Thread
 from typing import Optional
@@ -36,7 +34,6 @@ class IsbnError(Exception):
 def isbn_scr(
     isbn_container_str: str, pure: bool = False, date_format: str = '%Y-%m-%d'
 ) -> tuple:
-    """Create the response namedtuple."""
     if pure:
         isbn = isbn_container_str
     else:
@@ -79,13 +76,16 @@ def isbn_scr(
             ketabir_dict = ketabir_result_list[0]
         else:
             ketabir_dict = None
-        dictionary = choose_dict(ketabir_dict, otto_dict)
     else:
-        dictionary = otto_dict
+        ketabir_dict = None
 
     citoid_thread.join()
     if citoid_result_list:
-        dictionary['oclc'] = citoid_result_list[0]['oclc']
+        citoid_dict = citoid_result_list[0]
+    else:
+        citoid_dict = None
+
+    dictionary = combine_dicts(ketabir_dict, otto_dict, citoid_dict)
 
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
@@ -107,7 +107,7 @@ def ketabir_thread_target(isbn: str, result: list) -> None:
         return
 
 
-def choose_dict(ketabir_dict, otto_dict):
+def combine_dicts(ketabir: dict, otto: dict, citoid: dict) -> dict:
     """Choose which source to use.
 
     Return ketabir_dict if both dicts are available and lang is fa.
@@ -115,16 +115,27 @@ def choose_dict(ketabir_dict, otto_dict):
     Return ketabir_dict if ketabir_dict is None.
     Return otto_dict otherwise.
     """
-    if not otto_dict and not ketabir_dict:
+    if not otto and not ketabir and not citoid:
         raise IsbnError('Bibliographic information not found.')
-    if ketabir_dict and otto_dict:
-        # both exist
+
+    if ketabir and otto:
         if LANG == 'fa':
-            return ketabir_dict
-        return otto_dict
-    if ketabir_dict:
-        return ketabir_dict  # only ketabir exists
-    return otto_dict  # only ottobib exists
+            result = ketabir
+        else:
+            result = otto
+    elif ketabir:
+        result = ketabir
+    elif otto:
+        result = otto
+    else:
+        return citoid
+
+    if citoid:
+        oclc = citoid['oclc']
+        if oclc is not None:
+            result['oclc'] = oclc
+
+    return result
 
 
 def isbn2int(isbn):
@@ -137,24 +148,26 @@ def get_citoid_dict(isbn) -> Optional[dict]:
         'https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki/' + isbn)
     if r.status_code != 200:
         return
-    return r.json()[0]
-    # Currently get_citoid_dict is only used to get oclc id (T160845)
-    # j0 = r.json()[0]
-    # d = defaultdict(lambda: None, j0)
-    # d['cite_type'] = j0['itemType']
-    # d['isbn'] = d['ISBN'][0]
-    # if 'date' in j0:
-    #     d['year'] = j0['date']
-    # if 'author' in j0:
-    #     d['authors'] = [
-    #         Name(first.rstrip('.,'), last.rstrip('.,'))
-    #         for last, first in j0['author']
-    #     ]
-    # if 'url' in j0:
-    #     del d['url']
-    # if 'place' in j0:
-    #     d['publisher-location'] = j0['place']
-    # return d
+
+    j0 = r.json()[0]
+    d = defaultdict(lambda: None)
+
+    d['cite_type'] = j0['itemType']
+    d['isbn'] = j0['ISBN'][0]
+    # worldcat url is not needed since OCLC param will create it
+    # d['url'] = j0['url']
+    d['oclc'] = j0['oclc']
+    d['title'] = j0['title']
+
+    contributor = j0.get('contributor')
+    if contributor is not None:
+        d['authors'] = contributor
+
+    place = j0.get('place')
+    if place is not None:
+        d['publisher-location'] = place
+
+    return d
 
 
 def citoid_thread_target(isbn: str, result: list) -> None:
