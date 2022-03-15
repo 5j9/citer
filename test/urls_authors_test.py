@@ -3,6 +3,7 @@ from regex import compile as regex_compile, VERBOSE, IGNORECASE
 
 from lib.urls_authors import byline_to_names, BYLINE_PATTERN, \
     BYLINE_TAG_FINDITER
+from lib.urls import urls_scr
 
 BYLINE_PATTERN_REGEX = regex_compile(
     fr'^{BYLINE_PATTERN}$',
@@ -120,3 +121,16 @@ def test_byline_to_names_schema_author():
         '"logo":{"@type":"ImageObject","height":60,"url":"https://'
         'www.abc.net.au/res/abc/logos/amp-news-logo-60x240.png",'
         '"width":240}}}</script>'))['result'] == 'Kathleen Ferguson'
+
+
+def test_authors_meta_tag_with_no_quote():  # 28
+    # <meta property=article:author content="Brian Truitt"/>
+    assert (
+        "{{cite web | last=Truitt | first=Brian "
+        "| title='Star Wars': Disney+ switches up controversial "
+        "Han Solo/Greedo scene | website=USA TODAY | date=2019-11-12 "
+        "| url=https://www.usatoday.com/story/entertainment/movies/2019/11/12/star-wars-disney-plus-changes-controversial-han-solo-greedo-scene/2576097001/ "
+        "| access-date="
+    ) == urls_scr(
+        'https://www.usatoday.com/story/entertainment/movies/2019/11/12/star-wars-disney-plus-changes-controversial-han-solo-greedo-scene/2576097001/'
+    )[1][2:-12]
