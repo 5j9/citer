@@ -76,7 +76,7 @@ CONTENT_ATTR = r'''
     )(?P=q)
 '''
 AUTHOR_META_NAME_OR_PROP = r'''
-    (?<id>(?:name|property)\s*+=\s*+(?<q>["\'])
+    (?<id>(?:name|property)\s*+=\s*+(?<q>["\']?)
         (?>
             # http://socialhistory.ihcs.ac.ir/article_571_84.html
             # http://jn.physiology.org/content/81/1/319
