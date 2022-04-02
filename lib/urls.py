@@ -1,6 +1,3 @@
-"""Codes used for parsing contents of an arbitrary URL."""
-
-
 from collections import defaultdict
 from datetime import date as datetime_date
 from difflib import get_close_matches
