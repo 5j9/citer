@@ -278,7 +278,7 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
     names = []
     for fullname in fullnames:
         fullname = fullname.partition(' in ')[0].partition(' for ')[0]
-        if STOPWORDS_SEARCH(fullname):
+        if STOPWORDS_SEARCH(fullname) or fullname.isupper():
             continue
         try:
             first, last = first_last(fullname)
