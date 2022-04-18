@@ -91,13 +91,6 @@ def test_byline_to_names_newline_after_and():
     assert names[1][1] == 'Clark'
 
 
-def test_byline_to_names_the_triggers_nofirst_fulllast():
-    # https://www.nytimes.com/2016/01/08/opinion/a-shameful-round-up-of-refugees.html?_r=0
-    first, last = byline_to_names('THE EDITORIAL BOARD')[0]
-    assert first == ''
-    assert last == 'The Editorial Board'
-
-
 def test_byline_to_names_schema_author():
     # https://www.abc.net.au/news/2020-09-06/glow-worms-in-wollemi-national-park-survived-summer-bushfire/12634762
     assert next(BYLINE_TAG_FINDITER(
@@ -133,4 +126,18 @@ def test_authors_meta_tag_with_no_quote():  # 28
         "| access-date="
     ) == urls_scr(
         'https://www.usatoday.com/story/entertainment/movies/2019/11/12/star-wars-disney-plus-changes-controversial-han-solo-greedo-scene/2576097001/'
+    )[1][2:-12]
+
+
+def test_uppercase_sitename_in_authors():  # 28
+    # note: must use the specific testdata stored at
+    # https://gist.github.com/5j9/ec831edb740363191e21c4f500cb9a09#file-usatoday_toolforge-html-L86
+    assert (
+        "{{cite web | last=Truitt | first=Brian "
+        "| title=The infamous 'Han shot first' scene in 'Star Wars' has changed yet again on Disney+ "
+        "| website=USA TODAY | date=2019-11-12 "
+        "| url=https://www.usatoday.com/story/entertainment/movies/2019/11/12/2576097001/ "
+        "| access-date="
+    ) == urls_scr(
+        'https://www.usatoday.com/story/entertainment/movies/2019/11/12/2576097001/'
     )[1][2:-12]
