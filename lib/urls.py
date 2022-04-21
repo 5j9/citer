@@ -19,7 +19,7 @@ from lib.commons import (
 from lib.urls_authors import find_authors, CONTENT_ATTR
 
 
-MAX_RESPONSE_LENGTH = 2000000
+MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
 
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
 CHARSET = rc(
@@ -550,7 +550,9 @@ def get_html(url: str) -> str:
         for chunk in r.iter_content(MAX_RESPONSE_LENGTH):
             size += len(chunk)
             if size >= MAX_RESPONSE_LENGTH:
-                raise ValueError('response too large')
+                raise ValueError(
+                    'response was too large: '
+                    f'{size=} > {MAX_RESPONSE_LENGTH=}')
             a(chunk)
         content = b''.join(chunks)
     charset_match = CHARSET(content)
