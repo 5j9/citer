@@ -4,22 +4,15 @@ from threading import Thread
 from typing import Optional
 
 from langid import classify
-from regex import compile as regex_compile, DOTALL
 from isbnlib import info as isbn_info
 
 from config import LANG
 from lib.ketabir import url2dictionary as ketabir_url2dictionary
 from lib.ketabir import isbn2url as ketabir_isbn2url
-from lib.bibtex import parse as bibtex_parse
 from lib.commons import dict_to_sfn_cit_ref, request, ISBN13_SEARCH, \
     ISBN10_SEARCH
 from lib.ris import ris_parse
 
-
-OTTOBIB_SEARCH = regex_compile(
-    '<textarea[^>]*+>(.*?)</textarea>',
-    DOTALL,
-).search
 
 RM_DASH_SPACE = str.maketrans('', '', '- ')
 
@@ -61,12 +54,6 @@ def isbn_scr(
         args=(isbn, citoid_result_list))
     citoid_thread.start()
 
-    ottobib_bibtex = ottobib(isbn)
-    if ottobib_bibtex:
-        otto_dict = bibtex_parse(ottobib_bibtex)
-    else:
-        otto_dict = None
-
     if iranian_isbn is True:
         # noinspection PyUnboundLocalVariable
         ketabir_thread.join()
@@ -85,7 +72,7 @@ def isbn_scr(
     else:
         citoid_dict = None
 
-    dictionary = combine_dicts(ketabir_dict, otto_dict, citoid_dict)
+    dictionary = combine_dicts(ketabir_dict, citoid_dict)
 
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
@@ -107,7 +94,7 @@ def ketabir_thread_target(isbn: str, result: list) -> None:
         return
 
 
-def combine_dicts(ketabir: dict, otto: dict, citoid: dict) -> dict:
+def combine_dicts(ketabir: dict, citoid: dict) -> dict:
     """Choose which source to use.
 
     Return ketabir_dict if both dicts are available and lang is fa.
@@ -115,27 +102,22 @@ def combine_dicts(ketabir: dict, otto: dict, citoid: dict) -> dict:
     Return ketabir_dict if ketabir_dict is None.
     Return otto_dict otherwise.
     """
-    if not otto and not ketabir and not citoid:
+    if not ketabir and not citoid:
         raise IsbnError('Bibliographic information not found.')
 
-    if ketabir and otto:
-        if LANG == 'fa':
-            result = ketabir
-        else:
-            result = otto
-    elif ketabir:
-        result = ketabir
-    elif otto:
-        result = otto
-    else:
+    if not ketabir:
         return citoid
+    elif not citoid:
+        return ketabir
 
-    if citoid:
+    # both ketabid and citoid are available
+    if LANG == 'fa':
+        result = ketabir
         oclc = citoid['oclc']
         if oclc is not None:
             result['oclc'] = oclc
-
-    return result
+        return result
+    return citoid
 
 
 def isbn2int(isbn):
@@ -150,6 +132,8 @@ def get_citoid_dict(isbn) -> Optional[dict]:
         return
 
     j0 = r.json()[0]
+    get = j0.get
+
     d = defaultdict(lambda: None)
 
     d['cite_type'] = j0['itemType']
@@ -159,13 +143,27 @@ def get_citoid_dict(isbn) -> Optional[dict]:
     d['oclc'] = j0['oclc']
     d['title'] = j0['title']
 
-    contributor = j0.get('contributor')
-    if contributor is not None:
-        d['authors'] = contributor
+    authors = get('author')
+    contributors = get('contributor')
 
-    place = j0.get('place')
+    if authors is not None and contributors is not None:
+        d['authors'] = authors + contributors
+    elif authors is not None:
+        d['authors'] = authors
+    elif contributors is not None:
+        d['authors'] = contributors
+
+    publisher = get('publisher')
+    if publisher is not None:
+        d['publisher'] = publisher
+
+    place = get('place')
     if place is not None:
         d['publisher-location'] = place
+
+    date = get('date')
+    if date is not None:
+        d['date'] = date
 
     return d
 
@@ -174,14 +172,6 @@ def citoid_thread_target(isbn: str, result: list) -> None:
     citoid_dict = get_citoid_dict(isbn)
     if citoid_dict:
         result.append(citoid_dict)
-
-
-def ottobib(isbn):
-    """Convert ISBN to bibtex using ottobib.com."""
-    m = OTTOBIB_SEARCH(request(
-        'http://www.ottobib.com/isbn/' + isbn + '/bibtex').content.decode())
-    if m is not None:
-        return m[1]
 
 
 def oclc_scr(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:
