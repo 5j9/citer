@@ -5,7 +5,7 @@ with known BibTeX formats; therefore many other BiBteX entries may be parsed
 incorrectly or incompletely as TeX system is very complex and this module is
 not intended to parse TeX.
 
-Some of the known issues:
+Known issues:
     * Currently it does not detect special symbols and many TeX escape
         sequences (more information: http://www.bibtex.org/SpecialSymbols/)
     * String concatenations are not recognized. (e.g. "str1" # "str2")
