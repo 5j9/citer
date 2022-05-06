@@ -245,13 +245,19 @@ def test_doi1():
 
 def test_isbn_exists_on_ottobib_not_ketabir():
     assert (
-        '* {{یادکرد کتاب | نام خانوادگی=Adkins | نام=Roy |'
-        ' عنوان=The war for all the oceans : '
-        'from Nelson at the Nile to Napoleon at Waterloo |'
-        ' ناشر=Abacus | مکان=London | سال=2007 |'
-        ' شابک=978-0-349-11916-8 '
+        '* {{یادکرد کتاب | نام خانوادگی=Adkins '
+        '| نام=Roy '
+        '| نام خانوادگی۲=Adkins '
+        '| نام۲=Lesley '
+        '| عنوان=The war for all the oceans : from Nelson at the Nile to '
+        'Napoleon at Waterloo '
+        '| ناشر=Abacus '
+        '| مکان=London '
+        '| تاریخ=2007 '
+        '| شابک=978-0-349-11916-8 '
         '| oclc=137313052 '
-        '| زبان=en}}') in isbn_scr('9780349119168', pure=True)[1]
+        '| زبان=en}}'
+    ) in isbn_scr('9780349119168', pure=True)[1]
 
 
 def test_isbn_exists_on_ketabir_not_ottobib():

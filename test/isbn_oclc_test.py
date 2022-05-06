@@ -3,45 +3,31 @@ from lib.commons import ISBN_10OR13_SEARCH
 
 
 def test_is1():
-    """not found in ketabir"""
+    # not in ketabir
     assert (
         '* {{cite book '
         '| last=Adkins '
         '| first=Roy '
+        '| last2=Adkins '
+        '| first2=Lesley '
         '| title=The war for all the oceans : '
         'from Nelson at the Nile to Napoleon at Waterloo '
         '| publisher=Abacus '
         '| publication-place=London '
-        '| year=2007 '
+        '| date=2007 '
         '| isbn=978-0-349-11916-8 '
         '| oclc=137313052}}'
     ) == isbn_scr('9780349119168', pure=True)[1]
 
 
-def test_is2():
-    """not found in ottobib"""
-    assert (
-        '* {{cite book '
-        '| others=بدیل\u200cبن\u200cعلی خاقانی (شاعر), جهانگیر منصور '
-        '(به\u200cاهتمام), and محمدحسن فروزانفر (مقدمه) '
-        '| title=دیوان خاقانی شروانی '
-        '| publisher=موسسه انتشارات نگاه '
-        '| publication-place=تهران - تهران '
-        '| year=1396 '
-        '| isbn=978-964-6736-71-9 '
-        '| oclc=1176150182 '
-        '| language=fa | ref={{sfnref | موسسه انتشارات نگاه | 1396}}'
-        '}}'
-    ) == isbn_scr('978-964-6736-71-9', pure=True)[1]
-
-
 def test_is3():
-    """exists in both"""
+    # on both ketabid and citoid
     assert (
-        '* {{cite book | last=Sipihrī | first=Suhrāb '
+        '* {{cite book | last=Sipihrī | first=Suhrāb. '
         '| title=Rāz-i gul-i surkh '
         '| publisher=Muʼassasah-ʼi Intishārāt-i Nigāh '
-        '| publication-place=Tihrān | year=1379 | isbn=964-6736-34-3 '
+        '| publication-place=Tihrān | date=1379 [2000 or 2001] '
+        '| isbn=964-6736-34-3 '
         '| oclc=53446327}}'
     ) == isbn_scr('964-6736-34-3 ')[1]
 
