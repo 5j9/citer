@@ -961,3 +961,18 @@ def test_language_not_de_csbc():
     ) == urls_scr(
         'https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html'
     )[1][2:-12]
+
+
+def test_language_not_zh():
+    assert (
+        "{{cite web "
+        "| last=Jonscher "
+        "| first=Samantha "
+        "| title=Malcolm Abbott's domestic violence past shows 'urgent action' required to support First Nations - ABC News "
+        "| website=ABC (Australian Broadcasting Corporation) "
+        "| date=2022-05-14 "
+        "| url=https://www.abc.net.au/news/2022-05-15/malcolm-abbott-domestic-violence-prevention-fails/101059440 "
+        "| access-date="
+    ) == urls_scr(
+        'https://www.abc.net.au/news/2022-05-15/malcolm-abbott-domestic-violence-prevention-fails/101059440'
+    )[1][2:-12]

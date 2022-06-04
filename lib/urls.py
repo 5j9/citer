@@ -204,7 +204,7 @@ SITE_NAME_SEARCH = rc(
 ).search
 
 TITLE_SPLIT = rc(r' - | — |\|').split
-LANG_SEARCH = rc('lang="(..)"').search
+LANG_SEARCH = rc(r'\slang="([a-z]{2})[-"]').search
 
 
 class ContentTypeError(ValueError):
