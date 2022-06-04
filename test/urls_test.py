@@ -640,18 +640,20 @@ def test_oth4():
 def test_oth5():
     """Getting the date is tricky here."""
     o = urls_scr('http://www.magiran.com/npview.asp?ID=1410487')
-    assert '{{sfn | نوري | 2007}}' in o[0]
+    assert "{{sfn | ''Magiran'' | 2007}}" in o[0]
     assert (
         '* {{cite web '
-        '| last=نوري '
-        '| first=آزاده شهمير '
-        '| title=روزنامه سرمايه86/3/1: دكتر طاهر صباحي، محقق و مجموعه دار'
-        ' فرش: بازار جهاني با توليد فرش هنري نصيب ايران مي شود '
-        '| website=magiran.com '
+        # todo: could this be fixed for the new format of magiran?
+        # '| last=نوري '
+        # '| first=آزاده شهمير '
+        '| title=روزنامه سرمایه (1386/03/01): دکتر طاهر صباحی، محقق و '
+        'مجموعه دار فرش: بازار جهانی با تولید فرش هنری نصیب ایران می شود '
+        '| website=Magiran '
         '| date=2007-05-22 '
         '| url=http://www.magiran.com/npview.asp?ID=1410487 '
         '| language=fa '
-        '| access-date=') in o[1]
+        '| ref={{sfnref | Magiran | 2007}} '
+        '| access-date=') == o[1][:-12]
 
 
 def test_oth6():
