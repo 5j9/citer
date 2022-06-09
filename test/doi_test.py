@@ -138,3 +138,14 @@ def test_contains_brackets():  # 33
         '| publisher=Informa UK Limited | volume=39 | issue=4 | year=2007 '
         '| issn=1523-0430 | doi=10.1657/1523-0430(07-512)[zhu]2.0.co;2 '
         '| pages=658–662}}') == doi_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1]
+
+
+def test_non_crossref_doi():  # 35
+    assert (
+        '* {{cite | last=Hein | first=Andreas M. | last2=Baxter '
+        '| first2=Stephen '
+        '| title=Artificial Intelligence for Interstellar Travel '
+        '| publisher=arXiv | doi=10.48550/ARXIV.1811.06526 '
+        '| url=https://arxiv.org/abs/1811.06526 '
+        '| access-date=2022-06-09}}'
+    ) == doi_scr('10.48550/arXiv.1811.06526')[1]
