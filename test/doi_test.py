@@ -6,8 +6,10 @@ def test_doi1():
         "* {{cite journal | last=Atkins | first=Joshua H. | "
         "last2=Gershell | first2=Leland J. | title="
         "Selective anticancer drugs | journal=Nature Reviews Drug "
-        "Discovery | publisher=Springer Nature | volume=1 | issue=7 | "
-        "year=2002 | issn=1474-1776 | doi=10.1038/nrd842 | pages=491–492}}"
+        "Discovery | publisher=Springer Science and Business Media LLC "
+        "| volume=1 | issue=7 "
+        "| year=2002 | issn=1474-1776 | doi=10.1038/nrd842 "
+        "| pages=491–492}}"
     ) == doi_scr('https://doi.org/10.1038%2Fnrd842')[1]
 
 
@@ -119,7 +121,8 @@ def test_bad_author_name():
         '| title=Strange and charm HVP contributions to the muon (g − 2) '
         'including QED corrections with twisted-mass fermions '
         '| journal=Journal of High Energy Physics '
-        '| publisher=Springer Nature | volume=2017 | issue=10 '
+        '| publisher=Springer Science and Business Media LLC '
+        '| volume=2017 | issue=10 '
         '| year=2017 | issn=1029-8479 | doi=10.1007/jhep10(2017)157}}'
     ) == doi_scr('10.1007/JHEP10(2017)157')[1]
 
