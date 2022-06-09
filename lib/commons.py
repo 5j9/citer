@@ -16,6 +16,20 @@ else:
     from lib.generator_fa import sfn_cit_ref
 
 
+# The regex is from:
+# http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
+DOI_SEARCH = regex_compile(
+    r'''
+    \b
+    10\.[0-9]{4,}+
+    (?:\.[0-9]++)*+
+    /[^"&\'\s]++
+    \b
+    ''',
+    VERBOSE,
+).search
+
+
 b_TO_NUM = {name.lower(): num for num, name in enumerate(month_abbr) if num}
 B_TO_NUM = {name.lower(): num for num, name in enumerate(month_name) if num}
 
@@ -124,21 +138,15 @@ class NumberInNameError(InvalidNameError):
 
 
 def request(url, spoof=False, method='get', **kwargs):
-    return REQUEST(
-        method, url,
-        headers=SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER,
-        **kwargs)
+    headers = SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER
+    if 'headers' in kwargs:
+        headers |= kwargs.pop('headers')
+    return REQUEST(method, url, headers=headers, **kwargs)
 
 
 def dict_to_sfn_cit_ref(dictionary) -> tuple:
-    """Return (sfn, cite, ref) strings.
-
-    dictionary should be ready before calling this function.
-    The dictionary will be cleaned up (empty values will be removed) and
-    all values will be encoded using encode_for_template() function.
-    ISBN (if exist) will be hyphenated.
-    """
-    isbn = dictionary['isbn']
+    # Return (sfn, cite, ref) strings.
+    isbn = dictionary.get('isbn')
     if isbn:
         try:
             dictionary['isbn'] = isbn_mask(isbn)
