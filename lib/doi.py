@@ -3,7 +3,7 @@
 
 from collections import defaultdict
 from datetime import datetime
-from urllib.parse import unquote_plus, quote_plus
+from urllib.parse import unquote_plus
 from html import unescape
 
 from langid import classify
@@ -32,7 +32,7 @@ def get_crossref_dict(doi) -> defaultdict:
     """Return the parsed data of crossref.org for the given DOI."""
     # See https://citation.crosscite.org/docs.html for documentation.
     j = request(
-        f'https://api.crossref.org/v1/works/{quote_plus(doi)}/transform',
+        f'https://doi.org/{doi}',
         headers={"Accept": "application/vnd.citationstyles.csl+json"}
     ).json()
 
