@@ -1,0 +1,20 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Cache-Control": "max-age=0, private, must-revalidate",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Type": "application/vnd.citationstyles.csl+json; charset=utf-8",
+		"Date": "Thu, 09 Jun 2022 12:13:29 GMT",
+		"ETag": "W/\"3648c0fb656ded2bc53995302f803ae7\"",
+		"Server": "nginx/1.18.0 + Phusion Passenger(R) 6.0.13",
+		"Status": "200 OK",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding, Origin",
+		"X-Powered-By": "Phusion Passenger(R) 6.0.13",
+		"X-Request-Id": "bb634e5f-efe8-4908-9efd-11951478b10f",
+		"X-Runtime": "0.038989"
+	},
+	"status_code": 200,
+	"url": "https://data.crosscite.org/10.48550%2FarXiv.1811.06526"
+}
