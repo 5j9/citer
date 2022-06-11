@@ -149,3 +149,17 @@ def test_non_crossref_doi():  # 35
         '| url=https://arxiv.org/abs/1811.06526 '
         '| access-date=2022-06-09}}'
     ) == doi_scr('10.48550/arXiv.1811.06526')[1]
+
+
+def test_doi_with_full_date():  # 36
+    assert (
+        '* {{cite journal | last=Webber | first=W. R. | last2=McDonald '
+        '| first2=F. B. | last3=Lockwood | first3=J. A. | last4=Heikkila '
+        '| first4=B. '
+        '| title=The effect of the July 14, 2000 “Bastille Day” solar flare '
+        'event on &gt;70 MeV galactic cosmic rays observed at V1 and V2 in '
+        'the distant heliosphere | journal=Geophysical Research Letters '
+        '| publisher=American Geophysical Union (AGU) | volume=29 '
+        '| issue=10 | date=2002-05-15 | issn=0094-8276 '
+        '| doi=10.1029/2002gl014729 | pages=15–1–15–3}}'
+    ) == doi_scr('10.1029/2002GL014729')[1]
