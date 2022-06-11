@@ -54,8 +54,7 @@ def get_crossref_dict(doi) -> defaultdict:
     if published is not None:
         date = published['date-parts'][0]
         if len(date) == 3:
-            y, m, d = date
-            d['date'] = datetime(y, m, d)
+            d['date'] = datetime(*date)
         else:  # todo: better handle the case where len == 2
             d['year'] = f'{date[0]}'
 

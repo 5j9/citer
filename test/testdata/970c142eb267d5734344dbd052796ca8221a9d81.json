@@ -1,0 +1,24 @@
+{
+	"encoding": null,
+	"headers": {
+		"access-control-allow-headers": "X-Requested-With, Accept, Accept-Encoding, Accept-Charset, Accept-Language, Accept-Ranges, Cache-Control",
+		"access-control-allow-origin": "*",
+		"access-control-expose-headers": "Link",
+		"connection": "close",
+		"content-encoding": "gzip",
+		"content-length": "2187",
+		"content-type": "application/vnd.citationstyles.csl+json",
+		"date": "Sat, 11 Jun 2022 02:24:56 GMT",
+		"link": "<http://dx.doi.org/10.1029/2002gl014729>; rel=\"canonical\", <https://api.wiley.com/onlinelibrary/tdm/v1/articles/10.1029%2F2002GL014729>; version=\"vor\"; rel=\"item\", <http://doi.wiley.com/10.1002/tdm_license_1.1>; version=\"tdm\"; rel=\"license\"",
+		"permissions-policy": "interest-cohort=()",
+		"server": "Jetty(9.4.40.v20210413)",
+		"vary": "Accept, Accept-Encoding",
+		"x-api-pool": "public",
+		"x-rate-limit-interval": "1s",
+		"x-rate-limit-limit": "50",
+		"x-ratelimit-interval": "1s",
+		"x-ratelimit-limit": "50"
+	},
+	"status_code": 200,
+	"url": "https://api.crossref.org/v1/works/10.1029%2F2002GL014729/transform"
+}
