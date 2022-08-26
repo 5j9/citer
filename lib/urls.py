@@ -460,8 +460,9 @@ def find_date(html: str, url: str) -> datetime_date:
     # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
     # Example for find_any_date(html):
     # https://www.bbc.com/news/uk-england-25462900
-    m = DATE_SEARCH(html)
-    return find_any_date(m) if m else find_any_date(url) or find_any_date(html)
+    if (m := DATE_SEARCH(html)) is not None:
+        return find_any_date(m)
+    return find_any_date(url) or find_any_date(html)
 
 
 def analyze_home(url: str, home_list: list) -> None:
