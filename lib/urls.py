@@ -354,9 +354,7 @@ def find_site_name(
         thread.join()
         home_title = home_title_list[0]
         if (i := home_title.find(':')) != -1:
-            # http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html
-            site_name = home_title[:i].strip()
-            if site_name:
+            if site_name := home_title[:i].strip():
                 return site_name
         site_name = parse_title(home_title, url, None)[2]
         if site_name:
@@ -425,7 +423,7 @@ def parse_title(
     title_parts = TITLE_SPLIT(title.strip())
     if len(title_parts) == 1:
         return None, title, None
-    hostname = urlparse(url).hostname.replace('www.', '')
+    hostname = urlparse(url).hostname.replace('www.', '', 1)
     # Searching for intitle_sitename
     # 1. In hostname
     hnset = set(hostname.split('.'))
