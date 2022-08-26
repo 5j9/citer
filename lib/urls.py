@@ -308,7 +308,7 @@ def find_site_name(
     html_title: str,
     url: str,
     authors: List[Tuple[str, str]],
-    home_title_list: List[str],
+    home_list: List[str],
     thread: Thread,
 ) -> str:
     """Return (site's name as a string, where).
@@ -318,7 +318,7 @@ def find_site_name(
         html_title: Title of the page found in the title tag of the html.
         url: URL of the page.
         authors: Authors list returned from find_authors function.
-        home_title_list: A list containing the title of the home page as a str.
+        home_list: A list containing the title of the home page as a str.
         thread: The thread that should be joined before using home_title list.
     Returns site's name as a string.
     """
@@ -326,14 +326,16 @@ def find_site_name(
         return m['result']
     # search the title
     if site_name := parse_title(
-        html_title, url, authors, home_title_list, thread
+        html_title, url, authors, home_list, thread
     )[2]:
         return site_name
     # noinspection PyBroadException
     try:
         # using home_title
         thread.join()
-        home_title = home_title_list[0]
+        home_site_name, home_title = home_list
+        if home_site_name is not None:
+            return home_site_name
         if (i := home_title.find(':')) != -1:
             if site_name := home_title[:i].strip():
                 return site_name
@@ -352,16 +354,16 @@ def find_title(
     html_title: str,
     url: str,
     authors: List[Tuple[str, str]],
-    home_title: List[str],
+    home_list: List[str],
     thread: Thread,
 ) -> Optional[str]:
     """Return (title_string, where_info)."""
     if (m := TITLE_SEARCH(html)) is not None:
         return parse_title(
-            html_unescape(m['result']), url, authors, home_title, thread,
+            html_unescape(m['result']), url, authors, home_list, thread,
         )[1]
     elif html_title:
-        return parse_title(html_title, url, authors, home_title, thread)[1]
+        return parse_title(html_title, url, authors, home_list, thread)[1]
     else:
         return None
 
@@ -370,7 +372,7 @@ def parse_title(
     title: str,
     url: str,
     authors: Optional[List[Tuple[str, str]]],
-    home_title_list: Optional[List[str]] = None,
+    home_list: Optional[List[str]] = None,
     thread: Thread = None,
 ) -> Tuple[Optional[str], str, Optional[str]]:
     """Return (intitle_author, pure_title, intitle_sitename).
@@ -418,10 +420,10 @@ def parse_title(
         ):
             intitle_sitename = close_matches[0]
         else:
-            if thread:
+            if thread is not None:
                 thread.join()
-            if home_title_list:
-                home_title = home_title_list[0]
+            if home_list:
+                home_site_name, home_title = home_list
                 # 3. In homepage title
                 for part in title_parts:
                     if part in home_title:
@@ -462,13 +464,12 @@ def find_date(html: str, url: str) -> datetime_date:
     return find_any_date(m) if m else find_any_date(url) or find_any_date(html)
 
 
-def get_home_title(url: str, home_title_list: List[str]) -> None:
-    """Get homepage of the url and return it's title.
+def analyze_home(url: str, home_list: list) -> None:
+    """Append home_title and site_name to home_list.
 
-    home_title_list will be used to return the thread result.
     This function is invoked through a thread.
+    home_list is used to return the thread result.
     """
-    # Todo: cache the result.
     home_url = '://'.join(urlparse(url)[:2])
     with request(
         home_url, spoof=True, stream=True
@@ -481,11 +482,18 @@ def get_home_title(url: str, home_title_list: List[str]) -> None:
         ):
             return
         content = next(r.iter_content(MAX_RESPONSE_LENGTH))
+
     m = CHARSET(content)
     html = content.decode(m[1].decode() if m else r.encoding)
+
+    if m := SITE_NAME_SEARCH(html):
+        home_list.append(m['result'])
+    else:
+        home_list.append(None)
+
     m = TITLE_TAG(html)
     title = html_unescape(m['result']) if m else None
-    home_title_list.append(title)
+    home_list.append(title)
 
 
 def check_response_headers(r: RequestsResponse) -> None:
@@ -538,10 +546,9 @@ def url2dict(url: str) -> Dict[str, Any]:
     """Get url and return the result as a dictionary."""
     d = defaultdict(lambda: None)
     # Creating a thread to request homepage title in background
-    home_title_list = []  # A mutable variable used to get the thread result
-    home_title_thread = Thread(
-        target=get_home_title, args=(url, home_title_list))
-    home_title_thread.start()
+    home_thread = Thread(
+        target=analyze_home, args=(url, (home_list := [])))
+    home_thread.start()
 
     html = get_html(url)
     d['url'] = find_url(html, url)
@@ -563,9 +570,9 @@ def url2dict(url: str) -> Dict[str, Any]:
     else:
         d['cite_type'] = 'web'
         d['website'] = find_site_name(
-            html, html_title, url, authors, home_title_list, home_title_thread)
+            html, html_title, url, authors, home_list, home_thread)
     if (title := find_title(
-        html, html_title, url, authors, home_title_list, home_title_thread
+        html, html_title, url, authors, home_list, home_thread
     )) is not None:
         d['title'] = title.strip()
     if date := find_date(html, url):
