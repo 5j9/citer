@@ -1,0 +1,28 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Age": "2664",
+		"Cache-Control": "max-age=0, private",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Fri, 26 Aug 2022 08:17:10 GMT",
+		"Expires": "Fri, 26 Aug 2022 09:07:09 GMT",
+		"Last-Modified": "Fri, 26 Aug 2022 06:52:04 GMT",
+		"Matrix-Upstream": "web-golive-upstream",
+		"Pragma": "cache",
+		"Server": "openresty",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding, Accept-Encoding",
+		"Via": "1.1 squizedge.net",
+		"X-Cache": "HIT from squizedge.net",
+		"X-Content-Type-Options": "nosniff",
+		"X-DEBUG-Phase": "1",
+		"X-DEBUG-Referer": "0",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-Request-ID": "f43a1713-be46-4fde-a3cd-8160aca49179",
+		"X-upgrade-enabled": "off"
+	},
+	"status_code": 200,
+	"url": "https://www.utas.edu.au/"
+}

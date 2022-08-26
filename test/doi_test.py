@@ -147,8 +147,8 @@ def test_non_crossref_doi():  # 35
         '| title=Artificial Intelligence for Interstellar Travel '
         '| publisher=arXiv | doi=10.48550/ARXIV.1811.06526 '
         '| url=https://arxiv.org/abs/1811.06526 '
-        '| access-date=2022-06-09}}'
-    ) == doi_scr('10.48550/arXiv.1811.06526')[1]
+        '| access-date='
+    ) == doi_scr('10.48550/arXiv.1811.06526')[1][:-12]
 
 
 def test_doi_with_full_date():  # 36

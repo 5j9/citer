@@ -1,7 +1,7 @@
 # noinspection PyPackageRequirements
 from pytest import mark
 
-from lib.urls import urls_scr
+from lib.urls import urls_scr, SITE_NAME_SEARCH
 
 
 def test_bostonglobe1():
@@ -978,3 +978,14 @@ def test_language_not_zh():
     ) == urls_scr(
         'https://www.abc.net.au/news/2022-05-15/malcolm-abbott-domestic-violence-prevention-fails/101059440'
     )[1][2:-12]
+
+
+def test_home_site_name():
+    # this url does contain site name, but its homepage does
+    assert (
+        "* {{cite web | title=Black Convicts | website=University of Tasmania "
+        "| url=https://www.utas.edu.au/library/companion_to_tasmanian_history/B/Black%20Convicts.htm "
+        "| ref={{sfnref | University of Tasmania}} | access-date="
+    ) == urls_scr(
+        'https://www.utas.edu.au/library/companion_to_tasmanian_history/B/Black%20Convicts.htm'
+    )[1][:-12]
