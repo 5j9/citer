@@ -325,7 +325,7 @@ def find_site_name(
     html_title: str,
     url: str,
     authors: List[Tuple[str, str]],
-    home_title: List[str],
+    home_title_list: List[str],
     thread: Thread,
 ) -> str:
     """Return (site's name as a string, where).
@@ -335,7 +335,7 @@ def find_site_name(
         html_title: Title of the page found in the title tag of the html.
         url: URL of the page.
         authors: Authors list returned from find_authors function.
-        home_title: A list containing the title of the home page as a str.
+        home_title_list: A list containing the title of the home page as a str.
         thread: The thread that should be joined before using home_title list.
     Returns site's name as a string.
     """
@@ -344,7 +344,7 @@ def find_site_name(
         return m['result']
     # search the title
     site_name = parse_title(
-        html_title, url, authors, home_title, thread
+        html_title, url, authors, home_title_list, thread
     )[2]
     if site_name:
         return site_name
@@ -352,22 +352,21 @@ def find_site_name(
     try:
         # using home_title
         thread.join()
-        if ':' in home_title[0]:
+        home_title = home_title_list[0]
+        if (i := home_title.find(':')) != -1:
             # http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/AR2005090200822.html
-            site_name = home_title[0].split(':')[0].strip()
+            site_name = home_title[:i].strip()
             if site_name:
                 return site_name
-        site_name = parse_title(home_title[0], url, None)[2]
+        site_name = parse_title(home_title, url, None)[2]
         if site_name:
             return site_name
-        return home_title[0]
+        return home_title
     except Exception:
         logger.exception(url)
     # return hostname
     hostname = urlparse(url).hostname
-    if hostname.startswith('www.'):
-        return hostname[4:]
-    return hostname
+    return hostname.removeprefix('www.')
 
 
 def find_title(
