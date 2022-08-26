@@ -34,7 +34,7 @@ Some other tested and supported Persian websites:
 
 To run Citer on your local computer:
 
-1. Install Python 3.7+
+1. Install Python 3.9+
 2. Clone the project
 3. Install the dependencies using `pip install --user -r requirements.txt`
 4. Copy `config.py.example` to `config.py` (You might want to get an NCBI API key and add it to the config file if you're going to use its services)
