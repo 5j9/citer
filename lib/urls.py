@@ -248,16 +248,13 @@ def urls_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
 def find_journal(html: str) -> Optional[str]:
     """Return journal title as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    m = JOURNAL_TITLE_SEARCH(html)
-    if m is not None:
+    if (m := JOURNAL_TITLE_SEARCH(html)) is not None:
         return m['result']
 
 
 def find_url(html: str, url: str) -> str:
     """Return og:url or url as a string."""
-    # http://www.ft.com/cms/s/836f1b0e-f07c-11e3-b112-00144feabdc0,Authorised=false.html?_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F836f1b0e-f07c-11e3-b112-00144feabdc0.html%3Fsiteedition%3Duk&siteedition=uk&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fuk
-    m = URL_SEARCH(html)
-    if m is not None:
+    if (m := URL_SEARCH(html)) is not None:
         ogurl = m['result']
         if urlparse(ogurl).path:
             return ogurl
@@ -270,54 +267,40 @@ def find_issn(html: str) -> Optional[str]:
     Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this
     function does not check that.
     """
-    m = ISSN_SEARCH(html)
-    # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    # http://psycnet.apa.org/journals/edu/30/9/641/
-    if m is not None:
+    if (m := ISSN_SEARCH(html)) is not None:
         return m['result']
 
 
 def find_pmid(html: str) -> Optional[str]:
     """Return pmid as a string."""
-    # http://jn.physiology.org/content/81/1/319
-    m = PMID_SEARCH(html)
-    if m is not None:
+    if (m := PMID_SEARCH(html)) is not None:
         return m['result']
 
 
 def find_doi(html: str) -> Optional[str]:
     """Return DOI as a string."""
-    # http://jn.physiology.org/content/81/1/319
-    m = DOI_SEARCH(html)
-    if m is not None:
+    if (m := DOI_SEARCH(html)) is not None:
         return m['result']
 
 
 def find_volume(html: str) -> Optional[str]:
     """Return citatoin volume number as a string."""
-    # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    m = VOLUME_SEARCH(html)
-    if m is not None:
+    if (m := VOLUME_SEARCH(html)) is not None:
         return m['result']
 
 
 def find_issue(html: str) -> Optional[str]:
     """Return citation issue number as a string."""
-    # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    m = ISSUE_SEARCH(html)
-    if m is not None:
+    if (m := ISSUE_SEARCH(html)) is not None:
         return m['result']
 
 
 def find_pages(html: str) -> Optional[str]:
     """Return citation pages as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
-    fp_match = FIRST_PAGE_SEARCH(html)
-    if fp_match:
-        lp_match = LAST_PAGE_SEARCH(html)
-        if lp_match:
-            return \
-                fp_match['result'] + '–' + lp_match['result']
+    if fp_match := FIRST_PAGE_SEARCH(html):
+        if lp_match := LAST_PAGE_SEARCH(html):
+            return fp_match['result'] + '–' + lp_match['result']
 
 
 def find_site_name(
@@ -339,14 +322,12 @@ def find_site_name(
         thread: The thread that should be joined before using home_title list.
     Returns site's name as a string.
     """
-    m = SITE_NAME_SEARCH(html)
-    if m is not None:
+    if (m := SITE_NAME_SEARCH(html)) is not None:
         return m['result']
     # search the title
-    site_name = parse_title(
+    if site_name := parse_title(
         html_title, url, authors, home_title_list, thread
-    )[2]
-    if site_name:
+    )[2]:
         return site_name
     # noinspection PyBroadException
     try:
@@ -356,8 +337,7 @@ def find_site_name(
         if (i := home_title.find(':')) != -1:
             if site_name := home_title[:i].strip():
                 return site_name
-        site_name = parse_title(home_title, url, None)[2]
-        if site_name:
+        if site_name := parse_title(home_title, url, None)[2]:
             return site_name
         return home_title
     except Exception:
@@ -376,8 +356,7 @@ def find_title(
     thread: Thread,
 ) -> Optional[str]:
     """Return (title_string, where_info)."""
-    m = TITLE_SEARCH(html)
-    if m is not None:
+    if (m := TITLE_SEARCH(html)) is not None:
         return parse_title(
             html_unescape(m['result']), url, authors, home_title, thread,
         )[1]
@@ -434,10 +413,9 @@ def parse_title(
     else:
         # 2. Using difflib on hostname
         # Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
-        close_matches = get_close_matches(
+        if close_matches := get_close_matches(
             hostname, title_parts, n=1, cutoff=.3
-        )
-        if close_matches:
+        ):
             intitle_sitename = close_matches[0]
         else:
             if thread:
@@ -451,9 +429,9 @@ def parse_title(
                         break
                 else:
                     # 4. Using difflib on home_title
-                    close_matches = get_close_matches(
-                        home_title, title_parts, n=1, cutoff=.3)
-                    if close_matches:
+                    if close_matches := get_close_matches(
+                        home_title, title_parts, n=1, cutoff=.3
+                    ):
                         intitle_sitename = close_matches[0]
     # Remove sitename from title_parts
     if intitle_sitename:
@@ -525,8 +503,7 @@ def check_response_headers(r: RequestsResponse) -> None:
             raise ContentLengthError(
                 'Content-length was too long. '
                 '({mb:.2f} MB)'.format(mb=bytes_length / 1000000))
-    content_type = response_headers.get('content-type')
-    if content_type:
+    if content_type := response_headers.get('content-type'):
         if content_type.startswith('text/'):
             return
         raise ContentTypeError(
@@ -568,13 +545,11 @@ def url2dict(url: str) -> Dict[str, Any]:
 
     html = get_html(url)
     d['url'] = find_url(html, url)
-    m = TITLE_TAG(html)
-    html_title = html_unescape(m['result']) if m else None
-    if html_title:
-        d['html_title'] = html_title
+    if m := TITLE_TAG(html):
+        if html_title := html_unescape(m['result']):
+            d['html_title'] = html_title
     # d['html_title'] is used in waybackmechine.py.
-    authors = find_authors(html)
-    if authors:
+    if authors := find_authors(html):
         d['authors'] = authors
     d['issn'] = find_issn(html)
     d['pmid'] = find_pmid(html)
@@ -589,17 +564,15 @@ def url2dict(url: str) -> Dict[str, Any]:
         d['cite_type'] = 'web'
         d['website'] = find_site_name(
             html, html_title, url, authors, home_title_list, home_title_thread)
-    title = find_title(
-        html, html_title, url, authors, home_title_list, home_title_thread)
-    if title is not None:
+    if (title := find_title(
+        html, html_title, url, authors, home_title_list, home_title_thread
+    )) is not None:
         d['title'] = title.strip()
-    date = find_date(html, url)
-    if date:
+    if date := find_date(html, url):
         d['date'] = date
         d['year'] = str(date.year)
 
-    lang_match = LANG_SEARCH(html)
-    if lang_match is not None:
+    if (lang_match := LANG_SEARCH(html)) is not None:
         d['language'] = lang_match[1]
     else:
         d['language'] = classify(html)[0]
