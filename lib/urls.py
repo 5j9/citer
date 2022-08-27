@@ -17,6 +17,7 @@ from lib.commons import (
     find_any_date, dict_to_sfn_cit_ref, ANYDATE_PATTERN,
     request)
 from lib.urls_authors import find_authors, CONTENT_ATTR
+from lib.doi import get_crossref_dict
 
 
 MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
@@ -48,7 +49,7 @@ TITLE_SEARCH = rc(
 TITLE_TAG = rc(
     r'''
     <title\b[^>]*+>
-        (?P<result>[^<]*+[\s\S]*?)
+        (?P<result>[^<]++[\s\S]*?)
     </title\s*+>
     ''',
     VERBOSE | IGNORECASE,
@@ -325,10 +326,11 @@ def find_site_name(
     if (m := SITE_NAME_SEARCH(html)) is not None:
         return m['result']
     # search the title
-    if site_name := parse_title(
-        html_title, url, authors, home_list, thread
-    )[2]:
-        return site_name
+    if html_title is not None:
+        if site_name := parse_title(
+            html_title, url, authors, home_list, thread
+        )[2]:
+            return site_name
     # noinspection PyBroadException
     try:
         # using home_title
@@ -362,7 +364,7 @@ def find_title(
         return parse_title(
             html_unescape(m['result']), url, authors, home_list, thread,
         )[1]
-    elif html_title:
+    elif html_title is not None:
         return parse_title(html_title, url, authors, home_list, thread)[1]
     else:
         return None
@@ -545,7 +547,7 @@ def get_html(url: str) -> str:
 
 def url2dict(url: str) -> Dict[str, Any]:
     """Get url and return the result as a dictionary."""
-    d = defaultdict(lambda: None)
+    d: defaultdict[str, Any] = defaultdict(lambda: None)
     # Creating a thread to request homepage title in background
     home_thread = Thread(
         target=analyze_home, args=(url, (home_list := [])))
@@ -556,12 +558,13 @@ def url2dict(url: str) -> Dict[str, Any]:
     if m := TITLE_TAG(html):
         if html_title := html_unescape(m['result']):
             d['html_title'] = html_title
+    else:
+        html_title = None
     # d['html_title'] is used in waybackmechine.py.
     if authors := find_authors(html):
         d['authors'] = authors
     d['issn'] = find_issn(html)
     d['pmid'] = find_pmid(html)
-    d['doi'] = find_doi(html)
     d['volume'] = find_volume(html)
     d['issue'] = find_issue(html)
     d['page'] = find_pages(html)
