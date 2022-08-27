@@ -186,8 +186,7 @@ def find_authors(html) -> Optional[List[Tuple[str, str]]]:
     for match in META_AUTHOR_FINDITER(html):
         if match_id and match_id != match['id']:
             break
-        name = byline_to_names(match['result'])
-        if name:
+        if (name := byline_to_names(match['result'])) is not None:
             names.extend(name)
             match_id = match['id']
     if names:
@@ -225,8 +224,7 @@ def find_authors(html) -> Optional[List[Tuple[str, str]]]:
                 names.extend(ns)
     if names:
         return names
-    match = BYLINE_TEXT_PATTERN(TAGS_SUB('', html))
-    if match:
+    if (match := BYLINE_TEXT_PATTERN(TAGS_SUB('', html))) is not None:
         return byline_to_names(match[0])
     return None
 
@@ -254,13 +252,12 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
     byline = byline.partition('|')[0].strip(' ;\t\n')
     if ':' in byline:
         return None
-    m = ANYDATE_SEARCH(byline)
-    if m is not None:
+    if (m := ANYDATE_SEARCH(byline)) is not None:
         # Removing the date part
         byline = byline[:m.start()]
     if not byline:
         return None
-    if FOUR_DIGIT_NUM(byline):
+    if FOUR_DIGIT_NUM(byline) is not None:
         return None
     # Normalize 'and\n' (and the similar) to standard 'and '
     # This should be done before cutting the byline at the first newline

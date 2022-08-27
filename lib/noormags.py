@@ -48,9 +48,7 @@ def get_ris(noormags_url):
 def ris_fetcher_thread(url, ris_collection):
     """Fill the ris_dict. This function is called in a thread."""
     ris_dict = ris_parse(get_ris(url))
-    language = ris_dict.get('language')
-    if language:
+    if language := ris_dict.get('language'):
         ris_collection['language'] = language
-    authors = ris_dict.get('authors')
-    if authors:
+    if authors := ris_dict.get('authors'):
         ris_collection['authors'] = authors

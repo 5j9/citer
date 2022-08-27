@@ -40,12 +40,10 @@ def parse(bibtex):
     bibtex = special_sequence_cleanup(bibtex)
     d = search_for_tag(bibtex)
     # cite_type: book, journal, incollection, etc.
-    m = TYPE_SEARCH(bibtex)
-    if m is not None:
+    if (m := TYPE_SEARCH(bibtex)) is not None:
         d['cite_type'] = m[1].strip().lower()
     # author
-    author = d['author']
-    if author:
+    if author := d['author']:
         d['authors'] = names = []
         names_append = names.append
         for author in author.split(' and '):
@@ -56,8 +54,7 @@ def parse(bibtex):
             names_append(first_last(author))
         del d['author']
     # editor, not tested, just a copy of author
-    editor = d['editor']
-    if editor:
+    if editor := d['editor']:
         d['editors'] = names = []
         names_append = names.append
         for editor in editor.split(' and '):
@@ -67,8 +64,7 @@ def parse(bibtex):
                 continue
             names_append(first_last(editor))
         del d['editor']
-    pages = d['pages']
-    if pages:
+    if pages := d['pages']:
         d['page'] = \
             pages.replace(' ', '').replace('--', '–').replace('-', '–')
     return d

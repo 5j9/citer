@@ -14,8 +14,7 @@ def googlebooks_scr(parsed_url, date_format='%Y-%m-%d') -> tuple:
     """Create the response namedtuple."""
     parsed_query = parse_qs(parsed_url.query)
 
-    id_ = parsed_query.get('id')
-    if id_ is not None:
+    if (id_ := parsed_query.get('id')) is not None:
         volume_id = id_[0]
     else:  # the new URL format
         volume_id = parsed_url.path.rpartition('/')[2]
@@ -25,8 +24,7 @@ def googlebooks_scr(parsed_url, date_format='%Y-%m-%d') -> tuple:
         f'&output=ris', spoof=True).content.decode('utf8'))
     dictionary['date_format'] = date_format
     # manually adding page number to dictionary:
-    pg = parsed_query.get('pg')
-    if pg is not None:
+    if (pg := parsed_query.get('pg')) is not None:
         pg0 = pg[0]
         dictionary['page'] = pg0[2:]
         dictionary['url'] += f'&pg={pg0}'

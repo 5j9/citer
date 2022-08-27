@@ -3,6 +3,7 @@
 
 from collections import defaultdict
 from datetime import datetime
+from typing import Any
 from urllib.parse import unquote_plus
 from html import unescape
 
@@ -36,42 +37,37 @@ def get_crossref_dict(doi) -> defaultdict:
         headers={"Accept": "application/vnd.citationstyles.csl+json"}
     ).json()
 
-    d = defaultdict(lambda: None, {k.lower(): v for k, v in j.items()})
+    d : defaultdict[str, Any] = defaultdict(
+        lambda: None, {k.lower(): v for k, v in j.items()})
 
     d['cite_type'] = d['type']
 
-    author = d['author']
-    if author is not None:
+    if (author := d['author']) is not None:
         d['authors'] = [
             (a['given'], a['family']) for a in author if 'given' in a
         ]
 
-    issn = d['issn']
-    if issn is not None:
+    if (issn := d['issn']) is not None:
         d['issn'] = issn[0]
 
-    published = d['published']
-    if published is not None:
+    if (published := d['published']) is not None:
         date = published['date-parts'][0]
         if len(date) == 3:
             d['date'] = datetime(*date)
         else:  # todo: better handle the case where len == 2
             d['year'] = f'{date[0]}'
 
-    page = d['page']
-    if page is not None:
+    if (page := d['page']) is not None:
         d['page'] = page.replace('-', '–')
 
-    isbn = d['isbn']
-    if isbn is not None:
-        d['isbn'] = d['isbn'][0]
+    if (isbn := d['isbn']) is not None:
+        d['isbn'] = isbn[0]
 
     return d
 
 
 def extract_names(d: dict, from_key: str, to_key: str):
-    from_values = d[from_key]
-    if from_values is None:
+    if (from_values := d[from_key]) is None:
         return
     to_values = d[to_key] = []
     authors_append = to_values.append

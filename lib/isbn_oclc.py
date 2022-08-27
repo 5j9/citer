@@ -31,17 +31,13 @@ def isbn_scr(
         isbn = isbn_container_str
     else:
         # search for isbn13
-        m = ISBN13_SEARCH(isbn_container_str)
-        if m is not None:
+        if (m := ISBN13_SEARCH(isbn_container_str)) is not None:
             isbn = m[0]
         else:
             # search for isbn10
-            m = ISBN10_SEARCH(isbn_container_str)
-            isbn = m[0]
+            isbn = ISBN10_SEARCH(isbn_container_str)[0]
 
-    iranian_isbn = isbn_info(isbn) == 'Iran'
-
-    if iranian_isbn is True:
+    if (iranian_isbn := isbn_info(isbn) == 'Iran') is True:
         ketabir_result_list = []
         ketabir_thread = Thread(
             target=ketabir_thread_target,
@@ -83,11 +79,9 @@ def isbn_scr(
 def ketabir_thread_target(isbn: str, result: list) -> None:
     # noinspection PyBroadException
     try:
-        url = ketabir_isbn2url(isbn)
-        if url is None:  # ketab.ir does not have any entries for this isbn
-            return
-        d = ketabir_url2dictionary(url)
-        if d:
+        if (url := ketabir_isbn2url(isbn)) is None:
+            return  # ketab.ir does not have any entries for this isbn
+        if d := ketabir_url2dictionary(url):
             result.append(d)
     except Exception:
         logger.exception('isbn: %s', isbn)
@@ -113,8 +107,7 @@ def combine_dicts(ketabir: dict, citoid: dict) -> dict:
     # both ketabid and citoid are available
     if LANG == 'fa':
         result = ketabir
-        oclc = citoid['oclc']
-        if oclc is not None:
+        if (oclc := citoid['oclc']) is not None:
             result['oclc'] = oclc
         return result
     return citoid
@@ -153,24 +146,20 @@ def get_citoid_dict(isbn) -> Optional[dict]:
     elif contributors is not None:
         d['authors'] = contributors
 
-    publisher = get('publisher')
-    if publisher is not None:
+    if (publisher := get('publisher')) is not None:
         d['publisher'] = publisher
 
-    place = get('place')
-    if place is not None:
+    if (place := get('place')) is not None:
         d['publisher-location'] = place
 
-    date = get('date')
-    if date is not None:
+    if (date := get('date')) is not None:
         d['date'] = date
 
     return d
 
 
 def citoid_thread_target(isbn: str, result: list) -> None:
-    citoid_dict = get_citoid_dict(isbn)
-    if citoid_dict:
+    if citoid_dict := get_citoid_dict(isbn):
         result.append(citoid_dict)
 
 
@@ -184,8 +173,7 @@ def oclc_scr(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:
             'Perhaps you entered an invalid OCLC number?',
             '')
     d = ris_parse(text)
-    authors = d['authors']
-    if authors:
+    if authors := d['authors']:
         # worldcat has a '.' the end of the first name
         d['authors'] = [(
             fn.rstrip('.') if not fn.isupper() else fn,

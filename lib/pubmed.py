@@ -61,8 +61,7 @@ def ncbi(type_: str, id_: str) -> defaultdict:
     doi = None
     articleids = result_get('articleids', ())
     for articleid in articleids:
-        idtype = articleid['idtype']
-        if idtype == 'doi':
+        if (idtype := articleid['idtype']) == 'doi':
             doi = articleid['value']
             crossref_dict = {}
             crossref_thread = Thread(
@@ -91,8 +90,7 @@ def ncbi(type_: str, id_: str) -> defaultdict:
     date = result_get('pubdate') or result_get('epubdate') \
         or result_get('printpubdate')
     date_split = date.split(' ')
-    date_len = len(date_split)
-    if date_len == 3:
+    if (date_len := len(date_split)) == 3:
         d['date'] = datetime.strptime(date, '%Y %b %d')
     elif date_len == 2:
         d['year'], d['month'] = \
@@ -124,8 +122,7 @@ def ncbi(type_: str, id_: str) -> defaultdict:
 
     d['page'] = result_get('pages', '').replace('-', '–')
 
-    lang = result_get('lang')
-    if lang:
+    if (lang := result_get('lang')) is not None:
         d['language'] = lang[0]
 
     if doi:
