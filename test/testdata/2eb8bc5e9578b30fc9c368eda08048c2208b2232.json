@@ -1,0 +1,23 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+		"Cache-Control": "private",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Sat, 27 Aug 2022 12:11:25 GMT",
+		"Referrer-Policy": "same-origin",
+		"Server": "nginx",
+		"Set-Cookie": "pm-csrf=N4q0ezMvkEALHh16rjyA4xiocaKsqGgw6GN2jUlcBctkdmwts8wskLubauxFXLeF; expires=Sat, 26 Aug 2023 12:11:25 GMT; HttpOnly; Max-Age=31449600; Path=/; SameSite=Lax; Secure, pm-sessionid=levdbe6vccvp87sqslxqqmi04ds09m9q; expires=Sat, 27 Aug 2022 20:11:25 GMT; HttpOnly; Max-Age=28800; Path=/; Secure, ncbi_sid=599900A430A07A63_1038SID; Domain=.nih.gov; expires=Sun, 27 Aug 2023 12:11:25 GMT; HttpOnly; Max-Age=31536000; Path=/; Secure",
+		"Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Origin",
+		"Via": "1.1 google",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "DENY",
+		"X-UA-Compatible": "IE=Edge",
+		"X-XSS-Protection": "1; mode=block",
+		"content-encoding": "gzip"
+	},
+	"status_code": 200,
+	"url": "https://pubmed.ncbi.nlm.nih.gov/32687126/"
+}

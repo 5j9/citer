@@ -1,5 +1,6 @@
 # noinspection PyPackageRequirements
-from pytest import mark
+from pytest import mark, raises
+from unittest.mock import patch
 
 from lib.urls import urls_scr, SITE_NAME_SEARCH
 
@@ -989,3 +990,16 @@ def test_home_site_name():
     ) == urls_scr(
         'https://www.utas.edu.au/library/companion_to_tasmanian_history/B/Black%20Convicts.htm'
     )[1][:-12]
+
+
+def test_use_doi_if_available():
+    assert urls_scr('https://pubmed.ncbi.nlm.nih.gov/32687126/')[1] == (
+        '* {{cite journal | last=Ojewola | first=RufusWale | last2=Tijani | '
+        'first2=KehindeHabeeb | last3=Fatuga | first3=AdedejiLukman | '
+        'last4=Onyeze | first4=ChigozieInnocent | last5=Okeke | '
+        'first5=ChikeJohn | title=Management of a giant prostatic '
+        'enlargement: Case report and review of the literature | '
+        'journal=Nigerian Postgraduate Medical Journal | publisher=Medknow | '
+        'volume=27 | issue=3 | year=2020 | issn=1117-1936 | '
+        'doi=10.4103/npmj.npmj_69_20 | page=242}}'
+    )

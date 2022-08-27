@@ -554,6 +554,15 @@ def url2dict(url: str) -> Dict[str, Any]:
     home_thread.start()
 
     html = get_html(url)
+
+    if doi := find_doi(html):
+        # noinspection PyBroadException
+        try:
+            return get_crossref_dict(doi)
+        except Exception:
+            logger.exception(f'{url=}, {doi=}')
+            d['doi'] = doi
+
     d['url'] = find_url(html, url)
     if m := TITLE_TAG(html):
         if html_title := html_unescape(m['result']):
