@@ -85,7 +85,7 @@ zd = r'(?<d>0[1-9]|[12][0-9]|3[01])'
 Y = r'(?<Y>(?:19|20)\d\d)'
 ANYDATE_PATTERN = (
     fr'(?:(?:{B}|{b})\ {d},?\ {Y}|{d}\ (?:{B}|{b})\ {Y}|{Y}(?<sep>[-/]){zm}'
-    fr'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d)|\b{Y}{zm}{zd})')
+    fr'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d))')
 ANYDATE_SEARCH = regex_compile(ANYDATE_PATTERN, VERBOSE).search
 DIGITS_FINDALL = regex_compile(r'\d').findall
 MC_SUB = regex_compile(r'MC(\w)', IGNORECASE).sub

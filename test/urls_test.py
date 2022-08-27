@@ -533,26 +533,6 @@ def test_tgdaily3():
     assert ct in o[1]
 
 
-def test_oth1():
-    """Get title by hometitle comparison."""
-    i = 'http://www.ensani.ir/fa/content/326173/default.aspx'
-    o = urls_scr(i)
-    ct = (
-        '* {{cite web '
-        '| last=جلیلیان '
-        '| first=شهرام '
-        '| last2=نیا '
-        '| first2=امیر علی '
-        '| title=ورود کاسی ها به میان رودان و پیامدهای آن '
-        '| website=پرتال جامع علوم انسانی '
-        '| date=2014-05-20 '
-        '| url=http://www.ensani.ir/fa/content/326173/default.aspx '
-        '| language=fa '
-        '| access-date='
-    )
-    assert ct in o[1]
-
-
 def test_oth2():
     """Times of India, author could not be detected."""
     i = (
