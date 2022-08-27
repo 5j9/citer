@@ -148,7 +148,7 @@ def test_byline_ending_with_semicolon():
     # <meta name="citation_authors" content="Ojewola RW;Tijani KH;Fatuga AL;Onyeze CI;Okeke CJ;">
     assert byline_to_names(
         'Ojewola RW;Tijani KH;Fatuga AL;Onyeze CI;Okeke CJ;'
-    ) == [
+    ) == [  # it used to raise error however first are last are still swapped
         ('Ojewola', 'RW'),
         ('Tijani', 'KH'),
         ('Fatuga', 'AL'),
