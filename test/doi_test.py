@@ -142,10 +142,10 @@ def test_contains_brackets():  # 33
 
 def test_non_crossref_doi():  # 35
     assert (
-        '* {{cite | last=Hein | first=Andreas M. | last2=Baxter '
+        '* {{cite journal | last=Hein | first=Andreas M. | last2=Baxter '
         '| first2=Stephen '
         '| title=Artificial Intelligence for Interstellar Travel '
-        '| publisher=arXiv | doi=10.48550/ARXIV.1811.06526 '
+        '| journal=arXiv | publisher=arXiv | doi=10.48550/ARXIV.1811.06526 '
         '| url=https://arxiv.org/abs/1811.06526 '
         '| access-date='
     ) == doi_scr('10.48550/arXiv.1811.06526')[1][:-12]

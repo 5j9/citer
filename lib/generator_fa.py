@@ -60,6 +60,7 @@ TYPE_TO_CITE = {
     'journal': 'ژورنال',
     # https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=22368089&retmode=json&tool=my_tool&email=my_email@example.com
     'Journal Article': 'ژورنال',
+    'article-journal': 'ژورنال',
     'component': '',
     'book-chapter': 'کتاب',
     'report-series': 'report',
@@ -86,8 +87,7 @@ DIGITS_TO_FA = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
 
 def sfn_cit_ref(d: defaultdict) -> tuple:
     """Return sfn, citation, and ref."""
-    cite_type = TYPE_TO_CITE(d['cite_type'])
-    if not cite_type:
+    if not (cite_type := TYPE_TO_CITE(d['cite_type'])):
         logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
         cite_type = ''
     if cite_type in ('کتاب', 'ژورنال', 'وب'):
@@ -95,8 +95,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     else:
         return en_citations(d)
 
-    authors = d['authors']
-    if authors:
+    if authors := d['authors']:
         cit += names2para(authors, 'نام', 'نام خانوادگی', 'نویسنده')
         sfn = '&lt;ref&gt;{{پک'
         for first, last in authors[:4]:
@@ -104,21 +103,17 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     else:
         sfn = '&lt;ref&gt;{{پک/بن'
 
-    editors = d['editors']
-    if editors:
+    if editors := d['editors']:
         cit += names2para(
             editors, 'نام ویراستار', 'نام خانوادگی ویراستار', 'ویراستار')
 
-    translators = d['translators']
-    if translators:
+    if translators := d['translators']:
         cit += names1para(translators, 'ترجمه')
 
-    others = d['others']
-    if others:
+    if others := d['others']:
         cit += names1para(others, 'دیگران')
 
-    year = d['year']
-    if year:
+    if year := d['year']:
         sfn += ' | ' + year
 
     if cite_type == 'book':
@@ -147,36 +142,28 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         if website:
             cit += ' | وبگاه=' + website
 
-    chapter = d['chapter']
-    if chapter:
+    if chapter := d['chapter']:
         cit += ' | فصل=' + chapter
 
-    publisher = d['publisher'] or d['organization']
-    if publisher:
+    if publisher := (d['publisher'] or d['organization']):
         cit += ' | ناشر=' + publisher
 
-    address = d['address'] or d['publisher-location']
-    if address:
+    if address := (d['address'] or d['publisher-location']):
         cit += ' | مکان=' + address
 
-    edition = d['edition']
-    if edition:
+    if edition := d['edition']:
         cit += ' | ویرایش=' + edition
 
-    series = d['series']
-    if series:
+    if series := d['series']:
         cit += ' | سری=' + series
 
-    volume = d['volume']
-    if volume:
+    if volume := d['volume']:
         cit += ' | جلد=' + volume
 
-    issue = d['issue'] or d['number']
-    if issue:
+    if issue := (d['issue'] or d['number']):
         cit += ' | شماره=' + issue
 
-    ddate = d['date']
-    if ddate:
+    if ddate := d['date']:
         if isinstance(ddate, str):
             cit += ' | تاریخ=' + ddate
         else:
@@ -184,32 +171,25 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     elif year:
         cit += ' | سال=' + year
 
-    isbn = d['isbn']
-    if isbn:
+    if isbn := d['isbn']:
         cit += ' | شابک=' + isbn
 
-    issn = d['issn']
-    if issn:
+    if issn := d['issn']:
         cit += ' | issn=' + issn
 
-    pmid = d['pmid']
-    if pmid:
+    if pmid := d['pmid']:
         cit += ' | pmid=' + pmid
 
-    pmcid = d['pmcid']
-    if pmcid:
+    if pmcid := d['pmcid']:
         cit += ' | pmc=' + pmcid
 
-    doi = d['doi']
-    if doi:
+    if doi := d['doi']:
         cit += ' | doi=' + doi
 
-    oclc = d['oclc']
-    if oclc:
+    if oclc := d['oclc']:
         cit += ' | oclc=' + oclc
 
-    jstor = d['jstor']
-    if jstor:
+    if jstor := d['jstor']:
         cit += f' | jstor={jstor}'
         jstor_access = d['jstor-access']
         if jstor_access:
@@ -220,8 +200,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         if pages:
             cit += ' | صفحه=' + pages
 
-    url = d['url']
-    if url:
+    if url := d['url']:
         # Don't add a DOI URL if we already have added a DOI.
         if not doi or not DOI_URL_MATCH(url):
             cit += ' | پیوند=' + url
@@ -229,15 +208,13 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             # To prevent addition of access date
             url = None
 
-    archive_url = d['archive-url']
-    if archive_url:
+    if archive_url := d['archive-url']:
         cit += (
             f' | پیوند بایگانی={archive_url}'
             f' | تاریخ بایگانی={d["archive-date"].isoformat()}'
             f" | پیوند مرده={('آری' if d['url-status'] == 'yes' else 'نه')}")
 
-    language = d['language']
-    if language:
+    if language := d['language']:
         language = TO_TWO_LETTER_CODE(language.lower(), language)
         if cite_type == 'وب':
             cit += f' | کد زبان={language}'
