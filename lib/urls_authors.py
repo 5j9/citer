@@ -251,7 +251,7 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
     ... )
     [RawName("Erika Solomon"), RawName("Borzou Daragahi")]
     """
-    byline = byline.partition('|')[0].strip()
+    byline = byline.partition('|')[0].strip(' ;\t\n')
     if ':' in byline:
         return None
     m = ANYDATE_SEARCH(byline)

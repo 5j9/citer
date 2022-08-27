@@ -141,3 +141,17 @@ def test_uppercase_sitename_in_authors():  # 28
     ) == urls_scr(
         'https://www.usatoday.com/story/entertainment/movies/2019/11/12/2576097001/'
     )[1][2:-12]
+
+
+def test_byline_ending_with_semicolon():
+    # https://pubmed.ncbi.nlm.nih.gov/32687126/
+    # <meta name="citation_authors" content="Ojewola RW;Tijani KH;Fatuga AL;Onyeze CI;Okeke CJ;">
+    assert byline_to_names(
+        'Ojewola RW;Tijani KH;Fatuga AL;Onyeze CI;Okeke CJ;'
+    ) == [
+        ('Ojewola', 'RW'),
+        ('Tijani', 'KH'),
+        ('Fatuga', 'AL'),
+        ('Onyeze', 'CI'),
+        ('Okeke', 'CJ')
+    ]
