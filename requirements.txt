@@ -1,6 +1,6 @@
 isbnlib
 jdatetime
 langid
-mechanicalsoup
+bs4
 regex
 requests
