@@ -14,17 +14,17 @@ Known issues:
 
 from collections import defaultdict
 
-import regex as regex
+from regex import compile as rc
 
 from lib.commons import first_last
 
 
 # To remove Texts like {APA} from input.
-WORDS_IN_BRACES_SUB = regex.compile(r'(?<!=\s*){([^\\{}\n]*)}').sub
-FINDALL_BIBTEX_FIELDS = regex.compile(
+WORDS_IN_BRACES_SUB = rc(r'(?<!=\s*){([^\\{}\n]*)}').sub
+FINDALL_BIBTEX_FIELDS = rc(
     r'(\w+)\s*=\s*(?:[{"]\s*(.*?)\s*["}]|(\d+))'
 ).findall
-TYPE_SEARCH = regex.compile(r'@(.*?)\s*\{', regex.IGNORECASE).search
+TYPE_SEARCH = rc(r'(?i)@(.*?)\s*\{').search
 
 
 def search_for_tag(bibtex: str) -> defaultdict:
