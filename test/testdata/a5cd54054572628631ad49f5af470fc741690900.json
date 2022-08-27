@@ -1,0 +1,21 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"AR-ATIME": "3.227",
+		"AR-CACHE": "BYPASS",
+		"AR-PoweredBy": "Arvan Cloud (arvancloud.com)",
+		"AR-Request-ID": "7f27b70f1e6b93437cf6ef23c2b8b75c",
+		"AR-SID": "2012",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Type": "application/json; charset=utf-8",
+		"Date": "Sat, 27 Aug 2022 23:18:02 GMT",
+		"Keep-Alive": "timeout=65",
+		"Server": "ArvanCloud",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding, Accept-Encoding",
+		"X-XSS-Protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "https://msapi.ketab.ir/search/?query=978-964-459-398-7&limit=1"
+}

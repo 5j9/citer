@@ -5,23 +5,15 @@ from logging import getLogger
 from typing import Optional, Any
 
 from langid import classify
-from regex import compile as regex_compile
+from regex import compile as rc
 from requests import RequestException
-from mechanicalsoup import StatefulBrowser
+from bs4 import BeautifulSoup
 
-from lib.commons import first_last, dict_to_sfn_cit_ref, request, USER_AGENT
+from lib.commons import first_last, dict_to_sfn_cit_ref, request
 
 
-ISBN_SEARCH = regex_compile(r'ISBN: </b> ([-\d]++)').search
-DATE_SEARCH = regex_compile(
-    r'تاریخ نشر:</b>(?<year>\d{4})/(?<month>\d\d)/(?<day>\d\d)').search
-PUBLISHER_SEARCH = regex_compile(
-    r'Publisher_ctl00_NameLabel" class="linkk">(.*?)</span>').search
-VOLUME_SEARCH = regex_compile(r'\bجلد (\d+)').search
-TITLE_SEARCH = regex_compile(r'BookTitle" class="h4">([^<]++)').search
-AUTHORS_FINDALL = regex_compile(
-    r'rptAuthor_ctl\d\d_NameLabel" class="linkk">([^>:]++):([^<]++)<').findall
-LOCATION_SEARCH = regex_compile(r'محل نشر:</b>([^<]++)<').search
+AUTHORS_FINDALL = rc(r'(\S+?)\s*+:\s*+(.*)').findall
+VOLUME_SEARCH = rc(r'\bجلد (\d+)').search
 
 
 def ketabir_scr(url: str, date_format='%Y-%m-%d') -> tuple:
@@ -31,35 +23,32 @@ def ketabir_scr(url: str, date_format='%Y-%m-%d') -> tuple:
     if 'language' not in dictionary:
         # Assume that language is either fa or en.
         # Todo: give warning about this assumption?
-        dictionary['language'] = \
-            classify(dictionary['title'])[0]
+        dictionary['language'] = classify(dictionary['title'])[0]
     return dict_to_sfn_cit_ref(dictionary)
 
 
 def isbn2url(isbn: str) -> Optional[str]:
     """Return the ketab.ir book-url for the given isbn."""
-    browser = StatefulBrowser(user_agent=USER_AGENT)
-    browser.open('https://db.ketab.ir/Search.aspx')
-    browser.select_form()
-    browser['ctl00$ContentPlaceHolder1$TxtIsbn'] = isbn
-    browser.submit_selected()
-    first_link = browser.get_current_page().select_one('.HyperLink2')
-    if first_link is None:
-        return
-    return browser.absolute_url(first_link['href'])
+    r = request(f'https://msapi.ketab.ir/search/?query={isbn}&limit=1')
+    j = r.json()
+    return 'https://ketab.ir/book/' \
+           + j['result']['groups']['printableBook']['items'][0]['url']
 
 
 def url2dictionary(ketabir_url: str) -> Optional[dict]:
     try:
         # Try to see if ketabir is available,
-        # ottobib should continoue its work in isbn.py if it is not.
+        # ottobib should continue its work in isbn.py if it is not.
         r = request(ketabir_url)
     except RequestException:
         logger.exception(ketabir_url)
         return
-    html = r.content.decode('utf-8')
+
+    soup = BeautifulSoup(r.content)
     d : defaultdict[str, Any] = defaultdict(lambda: None, cite_type='book')
-    d['title'] = TITLE_SEARCH(html)[1]
+    d['title'] = soup.select_one('.card-title').text.strip()
+
+    table = {(tds := tr.select('td'))[0].text: tds[1] for tr in soup.select('tr')}
 
     # initiating name lists:
     others = []
@@ -67,15 +56,18 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
     editors = []
     translators = []
     # building lists:
-    for role, name in AUTHORS_FINDALL(html):
+    for span in table['پدیدآور'].select('span'):
+        role = span.find(text=True).strip(' :\n')
+        name = span.select_one('a').find(text=True)
+        name = first_last(name, ' ، ')
         if role == 'نويسنده':
-            authors.append(first_last(name))
+            authors.append(name)
         elif role == 'مترجم':
-            translators.append(first_last(name))
+            translators.append(name)
         elif role == 'ويراستار':
-            editors.append(first_last(name))
+            editors.append(name)
         else:
-            others.append(('', f'{name} ({role})'))
+            others.append(('', f'{name[0]} {name[1]} ({role})'))
     if authors:
         d['authors'] = authors
     if others:
@@ -85,21 +77,19 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
     if translators:
         d['translators'] = translators
 
-    if (m := PUBLISHER_SEARCH(html)) is not None:
-        d['publisher'] = m[1]
+    d['publisher'] = table['ناشر'].find('a').find(text=True).strip()
 
-    if (m := DATE_SEARCH(html)) is not None:
-        d['month'] = m['month']
-        d['year'] = m['year']
+    if len(date := table['تاریخ نشر'].text.strip()) == 8 and date.isdecimal():
+        d['month'] = date[4:6]
+        d['year'] = date[:4]
 
-    if (m := ISBN_SEARCH(html)) is not None:
-        d['isbn'] = m[1]
+    d['isbn'] = table['شابک'].text
 
-    if (m := VOLUME_SEARCH(html)) is not None:
+    if loc := table['محل نشر'].text.strip():
+        d['publisher-location'] = loc
+
+    if m := VOLUME_SEARCH(table['توضیحات'].text):
         d['volume'] = m[1]
-
-    if (m := LOCATION_SEARCH(html)) is not None:
-        d['publisher-location'] = m[1]
 
     return d
 

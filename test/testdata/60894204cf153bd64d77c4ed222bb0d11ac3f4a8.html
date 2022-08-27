@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> &#x641;&#x631;&#x627;&#x647;&#x646;&#x62C;&#x627;&#x631;&#x6CC;-&#x62F;&#x631;-&#x645;&#x62B;&#x646;&#x648;&#x6CC;&#x200C;&#x633;&#x631;&#x627;&#x6CC;&#x6CC;:-&#x628;&#x631;&#x631;&#x633;&#x6CC;-&#x642;&#x627;&#x644;&#x628;-&#x63A;&#x632;&#x644;---&#x645;&#x62B;&#x646;&#x648;&#x6CC;-&#x62F;&#x631;-&#x627;&#x62F;&#x628;-&#x641;&#x627;&#x631;&#x633;&#x6CC; | &#x647;&#x646;&#x631;-&#x631;&#x633;&#x627;&#x646;&#x647;-&#x627;&#x631;&#x62F;&#x6CC;&#x628;&#x647;&#x634;&#x62A; | &#x62E;&#x627;&#x646;&#x647; &#x6A9;&#x62A;&#x627;&#x628; &#x648; &#x627;&#x62F;&#x628;&#x6CC;&#x627;&#x62A; &#x627;&#x6CC;&#x631;&#x627;&#x646; </title>
+    <meta name="description" content="&#x641;&#x631;&#x627;&#x647;&#x646;&#x62C;&#x627;&#x631;&#x6CC;-&#x62F;&#x631;-&#x645;&#x62B;&#x646;&#x648;&#x6CC;&#x200C;&#x633;&#x631;&#x627;&#x6CC;&#x6CC;:-&#x628;&#x631;&#x631;&#x633;&#x6CC;-&#x642;&#x627;&#x644;&#x628;-&#x63A;&#x632;&#x644;---&#x645;&#x62B;&#x646;&#x648;&#x6CC;-&#x62F;&#x631;-&#x627;&#x62F;&#x628;-&#x641;&#x627;&#x631;&#x633;&#x6CC; - &#x647;&#x646;&#x631;-&#x631;&#x633;&#x627;&#x646;&#x647;-&#x627;&#x631;&#x62F;&#x6CC;&#x628;&#x647;&#x634;&#x62A; - &#x646;&#x645;&#x627;&#x6CC;&#x634;&#x6AF;&#x627;&#x647; &#x645;&#x62C;&#x627;&#x632;&#x6CC; &#x6A9;&#x62A;&#x627;&#x628; - &#x646;&#x645;&#x627;&#x6CC;&#x634;&#x6AF;&#x627;&#x647; &#x6A9;&#x62A;&#x627;&#x628; &#x62A;&#x647;&#x631;&#x627;&#x646; - &#x646;&#x645;&#x627;&#x6CC;&#x634;&#x6AF;&#x627;&#x647; &#x628;&#x6CC;&#x646; &#x627;&#x644;&#x645;&#x644;&#x644;&#x6CC; &#x6A9;&#x62A;&#x627;&#x628; - &#x62E;&#x627;&#x646;&#x647; &#x6A9;&#x62A;&#x627;&#x628; &#x648; &#x627;&#x62F;&#x628;&#x6CC;&#x627;&#x62A; &#x627;&#x6CC;&#x631;&#x627;&#x646; - &#x628;&#x627;&#x646;&#x6A9; &#x627;&#x637;&#x644;&#x627;&#x639;&#x627;&#x62A; &#x6A9;&#x62A;&#x627;&#x628; &#x627;&#x6CC;&#x631;&#x627;&#x646;" />
+    <link href="/assets/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+    <link href="/assets/dist/css/blog.rtl.css" rel="stylesheet" />
+    <link href="/assets/dist/css/font.css" rel="stylesheet" />
+    <link href="/assets/dist/css/navbar.css" rel="stylesheet" />
+    <link href="/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/css/PersianDatePicker.min.css" rel="stylesheet" />
+    <script src="/js/PersianDatePicker.min.js"></script>
+    <link rel="icon" href="/favicon.ico">
+    <link href="/css/fixednavbar.css" rel="stylesheet" />
+    <script>
+        function init() {
+            window.addEventListener('scroll', function (e) {
+                var distanceY = window.pageYOffset || document.documentElement.scrollTop,
+                    shrinkOn = 200,
+                    header = document.querySelector("header");
+                if (distanceY > shrinkOn) {
+                    classie.add(header, "smaller");
+                } else {
+                    if (classie.has(header, "smaller")) {
+                        classie.remove(header, "smaller");
+                    }
+                }
+            });
+        }
+        window.onload = init();
+    </script>
+    <script type="text/javascript" charset="utf-8">
+
+        window.onload = function () {
+            // argument true to arabic(!) num
+            alert("012345srh6srh789".toFaDigit(true)); // ٠١٢٣٤٥srh٦srh٧٨٩
+
+            // argument false|none to Persian(farsi) num
+            alert("012345srh6srh789".toFaDigit()); //  ۰۱۲۳۴۵srh۶srh۷۸۹
+        };
+
+    </script>
+
+        <!-- dataPicker -->
+    <link href='/DataPicker/css/fontawesome/css/font-awesome.min.css' rel='stylesheet' />
+    <link href="/DataPicker/css/vertical-responsive-menu.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/DataPicker/css/persianDatepicker-default.css" />
+    <link rel="stylesheet" href="/DataPicker/css/persianDatepicker-dark.css" />
+    <link rel="stylesheet" href="/DataPicker/css/persianDatepicker-latoja.css" />
+    <link rel="stylesheet" href="/DataPicker/css/persianDatepicker-melon.css" />
+    <link rel="stylesheet" href="/DataPicker/css/persianDatepicker-lightorang.css" />
+    <script src="/DataPicker/js/prism.js"></script>
+    <script src="/DataPicker/js/vertical-responsive-menu.min.js"></script>
+</head>
+<body style="background: #F7F7F7; font-family: IranSans; padding:0; margin: 0;" dir="rtl">
+
+
+
+
+
+
+    <main class="container ">
+            <script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+    .vertical-menu {
+        width: 200px;
+    }
+
+        .vertical-menu a {
+            background-color: #eee;
+            color: black;
+            display: block;
+            padding: 12px;
+            text-decoration: none;
+        }
+
+            .vertical-menu a:hover {
+                background-color: #ccc;
+            }
+
+            .vertical-menu a.active {
+                background-color: #04AA6D;
+                color: white;
+            }
+</style>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="vertical-menu">
+                    <a style="color:#0FA5A1" class="nav-link active" href="/">
+                        <b>خانه</b>
+                    </a>
+                        <a class="nav-link" href="/News">
+                            &#x627;&#x62E;&#x628;&#x627;&#x631;
+                        </a>
+                        <a class="nav-link" href="/Report">
+                            &#x6AF;&#x632;&#x627;&#x631;&#x634;&#x200C;&#x647;&#x627;
+                        </a>
+                        <a class="nav-link" href="/ShowReportImage">
+                            &#x686;&#x646;&#x62F; &#x631;&#x633;&#x627;&#x646;&#x647;&#x200C;&#x627;&#x6CC;
+                        </a>
+                        <a class="nav-link" href="/PublicationStatistics">
+                            &#x6AF;&#x632;&#x627;&#x631;&#x634; &#x622;&#x645;&#x627;&#x631;&#x6CC;
+                        </a>
+                    <a class="nav-link" href="/Account/Login">
+                        <b>ورود</b>
+                    </a>
+                    <a class="nav-link" href="/Account/Register">
+                        <b>ثبت نام</b>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="blog-header py-3">
+    <div class="container clearfix">
+        <div class="row  justify-content-between align-items-center">
+            <div class="col-lg-2 pt-1">
+                <a class="link-secondary" href="/">
+                    <div id="logo"></div>
+                </a>
+                <button type="button" style="box-shadow: none; outline: none; "
+                        class="btn btn-default tog" data-toggle="modal" data-target="#exampleModal">
+                    <img class="wlogo" src="/img/navbar-icon-18.jpg" />
+                    <img class="glogo" src="/img/navbar-icon-17.jpg" />
+                </button>
+
+                <!-- Modal -->
+
+            </div>
+
+            <div class="col-lg-8 text-center mt-3">
+                <nav class="navbar navbar-expand-lg navbar-light"
+                     style="float: none !important; margin: 0 auto "
+                     aria-label="Tenth navbar example">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse justify-content-md-center"
+                             id="navbarsExample08">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" id="home" style="padding-top:0" href="/">
+                                        <img class="glogo" style="width:25px" src="/img/home-logo.png" />
+                                    </a>
+                                </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link home" href="/News">
+                                            &#x627;&#x62E;&#x628;&#x627;&#x631;
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link home" href="/Report">
+                                            &#x6AF;&#x632;&#x627;&#x631;&#x634;&#x200C;&#x647;&#x627;
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link home" href="/ShowReportImage">
+                                            &#x686;&#x646;&#x62F; &#x631;&#x633;&#x627;&#x646;&#x647;&#x200C;&#x627;&#x6CC;
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link home" href="/PublicationStatistics">
+                                            &#x6AF;&#x632;&#x627;&#x631;&#x634; &#x622;&#x645;&#x627;&#x631;&#x6CC;
+                                        </a>
+                                    </li>
+                                    <link href="/css/Fasher.css" rel="stylesheet" />
+
+
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link home dropdown-toggle" href="#" id="dropdown08" data-bs-toggle="dropdown"
+                                       aria-expanded="false">درباره ما</a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdown08">
+                                        <li><a class="dropdown-item" href="/ShowManager/1">معرفی موسسه</a></li>
+                                        <li><a class="dropdown-item" href="/ShowManager/2">چارت سازمانی</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="/ShowManager/3">هیات امنا</a></li>
+                                        <li><a class="dropdown-item" href="/ShowManager/4">هیات مدیره</a></li>
+                                        <li><a class="dropdown-item" href="/ShowManager/5">مدیران</a></li>
+                                        <li><a class="dropdown-item" href="/ShowManager/6">همکاران</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+
+
+
+            <div class="col-lg-2 d-flex justify-content-end align-items-center" id="enter">
+
+                <a class="link-secondary justify-content-end entrance" style="margin-left:10px;" aria-label="ورود" href="/Account/Login">
+                    ورود
+                </a>
+                <a class="btn btn-sm btn-outline-secondary register" href="/Account/Register">ثبت نام</a>
+
+                <a class="btn btn-sm btn-outline-secondary register" data-toggle="modal"
+                title="جستجو در خبرها"
+                   style="margin-right:5px" data-target=".bd-example-modal-lg">
+                    <i class="fa fa-search"></i>
+                </a>
+
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                             
+
+
+
+
+<form method="get" action="/ShowNewsSearchResult">
+    <div class="form-actions no-color">
+        <div class="input-group" style="border: 5px solid #f1f1f1">
+            <input type="text" name="SearchString" placeholder="قسمتی از عنوان خبر را وارد کنید ..." class="form-control" 
+            id="taskSearch" />
+            <input type="submit" value="جستجو در خبرها" class="btn btn-outline-secondary " id="btnSearch" disabled />
+        </div>
+    </div>
+</form>
+
+<script>
+    let buttonS = document.getElementById("btnSearch");
+    let inputS = document.getElementById("taskSearch");
+    inputS.addEventListener("input", function (e) {
+        if (inputS.value.length >= 3) {
+            buttonS.disabled = false
+        } else {
+            buttonS.disabled = true
+        }
+    });
+
+
+</script>
+
+
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+        </main>
+
+        
+<style>
+    .boldTr {
+        font-weight: bold;
+    }
+</style>
+
+<main class="container">
+    <div class="card mb-3" style="border-radius:35px;">
+        <div class="row g-0">
+            <div class="col-md-3  text-center">
+                <br />
+                <img src="https://pic.ketab.ir/DataBase/BookImages/88/88220135.jpg"  alt="&#x641;&#x631;&#x627;&#x647;&#x646;&#x62C;&#x627;&#x631;&#x6CC; &#x62F;&#x631; &#x645;&#x62B;&#x646;&#x648;&#x6CC;&#x200C;&#x633;&#x631;&#x627;&#x6CC;&#x6CC;: &#x628;&#x631;&#x631;&#x633;&#x6CC; &#x642;&#x627;&#x644;&#x628; &#x63A;&#x632;&#x644; - &#x645;&#x62B;&#x646;&#x648;&#x6CC; &#x62F;&#x631; &#x627;&#x62F;&#x628; &#x641;&#x627;&#x631;&#x633;&#x6CC; | خانه کتاب و ادبیات ایران"
+                     onerror='this.onerror = null; this.src="../images/NoImage.jpg"'
+                     style="border-radius:35px;border:20px solid #ffffff" class="img-fluid"/>               
+            </div>
+            <div class="col-md-9" style="font-family:IranSans">
+                <div class="card-body">
+                    <a class="btn btn-sm btn-outline-secondary rounded-pill pull-left" href="https://pic.ketab.ir/DataBase/bookpdf/88/88220135.pdf"> صفحات اولیه کتاب</a>
+                    <h1 style="font-size:20px;" class="card-title ketabColor text-muted"><b>
+                        <i class="fa fa-circle " style="color: #0FA5A1"></i>  &#x641;&#x631;&#x627;&#x647;&#x646;&#x62C;&#x627;&#x631;&#x6CC; &#x62F;&#x631; &#x645;&#x62B;&#x646;&#x648;&#x6CC;&#x200C;&#x633;&#x631;&#x627;&#x6CC;&#x6CC;: &#x628;&#x631;&#x631;&#x633;&#x6CC; &#x642;&#x627;&#x644;&#x628; &#x63A;&#x632;&#x644; - &#x645;&#x62B;&#x646;&#x648;&#x6CC; &#x62F;&#x631; &#x627;&#x62F;&#x628; &#x641;&#x627;&#x631;&#x633;&#x6CC;</b></h1>
+                    <p class="card-text">
+                        <small class="text-muted">
+                                    <span>
+                                        &#x63A;&#x632;&#x644;
+                                    </span>
+                                    <span>
+                                        &#x645;&#x62B;&#x646;&#x648;&#x6CC;
+                                    </span>
+                            </small>
+                    </p>
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <td>پدیدآور</td>
+                            <td class="boldTr">
+                                        <span style="font-weight:normal">
+                                           &#x646;&#x648;&#x64A;&#x633;&#x646;&#x62F;&#x647; :   
+                                            <a style="font-weight:bold" href="/search?author=%DB%8C%D9%88%D8%B3%D9%81%E2%80%8C%D9%86%DA%98%D8%A7%D8%AF%20%D8%8C%20%DB%8C%D9%88%D8%B3%D9%81%E2%80%8C%D8%B9%D9%84%DB%8C">
+                                                &#x6CC;&#x648;&#x633;&#x641;&#x200C;&#x646;&#x698;&#x627;&#x62F; &#x60C; &#x6CC;&#x648;&#x633;&#x641;&#x200C;&#x639;&#x644;&#x6CC;
+                                            </a> 
+                                        </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ناشر</td>
+                            <td class="boldTr">
+
+                                <span>
+                                    <a href="/Publisher/b22482e9-9f89-4672-92fd-458b0483b5ca">
+                                        &#x647;&#x646;&#x631; &#x631;&#x633;&#x627;&#x646;&#x647; &#x627;&#x631;&#x62F;&#x6CC;&#x628;&#x647;&#x634;&#x62A;
+                                        <small class="text-danger fw-normal">
+                                            (برای تماس با ناشر و خرید کتاب کلیک کنید)
+                                        </small>
+                                    </a>
+                                </span>
+
+                            </td>
+                        </tr>
+                            <tr>
+                                <td>شابک</td>
+                                <td class="boldTr">978-964-2656-34-9</td>
+                            </tr>
+
+                        <tr>
+                            <td>تاریخ نشر</td>
+                            <td class="boldTr">
+
+13880220
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>قیمت</td>
+                            <td class="boldTr">
+30,000                            </td>
+                        </tr>
+                        <tr>
+                            <td>کد دیویی</td>
+                            <td class="boldTr">8fa1.0092</td>
+                        </tr>
+                        <tr>
+                            <td>زبان کتاب</td>
+                            <td class="boldTr">&#x641;&#x627;&#x631;&#x633;&#x6CC;</td>
+                        </tr>
+                        <tr>
+                            <td>محل نشر</td>
+                            <td class="boldTr">&#x62A;&#x647;&#x631;&#x627;&#x646; - &#x62A;&#x647;&#x631;&#x627;&#x646;</td>
+                        </tr>
+                        <tr>
+                            <td>توضیحات</td>
+                            <td class="boldTr">
+                                جلد  -
+                                200 صفحه -
+                                &#x62A;&#x627;&#x644;&#x6CC;&#x641; -
+                                چاپ 1
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" style="border-radius:35px;">
+        <div class="row g-0">
+            <div class="col-md-12" style="font-family:IranSans">
+                <div class="card-body">
+                    <h5 class="card-title ketabColor text-dark"><b>معرفی مختصر کتاب</b></h5>
+                    <p>
+                        &#xAB;&#x63A;&#x632;&#x644; &#x640; &#x645;&#x62B;&#x646;&#x648;&#x6CC;&#xBB;&#x60C; &#x628;&#x647; &#x645;&#x646;&#x632;&#x644;&#x629; &#x6CC;&#x6A9;&#x6CC; &#x627;&#x632; &#x641;&#x631;&#x627;&#x647;&#x646;&#x62C;&#x627;&#x631;&#x6CC;&#x200C;&#x647;&#x627;&#x6CC; &#x642;&#x627;&#x644;&#x628;&#x6CC;&#x60C; &#x639;&#x628;&#x627;&#x631;&#x62A; &#x627;&#x633;&#x62A; &#x627;&#x632; &#x622;&#x648;&#x631;&#x62F;&#x646; &#x63A;&#x632;&#x644; &#x62F;&#x631; &#x645;&#x62A;&#x646; &#x645;&#x62B;&#x646;&#x648;&#x6CC; &#x6A9;&#x647; &#x627;&#x645;&#x631;&#x648;&#x632;&#x647; &#x6A9;&#x627;&#x631;&#x628;&#x631;&#x62F; &#x641;&#x631;&#x627;&#x648;&#x627;&#x646;&#x6CC; &#x6CC;&#x627;&#x641;&#x62A;&#x647; &#x627;&#x633;&#x62A;. &#x633;&#x631;&#x686;&#x634;&#x645;&#x629; &#x627;&#x6CC;&#x646; &#x641;&#x631;&#x627;&#x647;&#x646;&#x62C;&#x627;&#x631;&#x6CC; &#x62F;&#x631; &#x627;&#x62F;&#x628;&#x6CC;&#x627;&#x62A; &#x6A9;&#x647;&#x646; &#x641;&#x627;&#x631;&#x633;&#x6CC; &#x62F;&#x6CC;&#x62F;&#x647; &#x645;&#x6CC;&#x200C;&#x634;&#x648;&#x62F;. &#x62F;&#x631; &#x627;&#x6CC;&#x646; &#x6A9;&#x62A;&#x627;&#x628; &#x633;&#x639;&#x6CC; &#x634;&#x62F;&#x647; &#x62A;&#x627; &#x633;&#x6CC;&#x631;&#x6CC; &#x645;&#x62E;&#x62A;&#x635;&#x631; &#x627;&#x632; &#x627;&#x6CC;&#x646; &#x631;&#x648;&#x6CC;&#x6A9;&#x631;&#x62F; &#x648; &#x62A;&#x62D;&#x648;&#x644; &#x642;&#x627;&#x644;&#x628; &#x63A;&#x632;&#x644; &#x640; &#x645;&#x62B;&#x646;&#x648;&#x6CC; &#x627;&#x632; &#x622;&#x63A;&#x627;&#x632; &#x62A;&#x627;&#x6A9;&#x646;&#x648;&#x646; &#x622;&#x648;&#x631;&#x62F;&#x647; &#x634;&#x648;&#x62F;. &#x6A9;&#x62A;&#x627;&#x628; &#x62F;&#x631; &#x62F;&#x648; &#x628;&#x62E;&#x634; &#xAB;&#x637;&#x628;&#x642;&#x647;&#x200C;&#x628;&#x646;&#x62F;&#x6CC; &#x627;&#x646;&#x648;&#x627;&#x639; &#x627;&#x62F;&#x628;&#x6CC;&#xBB; &#x648; &#xAB;&#x641;&#x631;&#x627;&#x647;&#x646;&#x62C;&#x627;&#x631;&#x6CC; &#x62F;&#x631; &#x642;&#x627;&#x644;&#x628; &#x645;&#x62B;&#x646;&#x648;&#x6CC;&#xBB; &#x627;&#x6CC;&#x646; &#x645;&#x648;&#x636;&#x648;&#x639;&#x627;&#x62A; &#x631;&#x627; &#x634;&#x627;&#x645;&#x644; &#x645;&#x6CC;&#x200C;&#x634;&#x648;&#x62F;. &#x627;&#x646;&#x648;&#x627;&#x639; &#x627;&#x62F;&#x628;&#x6CC;&#x61B; &#x633;&#x6CC;&#x631; &#x63A;&#x632;&#x644; &#x648; &#x645;&#x62B;&#x646;&#x648;&#x6CC; &#x62F;&#x631; &#x634;&#x639;&#x631; &#x641;&#x627;&#x631;&#x633;&#x6CC;&#x61B; &#x63A;&#x632;&#x644;  &#x645;&#x62B;&#x646;&#x648;&#x6CC; &#x62F;&#x631; &#x634;&#x639;&#x631; &#x6AF;&#x630;&#x634;&#x62A;&#x647; &#x648; &#x645;&#x639;&#x627;&#x635;&#x631;&#x61B; &#x648; &#x62F;&#x647; &#x646;&#x627;&#x645;&#x647;&#x200C;&#x633;&#x631;&#x627;&#x6CC;&#x6CC; &#x62F;&#x631; &#x634;&#x639;&#x631; &#x641;&#x627;&#x631;&#x633;&#x6CC;. 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start text-white mt-5"
+            style="background-color: #DDDDDD;">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Links -->
+            <section>
+                <!--Grid row-->
+                <div class="row">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h6 class="text-uppercase mb-4 font-weight-bold">
+                            <img src="/images/site/logo-light.png" alt="خانه کتاب و ادبیات ایران" />
+                        </h6>
+                        <p class="text-dark">
+                            خانه کتاب و ادبیات ایران موسسه ای غیرانتفاعی و غیردولتی است که به منظور نشر فرهنگ و تمدن اسلامی و
+                            با انگیزه اعتلا و شکوفایی شئون فرهنگ، کتاب و ادبیات ایران تأسیس شده است.
+                        </p>
+                        <p>
+                            <div class=" ml-lg-0 text-center text-md-end">
+
+                                
+
+<a class="btn btn-outline-secondary btn-floating m-1" 
+   href="https://www.instagram.com/khaneh.ketab.adabiat/"
+   target="_blank"
+   role="button">
+    
+    <i class="fa fa-instagram"></i>
+</a>
+<a class="btn btn-outline-secondary btn-floating m-1" 
+   href="http://aparat.ir"
+   target="_blank"
+   role="button">
+    
+    <i class="fa fa-video-camera"></i>
+</a>
+
+
+
+
+                            </div>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <hr class="w-100 clearfix d-md-none" />
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                        <h6 class="text-uppercase mb-4 font-weight-bold text-dark" style="font-family:iranSans">
+                            <b><i class="fa fa-circle " style="color: #0FA5A1"></i> لینک های مفید</b>
+                        </h6>
+                        <p style="font-size:14px;">
+                            <a class="text-dark" href="/">صفحه اصلی</a>
+                        </p>
+                        <p style="font-size:14px;">
+                            <a class="text-dark" href="/ShowManager">درباره ما</a>
+                        </p>
+                        <p style="font-size:14px;">
+                            <a class="text-dark" href="/ShowStatistics">آمار نشر</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <hr class="w-100 clearfix d-md-none" />
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                        <h6 class="text-uppercase mb-4 font-weight-bold text-dark" style="font-family:iranSans">
+                            <b><i class="fa fa-circle " style="color: #0FA5A1"></i> پیوندها  </b>
+                        </h6>
+                        
+    <p>
+        <a style="font-size:14px;" target="_blank" href="https://www.farhang.gov.ir/" class="text-dark">
+            &#x648;&#x632;&#x627;&#x631;&#x62A; &#x641;&#x631;&#x647;&#x646;&#x6AF; &#x648; &#x627;&#x631;&#x634;&#x627;&#x62F; &#x627;&#x633;&#x644;&#x627;&#x645;&#x6CC;
+        </a>
+    </p>
+    <p>
+        <a style="font-size:14px;" target="_blank" href="https://bookgrant.farhang.gov.ir/fa/tarhemayatigrant" class="text-dark">
+            &#x637;&#x631;&#x62D; &#x62D;&#x645;&#x627;&#x6CC;&#x62A; &#x627;&#x632; &#x62A;&#x631;&#x62C;&#x645;&#x647; &#x648; &#x627;&#x646;&#x62A;&#x634;&#x627;&#x631; &#x6A9;&#x62A;&#x627;&#x628; &#x627;&#x6CC;&#x631;&#x627;&#x646;&#x6CC; &#x62F;&#x631; &#x628;&#x627;&#x632;&#x627;&#x631; &#x647;&#x627;&#x6CC; &#x62C;&#x647;&#x627;&#x646;&#x6CC; (&#x6AF;&#x631;&#x646;&#x62A;)
+        </a>
+    </p>
+    <p>
+        <a style="font-size:14px;" target="_blank" href="https://jayezehfiroozeh.ir/Pages/Home.aspx" class="text-dark">
+            &#x62C;&#x627;&#x6CC;&#x632;&#x647; &#x641;&#x6CC;&#x631;&#x648;&#x632;&#x647;
+        </a>
+    </p>
+
+
+
+                    </div>
+
+                    <!-- Grid column -->
+                    <hr class="w-100 clearfix d-md-none" />
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h6 class="text-uppercase mb-4 font-weight-bold text-dark" style="font-family:iranSans">
+                            <b><i class="fa fa-circle " style="color: #0FA5A1"></i> اطلاعات تماس</b>
+                        </h6>
+                        <p class="text-dark">
+                            <i class="fa fa-map-marker mr-3"></i>
+                            تهران، خیابان انقلاب، بین فلسطین و شهید برادران مظفر جنوبی،شماره 1080
+                            <br />
+                            کدپسـتی: 1315773411
+                        </p>
+                        <p class="text-dark"><i class="fa fa-envelope mr-3"></i> info@ketab.ir</p>
+                        <p class="text-dark"><i class="fa fa-phone mr-3"></i> 021-91006363</p>
+                        <p class="text-dark"><i class="fa fa-fax mr-3"></i> 021-66415498</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Links -->
+
+            <hr class="my-3 text-dark">
+
+            <!-- Section: Copyright -->
+            <section class="p-3 pt-0">
+                <div class="row d-flex align-items-center">
+                    <!-- Grid column -->
+                    <div class="col-md-12 col-lg-12 text-center text-md-start">
+                        <!-- Copyright -->
+                        <div class="p-3 text-dark">
+                            <i class="fa fa-heart"></i> 
+                           تمامی حقوق مادی و معنوی این سایت به 
+                           <a style="color: #0FA5A1" class="ketabColor" href="https://ketab.ir/">
+                                <b>
+                                    موسسه خانه کتاب و ادبیات ایران
+                                </b>
+                            </a>
+                            تعلق دارد
+                        </div>
+                        <!-- Copyright -->
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                </div>
+            </section>
+            <!-- Section: Copyright -->
+        </div>
+        <!-- Grid container -->
+    </footer>
+    <!-- Footer -->
+
+
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js?v=8ZRc1sGeVrPBx4lD717BgRaQekyh78QKV9SKsdt638U"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            persian = { 0: '۰', 1: '۱', 2: '۲', 3: '۳', 4: '۴', 5: '۵', 6: '۶', 7: '۷', 8: '۸', 9: '۹' };
+            function traverse(el) {
+                if (el.nodeType == 3) {
+                    var list = el.data.match(/[0-9]/g);
+                    if (list != null && list.length != 0) {
+                        for (var i = 0; i < list.length; i++)
+                            el.data = el.data.replace(list[i], persian[list[i]]);
+                    }
+                }
+                for (var i = 0; i < el.childNodes.length; i++) {
+                    traverse(el.childNodes[i]);
+                }
+            }
+            traverse(document.body);
+        });
+
+    </script>
+    <script>
+
+        (function (window) {
+
+            'use strict';
+
+            // class helper functions from bonzo https://github.com/ded/bonzo
+
+            function classReg(className) {
+                return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+            }
+
+            // classList support for class management
+            // altho to be fair, the api sucks because it won't accept multiple classes at once
+            var hasClass, addClass, removeClass;
+
+            if ('classList' in document.documentElement) {
+                hasClass = function (elem, c) {
+                    return elem.classList.contains(c);
+                };
+                addClass = function (elem, c) {
+                    elem.classList.add(c);
+                };
+                removeClass = function (elem, c) {
+                    elem.classList.remove(c);
+                };
+            }
+            else {
+                hasClass = function (elem, c) {
+                    return classReg(c).test(elem.className);
+                };
+                addClass = function (elem, c) {
+                    if (!hasClass(elem, c)) {
+                        elem.className = elem.className + ' ' + c;
+                    }
+                };
+                removeClass = function (elem, c) {
+                    elem.className = elem.className.replace(classReg(c), ' ');
+                };
+            }
+
+            function toggleClass(elem, c) {
+                var fn = hasClass(elem, c) ? removeClass : addClass;
+                fn(elem, c);
+            }
+
+            var classie = {
+                // full names
+                hasClass: hasClass,
+                addClass: addClass,
+                removeClass: removeClass,
+                toggleClass: toggleClass,
+                // short names
+                has: hasClass,
+                add: addClass,
+                remove: removeClass,
+                toggle: toggleClass
+            };
+
+            // transport
+            if (typeof define === 'function' && define.amd) {
+                // AMD
+                define(classie);
+            } else {
+                // browser global
+                window.classie = classie;
+            }
+
+        })(window);
+
+    </script>
+
+
+    <script src="/DataPicker/js/jquery-1.10.1.min.js"></script>
+   
+    <script>
+        $(function () {
+            //usage
+
+
+            //themes
+            $("#pdpDefault").persianDatepicker({ alwaysShow: true, });
+            $("#pdpLatoja").persianDatepicker({ theme: "latoja", alwaysShow: true, });
+            $("#pdpLightorang").persianDatepicker({ theme: "lightorang", alwaysShow: true, });
+            $("#pdpMelon").persianDatepicker({ theme: "melon", alwaysShow: true, });
+            $("#pdpDark").persianDatepicker({ theme: "dark", alwaysShow: true, });
+
+            //size
+            $("#pdpSmall").persianDatepicker({ cellWidth: 14, cellHeight: 12, fontSize: 8 });
+            $("#pdpBig").persianDatepicker({ cellWidth: 78, cellHeight: 60, fontSize: 18 });
+
+            //formatting
+            $("#pdpF1").persianDatepicker({ formatDate: "YYYY/MM/DD 0h:0m:0s:ms" });
+            $("#pdpF2").persianDatepicker({ formatDate: "YYYY-0M-0D" });
+            $("#pdpF3").persianDatepicker({ formatDate: "YYYY-NM-DW|ND", isRTL: !0 });
+
+            //startDate & endDate
+            $("#pdpStartEnd").persianDatepicker({ startDate: "1394/11/12", endDate: "1395/5/5" });
+            $("#pdpStartToday").persianDatepicker({ startDate: "today", endDate: "1410/11/5" });
+            $("#pdpEndToday").persianDatepicker({ startDate: "1397/11/12", endDate: "today" });
+
+            //selectedBefor & selectedDate
+            $("#pdpSelectedDate").persianDatepicker({ selectedDate: "1404/1/1", alwaysShow: !0 });
+            $("#pdpSelectedBefore").persianDatepicker({ selectedBefore: !0 });
+            $("#pdpSelectedBoth").persianDatepicker({ selectedBefore: !0, selectedDate: "1395/5/5" });
+
+            //jdate & gdate attributes
+            $("#pdp-data-jdate").persianDatepicker({
+                onSelect: function () {
+                    alert($("#pdp-data-jdate").attr("data-gdate"));
+                }
+            });
+            $("#pdp-data-gdate").persianDatepicker({
+                showGregorianDate: true,
+                onSelect: function () {
+                    alert($("#pdp-data-gdate").attr("data-jdate"));
+                }
+            });
+
+            $("#pdpGregorian").persianDatepicker({ showGregorianDate: true });
+            var p = new persianDate();
+            $("#pdpStartDateTomarrow").persianDatepicker({ startDate: p.now().addDay(1).toString("YYYY/MM/DD"), endDate: p.now().addDay(4).toString("YYYY/MM/DD") });
+
+
+        });
+    </script>
+
+    
+</body>
+</html>

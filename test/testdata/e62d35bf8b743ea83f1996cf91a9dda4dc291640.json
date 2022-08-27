@@ -1,0 +1,22 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"AR-ATIME": "0.098",
+		"AR-CACHE": "BYPASS",
+		"AR-PoweredBy": "Arvan Cloud (arvancloud.com)",
+		"AR-Request-ID": "a588eb852cb52c5caec45a528e7af1e9",
+		"AR-SID": "2012",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Security-Policy": "upgrade-insecure-requests",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Sat, 27 Aug 2022 23:06:10 GMT",
+		"Keep-Alive": "timeout=65",
+		"Server": "ArvanCloud",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding, Accept-Encoding",
+		"X-XSS-Protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "https://ketab.ir/book/13a52229-5e3f-479e-8954-092b65e85923"
+}

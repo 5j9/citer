@@ -38,7 +38,7 @@ def test_is4():
         '* {{cite book | last=حافظ | first=شمس‌الدین‌محمد '
         '| others=رضا نظرزاده (به‌اهتمام) '
         '| title=دیوان کامل حافظ همراه با فالنامه | publisher=دیوان '
-        '| publication-place=قم - قم | year=1385 | isbn=964-92962-6-3 '
+        '| publication-place=قم - قم | year=1385 | isbn=978-964-92962-6-5 '
         '| language=fa}}'
     ) == isbn_scr('choghondar 964-92962-6-3 شلغم')[1]
 
