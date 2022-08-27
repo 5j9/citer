@@ -146,8 +146,7 @@ def request(url, spoof=False, method='get', **kwargs):
 
 def dict_to_sfn_cit_ref(dictionary) -> tuple:
     # Return (sfn, cite, ref) strings.
-    isbn = dictionary.get('isbn')
-    if isbn:
+    if isbn := dictionary.get('isbn'):
         try:
             dictionary['isbn'] = isbn_mask(isbn)
         except NotValidISBNError:
@@ -253,27 +252,28 @@ def find_any_date(str_or_match) -> datetime.date or None:
     groupdict = match.groupdict()
     day = int(groupdict['d'])
     year = int(groupdict['Y'])
-    month = groupdict.get('jB')  # ?.replace('ي', 'ی')
     today = datetime.today().date()
-    if month:
+    get = groupdict.get
+
+    if (month := get('jB')) is not None:
         date = jdate(year, jB_TO_NUM[month], day).togregorian()
         if date <= today:
             return date
         return
-    month = groupdict.get('B')
-    if month:
+
+    if (month := get('B')) is not None:
         date = datetime_date(year, B_TO_NUM[month.lower()], day)
         if date <= today:
             return date
         return
-    month = groupdict.get('b')
-    if month:
+
+    if (month := get('b')) is not None:
         date = datetime_date(year, b_TO_NUM[month.lower()], day)
         if date <= today:
             return date
         return
-    month = groupdict.get('m')
-    if month:
+
+    if (month := get('m')) is not None:
         date = datetime_date(year, int(month), day)
         if date <= today:
             return date

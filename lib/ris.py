@@ -50,26 +50,24 @@ def ris_parse(ris_text):
     match = RIS_FULLMATCH(ris_text)
     d.update(match.groupdict())
     # cite_type: (book, journal, . . . )
-    cite_type = d['type'].lower()
-    if cite_type == 'jour':
-        t2 = d['t2']
-        if t2 is not None:
+    if (cite_type := d['type'].lower()) == 'jour':
+        if (t2 := d['t2']) is not None:
             d['journal'] = t2
     url = d['url']
     if cite_type == 'elec' and url:
         d['cite_type'] = 'web'
     else:
         d['cite_type'] = cite_type
-    sn = d['sn']
-    if sn:  # determine if it is ISBN or ISSN according to the cite_type
-        if ISBN_10OR13_SEARCH(sn):
+
+    if sn := d['sn']:
+        # determine if it is ISBN or ISSN according to the cite_type
+        if ISBN_10OR13_SEARCH(sn) is not None:
             d['isbn'] = sn
         else:
             d['issn'] = sn
     # author:
     # d['authors'] should not be created unless there are some authors
-    authors = match.captures('author')
-    if authors:
+    if authors := match.captures('author'):
         # From RIS Format Specifications:
         # Each author must be on a separate line, preceded by this tag. Each
         # reference can contain unlimited author fields, and can contain up
@@ -85,13 +83,11 @@ def ris_parse(ris_text):
                 continue
             d['authors'].append(author)
     # DOIs may be in N1 (notes) tag, search for it in any tag
-    m = DOI_SEARCH(ris_text)
-    if m is not None:
+    if (m := DOI_SEARCH(ris_text)) is not None:
         d['doi'] = m[0]
-    start_page = d['start_page']
-    if start_page:
-        end_page = d['end_page']
-        if end_page:
+
+    if start_page := d['start_page']:
+        if end_page := d['end_page']:
             d['page'] = start_page + '–' + end_page
         else:
             d['page'] = start_page

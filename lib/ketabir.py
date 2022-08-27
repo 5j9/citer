@@ -2,7 +2,7 @@
 
 from collections import defaultdict
 from logging import getLogger
-from typing import Optional
+from typing import Optional, Any
 
 from langid import classify
 from regex import compile as regex_compile
@@ -58,8 +58,9 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
         logger.exception(ketabir_url)
         return
     html = r.content.decode('utf-8')
-    d = defaultdict(lambda: None, cite_type='book')
+    d : defaultdict[str, Any] = defaultdict(lambda: None, cite_type='book')
     d['title'] = TITLE_SEARCH(html)[1]
+
     # initiating name lists:
     others = []
     authors = []
@@ -83,22 +84,23 @@ def url2dictionary(ketabir_url: str) -> Optional[dict]:
         d['editors'] = editors
     if translators:
         d['translators'] = translators
-    m = PUBLISHER_SEARCH(html)
-    if m is not None:
+
+    if (m := PUBLISHER_SEARCH(html)) is not None:
         d['publisher'] = m[1]
-    m = DATE_SEARCH(html)
-    if m is not None:
+
+    if (m := DATE_SEARCH(html)) is not None:
         d['month'] = m['month']
         d['year'] = m['year']
-    m = ISBN_SEARCH(html)
-    if m is not None:
+
+    if (m := ISBN_SEARCH(html)) is not None:
         d['isbn'] = m[1]
-    m = VOLUME_SEARCH(html)
-    if m is not None:
+
+    if (m := VOLUME_SEARCH(html)) is not None:
         d['volume'] = m[1]
-    m = LOCATION_SEARCH(html)
-    if m is not None:
+
+    if (m := LOCATION_SEARCH(html)) is not None:
         d['publisher-location'] = m[1]
+
     return d
 
 

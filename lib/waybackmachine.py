@@ -26,8 +26,7 @@ def waybackmachine_scr(
     archive_url: str, date_format: str = '%Y-%m-%d'
 ) -> tuple:
     """Create the response namedtuple."""
-    m = URL_FULLMATCH(archive_url)
-    if not m:
+    if (m := URL_FULLMATCH(archive_url)) is None:
         # Could not parse the archive_url. Treat as an ordinary URL.
         return urls_scr(archive_url, date_format)
     archive_year, archive_month, archive_day, original_url = \
@@ -100,15 +99,17 @@ def original_url_dict(url: str):
     )
     home_title_thread.start()
     html = get_html(url)
-    m = TITLE_TAG(html)
-    html_title = m['result'] if m else None
-    if html_title:
-        d['html_title'] = html_title
-    authors = find_authors(html)
-    if authors:
+
+    if (m := TITLE_TAG(html)) is not None:
+        if html_title := m['result']:
+            d['html_title'] = html_title
+    else:
+        html_title = None
+
+    if authors := find_authors(html):
         d['authors'] = authors
-    journal = find_journal(html)
-    if journal:
+
+    if journal := find_journal(html):
         d['journal'] = journal
         d['cite_type'] = 'journal'
     else:
