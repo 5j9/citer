@@ -111,7 +111,7 @@ BYLINE_TAG_FINDITER = regex_compile(
             (?>class|id|rel)=
             (?<q>["\']?)
             (?>
-                author(?>_byline|Inline|-title)?
+                author(?>_byline|Inline|-title|s)?
                 |by(?>
                     line(?>Author|line-name)?
                     |_line(?:_date)?

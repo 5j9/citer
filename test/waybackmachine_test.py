@@ -36,7 +36,7 @@ def test_dead_url():
         '| title=London Development Centre: Support, time, recovery (STR) '
         'workers '
         '| website=londondevelopmentcentre.org '
-        '| date=2007-04-29 '
+        '| date=2007-02-12 '
         '| url=http://www.londondevelopmentcentre.org/page.php?s=1&p=2462 '
         '| archive-url=https://web.archive.org/web/20070429193849id_/'
         'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462 '
