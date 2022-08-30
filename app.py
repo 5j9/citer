@@ -115,25 +115,23 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
         # TLD stands for top-level domain
         tldless_netloc = parsed_url[1].rpartition('.')[0]
         # todo: make lazy?
-        resolver = TLDLESS_NETLOC_RESOLVER(
+        if (resolver := TLDLESS_NETLOC_RESOLVER(
             tldless_netloc[4:] if tldless_netloc.startswith('www.')
-            else tldless_netloc)
-        if resolver is not None:
+            else tldless_netloc
+        )) is not None:
             if resolver is googlebooks_scr:
                 return resolver(parsed_url, date_format)
             elif resolver is google_encrypted_scr:
                 return resolver(url, parsed_url, date_format)
             return resolver(url, date_format)
         # DOIs contain dots
-        m = DOI_SEARCH(unescape(en_user_input))
-        if m is not None:
+        if (m := DOI_SEARCH(unescape(en_user_input))) is not None:
             return doi_scr(m[0], True, date_format)
         return urls_scr(url, date_format)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
         # error-prone.
-        m = ISBN_10OR13_SEARCH(en_user_input)
-        if m is not None:
+        if (m := ISBN_10OR13_SEARCH(en_user_input)) is not None:
             try:
                 return isbn_scr(m[0], True, date_format)
             except IsbnError:
@@ -157,8 +155,7 @@ def app(environ: dict, start_response: callable) -> tuple:
     input_type = query_dict_get('input_type', [''])[0]
 
     # Warning: input is not escaped!
-    user_input = query_dict_get('user_input', [''])[0].strip()
-    if not user_input:
+    if not (user_input := query_dict_get('user_input', [''])[0].strip()):
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
