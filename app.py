@@ -88,7 +88,7 @@ def get_root_logger():
         maxBytes=20000,
         backupCount=0,
         encoding='utf-8',
-        delay=0)
+    )
     handler.setLevel(INFO)
     handler.setFormatter(
         Formatter('\n%(asctime)s\n%(levelname)s\n%(message)s\n'))
