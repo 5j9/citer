@@ -13,9 +13,7 @@ from regex import compile as rc, VERBOSE, IGNORECASE
 from requests import Response as RequestsResponse
 from requests.exceptions import RequestException
 
-from lib.commons import (
-    find_any_date, dict_to_sfn_cit_ref, ANYDATE_PATTERN,
-    request)
+from lib.commons import find_any_date, ANYDATE_PATTERN, request
 from lib.urls_authors import find_authors, CONTENT_ATTR
 from lib.doi import get_crossref_dict
 
