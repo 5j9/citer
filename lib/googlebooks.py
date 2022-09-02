@@ -1,16 +1,12 @@
-"""All things specifically related to the Google Books website."""
-
-
 from urllib.parse import parse_qs, urlparse
 
 from langid import classify
 
 from lib.commons import request
 from lib.ris import ris_parse
-from lib.commons import dict_to_sfn_cit_ref
 
 
-def googlebooks_scr(parsed_url, date_format='%Y-%m-%d') -> tuple:
+def url_to_dict(parsed_url, date_format='%Y-%m-%d') -> dict:
     """Create the response namedtuple."""
     parsed_query = parse_qs(parsed_url.query)
 
@@ -31,4 +27,4 @@ def googlebooks_scr(parsed_url, date_format='%Y-%m-%d') -> tuple:
     # although google does not provide a language field:
     if not dictionary['language']:
         dictionary['language'] = classify(dictionary['title'])[0]
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary

@@ -3,15 +3,15 @@ from unittest.mock import patch
 
 from lib.generator_fa import sfn_cit_ref
 from lib.commons import find_any_date
-from lib.ketabir import ketabir_scr
-from lib.doi import doi_scr
-from lib.isbn_oclc import isbn_scr
-from lib.noormags import noormags_scr
-from lib.noorlib import noorlib_scr
-from lib.pubmed import pmid_scr
-from lib.urls import urls_scr
 
 from test.googlebooks_test import googlebooks_scr
+from test.noormags_test import noormags_scr
+from test.noorlib_test import noorlib_scr
+from test.ketabir_test import ketabir_scr
+from test.doi_test import doi_scr
+from test.isbn_oclc_test import isbn_scr
+from test.pubmed_test import pmid_scr
+from test.urls_test import urls_scr
 
 
 sfn_cit_ref_patcher = patch('lib.commons.sfn_cit_ref', sfn_cit_ref)
@@ -251,7 +251,7 @@ def test_isbn_exists_on_ottobib_not_ketabir():
         '| شابک=978-0-349-11916-8 '
         '| oclc=137313052 '
         '| زبان=en}}'
-    ) in isbn_scr('9780349119168', pure=True)[1]
+    ) in isbn_scr('9780349119168', True)[1]
 
 
 def test_isbn_exists_on_ketabir_not_ottobib():
@@ -260,7 +260,7 @@ def test_isbn_exists_on_ketabir_not_ottobib():
         '(به\u200cاهتمام) و محمدحسن فروزانفر (مقدمه) | عنوان=دیوان خاقانی شروانی | '
         'ناشر=نگاه | مکان=تهران - تهران | سال=1396 | شابک=978-964-6736-71-9 | '
         'oclc=1176150182 | زبان=fa}}'
-    ) == isbn_scr('978-964-6736-71-9', pure=True)[1]
+    ) == isbn_scr('978-964-6736-71-9', True)[1]
 
 
 def test_isbn_exists_on_ketabir_and_ottobib():

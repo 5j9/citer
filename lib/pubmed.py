@@ -26,20 +26,20 @@ class NCBIError(Exception):
     pass
 
 
-def pmid_scr(pmid: str, date_format='%Y-%m-%d') -> tuple:
+def pmid_dict(pmid: str, date_format='%Y-%m-%d', /) -> dict:
     """Return the response namedtuple."""
     pmid = NON_DIGITS_SUB('', pmid)
     dictionary = ncbi('pmid', pmid)
     dictionary['date_format'] = date_format
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary
 
 
-def pmcid_scr(pmcid: str, date_format='%Y-%m-%d') -> tuple:
+def pmcid_dict(pmcid: str, date_format='%Y-%m-%d', /) -> dict:
     """Return the response namedtuple."""
     pmcid = NON_DIGITS_SUB('', pmcid)
     dictionary = ncbi('pmcid', pmcid)
     dictionary['date_format'] = date_format
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary
 
 
 def ncbi(type_: str, id_: str) -> defaultdict:

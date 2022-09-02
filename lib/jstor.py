@@ -1,11 +1,11 @@
 from threading import Thread
 from urllib.parse import urlparse
 
-from lib.commons import request, dict_to_sfn_cit_ref
+from lib.commons import request
 from lib.bibtex import parse as bibtex_parse
 
 
-def jstor_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
+def url_to_dict(url: str, date_format: str = '%Y-%m-%d') -> dict:
     open_access = []
     thread = Thread(target=is_open_access, args=(url, open_access))
     thread.start()
@@ -17,7 +17,7 @@ def jstor_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     thread.join()
     if open_access:
         dictionary['jstor-access'] = 'free'
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary
 
 
 def is_open_access(url: str, result: list):

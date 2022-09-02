@@ -1,4 +1,9 @@
-from lib.waybackmachine import waybackmachine_scr
+from lib.waybackmachine import url_to_dict
+from lib.commons import dict_to_sfn_cit_ref
+
+
+def waybackmachine_scr(*args):
+    return dict_to_sfn_cit_ref(url_to_dict(*args))
 
 
 def test_live_og_link():

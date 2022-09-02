@@ -9,25 +9,25 @@ from regex import compile as rc
 from requests import RequestException
 from bs4 import BeautifulSoup
 
-from lib.commons import first_last, dict_to_sfn_cit_ref, request
+from lib.commons import first_last, request
 
 
 AUTHORS_FINDALL = rc(r'(\S+?)\s*+:\s*+(.*)').findall
 VOLUME_SEARCH = rc(r'\bجلد (\d+)').search
 
 
-def ketabir_scr(url: str, date_format='%Y-%m-%d') -> tuple:
+def url_to_dict(url: str, date_format='%Y-%m-%d', /) -> dict:
     """Return the response namedtuple."""
-    dictionary = url2dictionary(url)
+    dictionary = _url_to_dict(url)
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
         # Assume that language is either fa or en.
         # Todo: give warning about this assumption?
         dictionary['language'] = classify(dictionary['title'])[0]
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary
 
 
-def isbn2url(isbn: str) -> Optional[str]:
+def isbn_to_url(isbn: str) -> Optional[str]:
     """Return the ketab.ir book-url for the given isbn."""
     r = request(f'https://msapi.ketab.ir/search/?query={isbn}&limit=1')
     j = r.json()
@@ -35,7 +35,7 @@ def isbn2url(isbn: str) -> Optional[str]:
            + j['result']['groups']['printableBook']['items'][0]['url']
 
 
-def url2dictionary(ketabir_url: str) -> Optional[dict]:
+def _url_to_dict(ketabir_url: str) -> Optional[dict]:
     try:
         # Try to see if ketabir is available,
         # ottobib should continue its work in isbn.py if it is not.

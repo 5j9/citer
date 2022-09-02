@@ -137,6 +137,14 @@ class NumberInNameError(InvalidNameError):
     """Raise when a RawName() contains digits."""
 
 
+class ReturnError(RuntimeError):
+
+    """Raise to display message to end user.
+
+    Pass sfn, cit, and ref fields as positional args.
+    """
+
+
 def request(url, spoof=False, method='get', **kwargs):
     headers = SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER
     if 'headers' in kwargs:

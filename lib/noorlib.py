@@ -2,7 +2,7 @@
 
 from regex import compile as regex_compile
 
-from lib.commons import dict_to_sfn_cit_ref, request
+from lib.commons import request
 from lib.bibtex import parse as bibtex_parse
 
 
@@ -11,16 +11,15 @@ BIBTEX_ARTICLE_ID_SEARCH = regex_compile(
 RIS_ARTICLE_ID_SEARCH = regex_compile(r'(?<=RIS&id=)\d+').search
 
 
-def noorlib_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
-    """Create the response namedtuple."""
-    dictionary = bibtex_parse(get_bibtex(url))
+def url_to_dict(url: str, date_format: str = '%Y-%m-%d') -> dict:
+    dictionary = bibtex_parse(dict_from_bibtex(url))
     dictionary['date_format'] = date_format
     # risr = get_ris(url)[1]
     # dictionary = risr.parse(ris)[1]
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary
 
 
-def get_bibtex(noorlib_url):
+def dict_from_bibtex(noorlib_url):
     """Get bibtex file content from a noormags url. Return as string."""
     pagetext = request(noorlib_url).text
     article_id = BIBTEX_ARTICLE_ID_SEARCH(pagetext)[0]
@@ -29,7 +28,7 @@ def get_bibtex(noorlib_url):
     return request(url).text
 
 
-def get_ris(noorlib_url):
+def dict_from_ris(noorlib_url):
     # This is copied from noormags module (currently not supported but may
     # be)[1]
     """Get ris file content from a noormags url. Return as string."""

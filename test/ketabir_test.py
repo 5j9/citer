@@ -1,4 +1,8 @@
-from lib.ketabir import ketabir_scr, isbn2url
+from lib.ketabir import url_to_dict, isbn_to_url
+from lib.commons import dict_to_sfn_cit_ref
+
+
+ketabir_scr = lambda *args: dict_to_sfn_cit_ref(url_to_dict(*args))
 
 
 def test_ab1():
@@ -86,6 +90,6 @@ def test_ab7():
 
 
 def test_isbn2url():
-    assert isbn2url(
+    assert isbn_to_url(
         '978-964-459-398-7'
     ) == 'https://ketab.ir/book/4cc231f9-35c2-4b60-a714-a0a11135e932'

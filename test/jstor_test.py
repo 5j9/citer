@@ -1,4 +1,8 @@
-from lib.jstor import jstor_scr
+from lib.jstor import url_to_dict
+from lib.commons import dict_to_sfn_cit_ref
+
+
+jstor_scr = lambda *args: dict_to_sfn_cit_ref(url_to_dict(*args))
 
 
 def test_1():
@@ -11,6 +15,7 @@ def test_1():
         '| publisher=Royal Irish Academy | volume=17 | year=1831 '
         '| issn=07908113 | jstor=30078788 | pages=171–177 '
         '| url=http://www.jstor.org/stable/30078788 ')
+
 
 def test_2():
     s, c, r = jstor_scr('https://www.jstor.org/stable/resrep26363.7?Search=yes&resultItemClick=true&searchText=google&searchUri=%2Faction%2FdoBasicSearch%3FQuery%3Dgoogle%26acc%3Doff%26wc%3Don%26fc%3Doff%26group%3Dnone%26refreqid%3Dsearch%253A2e627536469ca8786b576957a9797d56&ab_segments=0%2Fbasic_search_gsv2%2Fcontrol&refreqid=fastly-default%3Af90c911269c590baf37330b9d16ae1cd&seq=1#metadata_info_tab_contents')

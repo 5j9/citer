@@ -234,16 +234,11 @@ class StatusCodeError(ValueError):
 to_text = partial(rc(r'<[^>]*+>').sub, '')
 
 
-def urls_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
+def url_to_dict(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
     """Create the response namedtuple."""
-    try:
-        dictionary = url2dict(url)
-    except (ContentTypeError, ContentLengthError) as e:
-        logger.exception(url)
-        # Todo: i18n
-        return 'Could not process the request.', e, ''
+    dictionary = url2dict(url)
     dictionary['date_format'] = date_format
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary
 
 
 def find_journal(html: str) -> Optional[str]:

@@ -3,7 +3,7 @@ from regex import compile as regex_compile, VERBOSE, IGNORECASE
 
 from lib.urls_authors import byline_to_names, BYLINE_PATTERN, \
     BYLINE_TAG_FINDITER
-from lib.urls import urls_scr
+from test.urls_test import urls_scr
 
 BYLINE_PATTERN_REGEX = regex_compile(
     fr'^{BYLINE_PATTERN}$',

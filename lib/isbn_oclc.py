@@ -7,10 +7,9 @@ from langid import classify
 from isbnlib import info as isbn_info
 
 from config import LANG
-from lib.ketabir import url2dictionary as ketabir_url2dictionary
-from lib.ketabir import isbn2url as ketabir_isbn2url
-from lib.commons import dict_to_sfn_cit_ref, request, ISBN13_SEARCH, \
-    ISBN10_SEARCH
+from lib.ketabir import url_to_dict as ketabir_url_to_dict
+from lib.ketabir import isbn_to_url as ketabir_isbn2url
+from lib.commons import request, ISBN13_SEARCH, ISBN10_SEARCH, ReturnError
 from lib.ris import ris_parse
 
 
@@ -24,9 +23,11 @@ class IsbnError(Exception):
     pass
 
 
-def isbn_scr(
-    isbn_container_str: str, pure: bool = False, date_format: str = '%Y-%m-%d'
-) -> tuple:
+def isbn_to_dict(
+    isbn_container_str: str,
+    pure: bool = False,
+    date_format: str = '%Y-%m-%d',
+) -> dict:
     if pure:
         isbn = isbn_container_str
     else:
@@ -73,7 +74,7 @@ def isbn_scr(
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
         dictionary['language'] = classify(dictionary['title'])[0]
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary
 
 
 def ketabir_thread_target(isbn: str, result: list) -> None:
@@ -81,7 +82,7 @@ def ketabir_thread_target(isbn: str, result: list) -> None:
     try:
         if (url := ketabir_isbn2url(isbn)) is None:
             return  # ketab.ir does not have any entries for this isbn
-        if d := ketabir_url2dictionary(url):
+        if d := ketabir_url_to_dict(url):
             result.append(d)
     except Exception:
         logger.exception('isbn: %s', isbn)
@@ -163,15 +164,16 @@ def citoid_thread_target(isbn: str, result: list) -> None:
         result.append(citoid_dict)
 
 
-def oclc_scr(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:
+def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
     text = request(
         'https://www.worldcat.org/oclc/' + oclc + '?page=endnote'
         '&client=worldcat.org-detailed_record').content.decode()
     if '<html' in text:  # invalid OCLC number
-        return (
+        raise ReturnError(
             'Error processing OCLC number: ' + oclc,
-            'Perhaps you entered an invalid OCLC number?',
-            '')
+            'Make sure the OCLC number is valid.',
+            ''
+        )
     d = ris_parse(text)
     if authors := d['authors']:
         # worldcat has a '.' the end of the first name
@@ -182,7 +184,7 @@ def oclc_scr(oclc: str, date_format: str = '%Y-%m-%d') -> tuple:
     d['date_format'] = date_format
     d['oclc'] = oclc
     d['title'] = d['title'].rstrip('.')
-    return dict_to_sfn_cit_ref(d)
+    return d
 
 
 logger = getLogger(__name__)
