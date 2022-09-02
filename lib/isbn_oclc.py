@@ -171,14 +171,13 @@ def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
         (s := (f := content.find)(b' type="application/json">') + 25)
         :f(b'</script>', s)
     ])
-    # todo: develop for invalid oclc
-    # if j.get('message') == 'Not authenticated.':  # invalid OCLC number
-    #     raise ReturnError(
-    #         'Error processing OCLC number: ' + oclc,
-    #         'Make sure the OCLC number is valid.',
-    #         ''
-    #     )
     record = j['props']['pageProps']['record']
+    if record is None:  # invalid OCLC number
+        raise ReturnError(
+            'Error processing OCLC number: ' + oclc,
+            'Make sure the OCLC identifier is valid.',
+            ''
+        )
     d: defaultdict[str, Any] = defaultdict(lambda: None)
     d['cite_type'] = record['generalFormat'].lower()
     d['title'] = record['title']

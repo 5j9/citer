@@ -1,5 +1,7 @@
+from pytest import raises
+
 from lib.isbn_oclc import isbn_to_dict, oclc_dict
-from lib.commons import ISBN_10OR13_SEARCH, dict_to_sfn_cit_ref
+from lib.commons import ISBN_10OR13_SEARCH, dict_to_sfn_cit_ref, ReturnError
 
 
 def isbn_scr(*args):
@@ -85,3 +87,13 @@ def test_citoid_only():  # 31
         '| isbn=978-3-85673-522-7 | oclc=613273377 '
         '| language=de}}'
     ) == isbn_scr('3-85673-522-4')[1]
+
+
+def test_invalid_oclc():
+    with raises(ReturnError) as e:
+        oclc_dict('99999999999999')
+        assert e.args == (
+            'Error processing OCLC number: 99999999999999',
+            'Make sure the OCLC identifier is valid.',
+            ''
+        )
