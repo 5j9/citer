@@ -1,0 +1,21 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"CF-Cache-Status": "DYNAMIC",
+		"CF-RAY": "7444ac15786a9279-FRA",
+		"Cache-Control": "max-age=60, stale-while-revalidate",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Security-Policy": "frame-ancestors 'none'",
+		"Content-Type": "application/json; charset=utf-8",
+		"Date": "Fri, 02 Sep 2022 07:53:29 GMT",
+		"ETag": "W/\"123-sX/ZhsNHUILOA/iueiBJihnpsv8\"",
+		"Server": "cloudflare",
+		"Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding",
+		"X-Frame-Options": "SAMEORIGIN"
+	},
+	"status_code": 200,
+	"url": "https://www.worldcat.org/api/citations/809771201?citationStyle=chicago-author-date"
+}

@@ -2,7 +2,8 @@ from typing import List, Optional, Tuple
 
 from regex import compile as regex_compile, VERBOSE, IGNORECASE, ASCII
 
-from lib.commons import ANYDATE_SEARCH, first_last, InvalidNameError
+from lib.commons import ANYDATE_SEARCH, first_last, InvalidNameError, \
+    FOUR_DIGIT_NUM
 
 
 # Names in byline are required to be two or three parts
@@ -175,8 +176,6 @@ STOPWORDS_SEARCH = regex_compile(
     ''',
     IGNORECASE | VERBOSE,
 ).search
-
-FOUR_DIGIT_NUM = regex_compile(r'\d\d\d\d').search
 
 
 def find_authors(html) -> Optional[List[Tuple[str, str]]]:
