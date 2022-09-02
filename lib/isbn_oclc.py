@@ -1,7 +1,8 @@
 from collections import defaultdict
 from logging import getLogger
 from threading import Thread
-from typing import Optional
+from typing import Optional, Any
+from json import loads
 
 from langid import classify
 from isbnlib import info as isbn_info
@@ -9,8 +10,8 @@ from isbnlib import info as isbn_info
 from config import LANG
 from lib.ketabir import url_to_dict as ketabir_url_to_dict
 from lib.ketabir import isbn_to_url as ketabir_isbn2url
-from lib.commons import request, ISBN13_SEARCH, ISBN10_SEARCH, ReturnError
-from lib.ris import ris_parse
+from lib.commons import request, ISBN13_SEARCH, ISBN10_SEARCH, ReturnError, \
+    FOUR_DIGIT_NUM
 
 
 RM_DASH_SPACE = str.maketrans('', '', '- ')
@@ -165,25 +166,37 @@ def citoid_thread_target(isbn: str, result: list) -> None:
 
 
 def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
-    text = request(
-        'https://www.worldcat.org/oclc/' + oclc + '?page=endnote'
-        '&client=worldcat.org-detailed_record').content.decode()
-    if '<html' in text:  # invalid OCLC number
-        raise ReturnError(
-            'Error processing OCLC number: ' + oclc,
-            'Make sure the OCLC number is valid.',
-            ''
-        )
-    d = ris_parse(text)
-    if authors := d['authors']:
-        # worldcat has a '.' the end of the first name
-        d['authors'] = [(
-            fn.rstrip('.') if not fn.isupper() else fn,
-            ln.rstrip('.') if not ln.isupper() else ln,
-        ) for fn, ln in authors]
-    d['date_format'] = date_format
+    content = request('https://www.worldcat.org/title/' + oclc).content
+    j = loads(content[
+        (s := (f := content.find)(b' type="application/json">') + 25)
+        :f(b'</script>', s)
+    ])
+    # todo: develop for invalid oclc
+    # if j.get('message') == 'Not authenticated.':  # invalid OCLC number
+    #     raise ReturnError(
+    #         'Error processing OCLC number: ' + oclc,
+    #         'Make sure the OCLC number is valid.',
+    #         ''
+    #     )
+    record = j['props']['pageProps']['record']
+    d: defaultdict[str, Any] = defaultdict(lambda: None)
+    d['cite_type'] = record['generalFormat'].lower()
+    d['title'] = record['title']
+    d['authors'] = [
+        ('', c['nonPersonName']['text'])
+        if 'nonPersonName' in c else
+        (c["firstName"]['text'], c["secondName"]['text'])
+        for c in record["contributors"]
+    ]
+    d['publisher'] = record['publisher']
+    d['publisher-location'] = record['publicationPlace']
+    if m := FOUR_DIGIT_NUM(record['publicationDate']):
+        d['year'] = m[0]
+    d['language'] = record['catalogingLanguage']
+    if isbn := record['isbn13']:
+        d['isbn'] = isbn
     d['oclc'] = oclc
-    d['title'] = d['title'].rstrip('.')
+    d['date_format'] = date_format
     return d
 
 

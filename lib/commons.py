@@ -126,6 +126,8 @@ ISBN13_SEARCH = regex_compile(
 #     r'?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
 # )
 
+FOUR_DIGIT_NUM = regex_compile(r'\d\d\d\d').search
+
 
 class InvalidNameError(ValueError):
 
