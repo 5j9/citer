@@ -8,9 +8,8 @@ from urllib.parse import urlparse
 from regex import compile as regex_compile
 from requests import ConnectionError as RequestsConnectionError
 
-from lib.commons import dict_to_sfn_cit_ref
 from lib.urls import (
-    urls_scr, url2dict, analyze_home, get_html, find_authors,
+    url_to_dict as urls_url_to_dict, url2dict, analyze_home, get_html, find_authors,
     find_journal, find_site_name, find_title, ContentTypeError,
     ContentLengthError, StatusCodeError, TITLE_TAG
 )
@@ -22,13 +21,13 @@ URL_FULLMATCH = regex_compile(
 ).fullmatch
 
 
-def waybackmachine_scr(
+def url_to_dict(
     archive_url: str, date_format: str = '%Y-%m-%d'
-) -> tuple:
+) -> dict:
     """Create the response namedtuple."""
     if (m := URL_FULLMATCH(archive_url)) is None:
         # Could not parse the archive_url. Treat as an ordinary URL.
-        return urls_scr(archive_url, date_format)
+        return urls_url_to_dict(archive_url, date_format)
     archive_year, archive_month, archive_day, original_url = \
         m.groups()
     original_dict = {}
@@ -36,12 +35,7 @@ def waybackmachine_scr(
         target=original_url2dict, args=(original_url, original_dict)
     )
     thread.start()
-    try:
-        archive_dict = url2dict(archive_url)
-    except (ContentTypeError, ContentLengthError) as e:
-        logger.exception(archive_url)
-        # Todo: i18n
-        return 'Invalid content type or length.', e, ''
+    archive_dict = url2dict(archive_url)
     archive_dict['date_format'] = date_format
     archive_dict['url'] = original_url
     archive_dict['archive-url'] = archive_url
@@ -68,7 +62,7 @@ def waybackmachine_scr(
         archive_dict['website'] = (
             urlparse(original_url).hostname.replace('www.', '')
         )
-    return dict_to_sfn_cit_ref(archive_dict)
+    return archive_dict
 
 
 def original_url2dict(ogurl: str, original_dict) -> None:

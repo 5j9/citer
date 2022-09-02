@@ -1,8 +1,12 @@
 # noinspection PyPackageRequirements
-from pytest import mark, raises
-from unittest.mock import patch
+from pytest import mark
 
-from lib.urls import urls_scr, SITE_NAME_SEARCH
+from lib.urls import url_to_dict
+from lib.commons import dict_to_sfn_cit_ref
+
+
+def urls_scr(*args):
+    return dict_to_sfn_cit_ref(url_to_dict(*args))
 
 
 def test_bostonglobe1():

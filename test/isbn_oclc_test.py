@@ -1,5 +1,13 @@
-from lib.isbn_oclc import isbn_scr, oclc_scr
-from lib.commons import ISBN_10OR13_SEARCH
+from lib.isbn_oclc import isbn_to_dict, oclc_dict
+from lib.commons import ISBN_10OR13_SEARCH, dict_to_sfn_cit_ref
+
+
+def isbn_scr(*args):
+    return dict_to_sfn_cit_ref(isbn_to_dict(*args))
+
+
+def oclc_scr(*args):
+    return dict_to_sfn_cit_ref(oclc_dict(*args))
 
 
 def test_is1():
@@ -17,7 +25,7 @@ def test_is1():
         '| date=2007 '
         '| isbn=978-0-349-11916-8 '
         '| oclc=137313052}}'
-    ) == isbn_scr('9780349119168', pure=True)[1]
+    ) == isbn_scr('9780349119168', True)[1]
 
 
 def test_is3():

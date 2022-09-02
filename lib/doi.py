@@ -9,12 +9,11 @@ from html import unescape
 
 from langid import classify
 
-from lib.commons import dict_to_sfn_cit_ref, request, DOI_SEARCH
+from lib.commons import request, DOI_SEARCH
 from config import LANG
 
 
-def doi_scr(doi_or_url, pure=False, date_format='%Y-%m-%d') -> tuple:
-    """Return the response namedtuple."""
+def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
     if pure:
         doi = doi_or_url
     else:
@@ -26,7 +25,7 @@ def doi_scr(doi_or_url, pure=False, date_format='%Y-%m-%d') -> tuple:
     dictionary['date_format'] = date_format
     if LANG == 'fa':
         dictionary['language'] = classify(dictionary['title'])[0]
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary
 
 
 def get_crossref_dict(doi) -> defaultdict:

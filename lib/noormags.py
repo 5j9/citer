@@ -4,7 +4,7 @@ from threading import Thread
 
 from regex import compile as regex_compile
 
-from lib.commons import dict_to_sfn_cit_ref, request
+from lib.commons import request
 from lib.bibtex import parse as bibtex_parse
 from lib.ris import ris_parse
 
@@ -13,7 +13,7 @@ BIBTEX_ARTICLE_ID_SEARCH = regex_compile(r'(?<=/citation/bibtex/)\d+').search
 RIS_ARTICLE_ID_SEARCH = regex_compile(r'(?<=/citation/ris/)\d+').search
 
 
-def noormags_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
+def url_to_dict(url: str, date_format: str = '%Y-%m-%d') -> dict:
     """Create the response namedtuple."""
     ris_collection = {}
     ris_thread = Thread(target=ris_fetcher_thread, args=(url, ris_collection))
@@ -26,7 +26,7 @@ def noormags_scr(url: str, date_format: str = '%Y-%m-%d') -> tuple:
     # "IS  - 1" is wrong in RIS but "number = { 45 }," is correct in bibtex
     ris_thread.join()
     dictionary.update(ris_collection)
-    return dict_to_sfn_cit_ref(dictionary)
+    return dictionary
 
 
 def get_bibtex(noormags_url):

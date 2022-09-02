@@ -6,8 +6,8 @@ from pytest import raises
 from requests import JSONDecodeError
 
 from app import (
-    url_doi_isbn_scr, TLDLESS_NETLOC_RESOLVER, googlebooks_scr,
-    noormags_scr, noorlib_scr, google_encrypted_scr
+    input_to_dict, TLDLESS_NETLOC_RESOLVER, google_books_dict,
+    noorlib_url_to_dict, noormags_url_to_dict, google_encrypted_dict
 )
 
 
@@ -27,31 +27,29 @@ def assert_and_patch_resolver(url, resolver):
 
 def assert_scr(url, resolver):
     with assert_and_patch_resolver(url, resolver), raises(NotImplementedError):
-        url_doi_isbn_scr(url, '%Y-%m-%d')
+        input_to_dict(url, '%Y-%m-%d')
 
 
-def assert_google_books_scr(url, resolver=googlebooks_scr):
+def assert_google_books_scr(url, resolver=google_books_dict):
     assert_scr(url, resolver)
 
 
 def test_google_books_netloc():
     ag = assert_google_books_scr
     # note that top level domains are ignored
-    ag('encrypted.google.com/books?id=6upvonUt0O8C', google_encrypted_scr)
+    ag('encrypted.google.com/books?id=6upvonUt0O8C', google_encrypted_dict)
     ag('books.google.com/books?id=pzmt3pcBuGYC')
     ag('books.google.de/books?id=pzmt3pcBuGYC')
     ag('books.google.com.ar/books?id=pzmt3pcBuGYC')
     ag('books.google.co.il/books?id=pzmt3pcBuGYC')
-    with patch('app.googlebooks_scr') as mock:
-        url_doi_isbn_scr(
-            'www.google.com/books?id=bwfoCAAAQBAJ', None)
-        url_doi_isbn_scr(
-            'www.google.com/books/edition/_/bwfoCAAAQBAJ', None)
+    with patch('app.google_books_dict') as mock:
+        input_to_dict('www.google.com/books?id=bwfoCAAAQBAJ', None)
+        input_to_dict('www.google.com/books/edition/_/bwfoCAAAQBAJ', None)
     assert mock.call_count == 2
 
 
 def assert_noormags_scr(url):
-    assert_scr(url, noormags_scr)
+    assert_scr(url, noormags_url_to_dict)
 
 
 def test_noormags():
@@ -62,7 +60,7 @@ def test_noormags():
 
 
 def assert_noorlib_scr(url):
-    assert_scr(url, noorlib_scr)
+    assert_scr(url, noorlib_url_to_dict)
 
 
 def test_noorlib():
@@ -72,10 +70,10 @@ def test_noorlib():
     an('noorlib.ir/View/fa/Book/BookView/Image/6120')
 
 
-@patch('app.urls_scr')
-@patch('app.doi_scr', side_effect=JSONDecodeError('msg', 'doc', 1))
+@patch('app.urls_url_to_dict')
+@patch('app.doi_to_dict', side_effect=JSONDecodeError('msg', 'doc', 1))
 def test_doi_url_fallback_to_url(doi_scr, urls_scr):
     user_input = 'https://dl.acm.org/doi/10.5555/3157382.3157535'
-    assert url_doi_isbn_scr(user_input, '%B %#d, %Y') is urls_scr.return_value
+    assert input_to_dict(user_input, '%B %#d, %Y') is urls_scr.return_value
     doi_scr.assert_called_once_with('10.5555/3157382.3157535', True, '%B %#d, %Y')
     urls_scr.assert_called_once_with(user_input, '%B %#d, %Y')

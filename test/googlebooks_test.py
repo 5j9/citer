@@ -1,7 +1,13 @@
 from urllib.parse import urlparse
 
 from pytest import mark
-from lib.googlebooks import googlebooks_scr as _googlebooks_scr
+
+from lib.commons import dict_to_sfn_cit_ref
+from lib.googlebooks import url_to_dict
+
+
+def _googlebooks_scr(url):
+    return dict_to_sfn_cit_ref(url_to_dict(url))
 
 
 def googlebooks_scr(url):

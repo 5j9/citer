@@ -1,7 +1,12 @@
 from unittest.mock import patch, Mock
 
 from lib import pubmed
-from lib.pubmed import pmid_scr, pmcid_scr
+from lib.pubmed import pmid_dict, pmcid_dict
+from lib.commons import dict_to_sfn_cit_ref
+
+
+pmid_scr = lambda *args: dict_to_sfn_cit_ref(pmid_dict(*args))
+pmcid_scr = lambda *args: dict_to_sfn_cit_ref(pmcid_dict(*args))
 
 
 def test_doi_update():
@@ -48,4 +53,3 @@ def test_has_doi_but_no_crossref():
         '| date=22 August 2008 | pmid=18723523 | pmc=2562006 '
         '| doi=10.1093/bioinformatics/btn450 | pages=2339–2343}}'
     ) in pmcid_scr('2562006', '%d %B %Y')[1]
-
