@@ -6,7 +6,8 @@ from os.path import dirname, abspath
 from urllib.parse import parse_qs, urlparse, unquote
 from wsgiref.headers import Headers
 
-from requests import ConnectionError as RequestsConnectionError
+from requests import ConnectionError as RequestsConnectionError, \
+    JSONDecodeError
 
 from config import LANG
 from lib.ketabir import ketabir_scr
@@ -99,7 +100,7 @@ def get_root_logger():
 LOGGER = get_root_logger()
 
 
-def url_doi_isbn_scr(user_input, date_format) -> tuple:
+def url_doi_isbn_scr(user_input, date_format, /) -> tuple:
     en_user_input = unquote(uninum2en(user_input))
     # Checking the user input for dot is important because
     # the use of dotless domains is prohibited.
@@ -107,7 +108,7 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
     if '.' in en_user_input:
         # Try predefined URLs
         # Todo: The following code could be done in threads.
-        if not user_input.startswith('http'):
+        if not (url_input := user_input.startswith('http')):
             url = 'http://' + user_input
         else:
             url = user_input
@@ -124,9 +125,16 @@ def url_doi_isbn_scr(user_input, date_format) -> tuple:
             elif resolver is google_encrypted_scr:
                 return resolver(url, parsed_url, date_format)
             return resolver(url, date_format)
+
         # DOIs contain dots
         if (m := DOI_SEARCH(unescape(en_user_input))) is not None:
-            return doi_scr(m[0], True, date_format)
+            try:
+                return doi_scr(m[0], True, date_format)
+            except JSONDecodeError:
+                if url_input is False:
+                    raise
+                # continue with urls_scr
+
         return urls_scr(url, date_format)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is

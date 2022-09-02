@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 # noinspection PyPackageRequirements
 from pytest import raises
-
+from requests import JSONDecodeError
 
 from app import (
     url_doi_isbn_scr, TLDLESS_NETLOC_RESOLVER, googlebooks_scr,
@@ -70,3 +70,12 @@ def test_noorlib():
     an('www.noorlib.ir/View/fa/Book/BookView/Image/6120')
     an('www.noorlib.net/View/fa/Book/BookView/Image/6120')
     an('noorlib.ir/View/fa/Book/BookView/Image/6120')
+
+
+@patch('app.urls_scr')
+@patch('app.doi_scr', side_effect=JSONDecodeError('msg', 'doc', 1))
+def test_doi_url_fallback_to_url(doi_scr, urls_scr):
+    user_input = 'https://dl.acm.org/doi/10.5555/3157382.3157535'
+    assert url_doi_isbn_scr(user_input, '%B %#d, %Y') is urls_scr.return_value
+    doi_scr.assert_called_once_with('10.5555/3157382.3157535', True, '%B %#d, %Y')
+    urls_scr.assert_called_once_with(user_input, '%B %#d, %Y')
