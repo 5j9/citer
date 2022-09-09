@@ -2,5 +2,6 @@ isbnlib
 jdatetime
 langid
 bs4
+lxml
 regex
 requests
