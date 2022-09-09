@@ -44,7 +44,7 @@ def _url_to_dict(ketabir_url: str) -> Optional[dict]:
         logger.exception(ketabir_url)
         return
 
-    soup = BeautifulSoup(r.content)
+    soup = BeautifulSoup(r.content, features='lxml')
     d : defaultdict[str, Any] = defaultdict(lambda: None, cite_type='book')
     d['title'] = soup.select_one('.card-title').text.strip()
 
@@ -57,8 +57,8 @@ def _url_to_dict(ketabir_url: str) -> Optional[dict]:
     translators = []
     # building lists:
     for span in table['پدیدآور'].select('span'):
-        role = span.find(text=True).strip(' :\n')
-        name = span.select_one('a').find(text=True)
+        role = span.find(string=True).strip(' :\n')
+        name = span.select_one('a').find(string=True)
         name = first_last(name, ' ، ')
         if role == 'نويسنده':
             authors.append(name)
@@ -77,7 +77,7 @@ def _url_to_dict(ketabir_url: str) -> Optional[dict]:
     if translators:
         d['translators'] = translators
 
-    d['publisher'] = table['ناشر'].find('a').find(text=True).strip()
+    d['publisher'] = table['ناشر'].find('a').find(string=True).strip()
 
     if len(date := table['تاریخ نشر'].text.strip()) == 8 and date.isdecimal():
         d['month'] = date[4:6]
