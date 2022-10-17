@@ -1,0 +1,24 @@
+{
+	"encoding": null,
+	"headers": {
+		"access-control-allow-headers": "X-Requested-With, Accept, Accept-Encoding, Accept-Charset, Accept-Language, Accept-Ranges, Cache-Control",
+		"access-control-allow-origin": "*",
+		"access-control-expose-headers": "Link",
+		"connection": "close",
+		"content-encoding": "gzip",
+		"content-length": "3845",
+		"content-type": "application/vnd.citationstyles.csl+json",
+		"date": "Sun, 16 Oct 2022 15:57:17 GMT",
+		"link": "<http://dx.doi.org/10.1073/pnas.2015159118>; rel=\"canonical\", <http://www.pnas.org/syndication/doi/10.1073/pnas.2015159118>; version=\"vor\"; rel=\"item\", <https://pnas.org/doi/pdf/10.1073/pnas.2015159118>; version=\"vor\"; rel=\"item\", <https://www.pnas.org/site/aboutpnas/licenses.xhtml>; version=\"vor\"; rel=\"license\", <http://orcid.org/0000-0003-2267-9985>; title=\"Vincent Louis Viala\"; rel=\"author\", <http://orcid.org/0000-0002-3196-0173>; title=\"Pedro Gabriel Nachtigall\"; rel=\"author\", <http://orcid.org/0000-0001-7385-7679>; title=\"Michael Broe\"; rel=\"author\", <http://orcid.org/0000-0001-7461-3393>; title=\"H. Lisle Gibbs\"; rel=\"author\", <http://orcid.org/0000-0001-8994-1904>; title=\"Solange Maria de Toledo Serrano\"; rel=\"author\", <http://orcid.org/0000-0003-1787-6634>; title=\"Ana Maria Moura-da-Silva\"; rel=\"author\", <http://orcid.org/0000-0003-3652-241X>; title=\"Paulo Lee Ho\"; rel=\"author\", <http://orcid.org/0000-0002-2410-0562>; title=\"Milton Yutaka Nishiyama-Jr\"; rel=\"author\", <http://orcid.org/0000-0003-4491-0180>; title=\"Inácio L. M. Junqueira-de-Azevedo\"; rel=\"author\"",
+		"permissions-policy": "interest-cohort=()",
+		"server": "Jetty(9.4.40.v20210413)",
+		"vary": "Accept, Accept-Encoding",
+		"x-api-pool": "public",
+		"x-rate-limit-interval": "1s",
+		"x-rate-limit-limit": "50",
+		"x-ratelimit-interval": "1s",
+		"x-ratelimit-limit": "50"
+	},
+	"status_code": 200,
+	"url": "https://api.crossref.org/v1/works/10.1073%2Fpnas.2015159118/transform"
+}

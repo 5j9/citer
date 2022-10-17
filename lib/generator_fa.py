@@ -2,13 +2,12 @@
 
 
 from collections import defaultdict
-from datetime import date
 from logging import getLogger
 from random import seed as randseed, choice as randchoice
 from string import digits, ascii_lowercase
 
 from lib.generator_en import (
-    DOI_URL_MATCH, sfn_cit_ref as en_citations, fullname)
+    DOI_URL_MATCH, sfn_cit_ref as en_citations, fullname, FOUR_DIGIT_NUM, Date)
 from lib.language import TO_TWO_LETTER_CODE
 
 
@@ -113,8 +112,15 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if others := d['others']:
         cit += names1para(others, 'دیگران')
 
+    date = d['date']
     if year := d['year']:
         sfn += ' | ' + year
+    elif date is not None:
+        if isinstance(date, str):
+            y = FOUR_DIGIT_NUM(date)[0]
+        else:
+            y = date.strftime('%Y')
+        sfn += f' | {y}'
 
     if cite_type == 'book':
         booktitle = d['booktitle'] or d['container-title']
@@ -163,11 +169,11 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if issue := (d['issue'] or d['number']):
         cit += ' | شماره=' + issue
 
-    if ddate := d['date']:
-        if isinstance(ddate, str):
-            cit += ' | تاریخ=' + ddate
+    if date is not None:
+        if isinstance(date, str):
+            cit += ' | تاریخ=' + date
         else:
-            cit += ' | تاریخ=' + date.isoformat(ddate)
+            cit += ' | تاریخ=' + Date.isoformat(date)
     elif year:
         cit += ' | سال=' + year
 
@@ -230,7 +236,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         randchoice(ascii_lowercase)  # it should contain at least one non-digit
         + ''.join(randchoice(LOWER_ALPHA_DIGITS) for _ in range(4)))
     if url:
-        cit += f' | تاریخ بازبینی={date.today().isoformat()}'
+        cit += f' | تاریخ بازبینی={Date.today().isoformat()}'
 
     if not pages and cite_type != 'وب':
         sfn += ' | ص='
