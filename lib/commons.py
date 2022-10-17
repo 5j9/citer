@@ -10,6 +10,10 @@ from requests import Session
 
 from config import LANG, SPOOFED_USER_AGENT, NCBI_TOOL, NCBI_EMAIL, USER_AGENT
 
+
+# generator_en will be imported anyway because it is used in side generator_fa
+# noinspection PyUnresolvedReferences
+from lib.generator_en import FOUR_DIGIT_NUM
 if LANG == 'en':
     from lib.generator_en import sfn_cit_ref
 else:
@@ -126,7 +130,7 @@ ISBN13_SEARCH = regex_compile(
 #     r'?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
 # )
 
-FOUR_DIGIT_NUM = regex_compile(r'\d\d\d\d').search
+WS_NORMALIZE = partial(regex_compile(r'\s{2,}').sub, ' ')
 
 
 class InvalidNameError(ValueError):
@@ -156,12 +160,16 @@ def request(url, spoof=False, method='get', **kwargs):
 
 def dict_to_sfn_cit_ref(dictionary) -> tuple:
     # Return (sfn, cite, ref) strings.
+    if (title := dictionary.get('title')) is not None:
+        dictionary['title'] = WS_NORMALIZE(title)
+
     if isbn := dictionary.get('isbn'):
         try:
             dictionary['isbn'] = isbn_mask(isbn)
         except NotValidISBNError:
             # https://github.com/CrossRef/rest-api-doc/issues/214
             del dictionary['isbn']
+
     return sfn_cit_ref(dictionary)
 
 

@@ -1,7 +1,7 @@
 """Codes required to create English Wikipedia citation templates."""
 
 
-from datetime import date as datetime_date
+from datetime import date as Date
 from functools import partial
 from collections import defaultdict
 from logging import getLogger
@@ -15,6 +15,7 @@ from lib.language import TO_TWO_LETTER_CODE
 # https://www.crossref.org/display-guidelines/
 DOI_URL_MATCH = regex_compile(r'https?://(dx\.)?doi\.org/').match
 DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
+FOUR_DIGIT_NUM = regex_compile(r'\d\d\d\d').search
 
 refless = partial(regex_compile(
     r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})'
@@ -184,6 +185,12 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         if not date or year not in date:
             cit += f' | year={year}'
         sfn += f' | {year}'
+    elif date is not None:
+        if not isinstance(date, str):
+            y = date.strftime('%Y')
+        else:
+            y = FOUR_DIGIT_NUM(date)[0]
+        sfn += f' | {y}'
 
     if isbn := d['isbn']:
         cit += f' | isbn={isbn}'
@@ -252,7 +259,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         cit += '}}'
 
     if url:
-        cit += f' | access-date={datetime_date.today().strftime(date_format)}'
+        cit += f' | access-date={Date.today().strftime(date_format)}'
 
     cit += '}}'
     sfn += '}}'

@@ -93,7 +93,7 @@ def test_conference_location():
     assert (
         "* {{cite conference "
         "| title=Proceedings of the international workshop on System-level"
-        " interconnect prediction  - SLIP'06 "
+        " interconnect prediction - SLIP'06 "
         "| publisher=ACM Press "
         "| publication-place=New York, New York, USA "
         "| year=2006 "
@@ -167,3 +167,9 @@ def test_doi_with_full_date():  # 36
         '| issue=10 | date=2002-05-15 | issn=0094-8276 '
         '| doi=10.1029/2002gl014729 | pages=15–1–15–3}}'
     ) == doi_scr('10.1029/2002GL014729')[1]
+
+
+def test_sfn_extract_year_from_date():
+    s, c, r = doi_scr('10.1073/pnas.2015159118')
+    assert s == '{{sfn | Almeida | Viala | Nachtigall | Broe | 2021 | p=}}'
+    assert c == '* {{cite journal | last=Almeida | first=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118}}'
