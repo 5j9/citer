@@ -96,7 +96,7 @@ def dump_response(hsh, response: Response) -> None:
         'headers': {**response.headers},
         'encoding': response.encoding,
         'url': response.url}
-    with open(f'{TESTDATA}/{hsh}.json', 'w') as f:
+    with open(f'{TESTDATA}/{hsh}.json', 'w', encoding='utf8') as f:
         json_dump(d, f)
     with open(f'{TESTDATA}/{hsh}.html', 'wb') as f:
         f.write(response.content)
