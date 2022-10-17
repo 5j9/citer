@@ -11,7 +11,8 @@ from requests import ConnectionError as RequestsConnectionError, \
 
 from config import LANG
 from lib.ketabir import url_to_dict as ketabir_url_to_dict
-from lib.commons import uninum2en, scr_to_json, ISBN_10OR13_SEARCH, ReturnError
+from lib.commons import uninum2en, scr_to_json, ISBN_10OR13_SEARCH, \
+    ReturnError, dict_to_sfn_cit_ref
 from lib.doi import doi_to_dict, DOI_SEARCH
 from lib.googlebooks import url_to_dict as google_books_dict
 from lib.isbn_oclc import IsbnError, isbn_to_dict, oclc_dict
@@ -199,11 +200,12 @@ def app(environ: dict, start_response: callable) -> tuple:
         else:
             response_body = scr_to_html(scr, date_format, input_type)
     else:
+        scr = dict_to_sfn_cit_ref(d)
         status = '200 OK'
         if output_format == 'json':
-            response_body = scr_to_json(d)
+            response_body = scr_to_json(scr)
         else:
-            response_body = scr_to_html(d, date_format, input_type)
+            response_body = scr_to_html(scr, date_format, input_type)
     response_body = response_body.encode()
     RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
     start_response(status, RESPONSE_HEADERS.items())
