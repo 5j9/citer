@@ -1,7 +1,6 @@
 from calendar import month_abbr, month_name
 from datetime import datetime, date as datetime_date
 from functools import partial
-from json import dumps as json_dumps
 
 from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
@@ -171,15 +170,6 @@ def dict_to_sfn_cit_ref(dictionary) -> tuple:
             del dictionary['isbn']
 
     return sfn_cit_ref(dictionary)
-
-
-def scr_to_json(response) -> str:
-    """Generate api JSON response containing sfn, cite and ref."""
-    return json_dumps({
-        'reference_tag': response.ref,
-        'citation_template': response.cite,
-        'shortened_footnote': response.sfn,
-    })
 
 
 def first_last(fullname, separator=None) -> tuple:
