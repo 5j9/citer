@@ -9,18 +9,11 @@ from functools import partial
 from path import Path
 from requests import Session, Response, ConnectionError as RConnectionError
 # noinspection PyPackageRequirements
-from environs import Env
+
+from test.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
 
 # Do not import library parts here. commons.py should not be loaded
 # until LANG is set by test_fa and test_en.
-
-
-env = Env()
-env.read_env()
-# Use for updating cache entries
-FORCE_OVERWRITE_TESTDATA = env.bool('FORCE_OVERWRITE_TESTDATA', False)
-READONLY_TESTDATA = env.bool('READONLY_TESTDATA', True)
-REMOVE_UNUSED_TESTDATA = env.bool('REMOVE_UNUSED_TESTDATA', False)
 
 TESTDATA = Path(__file__).parent / 'testdata'
 
@@ -125,10 +118,6 @@ def fake_request(method, url, data=None, stream=False, **kwargs):
         response = load_response(sha1_hex)
 
     if response is None:  # either FileNotFoundError or FORCE_CACHE_OVERWRITE
-        if READONLY_TESTDATA:
-            raise RuntimeError(
-                f'testdata file not found. '
-                f'{READONLY_TESTDATA=} {FORCE_OVERWRITE_TESTDATA=}')
         print('Downloading ' + url)
         with real_request():
             try:
