@@ -30,14 +30,9 @@ json_dump = partial(
 
 
 class FakeResponse:
-
-    # todo: remove mechanicalsoup stuff
     __slots__ = (
         'content', 'iter_content', 'status_code', 'headers', 'encoding', 'url',
-        'soup'  # required by mechanicalsoup
     )
-
-    request = None   # required by mechanicalsoup
 
     def __init__(
         self, url: str, content: bytes, status_code: int, headers: dict,
