@@ -7,22 +7,21 @@
 		"Connection": "Keep-Alive",
 		"Content-Security-Policy": "upgrade-insecure-requests",
 		"Content-Type": "application/json; charset=UTF-8",
-		"Date": "Thu, 09 Jun 2022 10:37:32 GMT",
+		"Date": "Sun, 30 Oct 2022 03:19:46 GMT",
 		"Keep-Alive": "timeout=4, max=40",
-		"NCBI-PHID": "D0BD347135095BB5000029BABE488B4A.1.1.m_1",
-		"NCBI-SID": "8A784C81F6E218AD_0658SID",
+		"NCBI-PHID": "322C1E99C57B0BF500004C0A6BDCCD45.1.1.m_1",
+		"NCBI-SID": "B558C582416190BE_221ESID",
 		"Referrer-Policy": "origin-when-cross-origin",
 		"Server": "Finatra",
-		"Set-Cookie": "ncbi_sid=8A784C81F6E218AD_0658SID; domain=.nih.gov; path=/; expires=Fri, 09 Jun 2023 10:37:33 GMT",
+		"Set-Cookie": "ncbi_sid=B558C582416190BE_221ESID; domain=.nih.gov; path=/; expires=Mon, 30 Oct 2023 03:19:46 GMT",
 		"Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
 		"Transfer-Encoding": "chunked",
 		"X-RateLimit-Limit": "10",
 		"X-RateLimit-Remaining": "9",
-		"X-Test-Test": "test42",
 		"X-UA-Compatible": "IE=Edge",
 		"X-XSS-Protection": "1; mode=block",
 		"content-encoding": "gzip"
 	},
 	"status_code": 200,
-	"url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?api_key=dad47b304cafdc0790b32d335e3e3a403c08&retmode=json&tool=5j9.citer@github.com&email=dalba.wiki@gmail.com&db=pmc&id=3538472"
+	"url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?_REDACTED_PARAMS_&db=pubmed&id=123455"
 }

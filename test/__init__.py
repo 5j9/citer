@@ -11,7 +11,6 @@ from requests import Session, Response, ConnectionError as RConnectionError
 # noinspection PyPackageRequirements
 from environs import Env
 
-
 # Do not import library parts here. commons.py should not be loaded
 # until LANG is set by test_fa and test_en.
 
@@ -89,13 +88,14 @@ def load_response(hsh: str) -> Optional[FakeResponse]:
         d['url'], content, d['status_code'], d['headers'], d['encoding'])
 
 
-def dump_response(hsh, response: Response) -> None:
+def dump_response(hsh, response: Response, redacted_url: str) -> None:
     d = {
         'status_code': response.status_code,
         # CaseInsensitiveDict is not JSON serializable
         'headers': {**response.headers},
         'encoding': response.encoding,
-        'url': response.url}
+        'url': redacted_url,
+    }
     with open(f'{TESTDATA}/{hsh}.json', 'w', encoding='utf8') as f:
         json_dump(d, f)
     with open(f'{TESTDATA}/{hsh}.html', 'wb') as f:
@@ -110,10 +110,18 @@ def dump_connection_error(hsh):
 # noinspection PyDecorator
 @staticmethod
 def fake_request(method, url, data=None, stream=False, **kwargs):
-    if data:
-        cache_key = url + repr(sorted(data))
+    if url.startswith(NCBI_URL):
+        redacted_url = url.replace(
+            NCBI_URL,
+            NCBI_URL[:NCBI_URL.find('?')] + '?_REDACTED_PARAMS_'
+        )
     else:
-        cache_key = url
+        redacted_url = url
+
+    if data:
+        cache_key = redacted_url + repr(sorted(data))
+    else:
+        cache_key = redacted_url
     sha1_hex = sha1(cache_key.encode()).hexdigest()
 
     if FORCE_OVERWRITE_TESTDATA is True:
@@ -133,7 +141,7 @@ def fake_request(method, url, data=None, stream=False, **kwargs):
                     method, url, data=data, **kwargs)
             except RConnectionError:
                 dump_connection_error(sha1_hex)
-        dump_response(sha1_hex, response)
+        dump_response(sha1_hex, response, redacted_url)
 
     if stream is True:
         def iter_content(*_):
@@ -153,6 +161,9 @@ def real_request():
 
 original_request = Session.request
 Session.request = fake_request
+
+# this import needs to placed after Session patch
+from lib.pubmed import NCBI_URL  # noqa
 
 
 if REMOVE_UNUSED_TESTDATA is True:
