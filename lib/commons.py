@@ -5,7 +5,7 @@ from functools import partial
 from isbnlib import mask as isbn_mask, NotValidISBNError
 from jdatetime import date as jdate
 from regex import compile as regex_compile, VERBOSE, IGNORECASE
-from requests import Session
+import requests
 
 from config import LANG, SPOOFED_USER_AGENT, NCBI_TOOL, NCBI_EMAIL, USER_AGENT
 
@@ -104,7 +104,14 @@ SPOOFED_AGENT_HEADER = {
     'User-Agent': SPOOFED_USER_AGENT,
     'Accept': "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
 }
-REQUEST = partial(Session().request, timeout=10)
+
+
+urllib3 = requests.packages.urllib3
+# Workaround for `[SSL: DH_KEY_TOO_SMALL] dh key too small`.
+# https://stackoverflow.com/a/63349178/2705757
+urllib3.util.ssl_.DEFAULT_CIPHERS = 'ALL:@SECLEVEL=0'
+
+REQUEST = partial(requests.request, timeout=10)
 
 # original regex from:
 # https://www.debuggex.com/r/0Npla56ipD5aeTr9
