@@ -111,7 +111,7 @@ urllib3 = requests.packages.urllib3
 # https://stackoverflow.com/a/63349178/2705757
 urllib3.util.ssl_.DEFAULT_CIPHERS = 'ALL:@SECLEVEL=0'
 
-REQUEST = partial(requests.request, timeout=10)
+REQUEST = partial(requests.request, timeout=20)
 
 # original regex from:
 # https://www.debuggex.com/r/0Npla56ipD5aeTr9
