@@ -74,6 +74,7 @@ TYPE_TO_CITE = {
     'edited-book': 'کتاب',
     'standard-series': '',
     'jour': 'ژورنال',
+    'jrnl': 'ژورنال',
 }.get
 
 # According to https://en.wikipedia.org/wiki/Help:Footnotes,

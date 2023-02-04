@@ -70,6 +70,7 @@ TYPE_TO_CITE = {
     'proceedings-article': 'conference',
     'journal': 'journal',
     'jour': 'journal',
+    'jrnl': 'journal',
     # https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=22368089&retmode=json&tool=my_tool&email=my_email@example.com
     'Journal Article': 'journal',
     'component': '',
