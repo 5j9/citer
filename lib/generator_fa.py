@@ -7,74 +7,16 @@ from random import seed as randseed, choice as randchoice
 from string import digits, ascii_lowercase
 
 from lib.generator_en import (
-    DOI_URL_MATCH, sfn_cit_ref as en_citations, fullname, FOUR_DIGIT_NUM, Date)
+    DOI_URL_MATCH, sfn_cit_ref as en_citations, fullname, FOUR_DIGIT_NUM, Date,
+    TYPE_TO_CITE
+)
 from lib.language import TO_TWO_LETTER_CODE
 
 
-TYPE_TO_CITE = {
-    # BibTex types. Descriptions are from
-    # http://ctan.um.ac.ir/biblio/bibtex/base/btxdoc.pdf
-    # A part of a book, which may be a chapter (or section or whatever) and/or
-    # a range of pages.
-    'inbook': 'کتاب',
-    # A work that is printed and bound, but without a named publisher or
-    # sponsoring institution.
-    # Note: Yadkard does not currently support the `howpublished` option.
-    'booklet': 'کتاب',
-    # A part of a book having its own title.
-    'incollection': 'کتاب',
-    # Technical documentation.
-    # Template:Cite manual is a redirect to Template:Cite_book on enwiki.
-    'manual': 'کتاب',
-    # An article from a journal or magazine.
-    'article': 'ژورنال',
-    # The same as INPROCEEDINGS, included for Scribe compatibility.
-    'conference': 'conference',
-    # An article in a conference proceedings.
-    'inproceedings': 'conference',
-    # A Master's thesis.
-    'mastersthesis': 'thesis',
-    # A PhD thesis.
-    'phdthesis': 'thesis',
-    # A report published by a school or other institution, usually numbered
-    # within a series.
-    'techreport': 'techreport',
-    # Use this type when nothing else fits.
-    'misc': '',
-    # Types used by Yadkard.
-    'web': 'وب',
-    # crossref types (https://api.crossref.org/v1/types)
-    'book-section': 'کتاب',
-    'monograph': 'کتاب',
-    'report': 'report',
-    'book-track': 'کتاب',
-    'journal-article': 'ژورنال',
-    'book-part': 'کتاب',
-    'other': '',
+CITE_TYPE_TO_PERSIAN = {
     'book': 'کتاب',
-    'journal-volume': 'ژورنال',
-    'book-set': 'کتاب',
-    'reference-entry': '',
-    'proceedings-article': 'conference',
     'journal': 'ژورنال',
-    # https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=22368089&retmode=json&tool=my_tool&email=my_email@example.com
-    'Journal Article': 'ژورنال',
-    'article-journal': 'ژورنال',
-    'component': '',
-    'book-chapter': 'کتاب',
-    'report-series': 'report',
-    'proceedings': 'conference',
-    'standard': '',
-    'reference-book': 'کتاب',
-    'posted-content': '',
-    'journal-issue': 'ژورنال',
-    'dissertation': 'thesis',
-    'dataset': '',
-    'book-series': 'کتاب',
-    'edited-book': 'کتاب',
-    'standard-series': '',
-    'jour': 'ژورنال',
-    'jrnl': 'ژورنال',
+    'web': 'وب',
 }.get
 
 # According to https://en.wikipedia.org/wiki/Help:Footnotes,
@@ -90,6 +32,8 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if not (cite_type := TYPE_TO_CITE(d['cite_type'])):
         logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
         cite_type = ''
+    else:
+        cite_type = CITE_TYPE_TO_PERSIAN(cite_type) or cite_type
     if cite_type in ('کتاب', 'ژورنال', 'وب'):
         cit = '* {{یادکرد ' + cite_type
     else:
