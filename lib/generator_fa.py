@@ -3,7 +3,7 @@
 
 from collections import defaultdict
 from logging import getLogger
-from random import seed as randseed, choice as randchoice
+from random import seed, choice, choices
 from string import digits, ascii_lowercase
 
 from lib.generator_en import (
@@ -176,10 +176,10 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if pages:
         sfn += f' | ص={pages}'
     # Seed the random generator before adding today's date.
-    randseed(cit)
+    seed(cit)
     ref_name = (
-        randchoice(ascii_lowercase)  # it should contain at least one non-digit
-        + ''.join(randchoice(LOWER_ALPHA_DIGITS) for _ in range(4)))
+        choice(ascii_lowercase)  # it should contain at least one non-digit
+        + ''.join(choices(LOWER_ALPHA_DIGITS, k=4)))
     if url:
         cit += f' | تاریخ بازبینی={Date.today().isoformat()}'
 
