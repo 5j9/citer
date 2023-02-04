@@ -1,6 +1,6 @@
 from pytest import raises
 
-from lib.isbn_oclc import isbn_to_dict, oclc_dict
+from lib.isbn_oclc import isbn_to_dict, oclc_dict, worldcat_url_to_dict
 from lib.commons import ISBN_10OR13_SEARCH, dict_to_sfn_cit_ref, ReturnError
 
 
@@ -10,6 +10,10 @@ def isbn_scr(*args):
 
 def oclc_scr(*args):
     return dict_to_sfn_cit_ref(oclc_dict(*args))
+
+
+def worldcat_scr(*args):
+    return dict_to_sfn_cit_ref(worldcat_url_to_dict(*args))
 
 
 def test_is1():
@@ -103,3 +107,10 @@ def test_oclc_with_issn():
     assert oclc_scr('22239204')[1] == (
         '* {{cite journal | title=73 amateur radio today | publisher=WGE Pub. | publication-place=Hancock, N.H. | year=1990 | issn=1052-2522 | oclc=22239204 | ref={{sfnref | WGE Pub. | 1990}}}}'
     )
+
+
+def test_worldcat_url():
+    assert worldcat_scr('https://www.worldcat.org/title/46908525')[1] == (
+        '* {{cite book | last=Lewis | first=James Bryant | last2=Sesay | first2=Amadu | title=Korea and globalization : politics, economics and culture | publisher=RoutledgeCurzon | publication-place=Richmond | year=2002 | isbn=978-0-7007-1512-1 | oclc=46908525}}'
+    )
+
