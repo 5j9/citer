@@ -1,14 +1,12 @@
 from pytest_socket import disable_socket
 # noinspection PyPackageRequirements
-from environs import Env
+from decouple import config
 
 
-env = Env()
-env.read_env()
 # Use for updating cache entries
-FORCE_OVERWRITE_TESTDATA = env.bool('FORCE_OVERWRITE_TESTDATA', False)
-READONLY_TESTDATA = env.bool('READONLY_TESTDATA', True)
-REMOVE_UNUSED_TESTDATA = env.bool('REMOVE_UNUSED_TESTDATA', False)
+FORCE_OVERWRITE_TESTDATA = config('FORCE_OVERWRITE_TESTDATA', False, cast=bool)
+READONLY_TESTDATA = config('READONLY_TESTDATA', True, cast=bool)
+REMOVE_UNUSED_TESTDATA = config('REMOVE_UNUSED_TESTDATA', False, cast=bool)
 
 
 if READONLY_TESTDATA:
