@@ -6,12 +6,14 @@ from json import loads
 
 from langid import classify
 from isbnlib import info as isbn_info
+from regex import search
 
 from config import LANG
 from lib.ketabir import url_to_dict as ketabir_url_to_dict
 from lib.ketabir import isbn_to_url as ketabir_isbn2url
 from lib.commons import request, ISBN13_SEARCH, ISBN10_SEARCH, ReturnError, \
     FOUR_DIGIT_NUM
+from lib.urls import url_to_dict
 
 
 RM_DASH_SPACE = str.maketrans('', '', '- ')
@@ -163,6 +165,15 @@ def get_citoid_dict(isbn) -> Optional[dict]:
 def citoid_thread_target(isbn: str, result: list) -> None:
     if citoid_dict := get_citoid_dict(isbn):
         result.append(citoid_dict)
+
+
+def worldcat_url_to_dict(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
+    try:
+        oclc = search('(?i)worldcat.org/(?:title|oclc)/(\d+)', url)[1]
+    except TypeError:  # 'NoneType' object is not subscriptable
+        # e.g. on https://www.worldcat.org/formats-editions/22239204
+        return url_to_dict(url, date_format)
+    return oclc_dict(oclc, date_format)
 
 
 def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:

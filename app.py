@@ -15,7 +15,8 @@ from lib.commons import uninum2en, ISBN_10OR13_SEARCH, \
     ReturnError, dict_to_sfn_cit_ref
 from lib.doi import doi_to_dict, DOI_SEARCH
 from lib.googlebooks import url_to_dict as google_books_dict
-from lib.isbn_oclc import IsbnError, isbn_to_dict, oclc_dict
+from lib.isbn_oclc import IsbnError, isbn_to_dict, oclc_dict, \
+    worldcat_url_to_dict
 from lib.jstor import url_to_dict as jstor_url_to_dict
 from lib.noorlib import url_to_dict as noorlib_url_to_dict
 from lib.noormags import url_to_dict as noormags_url_to_dict
@@ -56,6 +57,7 @@ def google_encrypted_dict(url, parsed_url, date_format) -> dict:
 
 TLDLESS_NETLOC_RESOLVER = {
     'ketab': ketabir_url_to_dict,
+    'worldcat': worldcat_url_to_dict,
 
     'noorlib': noorlib_url_to_dict,
     'noormags': noormags_url_to_dict,
@@ -115,12 +117,9 @@ def input_to_dict(user_input, date_format, /) -> dict:
             url = user_input
         parsed_url = urlparse(url)
         # TLD stands for top-level domain
-        tldless_netloc = parsed_url[1].rpartition('.')[0]
+        tldless_netloc = parsed_url[1].rpartition('.')[0].removeprefix('www.')
         # todo: make lazy?
-        if (to_dict := TLDLESS_NETLOC_RESOLVER(
-            tldless_netloc[4:] if tldless_netloc.startswith('www.')
-            else tldless_netloc
-        )) is not None:
+        if (to_dict := TLDLESS_NETLOC_RESOLVER(tldless_netloc)) is not None:
             if to_dict is google_books_dict:
                 return to_dict(parsed_url, date_format)
             elif to_dict is google_encrypted_dict:
