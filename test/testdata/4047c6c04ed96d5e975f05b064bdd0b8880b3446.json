@@ -1,0 +1,22 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"CF-Cache-Status": "DYNAMIC",
+		"CF-RAY": "79403cb3dbfa30e4-FRA",
+		"Cache-Control": "private, no-cache, no-store, max-age=0, must-revalidate",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Security-Policy": "frame-ancestors 'none'",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Sat, 04 Feb 2023 03:14:40 GMT",
+		"Server": "cloudflare",
+		"Server-Timing": "cf-q-config;dur=5.9999999848515e-06",
+		"Set-Cookie": "TS01964259=011e5233359becd7ce260fa9bcdb342b2dfb97eb33bd0b0ff4c624e9713edfeb844eea455d9828312b123f58ef424a2d3adfb1a051; Path=/; Domain=.worldcat.org; Secure; HTTPOnly, __cf_bm=Vlk7bYQZb6dg_LT_86YuNn9cvPhl_Zb.tfhPf9VjJ_I-1675480480-0-ASatFhh4JVC9xC4t0CevTCFJnsobvwNZrIuy0hYOd3Hvcs9H1uLbxJS2YFGWIIVqH9MEEg1rYGvFWosISqhlDR8=; path=/; expires=Sat, 04-Feb-23 03:44:40 GMT; domain=.worldcat.org; HttpOnly; Secure; SameSite=None",
+		"Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding",
+		"X-Frame-Options": "SAMEORIGIN"
+	},
+	"status_code": 200,
+	"url": "https://www.worldcat.org/title/22239204"
+}

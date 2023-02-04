@@ -194,6 +194,8 @@ def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
     d['language'] = record['catalogingLanguage']
     if isbn := record['isbn13']:
         d['isbn'] = isbn
+    if issns := record['issns']:
+        d['issn'] = issns[0]
     d['oclc'] = oclc
     d['date_format'] = date_format
     return d

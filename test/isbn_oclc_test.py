@@ -97,3 +97,9 @@ def test_invalid_oclc():
             'Make sure the OCLC identifier is valid.',
             ''
         )
+
+
+def test_oclc_with_issn():
+    assert oclc_scr('22239204')[1] == (
+        '* {{cite | title=73 amateur radio today | publisher=WGE Pub. | publication-place=Hancock, N.H. | year=1990 | issn=1052-2522 | oclc=22239204 | ref={{sfnref | WGE Pub. | 1990}}}}'
+    )
