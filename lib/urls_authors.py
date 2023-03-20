@@ -1,10 +1,8 @@
 from typing import List, Optional, Tuple
 
-from regex import compile as regex_compile, VERBOSE, IGNORECASE, ASCII
+from regex import ASCII, IGNORECASE, VERBOSE, compile as regex_compile
 
-from lib.commons import ANYDATE_SEARCH, first_last, InvalidNameError, \
-    FOUR_DIGIT_NUM
-
+from lib.commons import ANYDATE_SEARCH, FOUR_DIGIT_NUM, InvalidNameError, first_last
 
 # Names in byline are required to be two or three parts
 NAME_PATTERN = r'\w[\w.-]++\ \w[\w.-]++(?>\ \w[\w.-]+)?'

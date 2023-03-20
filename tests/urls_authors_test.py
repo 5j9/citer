@@ -1,9 +1,8 @@
 from pytest import mark
-from regex import compile as regex_compile, VERBOSE, IGNORECASE
+from regex import IGNORECASE, VERBOSE, compile as regex_compile
 
-from lib.urls_authors import byline_to_names, BYLINE_PATTERN, \
-    BYLINE_TAG_FINDITER
-from test.urls_test import urls_scr
+from lib.urls_authors import BYLINE_PATTERN, BYLINE_TAG_FINDITER, byline_to_names
+from tests.urls_test import urls_scr
 
 BYLINE_PATTERN_REGEX = regex_compile(
     fr'^{BYLINE_PATTERN}$',

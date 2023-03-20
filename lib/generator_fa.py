@@ -3,15 +3,18 @@
 
 from collections import defaultdict
 from logging import getLogger
-from random import seed, choice, choices
-from string import digits, ascii_lowercase
+from random import choice, choices, seed
+from string import ascii_lowercase, digits
 
 from lib.generator_en import (
-    DOI_URL_MATCH, sfn_cit_ref as en_citations, fullname, FOUR_DIGIT_NUM, Date,
-    TYPE_TO_CITE
+    DOI_URL_MATCH,
+    FOUR_DIGIT_NUM,
+    TYPE_TO_CITE,
+    Date,
+    fullname,
+    sfn_cit_ref as en_citations,
 )
 from lib.language import TO_TWO_LETTER_CODE
-
 
 CITE_TYPE_TO_PERSIAN = {
     'book': 'کتاب',

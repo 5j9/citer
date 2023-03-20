@@ -1,8 +1,8 @@
 # noinspection PyPackageRequirements
 from pytest import mark
 
-from lib.urls import url_to_dict
 from lib.commons import dict_to_sfn_cit_ref
+from lib.urls import url_to_dict
 
 
 def urls_scr(*args):

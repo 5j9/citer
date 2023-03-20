@@ -1,19 +1,27 @@
 """Define related tools for web.archive.org (aka Wayback Machine)."""
 
 import logging
-from threading import Thread
 from datetime import date
+from threading import Thread
 from urllib.parse import urlparse
 
 from regex import compile as regex_compile
 from requests import ConnectionError as RequestsConnectionError
 
 from lib.urls import (
-    url_to_dict as urls_url_to_dict, url2dict, analyze_home, get_html, find_authors,
-    find_journal, find_site_name, find_title, ContentTypeError,
-    ContentLengthError, StatusCodeError, TITLE_TAG
+    TITLE_TAG,
+    ContentLengthError,
+    ContentTypeError,
+    StatusCodeError,
+    analyze_home,
+    find_authors,
+    find_journal,
+    find_site_name,
+    find_title,
+    get_html,
+    url2dict,
+    url_to_dict as urls_url_to_dict,
 )
-
 
 URL_FULLMATCH = regex_compile(
     r'https?+://web(?:-beta)?+\.archive\.org/(?:web/)?+'

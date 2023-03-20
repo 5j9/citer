@@ -1,18 +1,16 @@
 from datetime import date
 from unittest.mock import patch
 
-from lib.generator_fa import sfn_cit_ref
 from lib.commons import find_any_date
-
-from test.googlebooks_test import googlebooks_scr
-from test.noormags_test import noormags_scr
-from test.noorlib_test import noorlib_scr
-from test.ketabir_test import ketabir_scr
-from test.doi_test import doi_scr
-from test.isbn_oclc_test import isbn_scr
-from test.pubmed_test import pmid_scr
-from test.urls_test import urls_scr
-
+from lib.generator_fa import sfn_cit_ref
+from tests.doi_test import doi_scr
+from tests.googlebooks_test import googlebooks_scr
+from tests.isbn_oclc_test import isbn_scr
+from tests.ketabir_test import ketabir_scr
+from tests.noorlib_test import noorlib_scr
+from tests.noormags_test import noormags_scr
+from tests.pubmed_test import pmid_scr
+from tests.urls_test import urls_scr
 
 sfn_cit_ref_patcher = patch('lib.commons.sfn_cit_ref', sfn_cit_ref)
 doi_patcher = patch('lib.doi.LANG', 'fa')

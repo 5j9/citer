@@ -1,10 +1,9 @@
 from collections import defaultdict
 
-from regex import compile as regex_compile, MULTILINE, VERBOSE
+from regex import MULTILINE, VERBOSE, compile as regex_compile
 
+from lib.commons import ISBN_10OR13_SEARCH, InvalidNameError, first_last
 from lib.doi import DOI_SEARCH
-from lib.commons import first_last, InvalidNameError, ISBN_10OR13_SEARCH
-
 
 RIS_FULLMATCH = regex_compile(
     r'''

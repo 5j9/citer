@@ -2,9 +2,8 @@
 
 from regex import compile as regex_compile
 
-from lib.commons import request
 from lib.bibtex import parse as bibtex_parse
-
+from lib.commons import request
 
 BIBTEX_ARTICLE_ID_SEARCH = regex_compile(
     r'(?<=CitationHandler\.ashx\?id=)\d+').search

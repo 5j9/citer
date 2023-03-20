@@ -1,18 +1,18 @@
 from calendar import month_abbr, month_name
-from datetime import datetime, date as datetime_date
+from datetime import date as datetime_date, datetime
 from functools import partial
 
-from isbnlib import mask as isbn_mask, NotValidISBNError
-from jdatetime import date as jdate
-from regex import compile as regex_compile, VERBOSE, IGNORECASE
 import requests
+from isbnlib import NotValidISBNError, mask as isbn_mask
+from jdatetime import date as jdate
+from regex import IGNORECASE, VERBOSE, compile as regex_compile
 
-from config import LANG, SPOOFED_USER_AGENT, NCBI_TOOL, NCBI_EMAIL, USER_AGENT
-
+from config import LANG, NCBI_EMAIL, NCBI_TOOL, SPOOFED_USER_AGENT, USER_AGENT
 
 # generator_en will be imported anyway because it is used in side generator_fa
 # noinspection PyUnresolvedReferences
 from lib.generator_en import FOUR_DIGIT_NUM
+
 if LANG == 'en':
     from lib.generator_en import sfn_cit_ref
 else:

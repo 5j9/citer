@@ -4,10 +4,9 @@ from threading import Thread
 
 from regex import compile as regex_compile
 
-from lib.commons import request
 from lib.bibtex import parse as bibtex_parse
+from lib.commons import request
 from lib.ris import ris_parse
-
 
 BIBTEX_ARTICLE_ID_SEARCH = regex_compile(r'(?<=/citation/bibtex/)\d+').search
 RIS_ARTICLE_ID_SEARCH = regex_compile(r'(?<=/citation/ris/)\d+').search

@@ -5,44 +5,44 @@
 
 <esi:assign name="is_mobile" value="0" />
 <esi:choose>
-  <esi:when test="$(done)!='1'">
+  <esi:when tests="$(done)!='1'">
     <esi:assign name="done" value="0"/>
   </esi:when>
 </esi:choose>
 
 <esi:assign name="query_param" value="''"/>
 <esi:choose>
-    <esi:when test="$(QUERY_STRING)">
+    <esi:when tests="$(QUERY_STRING)">
         <esi:assign name="query_param">'?'+$(QUERY_STRING)</esi:assign>
     </esi:when>
 </esi:choose>
 
 <esi:choose>
-  <esi:when test="$(HTTP_USER_AGENT) matches_i '''SCH-I535|SPH-L710|SGH-N064|SGH-N035|SGH-T999|SGH-I747|GT-I9305|GT-I9300|android.+mobile|iphone|ipod|webos|blackberry.+webkit.+mobile|htc|opera\ mini|operamini|iemobile|opera\ mobi|lge|lg|palm|samsung|nokia|windows\ phone|windows\ ce|bb10|blackberry|Mobile.+Firefox|tizen.+mobile'''">
+  <esi:when tests="$(HTTP_USER_AGENT) matches_i '''SCH-I535|SPH-L710|SGH-N064|SGH-N035|SGH-T999|SGH-I747|GT-I9305|GT-I9300|android.+mobile|iphone|ipod|webos|blackberry.+webkit.+mobile|htc|opera\ mini|operamini|iemobile|opera\ mobi|lge|lg|palm|samsung|nokia|windows\ phone|windows\ ce|bb10|blackberry|Mobile.+Firefox|tizen.+mobile'''">
     <esi:assign name="is_mobile" value="1" />
   </esi:when>
 </esi:choose>
 
 <esi:choose>
-  <esi:when test="$(HTTP_USER_AGENT) matches_i '''SAMSUNG\ SM-T'''">
+  <esi:when tests="$(HTTP_USER_AGENT) matches_i '''SAMSUNG\ SM-T'''">
     <esi:assign name="is_mobile" value="0" />
   </esi:when>
 </esi:choose>
 
 <esi:choose>
-  <esi:when test="$(is_mobile) == '1' && $(HTTP_HOST) has 'huffingtonpost.com' && $(REQUEST_PATH) matches_i '/jobs'">
+  <esi:when tests="$(is_mobile) == '1' && $(HTTP_HOST) has 'huffingtonpost.com' && $(REQUEST_PATH) matches_i '/jobs'">
     <esi:assign name="done" value="1"/>
   </esi:when>
 </esi:choose>
 
 <esi:choose>
-  <esi:when test="$(is_mobile) == '1' && $(HTTP_HOST) has 'huffingtonpost.com' && $(REQUEST_PATH) matches_i '/hill/signup\.html'">
+  <esi:when tests="$(is_mobile) == '1' && $(HTTP_HOST) has 'huffingtonpost.com' && $(REQUEST_PATH) matches_i '/hill/signup\.html'">
     <esi:assign name="done" value="1"/>
   </esi:when>
 </esi:choose>
 
 <esi:choose>
-  <esi:when test="($exists($(QUERY_STRING{'m'})) && $(QUERY_STRING{'m'}) == 'false')
+  <esi:when tests="($exists($(QUERY_STRING{'m'})) && $(QUERY_STRING{'m'}) == 'false')
                     && $(is_mobile)=='1'">
       $add_header('Set-Cookie','mobileview=false; path=/;')
       $set_redirect('http://www.huffingtonpost.ca'+$(REQUEST_PATH))
@@ -51,7 +51,7 @@
 </esi:choose>
 
 <esi:choose>
-  <esi:when test="($exists($(QUERY_STRING{'m'})) && $(QUERY_STRING{'m'}) == 'true')
+  <esi:when tests="($exists($(QUERY_STRING{'m'})) && $(QUERY_STRING{'m'}) == 'true')
                     && $(is_mobile)=='1'">
       $add_header('Set-Cookie','mobileview=true; path=/;')
       <esi:assign name="ignore_mobile_cookie" value="1"/>
@@ -59,59 +59,59 @@
 </esi:choose>
 
 <esi:choose>
-  <esi:when test="($exists($(QUERY_STRING{'tm'})) && $(QUERY_STRING{'tm'}) == 'false')
+  <esi:when tests="($exists($(QUERY_STRING{'tm'})) && $(QUERY_STRING{'tm'}) == 'false')
                     && $(is_mobile)=='1'">
       <esi:assign name="done" value="1"/>
   </esi:when>
 </esi:choose>
 
 <esi:choose>
-  <esi:when test="$(is_mobile) == '1' && $(HTTP_HOST) has 'huffingtonpost.com' && $(REQUEST_PATH) matches_i 'special\/disney_travel'">
+  <esi:when tests="$(is_mobile) == '1' && $(HTTP_HOST) has 'huffingtonpost.com' && $(REQUEST_PATH) matches_i 'special\/disney_travel'">
     $set_redirect('http://m.news.travel.aol.com/disney/')
     <esi:assign name="done" value="1"/>
   </esi:when>
 </esi:choose>
 <esi:choose>
-  <esi:when test="( $(ignore_mobile_cookie) == '1' || !$exists($(HTTP_COOKIE{'mobileview'}) ) || $(HTTP_COOKIE{'mobileview'})=='true' ) && $(is_mobile) == '1' && $(done)=='0'">
+  <esi:when tests="( $(ignore_mobile_cookie) == '1' || !$exists($(HTTP_COOKIE{'mobileview'}) ) || $(HTTP_COOKIE{'mobileview'})=='true' ) && $(is_mobile) == '1' && $(done)=='0'">
     <esi:choose>
-      <esi:when test="!$exists($(HTTP_COOKIE{'mobileview'}))">
+      <esi:when tests="!$exists($(HTTP_COOKIE{'mobileview'}))">
         $add_header('Set-Cookie','mobileview=true; path=/;')
       </esi:when>
     </esi:choose>
     <esi:choose>
-      <esi:when test="$(REQUEST_PATH) matches_i '/?([0-9]+)/([0-9]+)/([0-9]+)/([^/]+)_([0-9]+)\.html#(.+)$' ">
+      <esi:when tests="$(REQUEST_PATH) matches_i '/?([0-9]+)/([0-9]+)/([0-9]+)/([^/]+)_([0-9]+)\.html#(.+)$' ">
         <esi:assign name="redirect_to">'http://m.huffpost.com/ca/entry/'+$(MATCHES{5})+'#$(MATCHES{6})'+$(query_param)</esi:assign>
       </esi:when>
-      <esi:when test="$(REQUEST_PATH) matches_i '/?([0-9]+)/([0-9]+)/([0-9]+)/([^/]+)_([0-9]+)\.html' ">
+      <esi:when tests="$(REQUEST_PATH) matches_i '/?([0-9]+)/([0-9]+)/([0-9]+)/([^/]+)_([0-9]+)\.html' ">
         <esi:assign name="redirect_to">'http://m.huffpost.com/ca/entry/'+$(MATCHES{5})+$(query_param)</esi:assign>
       </esi:when>
-      <esi:when test="$(REQUEST_PATH) matches_i '/([^/]+)/([^/]+)_([0-9]+)\.html'">
+      <esi:when tests="$(REQUEST_PATH) matches_i '/([^/]+)/([^/]+)_([0-9]+)\.html'">
         <esi:assign name="redirect_to">'http://m.huffpost.com/ca/entry/'+$(MATCHES{3})+$(query_param)</esi:assign>
       </esi:when>
-      <esi:when test="$(REQUEST_PATH) matches_i '/(news|tag|actualites)/([a-z0-9-_]+)' ">
+      <esi:when tests="$(REQUEST_PATH) matches_i '/(news|tag|actualites)/([a-z0-9-_]+)' ">
         <esi:assign name="redirect_to">'http://m.huffpost.com/ca/news/'+$(MATCHES{2})+'/'+$(query_param)</esi:assign>
       </esi:when>
-      <esi:when test="$(REQUEST_PATH) matches_i '/newsletter/([a-z0-9-_]+)'">
+      <esi:when tests="$(REQUEST_PATH) matches_i '/newsletter/([a-z0-9-_]+)'">
         <esi:assign name="redirect_to">'http://m.huffpost.com/ca/?pop=nls&nls='+ $(MATCHES{1})</esi:assign>
       </esi:when>
-      <esi:when test="$(REQUEST_PATH) matches_i '/imageblog'">
+      <esi:when tests="$(REQUEST_PATH) matches_i '/imageblog'">
         <esi:assign name="redirect_to">'http://m.huffpost.com/ca/news/imageblog/'+$(query_param)</esi:assign>
       </esi:when>
-      <esi:when test="$(REQUEST_PATH) matches_i '/thirdmetric'">
+      <esi:when tests="$(REQUEST_PATH) matches_i '/thirdmetric'">
         <esi:assign name="redirect_to">'http://m.huffpost.com/ca/news/third-metric/'+$(query_param)</esi:assign>
       </esi:when>
-      <esi:when test="$(REQUEST_PATH) matches_i '/p/horoscopos-([a-z]+)\.html' ">
+      <esi:when tests="$(REQUEST_PATH) matches_i '/p/horoscopos-([a-z]+)\.html' ">
         <esi:assign name="redirect_to">'http://m.huffpost.com/ca/horoscopos/'+$(MATCHES{1})+$(query_param)</esi:assign>
       </esi:when>
-      <esi:when test="$(REQUEST_PATH) matches_i '^\/(subscription|users\/notifications|terms)' ">
+      <esi:when tests="$(REQUEST_PATH) matches_i '^\/(subscription|users\/notifications|terms)' ">
         <esi:assign name="done" value="1"/>
       </esi:when>
-      <esi:when test="$(REQUEST_PATH) matches_i '^\/([a-z0-9-_]{2,})' ">
+      <esi:when tests="$(REQUEST_PATH) matches_i '^\/([a-z0-9-_]{2,})' ">
                   <esi:assign name="redirect_to">'http://m.huffpost.com/ca/vertical/'+$(MATCHES{1})+'/'+$(query_param)</esi:assign>
               </esi:when>
-      <esi:when test="$is_empty($(REQUEST_PATH)) || $(REQUEST_PATH) =='/'">
+      <esi:when tests="$is_empty($(REQUEST_PATH)) || $(REQUEST_PATH) =='/'">
         <esi:choose>
-          <esi:when test="($(GEO{'country_code'}) == 'AU')">
+          <esi:when tests="($(GEO{'country_code'}) == 'AU')">
             <esi:assign name="redirect_to">'http://m.huffpost.com/au'+$(query_param)</esi:assign>
           </esi:when>
           <esi:otherwise>
@@ -121,7 +121,7 @@
       </esi:when>
     </esi:choose>
     <esi:choose>
-      <esi:when test="$exists($(redirect_to)) && !$is_empty($(redirect_to))">
+      <esi:when tests="$exists($(redirect_to)) && !$is_empty($(redirect_to))">
         $set_redirect($(redirect_to))
       </esi:when>
     </esi:choose>
@@ -133,7 +133,7 @@
 <esi:assign name="ads_ord" value="$rand()" />
 <esi:assign name="is_aol_referer" value="0" />
 <esi:choose>
-  <esi:when test="$(HTTP_REFERER) has '.aol.com'">
+  <esi:when tests="$(HTTP_REFERER) has '.aol.com'">
     <esi:assign name="is_aol_referer" value="1" />
   </esi:when>
 </esi:choose>
@@ -143,13 +143,13 @@
 <esi:assign name="IS_US" value="$(HTTP_HOST) has 'huffingtonpost.com'" />
 
 <esi:choose>
-        <esi:when test="$(IS_US) && $(GEO{'country_code'}) == 'IN' && $(done)!='1'">
+        <esi:when tests="$(IS_US) && $(GEO{'country_code'}) == 'IN' && $(done)!='1'">
         <esi:choose>
-                <esi:when test="!$(QUERY_STRING)">
+                <esi:when tests="!$(QUERY_STRING)">
                         <esi:assign name="done" value="1"/>
                         $set_redirect('http://' + $(HTTP_HOST) + $(REQUEST_PATH) + '?ir=India&adsSiteOverride=in')
                 </esi:when>
-                <esi:when test="!$(QUERY_STRING{'ir'})">
+                <esi:when tests="!$(QUERY_STRING{'ir'})">
                         <esi:assign name="done" value="1"/>
                         $set_redirect('http://' + $(HTTP_HOST) + $(REQUEST_PATH) + '?' + $(QUERY_STRING) + '&ir=India&adsSiteOverride=in')
                 </esi:when>
@@ -391,16 +391,16 @@ window.adSetMOAT && adSetMOAT("1");
     </script>
 <!--esi
     <esi:choose>
-        <esi:when test="$(HTTP_REFERER) has '|dl' || $(QUERY_STRING) has '|dl' || $(HTTP_REFERER) has 'fundrace.' || $(QUERY_STRING) has 'fundrace.'">
+        <esi:when tests="$(HTTP_REFERER) has '|dl' || $(QUERY_STRING) has '|dl' || $(HTTP_REFERER) has 'fundrace.' || $(QUERY_STRING) has 'fundrace.'">
             <esi:choose>
-                            <esi:when test="($(HTTP_REFERER) has '|dl') || ($(QUERY_STRING) has '|dl')">
+                            <esi:when tests="($(HTTP_REFERER) has '|dl') || ($(QUERY_STRING) has '|dl')">
                 	<esi:text>
                     <script type="text/javascript">
                         var ads_ext_ref_sig = 'aol_welcome_screen';
                     </script>
                     </esi:text>
                 </esi:when>
-                            <esi:when test="($(HTTP_REFERER) has 'fundrace.') || ($(QUERY_STRING) has 'fundrace.')">
+                            <esi:when tests="($(HTTP_REFERER) has 'fundrace.') || ($(QUERY_STRING) has 'fundrace.')">
                 	<esi:text>
                     <script type="text/javascript">
                         var ads_ext_ref_sig = 'fundrace';
@@ -413,7 +413,7 @@ window.adSetMOAT && adSetMOAT("1");
 -->
 <!--esi
 	<esi:choose>
-		<esi:when test="($exists($(HTTP_COOKIE{'ad_ops_bookmarklet'})) && !($(HTTP_HOST) has 'editorial'))">
+		<esi:when tests="($exists($(HTTP_COOKIE{'ad_ops_bookmarklet'})) && !($(HTTP_HOST) has 'editorial'))">
             <script type="text/javascript" src="/ads/bookmarklet/bookmarklet.js"></script>
 		</esi:when>
 	</esi:choose>

@@ -1,7 +1,6 @@
-from pytest_socket import disable_socket
 # noinspection PyPackageRequirements
 from decouple import config
-
+from pytest_socket import disable_socket
 
 # Use for updating cache entries
 FORCE_OVERWRITE_TESTDATA = config('FORCE_OVERWRITE_TESTDATA', False, cast=bool)

@@ -1,15 +1,14 @@
 """Codes required to create English Wikipedia citation templates."""
 
 
+from collections import defaultdict
 from datetime import date as Date
 from functools import partial
-from collections import defaultdict
 from logging import getLogger
 
 from regex import compile as regex_compile
 
 from lib.language import TO_TWO_LETTER_CODE
-
 
 # Includes ShortDOIs (See: http://shortdoi.org/) and
 # https://www.crossref.org/display-guidelines/
