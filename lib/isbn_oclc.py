@@ -1,20 +1,26 @@
 from collections import defaultdict
+from json import loads
 from logging import getLogger
 from threading import Thread
-from typing import Optional, Any
-from json import loads
+from typing import Any, Optional
 
-from langid import classify
 from isbnlib import info as isbn_info
+from langid import classify
 from regex import search
 
 from config import LANG
-from lib.ketabir import url_to_dict as ketabir_url_to_dict
-from lib.ketabir import isbn_to_url as ketabir_isbn2url
-from lib.commons import request, ISBN13_SEARCH, ISBN10_SEARCH, ReturnError, \
-    FOUR_DIGIT_NUM
+from lib.commons import (
+    FOUR_DIGIT_NUM,
+    ISBN10_SEARCH,
+    ISBN13_SEARCH,
+    ReturnError,
+    request,
+)
+from lib.ketabir import (
+    isbn_to_url as ketabir_isbn2url,
+    url_to_dict as ketabir_url_to_dict,
+)
 from lib.urls import url_to_dict
-
 
 RM_DASH_SPACE = str.maketrans('', '', '- ')
 

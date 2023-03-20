@@ -1,9 +1,8 @@
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
 from lib import pubmed
-from lib.pubmed import pmid_dict, pmcid_dict
 from lib.commons import dict_to_sfn_cit_ref
-
+from lib.pubmed import pmcid_dict, pmid_dict
 
 pmid_scr = lambda *args: dict_to_sfn_cit_ref(pmid_dict(*args))
 pmcid_scr = lambda *args: dict_to_sfn_cit_ref(pmcid_dict(*args))

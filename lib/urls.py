@@ -5,18 +5,17 @@ from functools import partial
 from html import unescape as html_unescape
 from logging import getLogger
 from threading import Thread
-from typing import Optional, List, Dict, Any, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 from langid import classify
-from regex import compile as rc, VERBOSE, IGNORECASE
+from regex import IGNORECASE, VERBOSE, compile as rc
 from requests import Response as RequestsResponse
 from requests.exceptions import RequestException
 
-from lib.commons import find_any_date, ANYDATE_PATTERN, request
-from lib.urls_authors import find_authors, CONTENT_ATTR
+from lib.commons import ANYDATE_PATTERN, find_any_date, request
 from lib.doi import get_crossref_dict
-
+from lib.urls_authors import CONTENT_ATTR, find_authors
 
 MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
 

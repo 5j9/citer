@@ -18,7 +18,6 @@ from regex import compile as rc
 
 from lib.commons import first_last
 
-
 # To remove Texts like {APA} from input.
 WORDS_IN_BRACES_SUB = rc(r'(?<!=\s*){([^\\{}\n]*)}').sub
 FINDALL_BIBTEX_FIELDS = rc(

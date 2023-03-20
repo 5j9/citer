@@ -1,16 +1,18 @@
 import atexit
 from contextlib import contextmanager
-from hashlib import sha1
-from json import dump, loads, load
-from typing import Optional
 from functools import partial
+from hashlib import sha1
+from json import dump, load, loads
+from typing import Optional
 
 # noinspection PyPackageRequirements
 from path import Path
-from requests import Session, Response, ConnectionError as RConnectionError
+from requests import ConnectionError as RConnectionError, Response, Session
+
+from tests.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
+
 # noinspection PyPackageRequirements
 
-from test.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
 
 # Do not import library parts here. commons.py should not be loaded
 # until LANG is set by test_fa and test_en.
@@ -148,7 +150,6 @@ Session.request = fake_request
 
 # this import needs to placed after Session patch
 from lib.pubmed import NCBI_URL  # noqa
-
 
 if REMOVE_UNUSED_TESTDATA is True:
     all_testdata_files = {f.name for f in TESTDATA.files()}

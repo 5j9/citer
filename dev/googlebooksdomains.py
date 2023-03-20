@@ -1,5 +1,6 @@
+from re import MULTILINE, findall
+
 from requests import get
-from re import findall, MULTILINE
 
 github_content = get('https://github.com/SebastianJ/fiber-freeze/raw/master/data/https_urls.txt').content
 github_domains = set(findall(rb'(?<=//)books\.google\.[^/\n]*', github_content, MULTILINE))

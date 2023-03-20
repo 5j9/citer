@@ -1,6 +1,5 @@
-from lib.doi import doi_to_dict
 from lib.commons import dict_to_sfn_cit_ref
-
+from lib.doi import doi_to_dict
 
 doi_scr = lambda doi: dict_to_sfn_cit_ref(doi_to_dict(doi))
 

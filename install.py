@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """A script to be run as part of forgetools/install_python_webservice.py."""
 
-from os import chmod, open as os_open, close, O_CREAT, O_WRONLY, O_EXCL
+from os import O_CREAT, O_EXCL, O_WRONLY, chmod, close, open as os_open
 from os.path import expanduser
-from subprocess import check_output
 from re import sub
-
+from subprocess import check_output
 
 HOME = expanduser('~')
 

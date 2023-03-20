@@ -1,12 +1,12 @@
 """HTML skeleton of predefined en responses."""
 
 
-from string import Template
 from os import name as osname
 from os.path import dirname
+from string import Template
 from zlib import adler32
-from config import STATIC_PATH
 
+from config import STATIC_PATH
 
 htmldir = dirname(__file__)
 

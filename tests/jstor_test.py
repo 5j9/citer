@@ -1,6 +1,5 @@
-from lib.jstor import url_to_dict
 from lib.commons import dict_to_sfn_cit_ref
-
+from lib.jstor import url_to_dict
 
 jstor_scr = lambda *args: dict_to_sfn_cit_ref(url_to_dict(*args))
 

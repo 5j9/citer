@@ -1,13 +1,17 @@
-from urllib.parse import urlparse
 from unittest.mock import patch
+from urllib.parse import urlparse
 
 # noinspection PyPackageRequirements
 from pytest import raises
 from requests import JSONDecodeError
 
 from app import (
-    input_to_dict, TLDLESS_NETLOC_RESOLVER, google_books_dict,
-    noorlib_url_to_dict, noormags_url_to_dict, google_encrypted_dict
+    TLDLESS_NETLOC_RESOLVER,
+    google_books_dict,
+    google_encrypted_dict,
+    input_to_dict,
+    noorlib_url_to_dict,
+    noormags_url_to_dict,
 )
 
 

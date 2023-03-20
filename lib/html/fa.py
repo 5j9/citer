@@ -7,7 +7,6 @@ from zlib import adler32
 
 from config import STATIC_PATH
 
-
 htmldir = dirname(__file__)
 
 CSS = open(htmldir + '/fa.css', 'rb').read()

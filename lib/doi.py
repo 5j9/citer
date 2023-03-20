@@ -3,14 +3,14 @@
 
 from collections import defaultdict
 from datetime import datetime
+from html import unescape
 from typing import Any
 from urllib.parse import unquote_plus
-from html import unescape
 
 from langid import classify
 
-from lib.commons import request, DOI_SEARCH
 from config import LANG
+from lib.commons import DOI_SEARCH, request
 
 
 def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
