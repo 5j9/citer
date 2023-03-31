@@ -9,9 +9,9 @@ from app import (
     TLDLESS_NETLOC_RESOLVER,
     google_books_dict,
     google_encrypted_dict,
-    url_doi_isbn_to_dict,
     noorlib_url_to_dict,
     noormags_url_to_dict,
+    url_doi_isbn_to_dict,
 )
 
 

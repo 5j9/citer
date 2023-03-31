@@ -22,13 +22,13 @@ from lib.waybackmachine import url_to_dict as archive_url_to_dict
 if LANG == 'en':
     from lib.html.en import (
         CSS,
-        CSS_PATH,
         CSS_HEADERS,
+        CSS_PATH,
         DEFAULT_SCR,
         HTTPERROR_SCR,
         JS,
-        JS_PATH,
         JS_HEADERS,
+        JS_PATH,
         OTHER_EXCEPTION_SCR,
         UNDEFINED_INPUT_SCR,
         scr_to_html,
@@ -36,11 +36,11 @@ if LANG == 'en':
 else:
     from lib.html.fa import (
         CSS,
-        CSS_PATH,
-        JS_PATH,
         CSS_HEADERS,
+        CSS_PATH,
         DEFAULT_SCR,
         HTTPERROR_SCR,
+        JS_PATH,
         OTHER_EXCEPTION_SCR,
         UNDEFINED_INPUT_SCR,
         scr_to_html,
