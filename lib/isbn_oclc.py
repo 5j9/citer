@@ -204,8 +204,10 @@ def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
         (c["firstName"]['text'], c["secondName"]['text'])
         for c in record["contributors"]
     ]
-    d['publisher'] = record['publisher']
-    d['publisher-location'] = record['publicationPlace']
+    if (publisher := record['publisher']) != '[publisher not identified]':
+        d['publisher'] = publisher
+    if (place := record['publicationPlace']) != '[Place of publication not identified]':
+        d['publisher-location'] = place
     if m := FOUR_DIGIT_NUM(record['publicationDate']):
         d['year'] = m[0]
     d['language'] = record['catalogingLanguage']
