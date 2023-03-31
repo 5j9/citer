@@ -3,10 +3,10 @@
 <html>
 	<head>
 		<title>Citer</title>
-		<link rel="stylesheet" href="./static/en.css">
+		<link rel="stylesheet" href="static/en.css">
 	</head>
 	<body>
-		<form action="citer.fcgi">
+		<form>
             <select class="input-legend" name="input_type">
                 <option value="url-doi-isbn">URL/DOI/ISBN</option>
                 <option value="pmid">PMID</option>
@@ -41,9 +41,9 @@
 			</p>
 			<p>
 				Found a bug or have a suggestion? Contact me on <a href="https://meta.wikimedia.org/wiki/User_talk:Dalba">my talk page</a> or open an issue <a href="https://github.com/5j9/citer">on GitHub</a>.
-				<a id="bookmarklet" href="javascript:void(window.open('https://citer.toolforge.org/citer.fcgi?user_input='+encodeURIComponent(location.href)+'&dateformat='+encodeURIComponent('%B %{d}, %Y')))">Bookmarklet (drag to favorites bar)</a>
+				<a id="bookmarklet" href="javascript:void(window.open('https://citer.toolforge.org/?user_input='+encodeURIComponent(location.href)+'&dateformat='+encodeURIComponent('%B %{d}, %Y')))">Bookmarklet (drag to favorites bar)</a>
 			</p>
 		</footer>
-		<script src="./static/en.js"></script>
+		<script src="static/en.js"></script>
 	</body>
 </html>

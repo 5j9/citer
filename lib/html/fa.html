@@ -3,10 +3,10 @@
 <html dir="rtl">
 	<head>
 		<title>یادفا</title>
-		<link rel="stylesheet" href="./static/fa.css">
+		<link rel="stylesheet" href="static/fa.css">
 	</head>
 	<body>
-		<form action="citer.fcgi">
+		<form>
 			<select class="input-legend" name="input_type">
 				<option value="url-doi-isbn">نشانی وب/شابک/شناسهٔ برنمود رقمی</option>
 				<option value="pmid">PMID</option>
@@ -30,7 +30,7 @@
 			</p>
 			<p>
 				توجه داشته باشید که همواره احتمال خطا در خروجی ابزار وجود دارد و نیازمند بازبینی خواهد بود. <b>با مسئولیت خودتان از آن استفاده کنید.</b>
-				<a id="bookmarklet" href="javascript:void(window.open('http://yadfa.toolforge.org/citer.fcgi?user_input='+encodeURIComponent(location.href)))">
+				<a id="bookmarklet" href="javascript:void(window.open('http://yadfa.toolforge.org/?user_input='+encodeURIComponent(location.href)))">
 					بوکمارکلت
 				</a>
 			</p>
