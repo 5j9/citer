@@ -215,6 +215,7 @@ PATH_TO_HANDLER = {
     CSS_PATH: css,
     JS_PATH : js,
     '/': root,
+    '/citer.fcgi': root,  # for backward compatibility
 }
 
 
