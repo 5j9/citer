@@ -114,3 +114,14 @@ def test_worldcat_url():
         '* {{cite book | last=Lewis | first=James Bryant | last2=Sesay | first2=Amadu | title=Korea and globalization : politics, economics and culture | publisher=RoutledgeCurzon | publication-place=Richmond | year=2002 | isbn=978-0-7007-1512-1 | oclc=46908525}}'
     )
 
+
+def test_not_identified_pulisher():
+    assert worldcat_scr('https://www.worldcat.org/title/960872319')[1] == (
+        '* {{cite book | last=Loftis | first=Cory | title=Before I forget : art of Cory Loftis | year=2105 | isbn=978-0-692-57330-3 | oclc=960872319}}'
+    )
+    assert worldcat_scr('https://www.worldcat.org/title/650188009')[1] == (
+        '* {{cite book | last=Wilde | first=Geoff | last2=Braham | first2=Michael | title=Sandgrounders : the complete league history of Southport Football Club | publisher=Carnegie | year=1995 | isbn=978-1-874181-14-9 | oclc=650188009}}'
+    )
+    assert worldcat_scr('https://www.worldcat.org/title/1051746391')[1] == (
+        '* {{cite book | last=Love | first=James Lee | title=Recollections : written in the Library of Congress, Washington, D.C. | year=1921 | oclc=1051746391}}'
+    )
