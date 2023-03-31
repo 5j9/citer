@@ -212,8 +212,8 @@ def root(start_response: callable, environ: dict) -> tuple:
 
 
 PATH_TO_HANDLER = {
-    CSS_PATH: css,
-    JS_PATH : js,
+    f'/{CSS_PATH}.css': css,
+    f'/{JS_PATH}.js' : js,
     '/': root,
     '/citer.fcgi': root,  # for backward compatibility
 }
