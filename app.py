@@ -4,7 +4,6 @@ from logging import INFO, WARNING, Formatter, getLogger
 from logging.handlers import RotatingFileHandler
 from os.path import abspath, dirname
 from urllib.parse import parse_qs, unquote, urlparse
-from wsgiref.headers import Headers
 
 from requests import ConnectionError as RequestsConnectionError, JSONDecodeError
 
@@ -75,7 +74,8 @@ TLDLESS_NETLOC_RESOLVER = {
     'jstor': jstor_url_to_dict,
 }.get
 
-RESPONSE_HEADERS = Headers([('Content-Type', 'text/html; charset=UTF-8')])
+# always assign 'Content-Length' header HTTP_HEADERS[1] before sending
+HTTP_HEADERS = [('Content-Type', 'text/html; charset=UTF-8'), None]
 
 
 getLogger('requests').setLevel(WARNING)
@@ -167,8 +167,8 @@ def app(environ: dict, start_response: callable) -> tuple:
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
-        RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
-        start_response('200 OK', RESPONSE_HEADERS.items())
+        HTTP_HEADERS[1] = ('Content-Length', str(len(response_body)))
+        start_response('200 OK', HTTP_HEADERS)
         return response_body,
 
     to_dict = input_type_to_resolver[input_type]
@@ -194,8 +194,8 @@ def app(environ: dict, start_response: callable) -> tuple:
         status = '200 OK'
         response_body = scr_to_html(scr, date_format, input_type)
     response_body = response_body.encode()
-    RESPONSE_HEADERS['Content-Length'] = str(len(response_body))
-    start_response(status, RESPONSE_HEADERS.items())
+    HTTP_HEADERS[1] = ('Content-Length', str(len(response_body)))
+    start_response(status, HTTP_HEADERS)
     return response_body,
 
 
