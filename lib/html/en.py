@@ -1,6 +1,3 @@
-"""HTML skeleton of predefined en responses."""
-
-
 from os import name as osname
 from os.path import dirname
 from string import Template
@@ -43,18 +40,20 @@ JS_HEADERS = [
     ('Content-Length', str(len(JS))),
     ('Cache-Control', 'immutable, public, max-age=31536000')]
 
+JS_PATH = STATIC_PATH + str(adler32(JS))
+CSS_PATH = STATIC_PATH + str(adler32(CSS))
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
 HTML_SUBST = Template(
     open(f'{htmldir}/en.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
-        '"stylesheet" href="./static/en',
-        '"stylesheet" href="' + STATIC_PATH + str(adler32(CSS)),
+        '"stylesheet" href="static/en',
+        '"stylesheet" href="' + CSS_PATH,
         1,
     ).replace(
         # Invalidate js cache after any change in js file.
-        'src="./static/en',
-        'src="' + STATIC_PATH + str(adler32(JS)),
+        'src="static/en',
+        'src="' + JS_PATH,
         1,
     ).replace('{d}', '#d' if osname == 'nt' else '-d')
 ).substitute

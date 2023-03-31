@@ -1,6 +1,3 @@
-"""HTML skeleton of the predefined fa responses."""
-
-
 from os.path import dirname
 from string import Template
 from zlib import adler32
@@ -15,12 +12,15 @@ CSS_HEADERS = [
     ('Content-Length', str(len(CSS))),
     ('Cache-Control', 'max-age=31536000')]
 
+CSS_PATH = STATIC_PATH + str(adler32(CSS))
+JS_PATH = 'STATIC_PATH/<does_not_exist>.js'
 HTML_SUBST = Template(
     open(htmldir + '/fa.html', encoding='utf8').read().replace(
         # Invalidate css cache after any change in css file.
-        '"stylesheet" href="./static/fa',
-        '"stylesheet" href="' + STATIC_PATH + str(adler32(CSS))
-    )).substitute
+        '"stylesheet" href="static/fa',
+        '"stylesheet" href="' + CSS_PATH,
+    )
+).substitute
 
 # Predefined responses
 DEFAULT_SCR = ('یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '')

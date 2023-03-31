@@ -23,10 +23,12 @@ from lib.waybackmachine import url_to_dict as archive_url_to_dict
 if LANG == 'en':
     from lib.html.en import (
         CSS,
+        CSS_PATH,
         CSS_HEADERS,
         DEFAULT_SCR,
         HTTPERROR_SCR,
         JS,
+        JS_PATH,
         JS_HEADERS,
         OTHER_EXCEPTION_SCR,
         UNDEFINED_INPUT_SCR,
@@ -35,6 +37,8 @@ if LANG == 'en':
 else:
     from lib.html.fa import (
         CSS,
+        CSS_PATH,
+        JS_PATH,
         CSS_HEADERS,
         DEFAULT_SCR,
         HTTPERROR_SCR,
@@ -147,17 +151,17 @@ def input_to_dict(user_input, date_format, /) -> dict:
         return UNDEFINED_INPUT_SCR
 
 
-def app(environ: dict, start_response: callable) -> tuple:
-    path_info = environ['PATH_INFO']
-    if '/static/' in path_info:
-        if path_info[-4:] == '.css':
-            start_response('200 OK', CSS_HEADERS)
-            return CSS,
-        else:
-            # path_info.endswith('.js') and config.lang == 'en'
-            start_response('200 OK', JS_HEADERS)
-            return JS,
+def css(start_response: callable, *_) -> tuple:
+    start_response('200 OK', CSS_HEADERS)
+    return CSS,
 
+
+def js(start_response: callable, *_) -> tuple:
+    start_response('200 OK', JS_HEADERS)
+    return JS,
+
+
+def root(start_response: callable, environ: dict) -> tuple:
     query_dict_get = parse_qs(environ['QUERY_STRING']).get
     date_format = query_dict_get('dateformat', [''])[0].strip()
     input_type = query_dict_get('input_type', [''])[0]
@@ -197,6 +201,17 @@ def app(environ: dict, start_response: callable) -> tuple:
     HTTP_HEADERS[1] = ('Content-Length', str(len(response_body)))
     start_response(status, HTTP_HEADERS)
     return response_body,
+
+
+ROUTING_TABLE = {
+    CSS_PATH: css,
+    JS_PATH : js,
+    '/': root,
+}
+
+
+def app(environ: dict, start_response: callable) -> tuple:
+    return ROUTING_TABLE[environ['PATH_INFO']](start_response, environ)
 
 
 input_type_to_resolver = defaultdict(
