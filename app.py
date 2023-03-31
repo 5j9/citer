@@ -1,4 +1,3 @@
-from collections import defaultdict
 from html import unescape
 from logging import INFO, WARNING, Formatter, getLogger
 from logging.handlers import RotatingFileHandler
@@ -107,7 +106,7 @@ def get_root_logger():
 LOGGER = get_root_logger()
 
 
-def input_to_dict(user_input, date_format, /) -> dict:
+def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
     en_user_input = unquote(uninum2en(user_input))
     # Checking the user input for dot is important because
     # the use of dotless domains is prohibited.
@@ -161,6 +160,15 @@ def js(start_response: callable, *_) -> tuple:
     return JS,
 
 
+input_type_to_resolver = {
+    '': url_doi_isbn_to_dict,
+    'url-doi-isbn': url_doi_isbn_to_dict,
+    'pmid': pmid_dict,
+    'pmcid': pmcid_dict,
+    'oclc': oclc_dict
+}
+
+
 def root(start_response: callable, environ: dict) -> tuple:
     query_dict_get = parse_qs(environ['QUERY_STRING']).get
     date_format = query_dict_get('dateformat', [''])[0].strip()
@@ -203,7 +211,7 @@ def root(start_response: callable, environ: dict) -> tuple:
     return response_body,
 
 
-ROUTING_TABLE = {
+PATH_TO_HANDLER = {
     CSS_PATH: css,
     JS_PATH : js,
     '/': root,
@@ -211,15 +219,7 @@ ROUTING_TABLE = {
 
 
 def app(environ: dict, start_response: callable) -> tuple:
-    return ROUTING_TABLE[environ['PATH_INFO']](start_response, environ)
-
-
-input_type_to_resolver = defaultdict(
-    lambda: input_to_dict, {
-        'url-doi-isbn': input_to_dict,  # todo: can be removed?
-        'pmid': pmid_dict,
-        'pmcid': pmcid_dict,
-        'oclc': oclc_dict})
+    return PATH_TO_HANDLER[environ['PATH_INFO']](start_response, environ)
 
 
 if __name__ == '__main__':
