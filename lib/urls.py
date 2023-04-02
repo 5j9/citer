@@ -78,140 +78,29 @@ DATE_SEARCH = rc(
     IV,
 ).search
 
-JOURNAL_META_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])citation_journal_title(?P=q)
-'''
-JOURNAL_TITLE_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + JOURNAL_META_NAME_OR_PROP
-    + '|'
-    + JOURNAL_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
 
-PUBLISHER_META_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])(?:DC.publisher|citation_publisher)(?P=q)
-'''
-PUBLISHER_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + PUBLISHER_META_NAME_OR_PROP
-    + '|'
-    + PUBLISHER_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
+def meta_searcher(names: list):
+    name_or_prop = r'(?>name|property)=(?<q>["\'])\L<names>(?P=q)'
+    return rc(
+        r'<meta\s++[^\n<]*?(?:'
+        + CONTENT_ATTR + r'\s++[^\n<]*?' + name_or_prop
+        + '|'
+        + name_or_prop + r'\s++[^\n<]*?' + CONTENT_ATTR
+        + ')',
+        IV, names=names
+    ).search
 
-URL_META_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])og:url(?P=q)
-'''
-URL_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + URL_META_NAME_OR_PROP
-    + '|'
-    + URL_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
-
-ISSN_META_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])citation_issn(?P=q)
-'''
-ISSN_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + ISSN_META_NAME_OR_PROP
-    + '|'
-    + ISSN_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
-
-PMID_META_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])citation_pmid(?P=q)
-'''
-PMID_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + PMID_META_NAME_OR_PROP
-    + '|'
-    + PMID_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
-
-DOI_META_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])citation_doi(?P=q)
-'''
-DOI_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + DOI_META_NAME_OR_PROP
-    + '|'
-    + DOI_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
-
-
-VOLUME_META_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])citation_volume(?P=q)
-'''
-VOLUME_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + VOLUME_META_NAME_OR_PROP
-    + '|'
-    + VOLUME_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
-
-ISSUE_META_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])citation_issue(?P=q)
-'''
-ISSUE_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + ISSUE_META_NAME_OR_PROP
-    + '|'
-    + ISSUE_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
-
-FIRST_PAGE_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])citation_firstpage(?P=q)
-'''
-FIRST_PAGE_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + FIRST_PAGE_NAME_OR_PROP
-    + '|'
-    + FIRST_PAGE_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
-
-
-LAST_PAGE_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])citation_lastpage(?P=q)
-'''
-LAST_PAGE_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + LAST_PAGE_NAME_OR_PROP
-    + '|'
-    + LAST_PAGE_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
-
-
-SITE_NAME_NAME_OR_PROP = r'''
-    (?>name|property)=(?<q>["\'])og:site_name(?P=q)
-'''
-SITE_NAME_SEARCH = rc(
-    r'<meta\s++[^\n<]*?(?:'
-    + CONTENT_ATTR + r'\s++[^\n<]*?' + SITE_NAME_NAME_OR_PROP
-    + '|'
-    + SITE_NAME_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
-    + ')',
-    IV,
-).search
+JOURNAL_TITLE_SEARCH = meta_searcher(['citation_journal_title'])
+PUBLISHER_SEARCH = meta_searcher(['DC.publisher', 'citation_publisher'])
+URL_SEARCH = meta_searcher(['og:url'])
+ISSN_SEARCH = meta_searcher(['citation_issn'])
+PMID_SEARCH = meta_searcher(['citation_pmid'])
+DOI_SEARCH = meta_searcher(['citation_doi'])
+VOLUME_SEARCH = meta_searcher(['citation_volume'])
+ISSUE_SEARCH = meta_searcher(['citation_issue'])
+FIRST_PAGE_SEARCH = meta_searcher(['citation_firstpage'])
+LAST_PAGE_SEARCH = meta_searcher(['citation_lastpage'])
+SITE_NAME_SEARCH = meta_searcher(['og:site_name'])
 
 TITLE_SPLIT = rc(r' - | — |\|').split
 LANG_SEARCH = rc(r'\slang="([a-z]{2})[-"]').search
