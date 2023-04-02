@@ -1,9 +1,10 @@
 from typing import List, Optional, Tuple
 
-from regex import ASCII, IGNORECASE, VERBOSE, compile as regex_compile
+from regex import ASCII, IGNORECASE, VERBOSE
 
-from lib.commons import ANYDATE_SEARCH, FOUR_DIGIT_NUM, InvalidNameError, first_last
+from lib.commons import ANYDATE_SEARCH, FOUR_DIGIT_NUM, InvalidNameError, first_last, rc
 
+IV = IGNORECASE | VERBOSE
 # Names in byline are required to be two or three parts
 NAME_PATTERN = r'\w[\w.-]++\ \w[\w.-]++(?>\ \w[\w.-]+)?'
 
@@ -40,11 +41,11 @@ BYLINE_PATTERN = rf'''
         )?
     )?\s*
 '''
-BYLINE_PATTERN_SEARCH = regex_compile(BYLINE_PATTERN, VERBOSE | IGNORECASE)
+BYLINE_PATTERN_SEARCH = rc(BYLINE_PATTERN, IV)
 
-NORMALIZE_ANDS = regex_compile(r'\s++and\s++', IGNORECASE).sub
-NORMALIZE_COMMA_SPACES = regex_compile(r'\s*+,\s++', IGNORECASE).sub
-BY_PREFIX = regex_compile(
+NORMALIZE_ANDS = rc(r'\s++and\s++', IGNORECASE).sub
+NORMALIZE_COMMA_SPACES = rc(r'\s*+,\s++', IGNORECASE).sub
+BY_PREFIX = rc(
     r'''
     ^(?:
         (?>
@@ -58,11 +59,11 @@ BY_PREFIX = regex_compile(
     ([^\r\n]++)
     [\s\S]*
     ''',
-    IGNORECASE | VERBOSE,
+    IV,
 ).sub
-AND_OR_COMMA_SUFFIX = regex_compile(r'(?> and|,)?\s*+$', IGNORECASE).sub
-AND_OR_COMMA_SPLIT = regex_compile(r', and | and |, |;', IGNORECASE).split
-AND_SPLIT = regex_compile(r', and | and |;', IGNORECASE).split
+AND_OR_COMMA_SUFFIX = rc(r'(?> and|,)?\s*+$', IGNORECASE).sub
+AND_OR_COMMA_SPLIT = rc(r', and | and |, |;', IGNORECASE).split
+AND_SPLIT = rc(r', and | and |;', IGNORECASE).split
 
 CONTENT_ATTR = r'''
     content=(?<q>["\'])
@@ -85,7 +86,7 @@ AUTHOR_META_NAME_OR_PROP = r'''
         )
     (?P=q))
 '''
-META_AUTHOR_FINDITER = regex_compile(
+META_AUTHOR_FINDITER = rc(
     rf'''
     <meta\s[^>]*?(?:
         {AUTHOR_META_NAME_OR_PROP}\s[^c]*+[^>]*?{CONTENT_ATTR}
@@ -93,13 +94,13 @@ META_AUTHOR_FINDITER = regex_compile(
         {CONTENT_ATTR}\s[^>]*?{AUTHOR_META_NAME_OR_PROP}
     )
     ''',
-    VERBOSE | IGNORECASE
+    IV,
 ).finditer
 # id=byline
 # http://www.washingtonpost.com/wp-dyn/content/article/2006/12/20/AR2006122002165.html
 # rel=author
 # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
-BYLINE_TAG_FINDITER = regex_compile(
+BYLINE_TAG_FINDITER = rc(
     r'''
     (?>
         # author_byline example:
@@ -132,29 +133,29 @@ BYLINE_TAG_FINDITER = regex_compile(
         (?P=q)\s*+,\s*+(?P=q)name(?P=q)\s*+:\s*+(?P=q)(?<result>[^"']*+)(?P=q)
     )
     ''',
-    VERBOSE | IGNORECASE | ASCII).finditer
+    IV | ASCII).finditer
 
 
-BYLINE_HTML_PATTERN = regex_compile(
-    '>' + BYLINE_PATTERN + '<', VERBOSE | IGNORECASE
+BYLINE_HTML_PATTERN = rc(
+    '>' + BYLINE_PATTERN + '<', IV
 ).search
 # [\n|]{BYLINE_PATTERN}\n
 # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-BYLINE_TEXT_PATTERN = regex_compile(
-    r'[\n|]' + BYLINE_PATTERN + r'\n', VERBOSE | IGNORECASE
+BYLINE_TEXT_PATTERN = rc(
+    r'[\n|]' + BYLINE_PATTERN + r'\n', IV
 ).search
 
-TAGS_SUB = regex_compile(r'</?[a-z][^>]*+>', IGNORECASE).sub
+TAGS_SUB = rc(r'</?[a-z][^>]*+>', IGNORECASE).sub
 
 # http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876
 #  .byline > .author
-BYLINE_AUTHOR = regex_compile(
+BYLINE_AUTHOR = rc(
     r'<[a-z]++[^c]*+[^>]*?class=(?<q>["\']?)author\b(?P=q)'
     r'[^>]*+>(?<result>[^<>]++)',
     IGNORECASE | ASCII
 ).finditer
 
-STOPWORDS_SEARCH = regex_compile(
+STOPWORDS_SEARCH = rc(
     r'''
     \b(?>
         Administrator
@@ -172,7 +173,7 @@ STOPWORDS_SEARCH = regex_compile(
     |\.(?>com|ir)\b
     |www\.
     ''',
-    IGNORECASE | VERBOSE,
+    IV,
 ).search
 
 
