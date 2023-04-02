@@ -6,10 +6,9 @@ from typing import Any, Optional
 
 from bs4 import BeautifulSoup
 from langid import classify
-from regex import compile as rc
 from requests import RequestException
 
-from lib.commons import first_last, request
+from lib.commons import first_last, rc, request
 
 AUTHORS_FINDALL = rc(r'(\S+?)\s*+:\s*+(.*)').findall
 VOLUME_SEARCH = rc(r'\bجلد (\d+)').search

@@ -14,9 +14,7 @@ Known issues:
 
 from collections import defaultdict
 
-from regex import compile as rc
-
-from lib.commons import first_last
+from lib.commons import first_last, rc
 
 # To remove Texts like {APA} from input.
 WORDS_IN_BRACES_SUB = rc(r'(?<!=\s*){([^\\{}\n]*)}').sub
