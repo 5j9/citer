@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+				<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+							<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+							<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+							<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+						<head><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta charset="UTF-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta content="width=device-width,initial-scale=1" name="viewport">
+<link rel="shortcut icon" href="/themes/Mirage2/images/favicon.ico">
+<link rel="apple-touch-icon" href="/themes/Mirage2/images/apple-touch-icon.png">
+<meta name="Generator" content="DSpace 5.3">
+<link href="/themes/Mirage2/styles/main.css" rel="stylesheet">
+<link type="application/rss+xml" rel="alternate" href="/feed/rss_1.0/site">
+<link type="application/rss+xml" rel="alternate" href="/feed/rss_2.0/site">
+<link type="application/atom+xml" rel="alternate" href="/feed/atom_1.0/site">
+<link type="application/opensearchdescription+xml" rel="search" href="https://repositorio.unesp.br:443/description.xml" title="DSpace">
+<script>
+                //Clear default text of emty text areas on focus
+                function tFocus(element)
+                {
+                if (element.value == ' '){element.value='';}
+                }
+                //Clear default text of emty text areas on submit
+                function tSubmit(form)
+                {
+                var defaultedElements = document.getElementsByTagName("textarea");
+                for (var i=0; i != defaultedElements.length; i++){
+                if (defaultedElements[i].value == ' '){
+                defaultedElements[i].value='';}}
+                }
+                //Disable pressing 'enter' key to submit a form (otherwise pressing 'enter' causes a submission to start over)
+                function disableEnterKey(e)
+                {
+                var key;
+
+                if(window.event)
+                key = window.event.keyCode;     //Internet Explorer
+                else
+                key = e.which;     //Firefox and Netscape
+
+                if(key == 13)  //if "Enter" pressed, then disable!
+                return false;
+                else
+                return true;
+                }
+			</script><!--[if lt IE 9]>
+                <script src="/themes/Mirage2/vendor/html5shiv/dist/html5shiv.js"> </script>
+                <script src="/themes/Mirage2/vendor/respond/respond.min.js"> </script>
+                <![endif]--><script src="/themes/Mirage2/vendor/modernizr/modernizr.js">/*Modernizr enables HTML5 elements & feature detects*/</script>
+<title>Reposit&oacute;rio Institucional UNESP</title>
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld_OnoUAAAAAEky3ePI5Xk0P4igMf9a3ZaE3UMr">/*Auto imported Script*/</script>
+</head><body>
+<header>
+<div role="navigation" class="navbar navbar-default navbar-static-top">
+<div class="container">
+<div class="navbar-header">
+<button data-toggle="offcanvas" class="navbar-toggle" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="/"><img src="/themes/Mirage2//images/logo-repositorio.png" alt="Reposit&oacute;rio Institucional UNESP"></a>
+<div class="navbar-header pull-right visible-xs hidden-sm hidden-md hidden-lg">
+<ul class="nav nav-pills pull-left ">
+<li class="dropdown" id="ds-language-selection-xs">
+<button title="menu" data-toggle="dropdown" class="dropdown-toggle navbar-toggle navbar-link" role="button" id="language-dropdown-toggle-xs"><span aria-hidden="true" class="visible-xs glyphicon glyphicon-globe"></span></button>
+<ul data-no-collapse="true" aria-labelledby="language-dropdown-toggle-xs" role="menu" class="dropdown-menu pull-right">
+<li role="presentation">
+<a href="https://repositorio.unesp.br:443/?locale-attribute=pt_BR">portugu&ecirc;s (Brasil)</a>
+</li>
+<li role="presentation" class="disabled">
+<a href="https://repositorio.unesp.br:443/?locale-attribute=en">English</a>
+</li>
+<li role="presentation">
+<a href="https://repositorio.unesp.br:443/?locale-attribute=es">espa&ntilde;ol</a>
+</li>
+</ul>
+</li>
+<li>
+<form method="get" action="/ldap-login" style="display: inline">
+<button type="submit" title="usu&aacute;rio" class="navbar-toggle navbar-link"><span aria-hidden="true" class="visible-xs glyphicon glyphicon-user"></span></button>
+</form>
+</li>
+<li>
+<form method="get" action="/chat" style="display: inline">
+<button type="submit" title="Chat" class="navbar-toggle navbar-link"><span aria-hidden="true" class="visible-xs glyphicon glyphicon-comment"></span></button>
+</form>
+</li>
+<li>
+<form method="get" action="/page/about" style="display: inline">
+<button type="submit" class="navbar-toggle navbar-link" title="Sobre"><span aria-hidden="true" class="visible-xs glyphicon glyphicon-info-sign"></span></button>
+</form>
+</li>
+</ul>
+</div>
+</div>
+<div class="navbar-header pull-right hidden-xs">
+<div class="col-md-12">
+<a href="http://www.cruesp.sibi.usp.br/" target="_blank" title="Busca Integrada CRUESP" class="pull-right"><span id="ds-busca-integrada" class="pull-right"></span></a>
+</div>
+<div class="pull-right">
+<ul class="nav navbar-nav pull-left">
+<li class="dropdown" id="ds-language-selection">
+<a data-toggle="dropdown" class="dropdown-toggle" role="button" href="#" id="language-dropdown-toggle"><span class="hidden-xs">English&nbsp;<span class="caret"></span></span></a>
+<ul data-no-collapse="true" aria-labelledby="language-dropdown-toggle" role="menu" class="dropdown-menu pull-right">
+<li role="presentation">
+<a href="https://repositorio.unesp.br:443/?locale-attribute=pt_BR">portugu&ecirc;s (Brasil)</a>
+</li>
+<li role="presentation" class="disabled">
+<a href="https://repositorio.unesp.br:443/?locale-attribute=en">English</a>
+</li>
+<li role="presentation">
+<a href="https://repositorio.unesp.br:443/?locale-attribute=es">espa&ntilde;ol</a>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="nav navbar-nav pull-left">
+<li>
+<a href="/ldap-login"><span class="hidden-xs">Entrar</span></a>
+</li>
+</ul>
+<ul class="nav navbar-nav pull-left">
+<li>
+<a href="/chat" title="Chat"><span class="hidden-xs">
+                                                                                Chat
+                                                                        </span></a>
+</li>
+</ul>
+<ul class="nav navbar-nav pull-left">
+<li>
+<a href="/page/about"><span class="hidden-xs">Sobre</span></a>
+</li>
+</ul>
+<button type="button" class="navbar-toggle visible-sm" data-toggle="offcanvas"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="trail-wrapper hidden-print">
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+<ul class="breadcrumb">
+<li>
+<i aria-hidden="true" class="glyphicon glyphicon-home"></i>&nbsp;
+			Reposit&oacute;rio Institucional UNESP</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="hidden" id="no-js-warning-wrapper">
+<div id="no-js-warning">
+<div class="notice failure">JavaScript is disabled for your browser. Some features of this site may not work without it.</div>
+</div>
+</div>
+<div class="container" id="main-container">
+<div class="row row-offcanvas row-offcanvas-right">
+<div class="horizontal-slider clearfix">
+<div role="navigation" id="sidebar" class="col-xs-6 col-sm-3 sidebar-offcanvas">
+<div class="word-break hidden-print" id="ds-options">
+<div class="ds-option-set" id="ds-search-option">
+<form method="post" class="" id="ds-search-form" action="/discover">
+<fieldset>
+<div class="input-group">
+<input title="Pesquisar" placeholder="Pesquisar" type="text" class="ds-text-field form-control" name="query"><span class="input-group-btn"><button type="submit" title="Buscar" class="ds-button-field btn btn-primary"><span aria-hidden="true" class="glyphicon glyphicon-search"></span></button></span>
+</div>
+</fieldset>
+</form>
+</div>
+<h2 class="ds-option-set-head  h6">Navegar</h2>
+<div id="aspect_viewArtifacts_Navigation_list_browse" class="list-group">
+<a class="list-group-item active"><span class="h5 list-group-item-heading  h5">Em todo o Reposit&oacute;rio</span></a><a href="/community-list" class="list-group-item ds-option">Tipo de Produ&ccedil;&atilde;o</a><a href="/browse?type=dateissued" class="list-group-item ds-option">Data do documento</a><a href="/browse?type=author" class="list-group-item ds-option">Autor</a><a href="/browse?type=title" class="list-group-item ds-option">T&iacute;tulo</a><a href="/browse?type=subject" class="list-group-item ds-option">Palavra-chave</a>
+</div>
+<h2 class="ds-option-set-head  h6">Minha conta</h2>
+<div id="aspect_viewArtifacts_Navigation_list_account" class="list-group">
+<a href="/login" class="list-group-item ds-option">Entrar</a><a href="/register" class="list-group-item ds-option">Cadastrar</a>
+</div>
+<div id="aspect_viewArtifacts_Navigation_list_context" class="list-group"></div>
+<div id="aspect_viewArtifacts_Navigation_list_administrative" class="list-group"></div>
+<h2 class="ds-option-set-head  h6">Explore</h2>
+<div id="aspect_discovery_Navigation_list_discovery" class="list-group">
+<a class="list-group-item active"><span class="h5 list-group-item-heading  h5">Tipo</span></a><a href="/discover?filtertype=type&amp;filter_relational_operator=equals&amp;filter=Artigo" class="list-group-item ds-option">Artigo (111030)</a><a href="/discover?filtertype=type&amp;filter_relational_operator=equals&amp;filter=Disserta%C3%A7%C3%A3o+de+mestrado" class="list-group-item ds-option">Disserta&ccedil;&atilde;o de mestrado (32090)</a><a href="/discover?filtertype=type&amp;filter_relational_operator=equals&amp;filter=Tese+de+doutorado" class="list-group-item ds-option">Tese de doutorado (17459)</a><a href="/discover?filtertype=type&amp;filter_relational_operator=equals&amp;filter=Trabalho+de+conclus%C3%A3o+de+curso" class="list-group-item ds-option">Trabalho de conclus&atilde;o de curso (13401)</a><a href="/discover?filtertype=type&amp;filter_relational_operator=equals&amp;filter=Trabalho+apresentado+em+evento" class="list-group-item ds-option">Trabalho apresentado em evento (10430)</a><a href="/search-filter?field=type" class="list-group-item ds-option">... Ver mais</a><a class="list-group-item active"><span class="h5 list-group-item-heading  h5">Autor</span></a><a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=Adams%2C+T." class="list-group-item ds-option">Adams, T. (1966)</a><a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=Bean%2C+A." class="list-group-item ds-option">Bean, A. (1886)</a><a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=Hirosky%2C+R." class="list-group-item ds-option">Hirosky, R. (1884)</a><a href="/search-filter?field=author" class="list-group-item ds-option">... Ver mais</a><a class="list-group-item active"><span class="h5 list-group-item-heading  h5">Data de publica&ccedil;&atilde;o</span></a><a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B2020+TO+2023%5D" class="list-group-item ds-option">2020 - 2023 (32960)</a><a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B2010+TO+2019%5D" class="list-group-item ds-option">2010 - 2019 (113655)</a><a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B2000+TO+2009%5D" class="list-group-item ds-option">2000 - 2009 (42851)</a><a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B1990+TO+1999%5D" class="list-group-item ds-option">1990 - 1999 (7577)</a><a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B1980+TO+1989%5D" class="list-group-item ds-option">1980 - 1989 (1825)</a><a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B1970+TO+1979%5D" class="list-group-item ds-option">1970 - 1979 (451)</a><a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B1960+TO+1969%5D" class="list-group-item ds-option">1960 - 1969 (36)</a><a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B1959+TO+1959%5D" class="list-group-item ds-option">1959 - 1959 (1)</a><a class="list-group-item active"><span class="h5 list-group-item-heading  h5">Idioma</span></a><a href="/discover?filtertype=languageIso&amp;filter_relational_operator=equals&amp;filter=por" class="list-group-item ds-option">por (100211)</a><a href="/discover?filtertype=languageIso&amp;filter_relational_operator=equals&amp;filter=eng" class="list-group-item ds-option">eng (98407)</a><a href="/discover?filtertype=languageIso&amp;filter_relational_operator=equals&amp;filter=spa" class="list-group-item ds-option">spa (1309)</a><a href="/search-filter?field=languageIso" class="list-group-item ds-option">... Ver mais</a><a class="list-group-item active"><span class="h5 list-group-item-heading  h5">Ag&ecirc;ncia de fomento</span></a><a href="/discover?filtertype=sponsor&amp;filter_relational_operator=equals&amp;filter=Coordena%C3%A7%C3%A3o+de+Aperfei%C3%A7oamento+de+Pessoal+de+N%C3%ADvel+Superior+%28CAPES%29" class="list-group-item ds-option">Coordena&ccedil;&atilde;o de Aperfei&ccedil;oamento de Pessoal de N&iacute;vel Superior (CAPES) (34516)</a><a href="/discover?filtertype=sponsor&amp;filter_relational_operator=equals&amp;filter=Funda%C3%A7%C3%A3o+de+Amparo+%C3%A0+Pesquisa+do+Estado+de+S%C3%A3o+Paulo+%28FAPESP%29" class="list-group-item ds-option">Funda&ccedil;&atilde;o de Amparo &agrave; Pesquisa do Estado de S&atilde;o Paulo (FAPESP) (33366)</a><a href="/discover?filtertype=sponsor&amp;filter_relational_operator=equals&amp;filter=Conselho+Nacional+de+Desenvolvimento+Cient%C3%ADfico+e+Tecnol%C3%B3gico+%28CNPq%29" class="list-group-item ds-option">Conselho Nacional de Desenvolvimento Cient&iacute;fico e Tecnol&oacute;gico (CNPq) (26237)</a><a href="/search-filter?field=sponsor" class="list-group-item ds-option">... Ver mais</a><a class="list-group-item active"><span class="h5 list-group-item-heading  h5">Palavra-chave</span></a><a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=Brazil" class="list-group-item ds-option">Brazil (2406)</a><a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=human" class="list-group-item ds-option">human (1811)</a><a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=Educa%C3%A7%C3%A3o" class="list-group-item ds-option">Educa&ccedil;&atilde;o (1636)</a><a href="/search-filter?field=subject" class="list-group-item ds-option">... Ver mais</a><a class="list-group-item active"><span class="h5 list-group-item-heading  h5">P&oacute;s-gradua&ccedil;&atilde;o</span></a><a href="/discover?filtertype=graduateProgram&amp;filter_relational_operator=equals&amp;filter=Qu%C3%ADmica+-+IQ" class="list-group-item ds-option">Qu&iacute;mica - IQ (1120)</a><a href="/discover?filtertype=graduateProgram&amp;filter_relational_operator=equals&amp;filter=Educa%C3%A7%C3%A3o+-+FFC" class="list-group-item ds-option">Educa&ccedil;&atilde;o - FFC (1023)</a><a href="/discover?filtertype=graduateProgram&amp;filter_relational_operator=equals&amp;filter=Medicina+Veterin%C3%A1ria+-+FMVZ" class="list-group-item ds-option">Medicina Veterin&aacute;ria - FMVZ (993)</a><a href="/search-filter?field=graduateProgram" class="list-group-item ds-option">... Ver mais</a><a class="list-group-item active"><span class="h5 list-group-item-heading  h5">Campus</span></a><a href="/discover?filtertype=campus&amp;filter_relational_operator=equals&amp;filter=Universidade+Estadual+Paulista+%28Unesp%29%2C+Faculdade+de+Ci%C3%AAncias+Agr%C3%A1rias+e+Veterin%C3%A1rias%2C+Jaboticabal" class="list-group-item ds-option">Universidade Estadual Paulista (Unesp), Faculdade de Ci&ecirc;ncias Agr&aacute;rias e Veterin&aacute;rias, Jaboticabal (12334)</a><a href="/discover?filtertype=campus&amp;filter_relational_operator=equals&amp;filter=Universidade+Estadual+Paulista+%28Unesp%29%2C+Faculdade+de+Medicina%2C+Botucatu" class="list-group-item ds-option">Universidade Estadual Paulista (Unesp), Faculdade de Medicina, Botucatu (9116)</a><a href="/discover?filtertype=campus&amp;filter_relational_operator=equals&amp;filter=Universidade+Estadual+Paulista+%28Unesp%29%2C+Instituto+de+Bioci%C3%AAncias%2C+Rio+Claro" class="list-group-item ds-option">Universidade Estadual Paulista (Unesp), Instituto de Bioci&ecirc;ncias, Rio Claro (8744)</a><a href="/search-filter?field=campus" class="list-group-item ds-option">... Ver mais</a>
+</div>
+<h2 class="ds-option-set-head  h6">Estat&iacute;sticas</h2>
+<div id="aspect_statistics_Navigation_list_statistics" class="list-group">
+<a href="/statistics-home" class="list-group-item ds-option">Estat&iacute;sticas de uso</a>
+</div>
+<div>
+<h2 class="ds-option-set-head h6">Feeds RSS</h2>
+<div class="ds-option-set list-group" id="ds-feed-option">
+<a class="list-group-item" href="/feed/rss_1.0/site"><img alt="feed" class="btn-xs" src="/static/icons/feed.png">RSS 1.0</a><a class="list-group-item" href="/feed/rss_2.0/site"><img alt="feed" class="btn-xs" src="/static/icons/feed.png">RSS 2.0</a><a class="list-group-item" href="/feed/atom_1.0/site"><img alt="feed" class="btn-xs" src="/static/icons/feed.png">Atom</a>
+</div>
+</div>
+<div>
+<h2 class="ds-option-set-head h6">Sobre o Reposit&oacute;rio</h2>
+<div class="ds-option-set list-group">
+<a href="/page/stats" class="list-group-item">Estat&iacute;sticas de acesso</a><a href="/page/acompanhe" class="list-group-item">Acompanhamento de submiss&otilde;es</a>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-9 main-content">
+<div>
+<h2 class="ds-div-head page-header first-page-header">Apresenta&ccedil;&atilde;o</h2>
+<div id="file_news_div_news" class="ds-static-div primary">
+<p>O <strong>Reposit&oacute;rio Institucional UNESP</strong> tem como objetivo armazenar, preservar, divulgar e permitir o acesso aberto a documentos cient&iacute;ficos, acad&ecirc;micos, art&iacute;sticos, t&eacute;cnicos, bem como dados e plano de gest&atilde;o produzidos por pesquisadores e estudantes da UNESP.</p>
+</div>
+
+
+                
+<h2 class="ds-div-head page-header">Autoarquivamento</h2>
+<div id="file_news_div_news_1" class="ds-static-div primary">
+<p class="ds-paragraph">
+<a href="/page/autoarquivamento" class=""><span class="bold">Artigos preprints, posprints ou publicados</span></a> <a href="https://www2.unesp.br/Home/cgb/tutorial-autoarquivamento-artigos-e-capitulos-de-livro-versao-1.1-fev-2022.pdf" class="">(Tutorial)</a>
+</p>
+<p class="ds-paragraph">
+<a href="/page/autoarquivamento" class=""><span class="bold">Cap&iacute;tulos de livros</span></a> <a href="https://www2.unesp.br/Home/cgb/tutorial-autoarquivamento-artigos-e-capitulos-de-livro-versao-1.1-fev-2022.pdf" class="">(Tutorial)</a>
+</p>
+<p class="ds-paragraph">
+<a href="/page/autoarquivamento" class=""><span class="bold">Dados de pesquisa</span></a> <a href="https://www2.unesp.br/Home/cgb/gestaodedados/tutorial-autoarquivamento-plano-de-gestao-e-dados-versao-1.0.pdf" class="">(Tutorial)</a>
+</p>
+<p class="ds-paragraph">
+<a href="/page/autoarquivamento" class=""><span class="bold">Plano de gest&atilde;o de dados</span></a> <a href="https://www2.unesp.br/Home/cgb/gestaodedados/tutorial-autoarquivamento-plano-de-gestao-e-dados-versao-1.0.pdf" class="">(Tutorial)</a>
+</p>
+<p class="ds-paragraph">
+<a href="/submissions" class=""><span class="bold">Trabalho de Conclus&atilde;o de Curso</span></a> <a href="https://www2.unesp.br/portal#!/cgb/alunos/graduacao/autoarquivamento-de-tcc/" class="">(Tutorial)</a>
+</p>
+<p class="ds-paragraph">
+<a href="/submissions" class=""><span class="bold">Teses e Disserta&ccedil;&otilde;es</span></a> <a href="https://www2.unesp.br/Home/cgb/pos-graduacao/tutorial-para-o-autoarquivamento-de-dissertacoes-e-teses-versao2.3-mar2022.pdf" class="">(Tutorial)</a>
+</p>
+<p class="ds-paragraph">
+<a href="/submissions" class=""><span class="bold">Outros materiais</span></a>
+</p>
+</div>
+		
+<div class="ds-static-div col-md-12"></div>		
+		
+<h2 class="ds-div-head page-header">D&uacute;vidas</h2>
+<div id="file_news_div_news_2" class="ds-static-div primary">
+<p class="ds-paragraph">Caso possua d&uacute;vidas consulte um bibliotec&aacute;rio (de segunda a sexta das 09h &agrave;s 12h, exceto feriados): <a href="/chat" class="btn btn-primary bold"><span class="glyphicon glyphicon-comment">&nbsp;</span>Atendimento online</a>
+</p>
+<p class="ds-paragraph">Voc&ecirc; tamb&eacute;m pode enviar sua d&uacute;vida pelo formul&aacute;rio: <a href="/feedback" class="btn btn-primary bold"><span class="glyphicon glyphicon-envelope">&nbsp;</span>Envie sua d&uacute;vida</a>
+</p>
+<p class="ds-paragraph">Para acompanhar o progresso de sua submiss&atilde;o: <a href="/page/acompanhe" class="btn btn-primary bold">Acompanhamento de submiss&otilde;es</a>
+</p>
+</div>
+		
+<h2 class="ds-div-head page-header">Acesso Aberto</h2>
+<div id="file_news_div_news_3" class="ds-static-div primary">
+<p class="ds-paragraph">O Acesso Aberto envolve a disponibiliza&ccedil;&atilde;o da produ&ccedil;&atilde;o intelectual online, sem custos, podendo ter algumas restri&ccedil;&otilde;es com rela&ccedil;&atilde;o &agrave; utiliza&ccedil;&atilde;o dessa produ&ccedil;&atilde;o. Possibilita maior visibilidade do trabalho dos autores, aumenta a acessibilidade dos leitores, ampliando o impacto da universidade e de sua produ&ccedil;&atilde;o intelectual sobre a sociedade.</p>
+<p class="ds-paragraph">
+<a href="https://www2.unesp.br/portal#!/acessoaberto"> <img src="https://www2.unesp.br/Home/acessoaberto/logo_acesso_aberto-1.png" alt="" class="img-responsive col-md-4"></a>
+</p>
+<p class="ds-paragraph">
+                    &nbsp;
+                </p>
+</div>
+		
+		
+<div class="ds-static-div clearfix">
+                    &nbsp;
+                </div>
+                
+<div id="type-statistics" class="ds-static-div primary"></div>
+
+        
+<h2 class="ds-div-head page-header">Tipo de Produ&ccedil;&atilde;o</h2>
+<div id="aspect_artifactbrowser_CommunityBrowser_div_comunity-browser" class="ds-static-div primary">
+<p class="ds-paragraph"></p>
+<div id="aspect_artifactbrowser_CommunityBrowser_referenceSet_community-browser" class="ds-static-div community-browser-wrapper">
+<div class="ds-static-div row community-browser-row">
+<div class="ds-static-div col-xs-10 col-sm-12 col-sm-offset-0 list-mode">
+<a href="/handle/11449/1" name="community-browser-link">Produ&ccedil;&atilde;o acad&ecirc;mica e cient&iacute;fica</a>
+</div>
+</div>
+<div class="ds-static-div row community-browser-row odd-community-browser-row">
+<div class="ds-static-div col-xs-10 col-sm-12 col-sm-offset-0 list-mode">
+<a href="/handle/11449/140008" name="community-browser-link">Produ&ccedil;&atilde;o administrativa</a>
+</div>
+</div>
+<div class="ds-static-div row community-browser-row">
+<div class="ds-static-div col-xs-10 col-sm-12 col-sm-offset-0 list-mode">
+<a href="/handle/11449/138018" name="community-browser-link">Produ&ccedil;&atilde;o art&iacute;stica</a>
+</div>
+</div>
+<div class="ds-static-div row community-browser-row odd-community-browser-row">
+<div class="ds-static-div col-xs-10 col-sm-12 col-sm-offset-0 list-mode">
+<a href="/handle/11449/139485" name="community-browser-link">Produ&ccedil;&atilde;o comemorativa - UNESP 40 anos</a>
+</div>
+</div>
+<div class="ds-static-div row community-browser-row">
+<div class="ds-static-div col-xs-10 col-sm-12 col-sm-offset-0 list-mode">
+<a href="/handle/11449/214435" name="community-browser-link">Produ&ccedil;&atilde;o cultural</a>
+</div>
+</div>
+<div class="ds-static-div row community-browser-row odd-community-browser-row">
+<div class="ds-static-div col-xs-10 col-sm-12 col-sm-offset-0 list-mode">
+<a href="/handle/11449/108947" name="community-browser-link">Produ&ccedil;&atilde;o t&eacute;cnica</a>
+</div>
+</div>
+</div>
+</div>
+<div id="aspect_discovery_SiteRecentSubmissions_div_site-home" class="ds-static-div primary repository">
+<h2 class="ds-div-head page-header">Submiss&otilde;es recentes</h2>
+<div id="aspect_discovery_SiteRecentSubmissions_div_site-recent-submission" class="ds-static-div secondary recent-submission">
+<ul class="ds-artifact-list list-unstyled">
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242584/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242584">Preval&ecirc;ncia de comorbidades n&atilde;o relacionadas &agrave; aids e t&iacute;picas do envelhecimento de pacientes com infec&ccedil;&atilde;o pelo HIV/aids diagnosticados h&aacute; 20 anos ou mais e em uso prolongado de antirretrovirais</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242584&amp;rft_id=33004064065P4&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;rft.examinationboard=Banca+p%C3%BAblica">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Vicioli, Laura Beatriz de Camargo</span></small></span> <span class="publisher-date h4"><small>(<span class="publisher">Universidade Estadual Paulista (Unesp)</span>, <span class="date">2023</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Disserta&ccedil;&atilde;o de mestrado</span>]</small></span>
+</div>
+<div class="artifact-abstract">As pessoas que vivem com HIV diagnosticadas e tratadas em longo prazo podem apresentar uma s&eacute;rie de complica&ccedil;&otilde;es associadas ao seu envelhecimento precoce, incluindo altera&ccedil;&otilde;es metab&oacute;licas, osteoarticulares, cardiovasculares ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242583/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242583">Efeitos da suplementa&ccedil;&atilde;o com fibra alimentar na  constipa&ccedil;&atilde;o intestinal de pacientes com Doen&ccedil;a Renal  Cr&ocirc;nica Pr&eacute;-Dial&iacute;tica</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242583&amp;rft_id=33004064020P0&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;rft.examinationboard=Banca+p%C3%BAblica">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Thomazi, Ana Luiza Leite Silva</span></small></span> <span class="publisher-date h4"><small>(<span class="publisher">Universidade Estadual Paulista (Unesp)</span>, <span class="date">2023</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Tese de doutorado</span>]</small></span>
+</div>
+<div class="artifact-abstract">Introdu&ccedil;&atilde;o: A Doen&ccedil;a Renal Cr&ocirc;nica (DRC) &eacute; considerada um importante problema de sa&uacute;de p&uacute;blica mundial em decorr&ecirc;ncia do expressivo aumento nas taxas de incid&ecirc;ncia e preval&ecirc;ncia, associado a um custo social e econ&ocirc;mico ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242582/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242582">Valida&ccedil;&atilde;o estat&iacute;stica da retra&ccedil;&atilde;o de Fibonacci para a sele&ccedil;&atilde;o de carteira</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242582&amp;rft_id=33004153071P0&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;rft.examinationboard=Banca+p%C3%BAblica">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Ishizaka, Rodrigo Koiti</span></small></span> <span class="publisher-date h4"><small>(<span class="publisher">Universidade Estadual Paulista (Unesp)</span>, <span class="date">2023</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Tese de doutorado</span>]</small></span>
+</div>
+<div class="artifact-abstract">Nesta tese &eacute; apresentado um algoritmo baseado na an&aacute;lise t&eacute;cnica, principalmente na Retra&ccedil;&atilde;o de Fibonacci, com o objetivo de comprovar a sua efici&ecirc;ncia no mercado de a&ccedil;&otilde;es do Brasil. Esta ferramenta tem sido utilizada com ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242581/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242581">Bloqueio mei&oacute;tico em o&oacute;citos de equinos como alternativa para melhora da viabilidade</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242581&amp;rft_id=33004064086P1&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;rft.examinationboard=Banca+p%C3%BAblica">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Jorge, Mariana Lemos Nagib</span></small></span> <span class="publisher-date h4"><small>(<span class="publisher">Universidade Estadual Paulista (Unesp)</span>, <span class="date">2023</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Disserta&ccedil;&atilde;o de mestrado</span>]</small></span>
+</div>
+<div class="artifact-abstract">A manuten&ccedil;&atilde;o dos o&oacute;citos equinos em bloqueio mei&oacute;tico, seja atrav&eacute;s do uso de inibidores de meiose ou manuten&ccedil;&atilde;o deles em temperatura ambiente, &eacute; ben&eacute;fica para o posterior desenvolvimento embrion&aacute;rio. Com o objetivo de ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242580/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242580">Nova disposi&ccedil;&atilde;o construtiva de um transdutor para medi&ccedil;&atilde;o de deflex&atilde;o em plataformas assistivas</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=https%3A%2F%2Fbusca.inpi.gov.br%2FpePI%2F&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242580&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Oliveira, Geraldo Cesar Rosario de</span>; <span class="ds-dc_contributor_author-authority">Silva, Fernando de Azevedo</span>; <span class="ds-dc_contributor_author-authority">Rosado, Victor Orlando Gamarra</span></small></span> <span class="publisher-date h4"><small>(<span class="date">2023</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Patente</span>]</small></span>
+</div>
+<div class="artifact-abstract">O presente pedido de patente de modelo de utilidade refere-se a uma nova disposi&ccedil;&atilde;o construtiva de um equipamento transdutor, que &eacute; um dispositivo capaz de transformar um tipo de sinal (estimulo) em outro, diferente ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242579/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242579">Novas disposi&ccedil;&otilde;es construtivas de plataforma elevat&oacute;ria inclinada e elevat&oacute;ria vertical assistivas comandada por voz ou controle remoto e seu uso</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=https%3A%2F%2Fbusca.inpi.gov.br%2FpePI%2F&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242579&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Oliveira, Geraldo Cesar Rosario de</span>; <span class="ds-dc_contributor_author-authority">Silva, Fernando de Azevedo</span>; <span class="ds-dc_contributor_author-authority">Rosado, Victor Orlando Gamarra</span></small></span> <span class="publisher-date h4"><small>(<span class="date">2023</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Patente</span>]</small></span>
+</div>
+<div class="artifact-abstract">O presente pedido de patente de modelo de utilidade refere-se a novas disposi&ccedil;&otilde;es construtivas de plataforma elevat&oacute;ria inclinada e elevat&oacute;ria vertical assistivas comandada por voz ou controle remoto, assim como o seu uso. ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242578/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242578">Aplica&ccedil;&atilde;o metagen&ocirc;mica para detec&ccedil;&atilde;o de viromas em carrapatos coletados de animais silvestres</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242578&amp;rft_id=33004153074P9&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;rft.examinationboard=Banca+p%C3%BAblica">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Geraldini, Dayla Bott</span></small></span> <span class="publisher-date h4"><small>(<span class="publisher">Universidade Estadual Paulista (Unesp)</span>, <span class="date">2023</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Disserta&ccedil;&atilde;o de mestrado</span>]</small></span>
+</div>
+<div class="artifact-abstract">Arbov&iacute;rus s&atilde;o v&iacute;rus que utilizam vetores artr&oacute;podes hemat&oacute;fagos, como por exemplo, os mosquitos e carrapatos, para serem disseminados, circulando em ciclos urbanos e silvestres. Os carrapatos s&atilde;o artr&oacute;podes hemat&oacute;fagos, ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242577/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242577">Kit de imunodiagn&oacute;stico para detec&ccedil;&atilde;o de weissella cibaria e uso do kit</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=https%3A%2F%2Fbusca.inpi.gov.br%2FpePI%2F&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242577&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Fernandes, Dayanne Carla</span>; <span class="ds-dc_contributor_author-authority">Eto, Silas Fernandes</span>; <span class="ds-dc_contributor_author-authority">Funnicelli, Michelli In&aacute;cio Gon&ccedil;alves</span>; <span class="ds-dc_contributor_author-authority">Pizauro Junior, Jo&atilde;o Martins</span>; <span class="ds-dc_contributor_author-authority">Belo, Marco Antonio de Andrade</span>; <span class="ds-dc_contributor_author-authority">Silva, Ives Charlie</span></small></span> <span class="publisher-date h4"><small>(<span class="date">2023</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Patente</span>]</small></span>
+</div>
+<div class="artifact-abstract">O presente pedido de patente de inven&ccedil;&atilde;o &eacute; fundamentado no m&eacute;todo de conjuga&ccedil;&atilde;o do isotiocianato de fluoresce&iacute;na (FITC) com a imunoglobulina Y (IgY) e o uso deste anticorpo na detec&ccedil;&atilde;o da bact&eacute;ria Weissella cibaria, atrav&eacute;s ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242576/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242576">Composto com propriedades antivirais contra v&iacute;rus zika</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=https%3A%2F%2Fbusca.inpi.gov.br%2FpePI%2F&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242576&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Carneiro, Bruno Moreira</span>; <span class="ds-dc_contributor_author-authority">Oliva, Cintia Bittar</span>; <span class="ds-dc_contributor_author-authority">Cilli, Eduardo Maffud</span>; <span class="ds-dc_contributor_author-authority">Ayusso, Gabriela Miranda</span>; <span class="ds-dc_contributor_author-authority">Lima, Maria Leticia Duarte</span>; <span class="ds-dc_contributor_author-authority">Batista, Mariana Nogueira</span>; <span class="ds-dc_contributor_author-authority">Calmon, Marilia de Freitas</span>; <span class="ds-dc_contributor_author-authority">Rahal, Paula</span>; <span class="ds-dc_contributor_author-authority">Sanches, Paulo Ricardo da Silva</span></small></span> <span class="publisher-date h4"><small>(<span class="date">2023</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Patente</span>]</small></span>
+</div>
+<div class="artifact-abstract">A presente patente de inven&ccedil;&atilde;o trata de composto com propriedades antivirais contra v&iacute;rus Zika onde, notadamente, a mol&eacute;cula de origem sint&eacute;tica &eacute; composta pelo pept&iacute;deo de sequ&ecirc;ncia FALALKALKKALKKL-COOH conjugado com o ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/11449/242575/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<h4 class="artifact-title">
+<a href="/handle/11449/242575">Utiliza&ccedil;&atilde;o de nanopart&iacute;culas de zinco em fantoma encef&aacute;lico para simula&ccedil;&atilde;o de les&otilde;es em imagens de resson&acirc;ncia magn&eacute;tica</a><span aria-hidden="true" class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=http%3A%2F%2Fhdl.handle.net%2F11449%2F242575&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+				</span>
+</h4>
+<div class="artifact-info">
+<span class="author h4"><small><span class="ds-dc_contributor_author-authority">Zaparoli, Hulder Henrique</span></small></span> <span class="publisher-date h4"><small>(<span class="publisher">Universidade Estadual Paulista (Unesp)</span>, <span class="date">2022</span>)</small></span> <span class="item-type h4"><small>[<span class="type">Trabalho de conclus&atilde;o de curso</span>]</small></span>
+</div>
+<div class="artifact-abstract">A Esclerose M&uacute;ltipla (EM) &eacute; uma doen&ccedil;a autoimune caracterizada por causar &#13;
+danos na bainha de mielina, que ao se danificarem prejudicam a condu&ccedil;&atilde;o eficiente de &#13;
+impulsos neurais. A causa da EM engloba fatores gen&eacute;ticos ...</div>
+</div>
+</li>
+</ul>
+<p id="aspect_discovery_SiteRecentSubmissions_p_recent-submission-view-more" class="ds-paragraph recentSubmissionViewMore">
+<a href="/recent-submissions">Ver mais</a>
+</p>
+</div>
+</div>
+</div>
+<div class="visible-xs visible-sm">
+<footer>
+<div class="row">
+<hr>
+<div class="col-xs-7 col-sm-6">
+<div>
+<a title="Universidade Estadual Paulista 'J&uacute;lio de Mesquita Filho'" target="_blank" href="http://www.unesp.br/">Universidade Estadual Paulista "J&uacute;lio de Mesquita Filho"</a>
+</div>
+<div class="hidden-print">
+<a href="/page/about">Sobre o Reposit&oacute;rio Institucional UNESP</a> &bull; <a href="/page/faq">Perguntas frequentes (FAQ)</a> &bull; <a href="/feedback">Entre em contato</a>
+</div>
+</div>
+<div class="col-xs-5 col-sm-6 hidden-print">
+<div class="pull-right hidden-xs">
+<a href="http://www.unesp.br/" target="_blank" title="Universidade Estadual Paulista 'J&uacute;lio de Mesquita Filho'"><img src="/themes/Mirage2/images/logo-unesp.png" alt="Universidade Estadual Paulista 'J&uacute;lio de Mesquita Filho'"></a>
+</div>
+<div class="pull-right hidden-xs">
+<a href="http://doi.org/10.17616/R31NJN39" target="_blank" title="Re3data"><img src="https://www.re3data.org/public/badges/s/light/100013733.svg" alt="Re3data"></a>
+</div>
+</div>
+</div>
+<a class="hidden" href="/htmlmap">&nbsp;</a>
+<p>&nbsp;</p>
+</footer>
+</div>
+</div>
+</div>
+</div>
+<div class="hidden-xs hidden-sm">
+<footer>
+<div class="row">
+<hr>
+<div class="col-xs-7 col-sm-6">
+<div>
+<a title="Universidade Estadual Paulista 'J&uacute;lio de Mesquita Filho'" target="_blank" href="http://www.unesp.br/">Universidade Estadual Paulista "J&uacute;lio de Mesquita Filho"</a>
+</div>
+<div class="hidden-print">
+<a href="/page/about">Sobre o Reposit&oacute;rio Institucional UNESP</a> &bull; <a href="/page/faq">Perguntas frequentes (FAQ)</a> &bull; <a href="/feedback">Entre em contato</a>
+</div>
+</div>
+<div class="col-xs-5 col-sm-6 hidden-print">
+<div class="pull-right hidden-xs">
+<a href="http://www.unesp.br/" target="_blank" title="Universidade Estadual Paulista 'J&uacute;lio de Mesquita Filho'"><img src="/themes/Mirage2/images/logo-unesp.png" alt="Universidade Estadual Paulista 'J&uacute;lio de Mesquita Filho'"></a>
+</div>
+<div class="pull-right hidden-xs">
+<a href="http://doi.org/10.17616/R31NJN39" target="_blank" title="Re3data"><img src="https://www.re3data.org/public/badges/s/light/100013733.svg" alt="Re3data"></a>
+</div>
+</div>
+</div>
+<a class="hidden" href="/htmlmap">&nbsp;</a>
+<p>&nbsp;</p>
+</footer>
+</div>
+</div>
+<script>if(!window.DSpace){window.DSpace={};}window.DSpace.context_path='';window.DSpace.theme_path='/themes/Mirage2/';</script><script src="/themes/Mirage2/scripts/theme.js" charset="UTF-8">/*Auto imported script*/</script><script>
+                  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                  ga('create', 'UA-10538459-6', 'repositorio.unesp.br');
+                  ga('send', 'pageview');
+				</script>
+</body></html>

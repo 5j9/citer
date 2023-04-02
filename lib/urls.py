@@ -90,6 +90,18 @@ JOURNAL_TITLE_SEARCH = rc(
     VERBOSE | IGNORECASE,
 ).search
 
+PUBLISHER_META_NAME_OR_PROP = r'''
+    (?>name|property)=(?<q>["\'])(?:DC.publisher|citation_publisher)(?P=q)
+'''
+PUBLISHER_SEARCH = rc(
+    r'<meta\s++[^\n<]*?(?:'
+    + CONTENT_ATTR + r'\s++[^\n<]*?' + PUBLISHER_META_NAME_OR_PROP
+    + '|'
+    + PUBLISHER_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
+    + ')',
+    VERBOSE | IGNORECASE,
+).search
+
 URL_META_NAME_OR_PROP = r'''
     (?>name|property)=(?<q>["\'])og:url(?P=q)
 '''
@@ -243,6 +255,15 @@ def find_journal(html: str) -> Optional[str]:
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     if (m := JOURNAL_TITLE_SEARCH(html)) is not None:
         return m['result']
+
+
+def find_publisher(html: str) -> Optional[str]:
+    if (m := PUBLISHER_SEARCH(html)) is None:
+        return None
+    publisher = m['result']
+    if '|' in publisher:
+        return None
+    return publisher
 
 
 def find_url(html: str, url: str) -> str:
@@ -570,12 +591,14 @@ def url2dict(url: str) -> Dict[str, Any]:
     d['issue'] = find_issue(html)
     d['page'] = find_pages(html)
     d['journal'] = find_journal(html)
+    publisher = d['publisher'] = find_publisher(html)
     if d['journal']:
         d['cite_type'] = 'journal'
     else:
         d['cite_type'] = 'web'
-        d['website'] = find_site_name(
-            html, html_title, url, authors, home_list, home_thread)
+        if publisher is None:
+            d['website'] = find_site_name(
+                html, html_title, url, authors, home_list, home_thread)
     if (title := find_title(
         html, html_title, url, authors, home_list, home_thread
     )) is not None:

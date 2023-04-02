@@ -1,0 +1,21 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Connection": "Upgrade, Keep-Alive",
+		"Content-Encoding": "gzip",
+		"Content-Language": "en-US",
+		"Content-Type": "text/html;charset=utf-8",
+		"Date": "Tue, 21 Mar 2023 09:55:58 GMT",
+		"Keep-Alive": "timeout=5, max=100",
+		"Server": "Apache/2.4.29 (Ubuntu)",
+		"Set-Cookie": "JSESSIONID=CA07EA2B27C3B8DA1DF18B2D92C0DBF5; Path=/; Secure; HttpOnly",
+		"Transfer-Encoding": "chunked",
+		"Upgrade": "h2",
+		"Vary": "Accept-Encoding",
+		"X-Cocoon-Version": "2.2.0",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "DENY"
+	},
+	"status_code": 200,
+	"url": "https://repositorio.unesp.br/handle/11449/86528"
+}

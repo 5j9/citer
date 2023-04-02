@@ -1,0 +1,21 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Connection": "Upgrade, Keep-Alive",
+		"Content-Encoding": "gzip",
+		"Content-Language": "en-US",
+		"Content-Type": "text/html;charset=utf-8",
+		"Date": "Tue, 21 Mar 2023 09:55:57 GMT",
+		"Keep-Alive": "timeout=5, max=100",
+		"Server": "Apache/2.4.29 (Ubuntu)",
+		"Set-Cookie": "JSESSIONID=27CFCC44A0F3BE12749484E4EFC0933C; Path=/; Secure; HttpOnly",
+		"Transfer-Encoding": "chunked",
+		"Upgrade": "h2",
+		"Vary": "Accept-Encoding",
+		"X-Cocoon-Version": "2.2.0",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "DENY"
+	},
+	"status_code": 200,
+	"url": "https://repositorio.unesp.br"
+}

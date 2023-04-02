@@ -117,10 +117,11 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     else:
         # the same order should be used in citation_template:
         sfn += ' | ' + (
-            publisher or
-            f"''{journal}''" if journal else
-            f"''{website}''" if website else
-            title or 'Anon.'
+            publisher or (
+                f"''{journal}''" if journal else
+                f"''{website}''" if website else
+                title or 'Anon.'
+            )
         )
 
     if editors := d['editors']:
