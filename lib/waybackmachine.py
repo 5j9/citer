@@ -5,9 +5,9 @@ from datetime import date
 from threading import Thread
 from urllib.parse import urlparse
 
-from regex import compile as regex_compile
 from requests import ConnectionError as RequestsConnectionError
 
+from lib.commons import rc
 from lib.urls import (
     TITLE_TAG,
     ContentLengthError,
@@ -23,7 +23,7 @@ from lib.urls import (
     url_to_dict as urls_url_to_dict,
 )
 
-URL_FULLMATCH = regex_compile(
+URL_FULLMATCH = rc(
     r'https?+://web(?:-beta)?+\.archive\.org/(?:web/)?+'
     r'(\d{4})(\d{2})(\d{2})\d{6}(?>cs_|i(?>d_|m_)|js_)?+/(http.*)'
 ).fullmatch

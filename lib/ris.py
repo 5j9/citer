@@ -1,11 +1,11 @@
 from collections import defaultdict
 
-from regex import MULTILINE, VERBOSE, compile as regex_compile
+from regex import MULTILINE, VERBOSE
 
-from lib.commons import ISBN_10OR13_SEARCH, InvalidNameError, first_last
+from lib.commons import ISBN_10OR13_SEARCH, InvalidNameError, first_last, rc
 from lib.doi import DOI_SEARCH
 
-RIS_FULLMATCH = regex_compile(
+RIS_FULLMATCH = rc(
     r'''
     (?: # this  group matches any line
         ^

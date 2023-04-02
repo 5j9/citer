@@ -6,17 +6,16 @@ from datetime import date as Date
 from functools import partial
 from logging import getLogger
 
-from regex import compile as regex_compile
-
+from lib.commons import rc
 from lib.language import TO_TWO_LETTER_CODE
 
 # Includes ShortDOIs (See: http://shortdoi.org/) and
 # https://www.crossref.org/display-guidelines/
-DOI_URL_MATCH = regex_compile(r'https?://(dx\.)?doi\.org/').match
+DOI_URL_MATCH = rc(r'https?://(dx\.)?doi\.org/').match
 DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
-FOUR_DIGIT_NUM = regex_compile(r'\d\d\d\d').search
+FOUR_DIGIT_NUM = rc(r'\d\d\d\d').search
 
-refless = partial(regex_compile(
+refless = partial(rc(
     r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})'
 ).sub, r'\g<repl>')
 

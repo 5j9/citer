@@ -19,6 +19,7 @@ else:
     from lib.generator_fa import sfn_cit_ref
 
 
+rc = partial(rc, cache_pattern=False)
 # The regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 DOI_SEARCH = rc(

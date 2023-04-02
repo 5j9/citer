@@ -6,13 +6,11 @@ from logging import getLogger
 from threading import Thread
 from typing import Any
 
-from regex import compile as regex_compile
-
 from config import NCBI_API_KEY, NCBI_EMAIL, NCBI_TOOL
-from lib.commons import b_TO_NUM, request
+from lib.commons import b_TO_NUM, rc, request
 from lib.doi import get_crossref_dict
 
-NON_DIGITS_SUB = regex_compile(r'[^\d]').sub
+NON_DIGITS_SUB = rc(r'[^\d]').sub
 
 NCBI_URL = (
     'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?'
