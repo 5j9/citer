@@ -65,10 +65,10 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         sfn += ' | ' + year
     elif date is not None:
         if isinstance(date, str):
-            y = FOUR_DIGIT_NUM(date)[0]
+            year = FOUR_DIGIT_NUM(date)[0]
         else:
-            y = date.strftime('%Y')
-        sfn += f' | {y}'
+            year = date.strftime('%Y')
+        sfn += f' | {year}'
 
     if cite_type == 'book':
         booktitle = d['booktitle'] or d['container-title']
