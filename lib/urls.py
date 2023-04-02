@@ -9,22 +9,22 @@ from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 from langid import classify
-from regex import IGNORECASE, VERBOSE, compile as rc
 from requests import Response as RequestsResponse
 from requests.exceptions import RequestException
 
-from lib.commons import ANYDATE_PATTERN, find_any_date, request
+from lib.commons import ANYDATE_PATTERN, find_any_date, rc, request
 from lib.doi import get_crossref_dict
-from lib.urls_authors import CONTENT_ATTR, find_authors
+from lib.urls_authors import CONTENT_ATTR, IV, find_authors
 
 MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
+
 
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
 CHARSET = rc(
     rb'''
     <meta(?!\s*+(?>name|value)\s*+=)[^>]*?charset\s*+=[\s"']*+([^\s"'/>]*)
     ''',
-    IGNORECASE | VERBOSE,
+    IV,
 ).search
 
 TITLE_META_NAME_OR_PROP = r'''
@@ -40,7 +40,7 @@ TITLE_SEARCH = rc(
     + ')'
     '|'
     r'class=(?<q>["\'])(?>main-hed|heading1)(?P=q)[^>]++>(?<result>[^<]*+)<',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 TITLE_TAG = rc(
@@ -49,7 +49,7 @@ TITLE_TAG = rc(
         (?P<result>[^<]++[\s\S]*?)
     </title\s*+>
     ''',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 DATE_META_NAME_OR_PROP = r'''
@@ -75,7 +75,7 @@ DATE_SEARCH = rc(
     # http://livescience.com/46619-sterile-neutrino-experiment-beginning.html
     # https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0
     r'date(?>Published|line)[^\w]++' + ANYDATE_PATTERN,
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 JOURNAL_META_NAME_OR_PROP = r'''
@@ -87,7 +87,7 @@ JOURNAL_TITLE_SEARCH = rc(
     + '|'
     + JOURNAL_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 PUBLISHER_META_NAME_OR_PROP = r'''
@@ -99,7 +99,7 @@ PUBLISHER_SEARCH = rc(
     + '|'
     + PUBLISHER_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 URL_META_NAME_OR_PROP = r'''
@@ -111,7 +111,7 @@ URL_SEARCH = rc(
     + '|'
     + URL_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 ISSN_META_NAME_OR_PROP = r'''
@@ -123,7 +123,7 @@ ISSN_SEARCH = rc(
     + '|'
     + ISSN_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 PMID_META_NAME_OR_PROP = r'''
@@ -135,7 +135,7 @@ PMID_SEARCH = rc(
     + '|'
     + PMID_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 DOI_META_NAME_OR_PROP = r'''
@@ -147,7 +147,7 @@ DOI_SEARCH = rc(
     + '|'
     + DOI_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 
@@ -160,7 +160,7 @@ VOLUME_SEARCH = rc(
     + '|'
     + VOLUME_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 ISSUE_META_NAME_OR_PROP = r'''
@@ -172,7 +172,7 @@ ISSUE_SEARCH = rc(
     + '|'
     + ISSUE_META_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 FIRST_PAGE_NAME_OR_PROP = r'''
@@ -184,7 +184,7 @@ FIRST_PAGE_SEARCH = rc(
     + '|'
     + FIRST_PAGE_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 
@@ -197,7 +197,7 @@ LAST_PAGE_SEARCH = rc(
     + '|'
     + LAST_PAGE_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 
@@ -210,7 +210,7 @@ SITE_NAME_SEARCH = rc(
     + '|'
     + SITE_NAME_NAME_OR_PROP + r'\s++[^\n<]*?' + CONTENT_ATTR
     + ')',
-    VERBOSE | IGNORECASE,
+    IV,
 ).search
 
 TITLE_SPLIT = rc(r' - | — |\|').split

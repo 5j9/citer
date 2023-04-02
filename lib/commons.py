@@ -5,7 +5,7 @@ from functools import partial
 import requests
 from isbnlib import NotValidISBNError, mask as isbn_mask
 from jdatetime import date as jdate
-from regex import IGNORECASE, VERBOSE, compile as regex_compile
+from regex import IGNORECASE, VERBOSE, compile as rc
 
 from config import LANG, NCBI_EMAIL, NCBI_TOOL, SPOOFED_USER_AGENT, USER_AGENT
 
@@ -21,7 +21,7 @@ else:
 
 # The regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
-DOI_SEARCH = regex_compile(
+DOI_SEARCH = rc(
     r'''
     \b
     10\.[0-9]{4,}+
@@ -55,7 +55,7 @@ jB_TO_NUM = {
     'بهمن': 11,
     'اسفند': 12}
 
-DOUBLE_DIGIT_SEARCH = regex_compile(r'\d\d').search
+DOUBLE_DIGIT_SEARCH = rc(r'\d\d').search
 
 # Date patterns:
 
@@ -89,10 +89,10 @@ Y = r'(?<Y>(?:19|20)\d\d)'
 ANYDATE_PATTERN = (
     fr'(?:(?:{B}|{b})\ {d},?\ {Y}|{d}\ (?:{B}|{b})\ {Y}|{Y}(?<sep>[-/]){zm}'
     fr'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d))')
-ANYDATE_SEARCH = regex_compile(ANYDATE_PATTERN, VERBOSE).search
-DIGITS_FINDALL = regex_compile(r'\d').findall
-MC_SUB = regex_compile(r'MC(\w)', IGNORECASE).sub
-LAST_FIRST = partial(regex_compile(r'[,،]').split, maxsplit=1)
+ANYDATE_SEARCH = rc(ANYDATE_PATTERN, VERBOSE).search
+DIGITS_FINDALL = rc(r'\d').findall
+MC_SUB = rc(r'MC(\w)', IGNORECASE).sub
+LAST_FIRST = partial(rc(r'[,،]').split, maxsplit=1)
 
 
 AGENT_HEADER = {
@@ -116,16 +116,16 @@ REQUEST = partial(requests.request, timeout=20)
 # original regex from:
 # https://www.debuggex.com/r/0Npla56ipD5aeTr9
 # https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
-ISBN_10OR13_SEARCH = regex_compile(
+ISBN_10OR13_SEARCH = rc(
     r'97[89]([ -]?+)(?=\d{1,5}\1?+\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*){9}\d'
     r'|(?=\d{1,5}([ -]?+)\d{1,7}\2?+\d{1,6}\2?+\d)(?:\d\2*+){9}[\dX]'
 ).search
 
-ISBN10_SEARCH = regex_compile(
+ISBN10_SEARCH = rc(
     r'(?=\d{1,5}([ -]?+)\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}[\dX]'
 ).search
 
-ISBN13_SEARCH = regex_compile(
+ISBN13_SEARCH = rc(
     r'97[89]([ -]?+)(?=\d{1,5}\1?+\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}\d'
 ).search
 
@@ -136,7 +136,7 @@ ISBN13_SEARCH = regex_compile(
 #     r'?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
 # )
 
-WS_NORMALIZE = partial(regex_compile(r'\s{2,}').sub, ' ')
+WS_NORMALIZE = partial(rc(r'\s{2,}').sub, ' ')
 
 
 class InvalidNameError(ValueError):

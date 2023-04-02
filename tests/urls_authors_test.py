@@ -1,12 +1,15 @@
 from pytest import mark
-from regex import IGNORECASE, VERBOSE, compile as regex_compile
 
-from lib.urls_authors import BYLINE_PATTERN, BYLINE_TAG_FINDITER, byline_to_names
+from lib.urls_authors import (
+    BYLINE_PATTERN,
+    BYLINE_TAG_FINDITER,
+    IV,
+    byline_to_names,
+    rc,
+)
 from tests.urls_test import urls_scr
 
-BYLINE_PATTERN_REGEX = regex_compile(
-    fr'^{BYLINE_PATTERN}$',
-    IGNORECASE | VERBOSE)
+BYLINE_PATTERN_REGEX = rc(fr'^{BYLINE_PATTERN}$', IV)
 
 
 def test_byline_pattern_one_author():
