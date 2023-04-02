@@ -188,10 +188,10 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         sfn += f' | {year}'
     elif date is not None:
         if not isinstance(date, str):
-            y = date.strftime('%Y')
+            year = date.strftime('%Y')
         else:
-            y = FOUR_DIGIT_NUM(date)[0]
-        sfn += f' | {y}'
+            year = FOUR_DIGIT_NUM(date)[0]
+        sfn += f' | {year}'
 
     if isbn := d['isbn']:
         cit += f' | isbn={isbn}'

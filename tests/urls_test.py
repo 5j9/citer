@@ -975,5 +975,5 @@ def test_use_doi_if_available():
 
 def test_dspace_publisher():  # 27
     assert urls_scr('https://repositorio.unesp.br/handle/11449/86528')[1][:-12] == (
-        '* {{cite web | title=A neve em Palmas/PR: da reconstituição histórica à abordagem dinâmica | publisher=Universidade Estadual Paulista (Unesp) | date=2014-06-11 | url=https://repositorio.unesp.br/handle/11449/86528 | language=pt | ref={{sfnref | Universidade Estadual Paulista (Unesp) | 2014}} | access-date='
+        '* {{cite web | title=A neve em Palmas/PR: da reconstituição histórica à abordagem dinâmica | publisher=Universidade Estadual Paulista (Unesp) | date=2004 | url=https://repositorio.unesp.br/handle/11449/86528 | language=pt | ref={{sfnref | Universidade Estadual Paulista (Unesp) | 2004}} | access-date='
     )

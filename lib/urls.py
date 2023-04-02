@@ -63,8 +63,11 @@ DATE_META_NAME_OR_PROP = r'''
         |sailthru\.date
     )(?P=q)
 '''
-DATE_CONTENT_ATTR =\
-    r'content=(?<q>["\'])[^"\'<]*?' + ANYDATE_PATTERN + r'[^"\'<]*+(?P=q)'
+DATE_CONTENT_ATTR = (
+    r'content=(?<q>["\'])(?>'
+    + ANYDATE_PATTERN + r'|(?<year_only>\d{4})'
+    r'(?P=q))'
+)
 DATE_SEARCH = rc(
     r'<meta\s+[^\n<]*?(?:'
     + DATE_META_NAME_OR_PROP + r'\s++[^\n<]*?' + DATE_CONTENT_ATTR
@@ -365,7 +368,7 @@ def find_date(html: str, url: str) -> datetime_date:
     # Example for find_any_date(html):
     # https://www.bbc.com/news/uk-england-25462900
     if (m := DATE_SEARCH(html)) is not None:
-        return find_any_date(m)
+        return m['year_only'] or find_any_date(m)
     return find_any_date(url) or find_any_date(html)
 
 
@@ -494,7 +497,6 @@ def url2dict(url: str) -> Dict[str, Any]:
         d['title'] = title.strip()
     if date := find_date(html, url):
         d['date'] = date
-        d['year'] = str(date.year)
 
     if (lang_match := LANG_SEARCH(html)) is not None:
         d['language'] = lang_match[1]
