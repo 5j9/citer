@@ -296,7 +296,7 @@ def test_2letter_langcode():
 def test_either_year_or_date():
     assert urls_scr(
         'https://www.shora-gc.ir/fa/news/1815/%D8%A7%D8%B5%D9%84-%D9%87%D9%81%D8%AA%D8%A7%D8%AF-%D9%88-%D8%B3%D9%88%D9%85'
-    )[1][:-12] == '* {{یادکرد وب | عنوان=اصل هفتاد و سوم | وبگاه=پایگاه اطلاع رسانی شورای نگهبان - shora-gc.ir | تاریخ=2020-06-07 | پیوند=http://www.shora-gc.ir/fa/news/1815 | کد زبان=fa | تاریخ بازبینی='
+    )[1][:-12] == '* {{یادکرد وب | عنوان=اصل هفتاد و سوم | ناشر=پایگاه اطلاع رسانی شورای نگهبان - shora-gc.ir | تاریخ=2020-06-07 | پیوند=http://www.shora-gc.ir/fa/news/1815 | کد زبان=fa | تاریخ بازبینی='
 
 
 def test_arabic_ya():

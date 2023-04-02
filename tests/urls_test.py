@@ -646,18 +646,12 @@ def test_oth6():
     o = urls_scr(
         'http://www.farsnews.com/newstext.php?nn=13930418000036'
     )
-    assert "{{sfn | ''خبرگزاری فارس'' | 2014}}" in o[0]
+    assert (
+        '* {{cite web | title=آیت\u200cالله محمدی گیلانی دارفانی را وداع گفت | publisher=Fars News Agency | date=2014-07-09 | url=http://www.farsnews.com/newstext.php?nn=13930418000036 | language=fa | ref={{sfnref | Fars News Agency | 2014}} | access-date='
+    ) == o[1][:-12]
+    assert "{{sfn | Fars News Agency | 2014}}" in o[0]
     # Fars news is using 'خبرگزاری فارس' as og:author which is wrong
     # and thats why its name is not italicized in sfn.
-    assert (
-        '* {{cite web '
-        '| title=آیت\u200cالله محمدی گیلانی دارفانی را وداع گفت '
-        '| website=خبرگزاری فارس '
-        '| date=2014-07-09 '
-        '| url=http://www.farsnews.com/newstext.php?nn=13930418000036 '
-        '| language=fa '
-        '| ref={{sfnref | خبرگزاری فارس | 2014}} '
-        '| access-date=') in o[1]
 
 
 def test_oth7():
@@ -768,7 +762,7 @@ def test_reverse_name():
         '| last=Martin '
         '| first=Tracy '
         '| title=Dynamometers Explained '
-        '| website=HighBeam Research '
+        '| publisher=Dealernews '
         '| date=2014-07-01 '
         '| url=http://www.highbeam.com/doc/1P3-3372742961.html '
         '| access-date='
@@ -821,19 +815,9 @@ def test_oth15():
 def test_invalid_name():
     """Test that URL does not fail with InvalidNameError."""
     assert (
-        '* {{cite web | title=انتخابات 96 به روایت آمار '
-        '| website=پایگاه اطلاع رسانی شبکه خبر صدا'
-        ' و سیمای جمهوری اسلامی ایران |'
-        ' date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654 '
-        '| language=fa | ref={{sfnref |'
-        ' پایگاه اطلاع رسانی شبکه خبر'
-        ' صدا و سیمای جمهوری اسلامی ایران | 2017}} |'
-        ' access-date='
+        '* {{cite web | title=انتخابات 96 به روایت آمار | publisher=پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654 | language=fa | ref={{sfnref | پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | 2017}} | access-date=2023-04-02}}'
     ) in urls_scr(
-        'http://www.irinn.ir/fa/news/499654/'
-        '%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-'
-        '%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-'
-        '%D8%A2%D9%85%D8%A7%D8%B1'
+        'http://www.irinn.ir/fa/news/499654/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%A2%D9%85%D8%A7%D8%B1'
     )[1]
 
 
@@ -986,4 +970,10 @@ def test_use_doi_if_available():
         'journal=Nigerian Postgraduate Medical Journal | publisher=Medknow | '
         'volume=27 | issue=3 | year=2020 | issn=1117-1936 | '
         'doi=10.4103/npmj.npmj_69_20 | page=242}}'
+    )
+
+
+def test_dspace_publisher():  # 27
+    assert urls_scr('https://repositorio.unesp.br/handle/11449/86528')[1][:-12] == (
+        '* {{cite web | title=A neve em Palmas/PR: da reconstituição histórica à abordagem dinâmica | publisher=Universidade Estadual Paulista (Unesp) | date=2014-06-11 | url=https://repositorio.unesp.br/handle/11449/86528 | language=pt | ref={{sfnref | Universidade Estadual Paulista (Unesp) | 2014}} | access-date='
     )
