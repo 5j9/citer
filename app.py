@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 from requests import ConnectionError as RequestsConnectionError, JSONDecodeError
 
 from config import LANG
+from collections import defaultdict
 from lib.commons import ISBN_10OR13_SEARCH, ReturnError, dict_to_sfn_cit_ref, uninum2en
 from lib.doi import DOI_SEARCH, doi_to_dict
 from lib.googlebooks import url_to_dict as google_books_dict
@@ -160,6 +161,15 @@ def js(start_response: callable, *_) -> tuple:
     return JS,
 
 
+def page_does_not_exist(start_response: callable, *_) -> tuple:
+    text = b'404 not found'
+    start_response('404 not found', [
+        ('Content-Type', 'text/plain'),
+        ('Content-Length', str(len(text))),
+    ])
+    return text,
+
+
 input_type_to_resolver = {
     '': url_doi_isbn_to_dict,
     'url-doi-isbn': url_doi_isbn_to_dict,
@@ -211,12 +221,12 @@ def root(start_response: callable, environ: dict) -> tuple:
     return response_body,
 
 
-PATH_TO_HANDLER = {
+PATH_TO_HANDLER = defaultdict(lambda: page_does_not_exist, {
     f'/{CSS_PATH}.css': css,
     f'/{JS_PATH}.js' : js,
     '/': root,
     '/citer.fcgi': root,  # for backward compatibility
-}
+})
 
 
 def app(environ: dict, start_response: callable) -> tuple:
