@@ -2,7 +2,13 @@ from typing import List, Optional, Tuple
 
 from regex import ASCII, IGNORECASE, VERBOSE
 
-from lib.commons import ANYDATE_SEARCH, FOUR_DIGIT_NUM, InvalidNameError, first_last, rc
+from lib.commons import (
+    ANYDATE_SEARCH,
+    FOUR_DIGIT_NUM,
+    InvalidNameError,
+    first_last,
+    rc,
+)
 
 IV = IGNORECASE | VERBOSE
 # Names in byline are required to be two or three parts
