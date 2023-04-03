@@ -1,17 +1,42 @@
+from collections import defaultdict
 from html import unescape
 from logging import INFO, WARNING, Formatter, getLogger
 from logging.handlers import RotatingFileHandler
 from os.path import abspath, dirname
 from urllib.parse import parse_qs, unquote, urlparse
 
-from requests import ConnectionError as RequestsConnectionError, JSONDecodeError
+from requests import (
+    ConnectionError as RequestsConnectionError,
+    JSONDecodeError,
+)
 
-from config import LANG
-from collections import defaultdict
-from lib.commons import ISBN_10OR13_SEARCH, ReturnError, dict_to_sfn_cit_ref, uninum2en
+from lib.commons import (
+    ISBN_10OR13_SEARCH,
+    ReturnError,
+    dict_to_sfn_cit_ref,
+    uninum2en,
+)
 from lib.doi import DOI_SEARCH, doi_to_dict
 from lib.googlebooks import url_to_dict as google_books_dict
-from lib.isbn_oclc import IsbnError, isbn_to_dict, oclc_dict, worldcat_url_to_dict
+from lib.html import (
+    CSS,
+    CSS_HEADERS,
+    CSS_PATH,
+    DEFAULT_SCR,
+    HTTPERROR_SCR,
+    JS,
+    JS_HEADERS,
+    JS_PATH,
+    OTHER_EXCEPTION_SCR,
+    UNDEFINED_INPUT_SCR,
+    scr_to_html,
+)
+from lib.isbn_oclc import (
+    IsbnError,
+    isbn_to_dict,
+    oclc_dict,
+    worldcat_url_to_dict,
+)
 from lib.jstor import url_to_dict as jstor_url_to_dict
 from lib.ketabir import url_to_dict as ketabir_url_to_dict
 from lib.noorlib import url_to_dict as noorlib_url_to_dict
@@ -19,33 +44,6 @@ from lib.noormags import url_to_dict as noormags_url_to_dict
 from lib.pubmed import pmcid_dict, pmid_dict
 from lib.urls import url_to_dict as urls_url_to_dict
 from lib.waybackmachine import url_to_dict as archive_url_to_dict
-
-if LANG == 'en':
-    from lib.html.en import (
-        CSS,
-        CSS_HEADERS,
-        CSS_PATH,
-        DEFAULT_SCR,
-        HTTPERROR_SCR,
-        JS,
-        JS_HEADERS,
-        JS_PATH,
-        OTHER_EXCEPTION_SCR,
-        UNDEFINED_INPUT_SCR,
-        scr_to_html,
-    )
-else:
-    from lib.html.fa import (
-        CSS,
-        CSS_HEADERS,
-        CSS_PATH,
-        DEFAULT_SCR,
-        HTTPERROR_SCR,
-        JS_PATH,
-        OTHER_EXCEPTION_SCR,
-        UNDEFINED_INPUT_SCR,
-        scr_to_html,
-    )
 
 
 def google_encrypted_dict(url, parsed_url, date_format) -> dict:
