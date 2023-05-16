@@ -56,11 +56,6 @@ if LANG == 'en':
     DEFAULT_SCR = (
         'Generated citation will appear here...', '', '')
 
-    UNDEFINED_INPUT_SCR = (
-        'Undefined input.',
-        'Sorry, the input was not recognized.',
-        '')
-
     HTTPERROR_SCR = (
         'HTTP error:',
         'One or more of the web resources required to '
@@ -83,8 +78,4 @@ else:  # LANG == 'fa'
     OTHER_EXCEPTION_SCR = (
         'خطای ناشناخته‌ای رخ داد..',
         'اطلاعات خطا در سیاهه ثبت شد.',
-        '')
-    UNDEFINED_INPUT_SCR = (
-        'ورودی تجزیه‌ناپذیر',
-        'پوزش، ورودی قابل پردازش نبود. خطا در سیاهه ثبت شد.',
         '')

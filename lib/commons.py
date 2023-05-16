@@ -1,4 +1,5 @@
 from calendar import month_abbr, month_name
+from collections import defaultdict
 from datetime import date as datetime_date, datetime
 from functools import partial
 
@@ -165,7 +166,7 @@ def request(url, spoof=False, method='get', **kwargs):
     return REQUEST(method, url, headers=headers, **kwargs)
 
 
-def dict_to_sfn_cit_ref(dictionary) -> tuple:
+def dict_to_sfn_cit_ref(dictionary: defaultdict) -> tuple:
     # Return (sfn, cite, ref) strings.
     if (title := dictionary.get('title')) is not None:
         dictionary['title'] = WS_NORMALIZE(title)

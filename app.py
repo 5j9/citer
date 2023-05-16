@@ -28,15 +28,9 @@ from lib.html import (
     JS_HEADERS,
     JS_PATH,
     OTHER_EXCEPTION_SCR,
-    UNDEFINED_INPUT_SCR,
     scr_to_html,
 )
-from lib.isbn_oclc import (
-    IsbnError,
-    isbn_to_dict,
-    oclc_dict,
-    worldcat_url_to_dict,
-)
+from lib.isbn_oclc import isbn_to_dict, oclc_dict, worldcat_url_to_dict
 from lib.jstor import url_to_dict as jstor_url_to_dict
 from lib.ketabir import url_to_dict as ketabir_url_to_dict
 from lib.noorlib import url_to_dict as noorlib_url_to_dict
@@ -142,11 +136,7 @@ def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
         # We can check user inputs containing dots for ISBNs, but probably is
         # error-prone.
         if (m := ISBN_10OR13_SEARCH(en_user_input)) is not None:
-            try:
-                return isbn_to_dict(m[0], True, date_format)
-            except IsbnError:
-                pass
-        return UNDEFINED_INPUT_SCR
+            return isbn_to_dict(m[0], True, date_format)
 
 
 def css(start_response: callable, *_) -> tuple:
