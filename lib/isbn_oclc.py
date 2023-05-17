@@ -54,6 +54,14 @@ def isbn_to_dict(
             args=(isbn, ketabir_result_list))
         ketabir_thread.start()
 
+    google_books_result = []
+    google_books_thread = Thread(
+        target=google_books,
+        args=(isbn, google_books_result),
+    )
+    google_books_thread.start()
+
+
     citoid_result_list = []
     citoid_thread = Thread(
         target=citoid_thread_target,
@@ -76,7 +84,11 @@ def isbn_to_dict(
     if citoid_result_list:
         citoid_dict = citoid_result_list[0]
     else:
-        citoid_dict = None
+        citoid_dict = defaultdict(lambda: None)
+
+    google_books_thread.join()
+    if google_books_result:
+        citoid_dict.update(google_books_result[0])
 
     dictionary = combine_dicts(ketabir_dict, citoid_dict)
 
@@ -99,13 +111,6 @@ def ketabir_thread_target(isbn: str, result: list) -> None:
 
 
 def combine_dicts(ketabir: dict, citoid: dict) -> dict:
-    """Choose which source to use.
-
-    Return ketabir_dict if both dicts are available and lang is fa.
-    Return otto_dict if both dicts are available and lang is not fa.
-    Return ketabir_dict if ketabir_dict is None.
-    Return otto_dict otherwise.
-    """
     if not ketabir and not citoid:
         raise IsbnError('Bibliographic information not found.')
 
@@ -166,6 +171,24 @@ def get_citoid_dict(isbn) -> Optional[dict]:
         d['date'] = date
 
     return d
+
+
+def google_books(isbn: str, result: list):
+    try:
+        j = request(
+            f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}'
+        ).json()
+        d = j['items'][0]
+        d.update(d['volumeInfo'])
+    except Exception:  # noqa
+        return
+    if authors := d['authors']:
+        d['authors'] = [a.rsplit(' ', 1) for a in authors]
+    if date := d.get('publishedDate'):
+        d['date'] = date
+    d['isbn'] = isbn
+    d['cite_type'] = 'book'
+    result.append(d)
 
 
 def citoid_thread_target(isbn: str, result: list) -> None:

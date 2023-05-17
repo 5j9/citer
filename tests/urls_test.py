@@ -815,10 +815,10 @@ def test_oth15():
 def test_invalid_name():
     """Test that URL does not fail with InvalidNameError."""
     assert (
-        '* {{cite web | title=انتخابات 96 به روایت آمار | publisher=پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654 | language=fa | ref={{sfnref | پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | 2017}} | access-date=2023-04-02}}'
+        '* {{cite web | title=انتخابات 96 به روایت آمار | publisher=پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654 | language=fa | ref={{sfnref | پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | 2017}} | access-date='
     ) in urls_scr(
         'http://www.irinn.ir/fa/news/499654/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%A2%D9%85%D8%A7%D8%B1'
-    )[1]
+    )[1][:-12]
 
 
 def test_pages_from_html_meta():
