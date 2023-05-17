@@ -19,30 +19,14 @@ def worldcat_scr(*args):
 def test_is1():
     # not in ketabir
     assert (
-        '* {{cite book '
-        '| last=Adkins '
-        '| first=Roy '
-        '| last2=Adkins '
-        '| first2=Lesley '
-        '| title=The war for all the oceans : '
-        'from Nelson at the Nile to Napoleon at Waterloo '
-        '| publisher=Abacus '
-        '| publication-place=London '
-        '| date=2007 '
-        '| isbn=978-0-349-11916-8 '
-        '| oclc=137313052}}'
+        '* {{cite book | last=Adkins | first=Roy A. | last2=Adkins | first2=Lesley | title=The War for All the Oceans | publisher=Abacus (UK) | publication-place=London | date=2007 | isbn=978-0-349-11916-8 | oclc=137313052}}'
     ) == isbn_scr('9780349119168', True)[1]
 
 
 def test_is3():
     # on both ketabid and citoid
     assert (
-        '* {{cite book | last=Sipihrī | first=Suhrāb. '
-        '| title=Rāz-i gul-i surkh '
-        '| publisher=Muʼassasah-ʼi Intishārāt-i Nigāh '
-        '| publication-place=Tihrān | date=1379 [2000 or 2001] '
-        '| isbn=964-6736-34-3 '
-        '| oclc=53446327}}'
+        '* {{cite book | last=Sipihrī | first=Suhrāb | title=راز گل سرخ | publisher=Muʼassasah-ʼi Intishārāt-i Nigāh | publication-place=Tihrān | date=2005 | isbn=964-6736-34-3 | oclc=53446327 | language=fa}}'
     ) == isbn_scr('964-6736-34-3 ')[1]
 
 
@@ -86,10 +70,7 @@ def test_hyphened_isbn_match():  # 30
 
 def test_citoid_only():  # 31
     assert (
-        '* {{cite book | last=Ramseier | first=Walter '
-        '| title=Münchenstein - Heimatkunde | publication-place=[Liestal] '
-        '| isbn=978-3-85673-522-7 | oclc=613273377 '
-        '| language=de}}'
+        '* {{cite book | last=Ramseier | first=Walter | title=Münchenstein - Heimatkunde | publication-place=[Liestal] | date=1995 | isbn=3-85673-522-4 | oclc=613273377 | language=de}}'
     ) == isbn_scr('3-85673-522-4')[1]
 
 

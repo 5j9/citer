@@ -159,7 +159,7 @@ class ReturnError(RuntimeError):
     """
 
 
-def request(url, spoof=False, method='get', **kwargs):
+def request(url, spoof=False, method='get', **kwargs) -> requests.Response:
     headers = SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER
     if 'headers' in kwargs:
         headers |= kwargs.pop('headers')
