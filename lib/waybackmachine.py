@@ -96,8 +96,12 @@ def original_url_dict(url: str):
     d = {}
     # Creating a thread to request homepage title in background
     hometitle_list = []  # A mutable variable used to get the thread result
+
+    parsed_url = urlparse(url)
+    hostname = parsed_url.hostname.removeprefix('.www')
+
     home_title_thread = Thread(
-        target=analyze_home, args=(url, hometitle_list)
+        target=analyze_home, args=(parsed_url, hometitle_list)
     )
     home_title_thread.start()
     html = get_html(url)
@@ -117,10 +121,11 @@ def original_url_dict(url: str):
     else:
         d['cite_type'] = 'web'
         d['website'] = find_site_name(
-            html, html_title, url, authors, hometitle_list, home_title_thread
+            html, html_title, url, hostname, authors, hometitle_list,
+            home_title_thread,
         )
     d['title'] = find_title(
-        html, html_title, url, authors, hometitle_list, home_title_thread
+        html, html_title, hostname, authors, hometitle_list, home_title_thread
     )
     return d
 

@@ -2,7 +2,7 @@
 from pytest import mark
 
 from lib.commons import dict_to_sfn_cit_ref
-from lib.urls import url_to_dict
+from lib.urls import find_url, url_to_dict
 
 
 def urls_scr(*args):
@@ -706,9 +706,7 @@ def test_oth10():
         'Woman who lost brother on MH370 mourns relatives on board MH17 '
         '| website=The Times & The Sunday Times '
         '| date=2014-07-18 '
-        '| url=https://www.thetimes.co.uk/article/'
-        'woman-who-lost-brother-on-mh370-mourns-relatives-on-board-'
-        'mh17-r07q5rwppl0 '
+        '| url=https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0 '
         '| access-date='
     ) in urls_scr(
         'http://www.thetimes.co.uk/tto/news/world/'
@@ -977,3 +975,11 @@ def test_dspace_publisher():  # 27
     assert urls_scr('https://repositorio.unesp.br/handle/11449/86528')[1][:-12] == (
         '* {{cite web | title=A neve em Palmas/PR: da reconstituição histórica à abordagem dinâmica | publisher=Universidade Estadual Paulista (Unesp) | date=2004 | url=https://repositorio.unesp.br/handle/11449/86528 | language=pt | ref={{sfnref | Universidade Estadual Paulista (Unesp) | 2004}} | access-date='
     )
+
+
+def test_find_urls_not_matching():
+    # https://meta.wikimedia.org/w/index.php?diff=prev&oldid=25155727
+    url = 'https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-june-13-2023'
+    assert find_url(
+        '<meta property="og:url" content="http://dev-isw.bivings.com/" />', url
+    ) == url
