@@ -1,0 +1,24 @@
+{
+	"encoding": "UTF-8",
+	"headers": {
+		"CF-Cache-Status": "DYNAMIC",
+		"CF-RAY": "7d83f5e0282937ca-FRA",
+		"Cache-control": "public",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html; charset=UTF-8",
+		"Create-Date": "Fri, 16 Jun 2023 18:07:05 +0300",
+		"Date": "Fri, 16 Jun 2023 15:07:05 GMT",
+		"Last-Modified": "Fri, 16 Jun 2023 18:07:05 +0300",
+		"NEL": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+		"Report-To": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=3zYcB6M6e%2BIrrIXaz7Nju18btcPCOiiMoDPNyVBx9%2FlvrcjLHgPpQZp1cRPXR06K5A2Nke5%2FPB01AB06tkKe1gkrhNHpoKrESlhLEjaa8kC5pXUUy9dkEw%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+		"Server": "cloudflare",
+		"Set-Cookie": "vs=5a6c3ee2ebfb22826da2307ef74670e4; expires=Fri, 26-Sep-2025 23:07:05 GMT; Max-Age=72000000; path=/; domain=.zn.ua",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding",
+		"X-Powered-By": "PHP/7.4.28",
+		"alt-svc": "h3=\":443\"; ma=86400"
+	},
+	"status_code": 200,
+	"url": "https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html"
+}

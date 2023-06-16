@@ -1,0 +1,20 @@
+{
+	"encoding": "UTF-8",
+	"headers": {
+		"CF-Cache-Status": "DYNAMIC",
+		"CF-RAY": "7d83f5d5dbf79b2b-FRA",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html; charset=UTF-8",
+		"Date": "Fri, 16 Jun 2023 15:07:04 GMT",
+		"Last-Modified": "Fri, 16 Jun 2023 15:07:02 GMT",
+		"NEL": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+		"Report-To": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=0QjV54xSK%2BUAU5TIH%2BEjwS0wa8dz%2B1dcDSFv7PP3RwdJZ2MP8VEyUbvxoPzLaH1vWnz%2FKbMBZlfEeBiIGx0BxLKyY4zpcgx0KXIuExhUGXD6N6KVuWpYwA%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+		"Server": "cloudflare",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding",
+		"alt-svc": "h3=\":443\"; ma=86400"
+	},
+	"status_code": 200,
+	"url": "https://zn.ua"
+}

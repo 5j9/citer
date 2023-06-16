@@ -11,9 +11,6 @@ from requests import ConnectionError as RConnectionError, Response, Session
 
 from tests.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
 
-# noinspection PyPackageRequirements
-
-
 # Do not import library parts here. commons.py should not be loaded
 # until LANG is set by test_fa and test_en.
 
