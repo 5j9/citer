@@ -2,7 +2,7 @@ from calendar import month_abbr, month_name
 from collections import defaultdict
 from datetime import date as datetime_date, datetime
 from functools import partial
-from typing import Callable
+from typing import Callable, Optional
 
 import requests
 from isbnlib import NotValidISBNError, mask as isbn_mask
@@ -22,7 +22,7 @@ else:
 
 
 rc = partial(rc, cache_pattern=False)
-Search = Callable[[str], Match[str] | None]
+Search = Callable[[str], Optional[Match[str]]]
 # The regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 DOI_SEARCH: Search = rc(
