@@ -2,11 +2,12 @@ from calendar import month_abbr, month_name
 from collections import defaultdict
 from datetime import date as datetime_date, datetime
 from functools import partial
+from typing import Callable
 
 import requests
 from isbnlib import NotValidISBNError, mask as isbn_mask
 from jdatetime import date as jdate
-from regex import IGNORECASE, VERBOSE, compile as rc
+from regex import IGNORECASE, VERBOSE, Match, compile as rc
 
 from config import LANG, NCBI_EMAIL, NCBI_TOOL, SPOOFED_USER_AGENT, USER_AGENT
 
@@ -21,9 +22,10 @@ else:
 
 
 rc = partial(rc, cache_pattern=False)
+Search = Callable[[str], Match[str] | None]
 # The regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
-DOI_SEARCH = rc(
+DOI_SEARCH: Search = rc(
     r'''
     \b
     10\.[0-9]{4,}+
@@ -91,7 +93,7 @@ Y = r'(?<Y>(?:19|20)\d\d)'
 ANYDATE_PATTERN = (
     fr'(?:(?:{B}|{b})\ {d},?\ {Y}|{d}\ (?:{B}|{b})\ {Y}|{Y}(?<sep>[-/]){zm}'
     fr'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d))')
-ANYDATE_SEARCH = rc(ANYDATE_PATTERN, VERBOSE).search
+ANYDATE_SEARCH: Search = rc(ANYDATE_PATTERN, VERBOSE).search
 DIGITS_FINDALL = rc(r'\d').findall
 MC_SUB = rc(r'MC(\w)', IGNORECASE).sub
 LAST_FIRST = partial(rc(r'[,،]').split, maxsplit=1)

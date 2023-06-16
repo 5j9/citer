@@ -12,7 +12,7 @@ from langid import classify
 from requests import Response as RequestsResponse
 from requests.exceptions import RequestException
 
-from lib.commons import ANYDATE_PATTERN, find_any_date, rc, request
+from lib.commons import ANYDATE_PATTERN, Search, find_any_date, rc, request
 from lib.doi import get_crossref_dict
 from lib.urls_authors import CONTENT_ATTR, IV, find_authors
 
@@ -82,7 +82,7 @@ DATE_SEARCH = rc(
 ).search
 
 
-def meta_searcher(names: list):
+def meta_searcher(names: list) -> Search:
     name_or_prop = r'(?>name|property)=(?<q>["\'])\L<names>(?P=q)'
     return rc(
         r'<meta\s++[^\n<]*?(?:'
