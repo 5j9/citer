@@ -230,7 +230,7 @@ def find_site_name(
     Returns site's name as a string.
     """
     if (m := SITE_NAME_SEARCH(html)) is not None:
-        return m['result']
+        return m['result'].partition('|')[0].rstrip()
     # search the title
     if html_title is not None:
         if site_name := parse_title(
