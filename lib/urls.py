@@ -159,11 +159,10 @@ def find_publisher(html: str) -> Optional[str]:
 
 
 def find_url(html: str, url: str) -> str:
-    """Return og:url or url as a string."""
     if (m := URL_SEARCH(html)) is not None:
-        ogurl = m['result']
-        if urlparse(ogurl).path:
-            return ogurl
+        meta_url: str = m['result']
+        if len(urlparse(meta_url).path) > 1:  # some sites link to their homepage
+            return meta_url
     return url
 
 
@@ -213,6 +212,7 @@ def find_site_name(
     html: str,
     html_title: str,
     url: str,
+    hostname: str,
     authors: List[Tuple[str, str]],
     home_list: List[str],
     thread: Thread,
@@ -223,6 +223,7 @@ def find_site_name(
         html: The html string of the page being processed.
         html_title: Title of the page found in the title tag of the html.
         url: URL of the page.
+        hostname: urlparse(url).hostname.removeprefix('www.')
         authors: Authors list returned from find_authors function.
         home_list: A list containing the title of the home page as a str.
         thread: The thread that should be joined before using home_title list.
@@ -233,7 +234,7 @@ def find_site_name(
     # search the title
     if html_title is not None:
         if site_name := parse_title(
-            html_title, url, authors, home_list, thread
+            html_title, hostname, authors, home_list, thread
         )[2]:
             return site_name
     # noinspection PyBroadException
@@ -246,20 +247,19 @@ def find_site_name(
         if (i := home_title.find(':')) != -1:
             if site_name := home_title[:i].strip():
                 return site_name
-        if site_name := parse_title(home_title, url, None)[2]:
+        if site_name := parse_title(home_title, hostname, None)[2]:
             return site_name
         return home_title
     except Exception:
         logger.exception(url)
     # return hostname
-    hostname = urlparse(url).hostname
-    return hostname.removeprefix('www.')
+    return hostname
 
 
 def find_title(
     html: str,
     html_title: str,
-    url: str,
+    hostname: str,
     authors: List[Tuple[str, str]],
     home_list: List[str],
     thread: Thread,
@@ -267,17 +267,17 @@ def find_title(
     """Return (title_string, where_info)."""
     if (m := TITLE_SEARCH(html)) is not None:
         return parse_title(
-            html_unescape(m['result']), url, authors, home_list, thread,
+            html_unescape(m['result']), hostname, authors, home_list, thread,
         )[1]
     elif html_title is not None:
-        return parse_title(html_title, url, authors, home_list, thread)[1]
+        return parse_title(html_title, hostname, authors, home_list, thread)[1]
     else:
         return None
 
 
 def parse_title(
     title: str,
-    url: str,
+    hostname: str,
     authors: Optional[List[Tuple[str, str]]],
     home_list: Optional[List[str]] = None,
     thread: Thread = None,
@@ -311,7 +311,6 @@ def parse_title(
     title_parts = TITLE_SPLIT(title.strip())
     if len(title_parts) == 1:
         return None, title, None
-    hostname = urlparse(url).hostname.replace('www.', '', 1)
     # Searching for intitle_sitename
     # 1. In hostname
     hnset = set(hostname.split('.'))
@@ -371,14 +370,13 @@ def find_date(html: str, url: str) -> datetime_date:
         return m['year_only'] or find_any_date(m)
     return find_any_date(url) or find_any_date(html)
 
-
-def analyze_home(url: str, home_list: list) -> None:
+def analyze_home(parsed_url: tuple, home_list: list) -> None:
     """Append home_title and site_name to home_list.
 
     This function is invoked through a thread.
     home_list is used to return the thread result.
     """
-    home_url = '://'.join(urlparse(url)[:2])
+    home_url = '://'.join(parsed_url[:2])
     with request(
         home_url, spoof=True, stream=True
     ) as r:
@@ -452,14 +450,17 @@ def get_html(url: str) -> str:
 
 def url2dict(url: str) -> Dict[str, Any]:
     """Get url and return the result as a dictionary."""
-    d: defaultdict[str, Any] = defaultdict(lambda: None)
+    parsed_url = urlparse(url)
+    hostname = parsed_url.hostname.replace('www.', '', 1)
+
     # Creating a thread to request homepage title in background
     home_thread = Thread(
-        target=analyze_home, args=(url, (home_list := [])))
+        target=analyze_home, args=(parsed_url, (home_list := [])))
     home_thread.start()
 
     html = get_html(url)
 
+    d: defaultdict[str, Any] = defaultdict(lambda: None)
     if doi := find_doi(html):
         # noinspection PyBroadException
         try:
@@ -490,9 +491,11 @@ def url2dict(url: str) -> Dict[str, Any]:
         d['cite_type'] = 'web'
         if publisher is None:
             d['website'] = find_site_name(
-                html, html_title, url, authors, home_list, home_thread)
+                html, html_title, url, hostname, authors, home_list,
+                home_thread,
+            )
     if (title := find_title(
-        html, html_title, url, authors, home_list, home_thread
+        html, html_title, hostname, authors, home_list, home_thread
     )) is not None:
         d['title'] = title.strip()
     if date := find_date(html, url):
