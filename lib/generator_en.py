@@ -5,6 +5,8 @@ from collections import defaultdict
 from datetime import date as Date
 from functools import partial
 from logging import getLogger
+from random import choice, choices, seed
+from string import ascii_lowercase, digits
 
 from lib.commons import rc
 from lib.language import TO_TWO_LETTER_CODE
@@ -15,7 +17,7 @@ DOI_URL_MATCH = rc(r'https?://(dx\.)?doi\.org/').match
 DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 FOUR_DIGIT_NUM = rc(r'\d\d\d\d').search
 
-refless = partial(rc(
+rm_ref_arg = partial(rc(
     r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})'
 ).sub, r'\g<repl>')
 
@@ -86,6 +88,25 @@ TYPE_TO_CITE = {
     'standard-series': '',
     'rprt': 'report',
 }.get
+
+# According to https://en.wikipedia.org/wiki/Help:Footnotes,
+# the characters '!$%&()*,-.:;<@[]^_`{|}~' are also supported. But they are
+# hard to use.
+LOWER_ALPHA_NUM = digits + ascii_lowercase
+
+
+def generate_ref_name(cit):
+    # Note: Call this function BEFORE adding access-date date to cit.
+    # p: Probability of having the same ref-name on a webpage:
+    # https://math.stackexchange.com/questions/509679/probability-of-choosing-the-same-number
+    # n: Number of citations on a page
+    # p = ((n := 200)-1) / (math.perm(len(ascii_lowercase), 1) * math.perm(len(LOWER_ALPHA_NUM), 4))
+    # Probability of having same ref in 100_000 pages: p * 100_000
+    seed(cit)
+    return (
+        choice(ascii_lowercase)  # it should contain at least one non-digit
+        + ''.join(choices(LOWER_ALPHA_NUM, k=4))
+    )
 
 
 def sfn_cit_ref(d: defaultdict) -> tuple:
@@ -258,25 +279,21 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             cit += f' | {year}'
         cit += '}}'
 
+    # create ref_name before adding access-date
+    ref_name = generate_ref_name(cit)
+
     if url:
         cit += f' | access-date={Date.today().strftime(date_format)}'
 
     cit += '}}'
     sfn += '}}'
     # Finally create the ref tag.
-    name = sfn[8:-2].replace(' | ', ' ').replace("'", '')
-    text = refless(cit[2:])
-    if ' p=' in name and ' | page=' not in text:
-        name = name.replace(' p=', ' p. ')
-        if pages:
-            text = f'{text[:-2]} | page={pages}}}}}'
-        else:
-            text = f'{text[:-2]} | page=}}}}'
-    elif ' pp=' in name:
-        name = name.replace(' pp=', ' pp. ')
-        if pages and ' | pages=' not in text:
-            text = f'{text[:-2]} | pages={pages}}}}}'
-    ref = f'&lt;ref name="{name}"&gt;{text}&lt;/ref&gt;'
+    ref_content = rm_ref_arg(cit[2:])
+    if pages:
+        ref_content = f'{ref_content[:-2]} | page={pages}}}}}'
+    else:
+        ref_content = f'{ref_content[:-2]} | page=}}}}'
+    ref = f'&lt;ref name="{ref_name}"&gt;{ref_content}&lt;/ref&gt;'
     return sfn, cit, ref
 
 

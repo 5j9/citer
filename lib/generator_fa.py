@@ -1,10 +1,6 @@
 """Codes required to create citation templates for wikifa."""
-
-
 from collections import defaultdict
 from logging import getLogger
-from random import choice, choices, seed
-from string import ascii_lowercase, digits
 
 from lib.generator_en import (
     DOI_URL_MATCH,
@@ -12,6 +8,7 @@ from lib.generator_en import (
     TYPE_TO_CITE,
     Date,
     fullname,
+    generate_ref_name,
     sfn_cit_ref as en_citations,
 )
 from lib.language import TO_TWO_LETTER_CODE
@@ -21,11 +18,6 @@ CITE_TYPE_TO_PERSIAN = {
     'journal': 'ژورنال',
     'web': 'وب',
 }.get
-
-# According to https://en.wikipedia.org/wiki/Help:Footnotes,
-# the characters '!$%&()*,-.:;<@[]^_`{|}~' are also supported. But they are
-# hard to use.
-LOWER_ALPHA_DIGITS = digits + ascii_lowercase
 
 DIGITS_TO_FA = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
 
@@ -178,11 +170,10 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
 
     if pages:
         sfn += f' | ص={pages}'
-    # Seed the random generator before adding today's date.
-    seed(cit)
-    ref_name = (
-        choice(ascii_lowercase)  # it should contain at least one non-digit
-        + ''.join(choices(LOWER_ALPHA_DIGITS, k=4)))
+
+    # create ref_name before adding access-date
+    ref_name = generate_ref_name(cit)
+
     if url:
         cit += f' | تاریخ بازبینی={Date.today().isoformat()}'
 
