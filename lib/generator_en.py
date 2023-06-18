@@ -95,7 +95,7 @@ TYPE_TO_CITE = {
 LOWER_ALPHA_NUM = digits + ascii_lowercase
 
 
-def generate_ref_name(cit):
+def hash_for_ref_name(cit):
     # Note: Call this function BEFORE adding access-date date to cit.
     # p: Probability of having the same ref-name on a webpage:
     # https://math.stackexchange.com/questions/509679/probability-of-choosing-the-same-number
@@ -237,17 +237,20 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         if jstor_access:
             cit += f' | jstor-access=free'
 
+    pages_in_cit = pages_in_sfn = False
     if pages := d['page']:
         if '–' in pages:
             sfn += f' | pp={pages}'
+            pages_in_sfn = 2
+            if cite_type == 'journal':
+                cit += f' | pages={pages}'
+                pages_in_cit = 2
         else:
             sfn += f' | p={pages}'
-    if cite_type == 'journal':
-        if pages:
-            if '–' in pages:
-                cit += f' | pages={pages}'
-            else:
+            pages_in_sfn = 1
+            if cite_type == 'journal':
                 cit += f' | page={pages}'
+                pages_in_cit = 1
 
     if url := d['url']:
         # Don't add a DOI URL if we already have added a DOI.
@@ -258,6 +261,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             url = None
 
     if not pages and cite_type != 'web':
+        pages_in_sfn = 1
         sfn += ' | p='
 
     if archive_url := d['archive-url']:
@@ -280,7 +284,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         cit += '}}'
 
     # create ref_name before adding access-date
-    ref_name = generate_ref_name(cit)
+    ref_name = hash_for_ref_name(cit)
 
     if url:
         cit += f' | access-date={Date.today().strftime(date_format)}'
@@ -289,10 +293,13 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     sfn += '}}'
     # Finally create the ref tag.
     ref_content = rm_ref_arg(cit[2:])
-    if pages:
-        ref_content = f'{ref_content[:-2]} | page={pages}}}}}'
-    else:
-        ref_content = f'{ref_content[:-2]} | page=}}}}'
+    if pages_in_sfn and not pages_in_cit:
+        if pages:
+            param_name = 'page' if pages_in_sfn == 1 else 'pages'
+            ref_content = f'{ref_content[:-2]} | {param_name}={pages}}}}}'
+        else:
+            ref_content = f'{ref_content[:-2]} | page=}}}}'
+
     ref = f'&lt;ref name="{ref_name}"&gt;{ref_content}&lt;/ref&gt;'
     return sfn, cit, ref
 
