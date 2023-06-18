@@ -92,20 +92,15 @@ TYPE_TO_CITE = {
 # According to https://en.wikipedia.org/wiki/Help:Footnotes,
 # the characters '!$%&()*,-.:;<@[]^_`{|}~' are also supported. But they are
 # hard to use.
-LOWER_ALPHA_NUM = digits + ascii_lowercase
+ALPHA_NUM = digits + ascii_lowercase
 
 
-def hash_for_ref_name(cit):
+def hash_for_ref_name(cit, number_of_digits=4):
     # Note: Call this function BEFORE adding access-date date to cit.
-    # p: Probability of having the same ref-name on a webpage:
-    # https://math.stackexchange.com/questions/509679/probability-of-choosing-the-same-number
-    # n: Number of citations on a page
-    # p = ((n := 200)-1) / (math.perm(len(ascii_lowercase), 1) * math.perm(len(LOWER_ALPHA_NUM), 4))
-    # Probability of having same ref in 100_000 pages: p * 100_000
     seed(cit)
     return (
         choice(ascii_lowercase)  # it should contain at least one non-digit
-        + ''.join(choices(LOWER_ALPHA_NUM, k=4))
+        + ''.join(choices(digits, k=number_of_digits))
     )
 
 
@@ -283,8 +278,9 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             cit += f' | {year}'
         cit += '}}'
 
-    # create ref_name before adding access-date
-    ref_name = hash_for_ref_name(cit)
+    if not pages_in_sfn:
+        # create ref_name before adding access-date
+        ref_hash = hash_for_ref_name(cit, 3)
 
     if url:
         cit += f' | access-date={Date.today().strftime(date_format)}'
@@ -292,13 +288,17 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     cit += '}}'
     sfn += '}}'
     # Finally create the ref tag.
+    ref_name = sfn[8:-2].replace(' | ', ' ').replace("'", '')
+    if pages_in_sfn == 1:
+        ref_name = ref_name.replace(' p=', ' p. ')
+    elif pages_in_sfn == 2:
+        ref_name = ref_name.replace(' pp=', ' pp. ')
+    else:
+        ref_name += ' ' + ref_hash  # noqa
+
     ref_content = rm_ref_arg(cit[2:])
     if pages_in_sfn and not pages_in_cit:
-        if pages:
-            param_name = 'page' if pages_in_sfn == 1 else 'pages'
-            ref_content = f'{ref_content[:-2]} | {param_name}={pages}}}}}'
-        else:
-            ref_content = f'{ref_content[:-2]} | page=}}}}'
+        ref_content = f'{ref_content[:-2]} | page={pages if pages else ""}}}}}'
 
     ref = f'&lt;ref name="{ref_name}"&gt;{ref_content}&lt;/ref&gt;'
     return sfn, cit, ref
