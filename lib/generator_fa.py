@@ -8,7 +8,7 @@ from lib.generator_en import (
     TYPE_TO_CITE,
     Date,
     fullname,
-    generate_ref_name,
+    hash_for_ref_name,
     sfn_cit_ref as en_citations,
 )
 from lib.language import TO_TWO_LETTER_CODE
@@ -172,7 +172,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         sfn += f' | ص={pages}'
 
     # create ref_name before adding access-date
-    ref_name = generate_ref_name(cit)
+    ref_name = hash_for_ref_name(cit)
 
     if url:
         cit += f' | تاریخ بازبینی={Date.today().isoformat()}'
