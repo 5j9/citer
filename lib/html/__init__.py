@@ -13,7 +13,10 @@ CSS_HEADERS = [
     ('Content-Length', str(len(CSS))),
     ('Cache-Control', 'immutable, public, max-age=31536000')]
 
-JS = open(f'{htmldir}/{LANG}.js', 'rb').read()
+JS = open(f'{htmldir}/common.js', 'rb').read()
+if LANG == 'en':
+    JS += open(f'{htmldir}/{LANG}.js', 'rb').read()
+
 # Invalidate cache after css change.
 JS_HEADERS = [
     ('Content-Type', 'application/javascript; charset=UTF-8'),
