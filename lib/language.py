@@ -258,5 +258,7 @@ TO_TWO_LETTER_CODE = {
     'yiddish': 'yi',
     'yoruba': 'yo',
     'zhuang': 'za',
-    'zulu': 'zu'
+    'zulu': 'zu',
+    # https://meta.wikimedia.org/w/index.php?diff=next&oldid=25172699
+    'ua': 'uk',
 }.get
