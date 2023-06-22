@@ -14,8 +14,22 @@ body {
     vertical-align: middle;
     border-radius: 5px;
 }
+input, #shortened, #named_ref {
+    margin: 5px;
+    margin-bottom: 10px;
+}
+input[name=user_input] {
+    width: 80%;
+}
+input[type=submit]:hover {
+    transition: background-color 1s ease-in;
+    background-color: #33CC33;
+}
 .input-legend {
     margin-bottom: 0px;
+}
+#inputs {
+    display: flex;
 }
 #shortened, #named_ref {
     display:inline-block;
@@ -26,20 +40,6 @@ body {
 }
 #shortened:focus, #named_ref:focus {
     outline: none;
-}
-input[name=user_input] {
-    width: 80%;
-}
-input, #shortened, #named_ref {
-    margin: 5px;
-    margin-bottom: 10px;
-}
-#inputs {
-    display: flex;
-}
-input[type=submit]:hover {
-    transition: background-color 1s ease-in;
-    background-color: #33CC33;
 }
 footer {
     font-size: 90%;

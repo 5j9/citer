@@ -7,7 +7,9 @@ from config import LANG, STATIC_PATH
 
 htmldir = dirname(__file__)
 
-CSS = open(f'{htmldir}/{LANG}.css', 'rb').read()
+CSS = open(f'{htmldir}/common.css', 'rb').read()
+if LANG == 'fa':
+    CSS = CSS.replace(b'right;', b'left;')
 CSS_HEADERS = [
     ('Content-Type', 'text/css; charset=UTF-8'),
     ('Content-Length', str(len(CSS))),
@@ -16,7 +18,6 @@ CSS_HEADERS = [
 JS = open(f'{htmldir}/common.js', 'rb').read()
 if LANG == 'en':
     JS += open(f'{htmldir}/{LANG}.js', 'rb').read()
-
 # Invalidate cache after css change.
 JS_HEADERS = [
     ('Content-Type', 'application/javascript; charset=UTF-8'),
