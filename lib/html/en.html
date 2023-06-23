@@ -29,9 +29,17 @@
 		<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
 		<br>
 		<div id="shortened" contenteditable>$sfn<br><br>$cit</div>
+		<button onclick="copyText(shortElem)">Copy</button>
+		<button onclick="copyText(shortElem, 0)">Copy sfn</button>
+		<button onclick="copyText(shortElem, 1)">Copy citation</button>
+		<br><br>
 		<a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:
 		<br>
 		<div id="named_ref" contenteditable>$ref</div>
+		<button onclick="copyText(namedElem)">Copy</button>
+		<button onclick="copyText(namedElem, 3)">Copy self-closing form</button>
+		<button onclick="copyText(namedElem, 4)">Copy ref without name</button>
+		<br><br>
 		<footer>
 			<p>
 				You can use this tool to create shortened footnote/named reference for a given
