@@ -40,7 +40,7 @@ To run Citer on your local computer:
 4. Copy `config.py.example` to `config.py` (You might want to get an NCBI API key and add it to the config file if you're going to use its services)
 5. Run `python3 app.py`
 
-If there are no warnings or error messages (and no HTML is displayed), the main page will be accessible from:\
+If everything goes fine, the main page will be accessible from:\
     [http://localhost:5000/](http://localhost:5000/)
 
 If you experience any problems or have questions, please open an issue on this repo.
