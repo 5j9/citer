@@ -10,10 +10,7 @@ from jdatetime import date as jdate
 from regex import IGNORECASE, VERBOSE, Match, compile as rc
 
 from config import LANG, NCBI_EMAIL, NCBI_TOOL, SPOOFED_USER_AGENT, USER_AGENT
-
-# generator_en will be imported anyway because it is used in side generator_fa
-# noinspection PyUnresolvedReferences
-from lib.generator_en import FOUR_DIGIT_NUM
+from lib.generator_en import FOUR_DIGIT_NUM  # noqa: F401
 
 if LANG == 'en':
     from lib.generator_en import sfn_cit_ref
