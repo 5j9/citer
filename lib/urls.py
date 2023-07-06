@@ -105,7 +105,8 @@ FIRST_PAGE_SEARCH = meta_searcher(['citation_firstpage'])
 LAST_PAGE_SEARCH = meta_searcher(['citation_lastpage'])
 SITE_NAME_SEARCH = meta_searcher(['og:site_name'])
 
-TITLE_SPLIT = rc(r' - | — |\|').split
+TITLE_SEPS = {' - ', ' — ', '|'}
+TITLE_SPLIT = rc(r'(\L<title_seps>)', title_seps=TITLE_SEPS).split
 LANG_SEARCH = rc(r'\slang="([a-z]{2})[-"]').search
 
 
@@ -308,55 +309,52 @@ def parse_title(
 
     """
     intitle_author = intitle_sitename = None
-    title_parts = TITLE_SPLIT(title.strip())
-    if len(title_parts) == 1:
+    parts = TITLE_SPLIT(title.strip())
+    if len(parts) == 1:
         return None, title, None
+    parts = {p.lower(): p for p in parts}
     # Searching for intitle_sitename
     # 1. In hostname
-    hnset = set(hostname.split('.'))
-    for part in title_parts:
-        if (part in hostname) or not set(part.lower().split()) - hnset:
-            intitle_sitename = part
+    for part in parts:
+        if (
+            (part in hostname)
+            or not (set(part.split()) - set(hostname.split('.')))
+        ):
+            intitle_sitename = parts.pop(part).strip()
             break
     else:
         # 2. Using difflib on hostname
         # Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
         if close_matches := get_close_matches(
-            hostname, title_parts, n=1, cutoff=.3
+            hostname, parts, n=1, cutoff=.3
         ):
-            intitle_sitename = close_matches[0]
+            part = close_matches[0]
+            intitle_sitename = parts.pop(part).strip()
         else:
             if thread is not None:
                 thread.join()
             if home_list:
                 home_site_name, home_title = home_list
                 # 3. In homepage title
-                for part in title_parts:
+                for part in parts:
                     if part in home_title:
-                        intitle_sitename = part
+                        intitle_sitename = parts.pop(part).strip()
                         break
                 else:
                     # 4. Using difflib on home_title
                     if close_matches := get_close_matches(
-                        home_title, title_parts, n=1, cutoff=.3
+                        home_title, parts, n=1, cutoff=.3
                     ):
-                        intitle_sitename = close_matches[0]
-    # Remove sitename from title_parts
-    if intitle_sitename:
-        title_parts.remove(intitle_sitename)
-        intitle_sitename = intitle_sitename.strip()
+                        part = close_matches[0]
+                        intitle_sitename = parts.pop(part).strip()
     # Searching for intitle_author
     if authors:
         for first, last in authors:
-            for part in title_parts:
-                if last.lower() in part.lower():
-                    intitle_author = part
+            for part in parts:
+                if last.lower() in part:
+                    intitle_author = parts.pop(part).strip()
                     break
-    # Remove intitle_author from title_parts
-    if intitle_author:
-        title_parts.remove(intitle_author)
-        intitle_author = intitle_author.strip()
-    pure_title = ' - '.join(title_parts)
+    pure_title = ''.join(parts.values()).strip(''.join(TITLE_SEPS))
     return intitle_author, pure_title, intitle_sitename
 
 

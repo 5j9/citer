@@ -895,15 +895,14 @@ def test_single_line_meta_tags():
 def test_abc_author():
     assert (
         '* {{cite web | last=Ferguson | first=Kathleen '
-        '| title=Glow worms in Wollemi National Park survived Gospers '
-        'Mountain bushfire - ABC News '
-        '| website=ABC (Australian Broadcasting Corporation) '
+        '| title=Glow worms in Wollemi National Park survived Gospers Mountain bushfire '
+        '| website=ABC News '
         '| date=2020-09-06 | url=https://www.abc.net.au/news/2020-09-06/'
         'glow-worms-in-wollemi-national-park-survived-summer-bushfire/'
-        '12634762 | access-date=') in urls_scr(
+        '12634762 | access-date=') == urls_scr(
         'https://www.abc.net.au/news/2020-09-06/'
         'glow-worms-in-wollemi-national-park-survived-summer-bushfire/'
-        '12634762')[1]
+        '12634762')[1][:-12]
 
 
 def test_indaily():
@@ -937,8 +936,8 @@ def test_language_not_zh():
         "{{cite web "
         "| last=Jonscher "
         "| first=Samantha "
-        "| title=Malcolm Abbott's domestic violence past shows 'urgent action' required to support First Nations - ABC News "
-        "| website=ABC (Australian Broadcasting Corporation) "
+        "| title=Malcolm Abbott's domestic violence past shows 'urgent action' required to support First Nations "
+        "| website=ABC News "
         "| date=2022-05-14 "
         "| url=https://www.abc.net.au/news/2022-05-15/malcolm-abbott-domestic-violence-prevention-fails/101059440 "
         "| access-date="
@@ -991,5 +990,5 @@ def test_find_website_meta_pipe():
         'https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html'
     )
     assert scr[1][:-12] == (
-        '* {{cite web | title=Очільник Херсонської ОВА: Середній рівень підтоплення на ранок - 5,6 метра. Евакуйовано майже дві тисячі людей | website=Зеркало недели | date=2023-06-08 | url=https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html | language=uk | ref={{sfnref | Зеркало недели | 2023}} | access-date='
+        '* {{cite web | title=Очільник Херсонської ОВА: Середній рівень підтоплення на ранок — 5,6 метра. Евакуйовано майже дві тисячі людей | website=Зеркало недели | date=2023-06-08 | url=https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html | language=uk | ref={{sfnref | Зеркало недели | 2023}} | access-date='
     )
