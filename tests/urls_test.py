@@ -992,3 +992,13 @@ def test_find_website_meta_pipe():
     assert scr[1][:-12] == (
         '* {{cite web | title=Очільник Херсонської ОВА: Середній рівень підтоплення на ранок — 5,6 метра. Евакуйовано майже дві тисячі людей | website=Зеркало недели | date=2023-06-08 | url=https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html | language=uk | ref={{sfnref | Зеркало недели | 2023}} | access-date='
     )
+
+
+def test_pipe_in_home_title_as_website():
+    # https://meta.wikimedia.org/w/index.php?diff=next&oldid=25196965
+    scr = urls_scr(
+        'https://babel.ua/en/news/94854-russia-submitted-a-statement-against-ukraine-to-the-international-criminal-court-kyiv-is-accused-of-destroying-the-kakhovka-hpp'
+    )
+    assert scr[1][:-12] == (
+        '* {{cite web | last=Telishevska | first=Sofiia | title=Russia submitted a statement against Ukraine to the International Criminal Court. Kyiv is accused of destroying the Kakhovka HPP | website=Бабель  | date=2023-06-08 | url=https://babel.ua/en/news/94854-russia-submitted-a-statement-against-ukraine-to-the-international-criminal-court-kyiv-is-accused-of-destroying-the-kakhovka-hpp | access-date='
+    )
