@@ -1,0 +1,20 @@
+{
+	"encoding": "UTF-8",
+	"headers": {
+		"CF-Cache-Status": "DYNAMIC",
+		"CF-RAY": "7e27dd316ed5bb55-FRA",
+		"Cache-Control": "max-age=30, public, s-maxage=30",
+		"Connection": "keep-alive",
+		"Content-Encoding": "br",
+		"Content-Type": "text/html; charset=UTF-8",
+		"Date": "Thu, 06 Jul 2023 12:31:19 GMT",
+		"NEL": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+		"Report-To": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=lQvKMgDwshJ%2B9r5Gcr%2FTHOhDjvW1nwdzNWGVF084rOd9rNvOFwL%2BVRK%2BUCQuMJdKhyXhEIxgwaTo%2BZgGGp3ltnvIik6S0SNPqVrK6l3Pt6thd5VduDDyJZahjQ%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+		"Server": "cloudflare",
+		"Transfer-Encoding": "chunked",
+		"alt-svc": "h3=\":443\"; ma=86400",
+		"x-cache-status": "EXPIRED"
+	},
+	"status_code": 200,
+	"url": "https://babel.ua/en/news/94854-russia-submitted-a-statement-against-ukraine-to-the-international-criminal-court-kyiv-is-accused-of-destroying-the-kakhovka-hpp"
+}

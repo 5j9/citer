@@ -105,7 +105,7 @@ FIRST_PAGE_SEARCH = meta_searcher(['citation_firstpage'])
 LAST_PAGE_SEARCH = meta_searcher(['citation_lastpage'])
 SITE_NAME_SEARCH = meta_searcher(['og:site_name'])
 
-TITLE_SEPS = {' - ', ' — ', '|'}
+TITLE_SEPS = {' - ', ' — ', '|'}  # keep ins sync with <1>
 TITLE_SPLIT = rc(r'(\L<title_seps>)', title_seps=TITLE_SEPS).split
 LANG_SEARCH = rc(r'\slang="([a-z]{2})[-"]').search
 
@@ -250,7 +250,7 @@ def find_site_name(
                 return site_name
         if site_name := parse_title(home_title, hostname, None)[2]:
             return site_name
-        return home_title
+        return home_title.partition('|')[0]
     except Exception:
         logger.exception(url)
     # return hostname
@@ -354,7 +354,8 @@ def parse_title(
                 if last.lower() in part:
                     intitle_author = parts.pop(part).strip()
                     break
-    pure_title = ''.join(parts.values()).strip(''.join(TITLE_SEPS))
+    # keep strip chars in sync with <1>
+    pure_title = ''.join(parts.values()).strip('-|—').partition('|')[0]
     return intitle_author, pure_title, intitle_sitename
 
 
