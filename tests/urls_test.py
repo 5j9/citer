@@ -2,7 +2,7 @@
 from pytest import mark
 
 from lib.commons import dict_to_sfn_cit_ref
-from lib.urls import find_url, url_to_dict
+from lib.urls import LANG_SEARCH, find_url, url_to_dict
 
 
 def urls_scr(*args):
@@ -1002,3 +1002,7 @@ def test_pipe_in_home_title_as_website():
     assert scr[1][:-12] == (
         '* {{cite web | last=Telishevska | first=Sofiia | title=Russia submitted a statement against Ukraine to the International Criminal Court. Kyiv is accused of destroying the Kakhovka HPP | website=Бабель  | date=2023-06-08 | url=https://babel.ua/en/news/94854-russia-submitted-a-statement-against-ukraine-to-the-international-criminal-court-kyiv-is-accused-of-destroying-the-kakhovka-hpp | access-date='
     )
+
+
+def test_lang_search():
+    assert LANG_SEARCH('<html lang=en>')[1] == 'en'
