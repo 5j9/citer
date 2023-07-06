@@ -355,7 +355,7 @@ def parse_title(
                     intitle_author = parts.pop(part).strip()
                     break
     # keep strip chars in sync with <1>
-    pure_title = ''.join(parts.values()).strip('-|—').partition('|')[0]
+    pure_title = ''.join(parts.values()).strip('-|— ').partition('|')[0]
     return intitle_author, pure_title, intitle_sitename
 
 
