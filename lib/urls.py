@@ -107,7 +107,7 @@ SITE_NAME_SEARCH = meta_searcher(['og:site_name'])
 
 TITLE_SEPS = {' - ', ' — ', '|'}  # keep ins sync with <1>
 TITLE_SPLIT = rc(r'(\L<title_seps>)', title_seps=TITLE_SEPS).split
-LANG_SEARCH = rc(r'\slang="([a-z]{2})[-"]').search
+LANG_SEARCH = rc(r'\slang=["\']?([a-z]{2})\b').search
 
 
 class ContentTypeError(ValueError):
