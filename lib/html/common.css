@@ -3,15 +3,12 @@ body {
     margin-right:2em;
     font-family: tahoma;
 }
-#shortened, #named_ref, input, select {
-    transition: background-color 5s ease-in;
-    background-color: rgb(255, 255, 255);
+#shortened, #named_ref {
     border: 1px solid rgb(204, 204, 204);
     padding: 2px 2px;
     font-size: 14px;
     line-height: 16px;
     color: rgb(85, 85, 85);
-    vertical-align: middle;
     border-radius: 5px;
 }
 input, #shortened, #named_ref {
@@ -20,10 +17,6 @@ input, #shortened, #named_ref {
 }
 input[name=user_input] {
     width: 80%;
-}
-input[type=submit]:hover {
-    transition: background-color 1s ease-in;
-    background-color: #33CC33;
 }
 .input-legend {
     margin-bottom: 0px;
