@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="static/fa.css">
 	</head>
 	<body>
-		<form>
+		<form id="form">
 			<select class="input-legend" name="input_type" id="input_type" onchange="onInputTypeSelect();">
 				<option value="url-doi-isbn">نشانی وب/شابک/شناسهٔ برنمود رقمی</option>
 				<option value="pmid">PMID</option>
@@ -15,8 +15,8 @@
 				<option value="oclc">OCLC</option>
 			</select>:
 			<div id="inputs">
-				<input name="user_input" autofocus>
-				<input type="submit" value="ثبت درخواست">
+				<input id="user_input" name="user_input" autofocus>
+				<input type="submit" id="submit" value="ثبت درخواست">
 			</div>
 		</form>
 		<a href="https://fa.wikipedia.org/wiki/%D8%A7%D9%84%DA%AF%D9%88:%D9%BE%D8%A7%D9%86%D9%88%DB%8C%D8%B3_%DA%A9%D9%88%D8%AA%D8%A7%D9%87%E2%80%8C%D8%B4%D8%AF%D9%87">پانویس کوتاه‌شده</a> و یادکرد:

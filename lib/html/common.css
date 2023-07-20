@@ -10,12 +10,18 @@ body {
     line-height: 16px;
     color: rgb(85, 85, 85);
     border-radius: 5px;
+    display:inline-block;
+    width: 100%;
+    min-height:70px;
+    word-break: break-word;
+    font-family: monospace;
+    white-space: pre-wrap;
 }
 input, #shortened, #named_ref {
     margin: 5px;
     margin-bottom: 10px;
 }
-input[name=user_input] {
+#user_input {
     width: 80%;
 }
 .input-legend {
@@ -23,16 +29,6 @@ input[name=user_input] {
 }
 #inputs {
     display: flex;
-}
-#shortened, #named_ref {
-    display:inline-block;
-    width: 100%;
-    min-height:70px;
-    word-break: break-all;
-    font-family: monospace;
-}
-#shortened:focus, #named_ref:focus {
-    outline: none;
 }
 footer {
     font-size: 90%;

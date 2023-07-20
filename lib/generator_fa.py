@@ -36,11 +36,11 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
 
     if authors := d['authors']:
         cit += names2para(authors, 'نام', 'نام خانوادگی', 'نویسنده')
-        sfn = '&lt;ref&gt;{{پک'
+        sfn = '<ref>{{پک'
         for first, last in authors[:4]:
             sfn += ' | ' + last
     else:
-        sfn = '&lt;ref&gt;{{پک/بن'
+        sfn = '<ref>{{پک/بن'
 
     if editors := d['editors']:
         cit += names2para(
@@ -181,14 +181,14 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         sfn += ' | ص='
 
     cit += '}}'
-    sfn += '}}\u200F&lt;/ref&gt;'
+    sfn += '}}\u200F</ref>'
     # Finally create the ref tag.
     ref = cit[2:]
     if pages and ' | صفحه=' not in ref:
         ref = f'{ref[:-2]} | صفحه={pages}}}}}'
     elif not url:
         ref = f'{ref[:-2]} | صفحه=}}}}'
-    ref = f'&lt;ref name="{ref_name}"&gt;{ref}\u200F&lt;/ref&gt;'
+    ref = f'<ref name="{ref_name}">{ref}\u200F</ref>'
     return sfn, cit, ref
 
 

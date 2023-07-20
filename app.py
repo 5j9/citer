@@ -1,5 +1,6 @@
 from collections import defaultdict
 from html import unescape
+from json import dumps
 from logging import INFO, WARNING, Formatter, getLogger
 from logging.handlers import RotatingFileHandler
 from os.path import abspath, dirname
@@ -72,6 +73,7 @@ TLDLESS_NETLOC_RESOLVER = {
 
 # always assign 'Content-Length' header HTTP_HEADERS[1] before sending
 HTTP_HEADERS = [('Content-Type', 'text/html; charset=UTF-8'), None]
+JSON_HEADERS = [('Content-Type', 'application/json'), None]
 
 
 getLogger('requests').setLevel(WARNING)
@@ -166,6 +168,13 @@ input_type_to_resolver = {
     'oclc': oclc_dict
 }
 
+def read_body(environ: dict, /):
+    length = int(environ.get('CONTENT_LENGTH') or 0)
+    if length > 10_000:
+        LOGGER.error(f'CONTENT_LENGTH was too long; {length = } bytes')
+        return ''  # do not process the input
+    return environ['wsgi.input'].read(length).decode()
+
 
 def root(start_response: callable, environ: dict) -> tuple:
     query_dict_get = parse_qs(environ['QUERY_STRING']).get
@@ -173,7 +182,7 @@ def root(start_response: callable, environ: dict) -> tuple:
     input_type = query_dict_get('input_type', [''])[0]
 
     # Warning: input is not escaped!
-    if not (user_input := query_dict_get('user_input', [''])[0].strip()):
+    if not (user_input := read_body(environ)):
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
@@ -182,13 +191,13 @@ def root(start_response: callable, environ: dict) -> tuple:
         return response_body,
 
     to_dict = input_type_to_resolver[input_type]
-    # noinspection PyBroadException
+
     try:
         d = to_dict(user_input, date_format)
     except RequestsConnectionError:
         status = '500 ConnectionError'
         LOGGER.exception(user_input)
-        response_body = scr_to_html(HTTPERROR_SCR, date_format, input_type)
+        scr = HTTPERROR_SCR
     except Exception as e:
         status = '500 Internal Server Error'
 
@@ -197,15 +206,13 @@ def root(start_response: callable, environ: dict) -> tuple:
         else:
             LOGGER.exception(user_input)
             scr = OTHER_EXCEPTION_SCR
-
-        response_body = scr_to_html(scr, date_format, input_type)
     else:
         scr = dict_to_sfn_cit_ref(d)
         status = '200 OK'
-        response_body = scr_to_html(scr, date_format, input_type)
-    response_body = response_body.encode()
-    HTTP_HEADERS[1] = ('Content-Length', str(len(response_body)))
-    start_response(status, HTTP_HEADERS)
+
+    response_body = dumps(scr).encode()
+    JSON_HEADERS[1] = ('Content-Length', str(len(response_body)))
+    start_response(status, JSON_HEADERS)
     return response_body,
 
 

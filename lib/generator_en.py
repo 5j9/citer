@@ -300,7 +300,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     if pages_in_sfn and not pages_in_cit:
         ref_content = f'{ref_content[:-2]} | page={pages if pages else ""}}}}}'
 
-    ref = f'&lt;ref name="{ref_name}"&gt;{ref_content}&lt;/ref&gt;'
+    ref = f'<ref name="{ref_name}">{ref_content}<ref>'
     return sfn, cit, ref
 
 
