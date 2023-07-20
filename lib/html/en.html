@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="static/en.css">
 	</head>
 	<body>
-		<form>
+		<form id="form">
             <select class="input-legend" name="input_type" id="input_type" onchange="onInputTypeSelect();">
                 <option value="url-doi-isbn">URL/DOI/ISBN</option>
                 <option value="pmid">PMID</option>
@@ -15,8 +15,8 @@
                 <option value="oclc">OCLC Number</option>
             </select>:
 			<div id="inputs">
-				<input name="user_input" autofocus>
-				<input type="submit" value="Submit">
+				<input id="user_input" name="user_input" autofocus>
+				<input type="submit" id="submit" value="Submit">
 			</div>
 			<p class="input-legend">Date format:</p>
 			<input type="radio" name="dateformat" value="%Y-%m-%d" id="ymd" onclick="onDateChange()">2020-01-01
