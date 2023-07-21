@@ -195,7 +195,7 @@ def root(start_response: callable, environ: dict) -> tuple:
     if body:
         headers = JSON_HEADERS
         scr_to_resp_body = dumps
-    else:  # for the bookmarklet
+    else:  # for the bookmarklet; also if your directly goes to query page
         headers = HTTP_HEADERS
         scr_to_resp_body = partial(
             scr_to_html, date_format=date_format, input_type=input_type
