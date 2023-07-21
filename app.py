@@ -1,4 +1,5 @@
 from collections import defaultdict
+from functools import partial
 from html import unescape
 from json import dumps
 from logging import INFO, WARNING, Formatter, getLogger
@@ -54,20 +55,15 @@ def google_encrypted_dict(url, parsed_url, date_format) -> dict:
 TLDLESS_NETLOC_RESOLVER = {
     'ketab': ketabir_url_to_dict,
     'worldcat': worldcat_url_to_dict,
-
     'noorlib': noorlib_url_to_dict,
     'noormags': noormags_url_to_dict,
-
     'web.archive': archive_url_to_dict,
     'web-beta.archive': archive_url_to_dict,
-
     'books.google.co': google_books_dict,
     'books.google.com': google_books_dict,
     'books.google': google_books_dict,
-
     'google': google_encrypted_dict,
     'encrypted.google': google_encrypted_dict,
-
     'jstor': jstor_url_to_dict,
 }.get
 
@@ -93,7 +89,8 @@ def get_root_logger():
     )
     handler.setLevel(INFO)
     handler.setFormatter(
-        Formatter('\n%(asctime)s\n%(levelname)s\n%(message)s\n'))
+        Formatter('\n%(asctime)s\n%(levelname)s\n%(message)s\n')
+    )
     custom_logger.addHandler(handler)
     return custom_logger
 
@@ -143,21 +140,24 @@ def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
 
 def css(start_response: callable, *_) -> tuple:
     start_response('200 OK', CSS_HEADERS)
-    return CSS,
+    return (CSS,)
 
 
 def js(start_response: callable, *_) -> tuple:
     start_response('200 OK', JS_HEADERS)
-    return JS,
+    return (JS,)
 
 
 def page_does_not_exist(start_response: callable, *_) -> tuple:
     text = b'404 not found'
-    start_response('404 not found', [
-        ('Content-Type', 'text/plain'),
-        ('Content-Length', str(len(text))),
-    ])
-    return text,
+    start_response(
+        '404 not found',
+        [
+            ('Content-Type', 'text/plain'),
+            ('Content-Length', str(len(text))),
+        ],
+    )
+    return (text,)
 
 
 input_type_to_resolver = {
@@ -165,8 +165,9 @@ input_type_to_resolver = {
     'url-doi-isbn': url_doi_isbn_to_dict,
     'pmid': pmid_dict,
     'pmcid': pmcid_dict,
-    'oclc': oclc_dict
+    'oclc': oclc_dict,
 }
+
 
 def read_body(environ: dict, /):
     length = int(environ.get('CONTENT_LENGTH') or 0)
@@ -182,14 +183,23 @@ def root(start_response: callable, environ: dict) -> tuple:
     input_type = query_get('input_type', [''])[0]
 
     # Warning: input is not escaped!
-    user_input = read_body(environ) or query_get('user_input', [''])[0].strip()
-    if not user_input:
+    body = read_body(environ)
+    if not (user_input := body or query_get('user_input', [''])[0].strip()):
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
         HTTP_HEADERS[1] = ('Content-Length', str(len(response_body)))
         start_response('200 OK', HTTP_HEADERS)
-        return response_body,
+        return (response_body,)
+
+    if body:
+        headers = JSON_HEADERS
+        scr_to_resp_body = dumps
+    else:  # for the bookmarklet
+        headers = HTTP_HEADERS
+        scr_to_resp_body = partial(
+            scr_to_html, date_format=date_format, input_type=input_type
+        )
 
     to_dict = input_type_to_resolver[input_type]
 
@@ -211,18 +221,21 @@ def root(start_response: callable, environ: dict) -> tuple:
         scr = dict_to_sfn_cit_ref(d)
         status = '200 OK'
 
-    response_body = dumps(scr).encode()
-    JSON_HEADERS[1] = ('Content-Length', str(len(response_body)))
-    start_response(status, JSON_HEADERS)
-    return response_body,
+    response_body = scr_to_resp_body(scr).encode()
+    headers[1] = ('Content-Length', str(len(response_body)))
+    start_response(status, headers)
+    return (response_body,)
 
 
-PATH_TO_HANDLER = defaultdict(lambda: page_does_not_exist, {
-    f'/{CSS_PATH}.css': css,
-    f'/{JS_PATH}.js' : js,
-    '/': root,
-    '/citer.fcgi': root,  # for backward compatibility
-})
+PATH_TO_HANDLER = defaultdict(
+    lambda: page_does_not_exist,
+    {
+        f'/{CSS_PATH}.css': css,
+        f'/{JS_PATH}.js': js,
+        '/': root,
+        '/citer.fcgi': root,  # for backward compatibility
+    },
+)
 
 
 def app(environ: dict, start_response: callable) -> tuple:
@@ -233,6 +246,7 @@ if __name__ == '__main__':
     # note that app.py is not run as '__main__' in kubernetes
     # only for local computer
     from wsgiref.simple_server import make_server
+
     httpd = make_server('localhost', 5000, app)
     print('serving on http://localhost:5000')
     httpd.serve_forever()
