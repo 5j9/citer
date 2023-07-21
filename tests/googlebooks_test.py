@@ -137,7 +137,7 @@ def test_gb5():
         ' '
         '| access-date=') in o[1]
     assert (
-        '&lt;ref name="Serway Jewett 2009 p. 378"&gt;'
+        '<ref name="Serway Jewett 2009 p. 378">'
         '{{cite book '
         '| last=Serway '
         '| first=R.A. '
@@ -151,4 +151,4 @@ def test_gb5():
         '| url=https://books.google.com/books?id=6upvonUt0O8C&pg=PA378'
         ' '
         '| access-date=') in o[2]
-    assert ' | page=378}}&lt;/ref&gt;' in o[2]
+    assert ' | page=378}}</ref>' in o[2]
