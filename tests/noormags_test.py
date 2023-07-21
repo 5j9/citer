@@ -55,7 +55,7 @@ def test_nm2():
         '| language=fa '
         '| access-date=') in o[1]
     assert (
-        '&lt;ref name="سلیمانی\u200cمیمند 1389 pp. 103–124"&gt;'
+        '<ref name="سلیمانی\u200cمیمند 1389 pp. 103–124">'
         '{{cite journal '
         '| last=سلیمانی\u200cمیمند '
         '| first=\u200cمریم '

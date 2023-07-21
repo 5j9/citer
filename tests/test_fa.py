@@ -102,9 +102,10 @@ def test_ketabir7():
 
 
 def test_google_books_ending_page():
-    assert googlebooks_scr(
+    r = googlebooks_scr(
         'https://www.google.com/books/edition/So_You_Want_to_Sing_World_Music/OlCwDwAAQBAJ?hl=en&gbpv=1&dq=Darya+Dadvar&pg=PA293&printsec=frontcover'
-    )[2][-25:] == '| صفحه=293}}‏&lt;/ref&gt;'
+    )[2]
+    assert r[-19:] == '| صفحه=293}}‏</ref>'
 
 
 def test_google_books_1():
@@ -125,11 +126,11 @@ def test_google_books2():
         'http://books.google.com/books?id='
         'U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false')
     assert (
-        '&lt;ref&gt;'
+        '<ref>'
         '{{پک | Anderson | DeBolt | Featherstone | Gunther | 2010'
         ' | ک=InterACT with Web Standards: A'
         ' holistic approach to web design | زبان=en | ص=57}}'
-        '\u200f&lt;/ref&gt;') in o[0]
+        '\u200f</ref>') in o[0]
     assert (
         '* {{یادکرد کتاب |'
         ' نام خانوادگی=Anderson |'
@@ -164,12 +165,12 @@ def test_google_books3():
         'onepage&q=%22a%20Delimiter%20is%22&f=false'
     )
     assert (
-        '&lt;ref&gt;'
+        '<ref>'
         '{{پک | Farrell | 2009 '
         '| ک=Microsoft Visual C# 2008 Comprehensive: '
         'An Introduction to Object-Oriented Programming |'
         ' زبان=en | ص=588}}'
-        '\u200f&lt;/ref&gt;') in o[0]
+        '\u200f</ref>') in o[0]
     assert (
         '* {{یادکرد کتاب | نام خانوادگی=Farrell |'
         ' نام=J. | عنوان=Microsoft Visual C# 2008 Comprehensive: '
@@ -184,7 +185,7 @@ def test_google_books4():
     o = googlebooks_scr(
         'http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa=X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q=%22legal%20translation%20is%22&f=false')
     assert (
-        '&lt;ref&gt;{{پک | Sarcevic | \x8aar?evi? | 1997 | ک=New Approach to Legal Translation | زبان=en | ص=229}}\u200f&lt;/ref&gt;'
+        '<ref>{{پک | Sarcevic | \x8aar?evi? | 1997 | ک=New Approach to Legal Translation | زبان=en | ص=229}}\u200f</ref>'
     ) == o[0]
     assert (
         '* {{یادکرد کتاب | نام خانوادگی=Sarcevic | نام=S. | نام خانوادگی۲=\x8aar?evi? | نام۲=S. | عنوان=New Approach to Legal Translation | ناشر=Springer Netherlands | سال=1997 | شابک=978-90-411-0401-4 | پیوند=https://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 | زبان=en | تاریخ بازبینی='
@@ -295,7 +296,7 @@ def test_arabic_ya():
 
 def test_sfn_extract_year_from_date():
     s, c, r = doi_scr('10.1073/pnas.2015159118')
-    assert s == '&lt;ref&gt;{{پک | Almeida | Viala | Nachtigall | Broe | 2021 | ک=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | زبان=en | ص=}}\u200f&lt;/ref&gt;'
+    assert s == '<ref>{{پک | Almeida | Viala | Nachtigall | Broe | 2021 | ک=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | زبان=en | ص=}}\u200f</ref>'
     assert c == '* {{یادکرد ژورنال | نام خانوادگی=Almeida | نام=Diego Dantas | نام خانوادگی۲=Viala | نام۲=Vincent Louis | نام خانوادگی۳=Nachtigall | نام۳=Pedro Gabriel | نام خانوادگی۴=Broe | نام۴=Michael | نام خانوادگی۵=Gibbs | نام۵=H. Lisle | نام خانوادگی۶=Serrano | نام۶=Solange Maria de Toledo | نام خانوادگی۷=Moura-da-Silva | نام۷=Ana Maria | نام خانوادگی۸=Ho | نام۸=Paulo Lee | نام خانوادگی۹=Nishiyama-Jr | نام۹=Milton Yutaka | نام خانوادگی۱۰=Junqueira-de-Azevedo | نام۱۰=Inácio L. M. | عنوان=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | ژورنال=Proceedings of the National Academy of Sciences | ناشر=Proceedings of the National Academy of Sciences | جلد=118 | شماره=20 | تاریخ=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | زبان=en}}'
 
 
