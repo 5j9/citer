@@ -177,12 +177,13 @@ def read_body(environ: dict, /):
 
 
 def root(start_response: callable, environ: dict) -> tuple:
-    query_dict_get = parse_qs(environ['QUERY_STRING']).get
-    date_format = query_dict_get('dateformat', [''])[0].strip()
-    input_type = query_dict_get('input_type', [''])[0]
+    query_get = parse_qs(environ['QUERY_STRING']).get
+    date_format = query_get('dateformat', [''])[0].strip()
+    input_type = query_get('input_type', [''])[0]
 
     # Warning: input is not escaped!
-    if not (user_input := read_body(environ)):
+    user_input = read_body(environ) or query_get('user_input', [''])[0].strip()
+    if not user_input:
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
