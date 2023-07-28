@@ -17,9 +17,9 @@ DOI_URL_MATCH = rc(r'https?://(dx\.)?doi\.org/').match
 DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 FOUR_DIGIT_NUM = rc(r'\d\d\d\d').search
 
-rm_ref_arg = partial(rc(
-    r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})'
-).sub, r'\g<repl>')
+rm_ref_arg = partial(
+    rc(r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})').sub, r'\g<repl>'
+)
 
 TYPE_TO_CITE = {
     # BibTex types. Descriptions are from
@@ -98,9 +98,10 @@ ALPHA_NUM = digits + ascii_lowercase
 def hash_for_ref_name(cit, number_of_digits=4):
     # Note: Call this function BEFORE adding access-date date to cit.
     seed(cit)
-    return (
-        choice(ascii_lowercase)  # it should contain at least one non-digit
-        + ''.join(choices(digits, k=number_of_digits))
+    return choice(
+        ascii_lowercase
+    ) + ''.join(  # it should contain at least one non-digit
+        choices(digits, k=number_of_digits)
     )
 
 
@@ -132,10 +133,13 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     else:
         # the same order should be used in citation_template:
         sfn += ' | ' + (
-            publisher or (
-                f"''{journal}''" if journal else
-                f"''{website}''" if website else
-                title or 'Anon.'
+            publisher
+            or (
+                f"''{journal}''"
+                if journal
+                else f"''{website}''"
+                if website
+                else title or 'Anon.'
             )
         )
 
@@ -202,10 +206,10 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             cit += f' | year={year}'
         sfn += f' | {year}'
     elif date is not None:
-        if not isinstance(date, str):
-            year = date.strftime('%Y')
-        else:
+        if isinstance(date, str):
             year = FOUR_DIGIT_NUM(date)[0]
+        else:
+            year = date.strftime('%Y')
         sfn += f' | {year}'
 
     if isbn := d['isbn']:
@@ -263,7 +267,8 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         cit += (
             f' | archive-url={archive_url}'
             f' | archive-date={d["archive-date"].strftime(date_format)}'
-            f' | url-status={d["url-status"]}')
+            f' | url-status={d["url-status"]}'
+        )
 
     if language := d['language']:
         language = TO_TWO_LETTER_CODE(language.lower(), language)
@@ -272,8 +277,10 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
 
     if not authors:
         # order should match sfn_template
-        cit += ' | ref={{sfnref | ' \
+        cit += (
+            ' | ref={{sfnref | '
             f'{publisher or journal or website or title or "Anon."}'
+        )
         if year:
             cit += f' | {year}'
         cit += '}}'
