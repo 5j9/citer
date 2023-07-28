@@ -179,7 +179,7 @@ def read_body(environ: dict, /):
 
 def root(start_response: callable, environ: dict) -> tuple:
     query_get = parse_qs(environ['QUERY_STRING']).get
-    date_format = query_get('dateformat', [''])[0].strip()
+    date_format = query_get('dateformat', ['%Y-%m-%d'])[0].strip()
     input_type = query_get('input_type', [''])[0]
 
     # Warning: input is not escaped!
