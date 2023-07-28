@@ -95,9 +95,9 @@ TYPE_TO_CITE = {
 ALPHA_NUM = digits + ascii_lowercase
 
 
-def hash_for_ref_name(cit, number_of_digits=4):
-    # Note: Call this function BEFORE adding access-date date to cit.
-    seed(cit)
+def hash_for_ref_name(dd: defaultdict, number_of_digits=4):
+    # A combination of possible `user_input`s is used as seed.
+    seed(f'{dd["url"]}{dd["doi"]}{dd["isbn"]}{dd["pmid"]}{dd["pmcid"]}')
     return choice(
         ascii_lowercase
     ) + ''.join(  # it should contain at least one non-digit
@@ -285,10 +285,6 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             cit += f' | {year}'
         cit += '}}'
 
-    if not pages_in_sfn:
-        # create ref_name before adding access-date
-        ref_hash = hash_for_ref_name(cit, 3)
-
     if url:
         cit += f' | access-date={Date.today().strftime(date_format)}'
 
@@ -301,7 +297,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     elif pages_in_sfn == 2:
         ref_name = ref_name.replace(' pp=', ' pp. ')
     else:
-        ref_name += ' ' + ref_hash  # noqa
+        ref_name += ' ' + hash_for_ref_name(d, 3)
 
     ref_content = rm_ref_arg(cit[2:])
     if pages_in_sfn and not pages_in_cit:
