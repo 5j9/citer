@@ -44,7 +44,8 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
 
     if editors := d['editors']:
         cit += names2para(
-            editors, 'نام ویراستار', 'نام خانوادگی ویراستار', 'ویراستار')
+            editors, 'نام ویراستار', 'نام خانوادگی ویراستار', 'ویراستار'
+        )
 
     if translators := d['translators']:
         cit += names1para(translators, 'ترجمه')
@@ -158,7 +159,8 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         cit += (
             f' | پیوند بایگانی={archive_url}'
             f' | تاریخ بایگانی={d["archive-date"].isoformat()}'
-            f" | پیوند مرده={('آری' if d['url-status'] == 'yes' else 'نه')}")
+            f" | پیوند مرده={('آری' if d['url-status'] == 'yes' else 'نه')}"
+        )
 
     if language := d['language']:
         language = TO_TWO_LETTER_CODE(language.lower(), language)
@@ -170,9 +172,6 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
 
     if pages:
         sfn += f' | ص={pages}'
-
-    # create ref_name before adding access-date
-    ref_name = hash_for_ref_name(cit)
 
     if url:
         cit += f' | تاریخ بازبینی={Date.today().isoformat()}'
@@ -188,7 +187,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         ref = f'{ref[:-2]} | صفحه={pages}}}}}'
     elif not url:
         ref = f'{ref[:-2]} | صفحه=}}}}'
-    ref = f'<ref name="{ref_name}">{ref}\u200F</ref>'
+    ref = f'<ref name="{hash_for_ref_name(d)}">{ref}\u200F</ref>'
     return sfn, cit, ref
 
 
@@ -201,8 +200,11 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
         if c == 1:
             if first or not nofn_parameter:
                 s += (
-                    f' | {ln_parameter}=' + last +
-                    f' | {fn_parameter}=' + first)
+                    f' | {ln_parameter}='
+                    + last
+                    + f' | {fn_parameter}='
+                    + first
+                )
             else:
                 s += f' | {nofn_parameter}=' + fullname(first, last)
         else:
@@ -210,11 +212,13 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
                 s += (
                     f' | {ln_parameter}{str(c).translate(DIGITS_TO_FA)}'
                     f'={last} | {fn_parameter}{str(c).translate(DIGITS_TO_FA)}'
-                    f'={first}')
+                    f'={first}'
+                )
             else:
                 s += (
                     f' | {nofn_parameter}{str(c).translate(DIGITS_TO_FA)}'
-                    f'={fullname(first, last)}')
+                    f'={fullname(first, last)}'
+                )
     return s
 
 

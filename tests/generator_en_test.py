@@ -2,7 +2,7 @@ import datetime
 from collections import defaultdict
 from functools import partial
 
-from lib.generator_en import sfn_cit_ref
+from lib.generator_en import hash_for_ref_name, sfn_cit_ref
 
 dd = partial(defaultdict, lambda: None)
 
@@ -33,5 +33,27 @@ def test_do_not_add_page_url():
         }
     )
     assert sfn_cit_ref(d)[2][:-18] == (
-        '<ref name="Levine 2023 x505">{{cite web | last=Levine | first=Sam | title=‘Historic and significant’: key lawyer’s verdict on Alabama supreme court ruling | website=the Guardian | date=2023-06-18 | url=https://www.theguardian.com/us-news/2023/jun/18/alabama-supreme-court-allen-milligan | access-date='
+        '<ref name="Levine 2023 i094">{{cite web | last=Levine | first=Sam | title=‘Historic and significant’: key lawyer’s verdict on Alabama supreme court ruling | website=the Guardian | date=2023-06-18 | url=https://www.theguardian.com/us-news/2023/jun/18/alabama-supreme-court-allen-milligan | access-date='
     )
+
+
+def test_date_does_not_change_ref_name_hash():
+    date = datetime.date(2023, 6, 18)
+    d = dd(
+        {
+            'cite_type': 'web',
+            'url': 'https://1.com/',
+            'date': date,
+            'archive-url': 'https://1.com/',
+            'archive-date': date,
+            'url-status': 'dead',
+            'title': 'T',
+            'date_format': '%Y-%m-%d',
+        }
+    )
+    h1 = hash_for_ref_name(d, 3)
+    scr1 = sfn_cit_ref(d)
+    assert h1 in scr1[2]
+    d['date_format'] = '%d-%m-%Y'
+    assert scr1 != sfn_cit_ref(d)  # date_format changes output
+    assert h1 == hash_for_ref_name(d, 3)  # but hashes are the same
