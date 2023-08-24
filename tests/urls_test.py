@@ -21,23 +21,21 @@ def test_bostonglobe1():
         '| url=https://www.boston.com/cars/news-and-reviews/2014/06/29/'
         'hot-rod-stamps-google-on-road-a-gm-prospectus '
         '| access-date='
-    ) in urls_scr(
+    ) == urls_scr(
         'http://www.boston.com/cars/news-and-reviews/2014/06/28/'
         'hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/'
         'story.html',
         '%B %d, %Y',
-    )[1]
+    )[
+        1
+    ][
+        : -len('August 24, 2023}}')
+    ]
 
 
 def test_bostonglobe2():
     """bostonglobe.com"""
-    i = (
-        'http://www.bostonglobe.com/metro/2014/06/03/'
-        'walsh-meets-with-college-leaders-off-campus-housing/'
-        'lsxtLSGJMD86Gbkjay3D6J/story.html'
-    )
-    o = urls_scr(i)
-    ct = (
+    assert (
         '* {{cite web '
         '| last=Saltzman '
         '| first=Jonathan '
@@ -50,18 +48,21 @@ def test_bostonglobe2():
         'walsh-meets-with-college-leaders-off-campus-housing/'
         'lsxtLSGJMD86Gbkjay3D6J/story.html '
         '| access-date='
-    )
-    assert ct in o[1]
+    ) == urls_scr(
+        'http://www.bostonglobe.com/metro/2014/06/03/walsh-meets-with-college-leaders-off-campus-housing/lsxtLSGJMD86Gbkjay3D6J/story.html'
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_bostonglobe3():
     """bostonmagazine.com. Author tags return unrelated authors."""
-    i = (
+    assert urls_scr(
         'http://www.bostonmagazine.com/news/blog/2013/08/21/'
         'juliette-kayyem-jumps-in-for-guv/'
-    )
-    o = urls_scr(i)
-    ct = (
+    )[1][:-12] == (
         '* {{cite web '
         '| last=Bernstein '
         '| first=David S. '
@@ -72,7 +73,6 @@ def test_bostonglobe3():
         'juliette-kayyem-jumps-in-for-guv/ '
         '| access-date='
     )
-    assert ct in o[1]
 
 
 def test_washingtonpost1():
@@ -91,7 +91,8 @@ def test_washingtonpost1():
         '| date=2005-09-04 '
         '| url=http://www.washingtonpost.com/wp-dyn/content/article/'
         '2005/09/02/AR2005090200822.html '
-        '| access-date=') in o[1]
+        '| access-date='
+    ) == o[1][:-12]
 
 
 def test_huffingtonpost1():
@@ -111,7 +112,8 @@ def test_huffingtonpost1():
         '| date=2013-08-01 '
         '| url=http://www.huffingtonpost.ca/annelise-sorg/'
         'blackfish-killer-whale-seaworld_b_3686306.html '
-        '| access-date=') in o[1]
+        '| access-date='
+    ) == o[1][:-12]
 
 
 def test_huffingtonpost2():
@@ -134,7 +136,7 @@ def test_huffingtonpost2():
         "| access-date="
     )
     assert '{{sfn | Rifkin | 2014}}' == o[0]
-    assert e2 in o[1]
+    assert e2 == o[1][:-12]
 
 
 def test_dilytelegraph1():
@@ -159,7 +161,7 @@ def test_dilytelegraph1():
         "| access-date="
     )
     assert '{{sfn | Fogle | 2005}}' == o[0]
-    assert e2 in o[1]
+    assert e2 == o[1][:-12]
 
 
 def test_dilytelegraph2():
@@ -181,7 +183,7 @@ def test_dilytelegraph2():
         "| access-date="
     )
     assert '{{sfn | Highfield | 2003}}' == o[0]
-    assert e2 in o[1]
+    assert e2 == o[1][:-12]
 
 
 def test_dilytelegraph3():
@@ -203,7 +205,7 @@ def test_dilytelegraph3():
         "| access-date="
     )
     assert '{{sfn | Whitehead | 2011}}' == o[0]
-    assert e2 in o[1]
+    assert e2 == o[1][:-12]
 
 
 def test_dilymail1():
@@ -229,7 +231,8 @@ def test_dilymail1():
         '| date=2014-05-19 '
         '| url=http://www.dailymail.co.uk/news/article-2633025/'
         'London-cleric-convicted-NYC-terrorism-trial.html '
-        '| access-date=') in o[1]
+        '| access-date='
+    ) == o[1][:-12]
 
 
 def test_dilymail2():
@@ -246,11 +249,15 @@ def test_dilymail2():
         'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-shows-Kim-'
         'Kardashian-s-meltdown-nude-magazine-cover.html '
         '| access-date='
-    ) in urls_scr(
+    ) == urls_scr(
         'http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
         'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-'
         'shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html'
-    )[1]
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_bbc1():
@@ -266,7 +273,7 @@ def test_bbc1():
         "| ref={{sfnref | BBC News | 2014}} "
         "| access-date="
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_bbc2():
@@ -280,7 +287,9 @@ def test_bbc2():
         '| date=2013-08-26 '
         '| url=http://www.bbc.com/news/science-environment-23814524 '
         '| access-date='
-    ) in urls_scr('http://www.bbc.com/news/science-environment-23814524')[1]
+    ) == urls_scr('http://www.bbc.com/news/science-environment-23814524')[1][
+        :-12
+    ]
 
 
 def test_bbc3():
@@ -297,7 +306,7 @@ def test_bbc3():
         '| url=http://www.bbc.com/news/science-environment-23814524 '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_bbc4():
@@ -312,8 +321,13 @@ def test_bbc4():
         "| url="
         "http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm "
         "| access-date="
-    ) in urls_scr(
-        'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm')[1]
+    ) == urls_scr(
+        'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm'
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_bbc5():
@@ -327,7 +341,7 @@ def test_bbc5():
         "| date=2002-12-24 "
         "| url=http://news.bbc.co.uk/2/hi/business/2570109.stm "
         "| access-date="
-    ) in urls_scr('http://news.bbc.co.uk/2/hi/business/2570109.stm')[1]
+    ) == urls_scr('http://news.bbc.co.uk/2/hi/business/2570109.stm')[1][:-12]
 
 
 def test_bbc6():
@@ -344,7 +358,7 @@ def test_bbc6():
         "| url=http://www.bbc.com/news/science-environment-26267918 "
         "| access-date="
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_nyt1():
@@ -366,7 +380,7 @@ def test_nyt1():
         'on-the-internet-the-right-to-forget-vs-the-right-to-know.html '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_nyt2():
@@ -386,11 +400,14 @@ def test_nyt2():
         'the-nba.html '
         '| access-date='
     )
-    assert ct in urls_scr(
-        'https://www.nytimes.com/2014/05/31/sports/basketball/'
-        'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-'
-        'on-the-nba.html?hp'
-    )[1]
+    assert (
+        ct
+        == urls_scr(
+            'https://www.nytimes.com/2014/05/31/sports/basketball/'
+            'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-'
+            'on-the-nba.html?hp'
+        )[1][:-12]
+    )
 
 
 def test_nyt3():
@@ -408,7 +425,7 @@ def test_nyt3():
         '25kenya.html '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_nyt4():
@@ -433,7 +450,7 @@ def test_nyt4():
         'insider-trading-inquiry-includes-mickelson-and-icahn/ '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_nyt5():
@@ -453,7 +470,7 @@ def test_nyt5():
         '| ref={{sfnref | The New York Times | 2007}} '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_nyt6():
@@ -475,7 +492,7 @@ def test_nyt6():
         "adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html "
         "| access-date="
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_tgdaily1():
@@ -495,11 +512,11 @@ def test_tgdaily1():
         '| ref={{sfnref | TG Daily | 2014}} '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_tgdaily2():
-    """"Staff" in author name."""
+    """ "Staff" in author name."""
     i = (
         'http://www.tgdaily.com/space-features/'
         '82906-sma-reveals-giant-star-cluster-in-the-making'
@@ -515,7 +532,7 @@ def test_tgdaily2():
         '| ref={{sfnref | TG Daily | 2013}} '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 @mark.skip
@@ -534,7 +551,7 @@ def test_tgdaily3():
         'saddam_executed/ '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_oth2():
@@ -565,11 +582,15 @@ def test_text_search():
         'sudan-tech-sanctions-harm-innovation-development-us-'
         'government-and-corporations-must-act '
         '| access-date='
-    ) in urls_scr(
+    ) == urls_scr(
         'https://www.eff.org/deeplinks/2014/06/'
         'sudan-tech-sanctions-harm-innovation-development-us-'
         'government-and-corporations-must-act'
-    )[1]
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 # Disable because relies on class="author" which has been disabled due
@@ -599,7 +620,7 @@ def test_oth3():
         'the-pseudoscience-behind-homeopathy/ '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_oth4():
@@ -615,11 +636,15 @@ def test_oth4():
         "| url=http://www.livescience.com/"
         "46619-sterile-neutrino-experiment-beginning.html "
         "| access-date="
-    ) in urls_scr(
+    ) == urls_scr(
         'http://www.livescience.com/'
         '46619-sterile-neutrino-experiment-beginning.html?'
         'cmpid=514645_20140702_27078936'
-    )[1]
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_oth5():
@@ -638,14 +663,13 @@ def test_oth5():
         '| url=http://www.magiran.com/npview.asp?ID=1410487 '
         '| language=fa '
         '| ref={{sfnref | Magiran | 2007}} '
-        '| access-date=') == o[1][:-12]
+        '| access-date='
+    ) == o[1][:-12]
 
 
 def test_oth6():
     """Detection of website name."""
-    o = urls_scr(
-        'http://www.farsnews.com/newstext.php?nn=13930418000036'
-    )
+    o = urls_scr('http://www.farsnews.com/newstext.php?nn=13930418000036')
     assert (
         '* {{cite web | title=آیت\u200cالله محمدی گیلانی دارفانی را وداع گفت | publisher=Fars News Agency | date=2014-07-09 | url=http://www.farsnews.com/newstext.php?nn=13930418000036 | language=fa | ref={{sfnref | Fars News Agency | 2014}} | access-date='
     ) == o[1][:-12]
@@ -665,10 +689,14 @@ def test_oth7():
         '| date=2014-07-07 '
         '| url=http://news.mit.edu/2014/'
         'traffic-lights-theres-a-better-way-0707 '
-        '| access-date=') in urls_scr(
-            'http://news.mit.edu/2014/'
-            'traffic-lights-theres-a-better-way-0707'
-        )[1]
+        '| access-date='
+    ) == urls_scr(
+        'http://news.mit.edu/2014/' 'traffic-lights-theres-a-better-way-0707'
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_oth8():
@@ -691,7 +719,7 @@ def test_oth8():
         'israel-drone-launched-gaza-ashdod '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_oth10():
@@ -708,10 +736,14 @@ def test_oth10():
         '| date=2014-07-18 '
         '| url=https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0 '
         '| access-date='
-    ) in urls_scr(
+    ) == urls_scr(
         'http://www.thetimes.co.uk/tto/news/world/'
         'australia-newzealand/article4151214.ece'
-    )[1]
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_oth11():
@@ -732,7 +764,7 @@ def test_oth11():
         'entrepreneurs.html '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_oth12():
@@ -750,7 +782,7 @@ def test_oth12():
         'evidence-shows-iron-dome-not-working7318 '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_reverse_name():
@@ -764,9 +796,7 @@ def test_reverse_name():
         '| date=2014-07-01 '
         '| url=http://www.highbeam.com/doc/1P3-3372742961.html '
         '| access-date='
-    ) in urls_scr(
-        'http://www.highbeam.com/doc/1P3-3372742961.html'
-    )[1]
+    ) == urls_scr('http://www.highbeam.com/doc/1P3-3372742961.html')[1][:-12]
 
 
 def test_oth14():
@@ -786,7 +816,7 @@ def test_oth14():
         '| ref={{sfnref | The Independent | 1999}} '
         '| access-date='
     )
-    assert ct in o[1]
+    assert ct == o[1][:-12]
 
 
 def test_oth15():
@@ -800,23 +830,31 @@ def test_oth15():
         '| language=fa '
         '| ref={{sfnref | ایسنا | 2017}} '
         '| access-date='
-    ) in urls_scr(
+    ) == urls_scr(
         'http://www.isna.ir/news/95110603890/'
         '%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7'
         '-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-'
         '%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-'
         '%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84'
         '-%DA%A9%D8%B1%D8%AF'
-    )[1]
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_invalid_name():
     """Test that URL does not fail with InvalidNameError."""
     assert (
         '* {{cite web | title=انتخابات 96 به روایت آمار | publisher=پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654 | language=fa | ref={{sfnref | پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | 2017}} | access-date='
-    ) in urls_scr(
+    ) == urls_scr(
         'http://www.irinn.ir/fa/news/499654/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%A2%D9%85%D8%A7%D8%B1'
-    )[1][:-12]
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_pages_from_html_meta():
@@ -834,8 +872,10 @@ def test_pages_from_html_meta():
         '| pages=53–74 '
         '| url=http://socialhistory.ihcs.ac.ir/article_319_84.html '
         '| language=fa '
-        '| access-date=') in urls_scr(
-        'http://socialhistory.ihcs.ac.ir/article_319_84.html')[1]
+        '| access-date='
+    ) == urls_scr('http://socialhistory.ihcs.ac.ir/article_319_84.html')[1][
+        :-12
+    ]
 
 
 def test_empty_meta_author_content():
@@ -848,9 +888,15 @@ def test_empty_meta_author_content():
         "| url=http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-"
         "billion-oil-dues-170529171315570.html "
         "| ref={{sfnref | Al Jazeera | 2017}} "
-        "| access-date=") in urls_scr(
+        "| access-date="
+    ) == urls_scr(
         'http://www.aljazeera.com/news/2017/05/'
-        'uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html')[1]
+        'uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html'
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_citation_author_reverse_order():
@@ -873,11 +919,17 @@ def test_citation_author_reverse_order():
         'utm_source=other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.'
         'announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.'
         '4xDVKzx5EeeJjRJrkGD1dA '
-        '| access-date=') in urls_scr(
+        '| access-date='
+    ) == urls_scr(
         'https://arxiv.org/abs/1608.05006?utm_medium=email&utm_source='
         'other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.'
         'announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.'
-        '4xDVKzx5EeeJjRJrkGD1dA')[1]
+        '4xDVKzx5EeeJjRJrkGD1dA'
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_single_line_meta_tags():
@@ -887,9 +939,15 @@ def test_single_line_meta_tags():
         "| title=Spill spews tons of coal ash into North Carolina's "
         "Dan River | website=CNN | date=2014-02-09 "
         "| url=http://www.cnn.com/2014/02/09/us/north-carolina-coal-ash"
-        "-spill/index.html | access-date=") in urls_scr(
+        "-spill/index.html | access-date="
+    ) == urls_scr(
         'https://edition.cnn.com/'
-        '2014/02/09/us/north-carolina-coal-ash-spill/')[1]
+        '2014/02/09/us/north-carolina-coal-ash-spill/'
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_abc_author():
@@ -899,10 +957,16 @@ def test_abc_author():
         '| website=ABC News '
         '| date=2020-09-06 | url=https://www.abc.net.au/news/2020-09-06/'
         'glow-worms-in-wollemi-national-park-survived-summer-bushfire/'
-        '12634762 | access-date=') == urls_scr(
+        '12634762 | access-date='
+    ) == urls_scr(
         'https://www.abc.net.au/news/2020-09-06/'
         'glow-worms-in-wollemi-national-park-survived-summer-bushfire/'
-        '12634762')[1][:-12]
+        '12634762'
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_indaily():
@@ -911,9 +975,14 @@ def test_indaily():
         "| title=Epidemics expert questions Marshall's schools advice "
         "| website=InDaily | date=2020-03-19 "
         "| url=https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/ "
-        "| access-date=") in urls_scr(
+        "| access-date="
+    ) == urls_scr(
         'https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/'
-    )[1]
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_language_not_de_csbc():
@@ -928,7 +997,11 @@ def test_language_not_de_csbc():
         "| access-date="
     ) == urls_scr(
         'https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html'
-    )[1][2:-12]
+    )[
+        1
+    ][
+        2:-12
+    ]
 
 
 def test_language_not_zh():
@@ -943,7 +1016,11 @@ def test_language_not_zh():
         "| access-date="
     ) == urls_scr(
         'https://www.abc.net.au/news/2022-05-15/malcolm-abbott-domestic-violence-prevention-fails/101059440'
-    )[1][2:-12]
+    )[
+        1
+    ][
+        2:-12
+    ]
 
 
 def test_home_site_name():
@@ -954,7 +1031,11 @@ def test_home_site_name():
         "| ref={{sfnref | University of Tasmania}} | access-date="
     ) == urls_scr(
         'https://www.utas.edu.au/library/companion_to_tasmanian_history/B/Black%20Convicts.htm'
-    )[1][:-12]
+    )[
+        1
+    ][
+        :-12
+    ]
 
 
 def test_use_doi_if_available():
@@ -971,7 +1052,9 @@ def test_use_doi_if_available():
 
 
 def test_dspace_publisher():  # 27
-    assert urls_scr('https://repositorio.unesp.br/handle/11449/86528')[1][:-12] == (
+    assert urls_scr('https://repositorio.unesp.br/handle/11449/86528')[1][
+        :-12
+    ] == (
         '* {{cite web | title=A neve em Palmas/PR: da reconstituição histórica à abordagem dinâmica | publisher=Universidade Estadual Paulista (Unesp) | date=2004 | url=https://repositorio.unesp.br/handle/11449/86528 | language=pt | ref={{sfnref | Universidade Estadual Paulista (Unesp) | 2004}} | access-date='
     )
 
@@ -979,9 +1062,13 @@ def test_dspace_publisher():  # 27
 def test_find_urls_not_matching():
     # https://meta.wikimedia.org/w/index.php?diff=prev&oldid=25155727
     url = 'https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-june-13-2023'
-    assert find_url(
-        '<meta property="og:url" content="http://dev-isw.bivings.com/" />', url
-    ) == url
+    assert (
+        find_url(
+            '<meta property="og:url" content="http://dev-isw.bivings.com/" />',
+            url,
+        )
+        == url
+    )
 
 
 def test_find_website_meta_pipe():
