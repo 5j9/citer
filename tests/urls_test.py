@@ -1006,3 +1006,14 @@ def test_pipe_in_home_title_as_website():
 
 def test_lang_search():
     assert LANG_SEARCH('<html lang=en>')[1] == 'en'
+
+
+def test_invalid_og_url():
+    url = 'https://www.sohu.com/a/241449680_100110321'
+    assert (
+        find_url(
+            '<meta property="og:url" content="www.sohu.com/a/241449680_100110321"/>',
+            url,
+        )
+        == url
+    )

@@ -34,9 +34,13 @@ TITLE_META_NAME_OR_PROP = r'''
 '''
 TITLE_SEARCH = rc(
     r'<meta\s++(?:'
-    + TITLE_META_NAME_OR_PROP + r'\s++' + CONTENT_ATTR
+    + TITLE_META_NAME_OR_PROP
+    + r'\s++'
+    + CONTENT_ATTR
     + '|'
-    + CONTENT_ATTR + r'\s++' + TITLE_META_NAME_OR_PROP
+    + CONTENT_ATTR
+    + r'\s++'
+    + TITLE_META_NAME_OR_PROP
     + ')'
     '|'
     r'class=(?<q>["\'])(?>main-hed|heading1)(?P=q)[^>]++>(?<result>[^<]*+)<',
@@ -64,15 +68,18 @@ DATE_META_NAME_OR_PROP = r'''
     )(?P=q)
 '''
 DATE_CONTENT_ATTR = (
-    r'content=(?<q>["\'])(?>'
-    + ANYDATE_PATTERN + r'|(?<year_only>\d{4})'
+    r'content=(?<q>["\'])(?>' + ANYDATE_PATTERN + r'|(?<year_only>\d{4})'
     r'(?P=q))'
 )
 DATE_SEARCH = rc(
     r'<meta\s+[^\n<]*?(?:'
-    + DATE_META_NAME_OR_PROP + r'\s++[^\n<]*?' + DATE_CONTENT_ATTR
+    + DATE_META_NAME_OR_PROP
+    + r'\s++[^\n<]*?'
+    + DATE_CONTENT_ATTR
     + '|'
-    + DATE_CONTENT_ATTR + r'\s++[^\n<]*?' + DATE_META_NAME_OR_PROP
+    + DATE_CONTENT_ATTR
+    + r'\s++[^\n<]*?'
+    + DATE_META_NAME_OR_PROP
     + ')'
     '|'
     # http://livescience.com/46619-sterile-neutrino-experiment-beginning.html
@@ -86,12 +93,18 @@ def meta_searcher(names: list) -> Search:
     name_or_prop = r'(?>name|property)=(?<q>["\'])\L<names>(?P=q)'
     return rc(
         r'<meta\s++[^\n<]*?(?:'
-        + CONTENT_ATTR + r'\s++[^\n<]*?' + name_or_prop
+        + CONTENT_ATTR
+        + r'\s++[^\n<]*?'
+        + name_or_prop
         + '|'
-        + name_or_prop + r'\s++[^\n<]*?' + CONTENT_ATTR
+        + name_or_prop
+        + r'\s++[^\n<]*?'
+        + CONTENT_ATTR
         + ')',
-        IV, names=names
+        IV,
+        names=names,
     ).search
+
 
 JOURNAL_TITLE_SEARCH = meta_searcher(['citation_journal_title'])
 PUBLISHER_SEARCH = meta_searcher(['DC.publisher', 'citation_publisher'])
@@ -162,7 +175,11 @@ def find_publisher(html: str) -> Optional[str]:
 def find_url(html: str, url: str) -> str:
     if (m := URL_SEARCH(html)) is not None:
         meta_url: str = m['result']
-        if len(urlparse(meta_url).path) > 1:  # some sites link to their homepage
+        parsed_meta = urlparse(meta_url)
+        if (
+            parsed_meta.scheme  # must have a scheme
+            and len(parsed_meta.path) > 1  # some sites link to their homepage
+        ):
             return meta_url
     return url
 
@@ -268,7 +285,11 @@ def find_title(
     """Return (title_string, where_info)."""
     if (m := TITLE_SEARCH(html)) is not None:
         return parse_title(
-            html_unescape(m['result']), hostname, authors, home_list, thread,
+            html_unescape(m['result']),
+            hostname,
+            authors,
+            home_list,
+            thread,
         )[1]
     elif html_title is not None:
         return parse_title(html_title, hostname, authors, home_list, thread)[1]
@@ -316,9 +337,8 @@ def parse_title(
     # Searching for intitle_sitename
     # 1. In hostname
     for part in parts:
-        if (
-            (part in hostname)
-            or not (set(part.split()) - set(hostname.split('.')))
+        if (part in hostname) or not (
+            set(part.split()) - set(hostname.split('.'))
         ):
             intitle_sitename = parts.pop(part).strip()
             break
@@ -326,7 +346,7 @@ def parse_title(
         # 2. Using difflib on hostname
         # Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
         if close_matches := get_close_matches(
-            hostname, parts, n=1, cutoff=.3
+            hostname, parts, n=1, cutoff=0.3
         ):
             part = close_matches[0]
             intitle_sitename = parts.pop(part).strip()
@@ -343,7 +363,7 @@ def parse_title(
                 else:
                     # 4. Using difflib on home_title
                     if close_matches := get_close_matches(
-                        home_title, parts, n=1, cutoff=.3
+                        home_title, parts, n=1, cutoff=0.3
                     ):
                         part = close_matches[0]
                         intitle_sitename = parts.pop(part).strip()
@@ -369,6 +389,7 @@ def find_date(html: str, url: str) -> datetime_date:
         return m['year_only'] or find_any_date(m)
     return find_any_date(url) or find_any_date(html)
 
+
 def analyze_home(parsed_url: tuple, home_list: list) -> None:
     """Append home_title and site_name to home_list.
 
@@ -376,14 +397,14 @@ def analyze_home(parsed_url: tuple, home_list: list) -> None:
     home_list is used to return the thread result.
     """
     home_url = '://'.join(parsed_url[:2])
-    with request(
-        home_url, spoof=True, stream=True
-    ) as r:
+    with request(home_url, spoof=True, stream=True) as r:
         try:
             check_response_headers(r)
         except (
-            RequestException, StatusCodeError,
-            ContentTypeError, ContentLengthError,
+            RequestException,
+            StatusCodeError,
+            ContentTypeError,
+            ContentLengthError,
         ):
             return
         content = next(r.iter_content(MAX_RESPONSE_LENGTH))
@@ -415,21 +436,22 @@ def check_response_headers(r: RequestsResponse) -> None:
         if bytes_length > MAX_RESPONSE_LENGTH:
             raise ContentLengthError(
                 'Content-length was too long. '
-                '({mb:.2f} MB)'.format(mb=bytes_length / 1000000))
+                '({mb:.2f} MB)'.format(mb=bytes_length / 1000000)
+            )
     if content_type := response_headers.get('content-type'):
         if content_type.startswith('text/'):
             return
         raise ContentTypeError(
-            'Invalid content-type: ' +
-            content_type + ' (URL-content is supposed to be text/html)')
+            'Invalid content-type: '
+            + content_type
+            + ' (URL-content is supposed to be text/html)'
+        )
     return
 
 
 def get_html(url: str) -> str:
     """Return the html string for the given url."""
-    with request(
-        url, stream=True, spoof=True
-    ) as r:
+    with request(url, stream=True, spoof=True) as r:
         check_response_headers(r)
         size = 0
         chunks = []
@@ -439,12 +461,14 @@ def get_html(url: str) -> str:
             if size >= MAX_RESPONSE_LENGTH:
                 raise ValueError(
                     'response was too large: '
-                    f'{size=} > {MAX_RESPONSE_LENGTH=}')
+                    f'{size=} > {MAX_RESPONSE_LENGTH=}'
+                )
             a(chunk)
         content = b''.join(chunks)
     charset_match = CHARSET(content)
     return content.decode(
-        charset_match[1].decode() if charset_match else r.encoding)
+        charset_match[1].decode() if charset_match else r.encoding
+    )
 
 
 def url2dict(url: str) -> Dict[str, Any]:
@@ -454,7 +478,8 @@ def url2dict(url: str) -> Dict[str, Any]:
 
     # Creating a thread to request homepage title in background
     home_thread = Thread(
-        target=analyze_home, args=(parsed_url, (home_list := [])))
+        target=analyze_home, args=(parsed_url, (home_list := []))
+    )
     home_thread.start()
 
     html = get_html(url)
@@ -490,12 +515,19 @@ def url2dict(url: str) -> Dict[str, Any]:
         d['cite_type'] = 'web'
         if publisher is None:
             d['website'] = find_site_name(
-                html, html_title, url, hostname, authors, home_list,
+                html,
+                html_title,
+                url,
+                hostname,
+                authors,
+                home_list,
                 home_thread,
             )
-    if (title := find_title(
-        html, html_title, hostname, authors, home_list, home_thread
-    )) is not None:
+    if (
+        title := find_title(
+            html, html_title, hostname, authors, home_list, home_thread
+        )
+    ) is not None:
         d['title'] = title.strip()
     if date := find_date(html, url):
         d['date'] = date
