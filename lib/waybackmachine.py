@@ -101,7 +101,7 @@ def original_url_dict(url: str):
         target=analyze_home, args=(parsed_url, hometitle_list)
     )
     home_title_thread.start()
-    html = get_html(url)
+    url, html = get_html(url)
 
     if (m := TITLE_TAG(html)) is not None:
         if html_title := m['result']:

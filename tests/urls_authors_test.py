@@ -39,7 +39,8 @@ def test_byline_pattern_four_authors():
 
     """
     assert BYLINE_PATTERN_REGEX.search(
-        'by John Timmer, Matt Ford, Chris Lee, and Jonathan Gitlin Sept')
+        'by John Timmer, Matt Ford, Chris Lee, and Jonathan Gitlin Sept'
+    )
 
 
 @mark.xfail
@@ -52,7 +53,8 @@ def test_byline_pattern_four_authors_with_for():
     """
     assert BYLINE_PATTERN_REGEX.search(
         'By Sara Malm and Annette Witheridge and '
-        'Ian Drury for the Daily Mail and Daniel Bates')
+        'Ian Drury for the Daily Mail and Daniel Bates'
+    )
 
 
 def test_byline_to_names_two_author_seperated_by_comma():
@@ -81,7 +83,8 @@ def test_byline_to_names_byline_ends_with_comma():
 def test_byline_to_names_semicolon_seperated_names_and_for():
     names = byline_to_names(
         'Sara Malm;Annette Witheridge;Ian Drury for the Daily Mail;'
-        'Daniel Bates')
+        'Daniel Bates'
+    )
     assert len(names) == 4
     assert names[2][0] == 'Ian'
     assert names[2][1] == 'Drury'
@@ -95,27 +98,33 @@ def test_byline_to_names_newline_after_and():
 
 def test_byline_to_names_schema_author():
     # https://www.abc.net.au/news/2020-09-06/glow-worms-in-wollemi-national-park-survived-summer-bushfire/12634762
-    assert next(BYLINE_TAG_FINDITER(
-        '<script data-react-helmet="true" type="application/ld+json">'
-        '{"@context":"http://schema.org","@type":"NewsArticle","author":'
-        '[{"@type":"Person","name":"Kathleen Ferguson"}],'
-        '"dateModified":"2020-09-07T06:34:18+00:00",'
-        '"datePublished":"2020-09-06T05:26:48+00:00",'
-        '"description":"An ancient species of bug, glowing on the roof of '
-        'an abandoned railway tunnel deep in a remote forest, somehow '
-        'managed to survive the horror Gospers Mountain bushfire and '
-        'locals could not be happier.","headline":"Glow worms in Wollemi '
-        'National Park survived Gospers Mountain bushfire",'
-        '"image":{"@type":"ImageObject","height":485,'
-        '"url":"https://www.abc.net.au/cm/rimage/12634712-16x9-xlarge.jpg?'
-        'v=2","width":862},'
-        '"keywords":"glow worms,wollemi national park,bushfires",'
-        '"mainEntityOfPage":"https://www.abc.net.au/news/2020-09-06/glow-'
-        'worms-in-wollemi-national-park-survived-summer-bushfire/12634762",'
-        '"publisher":{"@type":"Organization","name":"ABC News",'
-        '"logo":{"@type":"ImageObject","height":60,"url":"https://'
-        'www.abc.net.au/res/abc/logos/amp-news-logo-60x240.png",'
-        '"width":240}}}</script>'))['result'] == 'Kathleen Ferguson'
+    assert (
+        next(
+            BYLINE_TAG_FINDITER(
+                '<script data-react-helmet="true" type="application/ld+json">'
+                '{"@context":"http://schema.org","@type":"NewsArticle","author":'
+                '[{"@type":"Person","name":"Kathleen Ferguson"}],'
+                '"dateModified":"2020-09-07T06:34:18+00:00",'
+                '"datePublished":"2020-09-06T05:26:48+00:00",'
+                '"description":"An ancient species of bug, glowing on the roof of '
+                'an abandoned railway tunnel deep in a remote forest, somehow '
+                'managed to survive the horror Gospers Mountain bushfire and '
+                'locals could not be happier.","headline":"Glow worms in Wollemi '
+                'National Park survived Gospers Mountain bushfire",'
+                '"image":{"@type":"ImageObject","height":485,'
+                '"url":"https://www.abc.net.au/cm/rimage/12634712-16x9-xlarge.jpg?'
+                'v=2","width":862},'
+                '"keywords":"glow worms,wollemi national park,bushfires",'
+                '"mainEntityOfPage":"https://www.abc.net.au/news/2020-09-06/glow-'
+                'worms-in-wollemi-national-park-survived-summer-bushfire/12634762",'
+                '"publisher":{"@type":"Organization","name":"ABC News",'
+                '"logo":{"@type":"ImageObject","height":60,"url":"https://'
+                'www.abc.net.au/res/abc/logos/amp-news-logo-60x240.png",'
+                '"width":240}}}</script>'
+            )
+        )['result']
+        == 'Kathleen Ferguson'
+    )
 
 
 def test_authors_meta_tag_with_no_quote():  # 28
@@ -128,7 +137,11 @@ def test_authors_meta_tag_with_no_quote():  # 28
         "| access-date="
     ) == urls_scr(
         'https://www.usatoday.com/story/entertainment/movies/2019/11/12/star-wars-disney-plus-changes-controversial-han-solo-greedo-scene/2576097001/'
-    )[1][2:-12]
+    )[
+        1
+    ][
+        2:-12
+    ]
 
 
 def test_uppercase_sitename_in_authors():  # 28
@@ -138,11 +151,15 @@ def test_uppercase_sitename_in_authors():  # 28
         "{{cite web | last=Truitt | first=Brian "
         "| title=The infamous 'Han shot first' scene in 'Star Wars' has changed yet again on Disney+ "
         "| website=USA TODAY | date=2019-11-12 "
-        "| url=https://www.usatoday.com/story/entertainment/movies/2019/11/12/2576097001/ "
+        "| url=https://www.usatoday.com/story/entertainment/movies/2019/11/12/star-wars-disney-plus-changes-controversial-han-solo-greedo-scene/2576097001/ "
         "| access-date="
     ) == urls_scr(
         'https://www.usatoday.com/story/entertainment/movies/2019/11/12/2576097001/'
-    )[1][2:-12]
+    )[
+        1
+    ][
+        2:-12
+    ]
 
 
 def test_byline_ending_with_semicolon():
@@ -155,5 +172,5 @@ def test_byline_ending_with_semicolon():
         ('Tijani', 'KH'),
         ('Fatuga', 'AL'),
         ('Onyeze', 'CI'),
-        ('Okeke', 'CJ')
+        ('Okeke', 'CJ'),
     ]

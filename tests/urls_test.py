@@ -18,7 +18,7 @@ def test_bostonglobe1():
         '| title=Hot Rod Stamps; Google on Road; A GM Prospectus '
         '| website=Boston.com '
         '| date=June 29, 2014 '
-        '| url=http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html '
+        '| url=https://www.boston.com/cars/news-and-reviews/2014/06/29/hot-rod-stamps-google-on-road-a-gm-prospectus '
         '| access-date='
     ) == urls_scr(
         'http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html',
@@ -260,7 +260,7 @@ def test_bbc1():
         "| title=US 'received Qatar assurances' on Afghan prisoner deal "
         "| website=BBC News "
         "| date=2014-06-01 "
-        "| url=https://www.bbc.com/news/world-asia-27653361 "
+        "| url=http://www.bbc.com/news/world-asia-27653361 "
         "| ref={{sfnref | BBC News | 2014}} "
         "| access-date="
     )
@@ -294,7 +294,7 @@ def test_bbc3():
         '| title=Sea otter return boosts ailing seagrass in California '
         '| website=BBC News '
         '| date=2013-08-26 '
-        '| url=https://www.bbc.com/news/science-environment-23814524 '
+        '| url=http://www.bbc.com/news/science-environment-23814524 '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -363,7 +363,7 @@ def test_nyt1():
         '| title=Right to Be Forgotten? Not That Easy '
         '| website=The New York Times '
         '| date=2014-05-30 '
-        '| url=http://www.nytimes.com/2014/05/30/business/international/on-the-internet-the-right-to-forget-vs-the-right-to-know.html?hp&_r=0 '
+        '| url=https://www.nytimes.com/2014/05/30/business/international/on-the-internet-the-right-to-forget-vs-the-right-to-know.html?hp&_r=1 '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -381,7 +381,7 @@ def test_nyt2():
         'It May Be a Steal for Steve Ballmer '
         '| website=The New York Times '
         '| date=2014-05-30 '
-        '| url=https://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp '
+        '| url=https://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp&_r=0 '
         '| access-date='
     )
     assert (
@@ -424,7 +424,7 @@ def test_nyt4():
         'Walters '
         '| website=DealBook '
         '| date=2014-06-12 '
-        '| url=http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/ '
+        '| url=https://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/?_r=0 '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -442,7 +442,7 @@ def test_nyt5():
         '| title=19th-century harpoon gives clue on whales '
         '| website=The New York Times '
         '| date=2007-06-13 '
-        '| url=https://www.nytimes.com/2007/06/13/world/americas/'
+        '| url=http://www.nytimes.com/2007/06/13/world/americas/'
         '13iht-whale.1.6123654.html '
         '| ref={{sfnref | The New York Times | 2007}} '
         '| access-date='
@@ -630,7 +630,7 @@ def test_oth5():
         'مجموعه دار فرش: بازار جهانی با تولید فرش هنری نصیب ایران می شود '
         '| website=Magiran '
         '| date=2007-05-22 '
-        '| url=http://www.magiran.com/npview.asp?ID=1410487 '
+        '| url=https://www.magiran.com/article/1410487 '
         '| language=fa '
         '| ref={{sfnref | Magiran | 2007}} '
         '| access-date='
@@ -685,7 +685,7 @@ def test_oth8():
         '| title=Israel says it has shot down drone launched from Gaza '
         '| website=the Guardian '
         '| date=2014-07-14 '
-        '| url=http://www.theguardian.com/world/2014/jul/14/'
+        '| url=https://www.theguardian.com/world/2014/jul/14/'
         'israel-drone-launched-gaza-ashdod '
         '| access-date='
     )
@@ -704,10 +704,10 @@ def test_oth10():
         'Woman who lost brother on MH370 mourns relatives on board MH17 '
         '| website=The Times & The Sunday Times '
         '| date=2014-07-18 '
-        '| url=http://www.thetimes.co.uk/tto/news/world/australia-newzealand/article4151214.ece '
+        '| url=https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0 '
         '| access-date='
     ) == urls_scr(
-        'http://www.thetimes.co.uk/tto/news/world/australia-newzealand/article4151214.ece'
+        'https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0'
     )[
         1
     ][
@@ -759,7 +759,7 @@ def test_reverse_name():
         '| title=Dynamometers Explained '
         '| publisher=Dealernews '
         '| date=2014-07-01 '
-        '| url=http://www.highbeam.com/doc/1P3-3372742961.html '
+        '| url=https://www.highbeam.com/doc/1P3-3372742961.html '
         '| access-date='
     ) == urls_scr('http://www.highbeam.com/doc/1P3-3372742961.html')[1][:-12]
 

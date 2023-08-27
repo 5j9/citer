@@ -436,7 +436,7 @@ def check_response_headers(r: RequestsResponse) -> None:
     return
 
 
-def get_html(url: str) -> str:
+def get_html(url: str) -> tuple[str, str]:
     """Return the html string for the given url."""
     with request(url, stream=True, spoof=True) as r:
         check_response_headers(r)
@@ -453,7 +453,7 @@ def get_html(url: str) -> str:
             a(chunk)
         content = b''.join(chunks)
     charset_match = CHARSET(content)
-    return content.decode(
+    return r.url, content.decode(
         charset_match[1].decode() if charset_match else r.encoding
     )
 
@@ -469,7 +469,7 @@ def url2dict(url: str) -> Dict[str, Any]:
     )
     home_thread.start()
 
-    html = get_html(url)
+    url, html = get_html(url)
 
     d: defaultdict[str, Any] = defaultdict(lambda: None)
     d['url'] = url
