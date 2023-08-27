@@ -2,7 +2,7 @@
 from pytest import mark
 
 from lib.commons import dict_to_sfn_cit_ref
-from lib.urls import LANG_SEARCH, find_url, url_to_dict
+from lib.urls import LANG_SEARCH, url_to_dict
 
 
 def urls_scr(*args):
@@ -18,13 +18,10 @@ def test_bostonglobe1():
         '| title=Hot Rod Stamps; Google on Road; A GM Prospectus '
         '| website=Boston.com '
         '| date=June 29, 2014 '
-        '| url=https://www.boston.com/cars/news-and-reviews/2014/06/29/'
-        'hot-rod-stamps-google-on-road-a-gm-prospectus '
+        '| url=http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html '
         '| access-date='
     ) == urls_scr(
-        'http://www.boston.com/cars/news-and-reviews/2014/06/28/'
-        'hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/'
-        'story.html',
+        'http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html',
         '%B %d, %Y',
     )[
         1
@@ -44,9 +41,7 @@ def test_bostonglobe2():
         '| title=Walsh meets with college leaders on off-campus housing '
         '| website=BostonGlobe.com '
         '| date=2014-06-03 '
-        '| url=https://www.bostonglobe.com/metro/2014/06/03/'
-        'walsh-meets-with-college-leaders-off-campus-housing/'
-        'lsxtLSGJMD86Gbkjay3D6J/story.html '
+        '| url=http://www.bostonglobe.com/metro/2014/06/03/walsh-meets-with-college-leaders-off-campus-housing/lsxtLSGJMD86Gbkjay3D6J/story.html '
         '| access-date='
     ) == urls_scr(
         'http://www.bostonglobe.com/metro/2014/06/03/walsh-meets-with-college-leaders-off-campus-housing/lsxtLSGJMD86Gbkjay3D6J/story.html'
@@ -188,10 +183,7 @@ def test_dilytelegraph2():
 
 def test_dilytelegraph3():
     """1 author, 2011"""
-    i = (
-        'http://www.telegraph.co.uk/news/8323909/'
-        'The-sperm-whale-works-in-extraordinary-ways.html'
-    )
+    i = 'http://www.telegraph.co.uk/news/8323909/The-sperm-whale-works-in-extraordinary-ways.html'
     o = urls_scr(i)
     e2 = (
         "* {{cite web "
@@ -200,8 +192,7 @@ def test_dilytelegraph3():
         "| title=The sperm whale works in extraordinary ways "
         "| website=Telegraph.co.uk "
         "| date=2011-02-15 "
-        "| url=http://www.telegraph.co.uk/news/science/8323909/"
-        "The-sperm-whale-works-in-extraordinary-ways.html "
+        "| url=http://www.telegraph.co.uk/news/8323909/The-sperm-whale-works-in-extraordinary-ways.html "
         "| access-date="
     )
     assert '{{sfn | Whitehead | 2011}}' == o[0]
@@ -269,7 +260,7 @@ def test_bbc1():
         "| title=US 'received Qatar assurances' on Afghan prisoner deal "
         "| website=BBC News "
         "| date=2014-06-01 "
-        "| url=http://www.bbc.com/news/world-asia-27653361 "
+        "| url=https://www.bbc.com/news/world-asia-27653361 "
         "| ref={{sfnref | BBC News | 2014}} "
         "| access-date="
     )
@@ -303,7 +294,7 @@ def test_bbc3():
         '| title=Sea otter return boosts ailing seagrass in California '
         '| website=BBC News '
         '| date=2013-08-26 '
-        '| url=http://www.bbc.com/news/science-environment-23814524 '
+        '| url=https://www.bbc.com/news/science-environment-23814524 '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -363,11 +354,7 @@ def test_bbc6():
 
 def test_nyt1():
     """newstylct, 1 author"""
-    i = (
-        'http://www.nytimes.com/2014/05/30/business/international/'
-        'on-the-internet-the-right-to-forget-vs-the-right-to-know.html?'
-        'hp&_r=0'
-    )
+    i = 'http://www.nytimes.com/2014/05/30/business/international/on-the-internet-the-right-to-forget-vs-the-right-to-know.html?hp&_r=0'
     o = urls_scr(i)
     ct = (
         '* {{cite web '
@@ -376,8 +363,7 @@ def test_nyt1():
         '| title=Right to Be Forgotten? Not That Easy '
         '| website=The New York Times '
         '| date=2014-05-30 '
-        '| url=https://www.nytimes.com/2014/05/30/business/international/'
-        'on-the-internet-the-right-to-forget-vs-the-right-to-know.html '
+        '| url=http://www.nytimes.com/2014/05/30/business/international/on-the-internet-the-right-to-forget-vs-the-right-to-know.html?hp&_r=0 '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -395,17 +381,13 @@ def test_nyt2():
         'It May Be a Steal for Steve Ballmer '
         '| website=The New York Times '
         '| date=2014-05-30 '
-        '| url=https://www.nytimes.com/2014/05/31/sports/basketball/'
-        'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-'
-        'the-nba.html '
+        '| url=https://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp '
         '| access-date='
     )
     assert (
         ct
         == urls_scr(
-            'https://www.nytimes.com/2014/05/31/sports/basketball/'
-            'steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-'
-            'on-the-nba.html?hp'
+            'https://www.nytimes.com/2014/05/31/sports/basketball/steven-a-ballmers-2-billion-play-for-clippers-is-a-big-bet-on-the-nba.html?hp'
         )[1][:-12]
     )
 
@@ -421,8 +403,7 @@ def test_nyt3():
         '| title=Election Rules Complicate Kenya Race '
         '| website=The New York Times '
         '| date=2007-12-25 '
-        '| url=https://www.nytimes.com/2007/12/25/world/africa/'
-        '25kenya.html '
+        '| url=http://www.nytimes.com/2007/12/25/world/africa/25kenya.html '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -430,10 +411,7 @@ def test_nyt3():
 
 def test_nyt4():
     """newstylct, 2 authors, only byline"""
-    i = (
-        'http://dealbook.nytimes.com/2014/05/30/'
-        'insider-trading-inquiry-includes-mickelson-and-icahn/'
-    )
+    i = 'http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/'
     o = urls_scr(i)
     ct = (
         '* {{cite web '
@@ -446,8 +424,7 @@ def test_nyt4():
         'Walters '
         '| website=DealBook '
         '| date=2014-06-12 '
-        '| url=https://dealbook.nytimes.com/2014/05/30/'
-        'insider-trading-inquiry-includes-mickelson-and-icahn/ '
+        '| url=http://dealbook.nytimes.com/2014/05/30/insider-trading-inquiry-includes-mickelson-and-icahn/ '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -475,10 +452,7 @@ def test_nyt5():
 
 def test_nyt6():
     """lastname=O'Connor"""
-    i = (
-        'http://www.nytimes.com/2003/10/09/us/'
-        'adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html'
-    )
+    i = 'http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html'
     o = urls_scr(i)
     ct = (
         "* {{cite web "
@@ -488,8 +462,7 @@ def test_nyt6():
         "Sonar Is Linked to Whale Deaths "
         "| website=The New York Times "
         "| date=2003-10-09 "
-        "| url=https://www.nytimes.com/2003/10/09/us/"
-        "adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html "
+        "| url=http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html "
         "| access-date="
     )
     assert ct == o[1][:-12]
@@ -633,13 +606,10 @@ def test_oth4():
         " Do Sterile Neutrinos Lurk in the Universe? "
         "| website=Live Science "
         "| date=2014-07-01 "
-        "| url=http://www.livescience.com/"
-        "46619-sterile-neutrino-experiment-beginning.html "
+        "| url=http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936 "
         "| access-date="
     ) == urls_scr(
-        'http://www.livescience.com/'
-        '46619-sterile-neutrino-experiment-beginning.html?'
-        'cmpid=514645_20140702_27078936'
+        'http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936'
     )[
         1
     ][
@@ -734,11 +704,10 @@ def test_oth10():
         'Woman who lost brother on MH370 mourns relatives on board MH17 '
         '| website=The Times & The Sunday Times '
         '| date=2014-07-18 '
-        '| url=https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0 '
+        '| url=http://www.thetimes.co.uk/tto/news/world/australia-newzealand/article4151214.ece '
         '| access-date='
     ) == urls_scr(
-        'http://www.thetimes.co.uk/tto/news/world/'
-        'australia-newzealand/article4151214.ece'
+        'http://www.thetimes.co.uk/tto/news/world/australia-newzealand/article4151214.ece'
     )[
         1
     ][
@@ -748,10 +717,7 @@ def test_oth10():
 
 def test_oth11():
     """Business News Daily."""
-    i = (
-        'http://www.businessnewsdaily.com/6762-male-female-entrepreneurs'
-        '.html?cmpid=514642_20140715_27858876'
-    )
+    i = 'http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876'
     o = urls_scr(i)
     ct = (
         '* {{cite web '
@@ -760,8 +726,7 @@ def test_oth11():
         '| title=Male vs. Female Entrepreneurs: How Are They Different? '
         '| website=Business News Daily '
         '| date=2014-07-10 '
-        '| url=http://www.businessnewsdaily.com/6762-male-female-'
-        'entrepreneurs.html '
+        '| url=http://www.businessnewsdaily.com/6762-male-female-entrepreneurs.html?cmpid=514642_20140715_27858876 '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -826,17 +791,12 @@ def test_oth15():
         '| title=برجام شرایط بین‌المللی ایران را کاملا متحول کرد '
         '| website=ایسنا '
         '| date=2017-01-25 '
-        '| url=http://www.isna.ir/news/95110603890/ '
+        '| url=http://www.isna.ir/news/95110603890/%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84-%DA%A9%D8%B1%D8%AF '
         '| language=fa '
         '| ref={{sfnref | ایسنا | 2017}} '
         '| access-date='
     ) == urls_scr(
-        'http://www.isna.ir/news/95110603890/'
-        '%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7'
-        '-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-'
-        '%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-'
-        '%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84'
-        '-%DA%A9%D8%B1%D8%AF'
+        'http://www.isna.ir/news/95110603890/%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84-%DA%A9%D8%B1%D8%AF'
     )[
         1
     ][
@@ -846,15 +806,10 @@ def test_oth15():
 
 def test_invalid_name():
     """Test that URL does not fail with InvalidNameError."""
+    url = 'http://www.irinn.ir/fa/news/499654/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%A2%D9%85%D8%A7%D8%B1'
     assert (
-        '* {{cite web | title=انتخابات 96 به روایت آمار | publisher=پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654 | language=fa | ref={{sfnref | پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | 2017}} | access-date='
-    ) == urls_scr(
-        'http://www.irinn.ir/fa/news/499654/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%A2%D9%85%D8%A7%D8%B1'
-    )[
-        1
-    ][
-        :-12
-    ]
+        '* {{cite web | title=انتخابات 96 به روایت آمار | publisher=پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%A2%D9%85%D8%A7%D8%B1 | language=fa | ref={{sfnref | پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | 2017}} | access-date='
+    ) == urls_scr(url)[1][:-12]
 
 
 def test_pages_from_html_meta():
@@ -935,14 +890,9 @@ def test_citation_author_reverse_order():
 def test_single_line_meta_tags():
     """Issue #9."""
     assert (
-        "* {{cite web | last=Shoichet | first=Catherine E. "
-        "| title=Spill spews tons of coal ash into North Carolina's "
-        "Dan River | website=CNN | date=2014-02-09 "
-        "| url=http://www.cnn.com/2014/02/09/us/north-carolina-coal-ash"
-        "-spill/index.html | access-date="
+        "* {{cite web | last=Shoichet | first=Catherine E. | title=Spill spews tons of coal ash into North Carolina's Dan River | website=CNN | date=2014-02-09 | url=https://edition.cnn.com/2014/02/09/us/north-carolina-coal-ash-spill/ | access-date="
     ) == urls_scr(
-        'https://edition.cnn.com/'
-        '2014/02/09/us/north-carolina-coal-ash-spill/'
+        'https://edition.cnn.com/2014/02/09/us/north-carolina-coal-ash-spill/'
     )[
         1
     ][
@@ -1059,18 +1009,6 @@ def test_dspace_publisher():  # 27
     )
 
 
-def test_find_urls_not_matching():
-    # https://meta.wikimedia.org/w/index.php?diff=prev&oldid=25155727
-    url = 'https://www.understandingwar.org/backgrounder/russian-offensive-campaign-assessment-june-13-2023'
-    assert (
-        find_url(
-            '<meta property="og:url" content="http://dev-isw.bivings.com/" />',
-            url,
-        )
-        == url
-    )
-
-
 def test_find_website_meta_pipe():
     # https://meta.wikimedia.org/w/index.php?diff=prev&oldid=25155870
     scr = urls_scr(
@@ -1093,14 +1031,3 @@ def test_pipe_in_home_title_as_website():
 
 def test_lang_search():
     assert LANG_SEARCH('<html lang=en>')[1] == 'en'
-
-
-def test_invalid_og_url():
-    url = 'https://www.sohu.com/a/241449680_100110321'
-    assert (
-        find_url(
-            '<meta property="og:url" content="www.sohu.com/a/241449680_100110321"/>',
-            url,
-        )
-        == url
-    )

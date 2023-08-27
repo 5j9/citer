@@ -29,15 +29,12 @@ URL_FULLMATCH = rc(
 ).fullmatch
 
 
-def url_to_dict(
-    archive_url: str, date_format: str = '%Y-%m-%d'
-) -> dict:
+def url_to_dict(archive_url: str, date_format: str = '%Y-%m-%d') -> dict:
     """Create the response namedtuple."""
     if (m := URL_FULLMATCH(archive_url)) is None:
         # Could not parse the archive_url. Treat as an ordinary URL.
         return urls_url_to_dict(archive_url, date_format)
-    archive_year, archive_month, archive_day, original_url = \
-        m.groups()
+    archive_year, archive_month, archive_day, original_url = m.groups()
     original_dict = {}
     thread = Thread(
         target=original_url2dict, args=(original_url, original_dict)
@@ -67,8 +64,8 @@ def url_to_dict(
     else:
         archive_dict['url-status'] = 'dead'
     if archive_dict['website'] == 'Wayback Machine':
-        archive_dict['website'] = (
-            urlparse(original_url).hostname.replace('www.', '')
+        archive_dict['website'] = urlparse(original_url).hostname.replace(
+            'www.', ''
         )
     return archive_dict
 
@@ -121,7 +118,12 @@ def original_url_dict(url: str):
     else:
         d['cite_type'] = 'web'
         d['website'] = find_site_name(
-            html, html_title, url, hostname, authors, hometitle_list,
+            html,
+            html_title,
+            url,
+            hostname,
+            authors,
+            hometitle_list,
             home_title_thread,
         )
     d['title'] = find_title(
