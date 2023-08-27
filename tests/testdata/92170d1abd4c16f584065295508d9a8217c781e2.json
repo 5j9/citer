@@ -1,0 +1,32 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Accept-Ranges": "bytes",
+		"Age": "0",
+		"Alt-Svc": "h3=\":443\"; ma=86400",
+		"Cache-Control": "public, max-age=180, stale-if-error=178",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Type": "text/html; charset=utf-8",
+		"Date": "Sun, 27 Aug 2023 04:38:45 GMT",
+		"ETag": "W/\"ba010-iJFpFvVMgybm0HKaVAkmWW1of9k\"",
+		"Expires": "Sun, 27 Aug 2023 04:41:45 GMT",
+		"Server": "CloudFront",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding",
+		"Via": "1.1 varnish (Varnish/6.2), 1.1 f7bcbd3ae495eace7510df02f4cb482a.cloudfront.net (CloudFront)",
+		"X-ACS-Version": "2",
+		"X-Amz-Cf-Id": "5NpjNP9IkO92Md5Yl3ffbh5TrKzR0uAxZU8nW7IEF3jRSdjYgR29_w==",
+		"X-Amz-Cf-Pop": "BAH52-C1",
+		"X-Cache": "Miss from cloudfront",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-Varnish": "9143940",
+		"X-XSS-Protection": "0",
+		"set-cookie": "anon_article_international=2; path=/; domain=www.thetimes.co.uk, nuk_customer_location_hint=GLOBAL; path=/; domain=.thetimes.co.uk, nuk_zephr_decisions=eyJ1bmxvY2stYnktdXJsLS0tZnJlbmNoLWVsZWN0aW9uIjoiTk9fQUNDRVNTIiwidW5sb2NrLWJ5LXVybCI6Ik5PX0FDQ0VTUyIsInRpbWVzLXRyYXZlbC11bmxvY2stYXBpIjoiTk9fQUNDRVNTIiwicmVnaXN0cmF0aW9uLXBheXdhbGwiOiJObyIsIm5ldy1ob3QtY29sZC1wYXl3YWxsIjoiTk9fQUNDRVNTIiwibGl2ZS1hcnRpY2xlcy1hYi10ZXN0LWFub255bW91cy11c2VycyI6Ik5PX0FDQ0VTUyIsImhhbGlmYXgtLS11bmxvY2stYnB0bC1zZWN0aW9uIjoiTk9fQUNDRVNTIiwiY29ycG9yYXRlLWlwLWFjY2VzcyI6Ik5PX0FDQ0VTUyIsImNvcm9uYXRpb24tbGl2ZS1wYWdlIjoiXG5OT19BQ0NFU1MifQ==; path=/, nuk_ni_statuscode=acsaz-307; max-age=120, nuk_customer_country_code=FR; path=/; domain=.thetimes.co.uk; secure, euconsent-v2=expire; expires=Tue, 01-Jan-2019 00:00:00 GMT; path=/",
+		"x-ni-statuscode": "acsaz-307",
+		"x-ni-statusmessage": "Teaser pages are enabled for the requested article"
+	},
+	"status_code": 200,
+	"url": "https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0"
+}
