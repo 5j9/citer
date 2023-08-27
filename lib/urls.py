@@ -108,7 +108,6 @@ def meta_searcher(names: list) -> Search:
 
 JOURNAL_TITLE_SEARCH = meta_searcher(['citation_journal_title'])
 PUBLISHER_SEARCH = meta_searcher(['DC.publisher', 'citation_publisher'])
-URL_SEARCH = meta_searcher(['og:url'])
 ISSN_SEARCH = meta_searcher(['citation_issn'])
 PMID_SEARCH = meta_searcher(['citation_pmid'])
 DOI_SEARCH = meta_searcher(['citation_doi'])
@@ -170,18 +169,6 @@ def find_publisher(html: str) -> Optional[str]:
     if '|' in publisher:
         return None
     return publisher
-
-
-def find_url(html: str, url: str) -> str:
-    if (m := URL_SEARCH(html)) is not None:
-        meta_url: str = m['result']
-        parsed_meta = urlparse(meta_url)
-        if (
-            parsed_meta.scheme  # must have a scheme
-            and len(parsed_meta.path) > 1  # some sites link to their homepage
-        ):
-            return meta_url
-    return url
 
 
 def find_issn(html: str) -> Optional[str]:
@@ -485,6 +472,8 @@ def url2dict(url: str) -> Dict[str, Any]:
     html = get_html(url)
 
     d: defaultdict[str, Any] = defaultdict(lambda: None)
+    d['url'] = url
+
     if doi := find_doi(html):
         # noinspection PyBroadException
         try:
@@ -493,7 +482,6 @@ def url2dict(url: str) -> Dict[str, Any]:
             logger.exception(f'{url=}, {doi=}')
             d['doi'] = doi
 
-    d['url'] = find_url(html, url)
     if m := TITLE_TAG(html):
         if html_title := html_unescape(m['result']):
             d['html_title'] = html_title

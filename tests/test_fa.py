@@ -32,7 +32,11 @@ def test_ketabir1():
         ' عنوان=101 راه برای اینکه پدر بهتری باشید |'
         ' ناشر=پیک ادبیات | مکان=تهران - تهران |'
         ' سال=1386 | شابک=978-964-8165-81-4 | زبان=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/27b3444f-1175-4db0-8411-b1719a5d7ed1')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/27b3444f-1175-4db0-8411-b1719a5d7ed1'
+    )[
+        1
+    ]
 
 
 def test_ketabir2():
@@ -42,7 +46,11 @@ def test_ketabir2():
         'خانوادگی۲=پلانو\u200cکلارک | نام۲=ویکی | ترجمه=محسن نیازی و عباس زارعی | '
         'عنوان=روش\u200cهای تحقیق تلفیقی | ناشر=ثامن الحجج | مکان=تهران - تهران | '
         'جلد=1 | سال=1387 | شابک=978-964-2823-35-2 | زبان=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/667c900a-69bd-4a1a-a651-1870d2f63a68')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/667c900a-69bd-4a1a-a651-1870d2f63a68'
+    )[
+        1
+    ]
 
 
 def test_ketabir3():
@@ -56,7 +64,11 @@ def test_ketabir3():
         ' به گام پیکربندی مسیریابهای میکروتیک: آمادگی آزمون MTCNA '
         '| ناشر=نشرگستر | مکان=تهران - تهران |'
         ' سال=1391 | شابک=978-600-5883-43-5 | زبان=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/f37fad8e-8f0b-4cd9-8875-f5de0e0d86ef')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/f37fad8e-8f0b-4cd9-8875-f5de0e0d86ef'
+    )[
+        1
+    ]
 
 
 def test_ketabir4():
@@ -68,7 +80,11 @@ def test_ketabir4():
         ' نام۳=صفورا | عنوان=11 سپتامبر ... آرماگدون |'
         ' ناشر=حدیث راه عشق | مکان=اصفهان - اصفهان |'
         ' سال=1386 | شابک=978-964-95633-4-3 | زبان=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/13a52229-5e3f-479e-8954-092b65e85923')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/13a52229-5e3f-479e-8954-092b65e85923'
+    )[
+        1
+    ]
 
 
 def test_ketabir5():
@@ -78,7 +94,11 @@ def test_ketabir5():
         'عنوان=فراهنجاری در مثنوی\u200cسرایی: بررسی قالب غزل - مثنوی در ادب فارسی | '
         'ناشر=هنر رسانه اردیبهشت | مکان=تهران - تهران | سال=1388 | '
         'شابک=978-964-2656-34-9 | زبان=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/a5958832-5c43-460d-bf42-65acb6077e52')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/a5958832-5c43-460d-bf42-65acb6077e52'
+    )[
+        1
+    ]
 
 
 def test_ketabir6():
@@ -87,7 +107,11 @@ def test_ketabir6():
         '* {{یادکرد کتاب | نام خانوادگی=مونس | نام=حسین | ترجمه=حمیدرضا شیخی | '
         'عنوان=تاریخ و تمدن مغرب | ناشر=سمت | مکان=مشهد - خراسان رضوی | جلد=1 | '
         'سال=1390 | شابک=978-964-530-036-2 | زبان=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/cb1989dc-ba09-4df6-aaee-fcdbd25ad322')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/cb1989dc-ba09-4df6-aaee-fcdbd25ad322'
+    )[
+        1
+    ]
 
 
 def test_ketabir7():
@@ -98,7 +122,11 @@ def test_ketabir7():
         'هاشمیان (زيرنظر) | عنوان=روانشناسی سلامت به ضمیمه نگرشی بر منابع اسلامی | '
         'ناشر=سمت | مکان=تهران - تهران | جلد=1 | سال=1379 | شابک=978-964-459-398-7 | '
         'زبان=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/4cc231f9-35c2-4b60-a714-a0a11135e932')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/4cc231f9-35c2-4b60-a714-a0a11135e932'
+    )[
+        1
+    ]
 
 
 def test_google_books_ending_page():
@@ -115,22 +143,28 @@ def test_google_books_1():
         ' سری=Digital Libraries and Electronic Publishing |'
         ' سال=2001 | شابک=978-0-262-26134-0 |'
         ' پیوند=https://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 |'
-        ' زبان=en | تاریخ بازبینی=') in googlebooks_scr(
+        ' زبان=en | تاریخ بازبینی='
+    ) in googlebooks_scr(
         'http://books.google.com/books?'
-        'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library')[1]
+        'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library'
+    )[
+        1
+    ]
 
 
 def test_google_books2():
     """a book with more than 4 authors (10 authors)"""
     o = googlebooks_scr(
         'http://books.google.com/books?id='
-        'U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false')
+        'U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
+    )
     assert (
         '<ref>'
         '{{پک | Anderson | DeBolt | Featherstone | Gunther | 2010'
         ' | ک=InterACT with Web Standards: A'
         ' holistic approach to web design | زبان=en | ص=57}}'
-        '\u200f</ref>') in o[0]
+        '\u200f</ref>'
+    ) in o[0]
     assert (
         '* {{یادکرد کتاب |'
         ' نام خانوادگی=Anderson |'
@@ -153,7 +187,8 @@ def test_google_books2():
         ' شابک=978-0-13-270490-8 |'
         ' پیوند=https://books.google.com/books?id=U46IzqYLZvAC&pg=PT57 |'
         ' زبان=en |'
-        ' تاریخ بازبینی=') in o[1]
+        ' تاریخ بازبینی='
+    ) in o[1]
 
 
 def test_google_books3():
@@ -170,20 +205,23 @@ def test_google_books3():
         '| ک=Microsoft Visual C# 2008 Comprehensive: '
         'An Introduction to Object-Oriented Programming |'
         ' زبان=en | ص=588}}'
-        '\u200f</ref>') in o[0]
+        '\u200f</ref>'
+    ) in o[0]
     assert (
         '* {{یادکرد کتاب | نام خانوادگی=Farrell |'
         ' نام=J. | عنوان=Microsoft Visual C# 2008 Comprehensive: '
         'An Introduction to Object-Oriented Programming |'
         ' ناشر=Cengage Learning | سال=2009 | شابک=978-1-111-78619-9 |'
         ' پیوند=https://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588 |'
-        ' زبان=en | تاریخ بازبینی=') in o[1]
+        ' زبان=en | تاریخ بازبینی='
+    ) in o[1]
 
 
 def test_google_books4():
     """Non-ascii characters in author's name."""
     o = googlebooks_scr(
-        'http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa=X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q=%22legal%20translation%20is%22&f=false')
+        'http://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa=X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q=%22legal%20translation%20is%22&f=false'
+    )
     assert (
         '<ref>{{پک | Sarcevic | \x8aar?evi? | 1997 | ک=New Approach to Legal Translation | زبان=en | ص=229}}\u200f</ref>'
     ) == o[0]
@@ -239,7 +277,7 @@ def test_doi1():
 def test_isbn_exists_on_ottobib_not_ketabir():
     assert (
         '* {{یادکرد کتاب | نام خانوادگی=Adkins | نام=Roy A. | نام خانوادگی۲=Adkins | نام۲=Lesley | عنوان=The War for All the Oceans | ناشر=Abacus (UK) | مکان=London | تاریخ=2007 | شابک=978-0-349-11916-8 | oclc=137313052 | زبان=en}}'
-    )in isbn_scr('9780349119168', True)[1]
+    ) in isbn_scr('9780349119168', True)[1]
 
 
 def test_isbn_exists_on_ketabir_not_ottobib():
@@ -284,21 +322,30 @@ def test_2letter_langcode():
 
 
 def test_either_year_or_date():
-    assert urls_scr(
-        'https://www.shora-gc.ir/fa/news/1815/%D8%A7%D8%B5%D9%84-%D9%87%D9%81%D8%AA%D8%A7%D8%AF-%D9%88-%D8%B3%D9%88%D9%85'
-    )[1][:-12] == '* {{یادکرد وب | عنوان=اصل هفتاد و سوم | ناشر=پایگاه اطلاع رسانی شورای نگهبان - shora-gc.ir | تاریخ=2020-06-07 | پیوند=http://www.shora-gc.ir/fa/news/1815 | کد زبان=fa | تاریخ بازبینی='
+    assert (
+        urls_scr(
+            'https://www.shora-gc.ir/fa/news/1815/%D8%A7%D8%B5%D9%84-%D9%87%D9%81%D8%AA%D8%A7%D8%AF-%D9%88-%D8%B3%D9%88%D9%85'
+        )[1][:-12]
+        == '* {{یادکرد وب | عنوان=اصل هفتاد و سوم | ناشر=پایگاه اطلاع رسانی شورای نگهبان - shora-gc.ir | تاریخ=2020-06-07 | پیوند=https://www.shora-gc.ir/fa/news/1815/%D8%A7%D8%B5%D9%84-%D9%87%D9%81%D8%AA%D8%A7%D8%AF-%D9%88-%D8%B3%D9%88%D9%85 | کد زبان=fa | تاریخ بازبینی='
+    )
 
 
 def test_arabic_ya():
-    assert find_any_date('تاریخ انتشار : جمعه ۳ ارديبهشت ۱۳۸۹ ساعت ۱۶:۴۸') == \
-        date(2010, 4, 23)
+    assert find_any_date(
+        'تاریخ انتشار : جمعه ۳ ارديبهشت ۱۳۸۹ ساعت ۱۶:۴۸'
+    ) == date(2010, 4, 23)
 
 
 def test_sfn_extract_year_from_date():
     s, c, r = doi_scr('10.1073/pnas.2015159118')
-    assert s == '<ref>{{پک | Almeida | Viala | Nachtigall | Broe | 2021 | ک=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | زبان=en | ص=}}\u200f</ref>'
-    assert c == '* {{یادکرد ژورنال | نام خانوادگی=Almeida | نام=Diego Dantas | نام خانوادگی۲=Viala | نام۲=Vincent Louis | نام خانوادگی۳=Nachtigall | نام۳=Pedro Gabriel | نام خانوادگی۴=Broe | نام۴=Michael | نام خانوادگی۵=Gibbs | نام۵=H. Lisle | نام خانوادگی۶=Serrano | نام۶=Solange Maria de Toledo | نام خانوادگی۷=Moura-da-Silva | نام۷=Ana Maria | نام خانوادگی۸=Ho | نام۸=Paulo Lee | نام خانوادگی۹=Nishiyama-Jr | نام۹=Milton Yutaka | نام خانوادگی۱۰=Junqueira-de-Azevedo | نام۱۰=Inácio L. M. | عنوان=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | ژورنال=Proceedings of the National Academy of Sciences | ناشر=Proceedings of the National Academy of Sciences | جلد=118 | شماره=20 | تاریخ=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | زبان=en}}'
-
+    assert (
+        s
+        == '<ref>{{پک | Almeida | Viala | Nachtigall | Broe | 2021 | ک=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | زبان=en | ص=}}\u200f</ref>'
+    )
+    assert (
+        c
+        == '* {{یادکرد ژورنال | نام خانوادگی=Almeida | نام=Diego Dantas | نام خانوادگی۲=Viala | نام۲=Vincent Louis | نام خانوادگی۳=Nachtigall | نام۳=Pedro Gabriel | نام خانوادگی۴=Broe | نام۴=Michael | نام خانوادگی۵=Gibbs | نام۵=H. Lisle | نام خانوادگی۶=Serrano | نام۶=Solange Maria de Toledo | نام خانوادگی۷=Moura-da-Silva | نام۷=Ana Maria | نام خانوادگی۸=Ho | نام۸=Paulo Lee | نام خانوادگی۹=Nishiyama-Jr | نام۹=Milton Yutaka | نام خانوادگی۱۰=Junqueira-de-Azevedo | نام۱۰=Inácio L. M. | عنوان=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | ژورنال=Proceedings of the National Academy of Sciences | ناشر=Proceedings of the National Academy of Sciences | جلد=118 | شماره=20 | تاریخ=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | زبان=en}}'
+    )
 
 
 def teardown_module():
