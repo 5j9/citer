@@ -11,6 +11,10 @@ def urls_scr(*args):
 
 def test_bostonglobe1():
     """boston.com, dateformat '%B %d, %Y'"""
+    cit = urls_scr(
+        'http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html',
+        '%B %d, %Y',
+    )[1]
     assert (
         '* {{cite web '
         '| last=Griffith '
@@ -19,15 +23,8 @@ def test_bostonglobe1():
         '| website=Boston.com '
         '| date=June 29, 2014 '
         '| url=https://www.boston.com/cars/news-and-reviews/2014/06/29/hot-rod-stamps-google-on-road-a-gm-prospectus '
-        '| access-date='
-    ) == urls_scr(
-        'http://www.boston.com/cars/news-and-reviews/2014/06/28/hot-rod-stamps-google-road-prospectus/hylbVi9qonAwBIH10CwiDP/story.html',
-        '%B %d, %Y',
-    )[
-        1
-    ][
-        : -len('August 24, 2023}}')
-    ]
+        '| access-date'
+    ) == cit[: cit.rfind('=')]
 
 
 def test_bostonglobe2():
