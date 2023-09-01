@@ -139,17 +139,14 @@ BYLINE_TAG_FINDITER = rc(
         (?P=q)\s*+,\s*+(?P=q)name(?P=q)\s*+:\s*+(?P=q)(?<result>[^"']*+)(?P=q)
     )
     ''',
-    IV | ASCII).finditer
+    IV | ASCII,
+).finditer
 
 
-BYLINE_HTML_PATTERN = rc(
-    '>' + BYLINE_PATTERN + '<', IV
-).search
+BYLINE_HTML_PATTERN = rc('>' + BYLINE_PATTERN + '<', IV).search
 # [\n|]{BYLINE_PATTERN}\n
 # http://voices.washingtonpost.com/thefix/eye-on-2008/2008-whale-update.html
-BYLINE_TEXT_PATTERN = rc(
-    r'[\n|]' + BYLINE_PATTERN + r'\n', IV
-).search
+BYLINE_TEXT_PATTERN = rc(r'[\n|]' + BYLINE_PATTERN + r'\n', IV).search
 
 TAGS_SUB = rc(r'</?[a-z][^>]*+>', IGNORECASE).sub
 
@@ -158,7 +155,7 @@ TAGS_SUB = rc(r'</?[a-z][^>]*+>', IGNORECASE).sub
 BYLINE_AUTHOR = rc(
     r'<[a-z]++[^c]*+[^>]*?class=(?<q>["\']?)author\b(?P=q)'
     r'[^>]*+>(?<result>[^<>]++)',
-    IGNORECASE | ASCII
+    IGNORECASE | ASCII,
 ).finditer
 
 STOPWORDS_SEARCH = rc(
@@ -238,7 +235,7 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
 
     The "By " prefix will be omitted.
     Names will be seperated either with " and " or ", ".
-    
+
     If any of the STOPWORDS is found in a name then it will be omitted from
     the result.
 
@@ -258,7 +255,7 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
         return None
     if (m := ANYDATE_SEARCH(byline)) is not None:
         # Removing the date part
-        byline = byline[:m.start()]
+        byline = byline[: m.start()]
     if not byline:
         return None
     if FOUR_DIGIT_NUM(byline) is not None:
@@ -277,18 +274,15 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
         # Comma may be the separator of first name and last name.
         fullnames = AND_SPLIT(byline)
     names = []
-    for fullname in fullnames:
+    for i, fullname in enumerate(fullnames):
         fullname = fullname.partition(' in ')[0].partition(' for ')[0]
-        if STOPWORDS_SEARCH(fullname) or fullname.isupper():
-            continue
+        if STOPWORDS_SEARCH(fullname) or (i and fullname.isupper()):
+            break
         try:
             first, last = first_last(fullname)
         except InvalidNameError:
             continue
-        if (
-            first.startswith(('The ', 'خبرگزار'))
-            or last.islower()
-        ):
+        if first.startswith(('The ', 'خبرگزار')) or last.islower():
             first, last = '', f'{first} {last}'
         names.append((first, last))
     if not names:
