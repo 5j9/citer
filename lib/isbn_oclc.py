@@ -177,7 +177,7 @@ def get_citoid_dict(isbn) -> Optional[dict]:
 def google_books(isbn: str, result: list):
     try:
         j = request(
-            f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}'
+            f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn.replace("-", "")}'
         ).json()
         d = j['items'][0]
         d.update(d['volumeInfo'])
