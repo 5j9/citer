@@ -50,8 +50,8 @@ def isbn_to_dict(
     if (iranian_isbn := isbn_info(isbn) == 'Iran') is True:
         ketabir_result_list = []
         ketabir_thread = Thread(
-            target=ketabir_thread_target,
-            args=(isbn, ketabir_result_list))
+            target=ketabir_thread_target, args=(isbn, ketabir_result_list)
+        )
         ketabir_thread.start()
 
     google_books_result = []
@@ -61,11 +61,10 @@ def isbn_to_dict(
     )
     google_books_thread.start()
 
-
     citoid_result_list = []
     citoid_thread = Thread(
-        target=citoid_thread_target,
-        args=(isbn, citoid_result_list))
+        target=citoid_thread_target, args=(isbn, citoid_result_list)
+    )
     citoid_thread.start()
 
     if iranian_isbn is True:
@@ -135,7 +134,8 @@ def isbn2int(isbn):
 def get_citoid_dict(isbn) -> Optional[dict]:
     # https://www.mediawiki.org/wiki/Citoid/API
     r = request(
-        'https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki/' + isbn)
+        'https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki/' + isbn
+    )
     if r.status_code != 200:
         return
 
@@ -148,7 +148,8 @@ def get_citoid_dict(isbn) -> Optional[dict]:
     d['isbn'] = j0['ISBN'][0]
     # worldcat url is not needed since OCLC param will create it
     # d['url'] = j0['url']
-    d['oclc'] = j0['oclc']
+    if (oclc := j0.get('oclc')) is not None:
+        d['oclc'] = oclc
     d['title'] = j0['title']
 
     authors = get('author')
@@ -207,29 +208,34 @@ def worldcat_url_to_dict(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
 
 def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
     content = request('https://www.worldcat.org/title/' + oclc).content
-    j = loads(content[
-        (s := (f := content.find)(b' type="application/json">') + 25)
-        :f(b'</script>', s)
-    ])
+    j = loads(
+        content[
+            (s := (f := content.find)(b' type="application/json">') + 25) : f(
+                b'</script>', s
+            )
+        ]
+    )
     record = j['props']['pageProps']['record']
     if record is None:  # invalid OCLC number
         raise ReturnError(
             'Error processing OCLC number: ' + oclc,
             'Make sure the OCLC identifier is valid.',
-            ''
+            '',
         )
     d: defaultdict[str, Any] = defaultdict(lambda: None)
     d['cite_type'] = record['generalFormat'].lower()
     d['title'] = record['title']
     d['authors'] = [
         ('', c['nonPersonName']['text'])
-        if 'nonPersonName' in c else
-        (c["firstName"]['text'], c["secondName"]['text'])
+        if 'nonPersonName' in c
+        else (c["firstName"]['text'], c["secondName"]['text'])
         for c in record["contributors"]
     ]
     if (publisher := record['publisher']) != '[publisher not identified]':
         d['publisher'] = publisher
-    if (place := record['publicationPlace']) != '[Place of publication not identified]':
+    if (
+        place := record['publicationPlace']
+    ) != '[Place of publication not identified]':
         d['publisher-location'] = place
     if m := FOUR_DIGIT_NUM(record['publicationDate']):
         d['year'] = m[0]

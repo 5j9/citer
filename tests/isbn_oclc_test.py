@@ -1,7 +1,12 @@
 from pytest import raises
 
 from lib.commons import ISBN_10OR13_SEARCH, ReturnError, dict_to_sfn_cit_ref
-from lib.isbn_oclc import isbn_to_dict, oclc_dict, worldcat_url_to_dict
+from lib.isbn_oclc import (
+    get_citoid_dict,
+    isbn_to_dict,
+    oclc_dict,
+    worldcat_url_to_dict,
+)
 
 
 def isbn_scr(*args):
@@ -18,16 +23,21 @@ def worldcat_scr(*args):
 
 def test_is1():
     # not in ketabir
-    assert (
-        '* {{cite book | last=Adkins | first=Roy A. | last2=Adkins | first2=Lesley | title=The War for All the Oceans | publisher=Abacus (UK) | publication-place=London | date=2007 | isbn=978-0-349-11916-8 | oclc=137313052}}'
-    ) == isbn_scr('9780349119168', True)[1]
+    assert isbn_scr('9780349119168', True)[1] == (
+        '* {{cite book | last=Adkins | first=Roy A. | last2=Adkins | first2=Lesley | '
+        'title=The War for All the Oceans | publisher=Abacus (UK) | '
+        'publication-place=London | date=2007 | isbn=978-0-349-11916-8 | '
+        'oclc=137313052}}'
+    )
 
 
 def test_is3():
     # on both ketabid and citoid
-    assert (
-        '* {{cite book | last=Sipihrī | first=Suhrāb | title=راز گل سرخ | publisher=Muʼassasah-ʼi Intishārāt-i Nigāh | publication-place=Tihrān | date=2005 | isbn=964-6736-34-3 | oclc=53446327 | language=fa}}'
-    ) == isbn_scr('964-6736-34-3 ')[1]
+    assert isbn_scr('964-6736-34-3 ')[1] == (
+        '* {{cite book | last=Sipihrī | first=Suhrāb | title=راز گل سرخ | '
+        'publisher=Muʼassasah-ʼi Intishārāt-i Nigāh | publication-place=Tihrān | '
+        'date=2005 | isbn=964-6736-34-3 | oclc=53446327 | language=fa}}'
+    )
 
 
 def test_is4():
@@ -80,7 +90,7 @@ def test_invalid_oclc():
         assert e.args == (
             'Error processing OCLC number: 99999999999999',
             'Make sure the OCLC identifier is valid.',
-            ''
+            '',
         )
 
 
@@ -106,3 +116,14 @@ def test_not_identified_pulisher():
     assert worldcat_scr('https://www.worldcat.org/title/1051746391')[1] == (
         '* {{cite book | last=Love | first=James Lee | title=Recollections : written in the Library of Congress, Washington, D.C. | year=1921 | oclc=1051746391}}'
     )
+
+
+def test_citoid():
+    assert get_citoid_dict('9781137330963') == {
+        'cite_type': 'book',
+        'date': '2013',
+        'isbn': '978-1-137-33096-3',
+        'publisher': 'Palgrave Macmillan',
+        'publisher-location': 'New York, NY',
+        'title': 'Ethnographies of social support',
+    }
