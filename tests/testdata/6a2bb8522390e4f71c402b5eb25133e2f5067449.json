@@ -1,0 +1,18 @@
+{
+	"encoding": "UTF-8",
+	"headers": {
+		"Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+		"Cache-Control": "private",
+		"Content-Encoding": "gzip",
+		"Content-Type": "application/json; charset=UTF-8",
+		"Date": "Sun, 03 Sep 2023 01:09:26 GMT",
+		"Server": "ESF",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Origin, X-Origin, Referer",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-XSS-Protection": "0"
+	},
+	"status_code": 200,
+	"url": "https://www.googleapis.com/books/v1/volumes?q=isbn:9646736343"
+}
