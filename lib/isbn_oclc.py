@@ -13,6 +13,7 @@ from lib.commons import (
     FOUR_DIGIT_NUM,
     ISBN10_SEARCH,
     ISBN13_SEARCH,
+    ISBN_10OR13_SEARCH,
     ReturnError,
     request,
 )
@@ -67,6 +68,16 @@ def isbn_to_dict(
     )
     citoid_thread.start()
 
+    citoid_thread.join()
+    if citoid_result_list:
+        dictionary = citoid_result_list[0]
+    else:
+        dictionary = defaultdict(lambda: None)
+
+    google_books_thread.join()
+    if google_books_result:
+        dictionary.update(google_books_result[0])
+
     if iranian_isbn is True:
         # noinspection PyUnboundLocalVariable
         ketabir_thread.join()
@@ -74,22 +85,7 @@ def isbn_to_dict(
         if ketabir_result_list:
             # noinspection PyUnboundLocalVariable
             ketabir_dict = ketabir_result_list[0]
-        else:
-            ketabir_dict = None
-    else:
-        ketabir_dict = None
-
-    citoid_thread.join()
-    if citoid_result_list:
-        citoid_dict = citoid_result_list[0]
-    else:
-        citoid_dict = defaultdict(lambda: None)
-
-    google_books_thread.join()
-    if google_books_result:
-        citoid_dict.update(google_books_result[0])
-
-    dictionary = combine_dicts(ketabir_dict, citoid_dict)
+            dictionary = combine_dicts(ketabir_dict, dictionary)
 
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
@@ -187,7 +183,6 @@ def google_books(isbn: str, result: list):
         d['authors'] = [a.rsplit(' ', 1) for a in authors]
     if date := d.get('publishedDate'):
         d['date'] = date
-    d['isbn'] = isbn
     d['cite_type'] = 'book'
     result.append(d)
 

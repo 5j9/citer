@@ -34,7 +34,7 @@ def test_is1():
 def test_is3():
     # on both ketabid and citoid
     assert isbn_scr('964-6736-34-3 ')[1] == (
-        '* {{cite book | last=Sipihrī | first=Suhrāb | title=راز گل سرخ | '
+        '* {{cite book | last=Sepehri | first=S. | title=Raz-egole sorkh | '
         'publisher=Muʼassasah-ʼi Intishārāt-i Nigāh | publication-place=Tihrān | '
         'date=2005 | isbn=964-6736-34-3 | oclc=53446327 | language=fa}}'
     )
