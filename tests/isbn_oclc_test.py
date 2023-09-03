@@ -46,7 +46,7 @@ def test_is4():
         '* {{cite book | last=حافظ | first=شمس‌الدین‌محمد '
         '| others=رضا نظرزاده (به‌اهتمام) '
         '| title=دیوان کامل حافظ همراه با فالنامه | publisher=دیوان '
-        '| publication-place=قم - قم | year=1385 | isbn=978-964-92962-6-5 '
+        '| publication-place=قم - قم | year=1385 | isbn=964-92962-6-3 '
         '| language=fa}}'
     ) == isbn_scr('choghondar 964-92962-6-3 شلغم')[1]
 
@@ -122,7 +122,6 @@ def test_citoid():
     assert get_citoid_dict('9781137330963') == {
         'cite_type': 'book',
         'date': '2013',
-        'isbn': '978-1-137-33096-3',
         'publisher': 'Palgrave Macmillan',
         'publisher-location': 'New York, NY',
         'title': 'Ethnographies of social support',

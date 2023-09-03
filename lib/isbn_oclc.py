@@ -4,7 +4,7 @@ from logging import getLogger
 from threading import Thread
 from typing import Any, Optional
 
-from isbnlib import info as isbn_info
+from isbnlib import info as isbn_info, mask as isbn_mask
 from langid import classify
 from regex import search
 
@@ -13,7 +13,6 @@ from lib.commons import (
     FOUR_DIGIT_NUM,
     ISBN10_SEARCH,
     ISBN13_SEARCH,
-    ISBN_10OR13_SEARCH,
     ReturnError,
     request,
 )
@@ -87,6 +86,7 @@ def isbn_to_dict(
             ketabir_dict = ketabir_result_list[0]
             dictionary = combine_dicts(ketabir_dict, dictionary)
 
+    dictionary['isbn'] = isbn_mask(isbn)
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
         dictionary['language'] = classify(dictionary['title'])[0]
@@ -141,10 +141,9 @@ def get_citoid_dict(isbn) -> Optional[dict]:
     d = defaultdict(lambda: None)
 
     d['cite_type'] = j0['itemType']
-    d['isbn'] = j0['ISBN'][0]
     # worldcat url is not needed since OCLC param will create it
     # d['url'] = j0['url']
-    if (oclc := j0.get('oclc')) is not None:
+    if (oclc := get('oclc')) is not None:
         d['oclc'] = oclc
     d['title'] = j0['title']
 
