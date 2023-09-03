@@ -15,7 +15,6 @@ VOLUME_SEARCH = rc(r'\bجلد (\d+)').search
 
 
 def url_to_dict(url: str, date_format='%Y-%m-%d', /) -> dict:
-    """Return the response namedtuple."""
     dictionary = _url_to_dict(url)
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
@@ -29,8 +28,10 @@ def isbn_to_url(isbn: str) -> Optional[str]:
     """Return the ketab.ir book-url for the given isbn."""
     r = request(f'https://msapi.ketab.ir/search/?query={isbn}&limit=1')
     j = r.json()
-    return 'https://ketab.ir/book/' \
-           + j['result']['groups']['printableBook']['items'][0]['url']
+    return (
+        'https://ketab.ir/book/'
+        + j['result']['groups']['printableBook']['items'][0]['url']
+    )
 
 
 def _url_to_dict(ketabir_url: str) -> Optional[dict]:
@@ -43,10 +44,12 @@ def _url_to_dict(ketabir_url: str) -> Optional[dict]:
         return
 
     soup = BeautifulSoup(r.content, features='lxml')
-    d : defaultdict[str, Any] = defaultdict(lambda: None, cite_type='book')
+    d: defaultdict[str, Any] = defaultdict(lambda: None, cite_type='book')
     d['title'] = soup.select_one('.card-title').text.strip()
 
-    table = {(tds := tr.select('td'))[0].text: tds[1] for tr in soup.select('tr')}
+    table = {
+        (tds := tr.select('td'))[0].text: tds[1] for tr in soup.select('tr')
+    }
 
     # initiating name lists:
     others = []
