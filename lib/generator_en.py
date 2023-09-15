@@ -1,7 +1,4 @@
-"""Codes required to create English Wikipedia citation templates."""
-
-
-from collections import defaultdict
+"""Functions for generating English Wikipedia citation templates."""
 from datetime import date as Date
 from functools import partial
 from logging import getLogger
@@ -95,9 +92,9 @@ TYPE_TO_CITE = {
 ALPHA_NUM = digits + ascii_lowercase
 
 
-def hash_for_ref_name(dd: defaultdict, number_of_digits=4):
+def hash_for_ref_name(g: callable, number_of_digits=4):
     # A combination of possible `user_input`s is used as seed.
-    seed(f'{dd["url"]}{dd["doi"]}{dd["isbn"]}{dd["pmid"]}{dd["pmcid"]}')
+    seed(f'{g("url")}{g("doi")}{g("isbn")}{g("pmid")}{g("pmcid")}')
     return choice(
         ascii_lowercase
     ) + ''.join(  # it should contain at least one non-digit
@@ -105,10 +102,11 @@ def hash_for_ref_name(dd: defaultdict, number_of_digits=4):
     )
 
 
-def sfn_cit_ref(d: defaultdict) -> tuple:
+def sfn_cit_ref(d: dict) -> tuple:
     """Return sfn, citation, and ref."""
-    date_format = d['date_format']
-    if not (cite_type := TYPE_TO_CITE(d['cite_type'])):
+    g = d.get
+    date_format = g('date_format')
+    if not (cite_type := TYPE_TO_CITE(g('cite_type'))):
         logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
         cite_type = ''
         cit = '* {{cite'
@@ -116,16 +114,16 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         cit = '* {{cite ' + cite_type
     sfn = '{{sfn'
 
-    publisher = d['publisher']
-    website = d['website']
-    title = d['title']
+    publisher = g('publisher')
+    website = g('website')
+    title = g('title')
 
     if cite_type == 'journal':
-        journal = d['journal'] or d['container-title']
+        journal = g('journal') or g('container-title')
     else:
-        journal = d['journal']
+        journal = g('journal')
 
-    if authors := d['authors']:
+    if authors := g('authors'):
         cit += names2para(authors, 'first', 'last', 'author')
         # {{sfn}} only supports a maximum of four authors
         for first, last in authors[:4]:
@@ -143,22 +141,22 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             )
         )
 
-    if editors := d['editors']:
+    if editors := g('editors'):
         cit += names2para(editors, 'editor-first', 'editor-last', 'editor')
-    if translators := d['translators']:
+    if translators := g('translators'):
         for i, (first, last) in enumerate(translators):
             translators[i] = first, f'{last} (مترجم)'
         # Todo: add a 'Translated by ' before name of translators?
-        others = d['others']
+        others = g('others')
         if others:
-            others.extend(d['translators'])
+            others.extend(g('translators'))
         else:
-            d['others'] = d['translators']
-    if others := d['others']:
+            d['others'] = g('translators')
+    if others := g('others'):
         cit += names1para(others, 'others')
 
     if cite_type == 'book':
-        booktitle = d['booktitle'] or d['container-title']
+        booktitle = g('booktitle') or g('container-title')
     else:
         booktitle = None
 
@@ -176,33 +174,33 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     elif website:
         cit += f' | website={website}'
 
-    if chapter := d['chapter']:
+    if chapter := g('chapter'):
         cit += f' | chapter={chapter}'
 
-    if publisher := (d['publisher'] or d['organization']):
+    if publisher := (g('publisher') or g('organization')):
         cit += f' | publisher={publisher}'
 
-    if address := (d['address'] or d['publisher-location']):
+    if address := (g('address') or g('publisher-location')):
         cit += f' | publication-place={address}'
 
-    if edition := d['edition']:
+    if edition := g('edition'):
         cit += f' | edition={edition}'
 
-    if series := d['series']:
+    if series := g('series'):
         cit += f' | series={series}'
 
-    if volume := d['volume']:
+    if volume := g('volume'):
         cit += f' | volume={volume.translate(DIGITS_TO_EN)}'
 
-    if issue := (d['issue'] or d['number']):
+    if issue := (g('issue') or g('number')):
         cit += f' | issue={issue}'
 
-    if date := d['date']:
+    if date := g('date'):
         if not isinstance(date, str):
             date = date.strftime(date_format)
         cit += f' | date={date}'
 
-    if year := d['year']:
+    if year := g('year'):
         year = str(int(year))  # convert any non-Latin digits to English ones
         if not date or year not in date:
             cit += f' | year={year}'
@@ -214,32 +212,32 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
             year = date.strftime('%Y')
         sfn += f' | {year}'
 
-    if isbn := d['isbn']:
+    if isbn := g('isbn'):
         cit += f' | isbn={isbn}'
 
-    if issn := d['issn']:
+    if issn := g('issn'):
         cit += f' | issn={issn}'
 
-    if pmid := d['pmid']:
+    if pmid := g('pmid'):
         cit += f' | pmid={pmid}'
 
-    if pmcid := d['pmcid']:
+    if pmcid := g('pmcid'):
         cit += f' | pmc={pmcid}'
 
-    if doi := d['doi']:
+    if doi := g('doi'):
         cit += f' | doi={doi}'
 
-    if oclc := d['oclc']:
+    if oclc := g('oclc'):
         cit += f' | oclc={oclc}'
 
-    if jstor := d['jstor']:
+    if jstor := g('jstor'):
         cit += f' | jstor={jstor}'
-        jstor_access = d['jstor-access']
+        jstor_access = g('jstor-access')
         if jstor_access:
             cit += ' | jstor-access=free'
 
     pages_in_cit = pages_in_sfn = False
-    if pages := d['page']:
+    if pages := g('page'):
         if '–' in pages:
             sfn += f' | pp={pages}'
             pages_in_sfn = 2
@@ -253,7 +251,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
                 cit += f' | page={pages}'
                 pages_in_cit = 1
 
-    if url := d['url']:
+    if url := g('url'):
         # Don't add a DOI URL if we already have added a DOI.
         if not doi or not DOI_URL_MATCH(url):
             cit += f' | url={url}'
@@ -265,14 +263,14 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
         pages_in_sfn = 1
         sfn += ' | p='
 
-    if archive_url := d['archive-url']:
+    if archive_url := g('archive-url'):
         cit += (
             f' | archive-url={archive_url}'
-            f' | archive-date={d["archive-date"].strftime(date_format)}'
-            f' | url-status={d["url-status"]}'
+            f' | archive-date={g("archive-date").strftime(date_format)}'
+            f' | url-status={g("url-status")}'
         )
 
-    if language := d['language']:
+    if language := g('language'):
         language = TO_TWO_LETTER_CODE(language.lower(), language)
         if language.lower() != 'en':
             cit += ' | language=' + language
@@ -299,7 +297,7 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     elif pages_in_sfn == 2:
         ref_name = ref_name.replace(' pp=', ' pp. ')
     else:
-        ref_name += ' ' + hash_for_ref_name(d, 3)
+        ref_name += ' ' + hash_for_ref_name(g, 3)
 
     ref_content = rm_ref_arg(cit[2:])
     if pages_in_sfn and not pages_in_cit:

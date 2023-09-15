@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 from regex import MULTILINE, VERBOSE
 
 from lib.commons import ISBN_10OR13_SEARCH, InvalidNameError, first_last, rc
@@ -45,7 +43,7 @@ RIS_FULLMATCH = rc(
 
 def ris_parse(ris_text):
     """Parse RIS_text data and return the result as a dictionary."""
-    d = defaultdict(lambda: None)
+    d = {}
     match = RIS_FULLMATCH(ris_text)
     d.update(match.groupdict())
     # cite_type: (book, journal, . . . )

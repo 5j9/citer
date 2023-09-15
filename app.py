@@ -1,4 +1,3 @@
-from collections import defaultdict
 from functools import partial
 from html import unescape
 from json import dumps
@@ -227,19 +226,18 @@ def root(start_response: callable, environ: dict) -> tuple:
     return (response_body,)
 
 
-PATH_TO_HANDLER = defaultdict(
-    lambda: page_does_not_exist,
-    {
-        f'/{CSS_PATH}.css': css,
-        f'/{JS_PATH}.js': js,
-        '/': root,
-        '/citer.fcgi': root,  # for backward compatibility
-    },
-)
+PATH_TO_HANDLER = {
+    f'/{CSS_PATH}.css': css,
+    f'/{JS_PATH}.js': js,
+    '/': root,
+    '/citer.fcgi': root,  # for backward compatibility
+}.get
 
 
 def app(environ: dict, start_response: callable) -> tuple:
-    return PATH_TO_HANDLER[environ['PATH_INFO']](start_response, environ)
+    return (PATH_TO_HANDLER(environ['PATH_INFO']) or page_does_not_exist)(
+        start_response, environ
+    )
 
 
 if __name__ == '__main__':

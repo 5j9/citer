@@ -1,6 +1,4 @@
 """All things that are specifically related to adinebook website"""
-
-from collections import defaultdict
 from logging import getLogger
 from typing import Any, Optional
 
@@ -44,7 +42,7 @@ def _url_to_dict(ketabir_url: str) -> Optional[dict]:
         return
 
     soup = BeautifulSoup(r.content, features='lxml')
-    d: defaultdict[str, Any] = defaultdict(lambda: None, cite_type='book')
+    d = {'cite_type': 'book'}
     d['title'] = soup.select_one('.card-title').text.strip()
 
     table = {

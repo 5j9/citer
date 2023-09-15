@@ -1,5 +1,4 @@
 from calendar import month_abbr, month_name
-from collections import defaultdict
 from datetime import date as datetime_date, datetime
 from functools import partial
 from typing import Callable, Optional
@@ -54,15 +53,15 @@ jB_TO_NUM = {
     'دی': 10,
     'دي': 10,
     'بهمن': 11,
-    'اسفند': 12}
+    'اسفند': 12,
+}
 
 DOUBLE_DIGIT_SEARCH = rc(r'\d\d').search
 
 # Date patterns:
 
 # January|February...
-B = (
-    r'''
+B = r'''
     (?<B>(?:J(?:anuary|u(?:ne|ly))
     |
     February
@@ -72,7 +71,7 @@ B = (
     A(?:pril|ugust)
     |
     (?:(?:(?:Sept|Nov|Dec)em)|Octo)ber))
-    ''')
+    '''
 # فروردین|اردیبهشت|خرداد...
 jB = f"(?>(?<jB>{'|'.join([jm for jm in jB_TO_NUM]).replace('ی', '[یي]')}))"
 # Month abbreviations:
@@ -89,7 +88,8 @@ zd = r'(?<d>0[1-9]|[12][0-9]|3[01])'
 Y = r'(?<Y>(?:19|20)\d\d)'
 ANYDATE_PATTERN = (
     fr'(?:(?:{B}|{b})\ {d},?\ {Y}|{d}\ (?:{B}|{b})\ {Y}|{Y}(?<sep>[-/]){zm}'
-    fr'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d))')
+    fr'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d))'
+)
 ANYDATE_SEARCH: Search = rc(ANYDATE_PATTERN, VERBOSE).search
 DIGITS_FINDALL = rc(r'\d').findall
 MC_SUB = rc(r'MC(\w)', IGNORECASE).sub
@@ -100,7 +100,8 @@ AGENT_HEADER = {
     'User-Agent': USER_AGENT,
     # Not required but recommended by
     # https://meta.wikimedia.org/wiki/User-Agent_policy
-    'Api-User-Agent': f'{NCBI_TOOL}/{NCBI_EMAIL}'}
+    'Api-User-Agent': f'{NCBI_TOOL}/{NCBI_EMAIL}',
+}
 SPOOFED_AGENT_HEADER = {
     'User-Agent': SPOOFED_USER_AGENT,
     'Accept': "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
@@ -165,7 +166,7 @@ def request(url, spoof=False, method='get', **kwargs) -> requests.Response:
     return REQUEST(method, url, headers=headers, **kwargs)
 
 
-def dict_to_sfn_cit_ref(dictionary: defaultdict) -> tuple:
+def dict_to_sfn_cit_ref(dictionary: dict) -> tuple:
     # Return (sfn, cite, ref) strings.
     if (title := dictionary.get('title')) is not None:
         dictionary['title'] = WS_NORMALIZE(title)
@@ -216,7 +217,7 @@ def first_last(fullname, separator=None) -> tuple:
     if separator is None:
         try:
             lastname, firstname = LAST_FIRST(fullname)
-        except ValueError:   # not enough values to unpack, use whitespace
+        except ValueError:  # not enough values to unpack, use whitespace
             sname = fullname.split()
             if len(sname) == 1:  # single word first-last with None separator
                 raise InvalidNameError
@@ -228,8 +229,9 @@ def first_last(fullname, separator=None) -> tuple:
         else:
             lastname, firstname = fullname, ''
     firstname = firstname.strip()
-    if (firstname.isupper() and lastname.isupper()) or \
-       (firstname.islower() and lastname.islower()):
+    if (firstname.isupper() and lastname.isupper()) or (
+        firstname.islower() and lastname.islower()
+    ):
         firstname = firstname.title()
         lastname = lastname.title()
         lastname = MC_SUB(lambda m: 'Mc' + m[1].upper(), lastname)
