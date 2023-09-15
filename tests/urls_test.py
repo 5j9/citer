@@ -1,8 +1,10 @@
 # noinspection PyPackageRequirements
+from unittest.mock import patch
+
 from pytest import mark
 
 from lib.commons import dict_to_sfn_cit_ref
-from lib.urls import LANG_SEARCH, url_to_dict
+from lib.urls import LANG_SEARCH, ContentTypeError, url_to_dict
 
 
 def urls_scr(*args):
@@ -1028,3 +1030,12 @@ def test_pipe_in_home_title_as_website():
 
 def test_lang_search():
     assert LANG_SEARCH('<html lang=en>')[1] == 'en'
+
+
+@patch('lib.urls.analyze_home', side_effect=ContentTypeError)
+@patch('lib.urls.get_html', side_effect=ContentTypeError)
+def test_non_text_content(m, m2):
+    scr = urls_scr('https://example.com/')
+    assert scr[1][:-12] == (
+        '* {{cite web | title= | url=https://example.com/ | ref={{sfnref | Anon.}} | access-date='
+    )
