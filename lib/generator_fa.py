@@ -76,6 +76,9 @@ def sfn_cit_ref(d: defaultdict) -> tuple:
     elif title:
         cit += ' | عنوان=' + title
         sfn += ' | ک=' + d['title']
+    else:
+        cit += ' | عنوان='
+        sfn += ' | ک='
 
     if cite_type == 'ژورنال':
         journal = d['journal'] or d['container-title']

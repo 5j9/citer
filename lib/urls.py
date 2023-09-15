@@ -386,7 +386,7 @@ def analyze_home(parsed_url: tuple, home_list: list) -> None:
     home_url = '://'.join(parsed_url[:2])
     with request(home_url, spoof=True, stream=True) as r:
         try:
-            check_response_headers(r)
+            check_response(r)
         except (
             RequestException,
             StatusCodeError,
@@ -409,37 +409,30 @@ def analyze_home(parsed_url: tuple, home_list: list) -> None:
     home_list.append(title)
 
 
-def check_response_headers(r: RequestsResponse) -> None:
-    """Check content-type and content-length of the response.
-
-    Raise ContentLengthError or ContentTypeError when appropriate.
-
-    """
+def check_response(r: RequestsResponse) -> None:
+    """Check content-type and content-length of the response."""
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
-    response_headers = r.headers
-    if 'content-length' in response_headers:
-        bytes_length = int(response_headers['content-length'])
-        if bytes_length > MAX_RESPONSE_LENGTH:
-            raise ContentLengthError(
-                'Content-length was too long. '
-                '({mb:.2f} MB)'.format(mb=bytes_length / 1000000)
-            )
-    if content_type := response_headers.get('content-type'):
-        if content_type.startswith('text/'):
-            return
-        raise ContentTypeError(
-            'Invalid content-type: '
-            + content_type
-            + ' (URL-content is supposed to be text/html)'
+    get_header = r.headers.get
+    if (content_type := get_header('content-type')) is not None:
+        if not content_type.startswith('text/'):
+            raise ContentTypeError(content_type)
+    # assume this is a text response
+    if (content_length := get_header('content-length')) is None:
+        # assume the length is OK, there is another check later
+        return
+    bytes_length = int(content_length)
+    if bytes_length > MAX_RESPONSE_LENGTH:
+        raise ContentLengthError(
+            'Content-length was too long. '
+            f'({bytes_length / 1000000:.2f} MB)'
         )
-    return
 
 
 def get_html(url: str) -> tuple[str, str]:
     """Return the html string for the given url."""
     with request(url, stream=True, spoof=True) as r:
-        check_response_headers(r)
+        check_response(r)
         size = 0
         chunks = []
         a = chunks.append
@@ -469,7 +462,10 @@ def url2dict(url: str) -> Dict[str, Any]:
     )
     home_thread.start()
 
-    url, html = get_html(url)
+    try:
+        url, html = get_html(url)
+    except ContentTypeError:
+        return defaultdict(lambda: None, {'url': url, 'cite_type': 'web'})
 
     d: defaultdict[str, Any] = defaultdict(lambda: None)
     d['url'] = url
