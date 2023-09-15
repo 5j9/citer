@@ -1,4 +1,3 @@
-from collections import defaultdict
 from json import loads
 from logging import getLogger
 from threading import Thread
@@ -71,7 +70,7 @@ def isbn_to_dict(
     if citoid_result_list:
         dictionary = citoid_result_list[0]
     else:
-        dictionary = defaultdict(lambda: None)
+        dictionary = {}
 
     google_books_thread.join()
     if google_books_result:
@@ -138,7 +137,7 @@ def get_citoid_dict(isbn) -> Optional[dict]:
     j0 = r.json()[0]
     get = j0.get
 
-    d = defaultdict(lambda: None)
+    d = {}
 
     d['cite_type'] = j0['itemType']
     # worldcat url is not needed since OCLC param will create it
@@ -216,7 +215,7 @@ def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
             'Make sure the OCLC identifier is valid.',
             '',
         )
-    d: defaultdict[str, Any] = defaultdict(lambda: None)
+    d = {}
     d['cite_type'] = record['generalFormat'].lower()
     d['title'] = record['title']
     d['authors'] = [

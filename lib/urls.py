@@ -1,4 +1,3 @@
-from collections import defaultdict
 from datetime import date as datetime_date
 from difflib import get_close_matches
 from functools import partial
@@ -465,10 +464,9 @@ def url2dict(url: str) -> Dict[str, Any]:
     try:
         url, html = get_html(url)
     except ContentTypeError:
-        return defaultdict(lambda: None, {'url': url, 'cite_type': 'web'})
+        return {'url': url, 'cite_type': 'web'}
 
-    d: defaultdict[str, Any] = defaultdict(lambda: None)
-    d['url'] = url
+    d = {'url': url}
 
     if doi := find_doi(html):
         # noinspection PyBroadException

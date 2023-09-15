@@ -1,6 +1,5 @@
 """Codes specifically related to PubMed inputs."""
 
-from collections import defaultdict
 from datetime import datetime
 from logging import getLogger
 from threading import Thread
@@ -14,14 +13,18 @@ NON_DIGITS_SUB = rc(r'[^\d]').sub
 
 NCBI_URL = (
     'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?'
-    'api_key=' + NCBI_API_KEY + '&retmode=json&tool=' + NCBI_TOOL + '&email='
-    + NCBI_EMAIL)
+    'api_key='
+    + NCBI_API_KEY
+    + '&retmode=json&tool='
+    + NCBI_TOOL
+    + '&email='
+    + NCBI_EMAIL
+)
 PUBMED_URL = NCBI_URL + '&db=pubmed&id='
 PMC_URL = NCBI_URL + '&db=pmc&id='
 
 
 class NCBIError(Exception):
-
     pass
 
 
@@ -41,7 +44,7 @@ def pmcid_dict(pmcid: str, date_format='%Y-%m-%d', /) -> dict:
     return dictionary
 
 
-def ncbi(type_: str, id_: str) -> defaultdict:
+def ncbi(type_: str, id_: str) -> dict:
     """Return the NCBI data for the given id_."""
     # According to https://www.ncbi.nlm.nih.gov/pmc/tools/get-metadata/
     if type_ == 'pmid':
@@ -55,8 +58,7 @@ def ncbi(type_: str, id_: str) -> defaultdict:
         # Return a 503 Service Unavailable
         raise NCBIError(json_response)
     result_get = json_response['result'][id_].get
-    d : defaultdict[str, Any] = defaultdict(lambda: None)
-
+    d = {}
     doi = None
     articleids = result_get('articleids', ())
     for articleid in articleids:
@@ -64,7 +66,8 @@ def ncbi(type_: str, id_: str) -> defaultdict:
             doi = articleid['value']
             crossref_dict = {}
             crossref_thread = Thread(
-                target=crossref_update, args=(crossref_dict, doi))
+                target=crossref_update, args=(crossref_dict, doi)
+            )
             crossref_thread.start()
             d['doi'] = doi
         elif idtype == 'pmcid':
@@ -86,14 +89,18 @@ def ncbi(type_: str, id_: str) -> defaultdict:
     d['url'] = result_get('availablefromurl')
     d['chapter'] = result_get('chapter')
 
-    date = result_get('pubdate') or result_get('epubdate') \
+    date = (
+        result_get('pubdate')
+        or result_get('epubdate')
         or result_get('printpubdate')
+    )
     date_split = date.split(' ')
     if (date_len := len(date_split)) == 3:
         d['date'] = datetime.strptime(date, '%Y %b %d')
     elif date_len == 2:
-        d['year'], d['month'] = \
-            date_split[0], str(b_TO_NUM[date_split[1].lower()])
+        d['year'], d['month'] = date_split[0], str(
+            b_TO_NUM[date_split[1].lower()]
+        )
     else:
         d['year'] = date
 
@@ -140,7 +147,8 @@ def crossref_update(dct: dict, doi: str):
         dct.update(get_crossref_dict(doi))
     except Exception:
         logger.exception(
-            'There was an error in resolving crossref DOI: ' + doi)
+            'There was an error in resolving crossref DOI: ' + doi
+        )
 
 
 logger = getLogger(__name__)
