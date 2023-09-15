@@ -117,7 +117,7 @@ LAST_PAGE_SEARCH = meta_searcher(['citation_lastpage'])
 SITE_NAME_SEARCH = meta_searcher(['og:site_name'])
 
 TITLE_SEPS = {' - ', ' — ', '|'}  # keep ins sync with <1>
-TITLE_SPLIT = rc(r'(\L<title_seps>)', title_seps=TITLE_SEPS).split
+TITLE_SPLIT = rc(r'\L<title_seps>', title_seps=TITLE_SEPS).split
 LANG_SEARCH = rc(r'\slang=["\']?([a-z]{2})\b').search
 
 
@@ -360,8 +360,10 @@ def parse_title(
                 if last.lower() in part:
                     intitle_author = parts.pop(part).strip()
                     break
-    # keep strip chars in sync with <1>
-    pure_title = ''.join(parts.values()).strip('-|— ').partition('|')[0]
+    if intitle_author is intitle_sitename is None:
+        pure_title = title
+    else:  # keep strip chars in sync with <1>
+        pure_title = ' — '.join(parts.values()).strip('-|— ').partition('|')[0]
     return intitle_author, pure_title, intitle_sitename
 
 

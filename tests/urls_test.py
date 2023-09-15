@@ -4,7 +4,7 @@ from unittest.mock import patch
 from pytest import mark
 
 from lib.commons import dict_to_sfn_cit_ref
-from lib.urls import LANG_SEARCH, ContentTypeError, url_to_dict
+from lib.urls import LANG_SEARCH, ContentTypeError, parse_title, url_to_dict
 
 
 def urls_scr(*args):
@@ -1039,3 +1039,14 @@ def test_non_text_content(m, m2):
     assert scr[1][:-12] == (
         '* {{cite web | title= | url=https://example.com/ | ref={{sfnref | Anon.}} | access-date='
     )
+
+
+def test_parse_title_not_dash():
+    # https://www.isu.org/inside-isu/rules-regulations/isu-statutes-constitution-regulations-technical
+    assert parse_title(
+        'Constitution & Regulations - International Skating Union',
+        'isu.org',
+        None,
+        [None, 'Home - International Skating Union'],
+        None,
+    ) == (None, 'Constitution & Regulations', 'International Skating Union')
