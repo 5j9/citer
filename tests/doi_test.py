@@ -25,9 +25,8 @@ def test_doi2():
         '| issue=3 | year=2014 | issn=0093-1896 | doi=10.1086/677379 '
         '| pages=272–281 '
         '| ref={{sfnref | University of Chicago Press | 2014}}'
-        '}}') == doi_scr(
-            'http://www.jstor.org/stable/info/10.1086/677379'
-        )[1]
+        '}}'
+    ) == doi_scr('http://www.jstor.org/stable/info/10.1086/677379')[1]
 
 
 def test_doi3():
@@ -140,7 +139,8 @@ def test_contains_brackets():  # 33
         '| journal=Arctic, Antarctic, and Alpine Research '
         '| publisher=Informa UK Limited | volume=39 | issue=4 | year=2007 '
         '| issn=1523-0430 | doi=10.1657/1523-0430(07-512)[zhu]2.0.co;2 '
-        '| pages=658–662}}') == doi_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1]
+        '| pages=658–662}}'
+    ) == doi_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1]
 
 
 def test_non_crossref_doi():  # 35
@@ -171,4 +171,16 @@ def test_doi_with_full_date():  # 36
 def test_sfn_extract_year_from_date():
     s, c, r = doi_scr('10.1073/pnas.2015159118')
     assert s == '{{sfn | Almeida | Viala | Nachtigall | Broe | 2021 | p=}}'
-    assert c == '* {{cite journal | last=Almeida | first=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118}}'
+    assert (
+        c
+        == '* {{cite journal | last=Almeida | first=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118}}'
+    )
+
+
+def test_doi_without_date():  # 46
+    assert doi_scr('10.1023/a:1018715525493')[1] == (
+        '* {{cite journal | last=Sigusch | first=Volkmar | title= | journal=Archives '
+        'of Sexual Behavior | publisher=Springer Science and Business Media LLC | '
+        'volume=27 | issue=4 | year=1998 | issn=0004-0002 | '
+        'doi=10.1023/a:1018715525493 | pages=331–359}}'
+    )

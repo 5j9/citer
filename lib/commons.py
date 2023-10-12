@@ -168,10 +168,11 @@ def request(url, spoof=False, method='get', **kwargs) -> requests.Response:
 
 def dict_to_sfn_cit_ref(dictionary: dict) -> tuple:
     # Return (sfn, cite, ref) strings.
-    if (title := dictionary.get('title')) is not None:
+    get = dictionary.get
+    if title := get('title'):
         dictionary['title'] = WS_NORMALIZE(title)
 
-    if isbn := dictionary.get('isbn'):
+    if isbn := get('isbn'):
         try:
             dictionary['isbn'] = isbn_mask(isbn)
         except NotValidISBNError:
