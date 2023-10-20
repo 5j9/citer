@@ -183,15 +183,26 @@ STOPWORDS_SEARCH = rc(
 def json_ld_authors(s: str) -> Optional[List[Tuple[str, str]]]:
     try:
         j = loads(s)
+    except JSONDecodeError:
+        return
+    try:
         if type(j) is list:
             ns = []
             for d in j:
                 if d['@type'] == 'Person':
                     ns += byline_to_names(d['name'])
             return ns
+
+        # assert type(j) is dict
         if j['@type'] == 'Person':
-            return byline_to_names(j['name'])
-    except (JSONDecodeError, KeyError):
+            if type(j['name']) is str:
+                return byline_to_names(j['name'])
+            # assert type(j['name']) is list
+            ns = []
+            for n in j['name']:
+                ns += byline_to_names(n)
+            return ns
+    except KeyError:
         return
 
 

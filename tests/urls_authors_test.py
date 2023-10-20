@@ -160,3 +160,10 @@ def test_find_authors_json_ld_url_between_type_and_name():
     assert find_authors(
         '"author":[{"@context":"http://schema.org","@type":"Person","url":"https://www.nytimes.com/by/michael-cooper","name":"Michael Cooper"}],'
     ) == [('Michael', 'Cooper')]
+
+
+def test_json_ld_author_name_is_list():
+    # https://www.npr.org/2012/05/31/153720369/requiem-for-a-cabaret-the-oak-room-closes
+    assert find_authors(
+        ',"author":{"@type":"Person","name":["Jeff Lunden"]},'
+    ) == [('Jeff', 'Lunden')]
