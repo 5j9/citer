@@ -1032,9 +1032,9 @@ def test_lang_search():
     assert LANG_SEARCH('<html lang=en>')[1] == 'en'
 
 
-@patch('lib.urls.analyze_home', side_effect=ContentTypeError)
+@patch('lib.urls.check_response', side_effect=ContentTypeError)
 @patch('lib.urls.get_html', side_effect=ContentTypeError)
-def test_non_text_content(m, m2):
+def test_non_text_content(_, __):
     scr = urls_scr('https://example.com/')
     assert scr[1][:-12] == (
         '* {{cite web | title= | url=https://example.com/ | ref={{sfnref | Anon.}} | access-date='
