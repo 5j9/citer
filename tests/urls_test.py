@@ -839,8 +839,7 @@ def test_empty_meta_author_content():
         "| title=UAE's Enoc pays Iran $4 billion in oil dues "
         "| website=Al Jazeera "
         "| date=2017-05-29 "
-        "| url=http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-"
-        "billion-oil-dues-170529171315570.html "
+        "| url=http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html "
         "| ref={{sfnref | Al Jazeera | 2017}} "
         "| access-date="
     ) == urls_scr(
@@ -1014,7 +1013,7 @@ def test_find_website_meta_pipe():
         'https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html'
     )
     assert scr[1][:-12] == (
-        '* {{cite web | title=Очільник Херсонської ОВА: Середній рівень підтоплення на ранок | website=Зеркало недели | date=2023-06-08 | url=https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html | language=uk | ref={{sfnref | Зеркало недели | 2023}} | access-date='
+        '* {{cite web | last=Хмілевська | first=Вікторія | title=Очільник Херсонської ОВА: Середній рівень підтоплення на ранок | website=Зеркало недели | date=2023-06-08 | url=https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html | language=uk | access-date='
     )
 
 

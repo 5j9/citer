@@ -1,3 +1,4 @@
+from json import JSONDecodeError, loads
 from typing import List, Optional, Tuple
 
 from regex import ASCII, IGNORECASE, VERBOSE
@@ -134,9 +135,8 @@ BYLINE_TAG_FINDITER = rc(
         (?<id>authorName["\']?\s*+:\s*+["\'])(?<result>[^"\'>\n]++)["\']
         |
         # schema.org
-        (?<q>["'])author(?P=q)\s*+:\s*+\[?{\s*+(?P=q)@type(?P=q)\s*+:\s*+(?P=q)
-        (?<id>Person)
-        (?P=q)\s*+,\s*+(?P=q)name(?P=q)\s*+:\s*+(?P=q)(?<result>[^"']*+)(?P=q)
+        (?<q>["'])(?<id>author)(?P=q)\s*+:\s*+
+        (?<result> \{ [^\}]* \} | \[ [^\]]* \] )
     )
     ''',
     IV | ASCII,
@@ -180,6 +180,21 @@ STOPWORDS_SEARCH = rc(
 ).search
 
 
+def json_ld_authors(s: str) -> Optional[List[Tuple[str, str]]]:
+    try:
+        j = loads(s)
+        if type(j) is list:
+            ns = []
+            for d in j:
+                if d['@type'] == 'Person':
+                    ns += byline_to_names(d['name'])
+            return ns
+        if j['@type'] == 'Person':
+            return byline_to_names(j['name'])
+    except (JSONDecodeError, KeyError):
+        return
+
+
 def find_authors(html) -> Optional[List[Tuple[str, str]]]:
     """Return authors names found in html."""
     names = []
@@ -218,7 +233,12 @@ def find_authors(html) -> Optional[List[Tuple[str, str]]]:
             if names:
                 return names
         else:
-            # not containing tags.
+            if match['id'] == 'author':
+                ns = json_ld_authors(match['result'])
+                if ns is not None:
+                    names = ns
+                    break
+            # not containRing tags.
             ns = byline_to_names(result)
             if ns is not None:
                 match_id = match['id']
