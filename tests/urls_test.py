@@ -1014,7 +1014,7 @@ def test_find_website_meta_pipe():
         'https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html'
     )
     assert scr[1][:-12] == (
-        '* {{cite web | title=Очільник Херсонської ОВА: Середній рівень підтоплення на ранок — 5,6 метра. Евакуйовано майже дві тисячі людей | website=Зеркало недели | date=2023-06-08 | url=https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html | language=uk | ref={{sfnref | Зеркало недели | 2023}} | access-date='
+        '* {{cite web | title=Очільник Херсонської ОВА: Середній рівень підтоплення на ранок | website=Зеркало недели | date=2023-06-08 | url=https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html | language=uk | ref={{sfnref | Зеркало недели | 2023}} | access-date='
     )
 
 
@@ -1050,3 +1050,13 @@ def test_parse_title_not_dash():
         [None, 'Home - International Skating Union'],
         None,
     ) == (None, 'Constitution & Regulations', 'International Skating Union')
+
+
+def test_find_title_meta_pipe():
+    # https://meta.wikimedia.org/w/index.php?diff=prev&oldid=25155870
+    scr = urls_scr(
+        'https://www.wsj.com/articles/the-dangerous-denial-of-sex-11581638089'
+    )
+    assert scr[1][:-12] == (
+        '* {{cite web | last=Wright | first=Colin M. | last2=Hilton | first2=Emma N. | title=The Dangerous Denial of Sex | website=WSJ | date=2020-02-13 | url=https://www.wsj.com/articles/the-dangerous-denial-of-sex-11581638089 | access-date='
+    )

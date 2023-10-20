@@ -1,3 +1,4 @@
 path
 python-decouple
 pytest-socket
+pysocks
