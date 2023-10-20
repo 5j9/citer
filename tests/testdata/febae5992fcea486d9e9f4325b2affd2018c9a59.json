@@ -1,0 +1,30 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"Age": "12",
+		"Cache-Control": "public, s-maxage=30",
+		"Connection": "keep-alive",
+		"Content-Encoding": "gzip",
+		"Content-Security-Policy": "default-src 'self' cdn.privacy-mgmt.com;script-src 'self' *.wsj.net *.wsj.com 'unsafe-inline' 'unsafe-eval';script-src-elem * 'unsafe-inline';manifest-src 'self' *.wsj.com;media-src * data: blob: https:;worker-src * 'unsafe-inline' 'unsafe-eval' blob: data:;frame-src * 'unsafe-inline';connect-src * 'unsafe-inline' 'unsafe-eval';form-action * 'unsafe-inline';frame-ancestors *;script-src-attr 'unsafe-inline';object-src 'self' 'unsafe-inline';img-src * data: blob: https:;font-src 'self' * 'unsafe-inline';upgrade-insecure-requests;base-uri 'self';style-src 'self' https: 'unsafe-inline'",
+		"Content-Type": "text/html; charset=utf-8",
+		"Cross-Origin-Resource-Policy": "same-site",
+		"Date": "Fri, 20 Oct 2023 02:50:25 GMT",
+		"Origin-Agent-Cluster": "?1",
+		"Referrer-Policy": "strict-origin-when-cross-origin,unsafe-url",
+		"Set-Cookie": "DJSESSION=country%3Dus%7C%7Ccontinent%3Dna%7C%7Cregion%3Din; Domain=.wsj.com; Path=/; Expires=Fri, 20 Oct 2023 03:50:28 GMT, wsjregion=na%2Cus; Domain=.wsj.com; Path=/; Expires=Sun, 19 Nov 2023 02:50:25 GMT, gdprApplies=false; Domain=.wsj.com; Path=/, ccpaApplies=false; Domain=.wsj.com; Path=/, vcdpaApplies=false; Domain=.wsj.com; Path=/, regulationApplies=gdpr%3Afalse%2Ccpra%3Afalse%2Cvcdpa%3Afalse; Domain=.wsj.com; Path=/, ab_uuid=09b6e648-f35b-480c-b55f-ee1f311fa72c; Domain=.wsj.com; Path=/; Expires=Mon, 17 Oct 2033 02:50:25 GMT, usr_prof_v2=eyJpYyI6MX0%3D; Domain=.wsj.com; Path=/; Expires=Fri, 20 Oct 2023 03:50:25 GMT, DJSESSION=country%3Dus%7C%7Ccontinent%3Dna%7C%7Cregion%3Din; Domain=.wsj.com; Path=/; Expires=Fri, 20 Oct 2023 03:50:28 GMT, wsjregion=na%2Cus; Domain=.wsj.com; Path=/; Expires=Sun, 19 Nov 2023 02:50:25 GMT, gdprApplies=false; Domain=.wsj.com; Path=/, ccpaApplies=false; Domain=.wsj.com; Path=/, vcdpaApplies=false; Domain=.wsj.com; Path=/, regulationApplies=gdpr%3Afalse%2Ccpra%3Afalse%2Cvcdpa%3Afalse; Domain=.wsj.com; Path=/",
+		"Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+		"Transfer-Encoding": "chunked",
+		"Via": "1.1 ddd3d8441374ce62d11d031216138152.cloudfront.net (CloudFront)",
+		"X-Amz-Cf-Id": "Ll4SGSRQFTbjABmZbuYpzMdSZ92yTfsXfHsp3__Xpxwzmdg01KrlwQ==",
+		"X-Amz-Cf-Pop": "IAD55-P4",
+		"X-Cache": "Hit from cloudfront",
+		"X-Content-Type-Options": "nosniff",
+		"X-DNS-Prefetch-Control": "off",
+		"X-Download-Options": "noopen",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-Permitted-Cross-Domain-Policies": "none",
+		"X-XSS-Protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "https://www.wsj.com"
+}
