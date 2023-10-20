@@ -319,50 +319,50 @@ def parse_title(
     parts = TITLE_SPLIT(title.strip())
     if len(parts) == 1:
         return None, title, None
-    parts = {p.lower(): p for p in parts}
+    parts_map: dict[str, str] = {p.lower(): p for p in parts}
     # Searching for intitle_sitename
     # 1. In hostname
-    for part in parts:
+    for part in parts_map:
         if (part in hostname) or not (
             set(part.split()) - set(hostname.split('.'))
         ):
-            intitle_sitename = parts.pop(part).strip()
+            intitle_sitename = parts_map.pop(part).strip()
             break
     else:
         # 2. Using difflib on hostname
         # Cutoff = 0.3: 'BBC - Homepage' will match u'‭BBC ‮فارسی‬'
         if close_matches := get_close_matches(
-            hostname, parts, n=1, cutoff=0.3
+            hostname, parts_map, n=1, cutoff=0.3
         ):
             part = close_matches[0]
-            intitle_sitename = parts.pop(part).strip()
+            intitle_sitename = parts_map.pop(part).strip()
         else:
             if thread is not None:
                 thread.join()
             if home_list:
                 home_site_name, home_title = home_list
                 # 3. In homepage title
-                for part in parts:
+                for part in parts_map:
                     if part in home_title:
-                        intitle_sitename = parts.pop(part).strip()
+                        intitle_sitename = parts_map.pop(part).strip()
                         break
                 else:
                     # 4. Using difflib on home_title
                     if close_matches := get_close_matches(
-                        home_title, parts, n=1, cutoff=0.3
+                        home_title, parts_map, n=1, cutoff=0.3
                     ):
                         part = close_matches[0]
-                        intitle_sitename = parts.pop(part).strip()
+                        intitle_sitename = parts_map.pop(part).strip()
     # Searching for intitle_author
     if authors:
         for first, last in authors:
-            for part in parts:
+            for part in parts_map:
                 if last.lower() in part:
-                    intitle_author = parts.pop(part).strip()
+                    intitle_author = parts_map.pop(part).strip()
                     break
     # keep strip chars in sync with <1>
     # pure_title = ' — '.join(parts.values()).strip('-|— ').partition('|')[0]
-    pure_title = max(parts.values(), key=len)
+    pure_title: str = max(parts_map.values(), key=len)
     return intitle_author, pure_title, intitle_sitename
 
 
