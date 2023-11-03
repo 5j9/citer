@@ -6,16 +6,18 @@ noormags_scr = lambda *args: dict_to_sfn_cit_ref(url_to_dict(*args))
 
 def test_nm1():
     """The second author does not have a last name. (Bibtex file error)"""
-    i = 'http://www.noormags.ir/view/fa/articlepage/105489/' \
-        '%d8%aa%d8%ad%d9%84%db%8c%d9%84-%d9%85%d9%86%d8%a7%d9%81%d8%b9-' \
-        '%d8%a8%d9%87%d8%b1%d9%87-%d9%88%d8%b1%db%8c-' \
-        '%d9%86%d8%a7%d8%b4%db%8c-%d8%a7%d8%b2-' \
-        '%d8%a7%d8%b5%d9%84%d8%a7%d8%ad%d8%a7%d8%aa-' \
-        '%d8%b5%d9%86%d8%b9%d8%aa-%d8%a8%d8%b1%d9%82-' \
-        '%d8%a7%d8%b3%d8%aa%d8%b1%d8%a7%d9%84%db%8c%d8%a7--' \
-        '%da%86%d8%a7%d8%b1%da%86%d9%88%d8%a8-%d9%87%d8%a7%db%8c-' \
-        '%d8%b1%d9%88%d8%b4-%d8%b4%d9%86%d8%a7%d8%ae%d8%aa%db%8c?q=' \
+    i = (
+        'http://www.noormags.ir/view/fa/articlepage/105489/'
+        '%d8%aa%d8%ad%d9%84%db%8c%d9%84-%d9%85%d9%86%d8%a7%d9%81%d8%b9-'
+        '%d8%a8%d9%87%d8%b1%d9%87-%d9%88%d8%b1%db%8c-'
+        '%d9%86%d8%a7%d8%b4%db%8c-%d8%a7%d8%b2-'
+        '%d8%a7%d8%b5%d9%84%d8%a7%d8%ad%d8%a7%d8%aa-'
+        '%d8%b5%d9%86%d8%b9%d8%aa-%d8%a8%d8%b1%d9%82-'
+        '%d8%a7%d8%b3%d8%aa%d8%b1%d8%a7%d9%84%db%8c%d8%a7--'
+        '%da%86%d8%a7%d8%b1%da%86%d9%88%d8%a8-%d9%87%d8%a7%db%8c-'
+        '%d8%b1%d9%88%d8%b4-%d8%b4%d9%86%d8%a7%d8%ae%d8%aa%db%8c?q='
         '%D8%A8%D8%B1%D9%82&score=21.639421&rownumber=1'
+    )
     o = noormags_scr(i)
     e = (
         '* {{cite journal '
@@ -53,7 +55,8 @@ def test_nm2():
         '| pages=103–124 '
         '| url=http://www.noormags.ir/view/fa/articlepage/692447 '
         '| language=fa '
-        '| access-date=') in o[1]
+        '| access-date='
+    ) in o[1]
     assert (
         '<ref name="سلیمانی\u200cمیمند 1389 pp. 103–124">'
         '{{cite journal '
@@ -66,4 +69,5 @@ def test_nm2():
         '| pages=103–124 '
         '| url=http://www.noormags.ir/view/fa/articlepage/692447 '
         '| language=fa '
-        '| access-date=') in o[2]
+        '| access-date='
+    ) in o[2]

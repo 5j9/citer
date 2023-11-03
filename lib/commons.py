@@ -22,13 +22,13 @@ Search = Callable[[str], Optional[Match[str]]]
 # The regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 DOI_SEARCH: Search = rc(
-    r'''
+    r"""
     \b
     10\.[0-9]{4,}+
     (?:\.[0-9]++)*+
     /[^"&\'\s]++
     \b
-    ''',
+    """,
     VERBOSE,
 ).search
 
@@ -61,7 +61,7 @@ DOUBLE_DIGIT_SEARCH = rc(r'\d\d').search
 # Date patterns:
 
 # January|February...
-B = r'''
+B = r"""
     (?<B>(?:J(?:anuary|u(?:ne|ly))
     |
     February
@@ -71,7 +71,7 @@ B = r'''
     A(?:pril|ugust)
     |
     (?:(?:(?:Sept|Nov|Dec)em)|Octo)ber))
-    '''
+    """
 # فروردین|اردیبهشت|خرداد...
 jB = f"(?>(?<jB>{'|'.join([jm for jm in jB_TO_NUM]).replace('ی', '[یي]')}))"
 # Month abbreviations:
@@ -87,8 +87,8 @@ zd = r'(?<d>0[1-9]|[12][0-9]|3[01])'
 # Gregorian year pattern 1900-2099
 Y = r'(?<Y>(?:19|20)\d\d)'
 ANYDATE_PATTERN = (
-    fr'(?:(?:{B}|{b})\ {d},?\ {Y}|{d}\ (?:{B}|{b})\ {Y}|{Y}(?<sep>[-/]){zm}'
-    fr'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d))'
+    rf'(?:(?:{B}|{b})\ {d},?\ {Y}|{d}\ (?:{B}|{b})\ {Y}|{Y}(?<sep>[-/]){zm}'
+    rf'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d))'
 )
 ANYDATE_SEARCH: Search = rc(ANYDATE_PATTERN, VERBOSE).search
 DIGITS_FINDALL = rc(r'\d').findall
@@ -104,7 +104,7 @@ AGENT_HEADER = {
 }
 SPOOFED_AGENT_HEADER = {
     'User-Agent': SPOOFED_USER_AGENT,
-    'Accept': "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
 }
 
 

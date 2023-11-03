@@ -34,9 +34,7 @@ def test_ketabir1():
         ' سال=1386 | شابک=978-964-8165-81-4 | زبان=fa}}'
     ) == ketabir_scr(
         'https://ketab.ir/book/27b3444f-1175-4db0-8411-b1719a5d7ed1'
-    )[
-        1
-    ]
+    )[1]
 
 
 def test_ketabir2():
@@ -48,9 +46,7 @@ def test_ketabir2():
         'جلد=1 | سال=1387 | شابک=978-964-2823-35-2 | زبان=fa}}'
     ) == ketabir_scr(
         'https://ketab.ir/book/667c900a-69bd-4a1a-a651-1870d2f63a68'
-    )[
-        1
-    ]
+    )[1]
 
 
 def test_ketabir3():
@@ -66,9 +62,7 @@ def test_ketabir3():
         ' سال=1391 | شابک=978-600-5883-43-5 | زبان=fa}}'
     ) == ketabir_scr(
         'https://ketab.ir/book/f37fad8e-8f0b-4cd9-8875-f5de0e0d86ef'
-    )[
-        1
-    ]
+    )[1]
 
 
 def test_ketabir4():
@@ -82,9 +76,7 @@ def test_ketabir4():
         ' سال=1386 | شابک=978-964-95633-4-3 | زبان=fa}}'
     ) == ketabir_scr(
         'https://ketab.ir/book/13a52229-5e3f-479e-8954-092b65e85923'
-    )[
-        1
-    ]
+    )[1]
 
 
 def test_ketabir5():
@@ -96,9 +88,7 @@ def test_ketabir5():
         'شابک=978-964-2656-34-9 | زبان=fa}}'
     ) == ketabir_scr(
         'https://ketab.ir/book/a5958832-5c43-460d-bf42-65acb6077e52'
-    )[
-        1
-    ]
+    )[1]
 
 
 def test_ketabir6():
@@ -109,9 +99,7 @@ def test_ketabir6():
         'سال=1390 | شابک=978-964-530-036-2 | زبان=fa}}'
     ) == ketabir_scr(
         'https://ketab.ir/book/cb1989dc-ba09-4df6-aaee-fcdbd25ad322'
-    )[
-        1
-    ]
+    )[1]
 
 
 def test_ketabir7():
@@ -124,9 +112,7 @@ def test_ketabir7():
         'زبان=fa}}'
     ) == ketabir_scr(
         'https://ketab.ir/book/4cc231f9-35c2-4b60-a714-a0a11135e932'
-    )[
-        1
-    ]
+    )[1]
 
 
 def test_google_books_ending_page():
@@ -147,9 +133,7 @@ def test_google_books_1():
     ) in googlebooks_scr(
         'http://books.google.com/books?'
         'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library'
-    )[
-        1
-    ]
+    )[1]
 
 
 def test_google_books2():
@@ -262,15 +246,15 @@ def test_noorlib1():
 def test_doi1():
     # Note: Language detection is wrong, it should be en
     assert (
-        "* {{یادکرد ژورنال | نام خانوادگی=Atkins |"
-        " نام=Joshua H. | نام خانوادگی۲=Gershell | نام۲=Leland J. |"
-        " عنوان=Selective anticancer drugs |"
-        " ژورنال=Nature Reviews Drug Discovery |"
-        " ناشر=Springer Science and Business Media LLC "
-        "| جلد=1 | شماره=7 |"
-        " سال=2002 | issn=1474-1776 | doi=10.1038/nrd842 |"
-        " صفحه=491–492 |"
-        " زبان=da}}"
+        '* {{یادکرد ژورنال | نام خانوادگی=Atkins |'
+        ' نام=Joshua H. | نام خانوادگی۲=Gershell | نام۲=Leland J. |'
+        ' عنوان=Selective anticancer drugs |'
+        ' ژورنال=Nature Reviews Drug Discovery |'
+        ' ناشر=Springer Science and Business Media LLC '
+        '| جلد=1 | شماره=7 |'
+        ' سال=2002 | issn=1474-1776 | doi=10.1038/nrd842 |'
+        ' صفحه=491–492 |'
+        ' زبان=da}}'
     ) in doi_scr('http://dx.doi.org/10.1038/nrd842')[1]
 
 

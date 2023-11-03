@@ -20,17 +20,17 @@ MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
 
 # https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
 CHARSET = rc(
-    rb'''
+    rb"""
     <meta(?!\s*+(?>name|value)\s*+=)[^>]*?charset\s*+=[\s"']*+([^\s"'/>]*)
-    ''',
+    """,
     IV,
 ).search
 
-TITLE_META_NAME_OR_PROP = r'''
+TITLE_META_NAME_OR_PROP = r"""
     (?>name|property)=(?<q>["\'])
         (?>citation_title|title|Headline|og:title)
     (?P=q)
-'''
+"""
 TITLE_SEARCH = rc(
     r'<meta\s++(?:'
     + TITLE_META_NAME_OR_PROP
@@ -47,15 +47,15 @@ TITLE_SEARCH = rc(
 ).search
 
 TITLE_TAG = rc(
-    r'''
+    r"""
     <title\b[^>]*+>
         (?P<result>[^<]++[\s\S]*?)
     </title\s*+>
-    ''',
+    """,
     IV,
 ).search
 
-DATE_META_NAME_OR_PROP = r'''
+DATE_META_NAME_OR_PROP = r"""
     (?>name|property)=(?<q>["\'])(?>
         article:(?>modified_time|published_time)
         |citation_(?>date|publication_date)
@@ -65,7 +65,7 @@ DATE_META_NAME_OR_PROP = r'''
         |pub_?date
         |sailthru\.date
     )(?P=q)
-'''
+"""
 DATE_CONTENT_ATTR = (
     r'content=(?<q>["\'])(?>' + ANYDATE_PATTERN + r'|(?<year_only>\d{4})'
     r'(?P=q))'

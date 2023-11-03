@@ -44,11 +44,7 @@ def test_bostonglobe2():
         '| access-date='
     ) == urls_scr(
         'http://www.bostonglobe.com/metro/2014/06/03/walsh-meets-with-college-leaders-off-campus-housing/lsxtLSGJMD86Gbkjay3D6J/story.html'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_bostonglobe3():
@@ -118,16 +114,16 @@ def test_huffingtonpost2():
     )
     o = urls_scr(i)
     e2 = (
-        "* {{cite web "
-        "| last=Rifkin "
-        "| first=Jeremy "
+        '* {{cite web '
+        '| last=Rifkin '
+        '| first=Jeremy '
         "| title=Beyond Obama's Plan: "
-        "A New Economic Vision for Addressing Climate Change "
-        "| website=The Huffington Post "
-        "| date=2014-06-02 "
-        "| url=http://www.huffingtonpost.com/jeremy-rifkin/"
-        "obamas-climate-change-plan_b_5427656.html "
-        "| access-date="
+        'A New Economic Vision for Addressing Climate Change '
+        '| website=The Huffington Post '
+        '| date=2014-06-02 '
+        '| url=http://www.huffingtonpost.com/jeremy-rifkin/'
+        'obamas-climate-change-plan_b_5427656.html '
+        '| access-date='
     )
     assert '{{sfn | Rifkin | 2014}}' == o[0]
     assert e2 == o[1][:-12]
@@ -142,17 +138,17 @@ def test_dilytelegraph1():
     )
     o = urls_scr(i)
     e2 = (
-        "* {{cite web "
-        "| last=Fogle "
-        "| first=Ben "
+        '* {{cite web '
+        '| last=Fogle '
+        '| first=Ben '
         "| title=We could see the whale's eyes, mouth... "
-        "the barnacles on its back "
-        "| website=Telegraph.co.uk "
-        "| date=2005-12-22 "
-        "| url=http://www.telegraph.co.uk/news/health/3334755/"
-        "We-could-see-the-whales-eyes-mouth...-"
-        "the-barnacles-on-its-back.html "
-        "| access-date="
+        'the barnacles on its back '
+        '| website=Telegraph.co.uk '
+        '| date=2005-12-22 '
+        '| url=http://www.telegraph.co.uk/news/health/3334755/'
+        'We-could-see-the-whales-eyes-mouth...-'
+        'the-barnacles-on-its-back.html '
+        '| access-date='
     )
     assert '{{sfn | Fogle | 2005}}' == o[0]
     assert e2 == o[1][:-12]
@@ -166,15 +162,15 @@ def test_dilytelegraph2():
     )
     o = urls_scr(i)
     e2 = (
-        "* {{cite web "
-        "| last=Highfield "
-        "| first=Roger "
+        '* {{cite web '
+        '| last=Highfield '
+        '| first=Roger '
         "| title=Marine 'collapse' linked to whale decline "
-        "| website=Telegraph.co.uk "
-        "| date=2003-09-29 "
-        "| url=http://www.telegraph.co.uk/news/science/science-news/"
-        "3313298/Marine-collapse-linked-to-whale-decline.html "
-        "| access-date="
+        '| website=Telegraph.co.uk '
+        '| date=2003-09-29 '
+        '| url=http://www.telegraph.co.uk/news/science/science-news/'
+        '3313298/Marine-collapse-linked-to-whale-decline.html '
+        '| access-date='
     )
     assert '{{sfn | Highfield | 2003}}' == o[0]
     assert e2 == o[1][:-12]
@@ -185,14 +181,14 @@ def test_dilytelegraph3():
     i = 'http://www.telegraph.co.uk/news/8323909/The-sperm-whale-works-in-extraordinary-ways.html'
     o = urls_scr(i)
     e2 = (
-        "* {{cite web "
-        "| last=Whitehead "
-        "| first=Hal "
-        "| title=The sperm whale works in extraordinary ways "
-        "| website=Telegraph.co.uk "
-        "| date=2011-02-15 "
-        "| url=http://www.telegraph.co.uk/news/8323909/The-sperm-whale-works-in-extraordinary-ways.html "
-        "| access-date="
+        '* {{cite web '
+        '| last=Whitehead '
+        '| first=Hal '
+        '| title=The sperm whale works in extraordinary ways '
+        '| website=Telegraph.co.uk '
+        '| date=2011-02-15 '
+        '| url=http://www.telegraph.co.uk/news/8323909/The-sperm-whale-works-in-extraordinary-ways.html '
+        '| access-date='
     )
     assert '{{sfn | Whitehead | 2011}}' == o[0]
     assert e2 == o[1][:-12]
@@ -232,7 +228,7 @@ def test_dilymail2():
         '| last=Gower '
         '| first=Eleanor '
         "| title=Kim Kardashian's meltdown at nude magazine cover"
-        " three years before full frontal photoshoot "
+        ' three years before full frontal photoshoot '
         '| website=Daily Mail Online '
         '| date=2014-11-14 '
         '| url=http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
@@ -243,11 +239,7 @@ def test_dilymail2():
         'http://www.dailymail.co.uk/tvshowbiz/article-2834145/'
         'I-m-never-taking-clothes-s-Vogue-Throwback-2011-video-'
         'shows-Kim-Kardashian-s-meltdown-nude-magazine-cover.html'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_bbc1():
@@ -255,13 +247,13 @@ def test_bbc1():
     i = 'https://www.bbc.com/news/world-asia-27653361'
     o = urls_scr(i)
     ct = (
-        "* {{cite web "
+        '* {{cite web '
         "| title=US 'received Qatar assurances' on Afghan prisoner deal "
-        "| website=BBC News "
-        "| date=2014-06-01 "
-        "| url=http://www.bbc.com/news/world-asia-27653361 "
-        "| ref={{sfnref | BBC News | 2014}} "
-        "| access-date="
+        '| website=BBC News '
+        '| date=2014-06-01 '
+        '| url=http://www.bbc.com/news/world-asia-27653361 '
+        '| ref={{sfnref | BBC News | 2014}} '
+        '| access-date='
     )
     assert ct == o[1][:-12]
 
@@ -302,35 +294,31 @@ def test_bbc3():
 def test_bbc4():
     """news.bbc.co.uk, 1 author"""
     assert (
-        "* {{cite web "
-        "| last=Jones "
-        "| first=Meirion "
+        '* {{cite web '
+        '| last=Jones '
+        '| first=Meirion '
         "| title=Malaria advice 'risks lives' "
-        "| website=BBC NEWS "
-        "| date=2006-07-13 "
-        "| url="
-        "http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm "
-        "| access-date="
+        '| website=BBC NEWS '
+        '| date=2006-07-13 '
+        '| url='
+        'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm '
+        '| access-date='
     ) == urls_scr(
         'http://news.bbc.co.uk/2/hi/programmes/newsnight/5178122.stm'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_bbc5():
     """news.bbc.co.uk, 1 author"""
     assert (
-        "* {{cite web "
-        "| last=Madslien "
-        "| first=Jorn "
-        "| title=Inside the Bentley factory "
-        "| website=BBC NEWS "
-        "| date=2002-12-24 "
-        "| url=http://news.bbc.co.uk/2/hi/business/2570109.stm "
-        "| access-date="
+        '* {{cite web '
+        '| last=Madslien '
+        '| first=Jorn '
+        '| title=Inside the Bentley factory '
+        '| website=BBC NEWS '
+        '| date=2002-12-24 '
+        '| url=http://news.bbc.co.uk/2/hi/business/2570109.stm '
+        '| access-date='
     ) == urls_scr('http://news.bbc.co.uk/2/hi/business/2570109.stm')[1][:-12]
 
 
@@ -339,14 +327,14 @@ def test_bbc6():
     i = 'http://www.bbc.com/news/science-environment-26267918'
     o = urls_scr(i)
     ct = (
-        "* {{cite web "
-        "| last=Amos "
-        "| first=Jonathan "
-        "| title=European Space Agency picks Plato planet-hunting mission "
-        "| website=BBC News "
-        "| date=2014-02-20 "
-        "| url=http://www.bbc.com/news/science-environment-26267918 "
-        "| access-date="
+        '* {{cite web '
+        '| last=Amos '
+        '| first=Jonathan '
+        '| title=European Space Agency picks Plato planet-hunting mission '
+        '| website=BBC News '
+        '| date=2014-02-20 '
+        '| url=http://www.bbc.com/news/science-environment-26267918 '
+        '| access-date='
     )
     assert ct == o[1][:-12]
 
@@ -454,15 +442,15 @@ def test_nyt6():
     i = 'http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html'
     o = urls_scr(i)
     ct = (
-        "* {{cite web "
+        '* {{cite web '
         "| last=O'Connor "
-        "| first=Anahad "
-        "| title=Adding Weight to Suspicion, "
-        "Sonar Is Linked to Whale Deaths "
-        "| website=The New York Times "
-        "| date=2003-10-09 "
-        "| url=http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html "
-        "| access-date="
+        '| first=Anahad '
+        '| title=Adding Weight to Suspicion, '
+        'Sonar Is Linked to Whale Deaths '
+        '| website=The New York Times '
+        '| date=2003-10-09 '
+        '| url=http://www.nytimes.com/2003/10/09/us/adding-weight-to-suspicion-sonar-is-linked-to-whale-deaths.html '
+        '| access-date='
     )
     assert ct == o[1][:-12]
 
@@ -534,7 +522,7 @@ def test_oth2():
         'articleshow/1163528927.cms?'
     )
     o = urls_scr(i)
-    sfn = "{{sfn | Kashyap | 2001}}"
+    sfn = '{{sfn | Kashyap | 2001}}'
     assert sfn in o[0]
 
 
@@ -558,11 +546,7 @@ def test_text_search():
         'https://www.eff.org/deeplinks/2014/06/'
         'sudan-tech-sanctions-harm-innovation-development-us-'
         'government-and-corporations-must-act'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 # Disable because relies on class="author" which has been disabled due
@@ -598,22 +582,18 @@ def test_oth3():
 def test_oth4():
     """rel="author" tag contains invalid information."""
     assert (
-        "* {{cite web "
-        "| last=Ghose "
-        "| first=Tia "
+        '* {{cite web '
+        '| last=Ghose '
+        '| first=Tia '
         "| title='Revolutionary' Physics:"
-        " Do Sterile Neutrinos Lurk in the Universe? "
-        "| website=Live Science "
-        "| date=2014-07-01 "
-        "| url=http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936 "
-        "| access-date="
+        ' Do Sterile Neutrinos Lurk in the Universe? '
+        '| website=Live Science '
+        '| date=2014-07-01 '
+        '| url=http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936 '
+        '| access-date='
     ) == urls_scr(
         'http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_oth5():
@@ -642,7 +622,7 @@ def test_oth6():
     assert (
         '* {{cite web | title=آیت\u200cالله محمدی گیلانی دارفانی را وداع گفت | publisher=Fars News Agency | date=2014-07-09 | url=http://www.farsnews.com/newstext.php?nn=13930418000036 | language=fa | ref={{sfnref | Fars News Agency | 2014}} | access-date='
     ) == o[1][:-12]
-    assert "{{sfn | Fars News Agency | 2014}}" in o[0]
+    assert '{{sfn | Fars News Agency | 2014}}' in o[0]
     # Fars news is using 'خبرگزاری فارس' as og:author which is wrong
     # and thats why its name is not italicized in sfn.
 
@@ -661,11 +641,7 @@ def test_oth7():
         '| access-date='
     ) == urls_scr(
         'http://news.mit.edu/2014/' 'traffic-lights-theres-a-better-way-0707'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_oth8():
@@ -707,11 +683,7 @@ def test_oth10():
         '| access-date='
     ) == urls_scr(
         'https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_oth11():
@@ -796,11 +768,7 @@ def test_oth15():
         '| access-date='
     ) == urls_scr(
         'http://www.isna.ir/news/95110603890/%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84-%DA%A9%D8%B1%D8%AF'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_invalid_name():
@@ -835,21 +803,17 @@ def test_pages_from_html_meta():
 def test_empty_meta_author_content():
     """Test that the output will not be malformed because empty meta."""
     assert (
-        "* {{cite web "
+        '* {{cite web '
         "| title=UAE's Enoc pays Iran $4 billion in oil dues "
-        "| website=Al Jazeera "
-        "| date=2017-05-29 "
-        "| url=http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html "
-        "| ref={{sfnref | Al Jazeera | 2017}} "
-        "| access-date="
+        '| website=Al Jazeera '
+        '| date=2017-05-29 '
+        '| url=http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html '
+        '| ref={{sfnref | Al Jazeera | 2017}} '
+        '| access-date='
     ) == urls_scr(
         'http://www.aljazeera.com/news/2017/05/'
         'uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_citation_author_reverse_order():
@@ -878,11 +842,7 @@ def test_citation_author_reverse_order():
         'other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.'
         'announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.'
         '4xDVKzx5EeeJjRJrkGD1dA'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_single_line_meta_tags():
@@ -891,11 +851,7 @@ def test_single_line_meta_tags():
         "* {{cite web | last=Shoichet | first=Catherine E. | title=Spill spews tons of coal ash into North Carolina's Dan River | website=CNN | date=2014-02-09 | url=https://edition.cnn.com/2014/02/09/us/north-carolina-coal-ash-spill/ | access-date="
     ) == urls_scr(
         'https://edition.cnn.com/2014/02/09/us/north-carolina-coal-ash-spill/'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_abc_author():
@@ -910,80 +866,60 @@ def test_abc_author():
         'https://www.abc.net.au/news/2020-09-06/'
         'glow-worms-in-wollemi-national-park-survived-summer-bushfire/'
         '12634762'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_indaily():
     assert (
-        "* {{cite web | last=Siebert | first=Bension "
+        '* {{cite web | last=Siebert | first=Bension '
         "| title=Epidemics expert questions Marshall's schools advice "
-        "| website=InDaily | date=2020-03-19 "
-        "| url=https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/ "
-        "| access-date="
+        '| website=InDaily | date=2020-03-19 '
+        '| url=https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/ '
+        '| access-date='
     ) == urls_scr(
         'https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_language_not_de_csbc():
     assert (
-        "{{cite web "
-        "| last=Martin "
-        "| first=Emmie "
-        "| title=In San Francisco, households earning $117,000 qualify as ‘low income’ "
-        "| website=CNBC "
-        "| date=2018-06-28 "
-        "| url=https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html "
-        "| access-date="
+        '{{cite web '
+        '| last=Martin '
+        '| first=Emmie '
+        '| title=In San Francisco, households earning $117,000 qualify as ‘low income’ '
+        '| website=CNBC '
+        '| date=2018-06-28 '
+        '| url=https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html '
+        '| access-date='
     ) == urls_scr(
         'https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html'
-    )[
-        1
-    ][
-        2:-12
-    ]
+    )[1][2:-12]
 
 
 def test_language_not_zh():
     assert (
-        "{{cite web "
-        "| last=Jonscher "
-        "| first=Samantha "
+        '{{cite web '
+        '| last=Jonscher '
+        '| first=Samantha '
         "| title=Malcolm Abbott's domestic violence past shows 'urgent action' required to support First Nations "
-        "| website=ABC News "
-        "| date=2022-05-14 "
-        "| url=https://www.abc.net.au/news/2022-05-15/malcolm-abbott-domestic-violence-prevention-fails/101059440 "
-        "| access-date="
+        '| website=ABC News '
+        '| date=2022-05-14 '
+        '| url=https://www.abc.net.au/news/2022-05-15/malcolm-abbott-domestic-violence-prevention-fails/101059440 '
+        '| access-date='
     ) == urls_scr(
         'https://www.abc.net.au/news/2022-05-15/malcolm-abbott-domestic-violence-prevention-fails/101059440'
-    )[
-        1
-    ][
-        2:-12
-    ]
+    )[1][2:-12]
 
 
 def test_home_site_name():
     # this url does contain site name, but its homepage does
     assert (
-        "* {{cite web | title=Black Convicts | website=University of Tasmania "
-        "| url=https://www.utas.edu.au/library/companion_to_tasmanian_history/B/Black%20Convicts.htm "
-        "| ref={{sfnref | University of Tasmania}} | access-date="
+        '* {{cite web | title=Black Convicts | website=University of Tasmania '
+        '| url=https://www.utas.edu.au/library/companion_to_tasmanian_history/B/Black%20Convicts.htm '
+        '| ref={{sfnref | University of Tasmania}} | access-date='
     ) == urls_scr(
         'https://www.utas.edu.au/library/companion_to_tasmanian_history/B/Black%20Convicts.htm'
-    )[
-        1
-    ][
-        :-12
-    ]
+    )[1][:-12]
 
 
 def test_use_doi_if_available():

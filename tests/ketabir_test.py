@@ -13,7 +13,9 @@ def test_ab1():
         '| title=101 راه برای اینکه پدر بهتری باشید '
         '| publisher=پیک ادبیات | publication-place=تهران - تهران '
         '| year=1386 | isbn=978-964-8165-81-4 | language=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/27b3444f-1175-4db0-8411-b1719a5d7ed1')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/27b3444f-1175-4db0-8411-b1719a5d7ed1'
+    )[1]
 
 
 def test_ab2():
@@ -25,7 +27,9 @@ def test_ab2():
         '| title=روش\u200cهای تحقیق تلفیقی '
         '| publisher=ثامن الحجج | publication-place=تهران - تهران '
         '| volume=1 | year=1387 | isbn=978-964-2823-35-2 | language=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/667c900a-69bd-4a1a-a651-1870d2f63a68')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/667c900a-69bd-4a1a-a651-1870d2f63a68'
+    )[1]
 
 
 def test_ab3():
@@ -40,7 +44,9 @@ def test_ab3():
         ' آمادگی آزمون MTCNA | publisher=نشرگستر '
         '| publication-place=تهران - تهران | year=1391 '
         '| isbn=978-600-5883-43-5 | language=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/f37fad8e-8f0b-4cd9-8875-f5de0e0d86ef')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/f37fad8e-8f0b-4cd9-8875-f5de0e0d86ef'
+    )[1]
 
 
 def test_ab4():
@@ -51,7 +57,9 @@ def test_ab4():
         '| title=11 سپتامبر ... آرماگدون | publisher=حدیث راه عشق '
         '| publication-place=اصفهان - اصفهان | year=1386 '
         '| isbn=978-964-95633-4-3 | language=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/13a52229-5e3f-479e-8954-092b65e85923')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/13a52229-5e3f-479e-8954-092b65e85923'
+    )[1]
 
 
 def test_ab5():
@@ -63,7 +71,9 @@ def test_ab5():
         '| publisher=هنر رسانه اردیبهشت '
         '| publication-place=تهران - تهران | year=1388 '
         '| isbn=978-964-2656-34-9 | language=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/a5958832-5c43-460d-bf42-65acb6077e52')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/a5958832-5c43-460d-bf42-65acb6077e52'
+    )[1]
 
 
 def test_ab6():
@@ -85,10 +95,13 @@ def test_ab7():
         '| title=روانشناسی سلامت به ضمیمه نگرشی بر منابع اسلامی | publisher=سمت | '
         'publication-place=تهران - تهران | volume=1 | year=1379 | '
         'isbn=978-964-459-398-7 | language=fa}}'
-    ) == ketabir_scr('https://ketab.ir/book/4cc231f9-35c2-4b60-a714-a0a11135e932')[1]
+    ) == ketabir_scr(
+        'https://ketab.ir/book/4cc231f9-35c2-4b60-a714-a0a11135e932'
+    )[1]
 
 
 def test_isbn2url():
-    assert isbn_to_url(
-        '978-964-459-398-7'
-    ) == 'https://ketab.ir/book/4cc231f9-35c2-4b60-a714-a0a11135e932'
+    assert (
+        isbn_to_url('978-964-459-398-7')
+        == 'https://ketab.ir/book/4cc231f9-35c2-4b60-a714-a0a11135e932'
+    )

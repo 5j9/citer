@@ -48,7 +48,9 @@ def test_google_books_netloc():
     ag('books.google.co.il/books?id=pzmt3pcBuGYC')
     with patch('app.google_books_dict') as mock:
         url_doi_isbn_to_dict('www.google.com/books?id=bwfoCAAAQBAJ', None)
-        url_doi_isbn_to_dict('www.google.com/books/edition/_/bwfoCAAAQBAJ', None)
+        url_doi_isbn_to_dict(
+            'www.google.com/books/edition/_/bwfoCAAAQBAJ', None
+        )
     assert mock.call_count == 2
 
 
@@ -78,6 +80,10 @@ def test_noorlib():
 @patch('app.doi_to_dict', side_effect=JSONDecodeError('msg', 'doc', 1))
 def test_doi_url_fallback_to_url(doi_scr, urls_scr):
     user_input = 'https://dl.acm.org/doi/10.5555/3157382.3157535'
-    assert url_doi_isbn_to_dict(user_input, '%B %#d, %Y') is urls_scr.return_value
-    doi_scr.assert_called_once_with('10.5555/3157382.3157535', True, '%B %#d, %Y')
+    assert (
+        url_doi_isbn_to_dict(user_input, '%B %#d, %Y') is urls_scr.return_value
+    )
+    doi_scr.assert_called_once_with(
+        '10.5555/3157382.3157535', True, '%B %#d, %Y'
+    )
     urls_scr.assert_called_once_with(user_input, '%B %#d, %Y')

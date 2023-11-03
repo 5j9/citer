@@ -25,16 +25,19 @@ def test_gb1():
         '| year=2001 '
         '| isbn=978-0-262-26134-0 '
         '| url=https://books.google.com/books?id=pzmt3pcBuGYC&pg=PR11 '
-        '| access-date=') in googlebooks_scr(
-            'http://books.google.com/books?'
-            'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library')[1]
+        '| access-date='
+    ) in googlebooks_scr(
+        'http://books.google.com/books?'
+        'id=pzmt3pcBuGYC&pg=PR11&lpg=PP1&dq=digital+library'
+    )[1]
 
 
 def test_gb2():
     """a book with more than 4 authors (10 authors)"""
     o = googlebooks_scr(
         'http://books.google.com/books?'
-        'id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false')
+        'id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
+    )
     assert (
         '{{sfn '
         '| Anderson '
@@ -42,7 +45,8 @@ def test_gb2():
         '| Featherstone '
         '| Gunther '
         '| 2010 '
-        '| p=57}}') in o[0]
+        '| p=57}}'
+    ) in o[0]
     assert (
         '* {{cite book '
         '| last=Anderson '
@@ -72,7 +76,8 @@ def test_gb2():
         '| year=2010 '
         '| isbn=978-0-13-270490-8 '
         '| url=https://books.google.com/books?id=U46IzqYLZvAC&pg=PT57 '
-        '| access-date=') in o[1]
+        '| access-date='
+    ) in o[1]
 
 
 def test_gb3():
@@ -80,7 +85,8 @@ def test_gb3():
     o = googlebooks_scr(
         'http://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588&dq=%22a+'
         'Delimiter+is%22&hl=en&sa=X&ei=oNKSUrKeDovItAbO_4CoBA&ved='
-        '0CC4Q6AEwAA#v=onepage&q=%22a%20Delimiter%20is%22&f=false')
+        '0CC4Q6AEwAA#v=onepage&q=%22a%20Delimiter%20is%22&f=false'
+    )
     assert '{{sfn | Farrell | 2009 | p=588}}' in o[0]
     assert (
         '* {{cite book '
@@ -92,7 +98,8 @@ def test_gb3():
         '| year=2009 '
         '| isbn=978-1-111-78619-9 '
         '| url=https://books.google.com/books?id=icMEAAAAQBAJ&pg=PA588 '
-        '| access-date=') in o[1]
+        '| access-date='
+    ) in o[1]
 
 
 @mark.xfail
@@ -102,7 +109,8 @@ def test_gb4():
         'https://books.google.com/books?id='
         'i8nZjjo_9ikC&pg=PA229&dq=%22legal+translation+is%22&hl=en&sa='
         'X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q='
-        '%22legal%20translation%20is%22&f=false')
+        '%22legal%20translation%20is%22&f=false'
+    )
     assert '{{sfn | Šarčević | 1997 | p=229}}' in o[0]
     assert (
         '* {{cite book '
@@ -113,7 +121,8 @@ def test_gb4():
         '| year=1997 '
         '| isbn=978-90-411-0401-4 '
         '| url=https://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 '
-        '| access-date=') in o[1]
+        '| access-date='
+    ) in o[1]
 
 
 def test_gb5():
@@ -121,7 +130,8 @@ def test_gb5():
     o = googlebooks_scr(
         'https://encrypted.google.com/books?id=6upvonUt0O8C&pg=PA378&'
         'dq=density+of+granite&hl=en&sa=X&ei=YBHIU-qCBIyX0QXusoDgAg&ved='
-        '0CEIQ6AEwBjgK#v=onepage&q=density%20of%20granite&f=false')
+        '0CEIQ6AEwBjgK#v=onepage&q=density%20of%20granite&f=false'
+    )
     assert (
         '* {{cite book '
         '| last=Serway '
@@ -135,7 +145,8 @@ def test_gb5():
         '| isbn=978-1-4390-4838-2 '
         '| url=https://books.google.com/books?id=6upvonUt0O8C&pg=PA378'
         ' '
-        '| access-date=') in o[1]
+        '| access-date='
+    ) in o[1]
     assert (
         '<ref name="Serway Jewett 2009 p. 378">'
         '{{cite book '
@@ -150,5 +161,6 @@ def test_gb5():
         '| isbn=978-1-4390-4838-2 '
         '| url=https://books.google.com/books?id=6upvonUt0O8C&pg=PA378'
         ' '
-        '| access-date=') in o[2]
+        '| access-date='
+    ) in o[2]
     assert ' | page=378}}</ref>' in o[2]

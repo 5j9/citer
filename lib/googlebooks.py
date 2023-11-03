@@ -15,9 +15,13 @@ def url_to_dict(parsed_url, date_format='%Y-%m-%d') -> dict:
     else:  # the new URL format
         volume_id = parsed_url.path.rpartition('/')[2]
 
-    dictionary = ris_parse(request(
-        f'https://{parsed_url.netloc}/books/download/?id={volume_id}'
-        f'&output=ris', spoof=True).content.decode('utf8'))
+    dictionary = ris_parse(
+        request(
+            f'https://{parsed_url.netloc}/books/download/?id={volume_id}'
+            f'&output=ris',
+            spoof=True,
+        ).content.decode('utf8')
+    )
     dictionary['date_format'] = date_format
     # manually adding page number to dictionary:
     if (pg := parsed_query.get('pg')) is not None:

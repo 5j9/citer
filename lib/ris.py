@@ -4,7 +4,7 @@ from lib.commons import ISBN_10OR13_SEARCH, InvalidNameError, first_last, rc
 from lib.doi import DOI_SEARCH
 
 RIS_FULLMATCH = rc(
-    r'''
+    r"""
     (?: # this  group matches any line
         ^
         (?>
@@ -36,7 +36,7 @@ RIS_FULLMATCH = rc(
         )
         \r?\n
     )*
-    ''',
+    """,
     VERBOSE | MULTILINE,
 ).fullmatch
 

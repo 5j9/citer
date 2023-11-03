@@ -17,7 +17,7 @@ NAME_PATTERN = r'\w[\w.-]++\ \w[\w.-]++(?>\ \w[\w.-]+)?'
 
 # BYLINE_PATTERN supports up to four names in a byline
 # names may be separated with "and", a "comma" or "comma and"
-BYLINE_PATTERN = rf'''
+BYLINE_PATTERN = rf"""
     \s*+By\s++{NAME_PATTERN}(
         ,\ {NAME_PATTERN}(
             ,\ {NAME_PATTERN}(
@@ -47,13 +47,13 @@ BYLINE_PATTERN = rf'''
             )?
         )?
     )?\s*
-'''
+"""
 BYLINE_PATTERN_SEARCH = rc(BYLINE_PATTERN, IV)
 
 NORMALIZE_ANDS = rc(r'\s++and\s++', IGNORECASE).sub
 NORMALIZE_COMMA_SPACES = rc(r'\s*+,\s++', IGNORECASE).sub
 BY_PREFIX = rc(
-    r'''
+    r"""
     ^(?:
         (?>
             [^b]++
@@ -65,14 +65,14 @@ BY_PREFIX = rc(
     )?
     ([^\r\n]++)
     [\s\S]*
-    ''',
+    """,
     IV,
 ).sub
 AND_OR_COMMA_SUFFIX = rc(r'(?> and|,)?\s*+$', IGNORECASE).sub
 AND_OR_COMMA_SPLIT = rc(r', and | and |, |;', IGNORECASE).split
 AND_SPLIT = rc(r', and | and |;', IGNORECASE).split
 
-CONTENT_ATTR = r'''
+CONTENT_ATTR = r"""
     content=(?<q>["\'])
     (?<result>
         (?>
@@ -81,8 +81,8 @@ CONTENT_ATTR = r'''
             (?!(?P=q))['"]
         )++
     )(?P=q)
-'''
-AUTHOR_META_NAME_OR_PROP = r'''
+"""
+AUTHOR_META_NAME_OR_PROP = r"""
     (?<id>(?:name|property)\s*+=\s*+(?<q>["\']?)
         (?>
             # http://socialhistory.ihcs.ac.ir/article_571_84.html
@@ -92,15 +92,15 @@ AUTHOR_META_NAME_OR_PROP = r'''
             |og:author
         )
     (?P=q))
-'''
+"""
 META_AUTHOR_FINDITER = rc(
-    rf'''
+    rf"""
     <meta\s[^>]*?(?:
         {AUTHOR_META_NAME_OR_PROP}\s[^c]*+[^>]*?{CONTENT_ATTR}
         |
         {CONTENT_ATTR}\s[^>]*?{AUTHOR_META_NAME_OR_PROP}
     )
-    ''',
+    """,
     IV,
 ).finditer
 # id=byline
@@ -108,7 +108,7 @@ META_AUTHOR_FINDITER = rc(
 # rel=author
 # http://timesofindia.indiatimes.com/india/27-ft-whale-found-dead-on-Orissa-shore/articleshow/1339609.cms?referral=PM
 BYLINE_TAG_FINDITER = rc(
-    r'''
+    r"""
     (?>
         # author_byline example:
         # http://blogs.ft.com/energy-source/2009/03/04/the-source-platts-rocks-boat-300-crude-solar-shake-ups-hot-jobs/#axzz31G5iiTSq
@@ -138,7 +138,7 @@ BYLINE_TAG_FINDITER = rc(
         (?<q>["'])(?<id>author)(?P=q)\s*+:\s*+
         (?<result> \{ [^\}]* \} | \[ [^\]]* \] )
     )
-    ''',
+    """,
     IV | ASCII,
 ).finditer
 
@@ -159,7 +159,7 @@ BYLINE_AUTHOR = rc(
 ).finditer
 
 STOPWORDS_SEARCH = rc(
-    r'''
+    r"""
     \b(?>
         Administrator
         |By
@@ -175,7 +175,7 @@ STOPWORDS_SEARCH = rc(
     )\b
     |\.(?>com|ir)\b
     |www\.
-    ''',
+    """,
     IV,
 ).search
 
