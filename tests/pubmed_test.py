@@ -25,7 +25,8 @@ def test_doi_update():
         '| pmid=22677080 '
         '| pmc=3538472 '
         '| doi=10.1016/j.mayocp.2012.02.015 '
-        '| pages=596–602}}') in pmcid_scr('3538472')[1]
+        '| pages=596–602}}'
+    ) in pmcid_scr('3538472')[1]
 
 
 def test_spanish_no_doi():

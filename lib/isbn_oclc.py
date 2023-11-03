@@ -221,8 +221,8 @@ def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
     d['authors'] = [
         ('', c['nonPersonName']['text'])
         if 'nonPersonName' in c
-        else (c["firstName"]['text'], c["secondName"]['text'])
-        for c in record["contributors"]
+        else (c['firstName']['text'], c['secondName']['text'])
+        for c in record['contributors']
     ]
     if (publisher := record['publisher']) != '[publisher not identified]':
         d['publisher'] = publisher

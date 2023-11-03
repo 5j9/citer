@@ -30,7 +30,7 @@ def get_crossref_dict(doi) -> dict:
     # See https://citation.crosscite.org/docs.html for documentation.
     j = request(
         f'https://doi.org/{doi}',
-        headers={"Accept": "application/vnd.citationstyles.csl+json"},
+        headers={'Accept': 'application/vnd.citationstyles.csl+json'},
     ).json()
 
     g = (d := {k.lower(): v for k, v in j.items()}).get

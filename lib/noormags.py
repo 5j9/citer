@@ -37,7 +37,8 @@ def get_ris(noormags_url):
     page_text = request(noormags_url).text
     article_id = RIS_ARTICLE_ID_SEARCH(page_text)[0]
     return request(
-        'http://www.noormags.ir/view/fa/citation/ris/' + article_id).text
+        'http://www.noormags.ir/view/fa/citation/ris/' + article_id
+    ).text
 
 
 def ris_fetcher_thread(url, ris_collection):

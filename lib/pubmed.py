@@ -98,8 +98,9 @@ def ncbi(type_: str, id_: str) -> dict:
     if (date_len := len(date_split)) == 3:
         d['date'] = datetime.strptime(date, '%Y %b %d')
     elif date_len == 2:
-        d['year'], d['month'] = date_split[0], str(
-            b_TO_NUM[date_split[1].lower()]
+        d['year'], d['month'] = (
+            date_split[0],
+            str(b_TO_NUM[date_split[1].lower()]),
         )
     else:
         d['year'] = date

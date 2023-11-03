@@ -17,18 +17,27 @@ from tests.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
 TESTDATA = Path(__file__).parent / 'testdata'
 
 json_dump = partial(
-    dump, ensure_ascii=False, check_circular=False, sort_keys=True,
-    indent='\t')
+    dump, ensure_ascii=False, check_circular=False, sort_keys=True, indent='\t'
+)
 
 
 class FakeResponse:
     __slots__ = (
-        'content', 'iter_content', 'status_code', 'headers', 'encoding', 'url',
+        'content',
+        'iter_content',
+        'status_code',
+        'headers',
+        'encoding',
+        'url',
     )
 
     def __init__(
-        self, url: str, content: bytes, status_code: int, headers: dict,
-        encoding: str
+        self,
+        url: str,
+        content: bytes,
+        status_code: int,
+        headers: dict,
+        encoding: str,
     ):
         self.url = url
         self.content = content
@@ -72,7 +81,8 @@ def load_response(hsh: str) -> Optional[FakeResponse]:
         USED_TESTDATA.add(filename)
 
     return FakeResponse(
-        d['url'], content, d['status_code'], d['headers'], d['encoding'])
+        d['url'], content, d['status_code'], d['headers'], d['encoding']
+    )
 
 
 def dump_response(hsh, response: Response, redacted_url: str) -> None:
@@ -99,8 +109,7 @@ def dump_connection_error(hsh):
 def fake_request(method, url, data=None, stream=False, **kwargs):
     if url.startswith(NCBI_URL):
         redacted_url = url.replace(
-            NCBI_URL,
-            NCBI_URL[:NCBI_URL.find('?')] + '?_REDACTED_PARAMS_'
+            NCBI_URL, NCBI_URL[: NCBI_URL.find('?')] + '?_REDACTED_PARAMS_'
         )
     else:
         redacted_url = url
@@ -120,16 +129,17 @@ def fake_request(method, url, data=None, stream=False, **kwargs):
         print('Downloading ' + url)
         with real_request():
             try:
-                response = Session().request(
-                    method, url, data=data, **kwargs)
+                response = Session().request(method, url, data=data, **kwargs)
             except RConnectionError:
                 dump_connection_error(sha1_hex)
         dump_response(sha1_hex, response, redacted_url)
 
     if stream is True:
+
         def iter_content(*_):
             # this closure over response will simulate a bound method
             return iter((response.content,))
+
         response.iter_content = iter_content
 
     return response
@@ -153,9 +163,11 @@ if REMOVE_UNUSED_TESTDATA is True:
     USED_TESTDATA = {*()}
 
     def rm_unused_files():
-        unused_files = (all_testdata_files - USED_TESTDATA)
+        unused_files = all_testdata_files - USED_TESTDATA
         for f in unused_files:
             (TESTDATA / f).remove()
-        print(f'removed {len(all_testdata_files - USED_TESTDATA)} unused testdata files')
+        print(
+            f'removed {len(all_testdata_files - USED_TESTDATA)} unused testdata files'
+        )
 
     atexit.register(rm_unused_files)

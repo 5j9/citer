@@ -1,4 +1,0 @@
-ignore = [
-    "E501",  # Line too long
-    "E731",  # Do not assign a `lambda` expression, use a `def`
-]

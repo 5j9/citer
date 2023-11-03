@@ -6,13 +6,13 @@ doi_scr = lambda doi: dict_to_sfn_cit_ref(doi_to_dict(doi))
 
 def test_doi1():
     assert (
-        "* {{cite journal | last=Atkins | first=Joshua H. | "
-        "last2=Gershell | first2=Leland J. | title="
-        "Selective anticancer drugs | journal=Nature Reviews Drug "
-        "Discovery | publisher=Springer Science and Business Media LLC "
-        "| volume=1 | issue=7 "
-        "| year=2002 | issn=1474-1776 | doi=10.1038/nrd842 "
-        "| pages=491–492}}"
+        '* {{cite journal | last=Atkins | first=Joshua H. | '
+        'last2=Gershell | first2=Leland J. | title='
+        'Selective anticancer drugs | journal=Nature Reviews Drug '
+        'Discovery | publisher=Springer Science and Business Media LLC '
+        '| volume=1 | issue=7 '
+        '| year=2002 | issn=1474-1776 | doi=10.1038/nrd842 '
+        '| pages=491–492}}'
     ) == doi_scr('https://doi.org/10.1038%2Fnrd842')[1]
 
 
@@ -89,16 +89,16 @@ def test_doi_isbn_no_year():
 def test_conference_location():
     """Test citing a conference with location."""
     assert (
-        "* {{cite conference "
-        "| title=Proceedings of the international workshop on System-level"
+        '* {{cite conference '
+        '| title=Proceedings of the international workshop on System-level'
         " interconnect prediction - SLIP'06 "
-        "| publisher=ACM Press "
-        "| publication-place=New York, New York, USA "
-        "| year=2006 "
-        "| isbn=1-59593-255-0 "
-        "| doi=10.1145/1117278 "
-        "| ref={{sfnref | ACM Press | 2006}}"
-        "}}"
+        '| publisher=ACM Press '
+        '| publication-place=New York, New York, USA '
+        '| year=2006 '
+        '| isbn=1-59593-255-0 '
+        '| doi=10.1145/1117278 '
+        '| ref={{sfnref | ACM Press | 2006}}'
+        '}}'
     ) == doi_scr('10.1145/1117278')[1]
 
 
@@ -130,17 +130,20 @@ def test_bad_author_name():
 
 
 def test_contains_brackets():  # 33
-    assert (  # note `[zhu]` in doi, it should not be escaped
-        '* {{cite journal | last=Zhu | first=Liping | last2=Lin | first2=Xiao '
-        '| last3=Li | first3=Yuanfang | last4=Li | first4=Bingyuan '
-        '| last5=Xie | first5=Manping '
-        '| title=Ostracoda Assemblages in Core Sediments and Their '
-        'Environmental Significance in a Small Lake in Northwest Tibet, China '
-        '| journal=Arctic, Antarctic, and Alpine Research '
-        '| publisher=Informa UK Limited | volume=39 | issue=4 | year=2007 '
-        '| issn=1523-0430 | doi=10.1657/1523-0430(07-512)[zhu]2.0.co;2 '
-        '| pages=658–662}}'
-    ) == doi_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1]
+    assert (
+        (  # note `[zhu]` in doi, it should not be escaped
+            '* {{cite journal | last=Zhu | first=Liping | last2=Lin | first2=Xiao '
+            '| last3=Li | first3=Yuanfang | last4=Li | first4=Bingyuan '
+            '| last5=Xie | first5=Manping '
+            '| title=Ostracoda Assemblages in Core Sediments and Their '
+            'Environmental Significance in a Small Lake in Northwest Tibet, China '
+            '| journal=Arctic, Antarctic, and Alpine Research '
+            '| publisher=Informa UK Limited | volume=39 | issue=4 | year=2007 '
+            '| issn=1523-0430 | doi=10.1657/1523-0430(07-512)[zhu]2.0.co;2 '
+            '| pages=658–662}}'
+        )
+        == doi_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1]
+    )
 
 
 def test_non_crossref_doi():  # 35
