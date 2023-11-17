@@ -230,16 +230,12 @@ def find_authors(html) -> List[Tuple[str, str]]:
         results.add(result)
         if match['tag']:
             results.add(result)
-            tag_text = TAGS_SUB('', result)
-            ns = byline_to_names(tag_text)
-            if ns:
+            if ns := byline_to_names(TAGS_SUB('', result)):
                 match_id = match['id']
                 names += ns
                 continue
             for m in BYLINE_AUTHOR(result):
-                author = m['result']
-                ns = byline_to_names(author)
-                if ns:
+                if ns := byline_to_names(m['result']):
                     names += ns
             if names:
                 return names
