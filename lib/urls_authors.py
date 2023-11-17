@@ -235,8 +235,7 @@ def find_authors(html) -> List[Tuple[str, str]]:
                 names += ns
                 continue
             for m in BYLINE_AUTHOR(result):
-                if ns := byline_to_names(m['result']):
-                    names += ns
+                names += byline_to_names(m['result'])
             if names:
                 return names
         else:  # not containing tags
