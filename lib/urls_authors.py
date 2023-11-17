@@ -206,15 +206,15 @@ def json_ld_authors(s: str) -> Optional[List[Tuple[str, str]]]:
         return
 
 
-def find_authors(html) -> Optional[List[Tuple[str, str]]]:
+def find_authors(html) -> List[Tuple[str, str]]:
     """Return authors names found in html."""
     names = []
     match_id = None
     for match in META_AUTHOR_FINDITER(html):
         if match_id and match_id != match['id']:
             break
-        if (name := byline_to_names(match['result'])) is not None:
-            names.extend(name)
+        if name := byline_to_names(match['result']):
+            names += name
             match_id = match['id']
     if names:
         return names
@@ -234,34 +234,30 @@ def find_authors(html) -> Optional[List[Tuple[str, str]]]:
             ns = byline_to_names(tag_text)
             if ns:
                 match_id = match['id']
-                names.extend(ns)
+                names += ns
                 continue
             for m in BYLINE_AUTHOR(result):
                 author = m['result']
                 ns = byline_to_names(author)
                 if ns:
-                    names.extend(ns)
+                    names += ns
             if names:
                 return names
-        else:
+        else:  # not containing tags
             if match['id'] == 'author':
-                ns = json_ld_authors(match['result'])
-                if ns is not None:
-                    names = ns
-                    break
-            # not containRing tags.
-            ns = byline_to_names(result)
-            if ns is not None:
+                if ns := json_ld_authors(match['result']):
+                    return ns
+            if ns := byline_to_names(result):
                 match_id = match['id']
-                names.extend(ns)
+                names += ns
     if names:
         return names
     if (match := BYLINE_TEXT_PATTERN(TAGS_SUB('', html))) is not None:
         return byline_to_names(match[0])
-    return None
+    return names
 
 
-def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
+def byline_to_names(byline) -> List[Tuple[str, str]]:
     r"""Find authors in byline sting. Return name objects as a list.
 
     The "By " prefix will be omitted.
@@ -283,14 +279,14 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
     """
     byline = byline.partition('|')[0].strip(' ;\t\n')
     if ':' in byline:
-        return None
+        return []
     if (m := ANYDATE_SEARCH(byline)) is not None:
         # Removing the date part
         byline = byline[: m.start()]
     if not byline:
-        return None
+        return []
     if FOUR_DIGIT_NUM(byline) is not None:
-        return None
+        return []
     # Normalize 'and\n' (and the similar) to standard 'and '
     # This should be done before cutting the byline at the first newline
     byline = NORMALIZE_ANDS(' and ', byline)
@@ -317,7 +313,7 @@ def byline_to_names(byline) -> Optional[List[Tuple[str, str]]]:
             first, last = '', f'{first} {last}'
         names.append((first, last))
     if not names:
-        return None
+        return names
     # Remove names not having first name (orgs)
     name0 = names[0]  # In case no name remains at the end
     names = [(fn, ln) for fn, ln in names if fn]

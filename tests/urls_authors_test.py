@@ -7,6 +7,7 @@ from lib.urls_authors import (
     byline_to_names,
     find_authors,
     rc,
+    json_ld_authors,
 )
 from tests.urls_test import urls_scr
 
@@ -159,3 +160,11 @@ def test_json_ld_author_name_is_list():
     assert find_authors(
         ',"author":{"@type":"Person","name":["Jeff Lunden"]},'
     ) == [('Jeff', 'Lunden')]
+
+
+def test_json_ld_first_name_only():
+    # https://www.reuters.com/world/europe/russia-says-ukrainian-forces-have-crossed-river-dnipro-face-hell-fire-death-2023-11-15/
+    # used to raise TypeError
+    assert not json_ld_authors(
+        '[{"@type":"Person","name":"Reuters","sameAs":"https://www.reuters.comundefined"}]'
+    )
