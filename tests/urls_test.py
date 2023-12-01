@@ -1,10 +1,16 @@
 # noinspection PyPackageRequirements
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 from pytest import mark
 
 from lib.commons import dict_to_sfn_cit_ref
-from lib.urls import LANG_SEARCH, ContentTypeError, parse_title, url_to_dict
+from lib.urls import (
+    LANG_SEARCH,
+    ContentTypeError,
+    parse_title,
+    url_to_dict,
+    StatusCodeError,
+)
 
 
 def urls_scr(*args):
@@ -995,3 +1001,15 @@ def test_find_title_meta_pipe():
     assert scr[1][:-12] == (
         '* {{cite web | last=Wright | first=Colin M. | last2=Hilton | first2=Emma N. | title=The Dangerous Denial of Sex | website=WSJ | date=2020-02-13 | url=https://www.wsj.com/articles/the-dangerous-denial-of-sex-11581638089 | access-date='
     )
+
+
+@patch('lib.urls.get_html', side_effect=StatusCodeError(402))
+def test_citoid_thesis_invalid_doi(get_html: Mock):
+    assert urls_scr('https://dl.acm.org/doi/10.5555/1123678')[1] == (
+        '* {{cite thesis | degree=phd | last=Madden | first=Samuel Ross | title=The '
+        'design and evaluation of a query processing architecture for sensor networks '
+        '| publisher=University of California at Berkeley | publication-place=USA | '
+        'date=2003 | doi=<!--10.5555/1123678--> | url=https://dl.acm.org/doi/10.5555/1123678 '
+        '| access-date=2023-12-01}}'
+    )
+    get_html.assert_called_once()

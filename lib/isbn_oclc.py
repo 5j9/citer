@@ -8,6 +8,7 @@ from langid import classify
 from regex import search
 
 from config import LANG
+from lib.citoid import get_citoid_dict
 from lib.commons import (
     FOUR_DIGIT_NUM,
     ISBN10_SEARCH,
@@ -124,48 +125,6 @@ def combine_dicts(ketabir: dict, citoid: dict) -> dict:
 
 def isbn2int(isbn):
     return int(isbn.translate(RM_DASH_SPACE))
-
-
-def get_citoid_dict(isbn) -> Optional[dict]:
-    # https://www.mediawiki.org/wiki/Citoid/API
-    r = request(
-        'https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki/' + isbn
-    )
-    if r.status_code != 200:
-        return
-
-    j0 = r.json()[0]
-    get = j0.get
-
-    d = {}
-
-    d['cite_type'] = j0['itemType']
-    # worldcat url is not needed since OCLC param will create it
-    # d['url'] = j0['url']
-    if (oclc := get('oclc')) is not None:
-        d['oclc'] = oclc
-    d['title'] = j0['title']
-
-    authors = get('author')
-    contributors = get('contributor')
-
-    if authors is not None and contributors is not None:
-        d['authors'] = authors + contributors
-    elif authors is not None:
-        d['authors'] = authors
-    elif contributors is not None:
-        d['authors'] = contributors
-
-    if (publisher := get('publisher')) is not None:
-        d['publisher'] = publisher
-
-    if (place := get('place')) is not None:
-        d['publisher-location'] = place
-
-    if (date := get('date')) is not None:
-        d['date'] = date
-
-    return d
 
 
 def google_books(isbn: str, result: list):

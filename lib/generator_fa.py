@@ -135,7 +135,13 @@ def sfn_cit_ref(d: dict[str, Any]) -> tuple:
         cit += ' | pmc=' + pmcid
 
     if doi := g('doi'):
-        cit += ' | doi=' + doi
+        if doi.startswith('10.5555'):
+            # To avoid Check |doi= value error
+            # invalid/temporary/test doi[1]
+            # https://en.wikipedia.org/wiki/Help:CS1_errors#bad_doi
+            cit += f' | doi=<!--{doi}-->'
+        else:
+            cit += f' | doi={doi}'
 
     if oclc := g('oclc'):
         cit += ' | oclc=' + oclc
