@@ -406,7 +406,7 @@ def analyze_home(parsed_url: tuple, home_list: list) -> None:
 def check_response(r: RequestsResponse) -> None:
     """Check content-type and content-length of the response."""
     if r.status_code != 200:
-        raise StatusCodeError(r)
+        raise StatusCodeError(r.status_code)
     get_header = r.headers.get
     if (content_type := get_header('content-type')) is not None:
         if not content_type.startswith('text/'):
