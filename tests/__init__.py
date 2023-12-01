@@ -6,7 +6,7 @@ from json import dump, load, loads
 from typing import Optional
 
 # noinspection PyPackageRequirements
-from path import Path
+from pathlib import Path
 from requests import ConnectionError as RConnectionError, Response, Session
 
 from tests.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
