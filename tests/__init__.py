@@ -159,7 +159,7 @@ Session.request = fake_request
 from lib.pubmed import NCBI_URL  # noqa
 
 if REMOVE_UNUSED_TESTDATA is True:
-    all_testdata_files = {f.name for f in TESTDATA.files()}
+    all_testdata_files = {f.name for f in TESTDATA.iterdir()}
     USED_TESTDATA = {*()}
 
     def rm_unused_files():
