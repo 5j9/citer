@@ -3,7 +3,6 @@
 from datetime import datetime
 from logging import getLogger
 from threading import Thread
-from typing import Any
 
 from config import NCBI_API_KEY, NCBI_EMAIL, NCBI_TOOL
 from lib.commons import b_TO_NUM, rc, request

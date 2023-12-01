@@ -1,7 +1,6 @@
 """Codes related to DOI inputs."""
 from datetime import datetime
 from html import unescape
-from typing import Any
 from urllib.parse import unquote_plus
 
 from langid import classify

@@ -1,6 +1,6 @@
 """All things that are specifically related to adinebook website"""
 from logging import getLogger
-from typing import Any, Optional
+from typing import Optional
 
 from bs4 import BeautifulSoup
 from langid import classify

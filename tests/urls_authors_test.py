@@ -2,7 +2,6 @@ from pytest import mark
 
 from lib.urls_authors import (
     BYLINE_PATTERN,
-    BYLINE_TAG_FINDITER,
     IV,
     byline_to_names,
     find_authors,

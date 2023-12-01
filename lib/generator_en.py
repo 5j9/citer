@@ -167,7 +167,7 @@ def sfn_cit_ref(d: dict) -> tuple:
     elif title:
         cit += f' | title={title}'
     else:
-        cit += f' | title='
+        cit += ' | title='
 
     if journal:
         cit += f' | journal={journal}'
