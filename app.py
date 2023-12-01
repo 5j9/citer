@@ -37,7 +37,7 @@ from lib.ketabir import url_to_dict as ketabir_url_to_dict
 from lib.noorlib import url_to_dict as noorlib_url_to_dict
 from lib.noormags import url_to_dict as noormags_url_to_dict
 from lib.pubmed import pmcid_dict, pmid_dict
-from lib.urls import url_to_dict as urls_url_to_dict
+from lib.urls import url_to_dict as urls_url_to_dict, get_html
 from lib.waybackmachine import url_to_dict as archive_url_to_dict
 
 
@@ -159,12 +159,22 @@ def page_does_not_exist(start_response: callable, *_) -> tuple:
     return (text,)
 
 
+def echo(url: str, _: str, /):
+    try:
+        url, text = get_html(url)
+    except Exception as e:
+        url = repr(e)
+        text = ''
+    raise ReturnError(url, '', text)
+
+
 input_type_to_resolver = {
     '': url_doi_isbn_to_dict,
     'url-doi-isbn': url_doi_isbn_to_dict,
     'pmid': pmid_dict,
     'pmcid': pmcid_dict,
     'oclc': oclc_dict,
+    'echo': echo,
 }
 
 
