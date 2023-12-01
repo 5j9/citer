@@ -164,7 +164,7 @@ def echo(url: str, _: str, /):
         url, text = get_html(url)
     except StatusCodeError as e:
         r = e.args[0]
-        raise ReturnError(r.url, f'{r.headers}', r.text)
+        raise ReturnError(r.url, f'{r.status_code}', r.text)
     except Exception as e:
         url = repr(e)
         text = ''
