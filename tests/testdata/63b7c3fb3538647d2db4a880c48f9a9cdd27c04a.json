@@ -1,0 +1,24 @@
+{
+	"encoding": "UTF-8",
+	"headers": {
+		"CF-Cache-Status": "DYNAMIC",
+		"CF-Ray": "82eb96e5cda865ac-FRA",
+		"Cache-Control": "no-cache",
+		"Connection": "keep-alive",
+		"Content-Encoding": "br",
+		"Content-Type": "text/html;charset=UTF-8",
+		"Date": "Fri, 01 Dec 2023 13:13:47 GMT",
+		"Link": "</products/acm/releasedAssets/css/build-3a67908605ca2afdd223.css>; rel=preload; as=style, </products/acm/releasedAssets/js/main.bundle-8f9a29ee2c8bd370dd2d.js>; rel=preload; as=script, </wro/msmq~product.css>; rel=preload; as=style; nopush, </wro/msmq~product.js>; rel=preload; as=script; nopush, <https://fonts.googleapis.com>; rel=preconnect; crossorigin, <https://fonts.gstatic.com>; rel=preconnect; crossorigin",
+		"Server": "cloudflare",
+		"Strict-Transport-Security": "max-age=15552000",
+		"Transfer-Encoding": "chunked",
+		"Vary": "Accept-Encoding",
+		"X-Content-Type-Options": "nosniff",
+		"X-Frame-Options": "SAMEORIGIN",
+		"X-Webstats-RespID": "8a95e493c39688b699f86772c44e5d8f",
+		"X-XSS-Protection": "1; mode=block",
+		"alt-svc": "h3=\":443\"; ma=86400"
+	},
+	"status_code": 200,
+	"url": "https://dl.acm.org"
+}

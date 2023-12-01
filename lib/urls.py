@@ -11,6 +11,7 @@ from langid import classify
 from requests import Response as RequestsResponse
 from requests.exceptions import RequestException
 
+from lib.citoid import get_citoid_dict
 from lib.commons import ANYDATE_PATTERN, Search, find_any_date, rc, request
 from lib.doi import get_crossref_dict
 from lib.urls_authors import CONTENT_ATTR, IV, find_authors
@@ -458,6 +459,13 @@ def url2dict(url: str) -> Dict[str, Any]:
 
     try:
         url, html = get_html(url)
+    except StatusCodeError:
+        # sometimes get_html fails (is blacklisted), but zotero works
+        # issues/47
+        if (d := get_citoid_dict(url, True)) is None:
+            raise
+        d['url'] = url
+        return d
     except ContentTypeError:
         return {'url': url, 'cite_type': 'web'}
 

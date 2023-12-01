@@ -41,6 +41,7 @@ TYPE_TO_CITE = {
     # An article in a conference proceedings.
     'inproceedings': 'conference',
     # A Master's thesis.
+    # todo: convert to degree/type parameter
     'mastersthesis': 'thesis',
     # A PhD thesis.
     'phdthesis': 'thesis',
@@ -84,6 +85,7 @@ TYPE_TO_CITE = {
     'edited-book': 'book',
     'standard-series': '',
     'rprt': 'report',
+    'thesis': 'thesis',
 }.get
 
 # According to https://en.wikipedia.org/wiki/Help:Footnotes,
@@ -122,6 +124,10 @@ def sfn_cit_ref(d: dict) -> tuple:
         journal = g('journal') or g('container-title')
     else:
         journal = g('journal')
+
+    if cite_type == 'thesis':
+        if (thesis_type := g('thesisType')) is not None:
+            cit += f' | degree={thesis_type}'
 
     if authors := g('authors'):
         cit += names2para(authors, 'first', 'last', 'author')
@@ -225,7 +231,13 @@ def sfn_cit_ref(d: dict) -> tuple:
         cit += f' | pmc={pmcid}'
 
     if doi := g('doi'):
-        cit += f' | doi={doi}'
+        if doi.startswith('10.5555'):
+            # To avoid Check |doi= value error
+            # invalid/temporary/test doi[1]
+            # https://en.wikipedia.org/wiki/Help:CS1_errors#bad_doi
+            cit += f' | doi=<!--{doi}-->'
+        else:
+            cit += f' | doi={doi}'
 
     if oclc := g('oclc'):
         cit += f' | oclc={oclc}'
