@@ -1,7 +1,7 @@
 from json import loads
 from logging import getLogger
 from threading import Thread
-from typing import Any, Optional
+from typing import Optional
 
 from isbnlib import info as isbn_info, mask as isbn_mask
 from langid import classify
