@@ -129,17 +129,11 @@ class ContentTypeError(ValueError):
 
 
 class ContentLengthError(ValueError):
-
     """Raise when content-length header indicates a very long content."""
-
-    pass
 
 
 class StatusCodeError(ValueError):
-
     """Raise when status_code != 200."""
-
-    pass
 
 
 # inaccurate but should be faster than bs4
@@ -412,7 +406,7 @@ def analyze_home(parsed_url: tuple, home_list: list) -> None:
 def check_response(r: RequestsResponse) -> None:
     """Check content-type and content-length of the response."""
     if r.status_code != 200:
-        raise StatusCodeError(r.status_code)
+        raise StatusCodeError(r)
     get_header = r.headers.get
     if (content_type := get_header('content-type')) is not None:
         if not content_type.startswith('text/'):

@@ -151,7 +151,7 @@ class NumberInNameError(InvalidNameError):
     """Raise when a RawName() contains digits."""
 
 
-class ReturnError(RuntimeError):
+class ReturnError(Exception):
 
     """Raise to display message to end user.
 
