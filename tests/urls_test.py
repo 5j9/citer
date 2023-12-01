@@ -1009,7 +1009,7 @@ def test_citoid_thesis_invalid_doi(get_html: Mock):
         '* {{cite thesis | degree=phd | last=Madden | first=Samuel Ross | title=The '
         'design and evaluation of a query processing architecture for sensor networks '
         '| publisher=University of California at Berkeley | publication-place=USA | '
-        'date=2003 | doi=<!--10.5555/1123678--> | url=https://dl.acm.org/doi/10.5555/1123678 '
+        'date=2003 | url=https://dl.acm.org/doi/10.5555/1123678 '
         '| access-date=2023-12-01}}'
     )
     get_html.assert_called_once()
