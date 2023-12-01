@@ -28,7 +28,6 @@ from lib.html import (
     JS,
     JS_HEADERS,
     JS_PATH,
-    OTHER_EXCEPTION_SCR,
     scr_to_html,
 )
 from lib.isbn_oclc import isbn_to_dict, oclc_dict, worldcat_url_to_dict
@@ -162,12 +161,8 @@ def page_does_not_exist(start_response: callable, *_) -> tuple:
 def echo(url: str, _: str, /):
     try:
         url, text = get_html(url)
-    except StatusCodeError as e:
-        r = e.args[0]
-        raise ReturnError(r.url, f'{r.status_code}', r.text)
     except Exception as e:
-        url = repr(e)
-        text = ''
+        url, text = repr(e), ''
     raise ReturnError(url, '', text)
 
 
@@ -228,7 +223,7 @@ def root(start_response: callable, environ: dict) -> tuple:
             scr = e.args
         else:
             LOGGER.exception(user_input)
-            scr = OTHER_EXCEPTION_SCR
+            scr = repr(e), '', ''
     else:
         scr = dict_to_sfn_cit_ref(d)
         status = '200 OK'
