@@ -1,8 +1,10 @@
+from typing import Optional
+
 from lib.commons import request
 from urllib.parse import quote_plus
 
 
-def get_citoid_dict(query: str, quote=False, /) -> dict | None:
+def get_citoid_dict(query: str, quote=False, /) -> Optional[dict]:
     if quote is True:
         query = quote_plus(query)
     # https://www.mediawiki.org/wiki/Citoid/API
