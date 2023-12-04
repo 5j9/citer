@@ -1,7 +1,10 @@
-"""Codes related to DOI inputs."""
 from datetime import datetime
 from html import unescape
 from urllib.parse import unquote_plus
+
+from requests import HTTPError
+
+from lib.citoid import get_citoid_dict
 
 from langid import classify
 
@@ -17,21 +20,25 @@ def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
         # decode percent encodings
         decoded_url = unquote_plus(unescape(doi_or_url))
         doi = DOI_SEARCH(decoded_url)[0]
-    dictionary = get_crossref_dict(doi)
-    dictionary['date_format'] = date_format
+    try:
+        d = get_citoid_dict(doi)
+    except HTTPError:
+        d = get_crossref_dict(doi)
+    d['date_format'] = date_format
     if LANG == 'fa':
-        dictionary['language'] = classify(dictionary['title'])[0]
-    return dictionary
+        d['language'] = classify(d['title'])[0]
+    return d
 
 
 def get_crossref_dict(doi) -> dict:
     """Return the parsed data of crossref.org for the given DOI."""
     # See https://citation.crosscite.org/docs.html for documentation.
-    j = request(
+    r = request(
         f'https://doi.org/{doi}',
         headers={'Accept': 'application/vnd.citationstyles.csl+json'},
-    ).json()
-
+    )
+    r.raise_for_status()
+    j = r.json()
     g = (d := {k.lower(): v for k, v in j.items()}).get
 
     d['cite_type'] = d['type']

@@ -7,7 +7,12 @@ from typing import Optional
 
 # noinspection PyPackageRequirements
 from pathlib import Path
-from requests import ConnectionError as RConnectionError, Response, Session
+from requests import (
+    ConnectionError as RConnectionError,
+    Response,
+    Session,
+    HTTPError,
+)
 
 from tests.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
 
@@ -57,6 +62,10 @@ class FakeResponse:
     @property
     def text(self):
         return self.content.decode(self.encoding)
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise HTTPError
 
 
 def load_response(hsh: str) -> Optional[FakeResponse]:
@@ -165,7 +174,7 @@ if REMOVE_UNUSED_TESTDATA is True:
     def rm_unused_files():
         unused_files = all_testdata_files - USED_TESTDATA
         for f in unused_files:
-            (TESTDATA / f).remove()
+            (TESTDATA / f).unlink()
         print(
             f'removed {len(all_testdata_files - USED_TESTDATA)} unused testdata files'
         )
