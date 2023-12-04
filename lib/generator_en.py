@@ -36,8 +36,6 @@ TYPE_TO_CITE = {
     # An article from a journal or magazine.
     'article': 'journal',
     'article-journal': 'journal',
-    # citoid
-    'journalArticle': 'journal',
     # The same as INPROCEEDINGS, included for Scribe compatibility.
     'conference': 'conference',
     # An article in a conference proceedings.

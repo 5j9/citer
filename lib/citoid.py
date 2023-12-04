@@ -4,15 +4,17 @@ from lib.commons import request
 from urllib.parse import quote_plus
 
 TRANSLATE = {
-    'thesisType': 'thesisType',
-    'place': 'publisher-location',
+    # 'url': 'url',
     'DOI': 'doi',
     'issue': 'issue',
-    'language': 'language',
-    'pages': 'pages',
-    # 'url': 'url',
-    'volume': 'volume',
     'itemType': 'cite_type',
+    'language': 'language',
+    'oclc': 'oclc',
+    'pages': 'pages',
+    'place': 'publisher-location',
+    'thesisType': 'thesisType',
+    'title': 'title',
+    'volume': 'volume',
 }
 
 
@@ -30,12 +32,9 @@ def get_citoid_dict(query: str, quote=False, /) -> Optional[dict]:
 
     d = {}
 
-    cite_type = d['cite_type'] = j0['itemType']
-    # worldcat url is not needed since OCLC param will create it
-    # d['url'] = j0['url']
-    if (oclc := get('oclc')) is not None:
-        d['oclc'] = oclc
-    d['title'] = j0['title']
+    for citoid_key, citer_key in TRANSLATE.items():
+        if (value := get(citoid_key)) is not None:
+            d[citer_key] = value
 
     authors = get('author')
     contributors = get('contributor')
@@ -52,12 +51,25 @@ def get_citoid_dict(query: str, quote=False, /) -> Optional[dict]:
     elif (publisher := get('university')) is not None:
         d['publisher'] = publisher
 
-    if cite_type == 'journalArticle':
+    if (cite_type := d['cite_type']) == 'journalArticle':
+        d['cite_type'] = 'journal'
         if (journal := get('publicationTitle')) is not None:
             d['journal'] = journal
+    elif cite_type == 'bookSection':
+        d['cite_type'] = 'book'
+        if (book := get('bookTitle')) is not None:
+            d['chapter'] = j0['title']
+            d['title'] = book
+    elif cite_type == 'conferencePaper':
+        d['cite_type'] = 'conference'
+        if (title := get('proceedingsTitle')) is not None:
+            d['title'] = title
 
     if (issn := get('ISSN')) is not None:
         d['issn'] = issn[0]
+
+    if (isbn := get('ISBN')) is not None:
+        d['isbn'] = isbn[0]
 
     if (date := get('date')) is not None:
         splits = date.split('-')
@@ -65,9 +77,5 @@ def get_citoid_dict(query: str, quote=False, /) -> Optional[dict]:
             d['date'] = splits[0]
         else:
             d['date'] = date
-
-    for citoid_key, citer_key in TRANSLATE.items():
-        if (value := get(citoid_key)) is not None:
-            d[citer_key] = value
 
     return d
