@@ -223,7 +223,7 @@ def root(start_response: callable, environ: dict) -> tuple:
             scr = e.args
         else:
             LOGGER.exception(user_input)
-            scr = repr(e), '', ''
+            scr = type(e).__name__, '', ''
     else:
         scr = dict_to_sfn_cit_ref(d)
         status = '200 OK'
