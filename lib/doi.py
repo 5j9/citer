@@ -21,9 +21,10 @@ def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
         decoded_url = unquote_plus(unescape(doi_or_url))
         doi = DOI_SEARCH(decoded_url)[0]
     try:
-        d = get_citoid_dict(doi)
+        d = get_citoid_dict(doi, True)
     except HTTPError:
         d = get_crossref_dict(doi)
+
     d['date_format'] = date_format
     if LANG == 'fa':
         d['language'] = classify(d['title'])[0]
