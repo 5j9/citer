@@ -145,8 +145,11 @@ def google_books(isbn: str, result: list):
 
 
 def citoid_thread_target(isbn: str, result: list) -> None:
-    if citoid_dict := get_citoid_dict(isbn):
-        result.append(citoid_dict)
+    try:
+        d = get_citoid_dict(isbn)
+    except Exception:
+        return
+    result.append(d)
 
 
 def worldcat_url_to_dict(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
