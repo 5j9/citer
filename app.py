@@ -162,7 +162,7 @@ def echo(url: str, _: str, /):
     try:
         url, text = get_html(url)
     except Exception as e:
-        url, text = repr(e), ''
+        url, text = type(e).__name__, ''
     raise ReturnError(url, '', text)
 
 
