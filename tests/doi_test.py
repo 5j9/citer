@@ -1,7 +1,16 @@
+from unittest.mock import patch
+
+from requests import HTTPError
+
 from lib.commons import dict_to_sfn_cit_ref
 from lib.doi import doi_to_dict
 
-doi_scr = lambda doi: dict_to_sfn_cit_ref(doi_to_dict(doi))
+
+def doi_scr(doi):
+    with patch('lib.doi.get_citoid_dict', side_effect=HTTPError):
+        scr = dict_to_sfn_cit_ref(doi_to_dict(doi))
+    assert scr == dict_to_sfn_cit_ref(doi_to_dict(doi))
+    return scr
 
 
 def test_doi1():

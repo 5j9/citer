@@ -11,8 +11,7 @@ def get_citoid_dict(query: str, quote=False, /) -> Optional[dict]:
     r = request(
         'https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki/' + query
     )
-    if r.status_code != 200:
-        return
+    r.raise_for_status()
 
     j0 = r.json()[0]
     get = j0.get
