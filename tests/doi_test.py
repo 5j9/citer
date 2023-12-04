@@ -6,15 +6,24 @@ from lib.commons import dict_to_sfn_cit_ref
 from lib.doi import doi_to_dict
 
 
-def doi_scr(doi):
+def doi_scr(doi) -> tuple:
     with patch('lib.doi.get_citoid_dict', side_effect=HTTPError):
-        scr = dict_to_sfn_cit_ref(doi_to_dict(doi))
-    assert scr == dict_to_sfn_cit_ref(doi_to_dict(doi))
-    return scr
+        doi_scr = dict_to_sfn_cit_ref(doi_to_dict(doi))
+    return doi_scr
+
+
+def citoid_scr(doi) -> tuple:
+    return dict_to_sfn_cit_ref(doi_to_dict(doi))
 
 
 def test_doi1():
-    assert (
+    assert citoid_scr('https://doi.org/10.1038%2Fnrd842')[1] == (
+        '* {{cite journal | last=Atkins | first=Joshua H. | last2=Gershell | '
+        'first2=Leland J. | title=Selective anticancer drugs | journal=Nature Reviews '
+        'Drug Discovery | volume=1 | issue=7 | date=2002 | issn=1474-1776 | '
+        'doi=10.1038/nrd842}}'
+    )
+    assert doi_scr('https://doi.org/10.1038%2Fnrd842')[1] == (
         '* {{cite journal | last=Atkins | first=Joshua H. | '
         'last2=Gershell | first2=Leland J. | title='
         'Selective anticancer drugs | journal=Nature Reviews Drug '
@@ -22,12 +31,12 @@ def test_doi1():
         '| volume=1 | issue=7 '
         '| year=2002 | issn=1474-1776 | doi=10.1038/nrd842 '
         '| pages=491–492}}'
-    ) == doi_scr('https://doi.org/10.1038%2Fnrd842')[1]
+    )
 
 
 def test_doi2():
     """Title of this DOI could not be detected in an older version."""
-    assert (
+    assert doi_scr('http://www.jstor.org/stable/info/10.1086/677379')[1] == (
         '* {{cite journal | title=Books of Critical Interest '
         '| journal=Critical Inquiry '
         '| publisher=University of Chicago Press | volume=40 '
@@ -35,19 +44,31 @@ def test_doi2():
         '| pages=272–281 '
         '| ref={{sfnref | University of Chicago Press | 2014}}'
         '}}'
-    ) == doi_scr('http://www.jstor.org/stable/info/10.1086/677379')[1]
+    )
+    assert citoid_scr('http://www.jstor.org/stable/info/10.1086/677379')[
+        1
+    ] == (
+        '* {{cite journal | title=Books of Critical Interest | journal=Critical '
+        'Inquiry | volume=40 | issue=3 | date=2014 | issn=0093-1896 | '
+        'doi=10.1086/677379 | ref={{sfnref | Critical Inquiry | 2014}}}}'
+    )
 
 
 def test_doi3():
     """No author. URL contains %2F."""
-    assert (
+    assert doi_scr('https://doi.org/10.1037%2Fh0063404')[1] == (
         '* {{cite journal | last=Spitzer | first=H. F. '
         '| title=Studies in retention. '
         '| journal=Journal of Educational Psychology '
         '| publisher=American Psychological Association (APA) '
         '| volume=30 | issue=9 | year=1939 | issn=0022-0663 '
         '| doi=10.1037/h0063404 | pages=641–656}}'
-    ) == doi_scr('https://doi.org/10.1037%2Fh0063404')[1]
+    )
+    assert citoid_scr('https://doi.org/10.1037%2Fh0063404')[1] == (
+        '* {{cite journal | last=Spitzer | first=H. F. | title=Studies in retention. '
+        '| journal=Journal of Educational Psychology | volume=30 | issue=9 | '
+        'date=1939 | issn=1939-2176 | doi=10.1037/h0063404}}'
+    )
 
 
 def test_doi4():

@@ -3,6 +3,18 @@ from typing import Optional
 from lib.commons import request
 from urllib.parse import quote_plus
 
+TRANSLATE = {
+    'thesisType': 'thesisType',
+    'place': 'publisher-location',
+    'DOI': 'doi',
+    'issue': 'issue',
+    'language': 'language',
+    'pages': 'pages',
+    # 'url': 'url',
+    'volume': 'volume',
+    'itemType': 'cite_type',
+}
+
 
 def get_citoid_dict(query: str, quote=False, /) -> Optional[dict]:
     if quote is True:
@@ -40,16 +52,22 @@ def get_citoid_dict(query: str, quote=False, /) -> Optional[dict]:
     elif (publisher := get('university')) is not None:
         d['publisher'] = publisher
 
-    if (degree := get('thesisType')) is not None:
-        d['thesisType'] = degree
+    if cite_type == 'journalArticle':
+        if (journal := get('publicationTitle')) is not None:
+            d['journal'] = journal
 
-    if (place := get('place')) is not None:
-        d['publisher-location'] = place
-
-    if (place := get('DOI')) is not None:
-        d['doi'] = place
+    if (issn := get('ISSN')) is not None:
+        d['issn'] = issn[0]
 
     if (date := get('date')) is not None:
-        d['date'] = date
+        splits = date.split('-')
+        if len(splits) == 2:  # YYYY-MM
+            d['date'] = splits[0]
+        else:
+            d['date'] = date
+
+    for citoid_key, citer_key in TRANSLATE.items():
+        if (value := get(citoid_key)) is not None:
+            d[citer_key] = value
 
     return d
