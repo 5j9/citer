@@ -122,6 +122,7 @@ def test_citoid():
     assert get_citoid_dict('9781137330963') == {
         'cite_type': 'book',
         'date': '2013',
+        'isbn': '978-1-137-33096-3',
         'publisher': 'Palgrave Macmillan',
         'publisher-location': 'New York, NY',
         'title': 'Ethnographies of social support',
