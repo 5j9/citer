@@ -7,6 +7,7 @@ from threading import Thread
 from config import NCBI_API_KEY, NCBI_EMAIL, NCBI_TOOL
 from lib.commons import b_TO_NUM, rc, request
 from lib.doi import get_crossref_dict
+from lib.citoid import get_citoid_dict
 
 NON_DIGITS_SUB = rc(r'[^\d]').sub
 
@@ -44,7 +45,11 @@ def pmcid_dict(pmcid: str, date_format='%Y-%m-%d', /) -> dict:
 
 
 def ncbi(type_: str, id_: str) -> dict:
-    """Return the NCBI data for the given id_."""
+    """Return the NCBI data for the given id_. PMC"""
+    try:
+        return get_citoid_dict(f'PMC{id_}' if type_ == 'pmcid' else id_)
+    except Exception:
+        pass
     # According to https://www.ncbi.nlm.nih.gov/pmc/tools/get-metadata/
     if type_ == 'pmid':
         json_response = request(PUBMED_URL + id_).json()

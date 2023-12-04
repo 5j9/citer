@@ -10,11 +10,13 @@ TRANSLATE = {
     'itemType': 'cite_type',
     'language': 'language',
     'oclc': 'oclc',
-    'pages': 'pages',
+    'pages': 'page',
     'place': 'publisher-location',
     'thesisType': 'thesisType',
     'title': 'title',
     'volume': 'volume',
+    'PMID': 'pmid',
+    'PMCID': 'pmcid',
 }
 
 
