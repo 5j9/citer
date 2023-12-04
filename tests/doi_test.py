@@ -17,12 +17,6 @@ def citoid_scr(doi) -> tuple:
 
 
 def test_doi1():
-    assert citoid_scr('https://doi.org/10.1038%2Fnrd842')[1] == (
-        '* {{cite journal | last=Atkins | first=Joshua H. | last2=Gershell | '
-        'first2=Leland J. | title=Selective anticancer drugs | journal=Nature Reviews '
-        'Drug Discovery | volume=1 | issue=7 | date=2002 | issn=1474-1776 | '
-        'doi=10.1038/nrd842}}'
-    )
     assert doi_scr('https://doi.org/10.1038%2Fnrd842')[1] == (
         '* {{cite journal | last=Atkins | first=Joshua H. | '
         'last2=Gershell | first2=Leland J. | title='
@@ -31,6 +25,12 @@ def test_doi1():
         '| volume=1 | issue=7 '
         '| year=2002 | issn=1474-1776 | doi=10.1038/nrd842 '
         '| pages=491–492}}'
+    )
+    assert citoid_scr('https://doi.org/10.1038%2Fnrd842')[1] == (
+        '* {{cite journal | last=Atkins | first=Joshua H. | last2=Gershell | '
+        'first2=Leland J. | title=Selective anticancer drugs | journal=Nature Reviews '
+        'Drug Discovery | volume=1 | issue=7 | date=2002 | issn=1474-1776 | '
+        'doi=10.1038/nrd842 | pages=491–492}}'
     )
 
 
@@ -50,7 +50,8 @@ def test_doi2():
     ] == (
         '* {{cite journal | title=Books of Critical Interest | journal=Critical '
         'Inquiry | volume=40 | issue=3 | date=2014 | issn=0093-1896 | '
-        'doi=10.1086/677379 | ref={{sfnref | Critical Inquiry | 2014}}}}'
+        'doi=10.1086/677379 | pages=272–281 | ref={{sfnref | Critical Inquiry | '
+        '2014}}}}'
     )
 
 
@@ -67,7 +68,7 @@ def test_doi3():
     assert citoid_scr('https://doi.org/10.1037%2Fh0063404')[1] == (
         '* {{cite journal | last=Spitzer | first=H. F. | title=Studies in retention. '
         '| journal=Journal of Educational Psychology | volume=30 | issue=9 | '
-        'date=1939 | issn=1939-2176 | doi=10.1037/h0063404}}'
+        'date=1939 | issn=1939-2176 | doi=10.1037/h0063404 | pages=641–656}}'
     )
 
 
@@ -167,7 +168,8 @@ def test_non_numeric_volume():
         'first2=Johann H. | last3=Kautz | first3=Richard L. | title=Near-Zero Bias '
         'Arrays of Josephson Tunnel Junctions Providing Standard Voltages up to 1 V | '
         'journal=IEEE Transactions on Instrumentation and Measurement | volume=IM-34 '
-        '| issue=2 | date=1985 | issn=0018-9456 | doi=10.1109/TIM.1985.4315297}}'
+        '| issue=2 | date=1985 | issn=0018-9456 | doi=10.1109/TIM.1985.4315297 | '
+        'pages=185–187}}'
     )
 
 
@@ -214,7 +216,8 @@ def test_contains_brackets():  # 33
         'first5=Manping | title=Ostracoda Assemblages in Core Sediments and Their '
         'Environmental Significance in a Small Lake in Northwest Tibet, China | '
         'journal=Arctic, Antarctic, and Alpine Research | volume=39 | issue=4 | '
-        'date=2007 | issn=1523-0430 | doi=10.1657/1523-0430(07-512)[ZHU]2.0.CO;2}}'
+        'date=2007 | issn=1523-0430 | doi=10.1657/1523-0430(07-512)[ZHU]2.0.CO;2 | '
+        'pages=658–662}}'
     )
 
 
@@ -276,7 +279,8 @@ def test_sfn_extract_year_from_date():
         'recruitment and evolution of snake toxins using the evolutionary context '
         'provided by the Bothrops jararaca genome | journal=Proceedings of the '
         'National Academy of Sciences | volume=118 | issue=20 | date=2021-05-18 | '
-        'issn=0027-8424 | doi=10.1073/pnas.2015159118}}'
+        'issn=0027-8424 | pmid=33972420 | pmc=PMC8157943 | '
+        'doi=10.1073/pnas.2015159118}}'
     )
 
 
@@ -290,5 +294,5 @@ def test_doi_without_date():  # 46
     assert citoid_scr('10.1023/a:1018715525493')[1] == (
         '* {{cite journal | last=Sigusch | first=Volkmar | title=[No title found] | '
         'journal=Archives of Sexual Behavior | volume=27 | issue=4 | date=1998 | '
-        'doi=10.1023/A:1018715525493}}'
+        'doi=10.1023/A:1018715525493 | pages=331–359}}'
     )

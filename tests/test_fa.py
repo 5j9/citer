@@ -292,17 +292,14 @@ def test_isbn_unpure_input():
 def test_2letter_langcode():
     """Test that 3letter language code is converted to a 2-letter one."""
     # Todo: The fawiki template mixes Persian and Chinese characters...
-    assert (
-        '* {{یادکرد ژورنال | نام خانوادگی=Huang | نام=Y '
-        '| نام خانوادگی۲=Lu | نام۲=J | نام خانوادگی۳=Shen '
-        '| نام۳=Y | نام خانوادگی۴=Lu | نام۴=J '
-        '| عنوان=[The protective effects of total flavonoids from '
-        'Lycium Barbarum L. on lipid peroxidation of liver mitochondria '
-        'and red blood cell in rats]. '
-        '| ژورنال=Wei sheng yan jiu = Journal of hygiene research '
-        '| جلد=28 | شماره=2 | تاریخ=1999-03-30 | issn=1000-8020 '
-        '| pmid=11938998 | صفحه=115–6 | زبان=zh}}'
-    ) in pmid_scr('11938998')[1]
+    assert pmid_scr('11938998')[1] == (
+        '* {{یادکرد ژورنال | نام خانوادگی=Huang | نام=Y. | نام خانوادگی۲=Lu | نام۲=J. '
+        '| نام خانوادگی۳=Shen | نام۳=Y. | نام خانوادگی۴=Lu | نام۴=J. | عنوان=[The '
+        'protective effects of total flavonoids from Lycium Barbarum L. on lipid '
+        'peroxidation of liver mitochondria and red blood cell in rats] | ژورنال=Wei '
+        'Sheng Yan Jiu = Journal of Hygiene Research | جلد=28 | شماره=2 | '
+        'تاریخ=1999-03-30 | issn=1000-8020 | pmid=11938998 | صفحه=115–116}}'
+    )
 
 
 def test_either_year_or_date():
