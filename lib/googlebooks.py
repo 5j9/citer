@@ -4,16 +4,19 @@ from langid import classify
 
 from lib.commons import request
 from lib.ris import ris_parse
+from lib.urls import url_to_dict as urls
 
 
 def url_to_dict(parsed_url, date_format='%Y-%m-%d') -> dict:
-    """Create the response namedtuple."""
     parsed_query = parse_qs(parsed_url.query)
 
     if (id_ := parsed_query.get('id')) is not None:
         volume_id = id_[0]
     else:  # the new URL format
-        volume_id = parsed_url.path.rpartition('/')[2]
+        path = parsed_url.path
+        if path[:7] != '/books/':
+            return urls(parsed_url.geturl(), date_format)
+        volume_id = path.rpartition('/')[2]
 
     dictionary = ris_parse(
         request(

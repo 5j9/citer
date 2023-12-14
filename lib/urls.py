@@ -447,7 +447,6 @@ def get_html(url: str) -> tuple[str, str]:
 
 
 def url2dict(url: str) -> Dict[str, Any]:
-    """Get url and return the result as a dictionary."""
     parsed_url = urlparse(url)
     hostname = parsed_url.hostname.replace('www.', '', 1)
 
