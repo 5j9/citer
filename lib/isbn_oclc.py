@@ -86,6 +86,9 @@ def isbn_to_dict(
             ketabir_dict = ketabir_result_list[0]
             dictionary = combine_dicts(ketabir_dict, dictionary)
 
+    if not dictionary:
+        raise ReturnError('Error: ISBN not found', '', '')
+
     dictionary['isbn'] = isbn_mask(isbn)
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:

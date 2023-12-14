@@ -152,11 +152,13 @@ class NumberInNameError(InvalidNameError):
 
 
 class ReturnError(Exception):
-
     """Raise to display message to end user.
 
     Pass sfn, cit, and ref fields as positional args.
     """
+
+    def __init__(self, sfn, cit, ref):
+        super().__init__(sfn, cit, ref)
 
 
 def request(url, spoof=False, method='get', **kwargs) -> requests.Response:

@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from pytest import raises
 
 from lib.commons import ISBN_10OR13_SEARCH, ReturnError, dict_to_sfn_cit_ref
@@ -87,11 +89,11 @@ def test_citoid_only():  # 31
 def test_invalid_oclc():
     with raises(ReturnError) as e:
         oclc_dict('99999999999999')
-        assert e.args == (
-            'Error processing OCLC number: 99999999999999',
-            'Make sure the OCLC identifier is valid.',
-            '',
-        )
+    assert e.value.args == (
+        'Error processing OCLC number: 99999999999999',
+        'Make sure the OCLC identifier is valid.',
+        '',
+    )
 
 
 def test_oclc_with_issn():
@@ -127,3 +129,11 @@ def test_citoid():
         'publisher-location': 'New York, NY',
         'title': 'Ethnographies of social support',
     }
+
+
+@patch('lib.isbn_oclc.google_books')
+@patch('lib.isbn_oclc.citoid_thread_target')
+def test_not_found_isbn(_m1, _m2):
+    with raises(ReturnError) as e:
+        isbn_scr('9798863646336')
+    assert e.value.args == ('Error: ISBN not found', '', '')
