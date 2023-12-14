@@ -66,6 +66,10 @@ def get_citoid_dict(query: str, quote=False, /) -> Optional[dict]:
         d['cite_type'] = 'conference'
         if (title := get('proceedingsTitle')) is not None:
             d['title'] = title
+    elif cite_type == 'webpage':
+        d['cite_type'] = 'web'
+        if (website := get('websiteTitle')) is not None:
+            d['website'] = website
 
     if (issn := get('ISSN')) is not None:
         d['issn'] = issn[0]
