@@ -202,7 +202,7 @@ def json_ld_authors(s: str) -> Optional[List[Tuple[str, str]]]:
             for n in j['name']:
                 ns += byline_to_names(n)
             return ns
-    except KeyError:
+    except (KeyError, TypeError):
         return
 
 
