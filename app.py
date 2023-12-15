@@ -36,7 +36,7 @@ from lib.ketabir import url_to_dict as ketabir_url_to_dict
 from lib.noorlib import url_to_dict as noorlib_url_to_dict
 from lib.noormags import url_to_dict as noormags_url_to_dict
 from lib.pubmed import pmcid_dict, pmid_dict
-from lib.urls import url_to_dict as urls_url_to_dict, get_html, StatusCodeError
+from lib.urls import url_to_dict as urls_url_to_dict, get_html
 from lib.waybackmachine import url_to_dict as archive_url_to_dict
 
 
