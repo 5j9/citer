@@ -243,6 +243,8 @@ def find_site_name(
         home_site_name, home_title = home_list
         if home_site_name is not None:
             return home_site_name
+        if home_title is None:
+            return hostname
         if (i := home_title.find(':')) != -1:
             if site_name := home_title[:i].strip():
                 return site_name
