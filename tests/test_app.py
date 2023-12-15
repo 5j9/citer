@@ -1,4 +1,5 @@
-from unittest.mock import patch
+from io import BytesIO
+from unittest.mock import patch, Mock
 from urllib.parse import urlparse
 
 # noinspection PyPackageRequirements
@@ -6,6 +7,8 @@ from pytest import raises
 from requests import JSONDecodeError
 
 from app import (
+    root,
+    input_type_to_resolver,
     TLDLESS_NETLOC_RESOLVER,
     google_books_dict,
     google_encrypted_dict,
@@ -87,3 +90,22 @@ def test_doi_url_fallback_to_url(doi_scr, urls_scr):
         '10.5555/3157382.3157535', True, '%B %#d, %Y'
     )
     urls_scr.assert_called_once_with(user_input, '%B %#d, %Y')
+
+
+def test_userinput_in_body_is_stripped():
+    m = Mock(side_effect=NotImplementedError)
+    with patch.dict(
+        input_type_to_resolver,
+        {
+            'url-doi-isbn': m,
+        },
+    ):
+        root(
+            lambda _, __: None,
+            {
+                'CONTENT_LENGTH': '121',
+                'QUERY_STRING': 'input_type=url-doi-isbn&dateformat=%25%23d+%25B+%25Y',
+                'wsgi.input': BytesIO(b'    https://books.google.com/'),
+            },
+        )
+    m.assert_called_once_with('https://books.google.com/', '%#d %B %Y')
