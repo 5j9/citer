@@ -191,7 +191,7 @@ def root(start_response: callable, environ: dict) -> tuple:
 
     # Warning: input is not escaped!
     body = read_body(environ)
-    if not (user_input := body or query_get('user_input', [''])[0].strip()):
+    if not (user_input := (body or query_get('user_input', [''])[0]).strip()):
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
