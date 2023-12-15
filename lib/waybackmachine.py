@@ -1,5 +1,3 @@
-"""Define related tools for web.archive.org (aka Wayback Machine)."""
-
 import logging
 from datetime import date
 from threading import Thread
@@ -30,7 +28,6 @@ URL_FULLMATCH = rc(
 
 
 def url_to_dict(archive_url: str, date_format: str = '%Y-%m-%d') -> dict:
-    """Create the response namedtuple."""
     if (m := URL_FULLMATCH(archive_url)) is None:
         # Could not parse the archive_url. Treat as an ordinary URL.
         return urls_url_to_dict(archive_url, date_format)
@@ -92,15 +89,9 @@ def original_url_dict(url: str):
     """Retuan dictionary only containing required data for og:url."""
     d = {}
     # Creating a thread to request homepage title in background
-    hometitle_list = []  # A mutable variable used to get the thread result
-
     parsed_url = urlparse(url)
     hostname = parsed_url.hostname.removeprefix('.www')
-
-    home_title_thread = Thread(
-        target=analyze_home, args=(parsed_url, hometitle_list)
-    )
-    home_title_thread.start()
+    home_thread, home_list = analyze_home(parsed_url)
     url, html = get_html(url)
 
     if (m := TITLE_TAG(html)) is not None:
@@ -123,11 +114,11 @@ def original_url_dict(url: str):
             url,
             hostname,
             authors,
-            hometitle_list,
-            home_title_thread,
+            home_list,
+            home_thread,
         )
     d['title'] = find_title(
-        html, html_title, hostname, authors, hometitle_list, home_title_thread
+        html, html_title, hostname, authors, home_list, home_thread
     )
     return d
 
