@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 from langid import classify
 from requests import Response as RequestsResponse
-from requests.exceptions import RequestException
+from requests.exceptions import RequestException, ConnectTimeout
 
 from lib.citoid import get_citoid_dict
 from lib.commons import ANYDATE_PATTERN, Search, find_any_date, rc, request
@@ -460,7 +460,7 @@ def url2dict(url: str) -> Dict[str, Any]:
 
     try:
         url, html = get_html(url)
-    except StatusCodeError:
+    except (StatusCodeError, ConnectTimeout):
         # sometimes get_html fails (is blacklisted), but zotero works
         # issues/47
         if (d := get_citoid_dict(url, True)) is None:
