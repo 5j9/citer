@@ -372,10 +372,9 @@ def find_date(html: str, url: str) -> datetime_date:
     return find_any_date(url) or find_any_date(html)
 
 
-def analyze_home(parsed_url: tuple, home_list: list) -> None:
+def _analyze_home(parsed_url: tuple, home_list: list) -> None:
     """Append home_title and site_name to home_list.
 
-    This function is invoked through a thread.
     home_list is used to return the thread result.
     """
     home_url = '://'.join(parsed_url[:2])
@@ -395,13 +394,18 @@ def analyze_home(parsed_url: tuple, home_list: list) -> None:
     html = content.decode(m[1].decode() if m else r.encoding)
 
     if m := SITE_NAME_SEARCH(html):
-        home_list.append(m['result'])
-    else:
-        home_list.append(None)
+        home_list[0] = m['result']
 
     m = TITLE_TAG(html)
     title = html_unescape(m['result']) if m else None
-    home_list.append(title)
+    home_list[1] = title
+
+
+def analyze_home(parsed_url: tuple) -> tuple[Thread, list]:
+    home_list = [None, None]
+    home_thread = Thread(target=_analyze_home, args=(parsed_url, home_list))
+    home_thread.start()
+    return home_thread, home_list
 
 
 def check_response(r: RequestsResponse) -> None:
@@ -450,11 +454,7 @@ def url2dict(url: str) -> Dict[str, Any]:
     parsed_url = urlparse(url)
     hostname = parsed_url.hostname.replace('www.', '', 1)
 
-    # Creating a thread to request homepage title in background
-    home_thread = Thread(
-        target=analyze_home, args=(parsed_url, (home_list := []))
-    )
-    home_thread.start()
+    home_thread, home_list = analyze_home(parsed_url)
 
     try:
         url, html = get_html(url)
