@@ -167,3 +167,11 @@ def test_json_ld_first_name_only():
     assert not json_ld_authors(
         '[{"@type":"Person","name":"Reuters","sameAs":"https://www.reuters.comundefined"}]'
     )
+
+
+def test_json_ld_name_not_a_list():
+    # https://www.fr.de/frankfurt/magische-maschinen-im-frankfurter-liebieghaus-92326311.html
+    # used to raise TypeError
+    assert find_authors('"author":["Andreas Hartmann"]') == [
+        ('["Andreas', 'Hartmann"]')
+    ]
