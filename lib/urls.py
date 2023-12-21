@@ -284,7 +284,7 @@ def parse_title(
     title: str,
     hostname: str,
     authors: Optional[List[Tuple[str, str]]],
-    home_list: Optional[List[str]] = None,
+    home_list: Optional[List[str | None]] = None,
     thread: Thread = None,
 ) -> Tuple[Optional[str], str, Optional[str]]:
     """Return (intitle_author, pure_title, intitle_sitename).
@@ -336,20 +336,21 @@ def parse_title(
         else:
             if thread is not None:
                 thread.join()
-            if home_list:
+            if home_list is not None:
                 home_site_name, home_title = home_list
-                # 3. In homepage title
-                for part in parts_map:
-                    if part in home_title:
-                        intitle_sitename = parts_map.pop(part).strip()
-                        break
-                else:
-                    # 4. Using difflib on home_title
-                    if close_matches := get_close_matches(
-                        home_title, parts_map, n=1, cutoff=0.3
-                    ):
-                        part = close_matches[0]
-                        intitle_sitename = parts_map.pop(part).strip()
+                if home_title is not None:
+                    # 3. In homepage title
+                    for part in parts_map:
+                        if part in home_title:
+                            intitle_sitename = parts_map.pop(part).strip()
+                            break
+                    else:
+                        # 4. Using difflib on home_title
+                        if close_matches := get_close_matches(
+                            home_title, parts_map, n=1, cutoff=0.3
+                        ):
+                            part = close_matches[0]
+                            intitle_sitename = parts_map.pop(part).strip()
     # Searching for intitle_author
     if authors:
         for first, last in authors:
