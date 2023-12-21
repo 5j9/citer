@@ -23,18 +23,11 @@ Additionally, URLs of many major news websites are supported, including:
 
 Special support for the URLs of the [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) is also implemented.
 
-Some other tested and supported Persian websites:
-* http://www.noormags.ir (نورمگز)
-* http://www.noorlib.ir (کتابخانه دیجیتال نور)
-* http://www.ketab.ir (خانه كتاب)
-* http://socialhistory.ihcs.ac.ir/ (تحقیقات تاریخ اجتماعی)
-
-
 ## Installation
 
 To run Citer on your local computer:
 
-1. Install Python 3.9+
+1. Install Python 3.11+
 2. Clone the project
 3. Install the dependencies using `pip install --user -r requirements.txt`
 4. Copy `config.py.example` to `config.py` (You might want to get an NCBI API key and add it to the config file if you're going to use its services)
