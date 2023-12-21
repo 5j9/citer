@@ -352,7 +352,7 @@ def parse_title(
                             part = close_matches[0]
                             intitle_sitename = parts_map.pop(part).strip()
     # Searching for intitle_author
-    if authors:
+    if authors and len(parts_map) > 1:
         for first, last in authors:
             for part in parts_map:
                 if last.lower() in part:

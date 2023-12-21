@@ -1015,7 +1015,18 @@ def test_citoid_thesis_invalid_doi(get_html: Mock):
     get_html.assert_called_once()
 
 
-def test_analyze_home_fails():
+def test_parse_title_when_analyze_home_fails():
     assert parse_title(
         'tp1 — tp2', 'www.un.org', None, [None, None], None
     ) == (None, 'tp1', None)
+
+
+def test_parse_title_all_parts_removed():
+    # https://www.un.org/en/about-us/un-charter/full-text
+    assert parse_title(
+        'United Nations Charter (full text) | United Nations',
+        'un.org',
+        [('United', 'Nations')],
+        [None, 'Welcome to the United Nations'],
+        None,
+    ) == (None, 'United Nations Charter (full text) ', 'United Nations')
