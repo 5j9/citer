@@ -1013,3 +1013,9 @@ def test_citoid_thesis_invalid_doi(get_html: Mock):
         '| access-date='
     )
     get_html.assert_called_once()
+
+
+def test_analyze_home_fails():
+    assert parse_title(
+        'tp1 — tp2', 'www.un.org', None, [None, None], None
+    ) == (None, 'tp1', None)
