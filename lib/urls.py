@@ -284,7 +284,7 @@ def parse_title(
     title: str,
     hostname: str,
     authors: Optional[List[Tuple[str, str]]],
-    home_list: Optional[List[str | None]] = None,
+    home_list: Optional[List[Optional[str]]] = None,
     thread: Thread = None,
 ) -> Tuple[Optional[str], str, Optional[str]]:
     """Return (intitle_author, pure_title, intitle_sitename).
