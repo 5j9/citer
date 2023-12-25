@@ -107,13 +107,7 @@ SPOOFED_AGENT_HEADER = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
 }
 
-
-urllib3 = requests.packages.urllib3
-# Workaround for `[SSL: DH_KEY_TOO_SMALL] dh key too small`.
-# https://stackoverflow.com/a/63349178/2705757
-urllib3.util.ssl_.DEFAULT_CIPHERS = 'ALL:@SECLEVEL=0'
-
-REQUEST = partial(requests.request, timeout=10)
+REQUEST = partial(requests.request, timeout=10, verify=False)
 
 # original regex from:
 # https://www.debuggex.com/r/0Npla56ipD5aeTr9
