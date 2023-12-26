@@ -2,7 +2,7 @@ from datetime import datetime
 from html import unescape
 from urllib.parse import unquote_plus
 
-from requests import HTTPError
+from httpx import HTTPError
 
 from lib.citoid import get_citoid_dict
 

@@ -1,19 +1,20 @@
 from io import BytesIO
-from unittest.mock import patch, Mock
+from json import JSONDecodeError
+from unittest.mock import Mock, patch
 from urllib.parse import urlparse
 
 # noinspection PyPackageRequirements
 from pytest import raises
-from requests import JSONDecodeError
 
 from app import (
-    root,
-    input_type_to_resolver,
+    LOGGER,
     TLDLESS_NETLOC_RESOLVER,
     google_books_dict,
     google_encrypted_dict,
+    input_type_to_resolver,
     noorlib_url_to_dict,
     noormags_url_to_dict,
+    root,
     url_doi_isbn_to_dict,
 )
 
@@ -99,7 +100,7 @@ def test_userinput_in_body_is_stripped():
         {
             'url-doi-isbn': m,
         },
-    ):
+    ), patch.object(LOGGER, 'exception'):
         root(
             lambda _, __: None,
             {

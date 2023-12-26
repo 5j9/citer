@@ -3,7 +3,7 @@ from datetime import date
 from threading import Thread
 from urllib.parse import urlparse
 
-from requests import ConnectionError as RequestsConnectionError
+from httpx import ConnectError
 
 from lib.commons import rc
 from lib.urls import (
@@ -76,7 +76,7 @@ def original_url2dict(ogurl: str, original_dict) -> None:
         ContentTypeError,
         ContentLengthError,
         StatusCodeError,
-        RequestsConnectionError,
+        ConnectError,
     ):
         pass
     except Exception:

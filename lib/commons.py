@@ -1,10 +1,10 @@
 from calendar import month_abbr, month_name
 from datetime import date as datetime_date, datetime
 from functools import partial
-from typing import Callable, Optional
+from ssl import CERT_NONE, create_default_context
+from typing import Callable, Iterable, Optional
 
-import requests
-import urllib3
+from httpx import Client, Response
 from isbnlib import NotValidISBNError, mask as isbn_mask
 from jdatetime import date as jdate
 from regex import IGNORECASE, VERBOSE, Match, compile as rc
@@ -108,8 +108,22 @@ SPOOFED_AGENT_HEADER = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
 }
 
-urllib3.disable_warnings()  # to suppres verify=False warning in request
-REQUEST = partial(requests.request, timeout=10, verify=False)
+context = create_default_context()
+context.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
+context.check_hostname = False
+context.verify_mode = CERT_NONE
+
+client = Client(verify=context, timeout=10)
+client_usage = 0
+
+
+def mortal_client() -> Client:
+    global client, client_usage
+    client_usage += 1
+    if client_usage > 1000:  # to save memory by discarding unneeded cookies
+        client = Client(verify=context, timeout=10)
+    return client
+
 
 # original regex from:
 # https://www.debuggex.com/r/0Npla56ipD5aeTr9
@@ -157,11 +171,15 @@ class ReturnError(Exception):
         super().__init__(sfn, cit, ref)
 
 
-def request(url, spoof=False, method='get', **kwargs) -> requests.Response:
+def request(
+    url, spoof=False, method='get', stream=False, **kwargs
+) -> Response | Iterable[Response]:
     headers = SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER
     if 'headers' in kwargs:
         headers |= kwargs.pop('headers')
-    return REQUEST(method, url, headers=headers, **kwargs)
+    if stream is True:
+        return mortal_client().stream(method, url, headers=headers, **kwargs)
+    return mortal_client().request(method, url, headers=headers, **kwargs)
 
 
 def dict_to_sfn_cit_ref(dictionary: dict) -> tuple:

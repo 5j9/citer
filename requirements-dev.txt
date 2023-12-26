@@ -1,3 +1,4 @@
 python-decouple
 pytest-socket
-pysocks
+# https://www.python-httpx.org/advanced/#SOCKS
+httpx[socks]

@@ -2,6 +2,7 @@
 format.quote-style = 'single'
 line-length = 79
 isort.combine-as-imports = true
+extend-select = ['I']  # isort
 
 [tool.pytest.ini_options]
 addopts = '--quiet --showlocals --tb=native'

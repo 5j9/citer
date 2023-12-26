@@ -3,17 +3,12 @@ from contextlib import contextmanager
 from functools import partial
 from hashlib import sha1
 from json import dump, load, loads
+from pathlib import Path
 from typing import Optional
 
-# noinspection PyPackageRequirements
-from pathlib import Path
-from requests import (
-    ConnectionError as RConnectionError,
-    Response,
-    Session,
-    HTTPError,
-)
+from httpx import ConnectError, HTTPError, Response
 
+from lib import commons
 from tests.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
 
 # Do not import library parts here. commons.py should not be loaded
@@ -63,6 +58,9 @@ class FakeResponse:
     def text(self):
         return self.content.decode(self.encoding)
 
+    def iter_bytes(self, _):
+        yield self.content
+
     def raise_for_status(self):
         if self.status_code >= 400:
             raise HTTPError
@@ -80,7 +78,7 @@ def load_response(hsh: str) -> Optional[FakeResponse]:
         USED_TESTDATA.add(filename)
 
     if 'raise' in d:
-        raise RConnectionError('per json data')
+        raise ConnectError('per json data')
 
     filename = f'{hsh}.html'
     with open(f'{TESTDATA}/{filename}', 'rb') as f:
@@ -115,7 +113,7 @@ def dump_connection_error(hsh):
 
 # noinspection PyDecorator
 @staticmethod
-def fake_request(method, url, data=None, stream=False, **kwargs):
+def fake_request(url, spoof=False, method='get', stream=False, **kwargs):
     if url.startswith(NCBI_URL):
         redacted_url = url.replace(
             NCBI_URL, NCBI_URL[: NCBI_URL.find('?')] + '?_REDACTED_PARAMS_'
@@ -123,7 +121,8 @@ def fake_request(method, url, data=None, stream=False, **kwargs):
     else:
         redacted_url = url
 
-    if data:
+    data: dict | None = kwargs.pop('data', None)
+    if data is not None:
         cache_key = redacted_url + repr(sorted(data))
     else:
         cache_key = redacted_url
@@ -138,8 +137,10 @@ def fake_request(method, url, data=None, stream=False, **kwargs):
         print('Downloading ' + url)
         with real_request():
             try:
-                response = Session().request(method, url, data=data, **kwargs)
-            except RConnectionError:
+                response = commons.request(
+                    url, method=method, data=data, spoof=spoof, **kwargs
+                )
+            except ConnectError:
                 dump_connection_error(sha1_hex)
         dump_response(sha1_hex, response, redacted_url)
 
@@ -156,13 +157,13 @@ def fake_request(method, url, data=None, stream=False, **kwargs):
 
 @contextmanager
 def real_request():
-    Session.request = original_request
+    commons.request = original_request
     yield
-    Session.request = fake_request
+    commons.request = fake_request
 
 
-original_request = Session.request
-Session.request = fake_request
+original_request = commons.request
+commons.request = fake_request
 
 # this import needs to placed after Session patch
 from lib.pubmed import NCBI_URL  # noqa

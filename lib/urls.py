@@ -7,9 +7,8 @@ from threading import Thread
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
+from httpx import HTTPError, Response, TimeoutException
 from langid import classify
-from requests import Response as RequestsResponse
-from requests.exceptions import RequestException, ConnectTimeout
 
 from lib.citoid import get_citoid_dict
 from lib.commons import ANYDATE_PATTERN, Search, find_any_date, rc, request
@@ -385,7 +384,7 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
         try:
             check_response(r)
         except (
-            RequestException,
+            HTTPError,
             StatusCodeError,
             ContentTypeError,
             ContentLengthError,
@@ -411,7 +410,7 @@ def analyze_home(parsed_url: tuple) -> tuple[Thread, list]:
     return home_thread, home_list
 
 
-def check_response(r: RequestsResponse) -> None:
+def check_response(r: Response) -> None:
     """Check content-type and content-length of the response."""
     if r.status_code != 200:
         raise StatusCodeError(r.status_code)
@@ -433,12 +432,13 @@ def check_response(r: RequestsResponse) -> None:
 
 def get_html(url: str) -> tuple[str, str]:
     """Return the html string for the given url."""
-    with request(url, stream=True, spoof=True) as r:
+    r: Response
+    with request(url, spoof=True, stream=True) as r:
         check_response(r)
         size = 0
         chunks = []
         a = chunks.append
-        for chunk in r.iter_content(MAX_RESPONSE_LENGTH):
+        for chunk in r.iter_bytes(MAX_RESPONSE_LENGTH):
             size += len(chunk)
             if size >= MAX_RESPONSE_LENGTH:
                 raise ValueError(
@@ -448,7 +448,7 @@ def get_html(url: str) -> tuple[str, str]:
             a(chunk)
         content = b''.join(chunks)
     charset_match = CHARSET(content)
-    return r.url, content.decode(
+    return str(r.url), content.decode(
         charset_match[1].decode() if charset_match else r.encoding
     )
 
@@ -461,7 +461,7 @@ def url2dict(url: str) -> Dict[str, Any]:
 
     try:
         url, html = get_html(url)
-    except (StatusCodeError, ConnectTimeout):
+    except (StatusCodeError, TimeoutException):
         # sometimes get_html fails (is blacklisted), but zotero works
         # issues/47
         if (d := get_citoid_dict(url, True)) is None:
