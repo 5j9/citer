@@ -4,6 +4,7 @@ from functools import partial
 from typing import Callable, Optional
 
 import requests
+import urllib3
 from isbnlib import NotValidISBNError, mask as isbn_mask
 from jdatetime import date as jdate
 from regex import IGNORECASE, VERBOSE, Match, compile as rc
@@ -107,6 +108,7 @@ SPOOFED_AGENT_HEADER = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
 }
 
+urllib3.disable_warnings()  # to suppres verify=False warning in request
 REQUEST = partial(requests.request, timeout=10, verify=False)
 
 # original regex from:
