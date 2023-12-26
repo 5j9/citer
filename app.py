@@ -5,6 +5,12 @@ from logging import INFO, WARNING, Formatter, getLogger
 from logging.handlers import RotatingFileHandler
 from os.path import abspath, dirname
 from urllib.parse import parse_qs, unquote, urlparse
+from os import environ
+
+# Enable Legacy Unsafe Renegotiation before loading requests
+# https://stackoverflow.com/questions/71603314/ssl-error-unsafe-legacy-renegotiation-disabled/73519818#73519818
+environ['OPENSSL_CONF'] = __file__ + '/../openssl.conf'
+
 
 from requests import (
     ConnectionError as RequestsConnectionError,
