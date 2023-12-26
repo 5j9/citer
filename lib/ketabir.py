@@ -1,10 +1,9 @@
-"""All things that are specifically related to adinebook website"""
 from logging import getLogger
 from typing import Optional
 
 from bs4 import BeautifulSoup
 from langid import classify
-from requests import RequestException
+from httpx import HTTPError
 
 from lib.commons import first_last, rc, request
 
@@ -37,7 +36,7 @@ def _url_to_dict(ketabir_url: str) -> Optional[dict]:
         # Try to see if ketabir is available,
         # ottobib should continue its work in isbn.py if it is not.
         r = request(ketabir_url)
-    except RequestException:
+    except HTTPError:
         logger.exception(ketabir_url)
         return
 

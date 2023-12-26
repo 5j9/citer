@@ -1,6 +1,6 @@
 from unittest.mock import Mock, patch
 
-from requests import HTTPError
+from httpx import HTTPError
 
 from lib import pubmed
 from lib.commons import dict_to_sfn_cit_ref

@@ -1,21 +1,10 @@
 from functools import partial
 from html import unescape
-from json import dumps
-from logging import INFO, WARNING, Formatter, getLogger
+from json import JSONDecodeError, dumps
+from logging import INFO, Formatter, basicConfig, getLogger
 from logging.handlers import RotatingFileHandler
 from os.path import abspath, dirname
 from urllib.parse import parse_qs, unquote, urlparse
-from os import environ
-
-# Enable Legacy Unsafe Renegotiation before loading requests
-# https://stackoverflow.com/questions/71603314/ssl-error-unsafe-legacy-renegotiation-disabled/73519818#73519818
-environ['OPENSSL_CONF'] = __file__ + '/../openssl.conf'
-
-
-from requests import (
-    ConnectionError as RequestsConnectionError,
-    JSONDecodeError,
-)
 
 from lib.commons import (
     ISBN_10OR13_SEARCH,
@@ -30,7 +19,6 @@ from lib.html import (
     CSS_HEADERS,
     CSS_PATH,
     DEFAULT_SCR,
-    HTTPERROR_SCR,
     JS,
     JS_HEADERS,
     JS_PATH,
@@ -42,7 +30,7 @@ from lib.ketabir import url_to_dict as ketabir_url_to_dict
 from lib.noorlib import url_to_dict as noorlib_url_to_dict
 from lib.noormags import url_to_dict as noormags_url_to_dict
 from lib.pubmed import pmcid_dict, pmid_dict
-from lib.urls import url_to_dict as urls_url_to_dict, get_html
+from lib.urls import get_html, url_to_dict as urls_url_to_dict
 from lib.waybackmachine import url_to_dict as archive_url_to_dict
 
 
@@ -76,16 +64,15 @@ HTTP_HEADERS = [('Content-Type', 'text/html; charset=UTF-8'), None]
 JSON_HEADERS = [('Content-Type', 'application/json'), None]
 
 
-getLogger('requests').setLevel(WARNING)
-getLogger('langid').setLevel(WARNING)
-
-
-def get_root_logger():
-    custom_logger = getLogger()
-    custom_logger.setLevel(INFO)
-    srcdir = dirname(abspath(__file__))
+def get_logger():
+    basicConfig(
+        format='%(pathname)s:%(lineno)d\n%(asctime)s %(levelname)s %(message)s'
+    )
+    logger = getLogger(__name__)
+    logger.setLevel(INFO)
+    src_dir = dirname(abspath(__file__))
     handler = RotatingFileHandler(
-        filename=f'{srcdir}/citer.log',
+        filename=f'{src_dir}/citer.log',
         mode='a',
         maxBytes=20000,
         backupCount=0,
@@ -95,11 +82,11 @@ def get_root_logger():
     handler.setFormatter(
         Formatter('\n%(asctime)s\n%(levelname)s\n%(message)s\n')
     )
-    custom_logger.addHandler(handler)
-    return custom_logger
+    logger.addHandler(handler)
+    return logger
 
 
-LOGGER = get_root_logger()
+LOGGER = get_logger()
 
 
 def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
@@ -185,7 +172,7 @@ input_type_to_resolver = {
 def read_body(environ: dict, /):
     length = int(environ.get('CONTENT_LENGTH') or 0)
     if length > 10_000:
-        LOGGER.error(f'CONTENT_LENGTH was too long; {length = } bytes')
+        LOGGER.error(f'CONTENT_LENGTH was too long; {length=} bytes')
         return ''  # do not process the input
     return environ['wsgi.input'].read(length).decode()
 
@@ -218,10 +205,6 @@ def root(start_response: callable, environ: dict) -> tuple:
 
     try:
         d = to_dict(user_input, date_format)
-    except RequestsConnectionError:
-        status = '500 ConnectionError'
-        LOGGER.exception(user_input)
-        scr = HTTPERROR_SCR
     except Exception as e:
         status = '500 Internal Server Error'
 

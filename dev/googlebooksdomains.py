@@ -1,6 +1,6 @@
 from re import MULTILINE, findall
 
-from requests import get
+from httpx import get
 
 github_content = get(
     'https://github.com/SebastianJ/fiber-freeze/raw/master/data/https_urls.txt'

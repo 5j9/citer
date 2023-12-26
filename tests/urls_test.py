@@ -1,5 +1,5 @@
 # noinspection PyPackageRequirements
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
 from pytest import mark
 
@@ -7,10 +7,11 @@ from lib.commons import dict_to_sfn_cit_ref
 from lib.urls import (
     LANG_SEARCH,
     ContentTypeError,
+    StatusCodeError,
     parse_title,
     url_to_dict,
-    StatusCodeError,
 )
+from tests import FakeResponse
 
 
 def urls_scr(*args):
@@ -973,7 +974,9 @@ def test_lang_search():
     assert LANG_SEARCH('<html lang=en>')[1] == 'en'
 
 
-@patch('lib.commons.REQUEST')
+@patch(
+    'lib.urls.request', return_value=FakeResponse('', b'', 200, {}, 'utf-8')
+)
 @patch('lib.urls.check_response', side_effect=ContentTypeError)
 def test_non_text_content(_0, _1):
     scr = urls_scr('https://example.com/')

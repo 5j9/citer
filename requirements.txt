@@ -4,4 +4,4 @@ langid
 bs4
 lxml
 regex
-requests
+httpx
