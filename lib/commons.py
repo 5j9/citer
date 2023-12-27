@@ -119,9 +119,11 @@ client_usage = 0
 
 def mortal_client() -> Client:
     global client, client_usage
-    client_usage += 1
     if client_usage > 1000:  # to save memory by discarding unneeded cookies
+        client_usage = 0
         client = Client(verify=context, timeout=10)
+        return client
+    client_usage += 1
     return client
 
 
