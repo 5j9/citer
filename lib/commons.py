@@ -1,8 +1,9 @@
 from calendar import month_abbr, month_name
+from collections.abc import Callable, Iterable
 from datetime import date as datetime_date, datetime
 from functools import partial
 from ssl import CERT_NONE, create_default_context
-from typing import Callable, Iterable, Optional
+from typing import Optional
 
 from httpx import Client, Response
 from isbnlib import NotValidISBNError, mask as isbn_mask

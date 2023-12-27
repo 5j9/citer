@@ -1,4 +1,4 @@
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 from urllib.parse import urlparse
 
 from pytest import mark, raises

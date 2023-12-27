@@ -1,7 +1,7 @@
 from typing import Optional
+from urllib.parse import quote_plus
 
 from lib.commons import request
-from urllib.parse import quote_plus
 
 TRANSLATE = {
     # 'url': 'url',

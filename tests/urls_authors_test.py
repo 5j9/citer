@@ -5,8 +5,8 @@ from lib.urls_authors import (
     IV,
     byline_to_names,
     find_authors,
-    rc,
     json_ld_authors,
+    rc,
 )
 from tests.urls_test import urls_scr
 
