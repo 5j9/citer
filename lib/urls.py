@@ -4,7 +4,7 @@ from functools import partial
 from html import unescape as html_unescape
 from logging import getLogger
 from threading import Thread
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 from urllib.parse import urlparse
 
 from httpx import HTTPError, Response, TimeoutException
@@ -148,14 +148,14 @@ def url_to_dict(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
     return dictionary
 
 
-def find_journal(html: str) -> Optional[str]:
+def find_journal(html: str) -> str | None:
     """Return journal title as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     if (m := JOURNAL_TITLE_SEARCH(html)) is not None:
         return m['result']
 
 
-def find_publisher(html: str) -> Optional[str]:
+def find_publisher(html: str) -> str | None:
     if (m := PUBLISHER_SEARCH(html)) is None:
         return None
     publisher = m['result']
@@ -164,7 +164,7 @@ def find_publisher(html: str) -> Optional[str]:
     return publisher
 
 
-def find_issn(html: str) -> Optional[str]:
+def find_issn(html: str) -> str | None:
     r"""Return International Standard Serial Number as a string.
 
     Normally ISSN should be in the  '\d{4}\-\d{3}[\dX]' format, but this
@@ -174,31 +174,31 @@ def find_issn(html: str) -> Optional[str]:
         return m['result']
 
 
-def find_pmid(html: str) -> Optional[str]:
+def find_pmid(html: str) -> str | None:
     """Return pmid as a string."""
     if (m := PMID_SEARCH(html)) is not None:
         return m['result']
 
 
-def find_doi(html: str) -> Optional[str]:
+def find_doi(html: str) -> str | None:
     """Return DOI as a string."""
     if (m := DOI_SEARCH(html)) is not None:
         return m['result']
 
 
-def find_volume(html: str) -> Optional[str]:
+def find_volume(html: str) -> str | None:
     """Return citatoin volume number as a string."""
     if (m := VOLUME_SEARCH(html)) is not None:
         return m['result']
 
 
-def find_issue(html: str) -> Optional[str]:
+def find_issue(html: str) -> str | None:
     """Return citation issue number as a string."""
     if (m := ISSUE_SEARCH(html)) is not None:
         return m['result']
 
 
-def find_pages(html: str) -> Optional[str]:
+def find_pages(html: str) -> str | None:
     """Return citation pages as a string."""
     # http://socialhistory.ihcs.ac.ir/article_319_84.html
     if fp_match := FIRST_PAGE_SEARCH(html):
@@ -211,8 +211,8 @@ def find_site_name(
     html_title: str,
     url: str,
     hostname: str,
-    authors: List[Tuple[str, str]],
-    home_list: List[str],
+    authors: list[tuple[str, str]],
+    home_list: list[str],
     thread: Thread,
 ) -> str:
     """Return (site's name as a string, where).
@@ -260,10 +260,10 @@ def find_title(
     html: str,
     html_title: str,
     hostname: str,
-    authors: List[Tuple[str, str]],
-    home_list: List[str],
+    authors: list[tuple[str, str]],
+    home_list: list[str],
     thread: Thread,
-) -> Optional[str]:
+) -> str | None:
     """Return (title_string, where_info)."""
     if (m := TITLE_SEARCH(html)) is not None:
         return parse_title(
@@ -282,10 +282,10 @@ def find_title(
 def parse_title(
     title: str,
     hostname: str,
-    authors: Optional[List[Tuple[str, str]]],
-    home_list: Optional[List[Optional[str]]] = None,
+    authors: list[tuple[str, str]] | None,
+    home_list: list[str | None] | None = None,
     thread: Thread = None,
-) -> Tuple[Optional[str], str, Optional[str]]:
+) -> tuple[str | None, str, str | None]:
     """Return (intitle_author, pure_title, intitle_sitename).
 
     Examples:
@@ -453,7 +453,7 @@ def get_html(url: str) -> tuple[str, str]:
     )
 
 
-def url2dict(url: str) -> Dict[str, Any]:
+def url2dict(url: str) -> dict[str, Any]:
     parsed_url = urlparse(url)
     hostname = parsed_url.hostname.replace('www.', '', 1)
 

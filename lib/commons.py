@@ -3,7 +3,6 @@ from collections.abc import Callable, Iterable
 from datetime import date as datetime_date, datetime
 from functools import partial
 from ssl import CERT_NONE, create_default_context
-from typing import Optional
 
 from httpx import Client, Response
 from isbnlib import NotValidISBNError, mask as isbn_mask
@@ -20,7 +19,7 @@ else:
 
 
 rc = partial(rc, cache_pattern=False)
-Search = Callable[[str], Optional[Match[str]]]
+Search = Callable[[str], Match[str] | None]
 # The regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
 DOI_SEARCH: Search = rc(

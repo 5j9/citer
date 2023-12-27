@@ -6,8 +6,11 @@ from lib import pubmed
 from lib.commons import dict_to_sfn_cit_ref
 from lib.pubmed import pmcid_dict, pmid_dict
 
-pmid_scr = lambda *args: dict_to_sfn_cit_ref(pmid_dict(*args))
-pmcid_scr = lambda *args: dict_to_sfn_cit_ref(pmcid_dict(*args))
+
+def pmid_scr(*args):
+    return dict_to_sfn_cit_ref(pmid_dict(*args))
+def pmcid_scr(*args):
+    return dict_to_sfn_cit_ref(pmcid_dict(*args))
 
 
 def test_doi_update():

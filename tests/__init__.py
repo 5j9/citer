@@ -4,7 +4,6 @@ from functools import partial
 from hashlib import sha1
 from json import dump, load, loads
 from pathlib import Path
-from typing import Optional
 
 from httpx import ConnectError, HTTPError, Response
 
@@ -66,7 +65,7 @@ class FakeResponse:
             raise HTTPError
 
 
-def load_response(hsh: str) -> Optional[FakeResponse]:
+def load_response(hsh: str) -> FakeResponse | None:
     filename = f'{hsh}.json'
     try:
         with open(f'{TESTDATA}/{filename}', 'rb') as f:

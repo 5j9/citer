@@ -1,5 +1,4 @@
 from json import JSONDecodeError, loads
-from typing import List, Optional, Tuple
 
 from regex import ASCII, IGNORECASE, VERBOSE
 
@@ -180,13 +179,13 @@ STOPWORDS_SEARCH = rc(
 ).search
 
 
-def json_ld_authors(s: str) -> Optional[List[Tuple[str, str]]]:
+def json_ld_authors(s: str) -> list[tuple[str, str]] | None:
     try:
         j = loads(s)
     except JSONDecodeError:
         return
     try:
-        if type(j) is list:
+        if type(j) is list:  # noqa: E721
             ns = []
             for d in j:
                 if d['@type'] == 'Person':
@@ -195,7 +194,7 @@ def json_ld_authors(s: str) -> Optional[List[Tuple[str, str]]]:
 
         # assert type(j) is dict
         if j['@type'] == 'Person':
-            if type(j['name']) is str:
+            if type(j['name']) is str:  # noqa: E721
                 return byline_to_names(j['name'])
             # assert type(j['name']) is list
             ns = []
@@ -206,7 +205,7 @@ def json_ld_authors(s: str) -> Optional[List[Tuple[str, str]]]:
         return
 
 
-def find_authors(html) -> List[Tuple[str, str]]:
+def find_authors(html) -> list[tuple[str, str]]:
     """Return authors names found in html."""
     names = []
     match_id = None
@@ -252,7 +251,7 @@ def find_authors(html) -> List[Tuple[str, str]]:
     return names
 
 
-def byline_to_names(byline) -> List[Tuple[str, str]]:
+def byline_to_names(byline) -> list[tuple[str, str]]:
     r"""Find authors in byline sting. Return name objects as a list.
 
     The "By " prefix will be omitted.

@@ -1,8 +1,16 @@
+project.requires-python = '>=3.11'
+
 [tool.ruff]
 format.quote-style = 'single'
 line-length = 79
 isort.combine-as-imports = true
-extend-select = ['I']  # isort
+extend-select = [
+    'I',  # isort
+    'UP',  # pyupgrade
+]
+ignore = [
+    'UP027',  # list comprehensions are faster than generator expressions
+]
 
 [tool.pytest.ini_options]
 addopts = '--quiet --showlocals --tb=native'

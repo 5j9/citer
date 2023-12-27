@@ -1,7 +1,9 @@
 from lib.commons import dict_to_sfn_cit_ref
 from lib.noormags import url_to_dict
 
-noormags_scr = lambda *args: dict_to_sfn_cit_ref(url_to_dict(*args))
+
+def noormags_scr(*args):
+    return dict_to_sfn_cit_ref(url_to_dict(*args))
 
 
 def test_nm1():

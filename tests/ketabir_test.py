@@ -1,7 +1,9 @@
 from lib.commons import dict_to_sfn_cit_ref
 from lib.ketabir import isbn_to_url, url_to_dict
 
-ketabir_scr = lambda *args: dict_to_sfn_cit_ref(url_to_dict(*args))
+
+def ketabir_scr(*args):
+    return dict_to_sfn_cit_ref(url_to_dict(*args))
 
 
 def test_ab1():
