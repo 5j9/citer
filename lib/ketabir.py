@@ -1,5 +1,4 @@
 from logging import getLogger
-from typing import Optional
 
 from bs4 import BeautifulSoup
 from httpx import HTTPError
@@ -21,7 +20,7 @@ def url_to_dict(url: str, date_format='%Y-%m-%d', /) -> dict:
     return dictionary
 
 
-def isbn_to_url(isbn: str) -> Optional[str]:
+def isbn_to_url(isbn: str) -> str | None:
     """Return the ketab.ir book-url for the given isbn."""
     r = request(f'https://msapi.ketab.ir/search/?query={isbn}&limit=1')
     j = r.json()
@@ -31,7 +30,7 @@ def isbn_to_url(isbn: str) -> Optional[str]:
     )
 
 
-def _url_to_dict(ketabir_url: str) -> Optional[dict]:
+def _url_to_dict(ketabir_url: str) -> dict | None:
     try:
         # Try to see if ketabir is available,
         # ottobib should continue its work in isbn.py if it is not.
