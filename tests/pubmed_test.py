@@ -9,6 +9,8 @@ from lib.pubmed import pmcid_dict, pmid_dict
 
 def pmid_scr(*args):
     return dict_to_sfn_cit_ref(pmid_dict(*args))
+
+
 def pmcid_scr(*args):
     return dict_to_sfn_cit_ref(pmcid_dict(*args))
 
