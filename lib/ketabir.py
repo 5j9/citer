@@ -2,8 +2,8 @@ from logging import getLogger
 from typing import Optional
 
 from bs4 import BeautifulSoup
-from langid import classify
 from httpx import HTTPError
+from langid import classify
 
 from lib.commons import first_last, rc, request
 

@@ -5,9 +5,9 @@ from logging import getLogger
 from threading import Thread
 
 from config import NCBI_API_KEY, NCBI_EMAIL, NCBI_TOOL
+from lib.citoid import get_citoid_dict
 from lib.commons import b_TO_NUM, rc, request
 from lib.doi import get_crossref_dict
-from lib.citoid import get_citoid_dict
 
 NON_DIGITS_SUB = rc(r'[^\d]').sub
 

@@ -3,12 +3,10 @@ from html import unescape
 from urllib.parse import unquote_plus
 
 from httpx import HTTPError
-
-from lib.citoid import get_citoid_dict
-
 from langid import classify
 
 from config import LANG
+from lib.citoid import get_citoid_dict
 from lib.commons import DOI_SEARCH, request
 
 
