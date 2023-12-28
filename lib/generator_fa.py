@@ -132,7 +132,7 @@ def sfn_cit_ref(d: dict[str, Any]) -> tuple:
         cit += ' | pmid=' + pmid
 
     if pmcid := g('pmcid'):
-        cit += ' | pmc=' + pmcid
+        cit += ' | pmc=' + pmcid.lower().removeprefix('pmc')
 
     if doi := g('doi'):
         # invalid/temporary/test doi

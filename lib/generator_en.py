@@ -228,7 +228,8 @@ def sfn_cit_ref(d: dict) -> tuple:
         cit += f' | pmid={pmid}'
 
     if pmcid := g('pmcid'):
-        cit += f' | pmc={pmcid}'
+        pmcid: str
+        cit += ' | pmc=' + pmcid.lower().removeprefix('pmc')
 
     if doi := g('doi'):
         # To avoid Check |doi= value error

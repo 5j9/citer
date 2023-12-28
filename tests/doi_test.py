@@ -279,7 +279,7 @@ def test_sfn_extract_year_from_date():
         'recruitment and evolution of snake toxins using the evolutionary context '
         'provided by the Bothrops jararaca genome | journal=Proceedings of the '
         'National Academy of Sciences | volume=118 | issue=20 | date=2021-05-18 | '
-        'issn=0027-8424 | pmid=33972420 | pmc=PMC8157943 | '
+        'issn=0027-8424 | pmid=33972420 | pmc=8157943 | '
         'doi=10.1073/pnas.2015159118}}'
     )
 
