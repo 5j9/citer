@@ -164,7 +164,7 @@ def worldcat_url_to_dict(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
 
 
 def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
-    content = request('https://www.worldcat.org/title/' + oclc).content
+    content = request('https://search.worldcat.org/title/' + oclc).content
     j = loads(
         content[
             (s := (f := content.find)(b' type="application/json">') + 25) : f(
