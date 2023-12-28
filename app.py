@@ -244,4 +244,7 @@ if __name__ == '__main__':
 
     httpd = make_server('localhost', 5000, app)
     print('serving on http://localhost:5000')
-    httpd.serve_forever()
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
