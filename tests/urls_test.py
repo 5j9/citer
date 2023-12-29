@@ -938,7 +938,7 @@ def test_use_doi_if_available():
         'enlargement: Case report and review of the literature | '
         'journal=Nigerian Postgraduate Medical Journal | publisher=Medknow | '
         'volume=27 | issue=3 | year=2020 | issn=1117-1936 | '
-        'doi=10.4103/npmj.npmj_69_20 | page=242}}'
+        'doi=10.4103/npmj.npmj_69_20 | doi-access=free | page=242}}'
     )
 
 

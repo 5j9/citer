@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from pytest import raises
 
-from lib.commons import ISBN_10OR13_SEARCH, ReturnError, dict_to_sfn_cit_ref
+from lib.commons import ReturnError, dict_to_sfn_cit_ref, isbn_10or13_search
 from lib.isbn_oclc import (
     get_citoid_dict,
     isbn_to_dict,
@@ -77,7 +77,7 @@ def test_fullname_in_ris():
 
 
 def test_hyphened_isbn_match():  # 30
-    assert ISBN_10OR13_SEARCH('2-253-00422-7')
+    assert isbn_10or13_search('2-253-00422-7')
 
 
 def test_citoid_only():  # 31

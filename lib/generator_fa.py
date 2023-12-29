@@ -1,14 +1,17 @@
-"""Functions for generating citation templates for wikifa."""
+"""Functions for generating citation templates for fa.wikipedia.org."""
 from logging import getLogger
 from typing import Any
 
-from lib.generator_en import (
-    DOI_URL_MATCH,
-    FOUR_DIGIT_NUM,
-    TYPE_TO_CITE,
-    Date,
+from lib import (
+    doi_url_match,
+    four_digit_num,
     fullname,
     hash_for_ref_name,
+    is_free_doi,
+    type_to_cite,
+)
+from lib.generator_en import (
+    Date,
     sfn_cit_ref as en_citations,
 )
 from lib.language import TO_TWO_LETTER_CODE
@@ -25,7 +28,7 @@ DIGITS_TO_FA = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
 def sfn_cit_ref(d: dict[str, Any]) -> tuple:
     """Return sfn, citation, and ref."""
     g = d.get
-    if not (cite_type := TYPE_TO_CITE(g('cite_type'))):
+    if not (cite_type := type_to_cite(g('cite_type'))):
         logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
         cite_type = ''
     else:
@@ -59,7 +62,7 @@ def sfn_cit_ref(d: dict[str, Any]) -> tuple:
         sfn += ' | ' + year
     elif date is not None:
         if isinstance(date, str):
-            year = FOUR_DIGIT_NUM(date)[0]
+            year = four_digit_num(date)[0]
         else:
             year = date.strftime('%Y')
         sfn += f' | {year}'
@@ -138,6 +141,8 @@ def sfn_cit_ref(d: dict[str, Any]) -> tuple:
         # invalid/temporary/test doi
         if not doi.startswith('10.5555'):
             cit += f' | doi={doi}'
+            if is_free_doi(doi):
+                cit += ' | doi-access=free'
 
     if oclc := g('oclc'):
         cit += ' | oclc=' + oclc
@@ -155,7 +160,7 @@ def sfn_cit_ref(d: dict[str, Any]) -> tuple:
 
     if url := g('url'):
         # Don't add a DOI URL if we already have added a DOI.
-        if not doi or not DOI_URL_MATCH(url):
+        if not doi or not doi_url_match(url):
             cit += ' | پیوند=' + url
         else:
             # To prevent addition of access date

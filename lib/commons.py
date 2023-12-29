@@ -7,10 +7,10 @@ from ssl import CERT_NONE, create_default_context
 from httpx import Client, Response
 from isbnlib import NotValidISBNError, mask as isbn_mask
 from jdatetime import date as jdate
-from regex import IGNORECASE, VERBOSE, Match, compile as rc
+from regex import IGNORECASE, VERBOSE, Match
 
 from config import LANG, NCBI_EMAIL, NCBI_TOOL, SPOOFED_USER_AGENT, USER_AGENT
-from lib.generator_en import FOUR_DIGIT_NUM  # noqa: F401
+from lib.generator_en import rc
 
 if LANG == 'en':
     from lib.generator_en import sfn_cit_ref
@@ -18,11 +18,10 @@ else:
     from lib.generator_fa import sfn_cit_ref
 
 
-rc = partial(rc, cache_pattern=False)
 Search = Callable[[str], Match[str] | None]
 # The regex is from:
 # http://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page
-DOI_SEARCH: Search = rc(
+doi_search: Search = rc(
     r"""
     \b
     10\.[0-9]{4,}+
@@ -57,7 +56,7 @@ jB_TO_NUM = {
     'اسفند': 12,
 }
 
-DOUBLE_DIGIT_SEARCH = rc(r'\d\d').search
+double_digit_search = rc(r'\d\d').search
 
 # Date patterns:
 
@@ -91,10 +90,10 @@ ANYDATE_PATTERN = (
     rf'(?:(?:{B}|{b})\ {d},?\ {Y}|{d}\ (?:{B}|{b})\ {Y}|{Y}(?<sep>[-/]){zm}'
     rf'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d))'
 )
-ANYDATE_SEARCH: Search = rc(ANYDATE_PATTERN, VERBOSE).search
-DIGITS_FINDALL = rc(r'\d').findall
-MC_SUB = rc(r'MC(\w)', IGNORECASE).sub
-LAST_FIRST = partial(rc(r'[,،]').split, maxsplit=1)
+date_search: Search = rc(ANYDATE_PATTERN, VERBOSE).search
+digits_findall = rc(r'\d').findall
+mc_sub = rc(r'MC(\w)', IGNORECASE).sub
+last_first = partial(rc(r'[,،]').split, maxsplit=1)
 
 
 AGENT_HEADER = {
@@ -130,16 +129,16 @@ def mortal_client() -> Client:
 # original regex from:
 # https://www.debuggex.com/r/0Npla56ipD5aeTr9
 # https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
-ISBN_10OR13_SEARCH = rc(
+isbn_10or13_search = rc(
     r'97[89]([ -]?+)(?=\d{1,5}\1?+\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*){9}\d'
     r'|(?=\d{1,5}([ -]?+)\d{1,7}\2?+\d{1,6}\2?+\d)(?:\d\2*+){9}[\dX]'
 ).search
 
-ISBN10_SEARCH = rc(
+isbn10_search = rc(
     r'(?=\d{1,5}([ -]?+)\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}[\dX]'
 ).search
 
-ISBN13_SEARCH = rc(
+isbn13_search = rc(
     r'97[89]([ -]?+)(?=\d{1,5}\1?+\d{1,7}\1?+\d{1,6}\1?+\d)(?:\d\1*+){9}\d'
 ).search
 
@@ -150,7 +149,7 @@ ISBN13_SEARCH = rc(
 #     r'?[0-9]{1,5}[- ]?(?:[0-9]+[- ]?){2}[0-9X]'
 # )
 
-WS_NORMALIZE = partial(rc(r'\s{2,}').sub, ' ')
+ws_normalize = partial(rc(r'\s{2,}').sub, ' ')
 
 
 class InvalidNameError(ValueError):
@@ -188,7 +187,7 @@ def dict_to_sfn_cit_ref(dictionary: dict) -> tuple:
     # Return (sfn, cite, ref) strings.
     get = dictionary.get
     if title := get('title'):
-        dictionary['title'] = WS_NORMALIZE(title)
+        dictionary['title'] = ws_normalize(title)
 
     if isbn := get('isbn'):
         try:
@@ -225,7 +224,7 @@ def first_last(fullname, separator=None) -> tuple:
         '\n' in fullname
         or len(fullname) > 40
         # "Jennifer 8. Lee"
-        or DOUBLE_DIGIT_SEARCH(fullname)
+        or double_digit_search(fullname)
     ):
         raise InvalidNameError
     if fullname[-4:] in (' Sr.', ' Jr.'):
@@ -235,7 +234,7 @@ def first_last(fullname, separator=None) -> tuple:
         suffix = None
     if separator is None:
         try:
-            lastname, firstname = LAST_FIRST(fullname)
+            lastname, firstname = last_first(fullname)
         except ValueError:  # not enough values to unpack, use whitespace
             sname = fullname.split()
             if len(sname) == 1:  # single word first-last with None separator
@@ -253,7 +252,7 @@ def first_last(fullname, separator=None) -> tuple:
     ):
         firstname = firstname.title()
         lastname = lastname.title()
-        lastname = MC_SUB(lambda m: 'Mc' + m[1].upper(), lastname)
+        lastname = mc_sub(lambda m: 'Mc' + m[1].upper(), lastname)
     if suffix:
         firstname += suffix.title()
     return firstname, lastname
@@ -268,7 +267,7 @@ def uninum2en(string) -> str:
     """
     if not string:
         raise ValueError
-    digits = set(DIGITS_FINDALL(string))
+    digits = set(digits_findall(string))
     for digit in digits:
         string = string.replace(digit, str(int(digit)))
     return string
@@ -281,7 +280,7 @@ def find_any_date(str_or_match) -> datetime.date or None:
     The returned date can't be from the future.
     """
     if isinstance(str_or_match, str):
-        match = ANYDATE_SEARCH(str_or_match)
+        match = date_search(str_or_match)
     else:
         match = str_or_match
     if not match:

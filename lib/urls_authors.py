@@ -2,10 +2,10 @@ from json import JSONDecodeError, loads
 
 from regex import ASCII, IGNORECASE, VERBOSE
 
+from lib import four_digit_num
 from lib.commons import (
-    ANYDATE_SEARCH,
-    FOUR_DIGIT_NUM,
     InvalidNameError,
+    date_search,
     first_last,
     rc,
 )
@@ -274,12 +274,12 @@ def byline_to_names(byline) -> list[tuple[str, str]]:
     byline = byline.partition('|')[0].strip(' ;\t\n')
     if ':' in byline:
         return []
-    if (m := ANYDATE_SEARCH(byline)) is not None:
+    if (m := date_search(byline)) is not None:
         # Removing the date part
         byline = byline[: m.start()]
     if not byline:
         return []
-    if FOUR_DIGIT_NUM(byline) is not None:
+    if four_digit_num(byline) is not None:
         return []
     # Normalize 'and\n' (and the similar) to standard 'and '
     # This should be done before cutting the byline at the first newline

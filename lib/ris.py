@@ -1,9 +1,9 @@
 from regex import MULTILINE, VERBOSE
 
-from lib.commons import ISBN_10OR13_SEARCH, InvalidNameError, first_last, rc
-from lib.doi import DOI_SEARCH
+from lib.commons import InvalidNameError, first_last, isbn_10or13_search, rc
+from lib.doi import doi_search
 
-RIS_FULLMATCH = rc(
+ris_fullmatch = rc(
     r"""
     (?: # this  group matches any line
         ^
@@ -44,7 +44,7 @@ RIS_FULLMATCH = rc(
 def ris_parse(ris_text):
     """Parse RIS_text data and return the result as a dictionary."""
     d = {}
-    match = RIS_FULLMATCH(ris_text)
+    match = ris_fullmatch(ris_text)
     d.update(match.groupdict())
     # cite_type: (book, journal, . . . )
     if (cite_type := d['type'].lower()) == 'jour':
@@ -58,7 +58,7 @@ def ris_parse(ris_text):
 
     if sn := d['sn']:
         # determine if it is ISBN or ISSN according to the cite_type
-        if ISBN_10OR13_SEARCH(sn) is not None:
+        if isbn_10or13_search(sn) is not None:
             d['isbn'] = sn
         else:
             d['issn'] = sn
@@ -80,7 +80,7 @@ def ris_parse(ris_text):
                 continue
             d['authors'].append(author)
     # DOIs may be in N1 (notes) tag, search for it in any tag
-    if (m := DOI_SEARCH(ris_text)) is not None:
+    if (m := doi_search(ris_text)) is not None:
         d['doi'] = m[0]
 
     if start_page := d['start_page']:

@@ -2,91 +2,23 @@
 from datetime import date as Date
 from functools import partial
 from logging import getLogger
-from random import choice, choices, seed
 from string import ascii_lowercase, digits
 
-from lib.commons import rc
+from lib import (
+    doi_url_match,
+    four_digit_num,
+    fullname,
+    hash_for_ref_name,
+    is_free_doi,
+    rc,
+    type_to_cite,
+)
 from lib.language import TO_TWO_LETTER_CODE
-
-# Includes ShortDOIs (See: http://shortdoi.org/) and
-# https://www.crossref.org/display-guidelines/
-DOI_URL_MATCH = rc(r'https?://(dx\.)?doi\.org/').match
-DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
-FOUR_DIGIT_NUM = rc(r'\d\d\d\d').search
 
 rm_ref_arg = partial(
     rc(r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})').sub, r'\g<repl>'
 )
-
-TYPE_TO_CITE = {
-    # BibTex types. Descriptions are from
-    # http://ctan.um.ac.ir/biblio/bibtex/base/btxdoc.pdf
-    # A part of a book, which may be a chapter (or section or whatever) and/or
-    # a range of pages.
-    'inbook': 'book',
-    # A work that is printed and bound, but without a named publisher or
-    # sponsoring institution.
-    # Note: Yadkard does not currently support the `howpublished` option.
-    'booklet': 'book',
-    # A part of a book having its own title.
-    'incollection': 'book',
-    # Technical documentation.
-    # Template:Cite manual is a redirect to Template:Cite_book on enwiki.
-    'manual': 'book',
-    # An article from a journal or magazine.
-    'article': 'journal',
-    'article-journal': 'journal',
-    # The same as INPROCEEDINGS, included for Scribe compatibility.
-    'conference': 'conference',
-    # An article in a conference proceedings.
-    'inproceedings': 'conference',
-    # A Master's thesis.
-    # todo: convert to degree/type parameter
-    'mastersthesis': 'thesis',
-    # A PhD thesis.
-    'phdthesis': 'thesis',
-    # A report published by a school or other institution, usually numbered
-    # within a series.
-    # Todo: Add support for Template:Cite techreport
-    'techreport': 'techreport',
-    # Use this type when nothing else fits.
-    'misc': '',
-    # Types used by Yadkard.
-    'web': 'web',
-    # crossref types (https://api.crossref.org/v1/types)
-    'book-section': 'book',
-    'monograph': 'book',
-    'report': 'report',
-    'book-track': 'book',
-    'journal-article': 'journal',
-    'book-part': 'book',
-    'other': '',
-    'book': 'book',
-    'journal-volume': 'journal',
-    'book-set': 'book',
-    'reference-entry': '',
-    'proceedings-article': 'conference',
-    'journal': 'journal',
-    'jour': 'journal',
-    'jrnl': 'journal',
-    # https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=22368089&retmode=json&tool=my_tool&email=my_email@example.com
-    'Journal Article': 'journal',
-    'component': '',
-    'book-chapter': 'book',
-    'report-series': 'report',
-    'proceedings': 'conference',
-    'standard': '',
-    'reference-book': 'book',
-    'posted-content': '',
-    'journal-issue': 'journal',
-    'dissertation': 'thesis',
-    'dataset': '',
-    'book-series': 'book',
-    'edited-book': 'book',
-    'standard-series': '',
-    'rprt': 'report',
-    'thesis': 'thesis',
-}.get
+DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 
 # According to https://en.wikipedia.org/wiki/Help:Footnotes,
 # the characters '!$%&()*,-.:;<@[]^_`{|}~' are also supported. But they are
@@ -94,21 +26,11 @@ TYPE_TO_CITE = {
 ALPHA_NUM = digits + ascii_lowercase
 
 
-def hash_for_ref_name(g: callable, number_of_digits=4):
-    # A combination of possible `user_input`s is used as seed.
-    seed(f'{g("url")}{g("doi")}{g("isbn")}{g("pmid")}{g("pmcid")}')
-    return choice(
-        ascii_lowercase
-    ) + ''.join(  # it should contain at least one non-digit
-        choices(digits, k=number_of_digits)
-    )
-
-
 def sfn_cit_ref(d: dict) -> tuple:
     """Return sfn, citation, and ref."""
     g = d.get
     date_format = g('date_format')
-    if not (cite_type := TYPE_TO_CITE(g('cite_type'))):
+    if not (cite_type := type_to_cite(g('cite_type'))):
         logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
         cite_type = ''
         cit = '* {{cite'
@@ -213,7 +135,7 @@ def sfn_cit_ref(d: dict) -> tuple:
         sfn += f' | {year}'
     elif date is not None:
         if isinstance(date, str):
-            year = FOUR_DIGIT_NUM(date)[0]
+            year = four_digit_num(date)[0]
         else:
             year = date.strftime('%Y')
         sfn += f' | {year}'
@@ -237,6 +159,8 @@ def sfn_cit_ref(d: dict) -> tuple:
         # https://en.wikipedia.org/wiki/Help:CS1_errors#bad_doi
         if not doi.startswith('10.5555'):
             cit += f' | doi={doi}'
+            if is_free_doi(doi):
+                cit += ' | doi-access=free'
 
     if oclc := g('oclc'):
         cit += f' | oclc={oclc}'
@@ -264,7 +188,7 @@ def sfn_cit_ref(d: dict) -> tuple:
 
     if url := g('url'):
         # Don't add a DOI URL if we already have added a DOI.
-        if not doi or not DOI_URL_MATCH(url):
+        if not doi or not doi_url_match(url):
             cit += f' | url={url}'
         else:
             # To prevent addition of access date
@@ -350,12 +274,6 @@ def names1para(translators, para):
         else:
             s += f', {fullname(first, last)}'
     return s
-
-
-def fullname(first: str, last: str) -> str:
-    if first:
-        return f'{first} {last}'
-    return last
 
 
 logger = getLogger(__name__)

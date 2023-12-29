@@ -7,7 +7,7 @@ from langid import classify
 
 from config import LANG
 from lib.citoid import get_citoid_dict
-from lib.commons import DOI_SEARCH, request
+from lib.commons import doi_search, request
 
 
 def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
@@ -17,7 +17,7 @@ def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
         # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
         # decode percent encodings
         decoded_url = unquote_plus(unescape(doi_or_url))
-        doi = DOI_SEARCH(decoded_url)[0]
+        doi = doi_search(decoded_url)[0]
     try:
         d = get_citoid_dict(doi, True)
     except HTTPError:

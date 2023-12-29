@@ -7,12 +7,12 @@ from langid import classify
 from regex import search
 
 from config import LANG
+from lib import four_digit_num
 from lib.citoid import get_citoid_dict
 from lib.commons import (
-    FOUR_DIGIT_NUM,
-    ISBN10_SEARCH,
-    ISBN13_SEARCH,
     ReturnError,
+    isbn10_search,
+    isbn13_search,
     request,
 )
 from lib.ketabir import (
@@ -40,11 +40,11 @@ def isbn_to_dict(
         isbn = isbn_container_str
     else:
         # search for isbn13
-        if (m := ISBN13_SEARCH(isbn_container_str)) is not None:
+        if (m := isbn13_search(isbn_container_str)) is not None:
             isbn = m[0]
         else:
             # search for isbn10
-            isbn = ISBN10_SEARCH(isbn_container_str)[0]
+            isbn = isbn10_search(isbn_container_str)[0]
 
     if (iranian_isbn := isbn_info(isbn) == 'Iran') is True:
         ketabir_result_list = []
@@ -194,7 +194,7 @@ def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
         place := record['publicationPlace']
     ) != '[Place of publication not identified]':
         d['publisher-location'] = place
-    if m := FOUR_DIGIT_NUM(record['publicationDate']):
+    if m := four_digit_num(record['publicationDate']):
         d['year'] = m[0]
     d['language'] = record['catalogingLanguage']
     if isbn := record['isbn13']:
