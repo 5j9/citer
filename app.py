@@ -7,12 +7,12 @@ from os.path import abspath, dirname
 from urllib.parse import parse_qs, unquote, urlparse
 
 from lib.commons import (
-    ISBN_10OR13_SEARCH,
     ReturnError,
     dict_to_sfn_cit_ref,
+    isbn_10or13_search,
     uninum2en,
 )
-from lib.doi import DOI_SEARCH, doi_to_dict
+from lib.doi import doi_search, doi_to_dict
 from lib.googlebooks import url_to_dict as google_books_dict
 from lib.html import (
     CSS,
@@ -113,7 +113,7 @@ def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
             return to_dict(url, date_format)
 
         # DOIs contain dots
-        if (m := DOI_SEARCH(unescape(en_user_input))) is not None:
+        if (m := doi_search(unescape(en_user_input))) is not None:
             try:
                 return doi_to_dict(m[0], True, date_format)
             except JSONDecodeError:
@@ -125,7 +125,7 @@ def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
         # error-prone.
-        if (m := ISBN_10OR13_SEARCH(en_user_input)) is not None:
+        if (m := isbn_10or13_search(en_user_input)) is not None:
             return isbn_to_dict(m[0], True, date_format)
 
 
