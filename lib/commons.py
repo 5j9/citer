@@ -112,15 +112,20 @@ context.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
 context.check_hostname = False
 context.verify_mode = CERT_NONE
 
-client = Client(verify=context, timeout=10)
+
+def new_client() -> Client:
+    return Client(verify=context, timeout=10, follow_redirects=True)
+
+
 client_usage = 0
+client = new_client()
 
 
 def mortal_client() -> Client:
     global client, client_usage
     if client_usage > 1000:  # to save memory by discarding unneeded cookies
         client_usage = 0
-        client = Client(verify=context, timeout=10)
+        client = new_client()
         return client
     client_usage += 1
     return client
