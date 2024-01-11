@@ -23,7 +23,6 @@ json_dump = partial(
 class FakeResponse:
     __slots__ = (
         'content',
-        'iter_content',
         'status_code',
         'headers',
         'encoding',
@@ -142,14 +141,6 @@ def fake_request(url, spoof=False, method='get', stream=False, **kwargs):
             except ConnectError:
                 dump_connection_error(sha1_hex)
         dump_response(sha1_hex, response, redacted_url)
-
-    if stream is True:
-
-        def iter_content(*_):
-            # this closure over response will simulate a bound method
-            return iter((response.content,))
-
-        response.iter_content = iter_content
 
     return response
 
