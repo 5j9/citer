@@ -381,6 +381,7 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
     """
     home_url = '://'.join(parsed_url[:2])
     with request(home_url, spoof=True, stream=True) as r:
+        r: Response
         try:
             check_response(r)
         except (
@@ -390,7 +391,7 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
             ContentLengthError,
         ):
             return
-        content = next(r.iter_content(MAX_RESPONSE_LENGTH))
+        content = next(r.iter_bytes(MAX_RESPONSE_LENGTH))
 
     m = CHARSET(content)
     html = content.decode(m[1].decode() if m else r.encoding)
