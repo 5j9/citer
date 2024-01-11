@@ -59,6 +59,7 @@ def copy_config():
 def main():
     set_file_permissions()
     copy_config()
+    write_uwsgi_ini()
 
 
 if __name__ == '__main__':
