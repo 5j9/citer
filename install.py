@@ -23,6 +23,11 @@ def set_file_permissions():
     chmod(HOME + '/www/python/src/config.py', 0o660)
 
 
+def write_uwsgi_ini():
+    with open(HOME + '/www/python/uwsgi.ini', 'wb') as f:
+        f.write(b'[uwsgi]\nenable-threads = true\n')
+
+
 def copy_config():
     committer_date = (
         check_output(
