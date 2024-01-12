@@ -122,15 +122,15 @@ def test_authors_meta_tag_with_no_quote():  # 28
 def test_uppercase_sitename_in_authors():  # 28
     # note: must use the specific testdata stored at
     # https://gist.github.com/5j9/ec831edb740363191e21c4f500cb9a09#file-usatoday_toolforge-html-L86
-    assert (
+    assert urls_scr(
+        'https://www.usatoday.com/story/entertainment/movies/2019/11/12/2576097001/'
+    )[1][2:-12] == (
         '{{cite web | last=Truitt | first=Brian '
         "| title=The infamous 'Han shot first' scene in 'Star Wars' has changed yet again on Disney+ "
         '| website=USA TODAY | date=2019-11-12 '
         '| url=https://www.usatoday.com/story/entertainment/movies/2019/11/12/star-wars-disney-plus-changes-controversial-han-solo-greedo-scene/2576097001/ '
         '| access-date='
-    ) == urls_scr(
-        'https://www.usatoday.com/story/entertainment/movies/2019/11/12/2576097001/'
-    )[1][2:-12]
+    )
 
 
 def test_byline_ending_with_semicolon():
@@ -175,3 +175,15 @@ def test_json_ld_name_not_a_list():
     assert find_authors('"author":["Andreas Hartmann"]') == [
         ('["Andreas', 'Hartmann"]')
     ]
+
+
+def test_itemprop():
+    # this may lead to false positive and could be disabled in the future
+    # https://denstoredanske.lex.dk/konger%C3%A6kken_i_Danmark
+    assert find_authors(
+        """ <li class="author-list__author" itemprop="author" itemscope
+        itemtype="http://schema.org/Person"
+        data-conjunction=" og ">
+        <a href="https://brugere.lex.dk/438">
+          <span itemprop="name">Bjørn Poulsen</span></a></li>"""
+    ) == [('Bjørn', 'Poulsen')]
