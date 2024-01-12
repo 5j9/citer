@@ -24,14 +24,6 @@ from lib.urls_authors import CONTENT_ATTR, IV, find_authors
 MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
 
 
-# https://stackoverflow.com/questions/3458217/how-to-use-regular-expression-to-match-the-charset-string-in-html
-CHARSET = rc(
-    rb"""
-    <meta(?!\s*+(?>name|value)\s*+=)[^>]*?charset\s*+=[\s"']*+([^\s"'/>]*)
-    """,
-    IV,
-).search
-
 TITLE_META_NAME_OR_PROP = r"""
     (?>name|property)=(?<q>["\'])
         (?>citation_title|title|Headline|og:title)
@@ -394,8 +386,7 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
             return
         content = next(r.iter_bytes(MAX_RESPONSE_LENGTH))
 
-    m = CHARSET(content)
-    html = content.decode(m[1].decode() if m else r.encoding)
+    html = content.decode(r.encoding, errors='replace')
 
     if m := SITE_NAME_SEARCH(html):
         home_list[0] = m['result']
@@ -448,10 +439,7 @@ def get_html(url: str) -> tuple[str, str]:
                 )
             a(chunk)
         content = b''.join(chunks)
-    charset_match = CHARSET(content)
-    return str(r.url), content.decode(
-        charset_match[1].decode() if charset_match else r.encoding
-    )
+    return f'{r.url}', content.decode(r.encoding, errors='replace')
 
 
 def url2dict(url: str) -> dict[str, Any]:

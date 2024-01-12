@@ -783,7 +783,9 @@ def test_invalid_name():
 
 def test_pages_from_html_meta():
     """Test extracting pages from html meta tags."""
-    assert (
+    assert urls_scr('http://socialhistory.ihcs.ac.ir/article_319_84.html')[1][
+        :-12
+    ] == (
         '* {{cite journal '
         '| last=جلیلیان '
         '| first=شهرام '
@@ -797,9 +799,7 @@ def test_pages_from_html_meta():
         '| url=http://socialhistory.ihcs.ac.ir/article_319_84.html '
         '| language=fa '
         '| access-date='
-    ) == urls_scr('http://socialhistory.ihcs.ac.ir/article_319_84.html')[1][
-        :-12
-    ]
+    )
 
 
 def test_empty_meta_author_content():
