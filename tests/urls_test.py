@@ -707,10 +707,10 @@ def test_oth11():
 
 
 def test_oth12():
-    """thebulletin.org"""
-    i = 'http://thebulletin.org/evidence-shows-iron-dome-not-working7318'
-    o = urls_scr(i)
-    ct = (
+    # thebulletin.org
+    assert urls_scr(
+        'http://thebulletin.org/evidence-shows-iron-dome-not-working7318'
+    )[1][:-12] == (
         '* {{cite web '
         '| last=Postol '
         '| first=Theodore A. '
@@ -721,7 +721,6 @@ def test_oth12():
         'evidence-shows-iron-dome-not-working7318 '
         '| access-date='
     )
-    assert ct == o[1][:-12]
 
 
 def test_reverse_name():
@@ -873,15 +872,15 @@ def test_abc_author():
 
 
 def test_indaily():
-    assert (
+    assert urls_scr(
+        'https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/'
+    )[1][:-12] == (
         '* {{cite web | last=Siebert | first=Bension '
         "| title=Epidemics expert questions Marshall's schools advice "
         '| website=InDaily | date=2020-03-19 '
         '| url=https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/ '
         '| access-date='
-    ) == urls_scr(
-        'https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/'
-    )[1][:-12]
+    )
 
 
 def test_language_not_de_csbc():
@@ -942,7 +941,11 @@ def test_dspace_publisher():  # 27
     assert urls_scr('https://repositorio.unesp.br/handle/11449/86528')[1][
         :-12
     ] == (
-        '* {{cite web | title=A neve em Palmas/PR: da reconstituição histórica à abordagem dinâmica | publisher=Universidade Estadual Paulista (Unesp) | date=2004 | url=https://repositorio.unesp.br/handle/11449/86528 | language=pt | ref={{sfnref | Universidade Estadual Paulista (Unesp) | 2004}} | access-date='
+        '* {{cite web | last=J&uacute | first=Carvalho | title=A neve em Palmas/PR: '
+        'da reconstituição histórica à abordagem dinâmica | publisher=Universidade '
+        'Estadual Paulista (Unesp) | date=2004 | '
+        'url=https://repositorio.unesp.br/handle/11449/86528 | language=pt | '
+        'access-date='
     )
 
 
