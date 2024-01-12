@@ -114,10 +114,10 @@ BYLINE_TAG_FINDITER = rc(
         # try byline before class_='author'
         <(?<tag>[a-z]\w++)\s++[^>]*?
         (?<id>
-            (?>class|id|rel|itemprop)=
+            (?>class|id|rel)=
             (?<q>["\']?)
             (?>
-                author(?>_byline|Inline|-title|s)?
+                author[^'"\s>]*+
                 |by(?>
                     line(?>Author|line-name)?
                     |_line(?:_date)?
