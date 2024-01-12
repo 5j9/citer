@@ -3,14 +3,13 @@ from datetime import date
 from threading import Thread
 from urllib.parse import urlparse
 
-from httpx import ConnectError
+from httpx import ConnectError, HTTPStatusError
 
 from lib.commons import rc
 from lib.urls import (
     TITLE_TAG,
     ContentLengthError,
     ContentTypeError,
-    StatusCodeError,
     analyze_home,
     find_authors,
     find_journal,
@@ -75,7 +74,7 @@ def original_url2dict(ogurl: str, original_dict) -> None:
     except (
         ContentTypeError,
         ContentLengthError,
-        StatusCodeError,
+        HTTPStatusError,
         ConnectError,
     ):
         pass

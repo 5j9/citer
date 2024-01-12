@@ -1,13 +1,13 @@
 # noinspection PyPackageRequirements
 from unittest.mock import Mock, patch
 
+from httpx import HTTPStatusError, Request, Response
 from pytest import mark
 
 from lib.commons import dict_to_sfn_cit_ref
 from lib.urls import (
     LANG_SEARCH,
     ContentTypeError,
-    StatusCodeError,
     parse_title,
     url_to_dict,
 )
@@ -1005,7 +1005,14 @@ def test_find_title_meta_pipe():
     )
 
 
-@patch('lib.urls.get_html', side_effect=StatusCodeError(402))
+@patch(
+    'lib.urls.get_html',
+    side_effect=HTTPStatusError(
+        '<test_citoid_thesis_invalid_doi>',
+        request=Request('GET', 'https://test/'),
+        response=Response(404),
+    ),
+)
 def test_citoid_thesis_invalid_doi(get_html: Mock):
     assert urls_scr('https://dl.acm.org/doi/10.5555/1123678')[1][:-12] == (
         '* {{cite thesis | degree=phd | last=Madden | first=Samuel Ross | title=The '
