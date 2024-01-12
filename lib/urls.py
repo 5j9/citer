@@ -11,7 +11,13 @@ from httpx import HTTPError, HTTPStatusError, Response, TimeoutException
 from langid import classify
 
 from lib.citoid import get_citoid_dict
-from lib.commons import ANYDATE_PATTERN, Search, find_any_date, rc, request
+from lib.commons import (
+    ANYDATE_PATTERN,
+    Search,
+    find_any_date,
+    rc,
+    request,
+)
 from lib.doi import get_crossref_dict
 from lib.urls_authors import CONTENT_ATTR, IV, find_authors
 
@@ -460,8 +466,7 @@ def url2dict(url: str) -> dict[str, Any]:
     except (HTTPStatusError, TimeoutException):
         # sometimes get_html fails (is blacklisted), but zotero works
         # issues/47
-        if (d := get_citoid_dict(url, True)) is None:
-            raise
+        d = get_citoid_dict(url, True)
         d['url'] = url
         return d
     except ContentTypeError:

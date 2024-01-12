@@ -7,11 +7,11 @@ from urllib.parse import urlparse
 from pytest import raises
 
 from app import (
-    LOGGER,
     TLDLESS_NETLOC_RESOLVER,
     google_books_dict,
     google_encrypted_dict,
     input_type_to_resolver,
+    logger,
     noorlib_url_to_dict,
     noormags_url_to_dict,
     root,
@@ -100,7 +100,7 @@ def test_userinput_in_body_is_stripped():
         {
             'url-doi-isbn': m,
         },
-    ), patch.object(LOGGER, 'exception'):
+    ), patch.object(logger, 'exception'):
         root(
             lambda _, __: None,
             {

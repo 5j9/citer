@@ -6,6 +6,8 @@ from logging.handlers import RotatingFileHandler
 from os.path import abspath, dirname
 from urllib.parse import parse_qs, unquote, urlparse
 
+from httpx import HTTPError
+
 from lib.commons import (
     ReturnError,
     dict_to_sfn_cit_ref,
@@ -86,7 +88,7 @@ def get_logger():
     return logger
 
 
-LOGGER = get_logger()
+logger = get_logger()
 
 
 def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
@@ -172,7 +174,7 @@ input_type_to_resolver = {
 def read_body(environ: dict, /):
     length = int(environ.get('CONTENT_LENGTH') or 0)
     if length > 10_000:
-        LOGGER.error(f'CONTENT_LENGTH was too long; {length=} bytes')
+        logger.error(f'CONTENT_LENGTH was too long; {length=} bytes')
         return ''  # do not process the input
     return environ['wsgi.input'].read(length).decode()
 
@@ -211,7 +213,8 @@ def root(start_response: callable, environ: dict) -> tuple:
         if isinstance(e, ReturnError):
             scr = e.args
         else:
-            LOGGER.exception(user_input)
+            if not isinstance(e, HTTPError):
+                logger.exception(user_input)
             scr = type(e).__name__, '', ''
     else:
         scr = dict_to_sfn_cit_ref(d)
