@@ -388,7 +388,6 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
             check_response(r)
         except (
             HTTPError,
-            HTTPStatusError,
             ContentTypeError,
             ContentLengthError,
         ):
