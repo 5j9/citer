@@ -60,8 +60,8 @@ class FakeResponse:
         yield self.content
 
     def raise_for_status(self):
-        if self.status_code >= 400:
-            raise HTTPError
+        if (self.status_code // 100) != 2:
+            raise HTTPError('status code was not 2xx')
 
 
 def load_response(hsh: str) -> FakeResponse | None:

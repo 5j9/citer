@@ -1,5 +1,4 @@
 """Functions for generating citation templates for fa.wikipedia.org."""
-from logging import getLogger
 from typing import Any
 
 from lib import (
@@ -8,6 +7,7 @@ from lib import (
     fullname,
     hash_for_ref_name,
     is_free_doi,
+    logger,
     type_to_cite,
 )
 from lib.generator_en import (
@@ -246,6 +246,3 @@ def names1para(translators, para):
         else:
             s += f'، {fullname(first, last)}'
     return s
-
-
-logger = getLogger(__name__)

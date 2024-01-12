@@ -1,5 +1,4 @@
 from json import loads
-from logging import getLogger
 from threading import Thread
 
 from isbnlib import info as isbn_info, mask as isbn_mask
@@ -7,7 +6,7 @@ from langid import classify
 from regex import search
 
 from config import LANG
-from lib import four_digit_num
+from lib import four_digit_num, logger
 from lib.citoid import get_citoid_dict
 from lib.commons import (
     ReturnError,
@@ -137,6 +136,7 @@ def google_books(isbn: str, result: list):
         d = j['items'][0]
         d.update(d['volumeInfo'])
     except Exception:  # noqa
+        # logger.exception('isbn: %s', isbn)
         return
     if authors := d['authors']:
         d['authors'] = [a.rsplit(' ', 1) for a in authors]
@@ -204,6 +204,3 @@ def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
     d['oclc'] = oclc
     d['date_format'] = date_format
     return d
-
-
-logger = getLogger(__name__)

@@ -2,7 +2,6 @@ from datetime import date as datetime_date
 from difflib import get_close_matches
 from functools import partial
 from html import unescape as html_unescape
-from logging import getLogger
 from threading import Thread
 from typing import Any
 from urllib.parse import urlparse
@@ -10,6 +9,7 @@ from urllib.parse import urlparse
 from httpx import HTTPError, HTTPStatusError, Response, TimeoutException
 from langid import classify
 
+from lib import logger
 from lib.citoid import get_citoid_dict
 from lib.commons import (
     ANYDATE_PATTERN,
@@ -513,6 +513,3 @@ def url2dict(url: str) -> dict[str, Any]:
         d['language'] = classify(html)[0]
 
     return d
-
-
-logger = getLogger(__name__)

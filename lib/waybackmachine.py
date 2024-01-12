@@ -1,10 +1,10 @@
-import logging
 from datetime import date
 from threading import Thread
 from urllib.parse import urlparse
 
-from httpx import ConnectError, HTTPStatusError
+from httpx import HTTPError
 
+from lib import logger
 from lib.commons import rc
 from lib.urls import (
     TITLE_TAG,
@@ -74,8 +74,7 @@ def original_url2dict(ogurl: str, original_dict) -> None:
     except (
         ContentTypeError,
         ContentLengthError,
-        HTTPStatusError,
-        ConnectError,
+        HTTPError,
     ):
         pass
     except Exception:
@@ -120,6 +119,3 @@ def original_url_dict(url: str):
         html, html_title, hostname, authors, home_list, home_thread
     )
     return d
-
-
-logger = logging.getLogger(__name__)

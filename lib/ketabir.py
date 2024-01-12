@@ -1,9 +1,8 @@
-from logging import getLogger
-
 from bs4 import BeautifulSoup
 from httpx import HTTPError
 from langid import classify
 
+from lib import logger
 from lib.commons import first_last, rc, request
 
 AUTHORS_FINDALL = rc(r'(\S+?)\s*+:\s*+(.*)').findall
@@ -89,6 +88,3 @@ def _url_to_dict(ketabir_url: str) -> dict | None:
         d['volume'] = m[1]
 
     return d
-
-
-logger = getLogger(__name__)
