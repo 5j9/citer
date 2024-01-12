@@ -228,7 +228,6 @@ def find_authors(html) -> list[tuple[str, str]]:
             break  # avoid duplicate results
         results.add(result)
         if match['tag']:
-            results.add(result)
             if ns := byline_to_names(TAGS_SUB('', result)):
                 match_id = match['id']
                 names += ns
