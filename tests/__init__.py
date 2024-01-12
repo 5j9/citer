@@ -142,6 +142,14 @@ def fake_request(url, spoof=False, method='get', stream=False, **kwargs):
                 dump_connection_error(sha1_hex)
         dump_response(sha1_hex, response, redacted_url)
 
+    if stream is True:
+
+        @contextmanager
+        def fake_stream():
+            yield response
+
+        return fake_stream()
+
     return response
 
 
