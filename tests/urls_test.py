@@ -463,13 +463,10 @@ def test_nyt6():
 
 
 def test_tgdaily1():
-    """Hard to find author and date."""
-    i = (
-        'http://www.tgdaily.com/web/'
-        '100381-apple-might-buy-beats-for-32-billion'
-    )
-    o = urls_scr(i)
-    ct = (
+    # Hard to find author and date.
+    assert urls_scr(
+        'http://www.tgdaily.com/web/100381-apple-might-buy-beats-for-32-billion'
+    )[1][:-12] == (
         '* {{cite web '
         '| title=Apple might buy Beats for $3.2 billion '
         '| website=TG Daily '
@@ -479,7 +476,6 @@ def test_tgdaily1():
         '| ref={{sfnref | TG Daily | 2014}} '
         '| access-date='
     )
-    assert ct == o[1][:-12]
 
 
 def test_tgdaily2():

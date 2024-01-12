@@ -114,7 +114,7 @@ BYLINE_TAG_FINDITER = rc(
         # try byline before class_='author'
         <(?<tag>[a-z]\w++)\s++[^>]*?
         (?<id>
-            (?>class|id|rel)=
+            (?>class|id|rel|itemprop)=
             (?<q>["\']?)
             (?>
                 author(?>_byline|Inline|-title|s)?
@@ -169,6 +169,7 @@ STOPWORDS_SEARCH = rc(
         |People
         |Reporter
         |Staff
+        |Team
         |Writer
         |سایت # tabnak.ir
     )\b
