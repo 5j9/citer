@@ -7,7 +7,7 @@ from threading import Thread
 from typing import Any
 from urllib.parse import urlparse
 
-from httpx import HTTPError, Response, TimeoutException
+from httpx import HTTPError, HTTPStatusError, Response, TimeoutException
 from langid import classify
 
 from lib.citoid import get_citoid_dict
@@ -130,10 +130,6 @@ class ContentTypeError(ValueError):
 
 class ContentLengthError(ValueError):
     """Raise when content-length header indicates a very long content."""
-
-
-class StatusCodeError(ValueError):
-    """Raise when status_code != 200."""
 
 
 # inaccurate but should be faster than bs4
@@ -386,7 +382,7 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
             check_response(r)
         except (
             HTTPError,
-            StatusCodeError,
+            HTTPStatusError,
             ContentTypeError,
             ContentLengthError,
         ):
@@ -413,8 +409,7 @@ def analyze_home(parsed_url: tuple) -> tuple[Thread, list]:
 
 def check_response(r: Response) -> None:
     """Check content-type and content-length of the response."""
-    if r.status_code != 200:
-        raise StatusCodeError(r.status_code)
+    r.raise_for_status()
     get_header = r.headers.get
     if (content_type := get_header('content-type')) is not None:
         if not content_type.startswith('text/'):
@@ -462,7 +457,7 @@ def url2dict(url: str) -> dict[str, Any]:
 
     try:
         url, html = get_html(url)
-    except (StatusCodeError, TimeoutException):
+    except (HTTPStatusError, TimeoutException):
         # sometimes get_html fails (is blacklisted), but zotero works
         # issues/47
         if (d := get_citoid_dict(url, True)) is None:
