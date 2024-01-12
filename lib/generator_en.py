@@ -1,7 +1,6 @@
 """Functions for generating English Wikipedia citation templates."""
 from datetime import date as Date
 from functools import partial
-from logging import getLogger
 from string import ascii_lowercase, digits
 
 from lib import (
@@ -10,6 +9,7 @@ from lib import (
     fullname,
     hash_for_ref_name,
     is_free_doi,
+    logger,
     rc,
     type_to_cite,
 )
@@ -274,6 +274,3 @@ def names1para(translators, para):
         else:
             s += f', {fullname(first, last)}'
     return s
-
-
-logger = getLogger(__name__)

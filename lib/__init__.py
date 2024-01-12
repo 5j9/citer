@@ -1,8 +1,37 @@
 from functools import partial
+from logging import INFO, Formatter, basicConfig, getLogger
+from logging.handlers import RotatingFileHandler
+from os.path import abspath, dirname
 from random import choice, choices, seed
 from string import ascii_lowercase, digits
 
 from regex import compile as rc
+
+
+def get_logger():
+    basicConfig(
+        format='%(pathname)s:%(lineno)d\n%(asctime)s %(levelname)s %(message)s'
+    )
+    logger = getLogger(__name__)
+    logger.setLevel(INFO)
+    src_dir = dirname(abspath(__file__))
+    handler = RotatingFileHandler(
+        filename=f'{src_dir}/citer.log',
+        mode='a',
+        maxBytes=20000,
+        backupCount=0,
+        encoding='utf-8',
+    )
+    handler.setLevel(INFO)
+    handler.setFormatter(
+        Formatter('\n%(asctime)s\n%(levelname)s\n%(message)s\n')
+    )
+    logger.addHandler(handler)
+    return logger
+
+
+logger = get_logger()
+
 
 rc = partial(rc, cache_pattern=False)
 

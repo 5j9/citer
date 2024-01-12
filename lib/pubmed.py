@@ -1,10 +1,10 @@
 """Codes specifically related to PubMed inputs."""
 
 from datetime import datetime
-from logging import getLogger
 from threading import Thread
 
 from config import NCBI_API_KEY, NCBI_EMAIL, NCBI_TOOL
+from lib import logger
 from lib.citoid import get_citoid_dict
 from lib.commons import b_TO_NUM, rc, request
 from lib.doi import get_crossref_dict
@@ -154,6 +154,3 @@ def crossref_update(dct: dict, doi: str):
         logger.exception(
             'There was an error in resolving crossref DOI: ' + doi
         )
-
-
-logger = getLogger(__name__)
