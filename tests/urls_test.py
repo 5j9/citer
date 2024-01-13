@@ -1,13 +1,14 @@
 # noinspection PyPackageRequirements
 from unittest.mock import Mock, patch
 
-from httpx import HTTPStatusError, Request, Response
+from httpx import ConnectError, HTTPStatusError, Request, Response
 from pytest import mark
 
 from lib.commons import dict_to_sfn_cit_ref
 from lib.urls import (
     LANG_SEARCH,
     ContentTypeError,
+    _analyze_home,
     parse_title,
     url_to_dict,
 )
@@ -1039,3 +1040,8 @@ def test_parse_title_all_parts_removed():
         [None, 'Welcome to the United Nations'],
         None,
     ) == (None, 'United Nations Charter (full text) ', 'United Nations')
+
+
+@patch('lib.urls.request', side_effect=ConnectError('<test>'))
+def test__analyze_home_stream_request_raises_connect_error(_request_mock):
+    assert _analyze_home(('https', 'example.com'), []) is None
