@@ -384,8 +384,10 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
             ContentLengthError,
         ):
             return
-        content = next(r.iter_bytes(MAX_RESPONSE_LENGTH))
 
+    content = next(r.iter_bytes(MAX_RESPONSE_LENGTH), None)
+    if content is None:
+        return
     html = content.decode(r.encoding, errors='replace')
 
     if m := SITE_NAME_SEARCH(html):
