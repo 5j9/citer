@@ -374,18 +374,18 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
     home_list is used to return the thread result.
     """
     home_url = '://'.join(parsed_url[:2])
-    with request(home_url, spoof=True, stream=True) as r:
-        r: Response
-        try:
+    try:
+        with request(home_url, spoof=True, stream=True) as r:
+            r: Response
             check_response(r)
-        except (
-            HTTPError,
-            ContentTypeError,
-            ContentLengthError,
-        ):
-            return
+            content = next(r.iter_bytes(MAX_RESPONSE_LENGTH), None)
+    except (
+        HTTPError,
+        ContentTypeError,
+        ContentLengthError,
+    ):
+        return None
 
-    content = next(r.iter_bytes(MAX_RESPONSE_LENGTH), None)
     if content is None:
         return
     html = content.decode(r.encoding, errors='replace')
