@@ -13,4 +13,4 @@ ignore = [
 ]
 
 [tool.pytest.ini_options]
-addopts = '--quiet --showlocals --tb=native'
+addopts = '--quiet --tb=short'
