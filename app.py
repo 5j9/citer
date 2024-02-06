@@ -15,6 +15,7 @@ from lib.commons import (
 from lib.doi import doi_search, doi_to_dict
 from lib.googlebooks import url_to_dict as google_books_dict
 from lib.html import (
+    ALLOW_ALL_ORIGINS,
     CSS,
     CSS_HEADERS,
     CSS_PATH,
@@ -59,9 +60,17 @@ TLDLESS_NETLOC_RESOLVER = {
     'jstor': jstor_url_to_dict,
 }.get
 
-# always assign 'Content-Length' header HTTP_HEADERS[1] before sending
-HTTP_HEADERS = [('Content-Type', 'text/html; charset=UTF-8'), None]
-JSON_HEADERS = [('Content-Type', 'application/json'), None]
+# Always assign 'Content-Length' header to HTTP_HEADERS[0] before sending.
+http_headers = [
+    None,
+    ('Content-Type', 'text/html; charset=UTF-8'),
+    ALLOW_ALL_ORIGINS,
+]
+json_headers = [
+    None,
+    ('Content-Type', 'application/json'),
+    ALLOW_ALL_ORIGINS,
+]
 
 
 def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
@@ -163,15 +172,15 @@ def root(start_response: callable, environ: dict) -> tuple:
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
-        HTTP_HEADERS[1] = ('Content-Length', str(len(response_body)))
-        start_response('200 OK', HTTP_HEADERS)
+        http_headers[0] = ('Content-Length', str(len(response_body)))
+        start_response('200 OK', http_headers)
         return (response_body,)
 
     if body:
-        headers = JSON_HEADERS
+        headers = json_headers
         scr_to_resp_body = dumps
     else:  # for the bookmarklet; also if user directly goes to query page
-        headers = HTTP_HEADERS
+        headers = http_headers
         scr_to_resp_body = partial(
             scr_to_html, date_format=date_format, input_type=input_type
         )
@@ -194,7 +203,7 @@ def root(start_response: callable, environ: dict) -> tuple:
         status = '200 OK'
 
     response_body = scr_to_resp_body(scr).encode()
-    headers[1] = ('Content-Length', str(len(response_body)))
+    headers[0] = ('Content-Length', str(len(response_body)))
     start_response(status, headers)
     return (response_body,)
 
