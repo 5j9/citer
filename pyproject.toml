@@ -1,8 +1,8 @@
 project.requires-python = '>=3.11'
 
 [tool.ruff]
-format.quote-style = 'single'
 line-length = 79
+format.quote-style = 'single'
 isort.combine-as-imports = true
 extend-select = [
     'I',  # isort
@@ -10,6 +10,7 @@ extend-select = [
 ]
 ignore = [
     'UP027',  # list comprehensions are faster than generator expressions
+    'E721',  # Do not compare types, use `isinstance()`
 ]
 
 [tool.pytest.ini_options]
