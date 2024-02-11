@@ -7,19 +7,7 @@ A citation generator tool for Wikipedia. Currently accessible from:\
 ## What does it do?
 
 Citer is especially useful for generating citations from Google Books URLs, DOIs (Any Digital object Identifiers) and ISBNs (International Standard Book Numbers).
-Additionally, URLs of many major news websites are supported, including:
-
-* The New York Times
-* BBC
-* Daily Mail
-* Daily Mirror
-* The Daily Telegraph
-* The Huffington Post
-* The Washington Post
-* The Boston Globe
-* Bloomberg Businessweek
-* Financial Times
-* The Times of India
+Additionally, any URL, including the URL of many major news websites can be processed to generate a citation.
 
 Special support for the URLs of the [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) is also implemented.
 
