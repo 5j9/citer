@@ -209,15 +209,13 @@ def json_ld_authors(s: str) -> list[tuple[str, str]] | None:
 def find_authors(html) -> list[tuple[str, str]]:
     """Return authors names found in html."""
     names = []
-    match_id = None
     for match in META_AUTHOR_FINDITER(html):
-        if match_id and match_id != match['id']:
-            break
-        if name := byline_to_names(match['result']):
-            names += name
-            match_id = match['id']
+        if match_names := byline_to_names(match['result']):
+            names += match_names
     if names:
-        return names
+        # meta authors may contain duplicate names.
+        # Only return unique authors, preserving the order.
+        return [*{}.fromkeys(names)]
     match_id = None
     results = set()
     for match in BYLINE_TAG_FINDITER(html):
