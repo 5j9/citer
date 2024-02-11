@@ -187,3 +187,11 @@ def test_itemprop():
         <a href="https://brugere.lex.dk/438">
           <span itemprop="name">Bjørn Poulsen</span></a></li>"""
     ) == [('Bjørn', 'Poulsen')]
+
+
+def test_duplicate_author_multiple_meta():
+    assert find_authors(
+        '<meta name="cXenseParse:author" content="David Stratton" data-separator=",">'
+        '<meta name="author" content="David Stratton">'
+        '<meta class="swiftype" name="author" data-type="string" content="David Stratton">'
+    ) == [('David', 'Stratton')]

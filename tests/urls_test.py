@@ -835,10 +835,7 @@ def test_citation_author_reverse_order():
         'Introductory Physical Science Courses '
         '| website=arXiv.org e-Print archive '
         '| date=2016-08-17 '
-        '| url=https://arxiv.org/abs/1608.05006?utm_medium=email&'
-        'utm_source=other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.'
-        'announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.'
-        '4xDVKzx5EeeJjRJrkGD1dA '
+        '| url=https://arxiv.org/abs/1608.05006?utm_medium=email&utm_source=other&utm_campaign=opencourse.GdeNrll1EeSROyIACtiVvg.announcements%257Eopencourse.GdeNrll1EeSROyIACtiVvg.4xDVKzx5EeeJjRJrkGD1dA '
         '| access-date='
     ) == urls_scr(
         'https://arxiv.org/abs/1608.05006?utm_medium=email&utm_source='
