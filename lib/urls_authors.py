@@ -215,7 +215,7 @@ def find_authors(html) -> list[tuple[str, str]]:
     if names:
         # meta authors may contain duplicate names.
         # Only return unique authors, preserving the order.
-        return [*{}.fromkeys(names)]
+        return [*dict.fromkeys(names)]
     match_id = None
     results = set()
     for match in BYLINE_TAG_FINDITER(html):
