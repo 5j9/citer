@@ -1,7 +1,7 @@
 # noinspection PyPackageRequirements
 from unittest.mock import Mock, patch
 
-from httpx import ConnectError, HTTPStatusError, Request, Response
+from curl_cffi import CurlError
 from pytest import mark
 
 from lib.commons import dict_to_sfn_cit_ref
@@ -1003,14 +1003,7 @@ def test_find_title_meta_pipe():
     )
 
 
-@patch(
-    'lib.urls.get_html',
-    side_effect=HTTPStatusError(
-        '<test_citoid_thesis_invalid_doi>',
-        request=Request('GET', 'https://test/'),
-        response=Response(404),
-    ),
-)
+@patch('lib.urls.get_html', side_effect=CurlError('test'))
 def test_citoid_thesis_invalid_doi(get_html: Mock):
     assert urls_scr('https://dl.acm.org/doi/10.5555/1123678')[1][:-12] == (
         '* {{cite thesis | degree=phd | last=Madden | first=Samuel Ross | title=The '
@@ -1039,6 +1032,6 @@ def test_parse_title_all_parts_removed():
     ) == (None, 'United Nations Charter (full text) ', 'United Nations')
 
 
-@patch('lib.urls.request', side_effect=ConnectError('<test>'))
+@patch('lib.urls.request', side_effect=CurlError('<test>'))
 def test__analyze_home_stream_request_raises_connect_error(_request_mock):
     assert _analyze_home(('https', 'example.com'), []) is None

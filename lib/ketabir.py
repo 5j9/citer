@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from httpx import HTTPError
+from curl_cffi import CurlError
 from langid import classify
 
 from lib import logger
@@ -34,13 +34,15 @@ def _url_to_dict(ketabir_url: str) -> dict | None:
         # Try to see if ketabir is available,
         # ottobib should continue its work in isbn.py if it is not.
         r = request(ketabir_url)
-    except HTTPError:
+    except CurlError:
         logger.exception(ketabir_url)
         return
 
     soup = BeautifulSoup(r.content, features='lxml')
-    d = {'cite_type': 'book'}
-    d['title'] = soup.select_one('.card-title').text.strip()
+    d = {
+        'cite_type': 'book',
+        'title': soup.select_one('.card-title').text.strip(),
+    }
 
     table = {
         (tds := tr.select('td'))[0].text: tds[1] for tr in soup.select('tr')

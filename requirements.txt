@@ -4,4 +4,4 @@ langid
 bs4
 lxml
 regex
-httpx
+curl_cffi

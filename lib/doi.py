@@ -2,7 +2,7 @@ from datetime import datetime
 from html import unescape
 from urllib.parse import unquote_plus
 
-from httpx import HTTPError
+from curl_cffi import CurlError
 from langid import classify
 
 from config import LANG
@@ -20,7 +20,7 @@ def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
         doi = doi_search(decoded_url)[0]
     try:
         d = get_citoid_dict(doi, True)
-    except HTTPError:
+    except CurlError:
         d = get_crossref_dict(doi)
 
     d['date_format'] = date_format
