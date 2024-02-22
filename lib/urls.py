@@ -6,13 +6,14 @@ from threading import Thread
 from typing import Any
 from urllib.parse import urlparse
 
-from httpx import HTTPError, HTTPStatusError, Response, TimeoutException
+from curl_cffi import CurlError
 from langid import classify
 
 from lib import logger
 from lib.citoid import get_citoid_dict
 from lib.commons import (
     ANYDATE_PATTERN,
+    Response,
     Search,
     find_any_date,
     rc,
@@ -375,20 +376,13 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
     """
     home_url = '://'.join(parsed_url[:2])
     try:
-        with request(home_url, spoof=True, stream=True) as r:
-            r: Response
-            check_response(r)
-            content = next(r.iter_bytes(MAX_RESPONSE_LENGTH), None)
+        r, html = read_text(home_url)
     except (
-        HTTPError,
+        CurlError,
         ContentTypeError,
         ContentLengthError,
     ):
         return None
-
-    if content is None:
-        return
-    html = content.decode(r.encoding, errors='replace')
 
     if m := SITE_NAME_SEARCH(html):
         home_list[0] = m['result']
@@ -424,15 +418,13 @@ def check_response(r: Response) -> None:
         )
 
 
-def get_html(url: str) -> tuple[str, str]:
-    """Return the html string for the given url."""
-    r: Response
+def read_text(url: str) -> tuple[Response, str]:
     with request(url, spoof=True, stream=True) as r:
         check_response(r)
         size = 0
         chunks = []
         a = chunks.append
-        for chunk in r.iter_bytes(MAX_RESPONSE_LENGTH):
+        for chunk in r.iter_content():
             size += len(chunk)
             if size >= MAX_RESPONSE_LENGTH:
                 raise ValueError(
@@ -440,8 +432,19 @@ def get_html(url: str) -> tuple[str, str]:
                     f'{size=} > {MAX_RESPONSE_LENGTH=}'
                 )
             a(chunk)
+
         content = b''.join(chunks)
-    return f'{r.url}', content.decode(r.encoding, errors='replace')
+        # if content is None:
+        #     return
+        html = content.decode(r.encoding, errors='replace')
+
+        return r, html
+
+
+def get_html(url: str) -> tuple[str, str]:
+    """Return the html string for the given url."""
+    r, text = read_text(url)
+    return r.url, text
 
 
 def url2dict(url: str) -> dict[str, Any]:
@@ -452,7 +455,7 @@ def url2dict(url: str) -> dict[str, Any]:
 
     try:
         url, html = get_html(url)
-    except (HTTPStatusError, TimeoutException):
+    except CurlError:
         # sometimes get_html fails (is blacklisted), but zotero works
         # issues/47
         d = get_citoid_dict(url, True)

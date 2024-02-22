@@ -2,7 +2,7 @@ from datetime import date
 from threading import Thread
 from urllib.parse import urlparse
 
-from httpx import HTTPError
+from curl_cffi import CurlError
 
 from lib import logger
 from lib.commons import rc
@@ -74,7 +74,7 @@ def original_url2dict(ogurl: str, original_dict) -> None:
     except (
         ContentTypeError,
         ContentLengthError,
-        HTTPError,
+        CurlError,
     ):
         pass
     except Exception:

@@ -1,15 +1,16 @@
 from calendar import month_abbr, month_name
-from collections.abc import Callable, Iterable
+from collections.abc import Callable
+from contextlib import AbstractContextManager
 from datetime import date as datetime_date, datetime
 from functools import partial
 from ssl import CERT_NONE, create_default_context
 
-from httpx import Client, Response
+from curl_cffi.requests import Response, Session
 from isbnlib import NotValidISBNError, mask as isbn_mask
 from jdatetime import date as jdate
 from regex import IGNORECASE, VERBOSE, Match
 
-from config import LANG, NCBI_EMAIL, NCBI_TOOL, SPOOFED_USER_AGENT, USER_AGENT
+from config import LANG, USER_AGENT
 from lib.generator_en import rc
 
 if LANG == 'en':
@@ -98,13 +99,6 @@ last_first = partial(rc(r'[,،]').split, maxsplit=1)
 
 AGENT_HEADER = {
     'User-Agent': USER_AGENT,
-    # Not required but recommended by
-    # https://meta.wikimedia.org/wiki/User-Agent_policy
-    'Api-User-Agent': f'{NCBI_TOOL}/{NCBI_EMAIL}',
-}
-SPOOFED_AGENT_HEADER = {
-    'User-Agent': SPOOFED_USER_AGENT,
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
 }
 
 context = create_default_context()
@@ -113,22 +107,22 @@ context.check_hostname = False
 context.verify_mode = CERT_NONE
 
 
-def new_client() -> Client:
-    return Client(verify=context, timeout=10, follow_redirects=True)
+def new_session() -> Session:
+    return Session(verify=context, timeout=10.0, impersonate='chrome120')
 
 
-client_usage = 0
-client = new_client()
+session_usage = 0
+session = new_session()
 
 
-def mortal_client() -> Client:
-    global client, client_usage
-    if client_usage > 1000:  # to save memory by discarding unneeded cookies
-        client_usage = 0
-        client = new_client()
-        return client
-    client_usage += 1
-    return client
+def mortal_session() -> Session:
+    global session, session_usage
+    if session_usage > 1000:  # to save memory by discarding unneeded cookies
+        session_usage = 0
+        session = new_session()
+        return session
+    session_usage += 1
+    return session
 
 
 # original regex from:
@@ -178,14 +172,17 @@ class ReturnError(Exception):
 
 
 def request(
-    url, spoof=False, method='get', stream=False, **kwargs
-) -> Response | Iterable[Response]:
-    headers = SPOOFED_AGENT_HEADER if spoof else AGENT_HEADER
+    url, spoof=False, method='GET', stream=False, **kwargs
+) -> Response | AbstractContextManager[Response]:
+    headers = None if spoof is True else AGENT_HEADER
     if 'headers' in kwargs:
         headers |= kwargs.pop('headers')
+    # session timeout does not work as expected
+    # https://github.com/yifeikong/curl_cffi/issues/253
+    kwargs['timeout'] = 10.0
     if stream is True:
-        return mortal_client().stream(method, url, headers=headers, **kwargs)
-    return mortal_client().request(method, url, headers=headers, **kwargs)
+        return mortal_session().stream(method, url, headers=headers, **kwargs)
+    return mortal_session().request(method, url, headers=headers, **kwargs)
 
 
 def dict_to_sfn_cit_ref(dictionary: dict) -> tuple:

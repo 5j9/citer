@@ -1,13 +1,13 @@
 from unittest.mock import patch
 
-from httpx import HTTPError
+from curl_cffi import CurlError
 
 from lib.commons import dict_to_sfn_cit_ref
 from lib.doi import doi_to_dict
 
 
 def doi_scr(doi) -> tuple:
-    with patch('lib.doi.get_citoid_dict', side_effect=HTTPError('')):
+    with patch('lib.doi.get_citoid_dict', side_effect=CurlError('test')):
         doi_scr = dict_to_sfn_cit_ref(doi_to_dict(doi))
     return doi_scr
 

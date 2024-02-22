@@ -1,6 +1,6 @@
 from re import MULTILINE, findall
 
-from httpx import get
+from curl_cffi.requests import get
 
 github_content = get(
     'https://github.com/SebastianJ/fiber-freeze/raw/master/data/https_urls.txt'

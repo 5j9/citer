@@ -5,7 +5,8 @@ from hashlib import sha1
 from json import dump, load, loads
 from pathlib import Path
 
-from httpx import ConnectError, HTTPError, Response
+from curl_cffi import CurlError
+from curl_cffi.requests import Response
 
 from lib import commons
 from tests.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
@@ -56,12 +57,12 @@ class FakeResponse:
     def text(self):
         return self.content.decode(self.encoding)
 
-    def iter_bytes(self, _):
+    def iter_content(self):
         yield self.content
 
     def raise_for_status(self):
         if (self.status_code // 100) != 2:
-            raise HTTPError('status code was not 2xx')
+            raise CurlError('status code was not 2xx')
 
 
 def load_response(hsh: str) -> FakeResponse | None:
@@ -76,7 +77,7 @@ def load_response(hsh: str) -> FakeResponse | None:
         USED_TESTDATA.add(filename)
 
     if 'raise' in d:
-        raise ConnectError('per json data')
+        raise CurlError('per json data')
 
     filename = f'{hsh}.html'
     with open(f'{TESTDATA}/{filename}', 'rb') as f:
@@ -111,7 +112,7 @@ def dump_connection_error(hsh):
 
 # noinspection PyDecorator
 @staticmethod
-def fake_request(url, spoof=False, method='get', stream=False, **kwargs):
+def fake_request(url, spoof=False, method='GET', stream=False, **kwargs):
     if url.startswith(NCBI_URL):
         redacted_url = url.replace(
             NCBI_URL, NCBI_URL[: NCBI_URL.find('?')] + '?_REDACTED_PARAMS_'
@@ -138,7 +139,7 @@ def fake_request(url, spoof=False, method='get', stream=False, **kwargs):
                 response = commons.request(
                     url, method=method, data=data, spoof=spoof, **kwargs
                 )
-            except ConnectError:
+            except CurlError:
                 dump_connection_error(sha1_hex)
         dump_response(sha1_hex, response, redacted_url)
 

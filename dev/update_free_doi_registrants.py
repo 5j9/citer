@@ -1,6 +1,6 @@
 from re import search, sub
 
-from httpx import get
+from curl_cffi.requests import get
 
 identifiers = get(
     'https://en.wikipedia.org/wiki/Module:Citation/CS1/Identifiers'

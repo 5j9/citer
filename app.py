@@ -3,7 +3,7 @@ from html import unescape
 from json import JSONDecodeError, dumps
 from urllib.parse import parse_qs, unquote, urlparse
 
-from httpx import HTTPError
+from curl_cffi import CurlError
 
 from lib import logger
 from lib.commons import (
@@ -195,7 +195,7 @@ def root(start_response: callable, environ: dict) -> tuple:
         if isinstance(e, ReturnError):
             scr = e.args
         else:
-            if not isinstance(e, HTTPError):
+            if not isinstance(e, CurlError):
                 logger.exception(user_input)
             scr = type(e).__name__, '', ''
     else:
