@@ -84,7 +84,7 @@ def original_url2dict(ogurl: str, original_dict) -> None:
 
 
 def original_url_dict(url: str):
-    """Retuan dictionary only containing required data for og:url."""
+    """Return a dictionary only containing required data for og:url."""
     d = {}
     # Creating a thread to request homepage title in background
     parsed_url = urlparse(url)
