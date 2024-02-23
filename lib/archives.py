@@ -7,15 +7,8 @@ from curl_cffi import CurlError
 from lib import logger
 from lib.commons import rc
 from lib.urls import (
-    TITLE_TAG,
     ContentLengthError,
     ContentTypeError,
-    analyze_home,
-    find_authors,
-    find_journal,
-    find_site_name,
-    find_title,
-    get_html,
     url_data,
 )
 
@@ -66,7 +59,7 @@ def og_url_data_tt(ogurl: str, original_dict) -> None:
     """Fill the dictionary with the information found in ogurl."""
     # noinspection PyBroadException
     try:
-        original_dict.update(og_url_data(ogurl))
+        original_dict.update(url_data(ogurl))
     except (
         ContentTypeError,
         ContentLengthError,
@@ -77,41 +70,3 @@ def og_url_data_tt(ogurl: str, original_dict) -> None:
         logger.exception(
             'There was an unexpected error in waybackmechine thread'
         )
-
-
-def og_url_data(url: str):
-    """Return a dictionary only containing required data for og:url."""
-    d = {}
-    # Creating a thread to request homepage title in background
-    parsed_url = urlparse(url)
-    hostname = parsed_url.hostname.removeprefix('.www')
-    home_thread, home_list = analyze_home(parsed_url)
-    url, html = get_html(url)
-
-    if (m := TITLE_TAG(html)) is not None:
-        if html_title := m['result']:
-            d['html_title'] = html_title
-    else:
-        html_title = None
-
-    if authors := find_authors(html):
-        d['authors'] = authors
-
-    if journal := find_journal(html):
-        d['journal'] = journal
-        d['cite_type'] = 'journal'
-    else:
-        d['cite_type'] = 'web'
-        d['website'] = find_site_name(
-            html,
-            html_title,
-            url,
-            hostname,
-            authors,
-            home_list,
-            home_thread,
-        )
-    d['title'] = find_title(
-        html, html_title, hostname, authors, home_list, home_thread
-    )
-    return d
