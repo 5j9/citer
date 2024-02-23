@@ -45,7 +45,7 @@ def ris_parse(ris_text):
     """Parse RIS_text data and return the result as a dictionary."""
     d = {}
     match = ris_fullmatch(ris_text)
-    d.update(match.groupdict())
+    d |= match.groupdict()
     # cite_type: (book, journal, . . . )
     if (cite_type := d['type'].lower()) == 'jour':
         if (t2 := d['t2']) is not None:

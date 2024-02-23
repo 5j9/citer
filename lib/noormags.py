@@ -10,8 +10,8 @@ RIS_ARTICLE_ID_SEARCH = rc(r'(?<=/citation/ris/)\d+').search
 
 def noormags_data(url: str) -> dict:
     """Create the response namedtuple."""
-    ris_collection = {}
-    ris_thread = Thread(target=ris_fetcher_thread, args=(url, ris_collection))
+    ris_d = {}
+    ris_thread = Thread(target=ris_fetcher_thread, args=(url, ris_d))
     ris_thread.start()
     d = bibtex_parse(get_bibtex(url))
     # language parameter needs to be taken from RIS
@@ -19,7 +19,7 @@ def noormags_data(url: str) -> dict:
     # for example: http://www.noormags.ir/view/fa/articlepage/104040
     # "IS  - 1" is wrong in RIS but "number = { 45 }," is correct in bibtex
     ris_thread.join()
-    d.update(ris_collection)
+    d |= ris_d
     return d
 
 
