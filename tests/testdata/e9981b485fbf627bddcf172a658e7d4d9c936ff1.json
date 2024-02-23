@@ -1,0 +1,25 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"alt-svc": "h3=\":443\"; ma=86400",
+		"cache-control": "no-cache, no-store",
+		"cf-cache-status": "DYNAMIC",
+		"cf-ray": "85a048d469823cbf-CDG",
+		"content-encoding": "br",
+		"content-type": "text/html; charset=utf-8",
+		"date": "Fri, 23 Feb 2024 14:51:01 GMT",
+		"expires": "-1",
+		"nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+		"pragma": "no-cache",
+		"report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=normXX%2B9AccXMciknLqr%2FXpvt%2BS6Gp%2BaJYMaxe8dK8MKDYo4Q1aaqy5dZRMm12gheT5oEokmhBwqJFaMimgt1OXlkTjO4EWGCh37U7OH8%2BHTn%2BYfTNTmCHiAVq9Y0HV9JM4%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+		"server": "cloudflare",
+		"strict-transport-security": "max-age=15768000",
+		"vary": "Accept-Encoding",
+		"x-content-type-options": "nosniff",
+		"x-frame-options": "SAMEORIGIN",
+		"x-powered-by": "My Little Pony",
+		"x-xss-protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "https://www.magiran.com"
+}
