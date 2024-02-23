@@ -87,7 +87,7 @@ def test_doi_url_fallback_to_url(doi_data, urls_data):
     urls_data.assert_called_once_with(user_input)
 
 
-def test_userinput_in_body_is_stripped():
+def test_json_body():
     m = Mock(side_effect=NotImplementedError)
     with patch.dict(
         input_type_to_resolver,
@@ -99,11 +99,40 @@ def test_userinput_in_body_is_stripped():
             lambda _, __: None,
             {
                 'CONTENT_LENGTH': '121',
-                'QUERY_STRING': 'input_type=url-doi-isbn&dateformat=%25%23d+%25B+%25Y',
-                'wsgi.input': BytesIO(b'    https://books.google.com/'),
+                'wsgi.input': BytesIO(
+                    b'{'
+                    b'"user_input": "https://books.google.com/",'
+                    b'"input_type": "url-doi-isbn",'
+                    b'"dateformat": "%#d %B %Y"'
+                    b'}'
+                ),
             },
         )
     m.assert_called_once_with('https://books.google.com/')
+
+
+def test_html_input():
+    m = Mock(side_effect=NotImplementedError)
+    with patch.dict(
+        input_type_to_resolver,
+        {
+            'html': m,
+        },
+    ), patch.object(logger, 'exception'):
+        root(
+            lambda _, __: None,
+            {
+                'CONTENT_LENGTH': '121',
+                'wsgi.input': BytesIO(
+                    b'{'
+                    b'"user_input": {"html": "<HTML>", "url": "<URL>"},'
+                    b'"input_type": "html",'
+                    b'"dateformat": "%#d %B %Y"'
+                    b'}'
+                ),
+            },
+        )
+    m.assert_called_once_with({'html': '<HTML>', 'url': '<URL>'})
 
 
 def test_invalid_user_input():
