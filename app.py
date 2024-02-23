@@ -74,7 +74,11 @@ json_headers = [
 ]
 
 
-def url_doi_isbn_data(user_input, /) -> dict:
+def html_data(user_input: dict):
+    return url_data(user_input['url'], html=user_input['html'])
+
+
+def url_doi_isbn_data(user_input: str, /) -> dict:
     en_user_input = unquote(uninum2en(user_input))
     # Checking the user input for dot is important because
     # the use of dotless domains is prohibited.
@@ -152,6 +156,7 @@ input_type_to_resolver = {
     'pmcid': pmcid_data,
     'oclc': oclc_data,
     'echo': echo,
+    'html': html_data,
 }
 
 
@@ -217,7 +222,7 @@ def root(start_response: callable, environ: dict) -> tuple:
     return (response_body,)
 
 
-PATH_TO_HANDLER = {
+get_handler = {
     f'/{CSS_PATH}.css': css,
     f'/{JS_PATH}.js': js,
     '/': root,
@@ -226,7 +231,7 @@ PATH_TO_HANDLER = {
 
 
 def app(environ: dict, start_response: callable) -> tuple:
-    return (PATH_TO_HANDLER(environ['PATH_INFO']) or page_does_not_exist)(
+    return (get_handler(environ['PATH_INFO']) or page_does_not_exist)(
         start_response, environ
     )
 
