@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from functools import partial
 from html import unescape
 from json import JSONDecodeError, dumps, loads
@@ -116,25 +117,28 @@ def url_doi_isbn_data(user_input: str, /) -> dict:
     raise ValueError('invalid user_input')
 
 
-def css(start_response: callable, *_) -> tuple:
+BytesTuple = tuple[bytes]
+StartResponse = Callable[[str, list[tuple[str, str]]], Callable]
+
+
+def css(start_response: StartResponse, _) -> BytesTuple:
     start_response('200 OK', CSS_HEADERS)
     return (CSS,)
 
 
-def js(start_response: callable, *_) -> tuple:
+def js(start_response: StartResponse, _) -> BytesTuple:
     start_response('200 OK', JS_HEADERS)
     return (JS,)
 
 
-def page_does_not_exist(start_response: callable, *_) -> tuple:
-    text = b'404 not found'
+def page_does_not_exist(start_response: StartResponse, _) -> BytesTuple:
     start_response(
         '404 not found',
         [
             ('Content-Type', 'text/plain'),
         ],
     )
-    return (text,)
+    return (b'404 not found',)
 
 
 def echo(url: str, _: str, /):
@@ -156,15 +160,15 @@ input_type_to_resolver = {
 }
 
 
-def read_body(environ: dict, /):
+def read_body(environ: dict, /) -> bytes:
     length = int(environ.get('CONTENT_LENGTH') or 0)
     if length > MAX_RESPONSE_LENGTH:
         logger.error(f'CONTENT_LENGTH was too long; {length:,} bytes')
-        return ''  # do not process the input
-    return environ['wsgi.input'].read(length).decode()
+        return b''  # do not process the input
+    return environ['wsgi.input'].read(length)
 
 
-def root(start_response: callable, environ: dict) -> tuple:
+def root(start_response: StartResponse, environ: dict) -> BytesTuple:
     body = read_body(environ)
 
     if body:
@@ -216,7 +220,7 @@ def root(start_response: callable, environ: dict) -> tuple:
     return (response_body,)
 
 
-get_handler = {
+get_handler: Callable[[str], Callable[[StartResponse, dict], BytesTuple]] = {
     f'/{CSS_PATH}.css': css,
     f'/{JS_PATH}.js': js,
     '/': root,
@@ -224,7 +228,7 @@ get_handler = {
 }.get
 
 
-def app(environ: dict, start_response: callable) -> tuple:
+def app(environ: dict, start_response: StartResponse) -> BytesTuple:
     # noinspection PyBroadException
     try:
         return (get_handler(environ['PATH_INFO']) or page_does_not_exist)(
