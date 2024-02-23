@@ -5,7 +5,7 @@ from lib.bibtex import parse as bibtex_parse
 from lib.commons import request
 
 
-def url_to_dict(url: str, date_format: str = '%Y-%m-%d') -> dict:
+def jstor_data(url: str, date_format: str = '%Y-%m-%d') -> dict:
     open_access = []
     thread = Thread(target=is_open_access, args=(url, open_access))
     thread.start()

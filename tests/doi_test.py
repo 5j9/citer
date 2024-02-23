@@ -2,18 +2,18 @@ from unittest.mock import patch
 
 from curl_cffi import CurlError
 
-from lib.commons import dict_to_sfn_cit_ref
-from lib.doi import doi_to_dict
+from lib.commons import data_to_sfn_cit_ref
+from lib.doi import doi_data
 
 
 def doi_scr(doi) -> tuple:
-    with patch('lib.doi.get_citoid_dict', side_effect=CurlError('test')):
-        doi_scr = dict_to_sfn_cit_ref(doi_to_dict(doi))
+    with patch('lib.doi.citoid_data', side_effect=CurlError('test')):
+        doi_scr = data_to_sfn_cit_ref(doi_data(doi))
     return doi_scr
 
 
 def citoid_scr(doi) -> tuple:
-    return dict_to_sfn_cit_ref(doi_to_dict(doi))
+    return data_to_sfn_cit_ref(doi_data(doi))
 
 
 def test_doi1():

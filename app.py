@@ -6,15 +6,15 @@ from urllib.parse import parse_qs, unquote, urlparse
 from curl_cffi import CurlError
 
 from lib import logger
-from lib.archives import url_to_dict as archive_url_to_dict
+from lib.archives import archive_org_data
 from lib.commons import (
     ReturnError,
-    dict_to_sfn_cit_ref,
+    data_to_sfn_cit_ref,
     isbn_10or13_search,
     uninum2en,
 )
-from lib.doi import doi_search, doi_to_dict
-from lib.googlebooks import url_to_dict as google_books_dict
+from lib.doi import doi_data, doi_search
+from lib.googlebooks import google_books_data
 from lib.html import (
     ALLOW_ALL_ORIGINS,
     CSS,
@@ -26,38 +26,38 @@ from lib.html import (
     JS_PATH,
     scr_to_html,
 )
-from lib.isbn_oclc import isbn_to_dict, oclc_dict, worldcat_url_to_dict
-from lib.jstor import url_to_dict as jstor_url_to_dict
-from lib.ketabir import url_to_dict as ketabir_url_to_dict
-from lib.noorlib import url_to_dict as noorlib_url_to_dict
-from lib.noormags import url_to_dict as noormags_url_to_dict
-from lib.pubmed import pmcid_dict, pmid_dict
-from lib.urls import get_html, url_to_dict as urls_url_to_dict
+from lib.isbn_oclc import isbn_data, oclc_data, worldcat_data
+from lib.jstor import jstor_data
+from lib.ketabir import ketabir_data
+from lib.noorlib import noorlib_data
+from lib.noormags import noormags_data
+from lib.pubmed import pmcid_data, pmid_data
+from lib.urls import get_html, url_data
 
 
-def google_encrypted_dict(url, parsed_url, date_format) -> dict:
+def google_encrypted_data(url, parsed_url, date_format) -> dict:
     if parsed_url[2][:7] in {'/books', '/books/'}:
         # sample urls:
         # https://encrypted.google.com/books?id=6upvonUt0O8C
         # https://www.google.com/books?id=bwfoCAAAQBAJ&pg=PA32
         # https://www.google.com/books/edition/_/bwfoCAAAQBAJ?gbpv=1&pg=PA32
-        return google_books_dict(parsed_url, date_format)
-    return urls_url_to_dict(url, date_format)
+        return google_books_data(parsed_url, date_format)
+    return url_data(url, date_format)
 
 
 TLDLESS_NETLOC_RESOLVER = {
-    'ketab': ketabir_url_to_dict,
-    'worldcat': worldcat_url_to_dict,
-    'noorlib': noorlib_url_to_dict,
-    'noormags': noormags_url_to_dict,
-    'web.archive': archive_url_to_dict,
-    'web-beta.archive': archive_url_to_dict,
-    'books.google.co': google_books_dict,
-    'books.google.com': google_books_dict,
-    'books.google': google_books_dict,
-    'google': google_encrypted_dict,
-    'encrypted.google': google_encrypted_dict,
-    'jstor': jstor_url_to_dict,
+    'ketab': ketabir_data,
+    'worldcat': worldcat_data,
+    'noorlib': noorlib_data,
+    'noormags': noormags_data,
+    'web.archive': archive_org_data,
+    'web-beta.archive': archive_org_data,
+    'books.google.co': google_books_data,
+    'books.google.com': google_books_data,
+    'books.google': google_books_data,
+    'google': google_encrypted_data,
+    'encrypted.google': google_encrypted_data,
+    'jstor': jstor_data,
 }.get
 
 # Always assign 'Content-Length' header to HTTP_HEADERS[0] before sending.
@@ -73,7 +73,7 @@ json_headers = [
 ]
 
 
-def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
+def url_doi_isbn_data(user_input, date_format, /) -> dict:
     en_user_input = unquote(uninum2en(user_input))
     # Checking the user input for dot is important because
     # the use of dotless domains is prohibited.
@@ -89,28 +89,28 @@ def url_doi_isbn_to_dict(user_input, date_format, /) -> dict:
         # TLD stands for top-level domain
         tldless_netloc = parsed_url[1].rpartition('.')[0].removeprefix('www.')
         # todo: make lazy?
-        if (to_dict := TLDLESS_NETLOC_RESOLVER(tldless_netloc)) is not None:
-            if to_dict is google_books_dict:
-                return to_dict(parsed_url, date_format)
-            elif to_dict is google_encrypted_dict:
-                return to_dict(url, parsed_url, date_format)
-            return to_dict(url, date_format)
+        if (data_func := TLDLESS_NETLOC_RESOLVER(tldless_netloc)) is not None:
+            if data_func is google_books_data:
+                return data_func(parsed_url, date_format)
+            elif data_func is google_encrypted_data:
+                return data_func(url, parsed_url, date_format)
+            return data_func(url, date_format)
 
         # DOIs contain dots
         if (m := doi_search(unescape(en_user_input))) is not None:
             try:
-                return doi_to_dict(m[0], True, date_format)
+                return doi_data(m[0], True, date_format)
             except JSONDecodeError:
                 if url_input is False:
                     raise
                 # continue with urls_scr
 
-        return urls_url_to_dict(url, date_format)
+        return url_data(url, date_format)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
         # error-prone.
         if (m := isbn_10or13_search(en_user_input)) is not None:
-            return isbn_to_dict(m[0], True, date_format)
+            return isbn_data(m[0], True, date_format)
 
 
 def css(start_response: callable, *_) -> tuple:
@@ -144,11 +144,11 @@ def echo(url: str, _: str, /):
 
 
 input_type_to_resolver = {
-    '': url_doi_isbn_to_dict,
-    'url-doi-isbn': url_doi_isbn_to_dict,
-    'pmid': pmid_dict,
-    'pmcid': pmcid_dict,
-    'oclc': oclc_dict,
+    '': url_doi_isbn_data,
+    'url-doi-isbn': url_doi_isbn_data,
+    'pmid': pmid_data,
+    'pmcid': pmcid_data,
+    'oclc': oclc_data,
     'echo': echo,
 }
 
@@ -185,10 +185,10 @@ def root(start_response: callable, environ: dict) -> tuple:
             scr_to_html, date_format=date_format, input_type=input_type
         )
 
-    to_dict = input_type_to_resolver[input_type]
+    data_func = input_type_to_resolver[input_type]
 
     try:
-        d = to_dict(user_input, date_format)
+        d = data_func(user_input, date_format)
     except Exception as e:
         status = '500 Internal Server Error'
 
@@ -199,7 +199,7 @@ def root(start_response: callable, environ: dict) -> tuple:
                 logger.exception(user_input)
             scr = type(e).__name__, '', ''
     else:
-        scr = dict_to_sfn_cit_ref(d)
+        scr = data_to_sfn_cit_ref(d)
         status = '200 OK'
 
     response_body = scr_to_resp_body(scr).encode()

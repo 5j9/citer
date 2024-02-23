@@ -1,9 +1,9 @@
-from lib.archives import url_to_dict
-from lib.commons import dict_to_sfn_cit_ref
+from lib.archives import archive_org_data
+from lib.commons import data_to_sfn_cit_ref
 
 
 def waybackmachine_scr(*args):
-    return dict_to_sfn_cit_ref(url_to_dict(*args))
+    return data_to_sfn_cit_ref(archive_org_data(*args))
 
 
 def test_live_og_link():

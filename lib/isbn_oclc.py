@@ -7,7 +7,7 @@ from regex import search
 
 from config import LANG
 from lib import four_digit_num, logger
-from lib.citoid import get_citoid_dict
+from lib.citoid import citoid_data
 from lib.commons import (
     ReturnError,
     isbn10_search,
@@ -16,9 +16,9 @@ from lib.commons import (
 )
 from lib.ketabir import (
     isbn_to_url as ketabir_isbn2url,
-    url_to_dict as ketabir_url_to_dict,
+    ketabir_data as ketabir_url_to_dict,
 )
-from lib.urls import url_to_dict
+from lib.urls import url_data
 
 RM_DASH_SPACE = str.maketrans('', '', '- ')
 
@@ -30,7 +30,7 @@ class IsbnError(Exception):
     pass
 
 
-def isbn_to_dict(
+def isbn_data(
     isbn_container_str: str,
     pure: bool = False,
     date_format: str = '%Y-%m-%d',
@@ -148,22 +148,22 @@ def google_books(isbn: str, result: list):
 
 def citoid_thread_target(isbn: str, result: list) -> None:
     try:
-        d = get_citoid_dict(isbn)
+        d = citoid_data(isbn)
     except Exception:
         return
     result.append(d)
 
 
-def worldcat_url_to_dict(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
+def worldcat_data(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
     try:
         oclc = search(r'(?i)worldcat.org/(?:title|oclc)/(\d+)', url)[1]
     except TypeError:  # 'NoneType' object is not subscriptable
         # e.g. on https://www.worldcat.org/formats-editions/22239204
-        return url_to_dict(url, date_format)
-    return oclc_dict(oclc, date_format)
+        return url_data(url, date_format)
+    return oclc_data(oclc, date_format)
 
 
-def oclc_dict(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
+def oclc_data(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
     content = request('https://search.worldcat.org/title/' + oclc).content
     j = loads(
         content[

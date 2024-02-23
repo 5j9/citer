@@ -2,25 +2,25 @@ from unittest.mock import patch
 
 from pytest import raises
 
-from lib.commons import ReturnError, dict_to_sfn_cit_ref, isbn_10or13_search
+from lib.commons import ReturnError, data_to_sfn_cit_ref, isbn_10or13_search
 from lib.isbn_oclc import (
-    get_citoid_dict,
-    isbn_to_dict,
-    oclc_dict,
-    worldcat_url_to_dict,
+    citoid_data,
+    isbn_data,
+    oclc_data,
+    worldcat_data,
 )
 
 
 def isbn_scr(*args):
-    return dict_to_sfn_cit_ref(isbn_to_dict(*args))
+    return data_to_sfn_cit_ref(isbn_data(*args))
 
 
 def oclc_scr(*args):
-    return dict_to_sfn_cit_ref(oclc_dict(*args))
+    return data_to_sfn_cit_ref(oclc_data(*args))
 
 
 def worldcat_scr(*args):
-    return dict_to_sfn_cit_ref(worldcat_url_to_dict(*args))
+    return data_to_sfn_cit_ref(worldcat_data(*args))
 
 
 def test_is1():
@@ -88,7 +88,7 @@ def test_citoid_only():  # 31
 
 def test_invalid_oclc():
     with raises(ReturnError) as e:
-        oclc_dict('99999999999999')
+        oclc_data('99999999999999')
     assert e.value.args == (
         'Error processing OCLC number: 99999999999999',
         'Make sure the OCLC identifier is valid.',
@@ -121,7 +121,7 @@ def test_not_identified_pulisher():
 
 
 def test_citoid():
-    assert get_citoid_dict('9781137330963') == {
+    assert citoid_data('9781137330963') == {
         'cite_type': 'book',
         'date': '2013',
         'isbn': '978-1-137-33096-3',

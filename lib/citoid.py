@@ -19,7 +19,7 @@ TRANSLATE = {
 }
 
 
-def get_citoid_dict(query: str, quote=False, /) -> dict:
+def citoid_data(query: str, quote=False, /) -> dict:
     if quote is True:
         query = quote_plus(query)
     # https://www.mediawiki.org/wiki/Citoid/API

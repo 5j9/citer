@@ -5,9 +5,9 @@ from threading import Thread
 
 from config import NCBI_API_KEY, NCBI_EMAIL, NCBI_TOOL
 from lib import logger
-from lib.citoid import get_citoid_dict
+from lib.citoid import citoid_data
 from lib.commons import b_TO_NUM, rc, request
-from lib.doi import get_crossref_dict
+from lib.doi import crossref_data
 
 NON_DIGITS_SUB = rc(r'[^\d]').sub
 
@@ -28,7 +28,7 @@ class NCBIError(Exception):
     pass
 
 
-def pmid_dict(pmid: str, date_format='%Y-%m-%d', /) -> dict:
+def pmid_data(pmid: str, date_format='%Y-%m-%d', /) -> dict:
     """Return the response namedtuple."""
     pmid = NON_DIGITS_SUB('', pmid)
     dictionary = ncbi('pmid', pmid)
@@ -36,7 +36,7 @@ def pmid_dict(pmid: str, date_format='%Y-%m-%d', /) -> dict:
     return dictionary
 
 
-def pmcid_dict(pmcid: str, date_format='%Y-%m-%d', /) -> dict:
+def pmcid_data(pmcid: str, date_format='%Y-%m-%d', /) -> dict:
     """Return the response namedtuple."""
     pmcid = NON_DIGITS_SUB('', pmcid)
     dictionary = ncbi('pmcid', pmcid)
@@ -47,7 +47,7 @@ def pmcid_dict(pmcid: str, date_format='%Y-%m-%d', /) -> dict:
 def ncbi(type_: str, id_: str) -> dict:
     """Return the NCBI data for the given id_. PMC"""
     try:
-        return get_citoid_dict(f'PMC{id_}' if type_ == 'pmcid' else id_)
+        return citoid_data(f'PMC{id_}' if type_ == 'pmcid' else id_)
     except Exception:
         pass
     # According to https://www.ncbi.nlm.nih.gov/pmc/tools/get-metadata/
@@ -149,7 +149,7 @@ def crossref_update(dct: dict, doi: str):
     """Update dct using crossref result."""
     # noinspection PyBroadException
     try:
-        dct.update(get_crossref_dict(doi))
+        dct.update(crossref_data(doi))
     except Exception:
         logger.exception(
             'There was an error in resolving crossref DOI: ' + doi

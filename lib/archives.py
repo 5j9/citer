@@ -17,7 +17,6 @@ from lib.urls import (
     find_title,
     get_html,
     url_data,
-    url_to_dict as urls_url_to_dict,
 )
 
 URL_FULLMATCH = rc(
@@ -26,15 +25,15 @@ URL_FULLMATCH = rc(
 ).fullmatch
 
 
-def url_to_dict(archive_url: str, date_format: str = '%Y-%m-%d') -> dict:
+def archive_org_data(archive_url: str, date_format: str = '%Y-%m-%d') -> dict:
     if (m := URL_FULLMATCH(archive_url)) is None:
         # Could not parse the archive_url. Treat as an ordinary URL.
-        return urls_url_to_dict(archive_url, date_format)
+        return url_data(archive_url, date_format)
     archive_year, archive_month, archive_day, original_url = m.groups()
     original_dict = {}
-    thread = Thread(target=og_url_data, args=(original_url, original_dict))
+    thread = Thread(target=og_url_data_tt, args=(original_url, original_dict))
     thread.start()
-    archive_dict = url_data(archive_url)
+    archive_dict = url_data(archive_url, date_format)
     archive_dict['date_format'] = date_format
     archive_dict['url'] = original_url
     archive_dict['archive-url'] = archive_url
@@ -64,11 +63,11 @@ def url_to_dict(archive_url: str, date_format: str = '%Y-%m-%d') -> dict:
     return archive_dict
 
 
-def og_url_data(ogurl: str, original_dict) -> None:
+def og_url_data_tt(ogurl: str, original_dict) -> None:
     """Fill the dictionary with the information found in ogurl."""
     # noinspection PyBroadException
     try:
-        original_dict.update(original_url_dict(ogurl))
+        original_dict.update(og_url_data(ogurl))
     except (
         ContentTypeError,
         ContentLengthError,
@@ -81,7 +80,7 @@ def og_url_data(ogurl: str, original_dict) -> None:
         )
 
 
-def original_url_dict(url: str):
+def og_url_data(url: str):
     """Return a dictionary only containing required data for og:url."""
     d = {}
     # Creating a thread to request homepage title in background
