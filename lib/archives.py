@@ -14,13 +14,13 @@ from lib.urls import (
     url_text,
 )
 
-ARCHIVE_ORG_URL_MATCH = rc(
+archive_org_url_match = rc(
     r'https?+://web(?:-beta)?+\.archive\.org/(?:web/)?+'
     r'(\d{4})(\d{2})(\d{2})\d{6}(?>cs_|i(?>d_|m_)|js_)?+/(http.*)'
 ).match
 
-ARCHIVE_TODAY_URL_SEARCH = rc(
-    r'<link rel="canonical" href="https://archive.ph/(\d{4}).(\d{2}).(\d{2})-[^/]*/(http[^"]*)"'
+archive_today_url_search = rc(
+    r'(?<=<link rel="canonical" href=")https://archive.ph/(\d{4}).(\d{2}).(\d{2})-[^/]*/(http[^"]*)"'
 ).search
 
 
@@ -57,12 +57,14 @@ def _archive_data(archive_url: str, m: Match, archive_html: str):
 
 def archive_today_data(archive_url: str) -> dict:
     _, archive_html = url_text(archive_url)
-    m = ARCHIVE_TODAY_URL_SEARCH(archive_html)
+    if (m := archive_today_url_search(archive_html)) is None:
+        # Could not parse the archive_url. Treat as an ordinary URL.
+        return url_data(archive_url, html=archive_html)
     return _archive_data(archive_url, m, archive_html)
 
 
 def archive_org_data(archive_url: str) -> dict:
-    if (m := ARCHIVE_ORG_URL_MATCH(archive_url)) is None:
+    if (m := archive_org_url_match(archive_url)) is None:
         # Could not parse the archive_url. Treat as an ordinary URL.
         return url_data(archive_url)
     _, archive_html = url_text(archive_url)

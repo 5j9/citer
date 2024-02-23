@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 from curl_cffi import CurlError
 
 from lib import logger
-from lib.archives import archive_org_data
+from lib.archives import archive_org_data, archive_today_data
 from lib.commons import (
     ReturnError,
     data_to_sfn_cit_ref,
@@ -45,13 +45,14 @@ def google_encrypted_data(url, parsed_url) -> dict:
     return url_data(url)
 
 
-TLDLESS_NETLOC_RESOLVER = {
+get_resolver = {
     'ketab': ketabir_data,
     'worldcat': worldcat_data,
     'noorlib': noorlib_data,
     'noormags': noormags_data,
     'web.archive': archive_org_data,
     'web-beta.archive': archive_org_data,
+    'archive': archive_today_data,
     'books.google.co': google_books_data,
     'books.google.com': google_books_data,
     'books.google': google_books_data,
@@ -86,10 +87,9 @@ def url_doi_isbn_data(user_input, /) -> dict:
         else:
             url = user_input
         parsed_url = urlparse(url)
-        # TLD stands for top-level domain
-        tldless_netloc = parsed_url[1].rpartition('.')[0].removeprefix('www.')
+        hostname_core = parsed_url[1].rpartition('.')[0].removeprefix('www.')
         # todo: make lazy?
-        if (data_func := TLDLESS_NETLOC_RESOLVER(tldless_netloc)) is not None:
+        if (data_func := get_resolver(hostname_core)) is not None:
             if data_func is google_books_data:
                 return data_func(parsed_url)
             elif data_func is google_encrypted_data:

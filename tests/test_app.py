@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 from pytest import raises
 
 from app import (
-    TLDLESS_NETLOC_RESOLVER,
+    get_resolver,
     google_books_data,
     google_encrypted_data,
     input_type_to_resolver,
@@ -24,7 +24,7 @@ def fake_resolver(*_):
 
 
 def assert_and_patch_resolver(url, resolver):
-    d = TLDLESS_NETLOC_RESOLVER.__self__
+    d = get_resolver.__self__
     netloc = urlparse('http://' + url).netloc
     if netloc[:4] == 'www.':
         netloc = netloc[4:]
