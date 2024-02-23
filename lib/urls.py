@@ -138,7 +138,7 @@ to_text = partial(rc(r'<[^>]*+>').sub, '')
 
 def url_to_dict(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
     """Create the response namedtuple."""
-    dictionary = url2dict(url)
+    dictionary = url_data(url)
     dictionary['date_format'] = date_format
     return dictionary
 
@@ -449,7 +449,7 @@ def get_html(url: str) -> tuple[str, str]:
     return r.url, text
 
 
-def url2dict(url: str) -> dict[str, Any]:
+def url_data(url: str) -> dict[str, Any]:
     parsed_url = urlparse(url)
     hostname = parsed_url.hostname.replace('www.', '', 1)
 
