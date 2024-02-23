@@ -16,7 +16,7 @@ from lib.urls import (
     find_site_name,
     find_title,
     get_html,
-    url2dict,
+    url_data,
     url_to_dict as urls_url_to_dict,
 )
 
@@ -32,11 +32,9 @@ def url_to_dict(archive_url: str, date_format: str = '%Y-%m-%d') -> dict:
         return urls_url_to_dict(archive_url, date_format)
     archive_year, archive_month, archive_day, original_url = m.groups()
     original_dict = {}
-    thread = Thread(
-        target=original_url2dict, args=(original_url, original_dict)
-    )
+    thread = Thread(target=og_url_data, args=(original_url, original_dict))
     thread.start()
-    archive_dict = url2dict(archive_url)
+    archive_dict = url_data(archive_url)
     archive_dict['date_format'] = date_format
     archive_dict['url'] = original_url
     archive_dict['archive-url'] = archive_url
@@ -66,7 +64,7 @@ def url_to_dict(archive_url: str, date_format: str = '%Y-%m-%d') -> dict:
     return archive_dict
 
 
-def original_url2dict(ogurl: str, original_dict) -> None:
+def og_url_data(ogurl: str, original_dict) -> None:
     """Fill the dictionary with the information found in ogurl."""
     # noinspection PyBroadException
     try:
