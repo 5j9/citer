@@ -9,7 +9,7 @@ A citation generator tool for Wikipedia. Currently accessible from:\
 Citer is especially useful for generating citations from Google Books URLs, DOIs (Any Digital object Identifiers) and ISBNs (International Standard Book Numbers).
 Additionally, any URL, including the URL of many major news websites can be processed to generate a citation.
 
-Special support for the URLs of the [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) is also implemented.
+URLs of [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) and [archive.today](https://archive.ph/) are also supported and generate a citation template with archive parameters filled.
 
 ## Installation
 
