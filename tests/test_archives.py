@@ -1,5 +1,5 @@
+from lib.archives import url_to_dict
 from lib.commons import dict_to_sfn_cit_ref
-from lib.waybackmachine import url_to_dict
 
 
 def waybackmachine_scr(*args):

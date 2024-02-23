@@ -6,6 +6,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 from curl_cffi import CurlError
 
 from lib import logger
+from lib.archives import url_to_dict as archive_url_to_dict
 from lib.commons import (
     ReturnError,
     dict_to_sfn_cit_ref,
@@ -32,7 +33,6 @@ from lib.noorlib import url_to_dict as noorlib_url_to_dict
 from lib.noormags import url_to_dict as noormags_url_to_dict
 from lib.pubmed import pmcid_dict, pmid_dict
 from lib.urls import get_html, url_to_dict as urls_url_to_dict
-from lib.waybackmachine import url_to_dict as archive_url_to_dict
 
 
 def google_encrypted_dict(url, parsed_url, date_format) -> dict:
