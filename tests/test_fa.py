@@ -10,7 +10,7 @@ from tests.ketabir_test import ketabir_scr
 from tests.noorlib_test import noorlib_scr
 from tests.noormags_test import noormags_scr
 from tests.pubmed_test import pmid_scr
-from tests.urls_test import urls_scr
+from tests.urls.test_urls import urls_scr
 
 sfn_cit_ref_patcher = patch('lib.commons.sfn_cit_ref', sfn_cit_ref)
 doi_patcher = patch('lib.doi.LANG', 'fa')
