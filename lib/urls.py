@@ -22,6 +22,13 @@ from lib.commons import (
 from lib.doi import crossref_data
 from lib.urls_authors import CONTENT_ATTR, IV, find_authors
 
+
+class ThreadLike:
+    @staticmethod
+    def join():
+        ...
+
+
 MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
 
 
@@ -387,10 +394,16 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
     home_list[1] = title
 
 
-def analyze_home(parsed_url: tuple) -> tuple[Thread, list]:
+def analyze_home(parsed_url: tuple, check_home=True, /) -> tuple[Thread, list]:
     home_list = [None, None]
-    home_thread = Thread(target=_analyze_home, args=(parsed_url, home_list))
-    home_thread.start()
+    if check_home is True:
+        home_thread = Thread(
+            target=_analyze_home, args=(parsed_url, home_list)
+        )
+        home_thread.start()
+    else:
+        home_thread = ThreadLike
+
     return home_thread, home_list
 
 
@@ -442,15 +455,28 @@ def get_html(url: str) -> tuple[str, str]:
     return r.url, text
 
 
-def url_data(url: str) -> dict[str, Any]:
+def url_data(
+    url: str, *, this_domain_only=False, check_home=True
+) -> dict[str, Any]:
+    """
+    :param url: the URL to be checked.
+    :param this_domain_only: do not check other sources like citoid.
+        Also, raise errors instead of returning template.
+    :param check_home: if False, do not check homepage of the URL. (Used in
+        archives module.)
+    """
     try:
         url, html = get_html(url)
     except CurlError:
         # sometimes get_html fails (is blacklisted), but zotero works
         # issues/47
+        if this_domain_only is True:
+            raise
         d = citoid_data(url, True)
         return {'url': url, **d}
     except ContentTypeError:
+        if this_domain_only is True:
+            raise
         return {'url': url, 'cite_type': 'web'}
 
     d = {'url': url}
@@ -480,8 +506,8 @@ def url_data(url: str) -> dict[str, Any]:
     publisher = d['publisher'] = find_publisher(html)
 
     parsed_url = urlparse(url)
-    hostname = parsed_url.hostname.replace('www.', '', 1)
-    home_thread, home_list = analyze_home(parsed_url)
+    hostname = parsed_url.hostname.removeprefix('www.')
+    home_thread, home_list = analyze_home(parsed_url, check_home)
 
     if d['journal']:
         d['cite_type'] = 'journal'
