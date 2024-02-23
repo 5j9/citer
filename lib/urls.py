@@ -10,7 +10,7 @@ from curl_cffi import CurlError
 from langid import classify
 
 from lib import logger
-from lib.citoid import get_citoid_dict
+from lib.citoid import citoid_data
 from lib.commons import (
     ANYDATE_PATTERN,
     Response,
@@ -19,7 +19,7 @@ from lib.commons import (
     rc,
     request,
 )
-from lib.doi import get_crossref_dict
+from lib.doi import crossref_data
 from lib.urls_authors import CONTENT_ATTR, IV, find_authors
 
 MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
@@ -134,13 +134,6 @@ class ContentLengthError(ValueError):
 # inaccurate but should be faster than bs4
 # https://stackoverflow.com/questions/14694482/converting-html-to-text-with-python
 to_text = partial(rc(r'<[^>]*+>').sub, '')
-
-
-def url_to_dict(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
-    """Create the response namedtuple."""
-    dictionary = url_data(url)
-    dictionary['date_format'] = date_format
-    return dictionary
 
 
 def find_journal(html: str) -> str | None:
@@ -449,7 +442,7 @@ def get_html(url: str) -> tuple[str, str]:
     return r.url, text
 
 
-def url_data(url: str) -> dict[str, Any]:
+def url_data(url: str, date_format: str = '%Y-%m-%d', /) -> dict[str, Any]:
     parsed_url = urlparse(url)
     hostname = parsed_url.hostname.replace('www.', '', 1)
 
@@ -460,18 +453,21 @@ def url_data(url: str) -> dict[str, Any]:
     except CurlError:
         # sometimes get_html fails (is blacklisted), but zotero works
         # issues/47
-        d = get_citoid_dict(url, True)
-        d['url'] = url
-        return d
+        d = citoid_data(url, True)
+        return {
+            'date_format': date_format,
+            'url': url,
+            **d,
+        }
     except ContentTypeError:
-        return {'url': url, 'cite_type': 'web'}
+        return {'date_format': date_format, 'url': url, 'cite_type': 'web'}
 
-    d = {'url': url}
+    d = {'date_format': date_format, 'url': url}
 
     if doi := find_doi(html):
         # noinspection PyBroadException
         try:
-            return get_crossref_dict(doi)
+            return crossref_data(doi)
         except Exception:
             logger.exception(f'{url=}, {doi=}')
             d['doi'] = doi

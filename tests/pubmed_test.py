@@ -3,21 +3,21 @@ from unittest.mock import Mock, patch
 from curl_cffi import CurlError
 
 from lib import pubmed
-from lib.commons import dict_to_sfn_cit_ref
-from lib.pubmed import pmcid_dict, pmid_dict
+from lib.commons import data_to_sfn_cit_ref
+from lib.pubmed import pmcid_data, pmid_data
 
 
 def pmid_scr(*args):
-    return dict_to_sfn_cit_ref(pmid_dict(*args))
+    return data_to_sfn_cit_ref(pmid_data(*args))
 
 
 def pmcid_scr(*args):
-    return dict_to_sfn_cit_ref(pmcid_dict(*args))
+    return data_to_sfn_cit_ref(pmcid_data(*args))
 
 
 def test_doi_update():
     """Updated using doi."""
-    with patch('lib.pubmed.get_citoid_dict', side_effect=CurlError):
+    with patch('lib.pubmed.citoid_data', side_effect=CurlError):
         assert (
             pmcid_scr('3538472')[1]
             == '* {{cite journal | last=Sweetser | first=Seth | title=Evaluating the Patient With Diarrhea: A Case-Based Approach | journal=Mayo Clinic Proceedings | publisher=Elsevier BV | volume=87 | issue=6 | year=2012 | issn=0025-6196 | pmid=22677080 | pmc=3538472 | doi=10.1016/j.mayocp.2012.02.015 | pages=596–602}}'
@@ -30,7 +30,7 @@ def test_doi_update():
 
 def test_spanish_no_doi():
     """Test retrieval without doi."""
-    with patch('lib.pubmed.get_citoid_dict', side_effect=CurlError):
+    with patch('lib.pubmed.citoid_data', side_effect=CurlError):
         assert pmid_scr('123455')[1] == (
             '* {{cite journal | last=Mendozo Hernández | first=P | title=[Clinical '
             'diagnosis and therapy. Intravenous and oral rehydration]. | journal=Boletin '
@@ -50,7 +50,7 @@ def test_spanish_no_doi():
 @patch.object(pubmed, 'crossref_update', Mock(return_value=None))
 def test_has_doi_but_no_crossref():
     """Test while doi exists but crossref_update is disabled."""
-    with patch('lib.pubmed.get_citoid_dict', side_effect=CurlError):
+    with patch('lib.pubmed.citoid_data', side_effect=CurlError):
         assert pmcid_scr('2562006', '%d %B %Y')[1] == (
             '* {{cite journal | last=Bannen | first=RM | last2=Suresh | first2=V | '
             'last3=Phillips | first3=GN Jr | last4=Wright | first4=SJ | last5=Mitchell | '

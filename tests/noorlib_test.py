@@ -1,9 +1,9 @@
-from lib.commons import dict_to_sfn_cit_ref
-from lib.noorlib import url_to_dict
+from lib.commons import data_to_sfn_cit_ref
+from lib.noorlib import noorlib_data
 
 
 def noorlib_scr(*args):
-    return dict_to_sfn_cit_ref(url_to_dict(*args))
+    return data_to_sfn_cit_ref(noorlib_data(*args))
 
 
 def test_nl1():

@@ -8,7 +8,7 @@ BIBTEX_ARTICLE_ID_SEARCH = rc(r'(?<=/citation/bibtex/)\d+').search
 RIS_ARTICLE_ID_SEARCH = rc(r'(?<=/citation/ris/)\d+').search
 
 
-def url_to_dict(url: str, date_format: str = '%Y-%m-%d') -> dict:
+def noormags_data(url: str, date_format: str = '%Y-%m-%d') -> dict:
     """Create the response namedtuple."""
     ris_collection = {}
     ris_thread = Thread(target=ris_fetcher_thread, args=(url, ris_collection))

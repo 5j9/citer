@@ -3,12 +3,12 @@ from urllib.parse import urlparse
 
 from pytest import mark, raises
 
-from lib.commons import dict_to_sfn_cit_ref
-from lib.googlebooks import url_to_dict
+from lib.commons import data_to_sfn_cit_ref
+from lib.googlebooks import google_books_data
 
 
 def _googlebooks_scr(url):
-    return dict_to_sfn_cit_ref(url_to_dict(url))
+    return data_to_sfn_cit_ref(google_books_data(url))
 
 
 def googlebooks_scr(url):
@@ -171,5 +171,5 @@ def test_gb5():
 def test_ngram_url(urls_mock: Mock):
     url = 'https://books.google.com/ngrams/graph?content=countermeasure&year_start=1740&year_end=1760&corpus=en-2019&smoothing=3'
     with raises(NotImplementedError):
-        url_to_dict(urlparse(url), '%Y-%m-%d')
+        google_books_data(urlparse(url), '%Y-%m-%d')
     urls_mock.assert_called_once_with(url, '%Y-%m-%d')

@@ -9,8 +9,8 @@ AUTHORS_FINDALL = rc(r'(\S+?)\s*+:\s*+(.*)').findall
 VOLUME_SEARCH = rc(r'\bجلد (\d+)').search
 
 
-def url_to_dict(url: str, date_format='%Y-%m-%d', /) -> dict:
-    dictionary = _url_to_dict(url)
+def ketabir_data(url: str, date_format='%Y-%m-%d', /) -> dict:
+    dictionary = _url_data(url)
     dictionary['date_format'] = date_format
     if 'language' not in dictionary:
         # Assume that language is either fa or en.
@@ -29,7 +29,7 @@ def isbn_to_url(isbn: str) -> str | None:
     )
 
 
-def _url_to_dict(ketabir_url: str) -> dict | None:
+def _url_data(ketabir_url: str) -> dict | None:
     try:
         # Try to see if ketabir is available,
         # ottobib should continue its work in isbn.py if it is not.

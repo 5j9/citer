@@ -4,18 +4,18 @@ from unittest.mock import Mock, patch
 from curl_cffi import CurlError
 from pytest import mark
 
-from lib.commons import dict_to_sfn_cit_ref
+from lib.commons import data_to_sfn_cit_ref
 from lib.urls import (
     LANG_SEARCH,
     ContentTypeError,
     _analyze_home,
-    url_to_dict,
+    url_data,
 )
 from tests import FakeResponse
 
 
 def urls_scr(*args):
-    return dict_to_sfn_cit_ref(url_to_dict(*args))
+    return data_to_sfn_cit_ref(url_data(*args))
 
 
 def test_bostonglobe1():

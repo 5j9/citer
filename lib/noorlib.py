@@ -5,7 +5,7 @@ BIBTEX_ARTICLE_ID_SEARCH = rc(r'(?<=CitationHandler\.ashx\?id=)\d+').search
 RIS_ARTICLE_ID_SEARCH = rc(r'(?<=RIS&id=)\d+').search
 
 
-def url_to_dict(url: str, date_format: str = '%Y-%m-%d') -> dict:
+def noorlib_data(url: str, date_format: str = '%Y-%m-%d') -> dict:
     dictionary = bibtex_parse(dict_from_bibtex(url))
     dictionary['date_format'] = date_format
     # risr = get_ris(url)[1]

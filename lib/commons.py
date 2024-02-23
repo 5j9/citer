@@ -182,7 +182,7 @@ def request(
     return mortal_session().request(method, url, headers=headers, **kwargs)
 
 
-def dict_to_sfn_cit_ref(dictionary: dict) -> tuple:
+def data_to_sfn_cit_ref(dictionary: dict) -> tuple:
     # Return (sfn, cite, ref) strings.
     get = dictionary.get
     if title := get('title'):

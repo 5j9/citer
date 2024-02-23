@@ -4,10 +4,10 @@ from langid import classify
 
 from lib.commons import request
 from lib.ris import ris_parse
-from lib.urls import url_to_dict as urls
+from lib.urls import url_data as urls
 
 
-def url_to_dict(parsed_url, date_format='%Y-%m-%d') -> dict:
+def google_books_data(parsed_url, date_format='%Y-%m-%d') -> dict:
     parsed_query = parse_qs(parsed_url.query)
 
     if (id_ := parsed_query.get('id')) is not None:

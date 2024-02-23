@@ -6,11 +6,11 @@ from curl_cffi import CurlError
 from langid import classify
 
 from config import LANG
-from lib.citoid import get_citoid_dict
+from lib.citoid import citoid_data
 from lib.commons import doi_search, request
 
 
-def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
+def doi_data(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
     if pure:
         doi = doi_or_url
     else:
@@ -19,9 +19,9 @@ def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
         decoded_url = unquote_plus(unescape(doi_or_url))
         doi = doi_search(decoded_url)[0]
     try:
-        d = get_citoid_dict(doi, True)
+        d = citoid_data(doi, True)
     except CurlError:
-        d = get_crossref_dict(doi)
+        d = crossref_data(doi)
 
     d['date_format'] = date_format
     if LANG == 'fa':
@@ -29,7 +29,7 @@ def doi_to_dict(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
     return d
 
 
-def get_crossref_dict(doi) -> dict:
+def crossref_data(doi) -> dict:
     """Return the parsed data of crossref.org for the given DOI."""
     # See https://citation.crosscite.org/docs.html for documentation.
     r = request(
