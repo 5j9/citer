@@ -67,13 +67,13 @@ def isbn_data(
 
     citoid_thread.join()
     if citoid_result_list:
-        dictionary = citoid_result_list[0]
+        d = citoid_result_list[0]
     else:
-        dictionary = {}
+        d = {}
 
     google_books_thread.join()
     if google_books_result:
-        dictionary.update(google_books_result[0])
+        d |= google_books_result[0]
 
     if iranian_isbn is True:
         # noinspection PyUnboundLocalVariable
@@ -82,16 +82,16 @@ def isbn_data(
         if ketabir_result_list:
             # noinspection PyUnboundLocalVariable
             ketabir_dict = ketabir_result_list[0]
-            dictionary = combine_dicts(ketabir_dict, dictionary)
+            d = combine_dicts(ketabir_dict, d)
 
-    if not dictionary:
+    if not d:
         raise ReturnError('Error: ISBN not found', '', '')
 
-    dictionary['isbn'] = isbn_mask(isbn)
-    dictionary['date_format'] = date_format
-    if 'language' not in dictionary:
-        dictionary['language'] = classify(dictionary['title'])[0]
-    return dictionary
+    d['isbn'] = isbn_mask(isbn)
+    d['date_format'] = date_format
+    if 'language' not in d:
+        d['language'] = classify(d['title'])[0]
+    return d
 
 
 def ketabir_thread_target(isbn: str, result: list) -> None:
@@ -134,7 +134,7 @@ def google_books(isbn: str, result: list):
             f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn.replace("-", "")}'
         ).json()
         d = j['items'][0]
-        d.update(d['volumeInfo'])
+        d |= d['volumeInfo']
     except Exception:  # noqa
         # logger.exception('isbn: %s', isbn)
         return

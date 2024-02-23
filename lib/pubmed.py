@@ -138,7 +138,7 @@ def ncbi(type_: str, id_: str) -> dict:
         # noinspection PyUnboundLocalVariable
         crossref_thread.join()
         # noinspection PyUnboundLocalVariable
-        d.update(crossref_dict)
+        d |= crossref_dict
 
     return d
 
@@ -147,7 +147,7 @@ def crossref_update(dct: dict, doi: str):
     """Update dct using crossref result."""
     # noinspection PyBroadException
     try:
-        dct.update(crossref_data(doi))
+        dct |= crossref_data(doi)
     except Exception:
         logger.exception(
             'There was an error in resolving crossref DOI: ' + doi

@@ -39,7 +39,7 @@ def archive_org_data(archive_url: str) -> dict:
             original_dict['title'] == archive_dict['title']
             or original_dict['html_title'] == archive_dict['html_title']
         ):
-            archive_dict.update(original_dict)
+            archive_dict |= original_dict
             archive_dict['url-status'] = 'live'
         else:
             # and original title is the same as archive title. Otherwise it
@@ -59,7 +59,7 @@ def og_url_data_tt(ogurl: str, original_dict) -> None:
     """Fill the dictionary with the information found in ogurl."""
     # noinspection PyBroadException
     try:
-        original_dict.update(url_data(ogurl))
+        original_dict |= url_data(ogurl)
     except (
         ContentTypeError,
         ContentLengthError,
