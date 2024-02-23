@@ -33,22 +33,21 @@ def test_live_og_link():
 
 def test_dead_url():
     """url-status=dead"""
-    assert (
+    assert waybackmachine_scr(
+        'https://web.archive.org/web/20070429193849id_/http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
+    )[1][:-12] == (
         '* {{cite web '
         '| title=London Development Centre: Support, time, recovery (STR) '
         'workers '
         '| website=londondevelopmentcentre.org '
         '| date=2007-02-12 '
         '| url=http://www.londondevelopmentcentre.org/page.php?s=1&p=2462 '
-        '| archive-url=https://web.archive.org/web/20070429193849id_/'
-        'http://www.londondevelopmentcentre.org/page.php?s=1&p=2462 '
+        '| archive-url=https://web.archive.org/web/20070429193849id_/http://www.londondevelopmentcentre.org/page.php?s=1&p=2462 '
         '| archive-date=2007-04-29 '
         '| url-status=dead '
         '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
         '| access-date='
-    ) == waybackmachine_scr(
-        'https://web.archive.org/web/20070429193849id_/http://www.londondevelopmentcentre.org/page.php?s=1&p=2462'
-    )[1][:-12]
+    )
 
 
 def test_webless_url():

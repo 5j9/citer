@@ -12,54 +12,51 @@ from lib.urls import (
     url_data,
 )
 
-URL_FULLMATCH = rc(
+ARCHIVE_ORG_URL_MATCH = rc(
     r'https?+://web(?:-beta)?+\.archive\.org/(?:web/)?+'
     r'(\d{4})(\d{2})(\d{2})\d{6}(?>cs_|i(?>d_|m_)|js_)?+/(http.*)'
-).fullmatch
+).match
 
 
 def archive_org_data(archive_url: str) -> dict:
-    if (m := URL_FULLMATCH(archive_url)) is None:
+    if (m := ARCHIVE_ORG_URL_MATCH(archive_url)) is None:
         # Could not parse the archive_url. Treat as an ordinary URL.
         return url_data(archive_url)
     archive_year, archive_month, archive_day, original_url = m.groups()
-    original_dict = {}
-    thread = Thread(target=og_url_data_tt, args=(original_url, original_dict))
-    thread.start()
-    archive_dict = url_data(archive_url)
-    archive_dict['url'] = original_url
-    archive_dict['archive-url'] = archive_url
-    archive_dict['archive-date'] = date(
+    og_d = {}
+    og_thread = Thread(target=og_url_data_tt, args=(original_url, og_d))
+    og_thread.start()
+    d = url_data(archive_url, check_home=False)
+    d['url'] = original_url
+    d['archive-url'] = archive_url
+    d['archive-date'] = date(
         int(archive_year), int(archive_month), int(archive_day)
     )
-    thread.join()
-    if original_dict:
+    og_thread.join()
+    if og_d:
         # The original_process has been successful
         if (
-            original_dict['title'] == archive_dict['title']
-            or original_dict['html_title'] == archive_dict['html_title']
+            og_d['title'] == d['title']
+            or og_d['html_title'] == d['html_title']
         ):
-            archive_dict |= original_dict
-            archive_dict['url-status'] = 'live'
+            d |= og_d
+            d['url-status'] = 'live'
         else:
             # and original title is the same as archive title. Otherwise it
             # means that the content probably has changed and the original data
             # cannot be trusted.
-            archive_dict['url-status'] = 'unfit'
+            d['url-status'] = 'unfit'
     else:
-        archive_dict['url-status'] = 'dead'
-    if archive_dict['website'] == 'Wayback Machine':
-        archive_dict['website'] = urlparse(original_url).hostname.replace(
-            'www.', ''
-        )
-    return archive_dict
+        d['website'] = urlparse(original_url).hostname.removeprefix('www.')
+        d['url-status'] = 'dead'
+    return d
 
 
-def og_url_data_tt(ogurl: str, original_dict) -> None:
+def og_url_data_tt(og_url: str, og_d: dict, /) -> None:
     """Fill the dictionary with the information found in ogurl."""
     # noinspection PyBroadException
     try:
-        original_dict |= url_data(ogurl)
+        og_d |= url_data(og_url, this_domain_only=True)
     except (
         ContentTypeError,
         ContentLengthError,
