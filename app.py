@@ -61,14 +61,11 @@ get_resolver = {
     'jstor': jstor_data,
 }.get
 
-# Always assign 'Content-Length' header to HTTP_HEADERS[0] before sending.
 http_headers = [
-    None,
     ('Content-Type', 'text/html; charset=UTF-8'),
     ALLOW_ALL_ORIGINS,
 ]
 json_headers = [
-    None,
     ('Content-Type', 'application/json'),
     ALLOW_ALL_ORIGINS,
 ]
@@ -135,7 +132,6 @@ def page_does_not_exist(start_response: callable, *_) -> tuple:
         '404 not found',
         [
             ('Content-Type', 'text/plain'),
-            ('Content-Length', str(len(text))),
         ],
     )
     return (text,)
@@ -186,7 +182,6 @@ def root(start_response: callable, environ: dict) -> tuple:
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
-        http_headers[0] = ('Content-Length', str(len(response_body)))
         start_response('200 OK', http_headers)
         return (response_body,)
 
@@ -217,7 +212,6 @@ def root(start_response: callable, environ: dict) -> tuple:
         status = '200 OK'
 
     response_body = scr_to_resp_body(scr).encode()
-    headers[0] = ('Content-Length', str(len(response_body)))
     start_response(status, headers)
     return (response_body,)
 
@@ -231,9 +225,15 @@ get_handler = {
 
 
 def app(environ: dict, start_response: callable) -> tuple:
-    return (get_handler(environ['PATH_INFO']) or page_does_not_exist)(
-        start_response, environ
-    )
+    # noinspection PyBroadException
+    try:
+        return (get_handler(environ['PATH_INFO']) or page_does_not_exist)(
+            start_response, environ
+        )
+    except Exception:
+        start_response('500 Internal Server Error', [])
+        logger.exception('app error, environ:\n%s', environ)
+        return (b'Unknown Error',)
 
 
 if __name__ == '__main__':
