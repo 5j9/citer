@@ -35,7 +35,7 @@ def assert_and_patch_resolver(url, resolver):
 
 def assert_scr(url, resolver):
     with assert_and_patch_resolver(url, resolver), raises(NotImplementedError):
-        url_doi_isbn_data(url, '%Y-%m-%d')
+        url_doi_isbn_data(url)
 
 
 def assert_google_books_scr(url, resolver=google_books_data):
@@ -51,8 +51,8 @@ def test_google_books_netloc():
     ag('books.google.com.ar/books?id=pzmt3pcBuGYC')
     ag('books.google.co.il/books?id=pzmt3pcBuGYC')
     with patch('app.google_books_data') as mock:
-        url_doi_isbn_data('www.google.com/books?id=bwfoCAAAQBAJ', None)
-        url_doi_isbn_data('www.google.com/books/edition/_/bwfoCAAAQBAJ', None)
+        url_doi_isbn_data('www.google.com/books?id=bwfoCAAAQBAJ')
+        url_doi_isbn_data('www.google.com/books/edition/_/bwfoCAAAQBAJ')
     assert mock.call_count == 2
 
 
@@ -80,13 +80,11 @@ def test_noorlib():
 
 @patch('app.url_data')
 @patch('app.doi_data', side_effect=JSONDecodeError('msg', 'doc', 1))
-def test_doi_url_fallback_to_url(doi_scr, urls_scr):
+def test_doi_url_fallback_to_url(doi_data, urls_data):
     user_input = 'https://dl.acm.org/doi/10.5555/3157382.3157535'
-    assert url_doi_isbn_data(user_input, '%B %#d, %Y') is urls_scr.return_value
-    doi_scr.assert_called_once_with(
-        '10.5555/3157382.3157535', True, '%B %#d, %Y'
-    )
-    urls_scr.assert_called_once_with(user_input, '%B %#d, %Y')
+    assert url_doi_isbn_data(user_input) is urls_data.return_value
+    doi_data.assert_called_once_with('10.5555/3157382.3157535', True)
+    urls_data.assert_called_once_with(user_input)
 
 
 def test_userinput_in_body_is_stripped():
@@ -105,4 +103,4 @@ def test_userinput_in_body_is_stripped():
                 'wsgi.input': BytesIO(b'    https://books.google.com/'),
             },
         )
-    m.assert_called_once_with('https://books.google.com/', '%#d %B %Y')
+    m.assert_called_once_with('https://books.google.com/')

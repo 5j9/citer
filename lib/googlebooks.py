@@ -4,10 +4,10 @@ from langid import classify
 
 from lib.commons import request
 from lib.ris import ris_parse
-from lib.urls import url_data as urls
+from lib.urls import url_data
 
 
-def google_books_data(parsed_url, date_format='%Y-%m-%d') -> dict:
+def google_books_data(parsed_url) -> dict:
     parsed_query = parse_qs(parsed_url.query)
 
     if (id_ := parsed_query.get('id')) is not None:
@@ -15,7 +15,7 @@ def google_books_data(parsed_url, date_format='%Y-%m-%d') -> dict:
     else:  # the new URL format
         path = parsed_url.path
         if path[:7] != '/books/':
-            return urls(parsed_url.geturl(), date_format)
+            return url_data(parsed_url.geturl())
         volume_id = path.rpartition('/')[2]
 
     dictionary = ris_parse(
@@ -25,7 +25,6 @@ def google_books_data(parsed_url, date_format='%Y-%m-%d') -> dict:
             spoof=True,
         ).content.decode('utf8')
     )
-    dictionary['date_format'] = date_format
     # manually adding page number to dictionary:
     if (pg := parsed_query.get('pg')) is not None:
         pg0 = pg[0]

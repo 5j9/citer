@@ -442,7 +442,7 @@ def get_html(url: str) -> tuple[str, str]:
     return r.url, text
 
 
-def url_data(url: str, date_format: str = '%Y-%m-%d', /) -> dict[str, Any]:
+def url_data(url: str) -> dict[str, Any]:
     parsed_url = urlparse(url)
     hostname = parsed_url.hostname.replace('www.', '', 1)
 
@@ -454,15 +454,11 @@ def url_data(url: str, date_format: str = '%Y-%m-%d', /) -> dict[str, Any]:
         # sometimes get_html fails (is blacklisted), but zotero works
         # issues/47
         d = citoid_data(url, True)
-        return {
-            'date_format': date_format,
-            'url': url,
-            **d,
-        }
+        return {'url': url, **d}
     except ContentTypeError:
-        return {'date_format': date_format, 'url': url, 'cite_type': 'web'}
+        return {'url': url, 'cite_type': 'web'}
 
-    d = {'date_format': date_format, 'url': url}
+    d = {'url': url}
 
     if doi := find_doi(html):
         # noinspection PyBroadException

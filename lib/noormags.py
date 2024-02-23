@@ -8,20 +8,19 @@ BIBTEX_ARTICLE_ID_SEARCH = rc(r'(?<=/citation/bibtex/)\d+').search
 RIS_ARTICLE_ID_SEARCH = rc(r'(?<=/citation/ris/)\d+').search
 
 
-def noormags_data(url: str, date_format: str = '%Y-%m-%d') -> dict:
+def noormags_data(url: str) -> dict:
     """Create the response namedtuple."""
     ris_collection = {}
     ris_thread = Thread(target=ris_fetcher_thread, args=(url, ris_collection))
     ris_thread.start()
-    dictionary = bibtex_parse(get_bibtex(url))
-    dictionary['date_format'] = date_format
+    d = bibtex_parse(get_bibtex(url))
     # language parameter needs to be taken from RIS
     # other information are more accurate in bibtex
     # for example: http://www.noormags.ir/view/fa/articlepage/104040
     # "IS  - 1" is wrong in RIS but "number = { 45 }," is correct in bibtex
     ris_thread.join()
-    dictionary.update(ris_collection)
-    return dictionary
+    d.update(ris_collection)
+    return d
 
 
 def get_bibtex(noormags_url):

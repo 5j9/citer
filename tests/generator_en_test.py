@@ -47,6 +47,5 @@ def test_date_does_not_change_ref_name_hash():
     h1 = hash_for_ref_name(g, 3)
     scr1 = sfn_cit_ref(d)
     assert h1 in scr1[2]
-    d['date_format'] = '%d-%m-%Y'
-    assert scr1 != sfn_cit_ref(d)  # date_format changes output
+    assert scr1 != sfn_cit_ref(d, '%d-%m-%Y')  # date_format changes output
     assert h1 == hash_for_ref_name(g, 3)  # but hashes are the same

@@ -14,8 +14,8 @@ from lib.urls import (
 from tests import FakeResponse
 
 
-def urls_scr(*args):
-    return data_to_sfn_cit_ref(url_data(*args))
+def urls_scr(url, date_format='%Y-%m-%d'):
+    return data_to_sfn_cit_ref(url_data(url), date_format)
 
 
 def test_bostonglobe1():

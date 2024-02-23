@@ -28,19 +28,17 @@ class NCBIError(Exception):
     pass
 
 
-def pmid_data(pmid: str, date_format='%Y-%m-%d', /) -> dict:
+def pmid_data(pmid: str) -> dict:
     """Return the response namedtuple."""
     pmid = NON_DIGITS_SUB('', pmid)
     dictionary = ncbi('pmid', pmid)
-    dictionary['date_format'] = date_format
     return dictionary
 
 
-def pmcid_data(pmcid: str, date_format='%Y-%m-%d', /) -> dict:
+def pmcid_data(pmcid: str) -> dict:
     """Return the response namedtuple."""
     pmcid = NON_DIGITS_SUB('', pmcid)
     dictionary = ncbi('pmcid', pmcid)
-    dictionary['date_format'] = date_format
     return dictionary
 
 

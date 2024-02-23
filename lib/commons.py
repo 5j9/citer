@@ -182,20 +182,20 @@ def request(
     return mortal_session().request(method, url, headers=headers, **kwargs)
 
 
-def data_to_sfn_cit_ref(dictionary: dict) -> tuple:
+def data_to_sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
     # Return (sfn, cite, ref) strings.
-    get = dictionary.get
+    get = d.get
     if title := get('title'):
-        dictionary['title'] = ws_normalize(title)
+        d['title'] = ws_normalize(title)
 
     if isbn := get('isbn'):
         try:
-            dictionary['isbn'] = isbn_mask(isbn)
+            d['isbn'] = isbn_mask(isbn)
         except NotValidISBNError:
             # https://github.com/CrossRef/rest-api-doc/issues/214
-            del dictionary['isbn']
+            del d['isbn']
 
-    return sfn_cit_ref(dictionary)
+    return sfn_cit_ref(d, date_format)
 
 
 def first_last(fullname, separator=None) -> tuple:
