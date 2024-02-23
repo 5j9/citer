@@ -8,7 +8,7 @@ from lib.urls_authors import (
     json_ld_authors,
     rc,
 )
-from tests.urls_test import urls_scr
+from tests.urls.test_urls import urls_scr
 
 BYLINE_PATTERN_REGEX = rc(rf'^{BYLINE_PATTERN}$', IV)
 
