@@ -32,7 +32,7 @@ from lib.ketabir import ketabir_data
 from lib.noorlib import noorlib_data
 from lib.noormags import noormags_data
 from lib.pubmed import pmcid_data, pmid_data
-from lib.urls import get_html, url_data
+from lib.urls import url_data, url_text
 
 
 def google_encrypted_data(url, parsed_url) -> dict:
@@ -137,7 +137,7 @@ def page_does_not_exist(start_response: callable, *_) -> tuple:
 
 def echo(url: str, _: str, /):
     try:
-        url, text = get_html(url)
+        url, text = url_text(url)
     except Exception as e:
         url, text = type(e).__name__, ''
     raise ReturnError(url, '', text)

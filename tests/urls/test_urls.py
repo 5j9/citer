@@ -991,8 +991,8 @@ def test_find_title_meta_pipe():
     )
 
 
-@patch('lib.urls.get_html', side_effect=CurlError('test'))
-def test_citoid_thesis_invalid_doi(get_html: Mock):
+@patch('lib.urls.url_text', side_effect=CurlError('test'))
+def test_citoid_thesis_invalid_doi(url_text: Mock):
     assert urls_scr('https://dl.acm.org/doi/10.5555/1123678')[1][:-12] == (
         '* {{cite thesis | degree=phd | last=Madden | first=Samuel Ross | title=The '
         'design and evaluation of a query processing architecture for sensor networks '
@@ -1000,7 +1000,7 @@ def test_citoid_thesis_invalid_doi(get_html: Mock):
         'date=2003 | url=https://dl.acm.org/doi/10.5555/1123678 '
         '| access-date='
     )
-    get_html.assert_called_once()
+    url_text.assert_called_once()
 
 
 @patch('lib.urls.request', side_effect=CurlError('<test>'))

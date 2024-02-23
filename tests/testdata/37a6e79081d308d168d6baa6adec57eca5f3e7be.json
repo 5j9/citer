@@ -1,0 +1,18 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"accept-ranges": "bytes",
+		"access-control-allow-origin": "*",
+		"cache-control": "maxage=300",
+		"content-encoding": "gzip",
+		"content-type": "text/html;charset=utf-8",
+		"date": "Fri, 23 Feb 2024 14:26:17 GMT",
+		"expires": "Fri, 23 Feb 2024 14:31:17 GMT",
+		"link": "<http://www.cbsnews.com/stories/2003/11/12/earlyshow/leisure/celebspot/main583274.shtml>; rel=\"original\", <http://archive.md/timegate/http://www.cbsnews.com/stories/2003/11/12/earlyshow/leisure/celebspot/main583274.shtml>; rel=\"timegate\", <http://archive.md/timemap/http://www.cbsnews.com/stories/2003/11/12/earlyshow/leisure/celebspot/main583274.shtml>; rel=\"timemap\"; type=\"application/link-format\"; from=\"Tue, 11 Dec 2012 04:04:07 GMT\"; until=\"Tue, 11 Dec 2012 04:04:07 GMT\", <http://archive.md/20121211040407/http://www.cbsnews.com/stories/2003/11/12/earlyshow/leisure/celebspot/main583274.shtml>; rel=\"first last memento\"; datetime=\"Tue, 11 Dec 2012 04:04:07 GMT\"",
+		"memento-datetime": "Tue, 11 Dec 2012 04:04:07 GMT",
+		"server": "nginx",
+		"vary": "Accept-Language"
+	},
+	"status_code": 200,
+	"url": "https://archive.ph/N3fQ"
+}

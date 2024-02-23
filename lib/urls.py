@@ -378,7 +378,7 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
     """
     home_url = '://'.join(parsed_url[:2])
     try:
-        r, html = read_text(home_url)
+        r, html = url_text(home_url)
     except (
         CurlError,
         ContentTypeError,
@@ -426,7 +426,7 @@ def check_response(r: Response) -> None:
         )
 
 
-def read_text(url: str) -> tuple[Response, str]:
+def url_text(url: str) -> tuple[str, str]:
     with request(url, spoof=True, stream=True) as r:
         check_response(r)
         size = 0
@@ -446,17 +446,11 @@ def read_text(url: str) -> tuple[Response, str]:
         #     return
         html = content.decode(r.encoding, errors='replace')
 
-        return r, html
-
-
-def get_html(url: str) -> tuple[str, str]:
-    """Return the html string for the given url."""
-    r, text = read_text(url)
-    return r.url, text
+        return r.url, html
 
 
 def url_data(
-    url: str, *, this_domain_only=False, check_home=True
+    url: str, *, this_domain_only=False, check_home=True, html=None
 ) -> dict[str, Any]:
     """
     :param url: the URL to be checked.
@@ -465,19 +459,20 @@ def url_data(
     :param check_home: if False, do not check homepage of the URL. (Used in
         archives module.)
     """
-    try:
-        url, html = get_html(url)
-    except CurlError:
-        # sometimes get_html fails (is blacklisted), but zotero works
-        # issues/47
-        if this_domain_only is True:
-            raise
-        d = citoid_data(url, True)
-        return {'url': url, **d}
-    except ContentTypeError:
-        if this_domain_only is True:
-            raise
-        return {'url': url, 'cite_type': 'web'}
+    if html is None:
+        try:
+            url, html = url_text(url)
+        except CurlError:
+            # sometimes get_html fails (is blacklisted), but zotero works
+            # issues/47
+            if this_domain_only is True:
+                raise
+            d = citoid_data(url, True)
+            return {'url': url, **d}
+        except ContentTypeError:
+            if this_domain_only is True:
+                raise
+            return {'url': url, 'cite_type': 'web'}
 
     d = {'url': url}
 

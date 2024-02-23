@@ -3,6 +3,7 @@ from threading import Thread
 from urllib.parse import urlparse
 
 from curl_cffi import CurlError
+from regex import Match
 
 from lib import logger
 from lib.commons import rc
@@ -10,6 +11,7 @@ from lib.urls import (
     ContentLengthError,
     ContentTypeError,
     url_data,
+    url_text,
 )
 
 ARCHIVE_ORG_URL_MATCH = rc(
@@ -17,16 +19,17 @@ ARCHIVE_ORG_URL_MATCH = rc(
     r'(\d{4})(\d{2})(\d{2})\d{6}(?>cs_|i(?>d_|m_)|js_)?+/(http.*)'
 ).match
 
+ARCHIVE_TODAY_URL_SEARCH = rc(
+    r'<link rel="canonical" href="https://archive.ph/(\d{4}).(\d{2}).(\d{2})-[^/]*/(http[^"]*)"'
+).search
 
-def archive_org_data(archive_url: str) -> dict:
-    if (m := ARCHIVE_ORG_URL_MATCH(archive_url)) is None:
-        # Could not parse the archive_url. Treat as an ordinary URL.
-        return url_data(archive_url)
+
+def _archive_data(archive_url: str, m: Match, archive_html: str):
     archive_year, archive_month, archive_day, original_url = m.groups()
     og_d = {}
     og_thread = Thread(target=og_url_data_tt, args=(original_url, og_d))
     og_thread.start()
-    d = url_data(archive_url, check_home=False)
+    d = url_data(archive_url, check_home=False, html=archive_html)
     d['url'] = original_url
     d['archive-url'] = archive_url
     d['archive-date'] = date(
@@ -50,6 +53,20 @@ def archive_org_data(archive_url: str) -> dict:
         d['website'] = urlparse(original_url).hostname.removeprefix('www.')
         d['url-status'] = 'dead'
     return d
+
+
+def archive_today_data(archive_url: str) -> dict:
+    _, archive_html = url_text(archive_url)
+    m = ARCHIVE_TODAY_URL_SEARCH(archive_html)
+    return _archive_data(archive_url, m, archive_html)
+
+
+def archive_org_data(archive_url: str) -> dict:
+    if (m := ARCHIVE_ORG_URL_MATCH(archive_url)) is None:
+        # Could not parse the archive_url. Treat as an ordinary URL.
+        return url_data(archive_url)
+    _, archive_html = url_text(archive_url)
+    return _archive_data(archive_url, m, archive_html)
 
 
 def og_url_data_tt(og_url: str, og_d: dict, /) -> None:
