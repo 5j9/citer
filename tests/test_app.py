@@ -104,3 +104,10 @@ def test_userinput_in_body_is_stripped():
             },
         )
     m.assert_called_once_with('https://books.google.com/')
+
+
+def test_invalid_user_input():
+    with raises(ValueError):
+        # the following used to return None
+        # which ends up with unhandled error during convertion to scr tuple.
+        url_doi_isbn_data('[object+HTMLInputElement]')

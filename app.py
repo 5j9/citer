@@ -1,6 +1,6 @@
 from functools import partial
 from html import unescape
-from json import JSONDecodeError, dumps
+from json import JSONDecodeError, dumps, loads
 from urllib.parse import parse_qs, unquote, urlparse
 
 from curl_cffi import CurlError
@@ -32,7 +32,7 @@ from lib.ketabir import ketabir_data
 from lib.noorlib import noorlib_data
 from lib.noormags import noormags_data
 from lib.pubmed import pmcid_data, pmid_data
-from lib.urls import url_data, url_text
+from lib.urls import MAX_RESPONSE_LENGTH, url_data, url_text
 
 
 def google_encrypted_data(url, parsed_url) -> dict:
@@ -106,11 +106,13 @@ def url_doi_isbn_data(user_input, /) -> dict:
                 # continue with urls_scr
 
         return url_data(url)
-    else:
-        # We can check user inputs containing dots for ISBNs, but probably is
-        # error-prone.
-        if (m := isbn_10or13_search(en_user_input)) is not None:
-            return isbn_data(m[0], True)
+
+    # We can check user inputs containing dots for ISBNs, but that sounds
+    # error-prone.
+    if (m := isbn_10or13_search(en_user_input)) is not None:
+        return isbn_data(m[0], True)
+
+    raise ValueError('invalid user_input')
 
 
 def css(start_response: callable, *_) -> tuple:
@@ -155,20 +157,27 @@ input_type_to_resolver = {
 
 def read_body(environ: dict, /):
     length = int(environ.get('CONTENT_LENGTH') or 0)
-    if length > 10_000:
-        logger.error(f'CONTENT_LENGTH was too long; {length=} bytes')
+    if length > MAX_RESPONSE_LENGTH:
+        logger.error(f'CONTENT_LENGTH was too long; {length:,} bytes')
         return ''  # do not process the input
     return environ['wsgi.input'].read(length).decode()
 
 
 def root(start_response: callable, environ: dict) -> tuple:
-    query_get = parse_qs(environ['QUERY_STRING']).get
-    date_format = query_get('dateformat', ['%Y-%m-%d'])[0].strip()
-    input_type = query_get('input_type', [''])[0]
-
-    # Warning: input is not escaped!
     body = read_body(environ)
-    if not (user_input := (body or query_get('user_input', [''])[0]).strip()):
+
+    if body:
+        get = loads(body).get
+        date_format = get('dateformat') or '%Y-%m-%d'
+        input_type = get('input_type') or ''
+        user_input = get('user_input')
+    else:
+        query_get = parse_qs(environ['QUERY_STRING']).get
+        date_format = query_get('dateformat', ['%Y-%m-%d'])[0].strip()
+        input_type = query_get('input_type', [''])[0]
+        user_input = query_get('user_input', [''])[0]
+
+    if not user_input:
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
