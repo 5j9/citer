@@ -26,10 +26,9 @@ DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 ALPHA_NUM = digits + ascii_lowercase
 
 
-def sfn_cit_ref(d: dict) -> tuple:
+def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
     """Return sfn, citation, and ref."""
     g = d.get
-    date_format = g('date_format')
     if not (cite_type := type_to_cite(g('cite_type'))):
         logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
         cite_type = ''

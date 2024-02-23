@@ -5,7 +5,7 @@ from lib.bibtex import parse as bibtex_parse
 from lib.commons import request
 
 
-def jstor_data(url: str, date_format: str = '%Y-%m-%d') -> dict:
+def jstor_data(url: str) -> dict:
     open_access = []
     thread = Thread(target=is_open_access, args=(url, open_access))
     thread.start()
@@ -15,7 +15,6 @@ def jstor_data(url: str, date_format: str = '%Y-%m-%d') -> dict:
     ).content.decode('utf8')
     dictionary = bibtex_parse(bibtex)
     dictionary['jstor'] = id_
-    dictionary['date_format'] = date_format
     thread.join()
     if open_access:
         dictionary['jstor-access'] = 'free'

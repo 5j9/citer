@@ -35,14 +35,14 @@ from lib.pubmed import pmcid_data, pmid_data
 from lib.urls import get_html, url_data
 
 
-def google_encrypted_data(url, parsed_url, date_format) -> dict:
+def google_encrypted_data(url, parsed_url) -> dict:
     if parsed_url[2][:7] in {'/books', '/books/'}:
         # sample urls:
         # https://encrypted.google.com/books?id=6upvonUt0O8C
         # https://www.google.com/books?id=bwfoCAAAQBAJ&pg=PA32
         # https://www.google.com/books/edition/_/bwfoCAAAQBAJ?gbpv=1&pg=PA32
-        return google_books_data(parsed_url, date_format)
-    return url_data(url, date_format)
+        return google_books_data(parsed_url)
+    return url_data(url)
 
 
 TLDLESS_NETLOC_RESOLVER = {
@@ -73,7 +73,7 @@ json_headers = [
 ]
 
 
-def url_doi_isbn_data(user_input, date_format, /) -> dict:
+def url_doi_isbn_data(user_input, /) -> dict:
     en_user_input = unquote(uninum2en(user_input))
     # Checking the user input for dot is important because
     # the use of dotless domains is prohibited.
@@ -91,26 +91,26 @@ def url_doi_isbn_data(user_input, date_format, /) -> dict:
         # todo: make lazy?
         if (data_func := TLDLESS_NETLOC_RESOLVER(tldless_netloc)) is not None:
             if data_func is google_books_data:
-                return data_func(parsed_url, date_format)
+                return data_func(parsed_url)
             elif data_func is google_encrypted_data:
-                return data_func(url, parsed_url, date_format)
-            return data_func(url, date_format)
+                return data_func(url, parsed_url)
+            return data_func(url)
 
         # DOIs contain dots
         if (m := doi_search(unescape(en_user_input))) is not None:
             try:
-                return doi_data(m[0], True, date_format)
+                return doi_data(m[0], True)
             except JSONDecodeError:
                 if url_input is False:
                     raise
                 # continue with urls_scr
 
-        return url_data(url, date_format)
+        return url_data(url)
     else:
         # We can check user inputs containing dots for ISBNs, but probably is
         # error-prone.
         if (m := isbn_10or13_search(en_user_input)) is not None:
-            return isbn_data(m[0], True, date_format)
+            return isbn_data(m[0], True)
 
 
 def css(start_response: callable, *_) -> tuple:
@@ -188,7 +188,7 @@ def root(start_response: callable, environ: dict) -> tuple:
     data_func = input_type_to_resolver[input_type]
 
     try:
-        d = data_func(user_input, date_format)
+        d = data_func(user_input)
     except Exception as e:
         status = '500 Internal Server Error'
 
@@ -199,7 +199,7 @@ def root(start_response: callable, environ: dict) -> tuple:
                 logger.exception(user_input)
             scr = type(e).__name__, '', ''
     else:
-        scr = data_to_sfn_cit_ref(d)
+        scr = data_to_sfn_cit_ref(d, date_format)
         status = '200 OK'
 
     response_body = scr_to_resp_body(scr).encode()

@@ -7,12 +7,12 @@ from lib.commons import data_to_sfn_cit_ref
 from lib.pubmed import pmcid_data, pmid_data
 
 
-def pmid_scr(*args):
-    return data_to_sfn_cit_ref(pmid_data(*args))
+def pmid_scr(id_, date_format='%Y-%m-%d'):
+    return data_to_sfn_cit_ref(pmid_data(id_), date_format)
 
 
-def pmcid_scr(*args):
-    return data_to_sfn_cit_ref(pmcid_data(*args))
+def pmcid_scr(id_, date_format='%Y-%m-%d'):
+    return data_to_sfn_cit_ref(pmcid_data(id_), date_format)
 
 
 def test_doi_update():

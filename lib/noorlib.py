@@ -5,9 +5,8 @@ BIBTEX_ARTICLE_ID_SEARCH = rc(r'(?<=CitationHandler\.ashx\?id=)\d+').search
 RIS_ARTICLE_ID_SEARCH = rc(r'(?<=RIS&id=)\d+').search
 
 
-def noorlib_data(url: str, date_format: str = '%Y-%m-%d') -> dict:
+def noorlib_data(url: str) -> dict:
     dictionary = bibtex_parse(dict_from_bibtex(url))
-    dictionary['date_format'] = date_format
     # risr = get_ris(url)[1]
     # dictionary = risr.parse(ris)[1]
     return dictionary
@@ -25,7 +24,7 @@ def dict_from_bibtex(noorlib_url):
     return request(url).text
 
 
-def dict_from_ris(noorlib_url):
+def ris_data(noorlib_url):
     # This is copied from noormags module (currently not supported but may
     # be)[1]
     """Get ris file content from a noormags url. Return as string."""

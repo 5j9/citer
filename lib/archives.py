@@ -25,16 +25,15 @@ URL_FULLMATCH = rc(
 ).fullmatch
 
 
-def archive_org_data(archive_url: str, date_format: str = '%Y-%m-%d') -> dict:
+def archive_org_data(archive_url: str) -> dict:
     if (m := URL_FULLMATCH(archive_url)) is None:
         # Could not parse the archive_url. Treat as an ordinary URL.
-        return url_data(archive_url, date_format)
+        return url_data(archive_url)
     archive_year, archive_month, archive_day, original_url = m.groups()
     original_dict = {}
     thread = Thread(target=og_url_data_tt, args=(original_url, original_dict))
     thread.start()
-    archive_dict = url_data(archive_url, date_format)
-    archive_dict['date_format'] = date_format
+    archive_dict = url_data(archive_url)
     archive_dict['url'] = original_url
     archive_dict['archive-url'] = archive_url
     archive_dict['archive-date'] = date(

@@ -154,16 +154,16 @@ def citoid_thread_target(isbn: str, result: list) -> None:
     result.append(d)
 
 
-def worldcat_data(url: str, date_format: str = '%Y-%m-%d', /) -> dict:
+def worldcat_data(url: str) -> dict:
     try:
         oclc = search(r'(?i)worldcat.org/(?:title|oclc)/(\d+)', url)[1]
     except TypeError:  # 'NoneType' object is not subscriptable
         # e.g. on https://www.worldcat.org/formats-editions/22239204
-        return url_data(url, date_format)
-    return oclc_data(oclc, date_format)
+        return url_data(url)
+    return oclc_data(oclc)
 
 
-def oclc_data(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
+def oclc_data(oclc: str) -> dict:
     content = request('https://search.worldcat.org/title/' + oclc).content
     j = loads(
         content[
@@ -202,5 +202,4 @@ def oclc_data(oclc: str, date_format: str = '%Y-%m-%d', /) -> dict:
     if issns := record['issns']:
         d['issn'] = issns[0]
     d['oclc'] = oclc
-    d['date_format'] = date_format
     return d

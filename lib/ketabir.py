@@ -9,9 +9,8 @@ AUTHORS_FINDALL = rc(r'(\S+?)\s*+:\s*+(.*)').findall
 VOLUME_SEARCH = rc(r'\bجلد (\d+)').search
 
 
-def ketabir_data(url: str, date_format='%Y-%m-%d', /) -> dict:
+def ketabir_data(url: str) -> dict:
     dictionary = _url_data(url)
-    dictionary['date_format'] = date_format
     if 'language' not in dictionary:
         # Assume that language is either fa or en.
         # Todo: give warning about this assumption?
