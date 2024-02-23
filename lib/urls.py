@@ -443,11 +443,6 @@ def get_html(url: str) -> tuple[str, str]:
 
 
 def url_data(url: str) -> dict[str, Any]:
-    parsed_url = urlparse(url)
-    hostname = parsed_url.hostname.replace('www.', '', 1)
-
-    home_thread, home_list = analyze_home(parsed_url)
-
     try:
         url, html = get_html(url)
     except CurlError:
@@ -483,6 +478,11 @@ def url_data(url: str) -> dict[str, Any]:
     d['page'] = find_pages(html)
     d['journal'] = find_journal(html)
     publisher = d['publisher'] = find_publisher(html)
+
+    parsed_url = urlparse(url)
+    hostname = parsed_url.hostname.replace('www.', '', 1)
+    home_thread, home_list = analyze_home(parsed_url)
+
     if d['journal']:
         d['cite_type'] = 'journal'
     else:
