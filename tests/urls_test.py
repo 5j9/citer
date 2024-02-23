@@ -1035,3 +1035,14 @@ def test_parse_title_all_parts_removed():
 @patch('lib.urls.request', side_effect=CurlError('<test>'))
 def test__analyze_home_stream_request_raises_connect_error(_request_mock):
     assert _analyze_home(('https', 'example.com'), []) is None
+
+
+def test_parse_title_repeated_parts():
+    # https://www.ilastik.org/
+    assert parse_title(
+        'ilastik - ilastik',
+        'ilastik.org',
+        [],
+        [None, 'ilastik - ilastik'],
+        None,
+    ) == (None, 'ilastik', 'ilastik')

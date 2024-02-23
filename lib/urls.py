@@ -318,6 +318,8 @@ def parse_title(
             set(part.split()) - set(hostname.split('.'))
         ):
             intitle_sitename = parts_map.pop(part).strip()
+            if not parts_map:  # repeated parts
+                return None, intitle_sitename, intitle_sitename
             break
     else:
         # 2. Using difflib on hostname
