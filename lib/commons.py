@@ -177,9 +177,6 @@ def request(
     headers = None if spoof is True else AGENT_HEADER
     if 'headers' in kwargs:
         headers |= kwargs.pop('headers')
-    # session timeout does not work as expected
-    # https://github.com/yifeikong/curl_cffi/issues/253
-    kwargs['timeout'] = 10.0
     if stream is True:
         return mortal_session().stream(method, url, headers=headers, **kwargs)
     return mortal_session().request(method, url, headers=headers, **kwargs)

@@ -4,4 +4,4 @@ langid
 bs4
 lxml
 regex
-curl_cffi
+curl_cffi >= 0.6.1
