@@ -88,8 +88,14 @@ zd = r'(?<d>0[1-9]|[12][0-9]|3[01])'
 # Gregorian year pattern 1900-2099
 Y = r'(?<Y>(?:19|20)\d\d)'
 ANYDATE_PATTERN = (
-    rf'(?:(?:{B}|{b})\ {d},?\ {Y}|{d}\ (?:{B}|{b})\ {Y}|{Y}(?<sep>[-/]){zm}'
-    rf'(?P=sep){zd}|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d))'
+    r'(?<![-–\d]\s*)'  # avoid date ranges
+    '(?>'
+    rf'(?:{B}|{b})\ {d},?\ {Y}'
+    rf'|{d}\ (?:{B}|{b})\ {Y}'
+    rf'|{Y}(?<sep>[-/]){zm}(?P=sep){zd}'
+    rf'|(?<d>\d\d?)\ {jB}\ (?<Y>\d\d\d\d)'
+    ')'
+    r'(?!\s*[-–])'  # avoid date ranges
 )
 date_search: Search = rc(ANYDATE_PATTERN, VERBOSE).search
 digits_findall = rc(r'\d').findall
