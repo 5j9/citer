@@ -9,7 +9,11 @@ from curl_cffi import CurlError
 from curl_cffi.requests import Response
 
 from lib import commons
-from tests.conftest import FORCE_OVERWRITE_TESTDATA, REMOVE_UNUSED_TESTDATA
+from tests.conftest import (
+    FORCE_OVERWRITE_TESTDATA,
+    PRINT_TEST_FILENAME,
+    REMOVE_UNUSED_TESTDATA,
+)
 
 # Do not import library parts here. commons.py should not be loaded
 # until LANG is set by test_fa and test_en.
@@ -66,6 +70,8 @@ class FakeResponse:
 
 
 def load_response(hsh: str) -> FakeResponse | None:
+    if PRINT_TEST_FILENAME:
+        print(f'filename: {hsh}')
     filename = f'{hsh}.json'
     try:
         with open(f'{TESTDATA}/{filename}', 'rb') as f:
