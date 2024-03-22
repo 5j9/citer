@@ -47,19 +47,19 @@ def google_encrypted_data(url, parsed_url) -> dict:
 
 
 get_resolver = {
-    'ketab': ketabir_data,
-    'worldcat': worldcat_data,
-    'noorlib': noorlib_data,
-    'noormags': noormags_data,
-    'web.archive': archive_org_data,
-    'web-beta.archive': archive_org_data,
     'archive': archive_today_data,
+    'books.google': google_books_data,
     'books.google.co': google_books_data,
     'books.google.com': google_books_data,
-    'books.google': google_books_data,
-    'google': google_encrypted_data,
     'encrypted.google': google_encrypted_data,
+    'google': google_encrypted_data,
     'jstor': jstor_data,
+    'ketab': ketabir_data,
+    'noorlib': noorlib_data,
+    'noormags': noormags_data,
+    'web-beta.archive': archive_org_data,
+    'web.archive': archive_org_data,
+    'worldcat': worldcat_data,
 }.get
 
 http_headers = [
