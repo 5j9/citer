@@ -42,3 +42,15 @@ def test_encoding():  # 25
         '| volume=35 | issue=63 | year=1965 | issn=00310581 | jstor=40991855 '
         '| pages=173–178 | url=http://www.jstor.org/stable/40991855 '
     )
+
+
+def test_issn_eissn():
+    s, c, r = jstor_scr('https://www.jstor.org/stable/1687467')
+    assert c[: c.index('| access-date=')] == (
+        '* {{cite journal | last=Kernighan | first=Brian W. | last2=Morgan | '
+        'first2=Samuel P. | title=The UNIX Operating System: A Model for Software '
+        'Design | journal=Science | publisher=American Association for the '
+        'Advancement of Science | volume=215 | issue=4534 | year=1982 | '
+        'issn=00368075 | jstor=1687467 | pages=779–783 | '
+        'url=http://www.jstor.org/stable/1687467 '
+    )
