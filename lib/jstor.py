@@ -27,5 +27,5 @@ def jstor_data(url: str) -> dict:
 
 
 def is_open_access(url: str, result: list):
-    if '"openAccess" : "True"' in request(url, spoof=True).text:
+    if b'"openAccess" : "True"' in request(url, spoof=True).content:
         result.append(True)
