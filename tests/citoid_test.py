@@ -11,3 +11,20 @@ def test_url():
         'title': 'Google Books Ngram Viewer',
         'website': 'books.google.com',
     }
+
+
+def test_bad_date():
+    assert citoid_data(
+        '10.1109/5992.805138',
+        True,
+    ) == {
+        'doi': '10.1109/5992.805138',
+        'issue': '6',
+        'cite_type': 'journal',
+        'page': '79–81',
+        'title': 'How to distribute your software over the web',
+        'volume': '1',
+        'authors': [['N.S.', 'Rebello']],
+        'journal': 'Computing in Science & Engineering',
+        'date': '1999',
+    }

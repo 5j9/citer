@@ -1,6 +1,7 @@
 from urllib.parse import quote_plus
 
-from lib.commons import request
+from lib import four_digit_num
+from lib.commons import find_any_date, request
 
 TRANSLATE = {
     # 'url': 'url',
@@ -77,10 +78,11 @@ def citoid_data(query: str, quote=False, /) -> dict:
         d['isbn'] = isbn[0]
 
     if (date := get('date')) is not None:
-        splits = date.split('-')
-        if len(splits) == 2:  # YYYY-MM
-            d['date'] = splits[0]
+        if (found_date := find_any_date(date)) is None:
+            # e.g. date == "Nov.-Dec./1999"
+            if (m := four_digit_num(date)) is not None:
+                d['date'] = m[0]
         else:
-            d['date'] = date
+            d['date'] = found_date
 
     return d
