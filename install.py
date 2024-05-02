@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """A script to be run as part of forgetools/install_python_webservice.py."""
 
+import os
 from os import O_CREAT, O_EXCL, O_WRONLY, chmod, close, open as os_open
 from os.path import expanduser
 from re import sub
@@ -44,8 +45,14 @@ def copy_config():
         .rstrip()
         .replace(b'-', b'.')
     )
+
+    def opener(path, flags):
+        return os.open(path, flags, 0o660)
+
     with open(HOME + '/.citer_config', 'rb') as home_config:
-        with open(HOME + '/www/python/src/config.py', 'wb') as src_config:
+        with open(
+            HOME + '/www/python/src/config.py', 'wb', opener=opener
+        ) as src_config:
             src_config.write(
                 sub(
                     b"(USER_AGENT = '.*)'\n",
@@ -57,9 +64,9 @@ def copy_config():
 
 
 def main():
-    set_file_permissions()
     copy_config()
     write_uwsgi_ini()
+    set_file_permissions()
 
 
 if __name__ == '__main__':
