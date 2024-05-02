@@ -1,0 +1,23 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"accept-ranges": "bytes",
+		"age": "0",
+		"alt-svc": "h3=\":443\";ma=86400,h3-29=\":443\";ma=86400,h3-27=\":443\";ma=86400",
+		"content-disposition": "attachment;filename=10.2307_1687467.txt;",
+		"content-length": "887",
+		"content-type": "text/plain",
+		"date": "Thu, 02 May 2024 12:19:21 GMT",
+		"server": "envoy",
+		"vary": "Fastly-SSL,Origin,X-Requested-Host",
+		"via": "1.1 varnish",
+		"x-cache": "MISS",
+		"x-cache-hits": "0",
+		"x-envoy-upstream-service-time": "260",
+		"x-jstor-restarts": "0",
+		"x-served-by": "cache-fjr990023-FJR",
+		"x-timer": "S1714652361.984389,VS0,VE458"
+	},
+	"status_code": 200,
+	"url": "https://www.jstor.org/citation/text/1687467"
+}

@@ -14,6 +14,11 @@ def jstor_data(url: str) -> dict:
         'https://www.jstor.org/citation/text/' + id_
     ).content.decode('utf8')
     dictionary = bibtex_parse(bibtex)
+
+    issn: str | None = dictionary.get('issn')
+    if issn is not None:  # there can be multiple ISSNs
+        dictionary['issn'] = issn.partition(',')[0]
+
     dictionary['jstor'] = id_
     thread.join()
     if open_access:
