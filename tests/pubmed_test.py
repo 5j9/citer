@@ -64,6 +64,6 @@ def test_has_doi_but_no_crossref():
         'first2=Vanitha | last3=Phillips | first3=George N. | last4=Wright | '
         'first4=Stephen J. | last5=Mitchell | first5=Julie C. | title=Optimal design '
         'of thermally stable proteins | journal=Bioinformatics | volume=24 | issue=20 '
-        '| date=2008-10-15 | issn=1367-4803 | pmid=18723523 | pmc=2562006 | '
+        '| date=15 October 2008 | issn=1367-4803 | pmid=18723523 | pmc=2562006 | '
         'doi=10.1093/bioinformatics/btn450 | pages=2339–2343}}'
     )
