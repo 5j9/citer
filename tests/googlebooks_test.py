@@ -149,7 +149,7 @@ def test_gb5():
         '| access-date='
     ) in o[1]
     assert (
-        '<ref name="Serway Jewett 2009 p. 378">'
+        '<ref name="w724">'
         '{{cite book '
         '| last=Serway '
         '| first=R.A. '
