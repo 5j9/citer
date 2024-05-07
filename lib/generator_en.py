@@ -1,4 +1,5 @@
 """Functions for generating English Wikipedia citation templates."""
+
 from datetime import date as Date
 from functools import partial
 from string import ascii_lowercase, digits
@@ -7,9 +8,9 @@ from lib import (
     doi_url_match,
     four_digit_num,
     fullname,
-    hash_for_ref_name,
     is_free_doi,
     logger,
+    make_ref_name,
     rc,
     type_to_cite,
 )
@@ -225,13 +226,7 @@ def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
     cit += '}}'
     sfn += '}}'
     # Finally create the ref tag.
-    ref_name = sfn[8:-2].replace(' | ', ' ').replace("'", '')
-    if pages_in_sfn == 1:
-        ref_name = ref_name.replace(' p=', ' p. ')
-    elif pages_in_sfn == 2:
-        ref_name = ref_name.replace(' pp=', ' pp. ')
-    else:
-        ref_name += ' ' + hash_for_ref_name(g, 3)
+    ref_name = make_ref_name(g)
 
     ref_content = rm_ref_arg(cit[2:])
     if pages_in_sfn and not pages_in_cit:

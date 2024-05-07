@@ -260,11 +260,11 @@ type_to_cite = {
 }.get
 
 
-def hash_for_ref_name(g: callable, number_of_digits=4):
+def make_ref_name(g: callable):
     # A combination of possible `user_input`s is used as seed.
     seed(f'{g("url")}{g("doi")}{g("isbn")}{g("pmid")}{g("pmcid")}')
     return choice(
         ascii_lowercase
     ) + ''.join(  # it should contain at least one non-digit
-        choices(digits, k=number_of_digits)
+        choices(digits, k=3)
     )

@@ -1,13 +1,14 @@
 """Functions for generating citation templates for fa.wikipedia.org."""
+
 from typing import Any
 
 from lib import (
     doi_url_match,
     four_digit_num,
     fullname,
-    hash_for_ref_name,
     is_free_doi,
     logger,
+    make_ref_name,
     type_to_cite,
 )
 from lib.generator_en import (
@@ -191,14 +192,14 @@ def sfn_cit_ref(d: dict[str, Any], _: str = '%Y-%m-%d', /) -> tuple:
         sfn += ' | ص='
 
     cit += '}}'
-    sfn += '}}\u200F</ref>'
+    sfn += '}}\u200f</ref>'
     # Finally create the ref tag.
     ref = cit[2:]
     if pages and ' | صفحه=' not in ref:
         ref = f'{ref[:-2]} | صفحه={pages}}}}}'
     elif not url:
         ref = f'{ref[:-2]} | صفحه=}}}}'
-    ref = f'<ref name="{hash_for_ref_name(g)}">{ref}\u200F</ref>'
+    ref = f'<ref name="{make_ref_name(g)}">{ref}\u200f</ref>'
     return sfn, cit, ref
 
 
