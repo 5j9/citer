@@ -28,7 +28,7 @@ def search_for_tag(bibtex: str) -> dict:
     return {f[0].lower(): f[1] if f[1] else f[2] for f in fs}
 
 
-def parse(bibtex):
+def parse(bibtex: str) -> dict:
     """Parse bibtex string and return a dictionary of information."""
     bibtex = special_sequence_cleanup(bibtex)
     g = (d := search_for_tag(bibtex)).get
@@ -62,7 +62,7 @@ def parse(bibtex):
     return d
 
 
-def special_sequence_cleanup(bibtex):
+def special_sequence_cleanup(bibtex: str) -> str:
     """Replace common TeX special symbol commands with their unicode value."""
     return WORDS_IN_BRACES_SUB(
         r'\g<1>',
