@@ -27,7 +27,7 @@ def test_do_not_add_page_url():
         'date_format': '%Y-%m-%d',
     }
     assert sfn_cit_ref(d)[2][:-18] == (
-        '<ref name="i094">{{cite web | last=Levine | first=Sam | title=‘Historic and significant’: key lawyer’s verdict on Alabama supreme court ruling | website=the Guardian | date=2023-06-18 | url=https://www.theguardian.com/us-news/2023/jun/18/alabama-supreme-court-allen-milligan | access-date='
+        '<ref name="u385">{{cite web | last=Levine | first=Sam | title=‘Historic and significant’: key lawyer’s verdict on Alabama supreme court ruling | website=the Guardian | date=2023-06-18 | url=https://www.theguardian.com/us-news/2023/jun/18/alabama-supreme-court-allen-milligan | access-date='
     )
 
 
@@ -49,3 +49,7 @@ def test_date_does_not_change_ref_name_hash():
     assert h1 in scr1[2]
     assert scr1 != sfn_cit_ref(d, '%d-%m-%Y')  # date_format changes output
     assert h1 == make_ref_name(g)  # but hashes are the same
+
+
+def test_ref_name_oclc_unique():
+    assert make_ref_name({'oclc': '1'}.get) != make_ref_name({'oclc': '2'}.get)

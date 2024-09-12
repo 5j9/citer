@@ -60,7 +60,7 @@ def test_nm2():
         '| access-date='
     ) in o[1]
     assert (
-        '<ref name="f209">'
+        '<ref name="q906">'
         '{{cite journal '
         '| last=سلیمانی\u200cمیمند '
         '| first=\u200cمریم '
