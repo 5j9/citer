@@ -89,12 +89,15 @@ def test_doi_url_fallback_to_url(doi_data, urls_data):
 
 def test_json_body():
     m = Mock(side_effect=NotImplementedError)
-    with patch.dict(
-        input_type_to_resolver,
-        {
-            'url-doi-isbn': m,
-        },
-    ), patch.object(logger, 'exception'):
+    with (
+        patch.dict(
+            input_type_to_resolver,
+            {
+                'url-doi-isbn': m,
+            },
+        ),
+        patch.object(logger, 'exception'),
+    ):
         root(
             lambda _, __: None,
             {
@@ -113,12 +116,15 @@ def test_json_body():
 
 def test_html_input():
     m = Mock(side_effect=NotImplementedError)
-    with patch.dict(
-        input_type_to_resolver,
-        {
-            'html': m,
-        },
-    ), patch.object(logger, 'exception'):
+    with (
+        patch.dict(
+            input_type_to_resolver,
+            {
+                'html': m,
+            },
+        ),
+        patch.object(logger, 'exception'),
+    ):
         root(
             lambda _, __: None,
             {
