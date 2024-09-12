@@ -148,8 +148,8 @@ def test_gb5():
         ' '
         '| access-date='
     ) in o[1]
-    assert (
-        '<ref name="w724">'
+    assert o[2].rpartition(' | access-date=')[0] == (
+        '<ref name="a902">'
         '{{cite book '
         '| last=Serway '
         '| first=R.A. '
@@ -161,9 +161,7 @@ def test_gb5():
         '| year=2009 '
         '| isbn=978-1-4390-4838-2 '
         '| url=https://books.google.com/books?id=6upvonUt0O8C&pg=PA378'
-        ' '
-        '| access-date='
-    ) in o[2]
+    )
     assert ' | page=378}}</ref>' in o[2]
 
 
