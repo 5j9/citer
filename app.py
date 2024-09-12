@@ -168,35 +168,49 @@ def read_body(environ: dict, /) -> bytes:
     return environ['wsgi.input'].read(length)
 
 
-def root(start_response: StartResponse, environ: dict) -> BytesTuple:
+def parse_params(
+    environ: dict,
+) -> tuple[
+    str,
+    str,
+    str | dict,  # user_input is dict when input_type == html
+    list[tuple[str, str]],
+    Callable[[tuple[str, str, str]], str],
+]:
     body = read_body(environ)
-
     if body:
         get = loads(body).get
-        date_format = get('dateformat') or '%Y-%m-%d'
-        input_type = get('input_type') or ''
-        user_input = get('user_input')
-    else:
-        query_get = parse_qs(environ['QUERY_STRING']).get
-        date_format = query_get('dateformat', ['%Y-%m-%d'])[0].strip()
-        input_type = query_get('input_type', [''])[0]
-        user_input = query_get('user_input', [''])[0]
+        return (
+            get('dateformat') or '%Y-%m-%d',
+            get('input_type', ''),
+            get('user_input', ''),  # string user_input is trimmed in common.js
+            json_headers,
+            dumps,
+        )
 
+    query_get = parse_qs(environ['QUERY_STRING']).get
+    date_format = query_get('dateformat', ('%Y-%m-%d',))[0].strip()
+    input_type = query_get('input_type', ('',))[0]
+    return (
+        date_format,
+        input_type,
+        query_get('user_input', ('',))[0].strip(),
+        # for the bookmarklet; also if user directly goes to query page
+        http_headers,
+        partial(scr_to_html, date_format=date_format, input_type=input_type),
+    )
+
+
+def root(start_response: StartResponse, environ: dict) -> BytesTuple:
+    date_format, input_type, user_input, headers, scr_to_resp_body = (
+        parse_params(environ)
+    )
     if not user_input:
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, input_type
         ).encode()
         start_response('200 OK', http_headers)
         return (response_body,)
-
-    if body:
-        headers = json_headers
-        scr_to_resp_body = dumps
-    else:  # for the bookmarklet; also if user directly goes to query page
-        headers = http_headers
-        scr_to_resp_body = partial(
-            scr_to_html, date_format=date_format, input_type=input_type
-        )
 
     data_func = input_type_to_resolver[input_type]
 
@@ -251,4 +265,3 @@ if __name__ == '__main__':
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
-    
