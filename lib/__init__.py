@@ -263,7 +263,7 @@ type_to_cite = {
 def make_ref_name(g: callable):
     # A combination of possible `user_input`s is used as seed.
     seed(
-        f'{g("url", '')}{g("isbn", '')}{g('doi', '')}'
+        f'{g("url", "")}{g("isbn", "")}{g("doi", "")}'
         or g('oclc', '')
         or g('pmid', '')
         or g('pmcid', '')
