@@ -14,23 +14,23 @@ if LANG == 'fa':
 
 ALLOW_ALL_ORIGINS = ('Access-Control-Allow-Origin', '*')
 CACHE_FOREVER = ('Cache-Control', 'immutable, public, max-age=31536000')
-CSS_HEADERS = [
+CSS_HEADERS = (
     ALLOW_ALL_ORIGINS,
     ('Content-Type', 'text/css; charset=UTF-8'),
     ('Content-Length', str(len(CSS))),
     CACHE_FOREVER,
-]
+)
 
 JS = open(f'{htmldir}/common.js', 'rb').read()
 if LANG == 'en':
     JS += open(f'{htmldir}/{LANG}.js', 'rb').read()
 # Invalidate cache after css change.
-JS_HEADERS = [
+JS_HEADERS = (
     ALLOW_ALL_ORIGINS,
     ('Content-Type', 'application/javascript; charset=UTF-8'),
     ('Content-Length', str(len(JS))),
     CACHE_FOREVER,
-]
+)
 
 JS_PATH = STATIC_PATH + str(adler32(JS))
 CSS_PATH = STATIC_PATH + str(adler32(CSS))
