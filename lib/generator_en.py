@@ -27,7 +27,9 @@ DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 ALPHA_NUM = digits + ascii_lowercase
 
 
-def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', pipe: str = ' | ', /) -> tuple:
+def sfn_cit_ref(
+    d: dict, date_format: str = '%Y-%m-%d', pipe: str = ' | ', /
+) -> tuple:
     """Return sfn, citation, and ref."""
     g = d.get
     if not (cite_type := type_to_cite(g('cite_type'))):
@@ -59,18 +61,20 @@ def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', pipe: str = ' | ', /) ->
     else:
         # the same order should be used in citation_template:
         sfn += '|' + (
-                publisher
-                or (
-                    f"''{journal}''"
-                    if journal
-                    else f"''{website}''"
-                    if website
-                    else title or 'Anon.'
-                )
+            publisher
+            or (
+                f"''{journal}''"
+                if journal
+                else f"''{website}''"
+                if website
+                else title or 'Anon.'
+            )
         )
 
     if editors := g('editors'):
-        cit += names2para(editors, pipe, 'editor-first', 'editor-last', 'editor')
+        cit += names2para(
+            editors, pipe, 'editor-first', 'editor-last', 'editor'
+        )
     if translators := g('translators'):
         for i, (first, last) in enumerate(translators):
             translators[i] = first, f'{last} (مترجم)'
@@ -231,7 +235,9 @@ def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', pipe: str = ' | ', /) ->
 
     ref_content = rm_ref_arg(cit[2:])
     if pages_in_sfn and not pages_in_cit:
-        ref_content = f'{ref_content[:-2]}{pipe}page={pages if pages else ""}}}}}'
+        ref_content = (
+            f'{ref_content[:-2]}{pipe}page={pages if pages else ""}}}}}'
+        )
 
     ref = f'<ref name="{ref_name}">{ref_content}</ref>'
     return sfn, cit, ref

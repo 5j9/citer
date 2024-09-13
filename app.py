@@ -201,14 +201,24 @@ def parse_params(
         query_get('user_input', ('',))[0].strip(),
         # for the bookmarklet; also if user directly goes to query page
         http_headers,
-        partial(scr_to_html, date_format=date_format, pipe_format=pipe_format, input_type=input_type),
+        partial(
+            scr_to_html,
+            date_format=date_format,
+            pipe_format=pipe_format,
+            input_type=input_type,
+        ),
     )
 
 
 def root(start_response: StartResponse, environ: dict) -> BytesTuple:
-    date_format, pipe_format, input_type, user_input, headers, scr_to_resp_body = (
-        parse_params(environ)
-    )
+    (
+        date_format,
+        pipe_format,
+        input_type,
+        user_input,
+        headers,
+        scr_to_resp_body,
+    ) = parse_params(environ)
     if not user_input:
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, pipe_format, input_type

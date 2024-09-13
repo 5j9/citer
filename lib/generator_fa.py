@@ -26,7 +26,9 @@ CITE_TYPE_TO_PERSIAN = {
 DIGITS_TO_FA = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
 
 
-def sfn_cit_ref(d: dict[str, Any], _: str = '%Y-%m-%d', pipe: str = ' | ', /) -> tuple:
+def sfn_cit_ref(
+    d: dict[str, Any], _: str = '%Y-%m-%d', pipe: str = ' | ', /
+) -> tuple:
     """Return sfn, citation, and ref."""
     g = d.get
     if not (cite_type := type_to_cite(g('cite_type'))):

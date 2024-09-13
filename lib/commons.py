@@ -158,12 +158,10 @@ ws_normalize = partial(rc(r'\s{2,}').sub, ' ')
 
 
 class InvalidNameError(ValueError):
-
     """Base class for RawName exceptions."""
 
 
 class NumberInNameError(InvalidNameError):
-
     """Raise when a RawName() contains digits."""
 
 
@@ -188,7 +186,9 @@ def request(
     return mortal_session().request(method, url, headers=headers, **kwargs)
 
 
-def data_to_sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', pipe_format: str = ' | ', /) -> tuple:
+def data_to_sfn_cit_ref(
+    d: dict, date_format: str = '%Y-%m-%d', pipe_format: str = ' | ', /
+) -> tuple:
     # Return (sfn, cite, ref) strings.
     get = d.get
     if title := get('title'):
