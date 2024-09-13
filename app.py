@@ -62,14 +62,14 @@ get_resolver = {
     'worldcat': worldcat_data,
 }.get
 
-http_headers = [
+http_headers = (
     ('Content-Type', 'text/html; charset=UTF-8'),
     ALLOW_ALL_ORIGINS,
-]
-json_headers = [
+)
+json_headers = (
     ('Content-Type', 'application/json'),
     ALLOW_ALL_ORIGINS,
-]
+)
 
 
 def html_data(user_input: dict):
@@ -122,12 +122,12 @@ StartResponse = Callable[[str, list[tuple[str, str]]], Callable]
 
 
 def css(start_response: StartResponse, _) -> BytesTuple:
-    start_response('200 OK', CSS_HEADERS)
+    start_response('200 OK', [*CSS_HEADERS])
     return (CSS,)
 
 
 def js(start_response: StartResponse, _) -> BytesTuple:
-    start_response('200 OK', JS_HEADERS)
+    start_response('200 OK', [*JS_HEADERS])
     return (JS,)
 
 
@@ -186,7 +186,7 @@ def parse_params(
             get('pipeformat') or ' | ',
             get('input_type', ''),
             get('user_input', ''),  # string user_input is trimmed in common.js
-            json_headers,
+            [*json_headers],
             dumps,
         )
 
@@ -200,7 +200,7 @@ def parse_params(
         input_type,
         query_get('user_input', ('',))[0].strip(),
         # for the bookmarklet; also if user directly goes to query page
-        http_headers,
+        [*http_headers],
         partial(
             scr_to_html,
             date_format=date_format,
@@ -223,7 +223,7 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
         response_body = scr_to_html(
             DEFAULT_SCR, date_format, pipe_format, input_type
         ).encode()
-        start_response('200 OK', http_headers)
+        start_response('200 OK', [*http_headers])
         return (response_body,)
 
     data_func = input_type_to_resolver[input_type]
