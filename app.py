@@ -173,6 +173,7 @@ def parse_params(
 ) -> tuple[
     str,
     str,
+    str,
     str | dict,  # user_input is dict when input_type == html
     list[tuple[str, str]],
     Callable[[tuple[str, str, str]], str],
@@ -182,6 +183,7 @@ def parse_params(
         get = loads(body).get
         return (
             get('dateformat') or '%Y-%m-%d',
+            get('pipeformat') or ' | ',
             get('input_type', ''),
             get('user_input', ''),  # string user_input is trimmed in common.js
             json_headers,
@@ -190,24 +192,26 @@ def parse_params(
 
     query_get = parse_qs(environ['QUERY_STRING']).get
     date_format = query_get('dateformat', ('%Y-%m-%d',))[0].strip()
+    pipe_format = query_get('pipeformat', [' | '])[0].replace('+', ' ')
     input_type = query_get('input_type', ('',))[0]
     return (
         date_format,
+        pipe_format,
         input_type,
         query_get('user_input', ('',))[0].strip(),
         # for the bookmarklet; also if user directly goes to query page
         http_headers,
-        partial(scr_to_html, date_format=date_format, input_type=input_type),
+        partial(scr_to_html, date_format=date_format, pipe_format=pipe_format, input_type=input_type),
     )
 
 
 def root(start_response: StartResponse, environ: dict) -> BytesTuple:
-    date_format, input_type, user_input, headers, scr_to_resp_body = (
+    date_format, pipe_format, input_type, user_input, headers, scr_to_resp_body = (
         parse_params(environ)
     )
     if not user_input:
         response_body = scr_to_html(
-            DEFAULT_SCR, date_format, input_type
+            DEFAULT_SCR, date_format, pipe_format, input_type
         ).encode()
         start_response('200 OK', http_headers)
         return (response_body,)
@@ -226,7 +230,7 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
                 logger.exception(user_input)
             scr = type(e).__name__, '', ''
     else:
-        scr = data_to_sfn_cit_ref(d, date_format)
+        scr = data_to_sfn_cit_ref(d, date_format, pipe_format)
         status = '200 OK'
 
     response_body = scr_to_resp_body(scr).encode()

@@ -78,7 +78,7 @@ def test_washingtonpost1():
         'http://www.washingtonpost.com/wp-dyn/content/article/2005/09/02/'
         'AR2005090200822.html'
     )
-    assert '{{sfn | Sachs | 2005}}' in o[0]
+    assert '{{sfn|Sachs|2005}}' in o[0]
     assert (
         '* {{cite web '
         '| last=Sachs '
@@ -98,7 +98,7 @@ def test_huffingtonpost1():
         'http://www.huffingtonpost.ca/annelise-sorg/'
         'blackfish-killer-whale-seaworld_b_3686306.html'
     )
-    assert '{{sfn | Sorg | 2013}}' == o[0]
+    assert '{{sfn|Sorg|2013}}' == o[0]
     assert (
         '* {{cite web '
         '| last=Sorg '
@@ -132,7 +132,7 @@ def test_huffingtonpost2():
         'obamas-climate-change-plan_b_5427656.html '
         '| access-date='
     )
-    assert '{{sfn | Rifkin | 2014}}' == o[0]
+    assert '{{sfn|Rifkin|2014}}' == o[0]
     assert e2 == o[1][:-12]
 
 
@@ -157,7 +157,7 @@ def test_dilytelegraph1():
         'the-barnacles-on-its-back.html '
         '| access-date='
     )
-    assert '{{sfn | Fogle | 2005}}' == o[0]
+    assert '{{sfn|Fogle|2005}}' == o[0]
     assert e2 == o[1][:-12]
 
 
@@ -179,7 +179,7 @@ def test_dilytelegraph2():
         '3313298/Marine-collapse-linked-to-whale-decline.html '
         '| access-date='
     )
-    assert '{{sfn | Highfield | 2003}}' == o[0]
+    assert '{{sfn|Highfield|2003}}' == o[0]
     assert e2 == o[1][:-12]
 
 
@@ -197,7 +197,7 @@ def test_dilytelegraph3():
         '| url=http://www.telegraph.co.uk/news/8323909/The-sperm-whale-works-in-extraordinary-ways.html '
         '| access-date='
     )
-    assert '{{sfn | Whitehead | 2011}}' == o[0]
+    assert '{{sfn|Whitehead|2011}}' == o[0]
     assert e2 == o[1][:-12]
 
 
@@ -207,7 +207,7 @@ def test_dilymail1():
         'http://www.dailymail.co.uk/news/article-2633025/'
         'London-cleric-convicted-NYC-terrorism-trial.html'
     )
-    assert '{{sfn | Malm | Witheridge | Drury | Bates | 2014}}' == o[0]
+    assert '{{sfn|Malm|Witheridge|Drury|Bates|2014}}' == o[0]
     assert (
         '* {{cite web '
         '| last=Malm '
@@ -259,7 +259,7 @@ def test_bbc1():
         '| website=BBC News '
         '| date=2014-06-01 '
         '| url=http://www.bbc.com/news/world-asia-27653361 '
-        '| ref={{sfnref | BBC News | 2014}} '
+        '| ref={{sfnref|BBC News|2014}} '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -438,7 +438,7 @@ def test_nyt5():
         '| date=2007-06-13 '
         '| url=http://www.nytimes.com/2007/06/13/world/americas/'
         '13iht-whale.1.6123654.html '
-        '| ref={{sfnref | The New York Times | 2007}} '
+        '| ref={{sfnref|The New York Times|2007}} '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -473,7 +473,7 @@ def test_tgdaily1():
         '| date=2014-05-09 '
         '| url=http://www.tgdaily.com/web/'
         '100381-apple-might-buy-beats-for-32-billion '
-        '| ref={{sfnref | TG Daily | 2014}} '
+        '| ref={{sfnref|TG Daily|2014}} '
         '| access-date='
     )
 
@@ -492,7 +492,7 @@ def test_tgdaily2():
         '| date=2013-12-17 '
         '| url=http://www.tgdaily.com/space-features/'
         '82906-sma-reveals-giant-star-cluster-in-the-making '
-        '| ref={{sfnref | TG Daily | 2013}} '
+        '| ref={{sfnref|TG Daily|2013}} '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -525,7 +525,7 @@ def test_oth2():
         'articleshow/1163528927.cms?'
     )
     o = urls_scr(i)
-    sfn = '{{sfn | Kashyap | 2001}}'
+    sfn = '{{sfn|Kashyap|2001}}'
     assert sfn in o[0]
 
 
@@ -602,7 +602,7 @@ def test_oth4():
 def test_oth5():
     """Getting the date is tricky here."""
     o = urls_scr('http://www.magiran.com/npview.asp?ID=1410487')
-    assert "{{sfn | ''Magiran'' | 2007}}" in o[0]
+    assert "{{sfn|''Magiran''|2007}}" in o[0]
     assert (
         '* {{cite web '
         # todo: could this be fixed for the new format of magiran?
@@ -614,7 +614,7 @@ def test_oth5():
         '| date=2007-05-22 '
         '| url=https://www.magiran.com/article/1410487 '
         '| language=fa '
-        '| ref={{sfnref | Magiran | 2007}} '
+        '| ref={{sfnref|Magiran|2007}} '
         '| access-date='
     ) == o[1][:-12]
 
@@ -623,9 +623,9 @@ def test_oth6():
     """Detection of website name."""
     o = urls_scr('http://www.farsnews.com/newstext.php?nn=13930418000036')
     assert (
-        '* {{cite web | title=آیت\u200cالله محمدی گیلانی دارفانی را وداع گفت | publisher=Fars News Agency | date=2014-07-09 | url=http://www.farsnews.com/newstext.php?nn=13930418000036 | language=fa | ref={{sfnref | Fars News Agency | 2014}} | access-date='
+        '* {{cite web | title=آیت\u200cالله محمدی گیلانی دارفانی را وداع گفت | publisher=Fars News Agency | date=2014-07-09 | url=http://www.farsnews.com/newstext.php?nn=13930418000036 | language=fa | ref={{sfnref|Fars News Agency|2014}} | access-date='
     ) == o[1][:-12]
-    assert '{{sfn | Fars News Agency | 2014}}' in o[0]
+    assert '{{sfn|Fars News Agency|2014}}' in o[0]
     # Fars news is using 'خبرگزاری فارس' as og:author which is wrong
     # and thats why its name is not italicized in sfn.
 
@@ -709,7 +709,7 @@ def test_oth11():
 def test_oth12():
     # thebulletin.org
     assert urls_scr(
-        'http://thebulletin.org/evidence-shows-iron-dome-not-working7318'
+        'https://thebulletin.org/2014/07/the-evidence-that-shows-iron-dome-is-not-working/'
     )[1][:-12] == (
         '* {{cite web '
         '| last=Postol '
@@ -717,8 +717,7 @@ def test_oth12():
         '| title=The evidence that shows Iron Dome is not working '
         '| website=Bulletin of the Atomic Scientists '
         '| date=2014-07-19 '
-        '| url=http://thebulletin.org/'
-        'evidence-shows-iron-dome-not-working7318 '
+        '| url=https://thebulletin.org/2014/07/the-evidence-that-shows-iron-dome-is-not-working/ '
         '| access-date='
     )
 
@@ -751,7 +750,7 @@ def test_oth14():
         '| date=1999-06-29 '
         '| url=http://www.independent.co.uk/news/business/'
         'the-investment-column-tt-group-1103208.html '
-        '| ref={{sfnref | The Independent | 1999}} '
+        '| ref={{sfnref|The Independent|1999}} '
         '| access-date='
     )
     assert ct == o[1][:-12]
@@ -766,7 +765,7 @@ def test_oth15():
         '| date=2017-01-25 '
         '| url=http://www.isna.ir/news/95110603890/%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84-%DA%A9%D8%B1%D8%AF '
         '| language=fa '
-        '| ref={{sfnref | ایسنا | 2017}} '
+        '| ref={{sfnref|ایسنا|2017}} '
         '| access-date='
     ) == urls_scr(
         'http://www.isna.ir/news/95110603890/%D8%A8%D8%B1%D8%AC%D8%A7%D9%85-%D8%B4%D8%B1%D8%A7%DB%8C%D8%B7-%D8%A8%DB%8C%D9%86-%D8%A7%D9%84%D9%85%D9%84%D9%84%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7-%DA%A9%D8%A7%D9%85%D9%84%D8%A7-%D9%85%D8%AA%D8%AD%D9%88%D9%84-%DA%A9%D8%B1%D8%AF'
@@ -777,7 +776,7 @@ def test_invalid_name():
     """Test that URL does not fail with InvalidNameError."""
     url = 'http://www.irinn.ir/fa/news/499654/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%A2%D9%85%D8%A7%D8%B1'
     assert (
-        '* {{cite web | title=انتخابات 96 به روایت آمار | publisher=پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%A2%D9%85%D8%A7%D8%B1 | language=fa | ref={{sfnref | پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | 2017}} | access-date='
+        '* {{cite web | title=انتخابات 96 به روایت آمار | publisher=پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران | date=2017-05-24 | url=http://www.irinn.ir/fa/news/499654/%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA-96-%D8%A8%D9%87-%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%A2%D9%85%D8%A7%D8%B1 | language=fa | ref={{sfnref|پایگاه اطلاع رسانی شبکه خبر صدا و سیمای جمهوری اسلامی ایران|2017}} | access-date='
     ) == urls_scr(url)[1][:-12]
 
 
@@ -810,7 +809,7 @@ def test_empty_meta_author_content():
         '| website=Al Jazeera '
         '| date=2017-05-29 '
         '| url=http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html '
-        '| ref={{sfnref | Al Jazeera | 2017}} '
+        '| ref={{sfnref|Al Jazeera|2017}} '
         '| access-date='
     ) == urls_scr(
         'http://www.aljazeera.com/news/2017/05/'
@@ -870,12 +869,12 @@ def test_abc_author():
 
 def test_indaily():
     assert urls_scr(
-        'https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/'
+        'https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice'
     )[1][:-12] == (
         '* {{cite web | last=Siebert | first=Bension '
         "| title=Epidemics expert questions Marshall's schools advice "
         '| website=InDaily | date=2020-03-19 '
-        '| url=https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice/ '
+        '| url=https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice '
         '| access-date='
     )
 
@@ -915,7 +914,7 @@ def test_home_site_name():
     assert (
         '* {{cite web | title=Black Convicts | website=University of Tasmania '
         '| url=https://www.utas.edu.au/library/companion_to_tasmanian_history/B/Black%20Convicts.htm '
-        '| ref={{sfnref | University of Tasmania}} | access-date='
+        '| ref={{sfnref|University of Tasmania}} | access-date='
     ) == urls_scr(
         'https://www.utas.edu.au/library/companion_to_tasmanian_history/B/Black%20Convicts.htm'
     )[1][:-12]
@@ -977,7 +976,7 @@ def test_lang_search():
 def test_non_text_content(_0, _1):
     scr = urls_scr('https://example.com/')
     assert scr[1][:-12] == (
-        '* {{cite web | title= | url=https://example.com/ | ref={{sfnref | Anon.}} | access-date='
+        '* {{cite web | title= | url=https://example.com/ | ref={{sfnref|Anon.}} | access-date='
     )
 
 
