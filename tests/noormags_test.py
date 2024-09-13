@@ -45,7 +45,7 @@ def test_nm2():
         '692447?sta=%D8%AF%D8%B9%D8%A7%DB%8C%20%D8%A7%D8%A8%D9%88%D8%AD%'
         'D9%85%D8%B2%D9%87%20%D8%AB%D9%85%D8%A7%D9%84%DB%8C'
     )
-    assert '{{sfn | سلیمانی\u200cمیمند | 1389 | pp=103–124}}' in o[0]
+    assert '{{sfn|سلیمانی\u200cمیمند|1389|pp=103–124}}' in o[0]
     assert (
         '* {{cite journal '
         '| last=سلیمانی\u200cمیمند '

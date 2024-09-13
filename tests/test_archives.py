@@ -49,7 +49,7 @@ def test_dead_url():
         '| archive-url=https://web.archive.org/web/20070429193849id_/http://www.londondevelopmentcentre.org/page.php?s=1&p=2462 '
         '| archive-date=2007-04-29 '
         '| url-status=dead '
-        '| ref={{sfnref | londondevelopmentcentre.org | 2007}} '
+        '| ref={{sfnref|londondevelopmentcentre.org|2007}} '
         '| access-date='
     )
 
@@ -94,7 +94,7 @@ def test_webless_url():
         '| archive-date=2017-01-19 '
         '| url-status=live '
         '| language=fa '
-        '| ref={{sfnref | ایسنا | 2017}} '
+        '| ref={{sfnref|ایسنا|2017}} '
         '| access-date='
     )
 
@@ -105,5 +105,5 @@ def test_archive_today_data():
         '| date=2012-12-11 | '
         'url=http://www.cbsnews.com/stories/2003/11/12/earlyshow/leisure/celebspot/main583274.shtml '
         '| archive-url=https://archive.ph/N3fQ | archive-date=2012-12-11 | '
-        'url-status=dead | ref={{sfnref | cbsnews.com | 2012}} | access-date='
+        'url-status=dead | ref={{sfnref|cbsnews.com|2012}} | access-date='
     )

@@ -8,7 +8,7 @@ def jstor_scr(*args):
 
 def test_1():
     s, c, r = jstor_scr('https://www.jstor.org/stable/30078788')
-    assert s == '{{sfn | Lloyd | 1831 | pp=171–177}}'
+    assert s == '{{sfn|Lloyd|1831|pp=171–177}}'
     assert c[: c.index('| access-date=')] == (
         '* {{cite journal | last=Lloyd | first=Humphrey '
         '| title=On a New Case of Interference of the Rays of Light '

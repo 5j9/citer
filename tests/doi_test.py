@@ -42,7 +42,7 @@ def test_doi2():
         '| publisher=University of Chicago Press | volume=40 '
         '| issue=3 | year=2014 | issn=0093-1896 | doi=10.1086/677379 '
         '| pages=272–281 '
-        '| ref={{sfnref | University of Chicago Press | 2014}}'
+        '| ref={{sfnref|University of Chicago Press|2014}}'
         '}}'
     )
     assert citoid_scr('http://www.jstor.org/stable/info/10.1086/677379')[
@@ -50,7 +50,7 @@ def test_doi2():
     ] == (
         '* {{cite journal | title=Books of Critical Interest | journal=Critical '
         'Inquiry | volume=40 | issue=3 | date=2014 | issn=0093-1896 | '
-        'doi=10.1086/677379 | pages=272–281 | ref={{sfnref | Critical Inquiry | '
+        'doi=10.1086/677379 | pages=272–281 | ref={{sfnref|Critical Inquiry|'
         '2014}}}}'
     )
 
@@ -141,7 +141,7 @@ def test_conference_location():
         '| year=2006 '
         '| isbn=1-59593-255-0 '
         '| doi=10.1145/1117278 '
-        '| ref={{sfnref | ACM Press | 2006}}'
+        '| ref={{sfnref|ACM Press|2006}}'
         '}}'
     )
     assert citoid_scr('10.1145/1117278')[1] == (
@@ -262,13 +262,13 @@ def test_doi_with_full_date():  # 36
 
 def test_sfn_extract_year_from_date():
     s, c, r = doi_scr('10.1073/pnas.2015159118')
-    assert s == '{{sfn | Almeida | Viala | Nachtigall | Broe | 2021 | p=}}'
+    assert s == '{{sfn|Almeida|Viala|Nachtigall|Broe|2021|p=}}'
     assert (
         c
         == '* {{cite journal | last=Almeida | first=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118}}'
     )
     s, c, r = citoid_scr('10.1073/pnas.2015159118')
-    assert s == '{{sfn | Almeida | Viala | Nachtigall | Broe | 2021 | p=}}'
+    assert s == '{{sfn|Almeida|Viala|Nachtigall|Broe|2021|p=}}'
     assert c == (
         '* {{cite journal | last=Almeida | first=Diego Dantas | last2=Viala | '
         'first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe '

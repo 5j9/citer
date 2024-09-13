@@ -24,6 +24,11 @@
 			<input type="radio" name="dateformat" value="%b %{d}, %Y" id="bdy" onclick="onDateChange()">Jan 1, 2020
 			<input type="radio" name="dateformat" value="%{d} %B %Y" id="dbby" onclick="onDateChange()">1 January 2020
 			<input type="radio" name="dateformat" value="%{d} %b %Y" id="dby" onclick="onDateChange()">1 Jan 2020
+			<br>
+			<p class="input-legend">Pipe spacing:</p>
+			<input type="radio" name="pipeformat" value=" | " id="both" onclick="onPipeChange()">{{cite book | last=Smith | first=Bob}}
+			<input type="radio" name="pipeformat" value=" |" id="before" onclick="onPipeChange()">{{cite book |last=Smith |first=Bob}}
+			<input type="radio" name="pipeformat" value="|" id="none" onclick="onPipeChange()">{{cite book|last=Smith|first=Bob}}
 			<br><br>
 		</form>
 		<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
@@ -50,7 +55,7 @@
 			</p>
 			<p>
 				Found a bug or have a suggestion? Contact me on <a href="https://meta.wikimedia.org/wiki/User_talk:Dalba">my talk page</a> or open an issue <a href="https://github.com/5j9/citer">on GitHub</a>.
-				<a id="bookmarklet" href="javascript:void(window.open('https://citer.toolforge.org/?user_input='+encodeURIComponent(location.href)+'&dateformat='+encodeURIComponent('%B %{d}, %Y')))">Bookmarklet (drag to favorites bar)</a>
+				<a id="bookmarklet" href="javascript:void(window.open('https://citer.toolforge.org/?user_input='+encodeURIComponent(location.href)+'&pipeformat=+|+&dateformat='+encodeURIComponent('%B %{d}, %Y')))">Bookmarklet (drag to favorites bar)</a>
 			</p>
 		</footer>
 		<script src="static/en.js"></script>

@@ -55,7 +55,7 @@ HTML_SUBST = Template(
 ).substitute
 
 
-def scr_to_html(scr: tuple, date_format: str, input_type: str):
+def scr_to_html(scr: tuple, date_format: str, pipe_format: str, input_type: str):
     """Insert sfn_cit_ref into the HTML template and return response_body."""
     sfn, cit, ref = [escape(i) for i in scr]
     return (
@@ -65,6 +65,7 @@ def scr_to_html(scr: tuple, date_format: str, input_type: str):
             ref=ref,
         )
         .replace(f'{date_format}"', f'{date_format}" checked', 1)
+        .replace(f'{pipe_format}"', f'{pipe_format}" checked', 1)
         .replace(f'="{input_type}"', f'="{input_type}" selected', 1)
     )
 

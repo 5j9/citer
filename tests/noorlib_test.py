@@ -34,7 +34,7 @@ def test_nl2():
     """The year parameter is not present."""
     i = 'http://www.noorlib.ir/View/fa/Book/BookView/Image/18454'
     o = noorlib_scr(i)
-    assert '{{sfn | کورانی | p=}}' in o[0]
+    assert '{{sfn|کورانی|p=}}' in o[0]
     assert (
         '* {{cite book '
         '| last=کورانی '

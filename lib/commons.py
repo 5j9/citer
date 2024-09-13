@@ -188,7 +188,7 @@ def request(
     return mortal_session().request(method, url, headers=headers, **kwargs)
 
 
-def data_to_sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
+def data_to_sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', pipe_format: str = ' | ', /) -> tuple:
     # Return (sfn, cite, ref) strings.
     get = d.get
     if title := get('title'):
@@ -201,7 +201,7 @@ def data_to_sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
             # https://github.com/CrossRef/rest-api-doc/issues/214
             del d['isbn']
 
-    return sfn_cit_ref(d, date_format)
+    return sfn_cit_ref(d, date_format, pipe_format)
 
 
 def first_last(fullname, separator=None) -> tuple:

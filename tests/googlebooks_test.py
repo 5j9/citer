@@ -40,13 +40,13 @@ def test_gb2():
         'id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
     )
     assert (
-        '{{sfn '
-        '| Anderson '
-        '| DeBolt '
-        '| Featherstone '
-        '| Gunther '
-        '| 2010 '
-        '| p=57}}'
+        '{{sfn'
+        '|Anderson'
+        '|DeBolt'
+        '|Featherstone'
+        '|Gunther'
+        '|2010'
+        '|p=57}}'
     ) in o[0]
     assert (
         '* {{cite book '
@@ -88,7 +88,7 @@ def test_gb3():
         'Delimiter+is%22&hl=en&sa=X&ei=oNKSUrKeDovItAbO_4CoBA&ved='
         '0CC4Q6AEwAA#v=onepage&q=%22a%20Delimiter%20is%22&f=false'
     )
-    assert '{{sfn | Farrell | 2009 | p=588}}' in o[0]
+    assert '{{sfn|Farrell|2009|p=588}}' in o[0]
     assert (
         '* {{cite book '
         '| last=Farrell '
@@ -112,7 +112,7 @@ def test_gb4():
         'X&ei=hEuYUr_mOsnKswb49oDQCA&ved=0CC4Q6AEwAA#v=onepage&q='
         '%22legal%20translation%20is%22&f=false'
     )
-    assert '{{sfn | Šarčević | 1997 | p=229}}' in o[0]
+    assert '{{sfn|Šarčević|1997|p=229}}' in o[0]
     assert (
         '* {{cite book '
         '| last=Šarčević '
