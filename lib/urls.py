@@ -25,8 +25,7 @@ from lib.urls_authors import CONTENT_ATTR, IV, find_authors
 
 class ThreadLike:
     @staticmethod
-    def join():
-        ...
+    def join(): ...
 
 
 MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
@@ -128,7 +127,6 @@ LANG_SEARCH = rc(r'\slang=["\']?([a-z]{2})\b').search
 
 
 class ContentTypeError(ValueError):
-
     """Raise when content-type header does not start with 'text/'."""
 
     pass
