@@ -106,7 +106,8 @@ def test_json_body():
                     b'{'
                     b'"user_input": "https://books.google.com/",'
                     b'"input_type": "url-doi-isbn",'
-                    b'"dateformat": "%#d %B %Y"'
+                    b'"dateformat": "%#d %B %Y",'
+                    b'"pipeformat": " | "'
                     b'}'
                 ),
             },
@@ -133,7 +134,8 @@ def test_html_input():
                     b'{'
                     b'"user_input": {"html": "<HTML>", "url": "<URL>"},'
                     b'"input_type": "html",'
-                    b'"dateformat": "%#d %B %Y"'
+                    b'"dateformat": "%#d %B %Y",'
+                    b'"pipeformat": " | "'
                     b'}'
                 ),
             },

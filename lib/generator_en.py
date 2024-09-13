@@ -27,7 +27,7 @@ DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 ALPHA_NUM = digits + ascii_lowercase
 
 
-def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
+def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', pipe: str = ' | ', /) -> tuple:
     """Return sfn, citation, and ref."""
     g = d.get
     if not (cite_type := type_to_cite(g('cite_type'))):
@@ -49,28 +49,28 @@ def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
 
     if cite_type == 'thesis':
         if (thesis_type := g('thesisType')) is not None:
-            cit += f' | degree={thesis_type}'
+            cit += f'{pipe}degree={thesis_type}'
 
     if authors := g('authors'):
-        cit += names2para(authors, 'first', 'last', 'author')
+        cit += names2para(authors, pipe, 'first', 'last', 'author')
         # {{sfn}} only supports a maximum of four authors
         for first, last in authors[:4]:
-            sfn += ' | ' + last
+            sfn += '|' + last
     else:
         # the same order should be used in citation_template:
-        sfn += ' | ' + (
-            publisher
-            or (
-                f"''{journal}''"
-                if journal
-                else f"''{website}''"
-                if website
-                else title or 'Anon.'
-            )
+        sfn += '|' + (
+                publisher
+                or (
+                    f"''{journal}''"
+                    if journal
+                    else f"''{website}''"
+                    if website
+                    else title or 'Anon.'
+                )
         )
 
     if editors := g('editors'):
-        cit += names2para(editors, 'editor-first', 'editor-last', 'editor')
+        cit += names2para(editors, pipe, 'editor-first', 'editor-last', 'editor')
     if translators := g('translators'):
         for i, (first, last) in enumerate(translators):
             translators[i] = first, f'{last} (مترجم)'
@@ -81,7 +81,7 @@ def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
         else:
             d['others'] = g('translators')
     if others := g('others'):
-        cit += names1para(others, 'others')
+        cit += names1para(others, pipe, 'others')
 
     if cite_type == 'book':
         booktitle = g('booktitle') or g('container-title')
@@ -89,139 +89,140 @@ def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
         booktitle = None
 
     if booktitle:
-        cit += f' | title={booktitle}'
+        cit += f'{pipe}title={booktitle}'
         if title:
-            cit += f' | chapter={title}'
+            cit += f'{pipe}chapter={title}'
     elif title:
-        cit += f' | title={title}'
+        cit += f'{pipe}title={title}'
     else:
-        cit += ' | title='
+        cit += f'{pipe}title='
 
     if journal:
-        cit += f' | journal={journal}'
+        cit += f'{pipe}journal={journal}'
     elif website:
-        cit += f' | website={website}'
+        cit += f'{pipe}website={website}'
 
     if chapter := g('chapter'):
-        cit += f' | chapter={chapter}'
+        cit += f'{pipe}chapter={chapter}'
 
     if publisher := (g('publisher') or g('organization')):
-        cit += f' | publisher={publisher}'
+        cit += f'{pipe}publisher={publisher}'
 
     if address := (g('address') or g('publisher-location')):
-        cit += f' | publication-place={address}'
+        cit += f'{pipe}publication-place={address}'
 
     if edition := g('edition'):
-        cit += f' | edition={edition}'
+        cit += f'{pipe}edition={edition}'
 
     if series := g('series'):
-        cit += f' | series={series}'
+        cit += f'{pipe}series={series}'
 
     if volume := g('volume'):
-        cit += f' | volume={volume.translate(DIGITS_TO_EN)}'
+        cit += f'{pipe}volume={volume.translate(DIGITS_TO_EN)}'
 
     if issue := (g('issue') or g('number')):
-        cit += f' | issue={issue}'
+        cit += f'{pipe}issue={issue}'
 
     if date := g('date'):
         if not isinstance(date, str):
             date = date.strftime(date_format)
-        cit += f' | date={date}'
+        cit += f'{pipe}date={date}'
 
     if year := g('year'):
         year = str(int(year))  # convert any non-Latin digits to English ones
         if not date or year not in date:
-            cit += f' | year={year}'
-        sfn += f' | {year}'
+            cit += f'{pipe}year={year}'
+        sfn += f'|{year}'
     elif date is not None:
         if isinstance(date, str):
             year = four_digit_num(date)[0]
         else:
             year = date.strftime('%Y')
-        sfn += f' | {year}'
+        sfn += f'|{year}'
 
     if isbn := g('isbn'):
-        cit += f' | isbn={isbn}'
+        cit += f'{pipe}isbn={isbn}'
 
     if issn := g('issn'):
-        cit += f' | issn={issn}'
+        cit += f'{pipe}issn={issn}'
 
     if pmid := g('pmid'):
-        cit += f' | pmid={pmid}'
+        cit += f'{pipe}pmid={pmid}'
 
     if pmcid := g('pmcid'):
         pmcid: str
-        cit += ' | pmc=' + pmcid.lower().removeprefix('pmc')
+        cit += f'{pipe}pmc=' + pmcid.lower().removeprefix('pmc')
 
     if doi := g('doi'):
         # To avoid Check |doi= value error
         # invalid/temporary/test doi[1]
         # https://en.wikipedia.org/wiki/Help:CS1_errors#bad_doi
         if not doi.startswith('10.5555'):
-            cit += f' | doi={doi}'
+            cit += f'{pipe}doi={doi}'
             if is_free_doi(doi):
-                cit += ' | doi-access=free'
+                cit += f'{pipe}doi-access=free'
 
     if oclc := g('oclc'):
-        cit += f' | oclc={oclc}'
+        cit += f'{pipe}oclc={oclc}'
 
     if jstor := g('jstor'):
-        cit += f' | jstor={jstor}'
+        cit += f'{pipe}jstor={jstor}'
         jstor_access = g('jstor-access')
         if jstor_access:
-            cit += ' | jstor-access=free'
+            cit += f'{pipe}jstor-access=free'
 
     pages_in_cit = pages_in_sfn = False
     if pages := g('page'):
         if '–' in pages:
-            sfn += f' | pp={pages}'
+            sfn += f'|pp={pages}'
             pages_in_sfn = 2
             if cite_type == 'journal':
-                cit += f' | pages={pages}'
+                cit += f'{pipe}pages={pages}'
                 pages_in_cit = 2
         else:
-            sfn += f' | p={pages}'
+            sfn += f'|p={pages}'
             pages_in_sfn = 1
             if cite_type == 'journal':
-                cit += f' | page={pages}'
+                cit += f'{pipe}page={pages}'
                 pages_in_cit = 1
 
     if url := g('url'):
         # Don't add a DOI URL if we already have added a DOI.
         if not doi or not doi_url_match(url):
-            cit += f' | url={url}'
+            cit += f'{pipe}url={url}'
         else:
             # To prevent addition of access date
             url = None
 
     if not pages and cite_type != 'web':
         pages_in_sfn = 1
-        sfn += ' | p='
+        sfn += '|p='
 
     if archive_url := g('archive-url'):
         cit += (
-            f' | archive-url={archive_url}'
-            f' | archive-date={g("archive-date").strftime(date_format)}'
-            f' | url-status={g("url-status")}'
+            f'{pipe}archive-url={archive_url}'
+            f'{pipe}archive-date={g("archive-date").strftime(date_format)}'
+            f'{pipe}url-status={g("url-status")}'
         )
 
     if language := g('language'):
         language = TO_TWO_LETTER_CODE(language.lower(), language)
         if language.lower() != 'en':
-            cit += ' | language=' + language
+            cit += f'{pipe}language=' + language
 
     if not authors:
         # order should match sfn_template
         cit += (
-            ' | ref={{sfnref | '
+            f'{pipe}'
+            'ref={{sfnref|'
             f'{publisher or journal or website or title or "Anon."}'
         )
         if year:
-            cit += f' | {year}'
+            cit += f'|{year}'
         cit += '}}'
 
     if url:
-        cit += f' | access-date={Date.today().strftime(date_format)}'
+        cit += f'{pipe}access-date={Date.today().strftime(date_format)}'
 
     cit += '}}'
     sfn += '}}'
@@ -230,13 +231,13 @@ def sfn_cit_ref(d: dict, date_format: str = '%Y-%m-%d', /) -> tuple:
 
     ref_content = rm_ref_arg(cit[2:])
     if pages_in_sfn and not pages_in_cit:
-        ref_content = f'{ref_content[:-2]} | page={pages if pages else ""}}}}}'
+        ref_content = f'{ref_content[:-2]}{pipe}page={pages if pages else ""}}}}}'
 
     ref = f'<ref name="{ref_name}">{ref_content}</ref>'
     return sfn, cit, ref
 
 
-def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
+def names2para(names, pipe, fn_parameter, ln_parameter, nofn_parameter=None):
     """Take list of names. Return the string to be appended to citation."""
     c = 0
     s = ''
@@ -244,20 +245,20 @@ def names2para(names, fn_parameter, ln_parameter, nofn_parameter=None):
         c += 1
         if c == 1:
             if first or not nofn_parameter:
-                s += f' | {ln_parameter}={last} | {fn_parameter}={first}'
+                s += f'{pipe}{ln_parameter}={last}{pipe}{fn_parameter}={first}'
             else:
-                s += f' | {nofn_parameter}={fullname(first, last)}'
+                s += f'{pipe}{nofn_parameter}={fullname(first, last)}'
         else:
             if first or not nofn_parameter:
-                s += f' | {ln_parameter}{c}={last} | {fn_parameter}{c}={first}'
+                s += f'{pipe}{ln_parameter}{c}={last}{pipe}{fn_parameter}{c}={first}'
             else:
-                s += f' | {nofn_parameter}{c}={fullname(first, last)}'
+                s += f'{pipe}{nofn_parameter}{c}={fullname(first, last)}'
     return s
 
 
-def names1para(translators, para):
+def names1para(translators, pipe, para):
     """Take list of names. Return the string to be appended to citation."""
-    s = f' | {para}='
+    s = f'{pipe}{para}='
     c = 0
     for first, last in translators:
         c += 1
