@@ -13,10 +13,10 @@ def noorlib_data(url: str) -> dict:
     return dictionary
 
 
-def dict_from_bibtex(noorlib_url):
+def dict_from_bibtex(noorlib_url) -> str:
     """Get bibtex file content from a noormags url. Return as string."""
     pagetext = request(noorlib_url).text
-    article_id = BIBTEX_ARTICLE_ID_SEARCH(pagetext)[0]
+    article_id: str = BIBTEX_ARTICLE_ID_SEARCH(pagetext)[0]  # type: ignore
     url = (
         'http://www.noorlib.ir/View/HttpHandler/CitationHandler.ashx?id='
         + article_id
@@ -25,13 +25,13 @@ def dict_from_bibtex(noorlib_url):
     return request(url).text
 
 
-def ris_data(noorlib_url):
+def ris_data(noorlib_url) -> str:
     # This is copied from noormags module (currently not supported but may
     # be)[1]
     """Get ris file content from a noormags url. Return as string."""
-    pagetext = request(noorlib_url).text
-    article_id = RIS_ARTICLE_ID_SEARCH(pagetext)[0]
-    url = (
+    pagetext: str = request(noorlib_url).text
+    article_id: str = RIS_ARTICLE_ID_SEARCH(pagetext)[0]  # type: ignore
+    url: str = (
         'http://www.noormags.ir/view/CitationHandler.ashx?format=RIS&id='
         + article_id
     )

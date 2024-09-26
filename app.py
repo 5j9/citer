@@ -253,7 +253,7 @@ get_handler: Callable[[str], Callable[[StartResponse, dict], BytesTuple]] = {
     f'/{JS_PATH}.js': js,
     '/': root,
     '/citer.fcgi': root,  # for backward compatibility
-}.get
+}.get  # type: ignore
 
 
 def app(environ: dict, start_response: StartResponse) -> BytesTuple:
