@@ -1,16 +1,13 @@
 from calendar import month_abbr, month_name
 from collections.abc import Callable
-from contextlib import AbstractContextManager
 from datetime import date as datetime_date, datetime
 from functools import partial
-from ssl import CERT_NONE, create_default_context
 
-from curl_cffi.requests import Response, Session
 from isbnlib import NotValidISBNError, mask as isbn_mask
 from jdatetime import date as jdate
 from regex import IGNORECASE, VERBOSE, Match
 
-from config import LANG, USER_AGENT
+from config import LANG
 from lib.generator_en import rc
 
 if LANG == 'en':
@@ -239,7 +236,7 @@ def uninum2en(string) -> str:
     return string
 
 
-def find_any_date(str_or_match) -> datetime.date or None:
+def find_any_date(str_or_match) -> datetime_date | None:
     """Try to find a date in input string and return it as a date object.
 
     If there is no matching date, return None.

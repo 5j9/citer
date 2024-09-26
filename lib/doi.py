@@ -18,7 +18,7 @@ def doi_data(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
         # unescape '&amp;', '&lt;', and '&gt;' in doi_or_url
         # decode percent encodings
         decoded_url = unquote_plus(unescape(doi_or_url))
-        doi = doi_search(decoded_url)[0]
+        doi = doi_search(decoded_url)[0]  # type: ignore
     try:
         d = citoid_data(doi, True)
     except CurlError:
