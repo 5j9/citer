@@ -11,3 +11,8 @@ PRINT_TEST_FILENAME = config('PRINT_TEST_FILENAME', False, cast=bool)
 
 if READONLY_TESTDATA:
     disable_socket()
+    from curl_cffi import requests
+
+    requests.Response = requests.Session = NotImplementedError(
+        'No network in READONLY_TESTDATA mode'
+    )
