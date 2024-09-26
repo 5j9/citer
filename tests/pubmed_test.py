@@ -20,11 +20,11 @@ def test_doi_update():
     with patch('lib.pubmed.citoid_data', side_effect=CurlError):
         assert (
             pmcid_scr('3538472')[1]
-            == '* {{cite journal | last=Sweetser | first=Seth | title=Evaluating the Patient With Diarrhea: A Case-Based Approach | journal=Mayo Clinic Proceedings | publisher=Elsevier BV | volume=87 | issue=6 | year=2012 | issn=0025-6196 | pmid=22677080 | pmc=3538472 | doi=10.1016/j.mayocp.2012.02.015 | pages=596–602}}'
+            == '* {{cite journal | last=Sweetser | first=Seth | title=Evaluating the Patient With Diarrhea: A Case-Based Approach | journal=Mayo Clinic Proceedings | publisher=Elsevier BV | volume=87 | issue=6 | year=2012 | issn=0025-6196 | pmid=22677080 | pmc=3538472 | doi=10.1016/j.mayocp.2012.02.015 | doi-access=free | pages=596–602}}'
         )
     assert (
         pmcid_scr('3538472')[1]
-        == '* {{cite journal | last=Sweetser | first=Seth | title=Evaluating the Patient With Diarrhea: A Case-Based Approach | journal=Mayo Clinic Proceedings | volume=87 | issue=6 | date=2012 | issn=0025-6196 | pmid=22677080 | pmc=3538472 | doi=10.1016/j.mayocp.2012.02.015 | pages=596–602}}'
+        == '* {{cite journal | last=Sweetser | first=Seth | title=Evaluating the Patient With Diarrhea: A Case-Based Approach | journal=Mayo Clinic Proceedings | volume=87 | issue=6 | date=2012 | issn=0025-6196 | pmid=22677080 | pmc=3538472 | doi=10.1016/j.mayocp.2012.02.015 | doi-access=free | pages=596–602}}'
     )
 
 
@@ -56,8 +56,8 @@ def test_has_doi_but_no_crossref():
             'last3=Phillips | first3=GN Jr | last4=Wright | first4=SJ | last5=Mitchell | '
             'first5=JC | title=Optimal design of thermally stable proteins | '
             'journal=Bioinformatics | volume=24 | issue=20 | date=22 August 2008 | '
-            'pmid=18723523 | pmc=2562006 | doi=10.1093/bioinformatics/btn450 | '
-            'pages=2339–2343}}'
+            'pmid=18723523 | pmc=2562006 | doi=10.1093/bioinformatics/btn450 '
+            '| doi-access=free | pages=2339–2343}}'
         )
     assert pmcid_scr('2562006', '%d %B %Y')[1] == (
         '* {{cite journal | last=Bannen | first=Ryan M. | last2=Suresh | '
@@ -65,5 +65,5 @@ def test_has_doi_but_no_crossref():
         'first4=Stephen J. | last5=Mitchell | first5=Julie C. | title=Optimal design '
         'of thermally stable proteins | journal=Bioinformatics | volume=24 | issue=20 '
         '| date=15 October 2008 | issn=1367-4803 | pmid=18723523 | pmc=2562006 | '
-        'doi=10.1093/bioinformatics/btn450 | pages=2339–2343}}'
+        'doi=10.1093/bioinformatics/btn450 | doi-access=free | pages=2339–2343}}'
     )

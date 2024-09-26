@@ -1,5 +1,6 @@
+from lib import request
 from lib.bibtex import parse as bibtex_parse
-from lib.commons import rc, request
+from lib.commons import rc
 
 BIBTEX_ARTICLE_ID_SEARCH = rc(r'(?<=CitationHandler\.ashx\?id=)\d+').search
 RIS_ARTICLE_ID_SEARCH = rc(r'(?<=RIS&id=)\d+').search

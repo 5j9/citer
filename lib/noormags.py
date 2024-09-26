@@ -1,7 +1,8 @@
 from threading import Thread
 
+from lib import request
 from lib.bibtex import parse as bibtex_parse
-from lib.commons import rc, request
+from lib.commons import rc
 from lib.ris import ris_parse
 
 BIBTEX_ARTICLE_ID_SEARCH = rc(r'(?<=/citation/bibtex/)\d+').search

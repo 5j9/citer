@@ -1,0 +1,23 @@
+{
+	"encoding": "UTF-8",
+	"headers": {
+		"access-control-allow-headers": "X-apikey, X-id, Origin, X-Requested-With, Content-Type, Content-Disposition, Accept, DNT, Keep-Alive, User-Agent, If-Modified-Since, Cache-Control",
+		"access-control-allow-methods": "HEAD, GET, PUT, POST, DELETE, OPTIONS",
+		"access-control-allow-origin": "*",
+		"alt-svc": "h3=\":443\"; ma=86400",
+		"cf-cache-status": "DYNAMIC",
+		"cf-ray": "8c9498ac4c175d4c-FRA",
+		"content-encoding": "br",
+		"content-type": "application/json; charset=UTF-8",
+		"date": "Thu, 26 Sep 2024 16:23:04 GMT",
+		"nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+		"permissions-policy": "interest-cohort=()",
+		"report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=uMdQJHb6dw7hhuCz4mHMIZdZUBAUC%2FhHs6ic1EUBm0cujlhJucqh1x1JsrX5rOupcJkgxp3QMh4ogrVwrBNumsEqq3prnbUn3t88LJ6sHRyMKnizat3lVYGG0PX0tq2HwQ%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+		"server": "cloudflare",
+		"x-paradigm": "v6.1.0 built Wed Sep 18 2024 01:44:55 GMT+0100",
+		"x-paradigm-bg": "true",
+		"x-paradigm-took": "17"
+	},
+	"status_code": 200,
+	"url": "https://api.openaccessbutton.org/find?id=10.1109/tim.1985.4315297"
+}

@@ -2,7 +2,7 @@ from urllib.parse import parse_qs
 
 from langid import classify
 
-from lib.commons import request
+from lib import request
 from lib.ris import ris_parse
 from lib.urls import url_data
 

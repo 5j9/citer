@@ -103,34 +103,6 @@ mc_sub = rc(r'MC(\w)', IGNORECASE).sub
 last_first = partial(rc(r'[,،]').split, maxsplit=1)
 
 
-AGENT_HEADER = {
-    'User-Agent': USER_AGENT,
-}
-
-context = create_default_context()
-context.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
-context.check_hostname = False
-context.verify_mode = CERT_NONE
-
-
-def new_session() -> Session:
-    return Session(verify=context, timeout=10.0, impersonate='chrome120')
-
-
-session_usage = 0
-session = new_session()
-
-
-def mortal_session() -> Session:
-    global session, session_usage
-    if session_usage > 1000:  # to save memory by discarding unneeded cookies
-        session_usage = 0
-        session = new_session()
-        return session
-    session_usage += 1
-    return session
-
-
 # original regex from:
 # https://www.debuggex.com/r/0Npla56ipD5aeTr9
 # https://www.debuggex.com/r/2s3Wld3CVCR1wKoZ
@@ -173,17 +145,6 @@ class ReturnError(Exception):
 
     def __init__(self, sfn, cit, ref):
         super().__init__(sfn, cit, ref)
-
-
-def request(
-    url, spoof=False, method='GET', stream=False, **kwargs
-) -> Response | AbstractContextManager[Response]:
-    headers = None if spoof is True else AGENT_HEADER
-    if 'headers' in kwargs:
-        headers |= kwargs.pop('headers')
-    if stream is True:
-        return mortal_session().stream(method, url, headers=headers, **kwargs)
-    return mortal_session().request(method, url, headers=headers, **kwargs)
 
 
 def data_to_sfn_cit_ref(

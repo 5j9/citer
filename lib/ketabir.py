@@ -2,8 +2,8 @@ from bs4 import BeautifulSoup
 from curl_cffi import CurlError
 from langid import classify
 
-from lib import logger
-from lib.commons import first_last, rc, request
+from lib import logger, request
+from lib.commons import first_last, rc
 
 AUTHORS_FINDALL = rc(r'(\S+?)\s*+:\s*+(.*)').findall
 VOLUME_SEARCH = rc(r'\bجلد (\d+)').search

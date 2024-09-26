@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 from curl_cffi import CurlError
 from langid import classify
 
-from lib import logger
+from lib import logger, request
 from lib.citoid import citoid_data
 from lib.commons import (
     ANYDATE_PATTERN,
@@ -17,7 +17,6 @@ from lib.commons import (
     Search,
     find_any_date,
     rc,
-    request,
 )
 from lib.doi import crossref_data
 from lib.urls_authors import CONTENT_ATTR, IV, find_authors
