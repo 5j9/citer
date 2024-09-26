@@ -17,7 +17,7 @@ from lib import (
 from lib.language import TO_TWO_LETTER_CODE
 
 rm_ref_arg = partial(
-    rc(r'( \| ref=({{.*?}}|harv))(?P<repl> \| |}})').sub, r'\g<repl>'
+    rc(r'(\s?\|\s?ref=({{.*?}}|harv))(?P<repl>\s?\|\s?|}})').sub, r'\g<repl>'
 )
 DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 
