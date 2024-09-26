@@ -1,0 +1,23 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+		"cf-cache-status": "MISS",
+		"cf-ray": "8c9271de587e3663-FRA",
+		"content-encoding": "br",
+		"content-type": "text/html; charset=utf-8",
+		"date": "Thu, 26 Sep 2024 10:07:04 GMT",
+		"last-modified": "Thu, 26 Sep 2024 10:07:04 GMT",
+		"nel": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}",
+		"report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=A6ED89NSbpoA8aCTiAizHQ3E6oWwBQKqi3DlilrJkbfFyc7OPu0Xb4Z9oP7XEuPOCwEldKOr9c2c1wfTlj%2BRh5pYbxzSLtq9vZXAy1tTo%2Bhn54Eb%2BcGjTmqh4RLIULVgJEZG1g%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+		"server": "cloudflare",
+		"strict-transport-security": "max-age=63072000",
+		"vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url, Accept-Encoding",
+		"x-matched-path": "/[...slug]",
+		"x-powered-by": "Next.js",
+		"x-vercel-cache": "MISS",
+		"x-vercel-id": "fra1::iad1::cdl2z-1727345223449-9652d6120a0f"
+	},
+	"status_code": 200,
+	"url": "https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice"
+}
