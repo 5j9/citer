@@ -74,11 +74,8 @@ def isbn_data(
         d |= google_books_result[0]
 
     if iranian_isbn is True:
-        # noinspection PyUnboundLocalVariable
-        ketabir_thread.join()
-        # noinspection PyUnboundLocalVariable
-        if ketabir_result_list:
-            # noinspection PyUnboundLocalVariable
+        ketabir_thread.join()  # type: ignore
+        if ketabir_result_list:  # type: ignore
             ketabir_dict = ketabir_result_list[0]
             d = combine_dicts(ketabir_dict, d)
 
@@ -154,7 +151,7 @@ def citoid_thread_target(isbn: str, result: list) -> None:
 
 def worldcat_data(url: str) -> dict:
     try:
-        oclc = search(r'(?i)worldcat.org/(?:title|oclc)/(\d+)', url)[1]
+        oclc = search(r'(?i)worldcat.org/(?:title|oclc)/(\d+)', url)[1]  # type: ignore
     except TypeError:  # 'NoneType' object is not subscriptable
         # e.g. on https://www.worldcat.org/formats-editions/22239204
         return url_data(url)

@@ -3,26 +3,20 @@ from difflib import get_close_matches
 from functools import partial
 from html import unescape as html_unescape
 from threading import Thread
-from typing import Any
+from typing import Any, Protocol
 from urllib.parse import urlparse
 
 from curl_cffi import CurlError
 from langid import classify
 
-from lib import logger, request
+from lib import Response, logger, request
 from lib.citoid import citoid_data
-from lib.commons import (
-    ANYDATE_PATTERN,
-    Response,
-    Search,
-    find_any_date,
-    rc,
-)
+from lib.commons import ANYDATE_PATTERN, Search, find_any_date, rc
 from lib.doi import crossref_data
 from lib.urls_authors import CONTENT_ATTR, IV, find_authors
 
 
-class ThreadLike:
+class Joinable(Protocol):
     @staticmethod
     def join(): ...
 
@@ -200,12 +194,12 @@ def find_pages(html: str) -> str | None:
 
 def find_site_name(
     html: str,
-    html_title: str,
+    html_title: str | None,
     url: str,
     hostname: str,
     authors: list[tuple[str, str]],
     home_list: list[str],
-    thread: Thread,
+    thread: Joinable,
 ) -> str:
     """Return (site's name as a string, where).
 
@@ -250,11 +244,11 @@ def find_site_name(
 
 def find_title(
     html: str,
-    html_title: str,
+    html_title: str | None,
     hostname: str,
     authors: list[tuple[str, str]],
     home_list: list[str],
-    thread: Thread,
+    thread: Joinable,
 ) -> str | None:
     """Return (title_string, where_info)."""
     if (m := TITLE_SEARCH(html)) is not None:
@@ -276,7 +270,7 @@ def parse_title(
     hostname: str,
     authors: list[tuple[str, str]] | None,
     home_list: list[str | None] | None = None,
-    thread: Thread = None,
+    thread: Joinable = None,
 ) -> tuple[str | None, str, str | None]:
     """Return (intitle_author, pure_title, intitle_sitename).
 
@@ -357,7 +351,7 @@ def parse_title(
     return intitle_author, pure_title, intitle_sitename
 
 
-def find_date(html: str, url: str) -> datetime_date | str:
+def find_date(html: str, url: str) -> datetime_date | str | None:
     """Return the date of the document."""
     # Example for find_any_date(url):
     # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
@@ -391,7 +385,9 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
     home_list[1] = title
 
 
-def analyze_home(parsed_url: tuple, check_home=True, /) -> tuple[Thread, list]:
+def analyze_home(
+    parsed_url: tuple, check_home=True, /
+) -> tuple[Joinable, list]:
     home_list = [None, None]
     if check_home is True:
         home_thread = Thread(
@@ -399,7 +395,7 @@ def analyze_home(parsed_url: tuple, check_home=True, /) -> tuple[Thread, list]:
         )
         home_thread.start()
     else:
-        home_thread = ThreadLike
+        home_thread = Joinable
 
     return home_thread, home_list
 
