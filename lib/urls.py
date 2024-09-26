@@ -357,7 +357,7 @@ def parse_title(
     return intitle_author, pure_title, intitle_sitename
 
 
-def find_date(html: str, url: str) -> datetime_date:
+def find_date(html: str, url: str) -> datetime_date | str:
     """Return the date of the document."""
     # Example for find_any_date(url):
     # http://ftalphaville.ft.com/2012/05/16/1002861/recap-and-tranche-primer/?Authorised=false
@@ -471,7 +471,7 @@ def url_data(
                 raise
             return {'url': url, 'cite_type': 'web'}
 
-    d = {'url': url}
+    d: dict[str, Any] = {'url': url}
 
     if doi := find_doi(html):
         # noinspection PyBroadException
@@ -498,7 +498,7 @@ def url_data(
     publisher = d['publisher'] = find_publisher(html)
 
     parsed_url = urlparse(url)
-    hostname = parsed_url.hostname.removeprefix('www.')
+    hostname = parsed_url.hostname.removeprefix('www.')  # type: ignore
     home_thread, home_list = analyze_home(parsed_url, check_home)
 
     if d['journal']:

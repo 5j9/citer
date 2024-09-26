@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from contextlib import AbstractContextManager
 from functools import partial
 from logging import INFO, Formatter, basicConfig, getLogger
@@ -6,6 +7,7 @@ from os.path import abspath, dirname
 from random import choice, choices, seed
 from ssl import CERT_NONE, create_default_context
 from string import ascii_lowercase, digits
+from typing import Literal, overload
 
 from curl_cffi.requests import Response, Session
 from regex import compile as rc
@@ -49,7 +51,7 @@ context.verify_mode = CERT_NONE
 
 
 def new_session() -> Session:
-    return Session(verify=context, timeout=10.0, impersonate='chrome120')
+    return Session(verify=context, timeout=10.0, impersonate='chrome120')  # type: ignore
 
 
 session_usage = 0
@@ -66,8 +68,36 @@ def mortal_session() -> Session:
     return session
 
 
+Method = Literal['GET'] | Literal['POST'] | Literal['HEAD']
+
+
+@overload
 def request(
-    url, spoof=False, method='GET', stream=False, **kwargs
+    url,
+    *,
+    spoof=False,
+    method: Method = 'GET',
+    stream: Literal[True],
+    **kwargs,
+) -> AbstractContextManager[Response]: ...
+@overload
+def request(
+    url,
+    *,
+    spoof=False,
+    method: Method = 'GET',
+    stream: Literal[False] = False,
+    **kwargs,
+) -> Response: ...
+
+
+def request(
+    url,
+    *,
+    spoof=False,
+    method: Method = 'GET',
+    stream=False,
+    **kwargs,
 ) -> Response | AbstractContextManager[Response]:
     headers = None if spoof is True else AGENT_HEADER
     if 'headers' in kwargs:
@@ -312,7 +342,7 @@ type_to_cite = {
 }.get
 
 
-def make_ref_name(g: callable):
+def make_ref_name(g: Callable) -> str:
     # A combination of possible `user_input`s is used as seed.
     seed(
         f'{g("url", "")}{g("isbn", "")}{g("doi", "")}'

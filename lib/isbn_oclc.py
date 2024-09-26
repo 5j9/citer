@@ -41,7 +41,7 @@ def isbn_data(
             isbn = m[0]
         else:
             # search for isbn10
-            isbn = isbn10_search(isbn_container_str)[0]
+            isbn = isbn10_search(isbn_container_str)[0]  # type: ignore
 
     if (iranian_isbn := isbn_info(isbn) == 'Iran') is True:
         ketabir_result_list = []

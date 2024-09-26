@@ -118,7 +118,9 @@ def dump_connection_error(hsh):
 
 # noinspection PyDecorator
 @staticmethod
-def fake_request(url, spoof=False, method='GET', stream=False, **kwargs):
+def fake_request(
+    url, *, spoof=False, method: lib.Method = 'GET', stream=False, **kwargs
+):
     if url.startswith(NCBI_URL):
         redacted_url = url.replace(
             NCBI_URL, NCBI_URL[: NCBI_URL.find('?')] + '?_REDACTED_PARAMS_'
@@ -175,7 +177,7 @@ from lib.pubmed import NCBI_URL  # noqa
 
 if REMOVE_UNUSED_TESTDATA is True:
     all_testdata_files = {f.name for f in TESTDATA.iterdir()}
-    USED_TESTDATA = {*()}
+    USED_TESTDATA = set()
 
     def rm_unused_files():
         unused_files = all_testdata_files - USED_TESTDATA
