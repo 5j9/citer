@@ -8,7 +8,7 @@ from pathlib import Path
 from curl_cffi import CurlError
 from curl_cffi.requests import Response
 
-from lib import commons
+import lib
 from tests.conftest import (
     FORCE_OVERWRITE_TESTDATA,
     PRINT_TEST_FILENAME,
@@ -142,7 +142,7 @@ def fake_request(url, spoof=False, method='GET', stream=False, **kwargs):
         print('Downloading ' + url)
         with real_request():
             try:
-                response = commons.request(
+                response = lib.request(
                     url, method=method, data=data, spoof=spoof, **kwargs
                 )
             except CurlError:
@@ -162,13 +162,13 @@ def fake_request(url, spoof=False, method='GET', stream=False, **kwargs):
 
 @contextmanager
 def real_request():
-    commons.request = original_request
+    lib.request = original_request
     yield
-    commons.request = fake_request
+    lib.request = fake_request
 
 
-original_request = commons.request
-commons.request = fake_request
+original_request = lib.request
+lib.request = fake_request
 
 # this import needs to placed after Session patch
 from lib.pubmed import NCBI_URL  # noqa

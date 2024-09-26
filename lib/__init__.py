@@ -1,11 +1,16 @@
+from contextlib import AbstractContextManager
 from functools import partial
 from logging import INFO, Formatter, basicConfig, getLogger
 from logging.handlers import RotatingFileHandler
 from os.path import abspath, dirname
 from random import choice, choices, seed
+from ssl import CERT_NONE, create_default_context
 from string import ascii_lowercase, digits
 
+from curl_cffi.requests import Response, Session
 from regex import compile as rc
+
+from config import USER_AGENT
 
 
 def get_logger():
@@ -31,6 +36,45 @@ def get_logger():
 
 
 logger = get_logger()
+
+
+AGENT_HEADER = {
+    'User-Agent': USER_AGENT,
+}
+
+context = create_default_context()
+context.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
+context.check_hostname = False
+context.verify_mode = CERT_NONE
+
+
+def new_session() -> Session:
+    return Session(verify=context, timeout=10.0, impersonate='chrome120')
+
+
+session_usage = 0
+session = new_session()
+
+
+def mortal_session() -> Session:
+    global session, session_usage
+    if session_usage > 1000:  # to save memory by discarding unneeded cookies
+        session_usage = 0
+        session = new_session()
+        return session
+    session_usage += 1
+    return session
+
+
+def request(
+    url, spoof=False, method='GET', stream=False, **kwargs
+) -> Response | AbstractContextManager[Response]:
+    headers = None if spoof is True else AGENT_HEADER
+    if 'headers' in kwargs:
+        headers |= kwargs.pop('headers')
+    if stream is True:
+        return mortal_session().stream(method, url, headers=headers, **kwargs)
+    return mortal_session().request(method, url, headers=headers, **kwargs)
 
 
 rc = partial(rc, cache_pattern=False)
@@ -180,13 +224,21 @@ known_free_doi_registrants = {
 free_doi_fullmatch = rc(r'10\.([^/]+)/[^\s–]*?[^.,]').fullmatch
 
 
-def is_free_doi(doi: str):
+def is_free_doi(doi: str) -> bool:
     # The following pattern is equavalant of '^10%.([^/]+)/[^%s–]-[^%.,]$' in
     # https://en.wikipedia.org/wiki/Module:Citation/CS1/Identifiers .
     m = free_doi_fullmatch(doi)
-    if m is None:
+    if m is not None:
+        if m[1] in known_free_doi_registrants:
+            return True
+
+    try:
+        oa = request(f'https://api.openaccessbutton.org/find?id={doi}').json()
+    except Exception:
+        logger.exception('Failed checking OA for doi: %s', doi)
         return False
-    return m[1] in known_free_doi_registrants
+    else:
+        return oa.get('url') is not None
 
 
 type_to_cite = {

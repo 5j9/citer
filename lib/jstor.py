@@ -1,8 +1,8 @@
 from threading import Thread
 from urllib.parse import urlparse
 
+from lib import request
 from lib.bibtex import parse as bibtex_parse
-from lib.commons import request
 
 
 def jstor_data(url: str) -> dict:

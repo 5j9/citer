@@ -6,13 +6,12 @@ from langid import classify
 from regex import search
 
 from config import LANG
-from lib import four_digit_num, logger
+from lib import four_digit_num, logger, request
 from lib.citoid import citoid_data
 from lib.commons import (
     ReturnError,
     isbn10_search,
     isbn13_search,
-    request,
 )
 from lib.ketabir import (
     isbn_to_url as ketabir_isbn2url,

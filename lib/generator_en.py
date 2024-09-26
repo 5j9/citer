@@ -163,7 +163,7 @@ def sfn_cit_ref(
         # https://en.wikipedia.org/wiki/Help:CS1_errors#bad_doi
         if not doi.startswith('10.5555'):
             cit += f'{pipe}doi={doi}'
-            if g('doi-access') or is_free_doi(doi):
+            if is_free_doi(doi):
                 cit += f'{pipe}doi-access=free'
 
     if oclc := g('oclc'):
