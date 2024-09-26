@@ -120,13 +120,13 @@ def test_doi_isbn_no_year():
         '| title=Forecasting water waves and currents :'
         ' a space-time approach '
         '| publisher=University Library/University of Twente '
-        '| isbn=978-90-365-2632-6 | doi=10.3990/1.9789036526326}}'
+        '| isbn=978-90-365-2632-6 | doi=10.3990/1.9789036526326 | doi-access=free}}'
     )
     assert citoid_scr('10.3990/1.9789036526326')[1] == (
         '* {{cite thesis | degree=PhD | last=Ambati | first=V.R. | title=Forecasting '
         'water waves and currents : a space-time approach | publisher=University of '
         'Twente | publication-place=Enschede, The Netherlands | date=2007-02-08 | '
-        'doi=10.3990/1.9789036526326}}'
+        'doi=10.3990/1.9789036526326 | doi-access=free}}'
     )
 
 
@@ -183,7 +183,7 @@ def test_bad_author_name():
         '| journal=Journal of High Energy Physics '
         '| publisher=Springer Science and Business Media LLC '
         '| volume=2017 | issue=10 '
-        '| year=2017 | issn=1029-8479 | doi=10.1007/jhep10(2017)157}}'
+        '| year=2017 | issn=1029-8479 | doi=10.1007/jhep10(2017)157 | doi-access=free}}'
     )
     assert citoid_scr('10.1007/JHEP10(2017)157')[1] == (
         '* {{cite journal | author=on behalf of ETM collaboration | last2=Giusti | '
@@ -191,7 +191,7 @@ def test_bad_author_name():
         'last5=Sanfilippo | first5=F. | last6=Simula | first6=S. | title=Strange and '
         'charm HVP contributions to the muon (g − 2) including QED corrections with '
         'twisted-mass fermions | journal=Journal of High Energy Physics | volume=2017 '
-        '| issue=10 | date=2017 | issn=1029-8479 | doi=10.1007/JHEP10(2017)157}}'
+        '| issue=10 | date=2017 | issn=1029-8479 | doi=10.1007/JHEP10(2017)157 | doi-access=free}}'
     )
 
 
@@ -206,7 +206,7 @@ def test_contains_brackets():  # 33
             'Environmental Significance in a Small Lake in Northwest Tibet, China '
             '| journal=Arctic, Antarctic, and Alpine Research '
             '| publisher=Informa UK Limited | volume=39 | issue=4 | year=2007 '
-            '| issn=1523-0430 | doi=10.1657/1523-0430(07-512)[zhu]2.0.co;2 '
+            '| issn=1523-0430 | doi=10.1657/1523-0430(07-512)[zhu]2.0.co;2 | doi-access=free '
             '| pages=658–662}}'
         )
     )
@@ -216,7 +216,7 @@ def test_contains_brackets():  # 33
         'first5=Manping | title=Ostracoda Assemblages in Core Sediments and Their '
         'Environmental Significance in a Small Lake in Northwest Tibet, China | '
         'journal=Arctic, Antarctic, and Alpine Research | volume=39 | issue=4 | '
-        'date=2007 | issn=1523-0430 | doi=10.1657/1523-0430(07-512)[ZHU]2.0.CO;2 | '
+        'date=2007 | issn=1523-0430 | doi=10.1657/1523-0430(07-512)[ZHU]2.0.CO;2 | doi-access=free | '
         'pages=658–662}}'
     )
 
@@ -226,7 +226,7 @@ def test_non_crossref_doi():  # 35
         '* {{cite journal | last=Hein | first=Andreas M. | last2=Baxter '
         '| first2=Stephen '
         '| title=Artificial Intelligence for Interstellar Travel '
-        '| journal=arXiv | publisher=arXiv | doi=10.48550/ARXIV.1811.06526 '
+        '| journal=arXiv | publisher=arXiv | doi=10.48550/ARXIV.1811.06526 | doi-access=free '
         '| url=https://arxiv.org/abs/1811.06526 '
         '| access-date='
     )
@@ -234,7 +234,7 @@ def test_non_crossref_doi():  # 35
     assert citoid_scr('10.48550/arXiv.1811.06526')[1] == (
         '* {{cite journal | last=Hein | first=Andreas M. | last2=Baxter | '
         'first2=Stephen | title=Artificial Intelligence for Interstellar Travel | '
-        'date=2018 | doi=10.48550/ARXIV.1811.06526}}'
+        'date=2018 | doi=10.48550/ARXIV.1811.06526 | doi-access=free}}'
     )
 
 
@@ -248,7 +248,7 @@ def test_doi_with_full_date():  # 36
         'the distant heliosphere | journal=Geophysical Research Letters '
         '| publisher=American Geophysical Union (AGU) | volume=29 '
         '| issue=10 | date=2002-05-15 | issn=0094-8276 '
-        '| doi=10.1029/2002gl014729 | pages=15–1–15–3}}'
+        '| doi=10.1029/2002gl014729 | doi-access=free | pages=15–1–15–3}}'
     )
     assert citoid_scr('10.1029/2002GL014729')[1] == (
         '* {{cite journal | last=Webber | first=W. R. | last2=McDonald | first2=F. B. '
@@ -256,7 +256,7 @@ def test_doi_with_full_date():  # 36
         'effect of the July 14, 2000 “Bastille Day” solar flare event on >70 MeV '
         'galactic cosmic rays observed at V1 and V2 in the distant heliosphere | '
         'journal=Geophysical Research Letters | volume=29 | issue=10 | '
-        'date=2002-05-15 | issn=0094-8276 | doi=10.1029/2002GL014729}}'
+        'date=2002-05-15 | issn=0094-8276 | doi=10.1029/2002GL014729 | doi-access=free}}'
     )
 
 
@@ -265,7 +265,7 @@ def test_sfn_extract_year_from_date():
     assert s == '{{sfn|Almeida|Viala|Nachtigall|Broe|2021|p=}}'
     assert (
         c
-        == '* {{cite journal | last=Almeida | first=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118}}'
+        == '* {{cite journal | last=Almeida | first=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | doi-access=free}}'
     )
     s, c, r = citoid_scr('10.1073/pnas.2015159118')
     assert s == '{{sfn|Almeida|Viala|Nachtigall|Broe|2021|p=}}'
@@ -280,7 +280,7 @@ def test_sfn_extract_year_from_date():
         'provided by the Bothrops jararaca genome | journal=Proceedings of the '
         'National Academy of Sciences | volume=118 | issue=20 | date=2021-05-18 | '
         'issn=0027-8424 | pmid=33972420 | pmc=8157943 | '
-        'doi=10.1073/pnas.2015159118}}'
+        'doi=10.1073/pnas.2015159118 | doi-access=free}}'
     )
 
 

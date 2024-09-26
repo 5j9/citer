@@ -6,6 +6,7 @@ from curl_cffi import CurlError
 from langid import classify
 
 from config import LANG
+from lib import logger
 from lib.citoid import citoid_data
 from lib.commons import doi_search, request
 
@@ -22,6 +23,13 @@ def doi_data(doi_or_url, pure=False, date_format='%Y-%m-%d', /) -> dict:
         d = citoid_data(doi, True)
     except CurlError:
         d = crossref_data(doi)
+
+    try:
+        oa = request(f'https://api.openaccessbutton.org/find?id={doi}').json()
+        if oa.get('url'):
+            d['doi-access'] = 'free'
+    except Exception:
+        logger.exception('Failed checking OA for doi: %s', doi)
 
     d['date_format'] = date_format
     if LANG == 'fa':
