@@ -129,7 +129,7 @@ class ContentLengthError(ValueError):
     """Raise when content-length header indicates a very long content."""
 
 
-# inaccurate but should be faster than bs4
+# inaccurate but should be faster than lxml
 # https://stackoverflow.com/questions/14694482/converting-html-to-text-with-python
 to_text = partial(rc(r'<[^>]*+>').sub, '')
 

@@ -529,8 +529,7 @@ def test_oth2():
     assert sfn in o[0]
 
 
-def test_text_search():
-    """Match byline on soup.text."""
+def test_byline_from_html_search():
     assert (
         '* {{cite web '
         '| last=Carlson '
