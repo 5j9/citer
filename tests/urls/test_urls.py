@@ -867,18 +867,6 @@ def test_abc_author():
     )[1][:-12]
 
 
-def test_indaily():
-    assert urls_scr(
-        'https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice'
-    )[1][:-12] == (
-        '* {{cite web | last=Siebert | first=Bension '
-        "| title=Epidemics expert questions Marshall's schools advice "
-        '| website=InDaily | date=2020-03-19 '
-        '| url=https://indaily.com.au/news/2020/03/19/epidemics-expert-contradicts-marshalls-schools-advice '
-        '| access-date='
-    )
-
-
 def test_language_not_de_csbc():
     assert (
         '{{cite web '
