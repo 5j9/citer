@@ -1,11 +1,14 @@
-# noinspection PyPackageRequirements
+from sys import argv
+
 from decouple import config
 from pytest_socket import disable_socket
 
-# Use for updating cache entries
+# Use for updating cache entries.
 FORCE_OVERWRITE_TESTDATA = config('FORCE_OVERWRITE_TESTDATA', False, cast=bool)
 READONLY_TESTDATA = config('READONLY_TESTDATA', True, cast=bool)
-REMOVE_UNUSED_TESTDATA = config('REMOVE_UNUSED_TESTDATA', False, cast=bool)
+REMOVE_UNUSED_TESTDATA = len(argv) < 2 and config(
+    'REMOVE_UNUSED_TESTDATA', False, cast=bool
+)
 PRINT_TEST_FILENAME = config('PRINT_TEST_FILENAME', False, cast=bool)
 
 
