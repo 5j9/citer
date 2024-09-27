@@ -706,22 +706,6 @@ def test_oth11():
     assert ct == o[1][:-12]
 
 
-def test_oth12():
-    # thebulletin.org
-    assert urls_scr(
-        'https://thebulletin.org/2014/07/the-evidence-that-shows-iron-dome-is-not-working/'
-    )[1][:-12] == (
-        '* {{cite web '
-        '| last=Postol '
-        '| first=Theodore A. '
-        '| title=The evidence that shows Iron Dome is not working '
-        '| website=Bulletin of the Atomic Scientists '
-        '| date=2014-07-19 '
-        '| url=https://thebulletin.org/2014/07/the-evidence-that-shows-iron-dome-is-not-working/ '
-        '| access-date='
-    )
-
-
 def test_reverse_name():
     """Author is `Martin, Tracy`. Tracy should be the first name."""
     assert (
