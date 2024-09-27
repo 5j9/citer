@@ -1,7 +1,6 @@
 isbnlib
 jdatetime
 langid
-bs4
 lxml
 regex
 curl_cffi >= 0.6.1
