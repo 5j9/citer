@@ -1,6 +1,6 @@
-from bs4 import BeautifulSoup
 from curl_cffi import CurlError
 from langid import classify
+from lxml.html import HtmlElement, fromstring
 
 from lib import logger, request
 from lib.commons import first_last, rc
@@ -10,7 +10,7 @@ VOLUME_SEARCH = rc(r'\bجلد (\d+)').search
 
 
 def ketabir_data(url: str) -> dict:
-    dictionary = _url_data(url)
+    dictionary: dict = _url_data(url)  # type: ignore
     if 'language' not in dictionary:
         # Assume that language is either fa or en.
         # Todo: give warning about this assumption?
@@ -37,25 +37,27 @@ def _url_data(ketabir_url: str) -> dict | None:
         logger.exception(ketabir_url)
         return
 
-    soup = BeautifulSoup(r.content, features='lxml')
+    soup: HtmlElement = fromstring(r.content)
     d = {
         'cite_type': 'book',
-        'title': soup.select_one('.card-title').text.strip(),
+        'title': soup.xpath('.//*[contains(@class, "card-title")][1]')[0]
+        .text_content()
+        .strip(),
     }
 
-    table = {
-        (tds := tr.select('td'))[0].text: tds[1] for tr in soup.select('tr')
+    table: dict[str, HtmlElement] = {
+        (tds := tr.xpath('.//td'))[0].text: tds[1]
+        for tr in soup.xpath('.//tr')
     }
-
     # initiating name lists:
     others = []
     authors = []
     editors = []
     translators = []
     # building lists:
-    for span in table['پدیدآور'].select('span'):
-        role = span.find(string=True).strip(' :\n')
-        name = span.select_one('a').find(string=True)
+    for span in table['پدیدآور'].xpath('.//span'):
+        role = span.text.strip(' :\n')
+        name = span.xpath('.//a[1]/text()')[0]
         name = first_last(name, ' ، ')
         if role == 'نويسنده':
             authors.append(name)
@@ -74,7 +76,7 @@ def _url_data(ketabir_url: str) -> dict | None:
     if translators:
         d['translators'] = translators
 
-    d['publisher'] = table['ناشر'].find('a').find(string=True).strip()
+    d['publisher'] = table['ناشر'].xpath('.//a[1]/text()')[0].strip()
 
     if len(date := table['تاریخ نشر'].text.strip()) == 8 and date.isdecimal():
         d['month'] = date[4:6]
