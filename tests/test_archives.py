@@ -99,6 +99,25 @@ def test_webless_url():
     )
 
 
+def test_dead_redirect():
+    """original urls that redirect to a generic or homepage url instead of throwing 404 should still be considered dead"""
+    assert waybackmachine_scr(
+        'https://web.archive.org/web/20220113020216/www.lib.city.minato.tokyo.jp/yukari/e/man-detail.cgi?id=79'
+    )[1][:-12] == (
+        '* {{cite web '
+        '| title=Prominent People of Minato City (Henricus Conradus Joannes Heusken) '
+        '| website=lib.city.minato.tokyo.jp '
+        '| date=2021-12-04 '
+        '| url=http://www.lib.city.minato.tokyo.jp/yukari/e/man-detail.cgi?id=79 '
+        '| archive-url=https://web.archive.org/web/20220113020216/www.lib.city.minato.tokyo.jp/yukari/e/man-detail.cgi?id=79 '
+        '| archive-date=2022-01-13 '
+        '| url-status=dead '
+        '| language=ja '
+        '| ref={{sfnref|lib.city.minato.tokyo.jp|2021}} '
+        '| access-date='
+    )
+
+
 def test_archive_today_data():
     assert today_scr('https://archive.ph/N3fQ')[1][:-12] == (
         "* {{cite web | title=Brendan Fraser's Looney Adventure | website=cbsnews.com "
