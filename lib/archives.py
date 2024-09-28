@@ -15,8 +15,8 @@ from lib.urls import (
 )
 
 archive_org_url_match = rc(
-    r'https?+://web(?:-beta)?+\.archive\.org/(?:web/)?+'
-    r'(\d{4})(\d{2})(\d{2})\d{6}(?>cs_|i(?>d_|m_)|js_)?+/(http.*)'
+    r'https?://web(?:-beta)?\.archive\.org/(?:web/)?'
+    r'(\d{4})(\d{2})(\d{2})\d{6}(?:cs_|i(?:d_|m_)|js_)?/(\S*)'
 ).match
 
 archive_today_url_search = rc(
@@ -26,28 +26,33 @@ archive_today_url_search = rc(
 
 def _archive_data(archive_url: str, m: Match, archive_html: str):
     archive_year, archive_month, archive_day, original_url = m.groups()
+    if not original_url.startswith('http'):
+        original_url = 'http://' + original_url
+
     og_d = {}
     og_thread = Thread(target=og_url_data_tt, args=(original_url, og_d))
     og_thread.start()
+
     d = url_data(archive_url, check_home=False, html=archive_html)
     d['url'] = original_url
     d['archive-url'] = archive_url
     d['archive-date'] = date(
         int(archive_year), int(archive_month), int(archive_day)
     )
+
     og_thread.join()
-    if og_d:
-        # The original_process has been successful
+    if og_d and og_d['url'] == d['url']:
+        # The og_url has been successfully scraped (not a redirect),
         if (
             og_d['title'] == d['title']
             or og_d['html_title'] == d['html_title']
         ):
+            # and original title is the same as archive title
             d |= og_d
             d['url-status'] = 'live'
         else:
-            # and original title is the same as archive title. Otherwise it
-            # means that the content probably has changed and the original data
-            # cannot be trusted.
+            # otherwise title does not match, meaning that the content
+            # probably has changed and the original data cannot be trusted
             d['url-status'] = 'unfit'
     else:
         d['website'] = urlparse(original_url).hostname.removeprefix('www.')
@@ -83,6 +88,4 @@ def og_url_data_tt(og_url: str, og_d: dict, /) -> None:
     ):
         pass
     except Exception:
-        logger.exception(
-            'There was an unexpected error in waybackmechine thread'
-        )
+        logger.exception('There was an unexpected error in waybackmachine thread')

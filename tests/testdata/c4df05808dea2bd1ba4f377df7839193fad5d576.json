@@ -1,0 +1,21 @@
+{
+	"encoding": "UTF-8",
+	"headers": {
+		"cache-control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
+		"content-type": "text/html; charset=UTF-8",
+		"date": "Fri, 27 Sep 2024 19:38:23 GMT",
+		"expires": "Mon, 26 Jul 1997 05:00:00 GMT",
+		"last-modified": "Fri, 27 Sep 2024 19:38:23 GMT",
+		"pragma": "no-cache",
+		"server": "Apache",
+		"set-cookie": "PHPSESSID=oj69it3mljajea5hs7jj6cirlt; path=/",
+		"strict-transport-security": "max-age=315360000;",
+		"transfer-encoding": "chunked",
+		"x-content-type-options": "nosniff",
+		"x-frame-options": "SAMEORIGIN",
+		"x-powered-by": "PHP/8.2.24",
+		"x-xss-protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "http://www.lib.city.minato.tokyo.jp"
+}
