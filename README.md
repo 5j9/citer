@@ -16,7 +16,7 @@ URLs of [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) and [ar
 To run Citer on your local computer:
 
 1. Install Python 3.11+
-2. Clone the project
+2. Clone the project (use `--depth=1` to reduce size)
 3. Install the dependencies using `pip install --user -r requirements.txt`
 4. Copy `config.py.example` to `config.py` (You might want to get an NCBI API key and add it to the config file if you're going to use its services)
 5. Run `python3 app.py`
