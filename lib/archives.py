@@ -88,4 +88,6 @@ def og_url_data_tt(og_url: str, og_d: dict, /) -> None:
     ):
         pass
     except Exception:
-        logger.exception('There was an unexpected error in waybackmachine thread')
+        logger.exception(
+            'There was an unexpected error in waybackmachine thread'
+        )
