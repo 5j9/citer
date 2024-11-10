@@ -3,4 +3,4 @@ jdatetime
 langid
 lxml
 regex
-curl_cffi >= 0.6.1
+curl_cffi >= 0.7.3
