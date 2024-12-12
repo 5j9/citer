@@ -153,8 +153,8 @@ def sfn_cit_ref(
     if pmid := g('pmid'):
         cit += f'{pipe}pmid={pmid}'
 
-    if pmcid := g('pmcid'):
-        pmcid: str
+    pmcid: str | None
+    if (pmcid := g('pmcid')) is not None:
         cit += f'{pipe}pmc=' + pmcid.lower().removeprefix('pmc')
 
     if doi := g('doi'):
