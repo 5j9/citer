@@ -1,0 +1,12 @@
+{
+	"encoding": "UTF-8",
+	"headers": {
+		"alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+		"content-length": "1595",
+		"content-type": "text/html; charset=UTF-8",
+		"date": "Thu, 12 Dec 2024 10:12:11 GMT",
+		"referrer-policy": "no-referrer"
+	},
+	"status_code": 403,
+	"url": "https://www.googleapis.com/books/v1/volumes?q=isbn:9788021087798"
+}

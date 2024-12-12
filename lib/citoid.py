@@ -1,4 +1,7 @@
+from functools import partial
 from urllib.parse import quote_plus
+
+from regex import compile as rc
 
 from lib import four_digit_num, request
 from lib.commons import find_any_date
@@ -19,6 +22,8 @@ TRANSLATE = {
     'PMCID': 'pmcid',
 }
 
+rm_non_numeric = partial(rc(r'\D').sub, '')
+
 
 def citoid_data(query: str, quote=False, /) -> dict:
     if quote is True:
@@ -37,6 +42,9 @@ def citoid_data(query: str, quote=False, /) -> dict:
     for citoid_key, citer_key in TRANSLATE.items():
         if (value := get(citoid_key)) is not None:
             d[citer_key] = value
+
+    if (oclc := d.get('oclc')) is not None:
+        d['oclc'] = rm_non_numeric(oclc)
 
     authors = get('author')
     contributors = get('contributor')

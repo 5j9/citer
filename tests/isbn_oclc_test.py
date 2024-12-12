@@ -137,3 +137,9 @@ def test_not_found_isbn(_m1, _m2):
     with raises(ReturnError) as e:
         isbn_scr('9798863646336')
     assert e.value.args == ('Error: ISBN not found', '', '')
+
+
+def test_oclc_no_leading_letters():
+    assert isbn_scr('978-80-210-8779-8')[1] == (
+        '* {{cite book | title=The European fortune of the Roman Veronica in the Middle Ages | publisher=Brepols | publication-place=Turnhout | date=2017 | isbn=978-80-210-8779-8 | oclc=1021182894 | ref={{sfnref|Brepols|2017}}}}'
+    )
