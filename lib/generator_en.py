@@ -8,9 +8,9 @@ from lib import (
     doi_url_match,
     four_digit_num,
     fullname,
-    is_free_doi,
     logger,
     make_ref_name,
+    open_access_url,
     rc,
     type_to_cite,
 )
@@ -163,7 +163,8 @@ def sfn_cit_ref(
         # https://en.wikipedia.org/wiki/Help:CS1_errors#bad_doi
         if not doi.startswith('10.5555'):
             cit += f'{pipe}doi={doi}'
-            if is_free_doi(doi):
+            if (url := open_access_url(doi)) is not None:
+                d['url'] = url
                 cit += f'{pipe}doi-access=free'
 
     if oclc := g('oclc'):

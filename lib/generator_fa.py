@@ -6,9 +6,9 @@ from lib import (
     doi_url_match,
     four_digit_num,
     fullname,
-    is_free_doi,
     logger,
     make_ref_name,
+    open_access_url,
     type_to_cite,
 )
 from lib.generator_en import (
@@ -144,7 +144,8 @@ def sfn_cit_ref(
         # invalid/temporary/test doi
         if not doi.startswith('10.5555'):
             cit += f' | doi={doi}'
-            if is_free_doi(doi):
+            if (url := open_access_url(doi)) is not None:
+                d['url'] = url
                 cit += ' | doi-access=free'
 
     if oclc := g('oclc'):
