@@ -159,42 +159,44 @@ def worldcat_data(url: str) -> dict:
 
 
 def oclc_data(oclc: str) -> dict:
-    content = request('https://search.worldcat.org/title/' + oclc).content
-    j = loads(
-        content[
-            (s := (f := content.find)(b' type="application/json">') + 25) : f(
-                b'</script>', s
-            )
-        ]
+    r = request(
+        'https://search.worldcat.org/api/search-item/' + oclc,
+        headers={
+            'Referer': 'https://search.worldcat.org/',
+            'Cookie': '',
+            'User-Agent': 'curl/8.9.0',
+            'Accept': '*/*',
+        },
     )
-    record = j['props']['pageProps']['record']
-    if record is None:  # invalid OCLC number
+    r.raise_for_status()
+    j = loads(r.content)
+    if j is None:  # invalid OCLC number
         raise ReturnError(
             'Error processing OCLC number: ' + oclc,
             'Make sure the OCLC identifier is valid.',
             '',
         )
     d = {}
-    d['cite_type'] = record['generalFormat'].lower()
-    d['title'] = record['title']
+    d['cite_type'] = j['generalFormat'].lower()
+    d['title'] = j['title']
     d['authors'] = [
         ('', c['nonPersonName']['text'])
         if 'nonPersonName' in c
         else (c['firstName']['text'], c['secondName']['text'])
-        for c in record['contributors']
+        for c in j['contributors']
     ]
-    if (publisher := record['publisher']) != '[publisher not identified]':
+    if (publisher := j['publisher']) != '[publisher not identified]':
         d['publisher'] = publisher
     if (
-        place := record['publicationPlace']
+        place := j['publicationPlace']
     ) != '[Place of publication not identified]':
         d['publisher-location'] = place
-    if m := four_digit_num(record['publicationDate']):
+    if m := four_digit_num(j['publicationDate']):
         d['year'] = m[0]
-    d['language'] = record['catalogingLanguage']
-    if isbn := record['isbn13']:
+    d['language'] = j['catalogingLanguage']
+    if isbn := j['isbn13']:
         d['isbn'] = isbn
-    if issns := record['issns']:
+    if issns := j['issns']:
         d['issn'] = issns[0]
     d['oclc'] = oclc
     return d

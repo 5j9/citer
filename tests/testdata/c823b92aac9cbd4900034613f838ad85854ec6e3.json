@@ -1,0 +1,21 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"cache-control": "max-age=60, stale-while-revalidate",
+		"cf-cache-status": "DYNAMIC",
+		"cf-ray": "8f100d54081bf9d7-MCT",
+		"content-encoding": "gzip",
+		"content-security-policy": "frame-ancestors 'none'",
+		"content-type": "application/json; charset=utf-8",
+		"date": "Thu, 12 Dec 2024 19:17:00 GMT",
+		"etag": "\"6lc3qw0n142an\"",
+		"server": "cloudflare",
+		"set-cookie": "TS01964259=011e52333520051e6bf2a1f560288365ee334dfcbd1d0dcc531ef2258ae4d4ca320101e8a8bfdb7616c0d0726f96d5e9a32743dce5; Path=/; Domain=.worldcat.org",
+		"strict-transport-security": "max-age=31536000; includeSubDomains",
+		"vary": "Accept-Encoding",
+		"x-content-type-options": "nosniff",
+		"x-frame-options": "SAMEORIGIN"
+	},
+	"status_code": 200,
+	"url": "https://search.worldcat.org/api/search-item/1051746391"
+}

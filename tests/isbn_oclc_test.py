@@ -87,13 +87,9 @@ def test_citoid_only():  # 31
 
 
 def test_invalid_oclc():
-    with raises(ReturnError) as e:
+    with raises(Exception) as e:
         oclc_data('99999999999999')
-    assert e.value.args == (
-        'Error processing OCLC number: 99999999999999',
-        'Make sure the OCLC identifier is valid.',
-        '',
-    )
+    assert e.value.args == ('status code was not 2xx',)
 
 
 def test_oclc_with_issn():
