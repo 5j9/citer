@@ -61,11 +61,7 @@ def scr_to_html(
     """Insert sfn_cit_ref into the HTML template and return response_body."""
     sfn, cit, ref = [escape(i) for i in scr]
     return (
-        HTML_SUBST(
-            sfn=sfn,
-            cit=cit,
-            ref=ref,
-        )
+        HTML_SUBST(shortened=sfn + '\n\n' + cit, named_ref=ref)
         .replace(f'{date_format}"', f'{date_format}" checked', 1)
         .replace(f'{pipe_format}"', f'{pipe_format}" checked', 1)
         .replace(f'="{input_type}"', f'="{input_type}" selected', 1)
