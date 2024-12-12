@@ -1,0 +1,21 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"cache-control": "max-age=60, stale-while-revalidate",
+		"cf-cache-status": "DYNAMIC",
+		"cf-ray": "8f100b15d831f9f2-MCT",
+		"content-encoding": "gzip",
+		"content-security-policy": "frame-ancestors 'none'",
+		"content-type": "application/json; charset=utf-8",
+		"date": "Thu, 12 Dec 2024 19:15:29 GMT",
+		"etag": "\"j7nxvmjsmu13a\"",
+		"server": "cloudflare",
+		"set-cookie": "TS01964259=011e5233356d816e9bd8a1d54205a6602319470bbb92ea095fc9d7af18e633c30402ddbe5ad1e4727b58718efa46cb8e30614fa43b; Path=/; Domain=.worldcat.org, __cf_bm=ehJEs55uW.6bycfPoGVfGQEzj2uzubLzc74.Ryib0Ok-1734030929-1.0.1.1-HQwSdFeVLhSqGZIkQrRm5nr56lhTY18X6E2GmlY6p1O6L30A7VMYqZ9TT7Q7j8zGIHRBgswU_B68WetXNV9ugw; path=/; expires=Thu, 12-Dec-24 19:45:29 GMT; domain=.worldcat.org; HttpOnly; Secure; SameSite=None, _cfuvid=E.5gQb74_9EO3jexuAXDOFxi.E05pY3Weyelket5CRY-1734030929313-0.0.1.1-604800000; path=/; domain=.worldcat.org; HttpOnly; Secure; SameSite=None",
+		"strict-transport-security": "max-age=31536000; includeSubDomains",
+		"vary": "Accept-Encoding",
+		"x-content-type-options": "nosniff",
+		"x-frame-options": "SAMEORIGIN"
+	},
+	"status_code": 200,
+	"url": "https://search.worldcat.org/api/search-item/24680975"
+}

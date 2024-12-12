@@ -101,7 +101,10 @@ def request(
 ) -> Response | AbstractContextManager[Response]:
     headers = None if spoof is True else AGENT_HEADER
     if (kw_headers := kwargs.pop('headers', None)) is not None:
-        headers |= kw_headers
+        if headers is not None:
+            headers |= kw_headers
+        else:
+            headers = kw_headers
     if stream is True:
         return mortal_session().stream(method, url, headers=headers, **kwargs)
     return mortal_session().request(method, url, headers=headers, **kwargs)
