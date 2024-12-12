@@ -1,39 +1,49 @@
 body {
-    margin-left:2em;
-    margin-right:2em;
+    margin-left: 2em;
+    margin-right: 2em;
     font-family: tahoma;
 }
-#shortened, #named_ref {
+
+#shortened,
+#named_ref {
     border: 1px solid rgb(204, 204, 204);
     padding: 2px 2px;
     font-size: 14px;
     line-height: 16px;
     color: rgb(85, 85, 85);
     border-radius: 5px;
-    display:inline-block;
+    display: inline-block;
     width: 100%;
-    min-height:70px;
+    min-height: 70px;
     word-break: break-word;
     font-family: monospace;
     white-space: pre-wrap;
 }
-input, #shortened, #named_ref {
+
+input,
+#shortened,
+#named_ref {
     margin: 5px;
     margin-bottom: 10px;
 }
+
 #user_input {
     width: 80%;
 }
+
 .input-legend {
     margin-bottom: 0px;
 }
+
 #inputs {
     display: flex;
 }
+
 footer {
     font-size: 90%;
     color: #666666;
 }
+
 #bookmarklet {
     float: right;
 }

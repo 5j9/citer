@@ -1,63 +1,78 @@
 <!DOCTYPE html>
 <html lang=en>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="icon" href="data:,">
-		<title>Citer</title>
-		<link rel="stylesheet" href="static/en.css">
-	</head>
-	<body>
-		<form id="form">
-            <select class="input-legend" name="input_type" id="input_type" onchange="onInputTypeSelect();">
-                <option value="url-doi-isbn">URL/DOI/ISBN</option>
-                <option value="pmid">PMID</option>
-                <option value="pmcid">PMCID</option>
-                <option value="oclc">OCLC Number</option>
-            </select>:
-			<div id="inputs">
-				<input id="user_input" name="user_input" autofocus>
-				<input type="submit" id="submit" value="Submit">
-			</div>
-			<p class="input-legend">Date format:</p>
-			<input type="radio" name="dateformat" value="%Y-%m-%d" id="ymd" onclick="onDateChange()">2020-01-01
-			<input type="radio" name="dateformat" value="%B %{d}, %Y" id="bbdy" onclick="onDateChange()">January 1, 2020
-			<input type="radio" name="dateformat" value="%b %{d}, %Y" id="bdy" onclick="onDateChange()">Jan 1, 2020
-			<input type="radio" name="dateformat" value="%{d} %B %Y" id="dbby" onclick="onDateChange()">1 January 2020
-			<input type="radio" name="dateformat" value="%{d} %b %Y" id="dby" onclick="onDateChange()">1 Jan 2020
-			<br>
-			<p class="input-legend">Pipe spacing:</p>
-			<input type="radio" name="pipeformat" value=" | " id="both" onclick="onPipeChange()">{{cite book | last=Smith | first=Bob}}
-			<input type="radio" name="pipeformat" value=" |" id="before" onclick="onPipeChange()">{{cite book |last=Smith |first=Bob}}
-			<input type="radio" name="pipeformat" value="|" id="none" onclick="onPipeChange()">{{cite book|last=Smith|first=Bob}}
-			<br><br>
-		</form>
-		<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="data:,">
+	<title>Citer</title>
+	<link rel="stylesheet" href="static/en.css">
+</head>
+
+<body>
+	<form id="form">
+		<select class="input-legend" name="input_type" id="input_type" onchange="onInputTypeSelect();">
+			<option value="url-doi-isbn">URL/DOI/ISBN</option>
+			<option value="pmid">PMID</option>
+			<option value="pmcid">PMCID</option>
+			<option value="oclc">OCLC Number</option>
+		</select>:
+		<div id="inputs">
+			<input id="user_input" name="user_input" autofocus>
+			<input type="submit" id="submit" value="Submit">
+		</div>
+		<p class="input-legend">Date format:</p>
+		<input type="radio" name="dateformat" value="%Y-%m-%d" id="ymd" onclick="onDateChange()">2020-01-01
+		<input type="radio" name="dateformat" value="%B %{d}, %Y" id="bbdy" onclick="onDateChange()">January 1, 2020
+		<input type="radio" name="dateformat" value="%b %{d}, %Y" id="bdy" onclick="onDateChange()">Jan 1, 2020
+		<input type="radio" name="dateformat" value="%{d} %B %Y" id="dbby" onclick="onDateChange()">1 January 2020
+		<input type="radio" name="dateformat" value="%{d} %b %Y" id="dby" onclick="onDateChange()">1 Jan 2020
 		<br>
+		<p class="input-legend">Pipe spacing:</p>
+		<input type="radio" name="pipeformat" value=" | " id="both" onclick="onPipeChange()">{{cite book | last=Smith |
+		first=Bob}}
+		<input type="radio" name="pipeformat" value=" |" id="before" onclick="onPipeChange()">{{cite book |last=Smith
+		|first=Bob}}
+		<input type="radio" name="pipeformat" value="|" id="none" onclick="onPipeChange()">{{cite
+		book|last=Smith|first=Bob}}
+		<br><br>
+	</form>
+	<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
+	<br>
 	<div id="shortened" contenteditable>$shortened</div>
-		<button onclick="copyText(shortElem)">Copy</button>
-		<button onclick="copyText(shortElem, 0)">Copy sfn</button>
-		<button onclick="copyText(shortElem, 1)">Copy citation</button>
-		<br><br>
-		<a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:
-		<br>
+	<button onclick="copyText(shortElem)">Copy</button>
+	<button onclick="copyText(shortElem, 0)">Copy sfn</button>
+	<button onclick="copyText(shortElem, 1)">Copy citation</button>
+	<br><br>
+	<a href="https://en.wikipedia.org/wiki/Wikipedia:NAMEDREFS#WP:NAMEDREFS">Named reference</a>:
+	<br>
 	<div id="named_ref" contenteditable>$named_ref</div>
-		<button onclick="copyText(namedElem)">Copy</button>
-		<button onclick="copyText(namedElem, 3)">Copy self-closing form</button>
-		<button onclick="copyText(namedElem, 4)">Copy ref without name</button>
-		<br><br>
-		<footer>
-			<p>
-				You can use this tool to create shortened footnote/named reference for a given
-				<a href="http://books.google.com/">Google Books URL</a>, <a href="https://en.wikipedia.org/wiki/Digital_object_identifier">DOI</a>, <a href="https://en.wikipedia.org/wiki/International_Standard_Book_Number">ISBN</a>, <a href="https://en.wikipedia.org/wiki/PubMed#PubMed_identifier">PMID</a>, <a href="https://en.wikipedia.org/wiki/PubMed_Central#PMCID">PMCID</a>, <a href="https://en.wikipedia.org/wiki/OCLC">OCLC</a> number, or the URL of many major news websites.
-			</p>
-			<p>
-				Note that there is always a chance of error in the generated output. <b>Please check the results before using them on wiki</b>.
-			</p>
-			<p>
-				Found a bug or have a suggestion? Contact me on <a href="https://meta.wikimedia.org/wiki/User_talk:Dalba">my talk page</a> or open an issue <a href="https://github.com/5j9/citer">on GitHub</a>.
-				<a id="bookmarklet" href="javascript:void(window.open('https://citer.toolforge.org/?user_input='+encodeURIComponent(location.href)+'&pipeformat=+|+&dateformat='+encodeURIComponent('%B %{d}, %Y')))">Bookmarklet (drag to favorites bar)</a>
-			</p>
-		</footer>
-		<script src="static/en.js"></script>
-	</body>
+	<button onclick="copyText(namedElem)">Copy</button>
+	<button onclick="copyText(namedElem, 3)">Copy self-closing form</button>
+	<button onclick="copyText(namedElem, 4)">Copy ref without name</button>
+	<br><br>
+	<footer>
+		<p>
+			You can use this tool to create shortened footnote/named reference for a given
+			<a href="http://books.google.com/">Google Books URL</a>, <a
+				href="https://en.wikipedia.org/wiki/Digital_object_identifier">DOI</a>, <a
+				href="https://en.wikipedia.org/wiki/International_Standard_Book_Number">ISBN</a>, <a
+				href="https://en.wikipedia.org/wiki/PubMed#PubMed_identifier">PMID</a>, <a
+				href="https://en.wikipedia.org/wiki/PubMed_Central#PMCID">PMCID</a>, <a
+				href="https://en.wikipedia.org/wiki/OCLC">OCLC</a> number, or the URL of many major news websites.
+		</p>
+		<p>
+			Note that there is always a chance of error in the generated output. <b>Please check the results before
+				using them on wiki</b>.
+		</p>
+		<p>
+			Found a bug or have a suggestion? Contact me on <a href="https://meta.wikimedia.org/wiki/User_talk:Dalba">my
+				talk page</a> or open an issue <a href="https://github.com/5j9/citer">on GitHub</a>.
+			<a id="bookmarklet"
+				href="javascript:void(window.open('https://citer.toolforge.org/?user_input='+encodeURIComponent(location.href)+'&pipeformat=+|+&dateformat='+encodeURIComponent('%B %{d}, %Y')))">Bookmarklet
+				(drag to favorites bar)</a>
+		</p>
+	</footer>
+	<script src="static/en.js"></script>
+</body>
+
 </html>
