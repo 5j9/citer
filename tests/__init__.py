@@ -149,6 +149,7 @@ def fake_request(
                 )
             except CurlError:
                 dump_connection_error(sha1_hex)
+                raise
         dump_response(sha1_hex, response, redacted_url)
 
     if stream is True:
