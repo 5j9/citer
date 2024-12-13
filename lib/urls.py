@@ -192,13 +192,16 @@ def find_pages(html: str) -> str | None:
             return fp_match['result'] + '–' + lp_match['result']
 
 
+HomeList = list[str | None]
+
+
 def find_site_name(
     html: str,
     html_title: str | None,
     url: str,
     hostname: str,
     authors: list[tuple[str, str]],
-    home_list: list[str],
+    home_list: HomeList,
     thread: Joinable,
 ) -> str:
     """Return (site's name as a string, where).
@@ -247,7 +250,7 @@ def find_title(
     html_title: str | None,
     hostname: str,
     authors: list[tuple[str, str]],
-    home_list: list[str],
+    home_list: HomeList,
     thread: Joinable,
 ) -> str | None:
     """Return (title_string, where_info)."""
@@ -269,8 +272,8 @@ def parse_title(
     title: str,
     hostname: str,
     authors: list[tuple[str, str]] | None,
-    home_list: list[str | None] | None = None,
-    thread: Joinable = None,
+    home_list: HomeList | None = None,
+    thread: Joinable | None = None,
 ) -> tuple[str | None, str, str | None]:
     """Return (intitle_author, pure_title, intitle_sitename).
 
@@ -362,7 +365,7 @@ def find_date(html: str, url: str) -> datetime_date | str | None:
     return find_any_date(url) or find_any_date(html)
 
 
-def _analyze_home(parsed_url: tuple, home_list: list) -> None:
+def _analyze_home(parsed_url: tuple, home_list: HomeList) -> None:
     """Append home_title and site_name to home_list.
 
     home_list is used to return the thread result.
@@ -387,8 +390,8 @@ def _analyze_home(parsed_url: tuple, home_list: list) -> None:
 
 def analyze_home(
     parsed_url: tuple, check_home=True, /
-) -> tuple[Joinable, list]:
-    home_list = [None, None]
+) -> tuple[Joinable, HomeList]:
+    home_list: HomeList = [None, None]
     if check_home is True:
         home_thread = Thread(
             target=_analyze_home, args=(parsed_url, home_list)
