@@ -1,6 +1,6 @@
 from datetime import date
 from threading import Thread
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 from curl_cffi import CurlError
 from regex import Match
@@ -26,6 +26,7 @@ archive_today_url_search = rc(
 
 def _archive_data(archive_url: str, m: Match, archive_html: str):
     archive_year, archive_month, archive_day, original_url = m.groups()
+    original_url = unquote(original_url)
     if not original_url.startswith('http'):
         original_url = 'http://' + original_url
 
