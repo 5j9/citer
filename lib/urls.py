@@ -417,8 +417,7 @@ def check_response(r: Response) -> None:
     bytes_length = int(content_length)
     if bytes_length > MAX_RESPONSE_LENGTH:
         raise ContentLengthError(
-            'Content-length was too long. '
-            f'({bytes_length / 1000000:.2f} MB)'
+            f'Content-length was too long. ({bytes_length / 1000000:.2f} MB)'
         )
 
 
@@ -432,8 +431,7 @@ def url_text(url: str) -> tuple[str, str]:
             size += len(chunk)
             if size >= MAX_RESPONSE_LENGTH:
                 raise ValueError(
-                    'response was too large: '
-                    f'{size=} > {MAX_RESPONSE_LENGTH=}'
+                    f'response was too large: {size=} > {MAX_RESPONSE_LENGTH=}'
                 )
             a(chunk)
 
