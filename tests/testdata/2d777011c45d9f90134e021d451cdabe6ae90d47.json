@@ -1,0 +1,20 @@
+{
+	"encoding": "UTF-8",
+	"headers": {
+		"age": "0",
+		"content-encoding": "br",
+		"content-security-policy": "upgrade-insecure-requests",
+		"content-type": "text/html;charset=UTF-8",
+		"date": "Thu, 20 Mar 2025 05:30:15 GMT",
+		"grace": "none",
+		"server": "ArvanCloud",
+		"server-timing": "total;dur=84",
+		"vary": "Accept-Encoding",
+		"x-cache": "MISS, BYPASS",
+		"x-request-id": "3adf6500315063d76eba953060da82d7",
+		"x-sid": "2162",
+		"x-xss-protection": "1; mode=block"
+	},
+	"status_code": 200,
+	"url": "http://www.isna.ir/news/95102918901/روانچی-در-ارتباط-با-مواضع-نامناسب-اخیر-مقامات-انگلیسی-در-مورد"
+}
