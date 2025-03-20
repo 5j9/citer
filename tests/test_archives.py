@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from lib.archives import archive_org_data, archive_today_data
 from lib.commons import data_to_sfn_cit_ref
 
@@ -126,3 +128,30 @@ def test_archive_today_data():
         '| archive-url=https://archive.ph/N3fQ | archive-date=2012-12-11 | '
         'url-status=dead | ref={{sfnref|cbsnews.com|2012}} | access-date='
     )
+
+
+@patch('lib.archives.url_text')
+@patch('lib.urls.request')
+def test_target_url_is_unquoted(request_mock, url_text_mock):
+    # request_mock.side_effect = NotImplementedError
+    url_text_mock.return_value = '', ''
+
+    # Define the URLs
+    input_url = (
+        'https://web.archive.org/web/20240722174924/'
+        'https%3A%2F%2Fwww.hindustantimes.com%2Fcities%2Fothers%2F'
+        'gauhati-hc-issues-summons-to-bjp-mp-from-assam-over-alleged-poll-irregularities-'
+        '101721657172227-amp.html'
+    )
+    expected_url = (
+        'https://www.hindustantimes.com/cities/others/'
+        'gauhati-hc-issues-summons-to-bjp-mp-from-assam-over-alleged-poll-irregularities-'
+        '101721657172227-amp.html'
+    )
+    # Suppress the NotImplementedError during the test
+    # with raises(NotImplementedError):
+    archive_org_data(input_url)
+
+    calls = request_mock.call_args_list
+    assert len(calls) == 1
+    assert calls[0].args[0] == expected_url
