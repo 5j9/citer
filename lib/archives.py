@@ -56,7 +56,7 @@ def _archive_data(archive_url: str, m: Match, archive_html: str):
             # probably has changed and the original data cannot be trusted
             d['url-status'] = 'unfit'
     else:
-        d['website'] = urlparse(original_url).hostname.removeprefix('www.')
+        d['website'] = urlparse(original_url).hostname.removeprefix('www.')  # type: ignore
         d['url-status'] = 'dead'
     return d
 
