@@ -2,7 +2,7 @@ from threading import Thread
 
 from lib import request
 from lib.bibtex import parse as bibtex_parse
-from lib.commons import rc
+from lib.commons import ReturnError, rc
 from lib.ris import ris_parse
 
 BIBTEX_ARTICLE_ID_SEARCH = rc(r'(?<=/citation/bibtex/)\d+').search
@@ -27,7 +27,7 @@ def noormags_data(url: str) -> dict:
 def get_bibtex(noormags_url):
     """Get BibTex file content from a noormags_url. Return as string."""
     page_text = request(noormags_url).text
-    article_id = BIBTEX_ARTICLE_ID_SEARCH(page_text)[0]
+    article_id = BIBTEX_ARTICLE_ID_SEARCH(page_text)[0]  # type: ignore
     url = 'http://www.noormags.ir/view/fa/citation/bibtex/' + article_id
     return request(url).text
 
@@ -35,7 +35,7 @@ def get_bibtex(noormags_url):
 def get_ris(noormags_url):
     """Get ris file content from a noormags url. Return as string."""
     page_text = request(noormags_url).text
-    article_id = RIS_ARTICLE_ID_SEARCH(page_text)[0]
+    article_id = RIS_ARTICLE_ID_SEARCH(page_text)[0]  # type: ignore
     return request(
         'http://www.noormags.ir/view/fa/citation/ris/' + article_id
     ).text
@@ -44,6 +44,8 @@ def get_ris(noormags_url):
 def ris_fetcher_thread(url, ris_collection):
     """Fill the ris_dict. This function is called in a thread."""
     ris_dict = ris_parse(get_ris(url))
+    if ris_dict is None:
+        raise ReturnError('RIS data could not be extracted', '', '')
     if language := ris_dict.get('language'):
         ris_collection['language'] = language
     if authors := ris_dict.get('authors'):

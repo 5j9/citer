@@ -1,13 +1,14 @@
-from urllib.parse import parse_qs
+from urllib.parse import ParseResult, parse_qs
 
 from langid import classify
 
 from lib import request
+from lib.citoid import citoid_data
 from lib.ris import ris_parse
 from lib.urls import url_data
 
 
-def google_books_data(parsed_url) -> dict:
+def google_books_data(parsed_url: ParseResult) -> dict:
     parsed_query = parse_qs(parsed_url.query)
 
     if (id_ := parsed_query.get('id')) is not None:
@@ -25,6 +26,8 @@ def google_books_data(parsed_url) -> dict:
             spoof=True,
         ).content.decode('utf8')
     )
+    if dictionary is None:
+        dictionary = citoid_data(parsed_url.geturl(), True)
     # manually adding page number to dictionary:
     if (pg := parsed_query.get('pg')) is not None:
         pg0 = pg[0]
