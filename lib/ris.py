@@ -45,6 +45,10 @@ def ris_parse(ris_text):
     """Parse RIS_text data and return the result as a dictionary."""
     d = {}
     match = ris_fullmatch(ris_text)
+    if match is None:
+        # We're sorry. your computer or network may be sending automated queries.
+        # to protect our users, we can't process your request right now.
+        return None
     d |= match.groupdict()
     # cite_type: (book, journal, . . . )
     if (cite_type := d['type'].lower()) == 'jour':
