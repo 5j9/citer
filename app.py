@@ -102,7 +102,7 @@ def url_doi_isbn_data(user_input: str, /) -> dict:
         if (m := doi_search(unescape(en_user_input))) is not None:
             try:
                 return doi_data(m[0], True)
-            except JSONDecodeError:
+            except (JSONDecodeError, CurlError):
                 if url_input is False:
                     raise
                 # continue with urls_scr

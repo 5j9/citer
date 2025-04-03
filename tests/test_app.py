@@ -4,6 +4,7 @@ from unittest.mock import Mock, patch
 from urllib.parse import urlparse
 
 # noinspection PyPackageRequirements
+from curl_cffi import CurlError
 from pytest import raises
 
 from app import (
@@ -148,3 +149,15 @@ def test_invalid_user_input():
         # the following used to return None
         # which ends up with unhandled error during convertion to scr tuple.
         url_doi_isbn_data('[object+HTMLInputElement]')
+
+mock_doi_data = Mock(side_effect=CurlError("Test curl error"))
+mock_url_data = Mock(return_value=NotImplemented)
+
+@patch('app.doi_data', mock_doi_data)
+@patch('app.url_data', mock_url_data)
+def test_http_error_in_fetching_doi():
+    user_input = 'https://dl.acm.org/doi/abs/10.5555/1105634.1105641'
+    result = url_doi_isbn_data(user_input)
+    mock_doi_data.assert_called_once_with('10.5555/1105634.1105641', True)
+    mock_url_data.assert_called_once_with(user_input)
+    assert result is NotImplemented
