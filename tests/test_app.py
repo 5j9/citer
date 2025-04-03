@@ -150,12 +150,10 @@ def test_invalid_user_input():
         # which ends up with unhandled error during convertion to scr tuple.
         url_doi_isbn_data('[object+HTMLInputElement]')
 
-mock_doi_data = Mock(side_effect=CurlError("Test curl error"))
-mock_url_data = Mock(return_value=NotImplemented)
 
-@patch('app.doi_data', mock_doi_data)
-@patch('app.url_data', mock_url_data)
-def test_http_error_in_fetching_doi():
+@patch('app.doi_data', side_effect=CurlError("Test curl error"))
+@patch('app.url_data', return_value=NotImplemented)
+def test_http_error_in_fetching_doi(mock_url_data, mock_doi_data):
     user_input = 'https://dl.acm.org/doi/abs/10.5555/1105634.1105641'
     result = url_doi_isbn_data(user_input)
     mock_doi_data.assert_called_once_with('10.5555/1105634.1105641', True)
