@@ -152,6 +152,7 @@ def fake_request(
                 raise
         dump_response(sha1_hex, response, redacted_url)
 
+    response.raise_for_status()
     if stream is True:
 
         @contextmanager
