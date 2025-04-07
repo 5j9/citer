@@ -1,6 +1,7 @@
 from unittest.mock import Mock, patch
 from urllib.parse import urlparse
 
+from curl_cffi import CurlError
 from pytest import mark, raises
 
 from lib.commons import data_to_sfn_cit_ref
@@ -39,15 +40,7 @@ def test_gb2():
         'http://books.google.com/books?'
         'id=U46IzqYLZvAC&pg=PT57#v=onepage&q&f=false'
     )
-    assert (
-        '{{sfn'
-        '|Anderson'
-        '|DeBolt'
-        '|Featherstone'
-        '|Gunther'
-        '|2010'
-        '|p=57}}'
-    ) in o[0]
+    assert ('{{sfn|Anderson|DeBolt|Featherstone|Gunther|2010|p=57}}') in o[0]
     assert (
         '* {{cite book '
         '| last=Anderson '
@@ -171,3 +164,23 @@ def test_ngram_url(url_data: Mock):
     with raises(NotImplementedError):
         google_books_data(urlparse(url))
     url_data.assert_called_once_with(url)
+
+
+@patch('lib.googlebooks.url_data', side_effect=CurlError)
+def test_citoid_fallback(url_data: Mock):
+    url = 'https://www.google.com/books/edition/The_Temptation_of_Chocolate/A-8PGtx3uI4C?hl=en&gbpv=1&dq=Neuhaus+ballotin&pg=PA21&printsec=frontcover'
+    assert google_books_data(urlparse(url)) == {
+        'authors': [
+            [
+                'Jacques',
+                'Mercier',
+            ],
+        ],
+        'cite_type': 'book',
+        'date': '2008',
+        'isbn': '978-2-87386-533-7',
+        'language': 'en',
+        'publisher': 'Lannoo Uitgeverij',
+        'title': 'The Temptation of Chocolate',
+        'url': 'https://www.google.com/books/edition/The_Temptation_of_Chocolate/A-8PGtx3uI4C?hl=en&gbpv=1&dq=Neuhaus+ballotin&pg=PA21&printsec=frontcover',
+    }

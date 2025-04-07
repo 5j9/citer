@@ -33,12 +33,13 @@ def google_books_data(parsed_url: ParseResult) -> dict:
 
     if dictionary is None:
         dictionary = citoid_data(parsed_url.geturl(), True)
-    # manually adding page number to dictionary:
-    if (pg := parsed_query.get('pg')) is not None:
+    elif (pg := parsed_query.get('pg')) is not None:
+        # Manually adding page number to dictionary. Not needed for citoid results.
         pg0 = pg[0]
         dictionary['page'] = pg0[2:]
         dictionary['url'] += f'&pg={pg0}'
-    # although google does not provide a language field:
+
+    # google does not provide a language field:
     if not dictionary['language']:
         dictionary['language'] = classify(dictionary['title'])[0]
     return dictionary
