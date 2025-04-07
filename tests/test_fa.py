@@ -259,9 +259,9 @@ def test_doi1():
 
 
 def test_isbn_exists_on_ottobib_not_ketabir():
-    assert (
-        '* {{یادکرد کتاب | نام خانوادگی=Adkins | نام=Roy A. | نام خانوادگی۲=Adkins | نام۲=Lesley | عنوان=The War for All the Oceans | ناشر=Abacus (UK) | مکان=London | تاریخ=2007 | شابک=978-0-349-11916-8 | oclc=137313052 | زبان=en}}'
-    ) in isbn_scr('9780349119168', True)[1]
+    assert isbn_scr('9780349119168', True)[1][:-12] == (
+        '* {{یادکرد کتاب | نام خانوادگی=Adkins | نام=Roy A. | نام خانوادگی۲=Adkins | نام۲=Lesley | عنوان=The War for All the Oceans | ناشر=Abacus (UK) | مکان=London | تاریخ=2007 | شابک=978-0-349-11916-8 | oclc=137313052 | پیوند=https://www.worldcat.org/oclc/137313052 | زبان=en | تاریخ بازبینی='
+    )
 
 
 def test_isbn_exists_on_ketabir_not_ottobib():
@@ -292,13 +292,14 @@ def test_isbn_unpure_input():
 def test_2letter_langcode():
     """Test that 3letter language code is converted to a 2-letter one."""
     # Todo: The fawiki template mixes Persian and Chinese characters...
-    assert pmid_scr('11938998')[1] == (
+    assert pmid_scr('11938998')[1][:-12] == (
         '* {{یادکرد ژورنال | نام خانوادگی=Huang | نام=Y. | نام خانوادگی۲=Lu | نام۲=J. '
         '| نام خانوادگی۳=Shen | نام۳=Y. | نام خانوادگی۴=Lu | نام۴=J. | عنوان=[The '
         'protective effects of total flavonoids from Lycium Barbarum L. on lipid '
         'peroxidation of liver mitochondria and red blood cell in rats] | ژورنال=Wei '
         'Sheng Yan Jiu = Journal of Hygiene Research | جلد=28 | شماره=2 | '
-        'تاریخ=1999-03-30 | issn=1000-8020 | pmid=11938998 | صفحه=115–116}}'
+        'تاریخ=1999-03-30 | issn=1000-8020 | pmid=11938998 | صفحه=115–116'
+        ' | پیوند=https://pubmed.ncbi.nlm.nih.gov/11938998 | تاریخ بازبینی='
     )
 
 

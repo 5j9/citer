@@ -25,20 +25,20 @@ def worldcat_scr(*args):
 
 def test_is1():
     # not in ketabir
-    assert isbn_scr('9780349119168', True)[1] == (
+    assert isbn_scr('9780349119168', True)[1][:-12] == (
         '* {{cite book | last=Adkins | first=Roy A. | last2=Adkins | first2=Lesley | '
         'title=The War for All the Oceans | publisher=Abacus (UK) | '
         'publication-place=London | date=2007 | isbn=978-0-349-11916-8 | '
-        'oclc=137313052}}'
+        'oclc=137313052 | url=https://www.worldcat.org/oclc/137313052 | access-date='
     )
 
 
 def test_is3():
     # on both ketabid and citoid
-    assert isbn_scr('964-6736-34-3 ')[1] == (
+    assert isbn_scr('964-6736-34-3 ')[1][:-12] == (
         '* {{cite book | last=Sepehri | first=S. | title=Raz-egole sorkh | '
         'publisher=Muʼassasah-ʼi Intishārāt-i Nigāh | publication-place=Tihrān | '
-        'date=2005 | isbn=964-6736-34-3 | oclc=53446327 | language=fa}}'
+        'date=2005 | isbn=964-6736-34-3 | oclc=53446327 | url=https://www.worldcat.org/oclc/53446327 | language=fa | access-date='
     )
 
 
@@ -81,9 +81,9 @@ def test_hyphened_isbn_match():  # 30
 
 
 def test_citoid_only():  # 31
-    assert (
-        '* {{cite book | last=Ramseier | first=Walter | title=Münchenstein - Heimatkunde | publication-place=[Liestal] | date=1995 | isbn=3-85673-522-4 | oclc=613273377 | language=de}}'
-    ) == isbn_scr('3-85673-522-4')[1]
+    assert isbn_scr('3-85673-522-4')[1][:-12] == (
+        '* {{cite book | last=Ramseier | first=Walter | title=Münchenstein - Heimatkunde | publication-place=[Liestal] | date=1995 | isbn=3-85673-522-4 | oclc=613273377 | url=https://www.worldcat.org/oclc/613273377 | language=de | access-date='
+    )
 
 
 def test_invalid_oclc():
@@ -136,6 +136,6 @@ def test_not_found_isbn(_m1, _m2):
 
 
 def test_oclc_no_leading_letters():
-    assert isbn_scr('978-80-210-8779-8')[1] == (
-        '* {{cite book | title=The European fortune of the Roman Veronica in the Middle Ages | publisher=Brepols | publication-place=Turnhout | date=2017 | isbn=978-80-210-8779-8 | oclc=1021182894 | ref={{sfnref|Brepols|2017}}}}'
+    assert isbn_scr('978-80-210-8779-8')[1][:-12] == (
+        '* {{cite book | title=The European fortune of the Roman Veronica in the Middle Ages | publisher=Brepols | publication-place=Turnhout | date=2017 | isbn=978-80-210-8779-8 | oclc=1021182894 | url=https://www.worldcat.org/title/on1021182894 | ref={{sfnref|Brepols|2017}} | access-date='
     )

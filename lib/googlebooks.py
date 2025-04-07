@@ -30,6 +30,7 @@ def google_books_data(parsed_url: ParseResult) -> dict:
         dictionary = None
     else:
         dictionary = ris_parse(r.content.decode('utf8'))
+
     if dictionary is None:
         dictionary = citoid_data(parsed_url.geturl(), True)
     # manually adding page number to dictionary:
