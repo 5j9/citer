@@ -38,12 +38,12 @@ def test_spanish_no_doi():
             'volume=78 | issue=4 | year=1975 | issn=0030-0632 | pmid=123455 | '
             'pages=307–17 | language=es}}'
         )
-    assert pmid_scr('123455')[1] == (
+    assert pmid_scr('123455')[1][:-12] == (
         '* {{cite journal | last=Mendozo Hernández | first=P. | title=[Clinical '
         'diagnosis and therapy. Intravenous and oral rehydration] | journal=Boletin '
         'De La Oficina Sanitaria Panamericana. Pan American Sanitary Bureau | '
         'volume=78 | issue=4 | date=1975 | issn=0030-0632 | pmid=123455 | '
-        'pages=307–317}}'
+        'pages=307–317 | url=https://pubmed.ncbi.nlm.nih.gov/123455 | access-date='
     )
 
 

@@ -26,11 +26,11 @@ def test_doi1():
         '| year=2002 | issn=1474-1776 | doi=10.1038/nrd842 '
         '| pages=491–492}}'
     )
-    assert citoid_scr('https://doi.org/10.1038%2Fnrd842')[1] == (
+    assert citoid_scr('https://doi.org/10.1038%2Fnrd842')[1][:-12] == (
         '* {{cite journal | last=Atkins | first=Joshua H. | last2=Gershell | '
         'first2=Leland J. | title=Selective anticancer drugs | journal=Nature Reviews '
         'Drug Discovery | volume=1 | issue=7 | date=2002 | issn=1474-1776 | '
-        'doi=10.1038/nrd842 | pages=491–492}}'
+        'doi=10.1038/nrd842 | pages=491–492 | url=https://www.nature.com/articles/nrd842 | access-date='
     )
 
 
@@ -45,13 +45,13 @@ def test_doi2():
         '| ref={{sfnref|University of Chicago Press|2014}}'
         '}}'
     )
-    assert citoid_scr('http://www.jstor.org/stable/info/10.1086/677379')[
-        1
+    assert citoid_scr('http://www.jstor.org/stable/info/10.1086/677379')[1][
+        :-12
     ] == (
         '* {{cite journal | title=Books of Critical Interest | journal=Critical '
         'Inquiry | volume=40 | issue=3 | date=2014 | issn=0093-1896 | '
-        'doi=10.1086/677379 | pages=272–281 | ref={{sfnref|Critical Inquiry|'
-        '2014}}}}'
+        'doi=10.1086/677379 | pages=272–281 | url=https://www.journals.uchicago.edu/doi/10.1086/677379 | ref={{sfnref|Critical Inquiry|'
+        '2014}} | access-date='
     )
 
 
@@ -65,10 +65,10 @@ def test_doi3():
         '| volume=30 | issue=9 | year=1939 | issn=0022-0663 '
         '| doi=10.1037/h0063404 | pages=641–656}}'
     )
-    assert citoid_scr('https://doi.org/10.1037%2Fh0063404')[1] == (
+    assert citoid_scr('https://doi.org/10.1037%2Fh0063404')[1][:-12] == (
         '* {{cite journal | last=Spitzer | first=H. F. | title=Studies in retention. '
         '| journal=Journal of Educational Psychology | volume=30 | issue=9 | '
-        'date=1939 | issn=1939-2176 | doi=10.1037/h0063404 | pages=641–656}}'
+        'date=1939 | issn=1939-2176 | doi=10.1037/h0063404 | pages=641–656 | url=http://doi.apa.org/getdoi.cfm?doi=10.1037/h0063404 | access-date='
     )
 
 
@@ -104,12 +104,12 @@ def test_incollection():
         '| issn=0075-8434 '
         '| doi=10.1007/bfb0064872}}'
     )
-    assert citoid_scr('DOI 10.1007/BFb0064872')[1] == (
+    assert citoid_scr('DOI 10.1007/BFb0064872')[1][:-12] == (
         '* {{cite book | last=Meyer | first=Albert R. | title=Logic Colloquium | '
         'chapter=Weak monadic second order theory of succesor is not '
         'elementary-recursive | publisher=Springer Berlin Heidelberg | '
         'publication-place=Berlin, Heidelberg | volume=453 | date=1975 | '
-        'isbn=978-3-540-07155-6 | doi=10.1007/bfb0064872}}'
+        'isbn=978-3-540-07155-6 | doi=10.1007/bfb0064872 | url=http://link.springer.com/10.1007/BFb0064872 | access-date='
     )
 
 
@@ -163,13 +163,13 @@ def test_non_numeric_volume():
         '(IEEE) | volume=IM-34 | issue=2 | year=1985 | issn=0018-9456 '
         '| doi=10.1109/tim.1985.4315297 | pages=185–187}}'
     )
-    assert citoid_scr('10.1109/TIM.1985.4315297')[1] == (
+    assert citoid_scr('10.1109/TIM.1985.4315297')[1][:-12] == (
         '* {{cite journal | last=Niemeyer | first=Jurgen | last2=Hinken | '
         'first2=Johann H. | last3=Kautz | first3=Richard L. | title=Near-Zero Bias '
         'Arrays of Josephson Tunnel Junctions Providing Standard Voltages up to 1 V | '
         'journal=IEEE Transactions on Instrumentation and Measurement | volume=IM-34 '
         '| issue=2 | date=1985 | issn=0018-9456 | doi=10.1109/TIM.1985.4315297 | '
-        'pages=185–187}}'
+        'pages=185–187 | url=http://ieeexplore.ieee.org/document/4315297/ | access-date='
     )
 
 
@@ -196,19 +196,18 @@ def test_bad_author_name():
 
 
 def test_contains_brackets():  # 33
-    assert (
-        doi_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1][:-12]
-        == (  # note `[zhu]` in doi, it should not be escaped
-            '* {{cite journal | last=Zhu | first=Liping | last2=Lin | first2=Xiao '
-            '| last3=Li | first3=Yuanfang | last4=Li | first4=Bingyuan '
-            '| last5=Xie | first5=Manping '
-            '| title=Ostracoda Assemblages in Core Sediments and Their '
-            'Environmental Significance in a Small Lake in Northwest Tibet, China '
-            '| journal=Arctic, Antarctic, and Alpine Research '
-            '| publisher=Informa UK Limited | volume=39 | issue=4 | year=2007 '
-            '| issn=1523-0430 | doi=10.1657/1523-0430(07-512)[zhu]2.0.co;2 | doi-access=free '
-            '| pages=658–662 | url=https://bioone.org/journals/arctic-antarctic-and-alpine-research/volume-39/issue-4/1523-0430_07-512_ZHU_2.0.CO_2/Ostracoda-Assemblages-in-Core-Sediments-and-Their-Environmental-Significance-in/10.1657/1523-0430(07-512)[ZHU]2.0.CO;2.pdf | access-date='
-        )
+    assert doi_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1][
+        :-12
+    ] == (  # note `[zhu]` in doi, it should not be escaped
+        '* {{cite journal | last=Zhu | first=Liping | last2=Lin | first2=Xiao '
+        '| last3=Li | first3=Yuanfang | last4=Li | first4=Bingyuan '
+        '| last5=Xie | first5=Manping '
+        '| title=Ostracoda Assemblages in Core Sediments and Their '
+        'Environmental Significance in a Small Lake in Northwest Tibet, China '
+        '| journal=Arctic, Antarctic, and Alpine Research '
+        '| publisher=Informa UK Limited | volume=39 | issue=4 | year=2007 '
+        '| issn=1523-0430 | doi=10.1657/1523-0430(07-512)[zhu]2.0.co;2 | doi-access=free '
+        '| pages=658–662 | url=https://bioone.org/journals/arctic-antarctic-and-alpine-research/volume-39/issue-4/1523-0430_07-512_ZHU_2.0.CO_2/Ostracoda-Assemblages-in-Core-Sediments-and-Their-Environmental-Significance-in/10.1657/1523-0430(07-512)[ZHU]2.0.CO;2.pdf | access-date='
     )
     assert citoid_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1][:-12] == (
         '* {{cite journal | last=Zhu | first=Liping | last2=Lin | first2=Xiao | '
@@ -291,8 +290,8 @@ def test_doi_without_date():  # 46
         'volume=27 | issue=4 | year=1998 | issn=0004-0002 | '
         'doi=10.1023/a:1018715525493 | pages=331–359}}'
     )
-    assert citoid_scr('10.1023/a:1018715525493')[1] == (
+    assert citoid_scr('10.1023/a:1018715525493')[1][:-12] == (
         '* {{cite journal | last=Sigusch | first=Volkmar | title=[No title found] | '
         'journal=Archives of Sexual Behavior | volume=27 | issue=4 | date=1998 | '
-        'doi=10.1023/A:1018715525493 | pages=331–359}}'
+        'doi=10.1023/A:1018715525493 | pages=331–359 | url=http://link.springer.com/10.1023/A:1018715525493 | access-date='
     )

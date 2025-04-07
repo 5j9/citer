@@ -7,7 +7,7 @@ from lib import four_digit_num, request
 from lib.commons import find_any_date
 
 TRANSLATE = {
-    # 'url': 'url',
+    'url': 'url',
     'DOI': 'doi',
     'issue': 'issue',
     'itemType': 'cite_type',
