@@ -168,7 +168,6 @@ def oclc_data(oclc: str) -> dict:
             'Accept': '*/*',
         },
     )
-    r.raise_for_status()
     j = loads(r.content)
     if j is None:  # invalid OCLC number
         raise ReturnError(

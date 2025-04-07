@@ -1,5 +1,6 @@
 from urllib.parse import ParseResult, parse_qs
 
+from curl_cffi import CurlError
 from langid import classify
 
 from lib import request
@@ -19,13 +20,16 @@ def google_books_data(parsed_url: ParseResult) -> dict:
             return url_data(parsed_url.geturl())
         volume_id = path.rpartition('/')[2]
 
-    dictionary = ris_parse(
-        request(
+    try:
+        r = request(
             f'https://{parsed_url.netloc}/books/download/?id={volume_id}'
             f'&output=ris',
             spoof=True,
-        ).content.decode('utf8')
-    )
+        )
+    except CurlError:
+        dictionary = None
+    else:
+        dictionary = ris_parse(r.content.decode('utf8'))
     if dictionary is None:
         dictionary = citoid_data(parsed_url.geturl(), True)
     # manually adding page number to dictionary:

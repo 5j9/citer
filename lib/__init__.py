@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from contextlib import AbstractContextManager
+from contextlib import AbstractContextManager, contextmanager
 from functools import partial
 from logging import INFO, Formatter, basicConfig, getLogger
 from logging.handlers import RotatingFileHandler
@@ -91,6 +91,13 @@ def request(
 ) -> Response: ...
 
 
+@contextmanager
+def enhanced_stream_ctx(ctx: AbstractContextManager[Response]):
+    with ctx as response:
+        response.raise_for_status()
+        yield response
+
+
 def request(
     url,
     *,
@@ -106,8 +113,12 @@ def request(
         else:
             headers = kw_headers
     if stream is True:
-        return mortal_session().stream(method, url, headers=headers, **kwargs)
-    return mortal_session().request(method, url, headers=headers, **kwargs)
+        ctx = mortal_session().stream(method, url, headers=headers, **kwargs)
+        return enhanced_stream_ctx(ctx)
+
+    r = mortal_session().request(method, url, headers=headers, **kwargs)
+    r.raise_for_status()
+    return r
 
 
 rc = partial(rc, cache_pattern=False)

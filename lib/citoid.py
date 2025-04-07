@@ -32,7 +32,6 @@ def citoid_data(query: str, quote=False, /) -> dict:
     r = request(
         'https://en.wikipedia.org/api/rest_v1/data/citation/mediawiki/' + query
     )
-    r.raise_for_status()
 
     j0 = r.json()[0]
     get = j0.get

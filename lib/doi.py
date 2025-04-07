@@ -37,7 +37,6 @@ def crossref_data(doi) -> dict:
         f'https://doi.org/{doi}',
         headers={'Accept': 'application/vnd.citationstyles.csl+json'},
     )
-    r.raise_for_status()
     j = r.json()
     g = (d := {k.lower(): v for k, v in j.items()}).get
 

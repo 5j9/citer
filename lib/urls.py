@@ -405,7 +405,6 @@ def analyze_home(
 
 def check_response(r: Response) -> None:
     """Check content-type and content-length of the response."""
-    r.raise_for_status()
     get_header = r.headers.get
     if (content_type := get_header('content-type')) is not None:
         if not content_type.startswith('text/'):
