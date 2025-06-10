@@ -1,37 +1,36 @@
 #!/usr/bin/env python3
 """A script to be run as part of forgetools/install_python_webservice.py."""
 
-import os
 from os import O_CREAT, O_EXCL, O_WRONLY, chmod, close, open as os_open
-from os.path import expanduser
 from pathlib import Path
 from re import sub
 from subprocess import check_output
 
-HOME = expanduser('~')
+HOME = Path.home()
 
 
 def set_file_permissions():
     try:
-        chmod(HOME + '/www/python/src/citer.log', 0o660)
+        chmod(HOME / 'www/python/src/citer.log', 0o660)
     except FileNotFoundError:
         close(
             os_open(
-                HOME + '/www/python/src/citer.log',
+                HOME / 'www/python/src/citer.log',
                 O_CREAT | O_EXCL | O_WRONLY,
                 0o660,
             )
         )
-    chmod(HOME + '/www/python/src/config.py', 0o660)
+    chmod(HOME / 'www/python/src/config.py', 0o660)
 
 
 def write_uwsgi_ini():
-    with open(HOME + '/www/python/uwsgi.ini', 'wb') as f:
-        f.write(b'[uwsgi]\nenable-threads = true\n')
+    (HOME / 'www/python/uwsgi.ini').write_bytes(
+        b'[uwsgi]\nenable-threads = true\n'
+    )
 
 
 def write_webservice_args():
-    (Path.home() / '.webservice-args').write_bytes(b'--cpu=3.0')
+    (HOME / '.webservice-args').write_bytes(b'--cpu=3.0')
 
 
 def copy_config():
@@ -40,7 +39,7 @@ def copy_config():
             [
                 'git',
                 '-C',
-                HOME + '/www/python/src',
+                f'{HOME}/www/python/src',
                 'log',
                 '-1',
                 '--format=%cd',
@@ -52,20 +51,19 @@ def copy_config():
     )
 
     def opener(path, flags):
-        return os.open(path, flags, 0o660)
+        return os_open(path, flags, 0o660)
 
-    with open(HOME + '/.citer_config', 'rb') as home_config:
-        with open(
-            HOME + '/www/python/src/config.py', 'wb', opener=opener
-        ) as src_config:
-            src_config.write(
-                sub(
-                    b"(USER_AGENT = '.*)'\n",
-                    rb'\1 v' + committer_date + b"'\n",
-                    home_config.read(),
-                    1,
-                )
+    with open(
+        HOME / 'www/python/src/config.py', 'wb', opener=opener
+    ) as src_config:
+        src_config.write(
+            sub(
+                b"(USER_AGENT = '.*)'\n",
+                rb'\1 v' + committer_date + b"'\n",
+                (HOME / '.citer_config').read_bytes(),
+                1,
             )
+        )
 
 
 def main():
