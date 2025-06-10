@@ -30,7 +30,7 @@ def write_uwsgi_ini():
 
 
 def write_webservice_args():
-    (HOME / '.webservice-args').write_bytes(b'--cpu=3.0')
+    (HOME / '.webservice-args').write_bytes(b'--cpu=3')
 
 
 def copy_config():
