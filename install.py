@@ -4,6 +4,7 @@
 import os
 from os import O_CREAT, O_EXCL, O_WRONLY, chmod, close, open as os_open
 from os.path import expanduser
+from pathlib import Path
 from re import sub
 from subprocess import check_output
 
@@ -27,6 +28,10 @@ def set_file_permissions():
 def write_uwsgi_ini():
     with open(HOME + '/www/python/uwsgi.ini', 'wb') as f:
         f.write(b'[uwsgi]\nenable-threads = true\n')
+
+
+def write_webservice_args():
+    (Path.home() / '.webservice-args').write_bytes(b'--cpu=3.0')
 
 
 def copy_config():
@@ -66,6 +71,7 @@ def copy_config():
 def main():
     copy_config()
     write_uwsgi_ini()
+    write_webservice_args()
     set_file_permissions()
 
 
