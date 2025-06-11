@@ -1,4 +1,15 @@
-project.requires-python = '>=3.11'
+[project]
+version = '0.0.dev0'
+name = 'citer'
+requires-python = '>=3.11'
+dependencies = [
+    "curl-cffi>=0.7.3",
+    "isbnlib>=3.10.14",
+    "jdatetime>=5.2.0",
+    "langid>=1.1.6",
+    "lxml>=5.4.0",
+    "regex>=2024.11.6",
+]
 
 [tool.ruff]
 line-length = 79
@@ -28,3 +39,9 @@ reportUnnecessaryCast = "warning"
 reportUnnecessaryContains = "warning"
 reportUnnecessaryIsInstance = "warning"
 reportUnnecessaryTypeIgnoreComment = true
+
+[dependency-groups]
+dev = [
+    "pytest-socket>=0.7.0",
+    "python-decouple>=3.8",
+]
