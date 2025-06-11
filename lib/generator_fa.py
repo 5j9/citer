@@ -174,7 +174,7 @@ def sfn_cit_ref(
         cit += (
             f' | پیوند بایگانی={archive_url}'
             f' | تاریخ بایگانی={g("archive-date").isoformat()}'
-            f" | پیوند مرده={('آری' if g('url-status') == 'yes' else 'نه')}"
+            f' | پیوند مرده={("آری" if g("url-status") == "yes" else "نه")}'
         )
 
     if language := g('language'):

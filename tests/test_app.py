@@ -151,7 +151,7 @@ def test_invalid_user_input():
         url_doi_isbn_data('[object+HTMLInputElement]')
 
 
-@patch('app.doi_data', side_effect=CurlError("Test curl error"))
+@patch('app.doi_data', side_effect=CurlError('Test curl error'))
 @patch('app.url_data', return_value=NotImplemented)
 def test_http_error_in_fetching_doi(mock_url_data, mock_doi_data):
     user_input = 'https://dl.acm.org/doi/abs/10.5555/1105634.1105641'

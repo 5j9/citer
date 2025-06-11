@@ -71,7 +71,7 @@ B = r"""
     (?:(?:(?:Sept|Nov|Dec)em)|Octo)ber))
     """
 # فروردین|اردیبهشت|خرداد...
-jB = f"(?>(?<jB>{'|'.join([jm for jm in jB_TO_NUM]).replace('ی', '[یي]')}))"
+jB = f'(?>(?<jB>{"|".join([jm for jm in jB_TO_NUM]).replace("ی", "[یي]")}))'
 # Month abbreviations:
 b = r'(?>(?<b>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)).?'
 # Month numbers 0?1-12

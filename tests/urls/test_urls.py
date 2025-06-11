@@ -642,7 +642,7 @@ def test_oth7():
         'traffic-lights-theres-a-better-way-0707 '
         '| access-date='
     ) == urls_scr(
-        'http://news.mit.edu/2014/' 'traffic-lights-theres-a-better-way-0707'
+        'http://news.mit.edu/2014/traffic-lights-theres-a-better-way-0707'
     )[1][:-12]
 
 
