@@ -15,11 +15,10 @@ URLs of [Wayback Machine](https://en.wikipedia.org/wiki/Wayback_Machine) and [ar
 
 To run Citer on your local computer:
 
-1. Install Python 3.11+
-2. Clone the project (use `--depth=1` to reduce size)
-3. Install the dependencies using `pip install --user -r requirements.txt`
-4. Copy `config.py.example` to `config.py` (You might want to get an NCBI API key and add it to the config file if you're going to use its services)
-5. Run `python3 app.py`
+1. Clone the project (use `--depth=1` to reduce size)
+2. Copy `config.py.example` to `config.py` (You might want to get an NCBI API key and add it to the config file if you're going to use its services)
+3. [Install uv](https://docs.astral.sh/uv/getting-started/installation/#installing-uv). (`curl -LsSf https://astral.sh/uv/install.sh | sh`)
+5. Run `uv run app.py`
 
 If everything goes fine, the main page will be accessible from:\
     [http://localhost:5000/](http://localhost:5000/)
