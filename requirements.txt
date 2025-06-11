@@ -1,6 +1,0 @@
-isbnlib
-jdatetime
-langid
-lxml
-regex
-curl_cffi >= 0.7.3
