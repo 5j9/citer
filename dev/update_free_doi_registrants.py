@@ -6,9 +6,9 @@ identifiers = get(
     'https://en.wikipedia.org/wiki/Module:Citation/CS1/Identifiers'
 ).text
 # note: in Lua `-` is equivalent of `*?` in PCRE.
-assert (
-    '^10%.([^/]+)/[^%s–]-[^%.,]$' in identifiers
-), 'registrant matcher has changed'
+assert '^10%.([^/]+)/[^%s–]-[^%.,]$' in identifiers, (
+    'registrant matcher has changed'
+)
 
 
 configuration = get(
