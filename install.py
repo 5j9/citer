@@ -29,8 +29,9 @@ def write_uwsgi_ini():
     )
 
 
-def write_webservice_args():
-    (HOME / '.webservice-args').write_bytes(b'--cpu=3')
+def write_webservice_template():
+    # https://wikitech.wikimedia.org/wiki/Help:Toolforge/Web#Webservice_templates
+    (HOME / 'service.template').write_bytes(b'cpu: 3\nmem: 2Gi\n')
 
 
 def copy_config():
@@ -69,7 +70,7 @@ def copy_config():
 def main():
     copy_config()
     write_uwsgi_ini()
-    write_webservice_args()
+    write_webservice_template()
     set_file_permissions()
 
 
