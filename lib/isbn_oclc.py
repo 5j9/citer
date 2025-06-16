@@ -130,11 +130,16 @@ def google_books(isbn: str, result: list):
         ).json()
         d = j['items'][0]
         d |= d['volumeInfo']
-    except Exception:  # noqa
+    except Exception:
         # logger.exception('isbn: %s', isbn)
         return
-    if authors := d['authors']:
+
+    if (authors := d.get('authors')) is not None:
         d['authors'] = [a.rsplit(' ', 1) for a in authors]
+    else:
+        logger.error(f'authors was none: {d=}')
+        return
+
     if date := d.get('publishedDate'):
         d['date'] = date
     d['cite_type'] = 'book'
