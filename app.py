@@ -240,8 +240,14 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
                 logger.exception(user_input)
             scr = type(e).__name__, '', ''
     else:
-        scr = data_to_sfn_cit_ref(d, date_format, pipe_format)
-        status = '200 OK'
+        try:
+            scr = data_to_sfn_cit_ref(d, date_format, pipe_format)
+        except Exception as e:
+            logger.exception('Error in data_to_sfn_cit_ref')
+            scr = (type(e).__name__, '', '')
+            status = '500 Internal Server Error'
+        else:
+            status = '200 OK'
 
     response_body = scr_to_resp_body(scr).encode()
     start_response(status, headers)
