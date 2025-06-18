@@ -88,6 +88,10 @@ def test_doi_url_fallback_to_url(doi_data, urls_data):
     urls_data.assert_called_once_with(user_input)
 
 
+def fake_start_response(_, __):
+    return lambda: None
+
+
 def test_json_body():
     m = Mock(side_effect=NotImplementedError)
     with (
@@ -100,7 +104,7 @@ def test_json_body():
         patch.object(logger, 'exception'),
     ):
         root(
-            lambda _, __: None,
+            fake_start_response,
             {
                 'CONTENT_LENGTH': '121',
                 'wsgi.input': BytesIO(
@@ -128,7 +132,7 @@ def test_html_input():
         patch.object(logger, 'exception'),
     ):
         root(
-            lambda _, __: None,
+            fake_start_response,
             {
                 'CONTENT_LENGTH': '121',
                 'wsgi.input': BytesIO(
