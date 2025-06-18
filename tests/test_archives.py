@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+from curl_cffi import CurlError
+
 from lib.archives import archive_org_data, archive_today_data
 from lib.commons import data_to_sfn_cit_ref
 
@@ -126,7 +128,7 @@ def test_archive_today_data():
 @patch('lib.archives.url_text')
 @patch('lib.urls.request')
 def test_target_url_is_unquoted(request_mock, url_text_mock):
-    # request_mock.side_effect = NotImplementedError
+    request_mock.side_effect = CurlError('test')
     url_text_mock.return_value = '', ''
 
     # Define the URLs
@@ -141,8 +143,6 @@ def test_target_url_is_unquoted(request_mock, url_text_mock):
         'gauhati-hc-issues-summons-to-bjp-mp-from-assam-over-alleged-poll-irregularities-'
         '101721657172227-amp.html'
     )
-    # Suppress the NotImplementedError during the test
-    # with raises(NotImplementedError):
     archive_org_data(input_url)
 
     calls = request_mock.call_args_list
