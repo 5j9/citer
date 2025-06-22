@@ -1,4 +1,3 @@
-from collections.abc import Callable
 from datetime import date as datetime_date
 from difflib import get_close_matches
 from functools import partial
@@ -9,7 +8,6 @@ from urllib.parse import urlparse
 
 from curl_cffi import CurlError
 from langid import classify
-from regex import Match
 
 from lib import Response, logger, request
 from lib.citoid import citoid_data
@@ -118,9 +116,7 @@ SITE_NAME_SEARCH = meta_searcher(['og:site_name'])
 
 TITLE_SEPS = {' - ', ' — ', '|'}  # keep ins sync with <1>
 TITLE_SPLIT = rc(r'\L<title_seps>', title_seps=TITLE_SEPS).split
-LANG_SEARCH: Callable[..., Match[str]] = rc(
-    r'\slang=["\']?([a-z]{2})\b'
-).search  # type: ignore
+LANG_SEARCH = rc(r'\slang=["\']?([a-z]{2})\b').search
 
 
 class ContentTypeError(ValueError):
