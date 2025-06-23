@@ -25,7 +25,7 @@ def set_file_permissions():
 
 def write_uwsgi_ini():
     (HOME / 'www/python/uwsgi.ini').write_bytes(
-        b'[uwsgi]\nenable-threads = true\n'
+        (HOME / 'www/python/src/uwsgi.ini').read_bytes()
     )
 
 
