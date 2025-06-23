@@ -51,7 +51,7 @@ context.verify_mode = CERT_NONE
 
 
 def new_session() -> Session:
-    return Session(verify=context, timeout=5.0, impersonate='chrome')  # type: ignore
+    return Session(verify=context, timeout=10.0, impersonate='chrome')  # type: ignore
 
 
 session_usage = 0
