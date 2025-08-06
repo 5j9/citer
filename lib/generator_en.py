@@ -250,7 +250,7 @@ def names2para(names, pipe, fn_parameter, ln_parameter, nofn_parameter=None):
     s = ''
     for first, last in names:
         c += 1
-        if c == 1:
+        if len(names) == 1:
             if first or not nofn_parameter:
                 s += f'{pipe}{ln_parameter}={last}{pipe}{fn_parameter}={first}'
             else:

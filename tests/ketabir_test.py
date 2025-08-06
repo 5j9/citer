@@ -23,7 +23,7 @@ def test_ab1():
 def test_ab2():
     """authors = 3, translators = 2, otheo = 0, isbn13"""
     assert (
-        '* {{cite book | last=کرسول | first=جان | last2=پلانو‌کلارک '
+        '* {{cite book | last1=کرسول | first1=جان | last2=پلانو‌کلارک '
         '| first2=ویکی '
         '| others=محسن نیازی (مترجم), and عباس زارعی (مترجم) '
         '| title=روش\u200cهای تحقیق تلفیقی '
@@ -37,7 +37,7 @@ def test_ab2():
 def test_ab3():
     """authors = 2, translators = 0, otheo = 4, isbn13"""
     assert (
-        '* {{cite book | last=فخررحیمی | first=علیرضا | last2=فخررحیمی '
+        '* {{cite book | last1=فخررحیمی | first1=علیرضا | last2=فخررحیمی '
         '| first2=الهام '
         '| others=آرش نادرپور '
         '(مقدمه), وحید شهبازیان (مقدمه), رضا مقدم (مقدمه), and'
@@ -54,7 +54,7 @@ def test_ab3():
 def test_ab4():
     """authors = 3, translators = 0, otheo = 0, isbn13"""
     assert (
-        '* {{cite book | last=کریمی | first=نجمه | last2=یزدخواستی '
+        '* {{cite book | last1=کریمی | first1=نجمه | last2=یزدخواستی '
         '| first2=فروغ | last3=مختاری | first3=صفورا '
         '| title=11 سپتامبر ... آرماگدون | publisher=حدیث راه عشق '
         '| publication-place=اصفهان - اصفهان | year=1386 '

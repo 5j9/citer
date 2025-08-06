@@ -24,7 +24,7 @@ def test_2():
         'https://www.jstor.org/stable/resrep26363.7?Search=yes&resultItemClick=true&searchText=google&searchUri=%2Faction%2FdoBasicSearch%3FQuery%3Dgoogle%26acc%3Doff%26wc%3Don%26fc%3Doff%26group%3Dnone%26refreqid%3Dsearch%253A2e627536469ca8786b576957a9797d56&ab_segments=0%2Fbasic_search_gsv2%2Fcontrol&refreqid=fastly-default%3Af90c911269c590baf37330b9d16ae1cd&seq=1#metadata_info_tab_contents'
     )
     assert c[: c.index('| access-date=')] == (
-        '* {{cite techreport | last=Singh | first=Spandana | last2=Blase '
+        '* {{cite techreport | last1=Singh | first1=Spandana | last2=Blase '
         '| first2=Margerite '
         '| title=Protecting the Vote: How Internet Platforms Are Addressing Election and Voter Suppression-Related Misinformation and Disinformation '
         '| year=2020 | jstor=resrep26363.7 | jstor-access=free '
@@ -47,7 +47,7 @@ def test_encoding():  # 25
 def test_issn_eissn():
     s, c, r = jstor_scr('https://www.jstor.org/stable/1687467')
     assert c[: c.index('| access-date=')] == (
-        '* {{cite journal | last=Kernighan | first=Brian W. | last2=Morgan | '
+        '* {{cite journal | last1=Kernighan | first1=Brian W. | last2=Morgan | '
         'first2=Samuel P. | title=The UNIX Operating System: A Model for Software '
         'Design | journal=Science | publisher=American Association for the '
         'Advancement of Science | volume=215 | issue=4534 | year=1982 | '
