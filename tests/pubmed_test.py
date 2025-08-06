@@ -54,7 +54,7 @@ def test_has_doi_but_no_crossref():
         assert pmcid_scr('2562006', '%d %B %Y')[1].partition(
             ' | access-date='
         )[0] == (
-            '* {{cite journal | last=Bannen | first=RM | last2=Suresh | first2=V | '
+            '* {{cite journal | last1=Bannen | first1=RM | last2=Suresh | first2=V | '
             'last3=Phillips | first3=GN Jr | last4=Wright | first4=SJ | last5=Mitchell | '
             'first5=JC | title=Optimal design of thermally stable proteins | '
             'journal=Bioinformatics | volume=24 | issue=20 | date=22 August 2008 | '
@@ -64,7 +64,7 @@ def test_has_doi_but_no_crossref():
     assert pmcid_scr('2562006', '%d %B %Y')[1].partition(' | access-date=')[
         0
     ] == (
-        '* {{cite journal | last=Bannen | first=Ryan M. | last2=Suresh | '
+        '* {{cite journal | last1=Bannen | first1=Ryan M. | last2=Suresh | '
         'first2=Vanitha | last3=Phillips | first3=George N. | last4=Wright | '
         'first4=Stephen J. | last5=Mitchell | first5=Julie C. | title=Optimal design '
         'of thermally stable proteins | journal=Bioinformatics | volume=24 | issue=20 '

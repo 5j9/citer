@@ -18,7 +18,7 @@ def citoid_scr(doi) -> tuple:
 
 def test_doi1():
     assert doi_scr('https://doi.org/10.1038%2Fnrd842')[1] == (
-        '* {{cite journal | last=Atkins | first=Joshua H. | '
+        '* {{cite journal | last1=Atkins | first1=Joshua H. | '
         'last2=Gershell | first2=Leland J. | title='
         'Selective anticancer drugs | journal=Nature Reviews Drug '
         'Discovery | publisher=Springer Science and Business Media LLC '
@@ -27,7 +27,7 @@ def test_doi1():
         '| pages=491–492}}'
     )
     assert citoid_scr('https://doi.org/10.1038%2Fnrd842')[1][:-12] == (
-        '* {{cite journal | last=Atkins | first=Joshua H. | last2=Gershell | '
+        '* {{cite journal | last1=Atkins | first1=Joshua H. | last2=Gershell | '
         'first2=Leland J. | title=Selective anticancer drugs | journal=Nature Reviews '
         'Drug Discovery | volume=1 | issue=7 | date=2002 | issn=1474-1776 | '
         'doi=10.1038/nrd842 | pages=491–492 | url=https://www.nature.com/articles/nrd842 | access-date='
@@ -75,7 +75,7 @@ def test_doi3():
 def test_doi4():
     """publisher=Informa {UK"""
     assert (
-        '* {{cite journal | last=Davis | first=Margaret I. | last2=Jason '
+        '* {{cite journal | last1=Davis | first1=Margaret I. | last2=Jason '
         '| first2=Leonard A. | last3=Ferrari | first3=Joseph R. '
         '| last4=Olson | first4=Bradley D. | last5=Alvarez '
         '| first5=Josefina '
@@ -145,7 +145,7 @@ def test_conference_location():
         '}}'
     )
     assert citoid_scr('10.1145/1117278')[1] == (
-        '* {{cite conference | last=Hutton | first=Mike | last2=Dambre | first2=Joni '
+        '* {{cite conference | last1=Hutton | first1=Mike | last2=Dambre | first2=Joni '
         '| title=Proceedings of the 2006 international workshop on System-level '
         'interconnect prediction | publisher=ACM | publication-place=Munich Germany | '
         'date=2006-03-04 | isbn=978-1-59593-255-6 | doi=10.1145/1117278}}'
@@ -154,7 +154,7 @@ def test_conference_location():
 
 def test_non_numeric_volume():
     assert doi_scr('10.1109/TIM.1985.4315297')[1] == (
-        '* {{cite journal | last=Niemeyer | first=Jurgen | last2=Hinken '
+        '* {{cite journal | last1=Niemeyer | first1=Jurgen | last2=Hinken '
         '| first2=Johann H. | last3=Kautz | first3=Richard L. '
         '| title=Near-Zero Bias Arrays of Josephson Tunnel Junctions '
         'Providing Standard Voltages up to 1 V | journal=IEEE '
@@ -164,7 +164,7 @@ def test_non_numeric_volume():
         '| doi=10.1109/tim.1985.4315297 | pages=185–187}}'
     )
     assert citoid_scr('10.1109/TIM.1985.4315297')[1][:-12] == (
-        '* {{cite journal | last=Niemeyer | first=Jurgen | last2=Hinken | '
+        '* {{cite journal | last1=Niemeyer | first1=Jurgen | last2=Hinken | '
         'first2=Johann H. | last3=Kautz | first3=Richard L. | title=Near-Zero Bias '
         'Arrays of Josephson Tunnel Junctions Providing Standard Voltages up to 1 V | '
         'journal=IEEE Transactions on Instrumentation and Measurement | volume=IM-34 '
@@ -175,7 +175,7 @@ def test_non_numeric_volume():
 
 def test_bad_author_name():
     assert doi_scr('10.1007/JHEP10(2017)157')[1][:-12] == (
-        '* {{cite journal | last=Giusti | first=D. | last2=Lubicz '
+        '* {{cite journal | last1=Giusti | first1=D. | last2=Lubicz '
         '| first2=V. | last3=Martinelli | first3=G. | last4=Sanfilippo '
         '| first4=F. | last5=Simula | first5=S. '
         '| title=Strange and charm HVP contributions to the muon (g − 2) '
@@ -186,7 +186,7 @@ def test_bad_author_name():
         '| year=2017 | issn=1029-8479 | doi=10.1007/jhep10(2017)157 | doi-access=free | url=https://link.springer.com/content/pdf/10.1007%2FJHEP10%282017%29157.pdf | access-date='
     )
     assert citoid_scr('10.1007/JHEP10(2017)157')[1][:-12] == (
-        '* {{cite journal | author=on behalf of ETM collaboration | last2=Giusti | '
+        '* {{cite journal | author1=on behalf of ETM collaboration | last2=Giusti | '
         'first2=D. | last3=Lubicz | first3=V. | last4=Martinelli | first4=G. | '
         'last5=Sanfilippo | first5=F. | last6=Simula | first6=S. | title=Strange and '
         'charm HVP contributions to the muon (g − 2) including QED corrections with '
@@ -199,7 +199,7 @@ def test_contains_brackets():  # 33
     assert doi_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1][
         :-12
     ] == (  # note `[zhu]` in doi, it should not be escaped
-        '* {{cite journal | last=Zhu | first=Liping | last2=Lin | first2=Xiao '
+        '* {{cite journal | last1=Zhu | first1=Liping | last2=Lin | first2=Xiao '
         '| last3=Li | first3=Yuanfang | last4=Li | first4=Bingyuan '
         '| last5=Xie | first5=Manping '
         '| title=Ostracoda Assemblages in Core Sediments and Their '
@@ -210,7 +210,7 @@ def test_contains_brackets():  # 33
         '| pages=658–662 | url=https://bioone.org/journals/arctic-antarctic-and-alpine-research/volume-39/issue-4/1523-0430_07-512_ZHU_2.0.CO_2/Ostracoda-Assemblages-in-Core-Sediments-and-Their-Environmental-Significance-in/10.1657/1523-0430(07-512)[ZHU]2.0.CO;2.pdf | access-date='
     )
     assert citoid_scr('10.1657/1523-0430(07-512)[ZHU]2.0.CO;2')[1][:-12] == (
-        '* {{cite journal | last=Zhu | first=Liping | last2=Lin | first2=Xiao | '
+        '* {{cite journal | last1=Zhu | first1=Liping | last2=Lin | first2=Xiao | '
         'last3=Li | first3=Yuanfang | last4=Li | first4=Bingyuan | last5=Xie | '
         'first5=Manping | title=Ostracoda Assemblages in Core Sediments and Their '
         'Environmental Significance in a Small Lake in Northwest Tibet, China | '
@@ -222,7 +222,7 @@ def test_contains_brackets():  # 33
 
 def test_non_crossref_doi():  # 35
     assert doi_scr('10.48550/arXiv.1811.06526')[1][:-12] == (
-        '* {{cite journal | last=Hein | first=Andreas M. | last2=Baxter '
+        '* {{cite journal | last1=Hein | first1=Andreas M. | last2=Baxter '
         '| first2=Stephen '
         '| title=Artificial Intelligence for Interstellar Travel '
         '| journal=arXiv | publisher=arXiv | doi=10.48550/ARXIV.1811.06526 | doi-access=free '
@@ -231,7 +231,7 @@ def test_non_crossref_doi():  # 35
     )
     # lacks required journal parameter
     assert citoid_scr('10.48550/arXiv.1811.06526')[1][:-12] == (
-        '* {{cite journal | last=Hein | first=Andreas M. | last2=Baxter | '
+        '* {{cite journal | last1=Hein | first1=Andreas M. | last2=Baxter | '
         'first2=Stephen | title=Artificial Intelligence for Interstellar Travel | '
         'date=2018 | doi=10.48550/ARXIV.1811.06526 | doi-access=free | url=https://arxiv.org/abs/1811.06526 | access-date='
     )
@@ -239,7 +239,7 @@ def test_non_crossref_doi():  # 35
 
 def test_doi_with_full_date():  # 36
     assert doi_scr('10.1029/2002GL014729')[1][:-12] == (
-        '* {{cite journal | last=Webber | first=W. R. | last2=McDonald '
+        '* {{cite journal | last1=Webber | first1=W. R. | last2=McDonald '
         '| first2=F. B. | last3=Lockwood | first3=J. A. | last4=Heikkila '
         '| first4=B. '
         '| title=The effect of the July 14, 2000 “Bastille Day” solar flare '
@@ -250,7 +250,7 @@ def test_doi_with_full_date():  # 36
         '| doi=10.1029/2002gl014729 | doi-access=free | pages=15–1–15–3 | url=https://onlinelibrary.wiley.com/doi/pdfdirect/10.1029/2002GL014729 | access-date='
     )
     assert citoid_scr('10.1029/2002GL014729')[1][:-12] == (
-        '* {{cite journal | last=Webber | first=W. R. | last2=McDonald | first2=F. B. '
+        '* {{cite journal | last1=Webber | first1=W. R. | last2=McDonald | first2=F. B. '
         '| last3=Lockwood | first3=J. A. | last4=Heikkila | first4=B. | title=The '
         'effect of the July 14, 2000 “Bastille Day” solar flare event on >70 MeV '
         'galactic cosmic rays observed at V1 and V2 in the distant heliosphere | '
@@ -264,12 +264,12 @@ def test_sfn_extract_year_from_date():
     assert s == '{{sfn|Almeida|Viala|Nachtigall|Broe|2021|p=}}'
     assert (
         c[:-12]
-        == '* {{cite journal | last=Almeida | first=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | doi-access=free | url=https://www.pnas.org/content/pnas/118/20/e2015159118.full.pdf | access-date='
+        == '* {{cite journal | last1=Almeida | first1=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | doi-access=free | url=https://www.pnas.org/content/pnas/118/20/e2015159118.full.pdf | access-date='
     )
     s, c, r = citoid_scr('10.1073/pnas.2015159118')
     assert s == '{{sfn|Almeida|Viala|Nachtigall|Broe|2021|p=}}'
     assert c[:-12] == (
-        '* {{cite journal | last=Almeida | first=Diego Dantas | last2=Viala | '
+        '* {{cite journal | last1=Almeida | first1=Diego Dantas | last2=Viala | '
         'first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe '
         '| first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | '
         'first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | '

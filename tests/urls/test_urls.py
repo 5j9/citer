@@ -40,8 +40,8 @@ def test_bostonglobe2():
     """bostonglobe.com"""
     assert (
         '* {{cite web '
-        '| last=Saltzman '
-        '| first=Jonathan '
+        '| last1=Saltzman '
+        '| first1=Jonathan '
         '| last2=Farragher '
         '| first2=Thomas '
         '| title=Walsh meets with college leaders on off-campus housing '
@@ -210,8 +210,8 @@ def test_dilymail1():
     assert '{{sfn|Malm|Witheridge|Drury|Bates|2014}}' == o[0]
     assert (
         '* {{cite web '
-        '| last=Malm '
-        '| first=Sara '
+        '| last1=Malm '
+        '| first1=Sara '
         '| last2=Witheridge '
         '| first2=Annette '
         '| last3=Drury '
@@ -367,8 +367,8 @@ def test_nyt2():
     """newstylct, 2 authors"""
     ct = (
         '* {{cite web '
-        '| last=Belson '
-        '| first=Ken '
+        '| last1=Belson '
+        '| first1=Ken '
         '| last2=Sandomir '
         '| first2=Richard '
         '| title=$2 Billion for Clippers? In Time, '
@@ -409,8 +409,8 @@ def test_nyt4():
     o = urls_scr(i)
     ct = (
         '* {{cite web '
-        '| last=Goldstein '
-        '| first=Matthew '
+        '| last1=Goldstein '
+        '| first1=Matthew '
         '| last2=Protess '
         '| first2=Ben '
         '| title=Investor, Bettor, Golfer: '
@@ -532,8 +532,8 @@ def test_oth2():
 def test_byline_from_html_search():
     assert (
         '* {{cite web '
-        '| last=Carlson '
-        '| first=Kimberly '
+        '| last1=Carlson '
+        '| first1=Kimberly '
         '| last2=York '
         '| first2=Jillian C. '
         '| title=Sudan Tech Sanctions Harm Innovation and Development: '
@@ -563,8 +563,8 @@ def test_oth3():
     o = urls_scr(i)
     ct = (
         '* {{cite web '
-        '| last=Timmer '
-        '| first=John '
+        '| last1=Timmer '
+        '| first1=John '
         '| last2=Ford '
         '| first2=Matt '
         '| last3=Lee '
@@ -655,8 +655,8 @@ def test_oth8():
     o = urls_scr(i)
     ct = (
         '* {{cite web '
-        '| last=Beaumont '
-        '| first=Peter '
+        '| last1=Beaumont '
+        '| first1=Peter '
         '| last2=Crowcroft '
         '| first2=Orlando '
         '| title=Israel says it has shot down drone launched from Gaza '
@@ -673,8 +673,8 @@ def test_oth10():
     """The Times. (Authors found by "byline" css selector)"""
     assert (
         '* {{cite web '
-        '| last=Lagan '
-        '| first=Bernard '
+        '| last1=Lagan '
+        '| first1=Bernard '
         '| last2=Charter '
         '| first2=David '
         '| title='
@@ -808,8 +808,8 @@ def test_citation_author_reverse_order():
     """
     assert (
         '* {{cite web '
-        '| last=Hartman '
-        '| first=JudithAnn R. '
+        '| last1=Hartman '
+        '| first1=JudithAnn R. '
         '| last2=Nelson '
         '| first2=Eric A. '
         '| title=Automaticity in Computation and Student Success in '
@@ -893,7 +893,7 @@ def test_home_site_name():
 
 def test_use_doi_if_available():
     assert urls_scr('https://pubmed.ncbi.nlm.nih.gov/32687126/')[1] == (
-        '* {{cite journal | last=Ojewola | first=RufusWale | last2=Tijani | '
+        '* {{cite journal | last1=Ojewola | first1=RufusWale | last2=Tijani | '
         'first2=KehindeHabeeb | last3=Fatuga | first3=AdedejiLukman | '
         'last4=Onyeze | first4=ChigozieInnocent | last5=Okeke | '
         'first5=ChikeJohn | title=Management of a giant prostatic '
@@ -957,7 +957,7 @@ def test_find_title_meta_pipe():
         'https://www.wsj.com/articles/the-dangerous-denial-of-sex-11581638089'
     )
     assert scr[1][:-12] == (
-        '* {{cite web | last=Wright | first=Colin M. | last2=Hilton | first2=Emma N. | title=The Dangerous Denial of Sex | website=WSJ | date=2020-02-13 | url=https://www.wsj.com/articles/the-dangerous-denial-of-sex-11581638089 | access-date='
+        '* {{cite web | last1=Wright | first1=Colin M. | last2=Hilton | first2=Emma N. | title=The Dangerous Denial of Sex | website=WSJ | date=2020-02-13 | url=https://www.wsj.com/articles/the-dangerous-denial-of-sex-11581638089 | access-date='
     )
 
 

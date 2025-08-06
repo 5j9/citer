@@ -43,8 +43,8 @@ def test_gb2():
     assert ('{{sfn|Anderson|DeBolt|Featherstone|Gunther|2010|p=57}}') in o[0]
     assert (
         '* {{cite book '
-        '| last=Anderson '
-        '| first=E. '
+        '| last1=Anderson '
+        '| first1=E. '
         '| last2=DeBolt '
         '| first2=V. '
         '| last3=Featherstone '
@@ -128,8 +128,8 @@ def test_gb5():
     )
     assert (
         '* {{cite book '
-        '| last=Serway '
-        '| first=R.A. '
+        '| last1=Serway '
+        '| first1=R.A. '
         '| last2=Jewett '
         '| first2=J.W. '
         '| title=Physics for Scientists and Engineers, Volume 1, '
@@ -144,8 +144,8 @@ def test_gb5():
     assert o[2].rpartition(' | access-date=')[0] == (
         '<ref name="a902">'
         '{{cite book '
-        '| last=Serway '
-        '| first=R.A. '
+        '| last1=Serway '
+        '| first1=R.A. '
         '| last2=Jewett '
         '| first2=J.W. '
         '| title=Physics for Scientists and Engineers, Volume 1, '

@@ -26,7 +26,7 @@ def worldcat_scr(*args):
 def test_is1():
     # not in ketabir
     assert isbn_scr('9780349119168', True)[1][:-12] == (
-        '* {{cite book | last=Adkins | first=Roy A. | last2=Adkins | first2=Lesley | '
+        '* {{cite book | last1=Adkins | first1=Roy A. | last2=Adkins | first2=Lesley | '
         'title=The War for All the Oceans | publisher=Abacus (UK) | '
         'publication-place=London | date=2007 | isbn=978-0-349-11916-8 | '
         'oclc=137313052 | url=https://www.worldcat.org/oclc/137313052 | access-date='
@@ -55,7 +55,7 @@ def test_is4():
 
 def test_oclc1():
     assert oclc_scr('875039842')[1] == (
-        '* {{cite book | last=Lewis | first=James Bryant | last2=Sesay | first2=Amadu | title=Korea and globalization : politics, economics and culture | publisher=RoutledgeCurzon | publication-place=Richmond | year=2002 | isbn=978-0-7007-1512-1 | oclc=875039842}}'
+        '* {{cite book | last1=Lewis | first1=James Bryant | last2=Sesay | first2=Amadu | title=Korea and globalization : politics, economics and culture | publisher=RoutledgeCurzon | publication-place=Richmond | year=2002 | isbn=978-0-7007-1512-1 | oclc=875039842}}'
     )
 
 
@@ -100,7 +100,7 @@ def test_oclc_with_issn():
 
 def test_worldcat_url():
     assert worldcat_scr('https://www.worldcat.org/title/46908525')[1] == (
-        '* {{cite book | last=Lewis | first=James Bryant | last2=Sesay | first2=Amadu | title=Korea and globalization : politics, economics and culture | publisher=RoutledgeCurzon | publication-place=Richmond | year=2002 | isbn=978-0-7007-1512-1 | oclc=46908525}}'
+        '* {{cite book | last1=Lewis | first1=James Bryant | last2=Sesay | first2=Amadu | title=Korea and globalization : politics, economics and culture | publisher=RoutledgeCurzon | publication-place=Richmond | year=2002 | isbn=978-0-7007-1512-1 | oclc=46908525}}'
     )
 
 
@@ -109,7 +109,7 @@ def test_not_identified_pulisher():
         '* {{cite book | last=Loftis | first=Cory | title=Before I forget : art of Cory Loftis | year=2105 | isbn=978-0-692-57330-3 | oclc=960872319}}'
     )
     assert worldcat_scr('https://www.worldcat.org/title/650188009')[1] == (
-        '* {{cite book | last=Wilde | first=Geoff | last2=Braham | first2=Michael | title=Sandgrounders : the complete league history of Southport Football Club | publisher=Carnegie | year=1995 | isbn=978-1-874181-14-9 | oclc=650188009}}'
+        '* {{cite book | last1=Wilde | first1=Geoff | last2=Braham | first2=Michael | title=Sandgrounders : the complete league history of Southport Football Club | publisher=Carnegie | year=1995 | isbn=978-1-874181-14-9 | oclc=650188009}}'
     )
     assert worldcat_scr('https://www.worldcat.org/title/1051746391')[1] == (
         '* {{cite book | last=Love | first=James Lee | title=Recollections : written in the Library of Congress, Washington, D.C. | year=1921 | oclc=1051746391}}'
