@@ -40,7 +40,7 @@ def test_ketabir1():
 def test_ketabir2():
     """authors = 3, translators = 2, otheo = 0, isbn13"""
     assert (
-        '* {{یادکرد کتاب | نام خانوادگی=کرسول | نام=جان | نام '
+        '* {{یادکرد کتاب | نام خانوادگی۱=کرسول | نام۱=جان | نام '
         'خانوادگی۲=پلانو\u200cکلارک | نام۲=ویکی | ترجمه=محسن نیازی و عباس زارعی | '
         'عنوان=روش\u200cهای تحقیق تلفیقی | ناشر=ثامن الحجج | مکان=تهران - تهران | '
         'جلد=1 | سال=1387 | شابک=978-964-2823-35-2 | زبان=fa}}'
@@ -52,8 +52,8 @@ def test_ketabir2():
 def test_ketabir3():
     """authors = 2, translators = 0, otheo = 4, isbn13"""
     assert (
-        '* {{یادکرد کتاب | نام خانوادگی=فخررحیمی |'
-        ' نام=علیرضا | نام خانوادگی۲=فخررحیمی |'
+        '* {{یادکرد کتاب | نام خانوادگی۱=فخررحیمی |'
+        ' نام۱=علیرضا | نام خانوادگی۲=فخررحیمی |'
         ' نام۲=الهام | دیگران=آرش نادرپور'
         ' (مقدمه)، وحید شهبازیان (مقدمه)، رضا مقدم (مقدمه) '
         'و امیر جابری (مقدمه) | عنوان=آموزش گام'
@@ -68,8 +68,8 @@ def test_ketabir3():
 def test_ketabir4():
     """authors = 3, translators = 0, otheo = 0, isbn13"""
     assert (
-        '* {{یادکرد کتاب | نام خانوادگی=کریمی |'
-        ' نام=نجمه | نام خانوادگی۲=یزدخواستی |'
+        '* {{یادکرد کتاب | نام خانوادگی۱=کریمی |'
+        ' نام۱=نجمه | نام خانوادگی۲=یزدخواستی |'
         ' نام۲=فروغ | نام خانوادگی۳=مختاری |'
         ' نام۳=صفورا | عنوان=11 سپتامبر ... آرماگدون |'
         ' ناشر=حدیث راه عشق | مکان=اصفهان - اصفهان |'
@@ -151,8 +151,8 @@ def test_google_books2():
     ) in o[0]
     assert (
         '* {{یادکرد کتاب |'
-        ' نام خانوادگی=Anderson |'
-        ' نام=E. |'
+        ' نام خانوادگی۱=Anderson |'
+        ' نام۱=E. |'
         ' نام خانوادگی۲=DeBolt | نام۲=V. |'
         ' نام خانوادگی۳=Featherstone |'
         ' نام۳=D. | نام خانوادگی۴=Gunther |'
@@ -210,7 +210,7 @@ def test_google_books4():
         '<ref>{{پک | Sarcevic | \x8aar?evi? | 1997 | ک=New Approach to Legal Translation | زبان=en | ص=229}}\u200f</ref>'
     ) == o[0]
     assert (
-        '* {{یادکرد کتاب | نام خانوادگی=Sarcevic | نام=S. | نام خانوادگی۲=\x8aar?evi? | نام۲=S. | عنوان=New Approach to Legal Translation | ناشر=Springer Netherlands | سال=1997 | شابک=978-90-411-0401-4 | پیوند=https://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 | زبان=en | تاریخ بازبینی='
+        '* {{یادکرد کتاب | نام خانوادگی۱=Sarcevic | نام۱=S. | نام خانوادگی۲=\x8aar?evi? | نام۲=S. | عنوان=New Approach to Legal Translation | ناشر=Springer Netherlands | سال=1997 | شابک=978-90-411-0401-4 | پیوند=https://books.google.com/books?id=i8nZjjo_9ikC&pg=PA229 | زبان=en | تاریخ بازبینی='
     ) in o[1]
 
 
@@ -246,8 +246,8 @@ def test_noorlib1():
 def test_doi1():
     # Note: Language detection is wrong, it should be en
     assert (
-        '* {{یادکرد ژورنال | نام خانوادگی=Atkins |'
-        ' نام=Joshua H. | نام خانوادگی۲=Gershell | نام۲=Leland J. |'
+        '* {{یادکرد ژورنال | نام خانوادگی۱=Atkins |'
+        ' نام۱=Joshua H. | نام خانوادگی۲=Gershell | نام۲=Leland J. |'
         ' عنوان=Selective anticancer drugs |'
         ' ژورنال=Nature Reviews Drug Discovery |'
         ' ناشر=Springer Science and Business Media LLC '
@@ -260,7 +260,7 @@ def test_doi1():
 
 def test_isbn_exists_on_ottobib_not_ketabir():
     assert isbn_scr('9780349119168', True)[1][:-12] == (
-        '* {{یادکرد کتاب | نام خانوادگی=Adkins | نام=Roy A. | نام خانوادگی۲=Adkins | نام۲=Lesley | عنوان=The War for All the Oceans | ناشر=Abacus (UK) | مکان=London | تاریخ=2007 | شابک=978-0-349-11916-8 | oclc=137313052 | پیوند=https://www.worldcat.org/oclc/137313052 | زبان=en | تاریخ بازبینی='
+        '* {{یادکرد کتاب | نام خانوادگی۱=Adkins | نام۱=Roy A. | نام خانوادگی۲=Adkins | نام۲=Lesley | عنوان=The War for All the Oceans | ناشر=Abacus (UK) | مکان=London | تاریخ=2007 | شابک=978-0-349-11916-8 | oclc=137313052 | پیوند=https://www.worldcat.org/oclc/137313052 | زبان=en | تاریخ بازبینی='
     )
 
 
@@ -293,7 +293,7 @@ def test_2letter_langcode():
     """Test that 3letter language code is converted to a 2-letter one."""
     # Todo: The fawiki template mixes Persian and Chinese characters...
     assert pmid_scr('11938998')[1][:-12] == (
-        '* {{یادکرد ژورنال | نام خانوادگی=Huang | نام=Y. | نام خانوادگی۲=Lu | نام۲=J. '
+        '* {{یادکرد ژورنال | نام خانوادگی۱=Huang | نام۱=Y. | نام خانوادگی۲=Lu | نام۲=J. '
         '| نام خانوادگی۳=Shen | نام۳=Y. | نام خانوادگی۴=Lu | نام۴=J. | عنوان=[The '
         'protective effects of total flavonoids from Lycium Barbarum L. on lipid '
         'peroxidation of liver mitochondria and red blood cell in rats] | ژورنال=Wei '
@@ -326,7 +326,7 @@ def test_sfn_extract_year_from_date():
     )
     assert (
         c[:-12]
-        == '* {{یادکرد ژورنال | نام خانوادگی=Almeida | نام=Diego Dantas | نام خانوادگی۲=Viala | نام۲=Vincent Louis | نام خانوادگی۳=Nachtigall | نام۳=Pedro Gabriel | نام خانوادگی۴=Broe | نام۴=Michael | نام خانوادگی۵=Gibbs | نام۵=H. Lisle | نام خانوادگی۶=Serrano | نام۶=Solange Maria de Toledo | نام خانوادگی۷=Moura-da-Silva | نام۷=Ana Maria | نام خانوادگی۸=Ho | نام۸=Paulo Lee | نام خانوادگی۹=Nishiyama-Jr | نام۹=Milton Yutaka | نام خانوادگی۱۰=Junqueira-de-Azevedo | نام۱۰=Inácio L. M. | عنوان=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | ژورنال=Proceedings of the National Academy of Sciences | ناشر=Proceedings of the National Academy of Sciences | جلد=118 | شماره=20 | تاریخ=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | doi-access=free | پیوند=https://www.pnas.org/content/pnas/118/20/e2015159118.full.pdf | زبان=en | تاریخ بازبینی='
+        == '* {{یادکرد ژورنال | نام خانوادگی۱=Almeida | نام۱=Diego Dantas | نام خانوادگی۲=Viala | نام۲=Vincent Louis | نام خانوادگی۳=Nachtigall | نام۳=Pedro Gabriel | نام خانوادگی۴=Broe | نام۴=Michael | نام خانوادگی۵=Gibbs | نام۵=H. Lisle | نام خانوادگی۶=Serrano | نام۶=Solange Maria de Toledo | نام خانوادگی۷=Moura-da-Silva | نام۷=Ana Maria | نام خانوادگی۸=Ho | نام۸=Paulo Lee | نام خانوادگی۹=Nishiyama-Jr | نام۹=Milton Yutaka | نام خانوادگی۱۰=Junqueira-de-Azevedo | نام۱۰=Inácio L. M. | عنوان=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | ژورنال=Proceedings of the National Academy of Sciences | ناشر=Proceedings of the National Academy of Sciences | جلد=118 | شماره=20 | تاریخ=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | doi-access=free | پیوند=https://www.pnas.org/content/pnas/118/20/e2015159118.full.pdf | زبان=en | تاریخ بازبینی='
     )
 
 
