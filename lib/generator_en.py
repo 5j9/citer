@@ -203,15 +203,19 @@ def sfn_cit_ref(
         sfn += '|p='
 
     if archive_url := g('archive-url'):
+        if archive_date := g('archive-date'):
+            archive_date = archive_date.strftime(date_format)
+        else:
+            archive_date = ''
         cit += (
             f'{pipe}archive-url={archive_url}'
-            f'{pipe}archive-date={g("archive-date").strftime(date_format)}'
+            f'{pipe}archive-date={archive_date}'
             f'{pipe}url-status={g("url-status")}'
         )
 
     if language := g('language'):
         language = TO_TWO_LETTER_CODE(language.lower(), language)
-        if language.lower() != 'en':
+        if language and language.lower() != 'en':
             cit += f'{pipe}language=' + language
 
     if not authors:
