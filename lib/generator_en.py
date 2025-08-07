@@ -139,7 +139,7 @@ def sfn_cit_ref(
         sfn += f'|{year}'
     elif date is not None:
         if isinstance(date, str):
-            year = four_digit_num(date)[0]
+            year = four_digit_num(date)
         else:
             year = date.strftime('%Y')
         sfn += f'|{year}'

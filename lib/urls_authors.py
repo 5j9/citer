@@ -186,7 +186,7 @@ def json_ld_authors(s: str) -> list[tuple[str, str]] | None:
     except JSONDecodeError:
         return
     try:
-        if type(j) is list:  # noqa: E721
+        if type(j) is list:
             ns = []
             for d in j:
                 if d['@type'] == 'Person':
@@ -195,7 +195,7 @@ def json_ld_authors(s: str) -> list[tuple[str, str]] | None:
 
         # assert type(j) is dict
         if j['@type'] == 'Person':
-            if type(j['name']) is str:  # noqa: E721
+            if type(j['name']) is str:
                 return byline_to_names(j['name'])
             # assert type(j['name']) is list
             ns = []

@@ -87,8 +87,7 @@ def citoid_data(query: str, quote=False, /) -> dict:
     if (date := get('date')) is not None:
         if (found_date := find_any_date(date)) is None:
             # e.g. date == "Nov.-Dec./1999"
-            if (m := four_digit_num(date)) is not None:
-                d['date'] = m[0]
+            d['date'] = four_digit_num(date)
         else:
             d['date'] = found_date
 

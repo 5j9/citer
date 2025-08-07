@@ -123,7 +123,9 @@ def request(
 
 rc = partial(rc, cache_pattern=False)
 
-four_digit_num = rc(r'\d\d\d\d').search
+
+def four_digit_num(s: str) -> str | None:
+    return None if (m := rc(r'\d\d\d\d').search(s)) is None else m[0]
 
 
 def fullname(first: str, last: str) -> str:
