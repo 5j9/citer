@@ -34,7 +34,6 @@ def sfn_cit_ref(
     g = d.get
     if not (cite_type := type_to_cite(g('cite_type', ''))):
         logger.warning('Unknown citation type: %s, d: %s', cite_type, d)
-        cite_type = ''
         cit = '* {{cite'
     else:
         cit = '* {{cite ' + cite_type
