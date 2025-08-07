@@ -81,7 +81,7 @@ def sfn_cit_ref(
             cit += ' | فصل=' + title
     elif title:
         cit += ' | عنوان=' + title
-        sfn += ' | ک=' + g('title')
+        sfn += f' | ک={g("title")}'
     else:
         cit += ' | عنوان='
         sfn += ' | ک='
@@ -170,9 +170,13 @@ def sfn_cit_ref(
             url = None
 
     if archive_url := g('archive-url'):
+        if archive_date := g('archive-date'):
+            archive_date = archive_date.isoformat()
+        else:
+            archive_date = ''
         cit += (
             f' | پیوند بایگانی={archive_url}'
-            f' | تاریخ بایگانی={g("archive-date").isoformat()}'
+            f' | تاریخ بایگانی={archive_date}'
             f' | پیوند مرده={("آری" if g("url-status") == "yes" else "نه")}'
         )
 
