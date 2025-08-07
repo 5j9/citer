@@ -70,7 +70,7 @@ def sfn_cit_ref(
             year = date.strftime('%Y')
         sfn += f' | {year}'
 
-    if cite_type == 'book':
+    if cite_type == 'کتاب':
         booktitle = g('booktitle') or g('container-title')
     else:
         booktitle = None
