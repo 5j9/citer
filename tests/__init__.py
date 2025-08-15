@@ -28,9 +28,9 @@ json_dump = partial(
 class FakeResponse:
     __slots__ = (
         'content',
-        'status_code',
-        'headers',
         'encoding',
+        'headers',
+        'status_code',
         'url',
     )
 
