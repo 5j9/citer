@@ -1,6 +1,6 @@
 import datetime
 
-from lib.generator_en import make_ref_name, sfn_cit_ref
+from lib.generator_en import make_ref_name, names2para, sfn_cit_ref
 
 
 def test_do_not_add_page_url():
@@ -53,3 +53,7 @@ def test_date_does_not_change_ref_name_hash():
 
 def test_ref_name_oclc_unique():
     assert make_ref_name({'oclc': '1'}.get) != make_ref_name({'oclc': '2'}.get)
+
+
+def test_names2para_single_name():
+    assert names2para([['Veṭṭaṃmāṇi']], '|', 'fn', 'ln')

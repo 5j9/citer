@@ -1,4 +1,5 @@
 import subprocess
+import sys
 from pathlib import Path
 
 from app import ALLOW_ALL_ORIGINS, BytesTuple, StartResponse, logger
@@ -54,9 +55,12 @@ def get_git_info() -> tuple[str, str, str]:
 
 def version_info(start_response: StartResponse, environ: dict) -> BytesTuple:
     """
-    Handles the /version path, displaying git commit information.
+    Handles the /version path, displaying git commit information and Python version.
     """
     commit_hash, commit_date, commit_subject = get_git_info()
+
+    # Get Python Version 🐍
+    python_version = sys.version.split()[0]
 
     status = '200 OK'
     # Use simple HTML headers for this endpoint
@@ -119,11 +123,10 @@ def version_info(start_response: StartResponse, environ: dict) -> BytesTuple:
     <body>
         <div class="container">
             <h1>Application Version Info</h1>
-            <p><span class="label">Latest Commit:</span> <span class="value">{commit_hash}</span></p>
+            <p><span class="label">Python Version:</span> <span class="value">{python_version}</span></p> <p><span class="label">Latest Commit:</span> <span class="value">{commit_hash}</span></p>
             <p><span class="label">Commit Date:</span> <span class="value">{commit_date}</span></p>
             <p><span class="label">Commit Subject:</span> <span class="value">{commit_subject}</span></p>
             <p><span class="label">Source Path:</span> <span class="value">{Path(__file__).parent.resolve()}</span></p>
-            <!-- Added GitHub Repository Link -->
             <p class="repo-link"><span class="label">GitHub Repo:</span> <span class="value"><a href="{github_url}" target="_blank">{github_url}</a></span></p>
             <p style="margin-top: 20px; font-size: 0.85em; color: #64748b;">
                 Served by: {environ.get('SERVER_SOFTWARE', 'Unknown WSGI Server')}
