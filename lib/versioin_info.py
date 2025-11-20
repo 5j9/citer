@@ -65,6 +65,8 @@ def version_info(start_response: StartResponse, environ: dict) -> BytesTuple:
         ALLOW_ALL_ORIGINS,
     ]
 
+    github_url = 'https://github.com/5j9/citer'
+
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -107,6 +109,11 @@ def version_info(start_response: StartResponse, environ: dict) -> BytesTuple:
                 color: #0f172a;
                 word-break: break-all;
             }}
+            .repo-link {{
+                margin-top: 15px;
+                padding-top: 10px;
+                border-top: 1px dashed #e2e8f0;
+            }}
         </style>
     </head>
     <body>
@@ -116,6 +123,8 @@ def version_info(start_response: StartResponse, environ: dict) -> BytesTuple:
             <p><span class="label">Commit Date:</span> <span class="value">{commit_date}</span></p>
             <p><span class="label">Commit Subject:</span> <span class="value">{commit_subject}</span></p>
             <p><span class="label">Source Path:</span> <span class="value">{Path(__file__).parent.resolve()}</span></p>
+            <!-- Added GitHub Repository Link -->
+            <p class="repo-link"><span class="label">GitHub Repo:</span> <span class="value"><a href="{github_url}" target="_blank">{github_url}</a></span></p>
             <p style="margin-top: 20px; font-size: 0.85em; color: #64748b;">
                 Served by: {environ.get('SERVER_SOFTWARE', 'Unknown WSGI Server')}
             </p>

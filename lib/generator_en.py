@@ -249,20 +249,25 @@ def sfn_cit_ref(
 
 def names2para(names, pipe, fn_parameter, ln_parameter, nofn_parameter=None):
     """Take list of names. Return the string to be appended to citation."""
+    try:
+        if len(names) == 1:
+            first, last = names[0]
+            if first or not nofn_parameter:
+                return (
+                    f'{pipe}{ln_parameter}={last}{pipe}{fn_parameter}={first}'
+                )
+            return f'{pipe}{nofn_parameter}={fullname(first, last)}'
 
-    if len(names) == 1:
-        first, last = names[0]
-        if first or not nofn_parameter:
-            return f'{pipe}{ln_parameter}={last}{pipe}{fn_parameter}={first}'
-        return f'{pipe}{nofn_parameter}={fullname(first, last)}'
-
-    s = ''
-    for c, (first, last) in enumerate(names, 1):
-        if first or not nofn_parameter:
-            s += f'{pipe}{ln_parameter}{c}={last}{pipe}{fn_parameter}{c}={first}'
-        else:
-            s += f'{pipe}{nofn_parameter}{c}={fullname(first, last)}'
-    return s
+        s = ''
+        for c, (first, last) in enumerate(names, 1):
+            if first or not nofn_parameter:
+                s += f'{pipe}{ln_parameter}{c}={last}{pipe}{fn_parameter}{c}={first}'
+            else:
+                s += f'{pipe}{nofn_parameter}{c}={fullname(first, last)}'
+        return s
+    except Exception as e:
+        logger.exception(f'{e} in names2para {names=}')
+        return ''
 
 
 def names1para(translators, pipe, para):
