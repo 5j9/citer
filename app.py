@@ -254,11 +254,18 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
     return (response_body,)
 
 
+def lazy_version_info(start_response: StartResponse, environ: dict):
+    from lib.versioin_info import version_info
+
+    return version_info(start_response, environ)
+
+
 get_handler: Callable[[str], Callable[[StartResponse, dict], BytesTuple]] = {
     f'/{CSS_PATH}.css': css,
     f'/{JS_PATH}.js': js,
     '/': root,
     '/citer.fcgi': root,  # for backward compatibility
+    '/version': lazy_version_info,  # Added the new endpoint
 }.get  # type: ignore
 
 
