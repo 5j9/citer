@@ -10,8 +10,8 @@ def test_ab1():
     """authors = 1, translators = 2, otheo = 1, isbn13"""
     assert (
         '* {{cite book | last=لانسکی | first=ویکی '
-        '| others=کی وایت (تصويرگر), فیروزه دالکی (مترجم), '
-        'and مژگان امیرفروغی (مترجم) '
+        '| others=کی وایت (تصويرگر), فیروزه دالکی (translator), '
+        'and مژگان امیرفروغی (translator) '
         '| title=101 راه برای اینکه پدر بهتری باشید '
         '| publisher=پیک ادبیات | publication-place=تهران - تهران '
         '| year=1386 | isbn=978-964-8165-81-4 | language=fa}}'
@@ -25,7 +25,7 @@ def test_ab2():
     assert (
         '* {{cite book | last1=کرسول | first1=جان | last2=پلانو‌کلارک '
         '| first2=ویکی '
-        '| others=محسن نیازی (مترجم), and عباس زارعی (مترجم) '
+        '| others=محسن نیازی (translator), and عباس زارعی (translator) '
         '| title=روش\u200cهای تحقیق تلفیقی '
         '| publisher=ثامن الحجج | publication-place=تهران - تهران '
         '| volume=1 | year=1387 | isbn=978-964-2823-35-2 | language=fa}}'
@@ -36,7 +36,9 @@ def test_ab2():
 
 def test_ab3():
     """authors = 2, translators = 0, otheo = 4, isbn13"""
-    assert (
+    assert ketabir_scr(
+        'https://ketab.ir/book/f37fad8e-8f0b-4cd9-8875-f5de0e0d86ef'
+    )[1] == (
         '* {{cite book | last1=فخررحیمی | first1=علیرضا | last2=فخررحیمی '
         '| first2=الهام '
         '| others=آرش نادرپور '
@@ -46,9 +48,7 @@ def test_ab3():
         ' آمادگی آزمون MTCNA | publisher=نشرگستر '
         '| publication-place=تهران - تهران | year=1391 '
         '| isbn=978-600-5883-43-5 | language=fa}}'
-    ) == ketabir_scr(
-        'https://ketab.ir/book/f37fad8e-8f0b-4cd9-8875-f5de0e0d86ef'
-    )[1]
+    )
 
 
 def test_ab4():
@@ -83,7 +83,7 @@ def test_ab6():
     assert ketabir_scr(
         'https://ketab.ir/book/cb1989dc-ba09-4df6-aaee-fcdbd25ad322'
     )[1] == (
-        '* {{cite book | last=مونس | first=حسین | others=حمیدرضا شیخی (مترجم) | '
+        '* {{cite book | last=مونس | first=حسین | others=حمیدرضا شیخی (translator) | '
         'title=تاریخ و تمدن مغرب | publisher=سمت | publication-place=مشهد - خراسان '
         'رضوی | volume=1 | year=1390 | isbn=978-964-530-036-2 | language=fa}}'
     )
@@ -93,7 +93,7 @@ def test_ab7():
     """1 Editor."""
     assert (
         '* {{cite book | last=دیماتیو | first=ام.رابین | editor-last=جباری | '
-        'editor-first=کریم | others=کیانوش هاشمیان (زيرنظر), and محمد کاویانی (مترجم) '
+        'editor-first=کریم | others=کیانوش هاشمیان (زيرنظر), and محمد کاویانی (translator) '
         '| title=روانشناسی سلامت به ضمیمه نگرشی بر منابع اسلامی | publisher=سمت | '
         'publication-place=تهران - تهران | volume=1 | year=1379 | '
         'isbn=978-964-459-398-7 | language=fa}}'

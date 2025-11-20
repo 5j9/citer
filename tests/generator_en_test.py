@@ -1,6 +1,6 @@
 import datetime
 
-from lib.generator_en import make_ref_name, names2para, sfn_cit_ref
+from lib.generator_en import make_ref_name, sfn_cit_ref
 
 
 def test_do_not_add_page_url():
@@ -56,4 +56,9 @@ def test_ref_name_oclc_unique():
 
 
 def test_names2para_single_name():
-    assert names2para([['Veṭṭaṃmāṇi']], '|', 'fn', 'ln')
+    assert sfn_cit_ref({'authors': [['single_name'], ['John', 'Doe']]}) == (
+        '{{sfn|single_name|Doe|p=}}',
+        '* {{cite | author1=single_name | last2=Doe | first2=John | title=}}',
+        '<ref name="o537">{{cite | author1=single_name | last2=Doe | first2=John | '
+        'title= | page=}}</ref>',
+    )

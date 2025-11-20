@@ -27,6 +27,15 @@ DIGITS_TO_EN = str.maketrans('۰۱۲۳۴۵۶۷۸۹', '0123456789')
 ALPHA_NUM = digits + ascii_lowercase
 
 
+def sanitize_names(names) -> list[tuple[str, str]] | None:
+    if names:
+        return [
+            (name[0], name[-1]) if len(name) >= 2 else ('', name[0])
+            for name in names
+            if name
+        ]
+
+
 def sfn_cit_ref(
     d: dict, date_format: str = '%Y-%m-%d', pipe: str = ' | ', /
 ) -> tuple:
@@ -52,7 +61,7 @@ def sfn_cit_ref(
         if (thesis_type := g('thesisType')) is not None:
             cit += f'{pipe}degree={thesis_type}'
 
-    if authors := g('authors'):
+    if authors := sanitize_names(g('authors')):
         cit += names2para(authors, pipe, 'first', 'last', 'author')
         # {{sfn}} only supports a maximum of four authors
         for first, last in authors[:4]:
@@ -70,20 +79,19 @@ def sfn_cit_ref(
             )
         )
 
-    if editors := g('editors'):
+    if editors := sanitize_names(g('editors')):
         cit += names2para(
             editors, pipe, 'editor-first', 'editor-last', 'editor'
         )
-    if translators := g('translators'):
+    if translators := sanitize_names(g('translators')):
         for i, (first, last) in enumerate(translators):
-            translators[i] = first, f'{last} (مترجم)'
-        # Todo: add a 'Translated by ' before name of translators?
+            translators[i] = first, f'{last} (translator)'
         others = g('others')
         if others:
-            others.extend(g('translators'))
+            others.extend(translators)
         else:
-            d['others'] = g('translators')
-    if others := g('others'):
+            d['others'] = translators
+    if others := sanitize_names(g('others')):
         cit += names1para(others, pipe, 'others')
 
     if cite_type == 'book':

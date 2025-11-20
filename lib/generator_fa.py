@@ -13,6 +13,7 @@ from lib import (
 )
 from lib.generator_en import (
     Date,
+    sanitize_names,
     sfn_cit_ref as en_citations,
 )
 from lib.language import TO_TWO_LETTER_CODE
@@ -40,7 +41,7 @@ def sfn_cit_ref(
     else:
         return en_citations(d)
 
-    if authors := g('authors'):
+    if authors := sanitize_names(g('authors')):
         cit += names2para(authors, 'نام', 'نام خانوادگی', 'نویسنده')
         sfn = '<ref>{{پک'
         for first, last in authors[:4]:
@@ -48,15 +49,15 @@ def sfn_cit_ref(
     else:
         sfn = '<ref>{{پک/بن'
 
-    if editors := g('editors'):
+    if editors := sanitize_names(g('editors')):
         cit += names2para(
             editors, 'نام ویراستار', 'نام خانوادگی ویراستار', 'ویراستار'
         )
 
-    if translators := g('translators'):
+    if translators := sanitize_names(g('translators')):
         cit += names1para(translators, 'ترجمه')
 
-    if others := g('others'):
+    if others := sanitize_names(g('others')):
         cit += names1para(others, 'دیگران')
 
     date = g('date')
