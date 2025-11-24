@@ -46,6 +46,14 @@ def clean_up_title(title: str | None) -> str | None:
     return title.translate(quotes_translatioins)
 
 
+def clean_up_website(website: str | None) -> str | None:
+    if not website:
+        return website
+    if website[:4] == 'the ':
+        website = 'The ' + website[4:]
+    return website
+
+
 def sfn_cit_ref(
     d: dict, date_format: str = '%Y-%m-%d', pipe: str = ' | ', /
 ) -> tuple:
@@ -59,7 +67,6 @@ def sfn_cit_ref(
     sfn = '{{sfn'
 
     publisher = g('publisher')
-    website = g('website')
 
     if cite_type == 'journal':
         journal = g('journal') or g('container-title')
@@ -71,6 +78,7 @@ def sfn_cit_ref(
             cit += f'{pipe}degree={thesis_type}'
 
     title = clean_up_title(g('title'))
+    website = clean_up_website(g('website'))
 
     if authors := sanitize_names(g('authors')):
         cit += names2para(authors, pipe, 'first', 'last', 'author')

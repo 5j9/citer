@@ -14,6 +14,7 @@ from lib import (
 from lib.generator_en import (
     Date,
     clean_up_title,
+    clean_up_website,
     sanitize_names,
     sfn_cit_ref as en_citations,
 )
@@ -96,7 +97,7 @@ def sfn_cit_ref(
     if journal:
         cit += ' | ژورنال=' + journal
     else:
-        website = g('website')
+        website = clean_up_website(g('website'))
         if website:
             cit += ' | وبگاه=' + website
 

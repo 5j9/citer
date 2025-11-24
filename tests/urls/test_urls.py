@@ -660,7 +660,7 @@ def test_oth8():
         '| last2=Crowcroft '
         '| first2=Orlando '
         '| title=Israel says it has shot down drone launched from Gaza '
-        '| website=the Guardian '
+        '| website=The Guardian '
         '| date=2014-07-14 '
         '| url=https://www.theguardian.com/world/2014/jul/14/'
         'israel-drone-launched-gaza-ashdod '
