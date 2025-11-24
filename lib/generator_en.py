@@ -36,6 +36,16 @@ def sanitize_names(names) -> list[tuple[str, str]] | None:
         ]
 
 
+quotes_translatioins = str.maketrans('‘’“”', '\'\'""')
+
+
+def clean_up_title(title: str | None) -> str | None:
+    # https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style/Titles_of_works#Typographic_conformity
+    if not title:
+        return title
+    return title.translate(quotes_translatioins)
+
+
 def sfn_cit_ref(
     d: dict, date_format: str = '%Y-%m-%d', pipe: str = ' | ', /
 ) -> tuple:
@@ -50,7 +60,6 @@ def sfn_cit_ref(
 
     publisher = g('publisher')
     website = g('website')
-    title = g('title')
 
     if cite_type == 'journal':
         journal = g('journal') or g('container-title')
@@ -60,6 +69,8 @@ def sfn_cit_ref(
     if cite_type == 'thesis':
         if (thesis_type := g('thesisType')) is not None:
             cit += f'{pipe}degree={thesis_type}'
+
+    title = clean_up_title(g('title'))
 
     if authors := sanitize_names(g('authors')):
         cit += names2para(authors, pipe, 'first', 'last', 'author')

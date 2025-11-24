@@ -635,7 +635,7 @@ def test_oth7():
         '* {{cite web '
         '| last=Chandler '
         '| first=David L. '
-        '| title=Traffic lights: There’s a better way '
+        "| title=Traffic lights: There's a better way "
         '| website=MIT News '
         '| date=2014-07-07 '
         '| url=http://news.mit.edu/2014/'
@@ -855,7 +855,7 @@ def test_language_not_de_csbc():
         '{{cite web '
         '| last=Martin '
         '| first=Emmie '
-        '| title=In San Francisco, households earning $117,000 qualify as ‘low income’ '
+        "| title=In San Francisco, households earning $117,000 qualify as 'low income' "
         '| website=CNBC '
         '| date=2018-06-28 '
         '| url=https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html '

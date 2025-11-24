@@ -13,6 +13,7 @@ from lib import (
 )
 from lib.generator_en import (
     Date,
+    clean_up_title,
     sanitize_names,
     sfn_cit_ref as en_citations,
 )
@@ -75,7 +76,7 @@ def sfn_cit_ref(
     else:
         booktitle = None
 
-    title = g('title')
+    title = clean_up_title(g('title'))
     if booktitle:
         cit += ' | عنوان=' + booktitle
         if title:
