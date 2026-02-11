@@ -1,0 +1,25 @@
+{
+	"encoding": "utf-8",
+	"headers": {
+		"age": "9057",
+		"cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+		"cf-cache-status": "HIT",
+		"cf-ray": "9cc1a14b2ea49122-FRA",
+		"content-encoding": "br",
+		"content-type": "text/html; charset=utf-8",
+		"date": "Wed, 11 Feb 2026 06:01:09 GMT",
+		"last-modified": "Wed, 11 Feb 2026 03:30:11 GMT",
+		"link": "</_next/static/media/10cf2e4a3d7dc47d-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/11f8bd6e997f4bb9-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/1aebf553415175ee-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/26291edfbbce13d5-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/37786be940ec402b-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\"",
+		"nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+		"report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=7oNFWJaf0eHZ8UVvCEazhDLVje5IIJ2CAzbrFt0QRwhnb0XKfbTc543Xr8HNJiz5WueomiKo7gjJSoLwJgsNTitIpYxrJpoz5yL6GpJfhXxO9LVk4lFXZvgsygtLCys%3D\"}]}",
+		"server": "cloudflare",
+		"strict-transport-security": "max-age=63072000",
+		"vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, accept-encoding",
+		"x-matched-path": "/salife/[...slug]",
+		"x-powered-by": "Next.js",
+		"x-vercel-cache": "MISS",
+		"x-vercel-id": "fra1::sfo1::sm6wb-1770780610968-a7c67773d80e"
+	},
+	"status_code": 200,
+	"url": "https://www.indailysa.com.au/salife/out-about/2026/02/11/minda-womens-golf-day"
+}

@@ -510,7 +510,7 @@ def url_data(
                 authors,
                 home_list,
                 home_thread,
-            )
+            ).partition(',')[0]
     if (
         title := find_title(
             html, html_title, hostname, authors, home_list, home_thread

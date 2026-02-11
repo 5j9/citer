@@ -976,3 +976,12 @@ def test_citoid_thesis_invalid_doi(url_text: Mock):
 @patch('lib.urls.request', side_effect=CurlError('<test>'))
 def test__analyze_home_stream_request_raises_connect_error(_request_mock):
     assert _analyze_home(('https', 'example.com'), []) is None
+
+
+def test_comma_in_site_name():
+    scr = urls_scr(
+        'https://www.indailysa.com.au/salife/out-about/2026/02/11/minda-womens-golf-day'
+    )
+    assert scr[1][:-12] == (
+        "* {{cite web | title=Minda Women's Golf Day | website=InDaily | date=2026-02-11 | url=https://www.indailysa.com.au/salife/out-about/2026/02/11/minda-womens-golf-day | ref={{sfnref|InDaily|2026}} | access-date="
+    )
