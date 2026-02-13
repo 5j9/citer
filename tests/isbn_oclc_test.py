@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from curl_cffi import CurlError
 from pytest import raises
 
 from lib.commons import ReturnError, data_to_sfn_cit_ref, isbn_10or13_search
@@ -87,9 +88,8 @@ def test_citoid_only():  # 31
 
 
 def test_invalid_oclc():
-    with raises(Exception) as e:
+    with raises(CurlError) as e:
         oclc_data('99999999999999')
-    assert e.value.args == ('status code was not 2xx',)
 
 
 def test_oclc_with_issn():

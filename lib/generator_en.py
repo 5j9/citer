@@ -43,7 +43,7 @@ def clean_up_title(title: str | None) -> str | None:
     # https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style/Titles_of_works#Typographic_conformity
     if not title:
         return title
-    return title.translate(quotes_translatioins)
+    return title.partition('|')[0].strip().translate(quotes_translatioins)
 
 
 def clean_up_website(website: str | None) -> str | None:

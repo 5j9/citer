@@ -1,6 +1,7 @@
 from json import loads
 from threading import Thread
 
+from curl_cffi import CurlError
 from isbnlib import info as isbn_info, mask as isbn_mask
 from langid import classify
 from regex import search
@@ -164,15 +165,21 @@ def worldcat_data(url: str) -> dict:
 
 
 def oclc_data(oclc: str) -> dict:
-    r = request(
-        'https://search.worldcat.org/api/search-item/' + oclc,
-        headers={
-            'Referer': 'https://search.worldcat.org/',
-            'Cookie': '',
-            'User-Agent': 'curl/8.9.0',
-            'Accept': '*/*',
-        },
-    )
+    try:
+        r = request(
+            f'https://search.worldcat.org/api/search-item/{oclc}',
+            headers={
+                'Referer': 'https://search.worldcat.org/',
+                'Cookie': '',
+                'User-Agent': 'curl/8.9.0',
+                'Accept': '*/*',
+            },
+        )
+    except CurlError:
+        d = citoid_data(f'https://www.worldcat.org/oclc/{oclc}', True)
+        d['oclc'] = oclc
+        return d
+
     j = loads(r.content)
     if j is None:  # invalid OCLC number
         raise ReturnError(
