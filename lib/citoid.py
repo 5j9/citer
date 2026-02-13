@@ -26,7 +26,7 @@ rm_non_numeric = partial(rc(r'\D').sub, '')
 
 
 def citoid_data(query: str, quote=False, /) -> dict:
-    if quote is True:
+    if quote:
         query = quote_plus(query)
     # https://www.mediawiki.org/wiki/Citoid/API
     r = request(
