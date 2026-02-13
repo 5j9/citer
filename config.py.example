@@ -1,4 +1,6 @@
-LANG = 'en'
+from typing import Literal
+
+LANG: Literal['fa', 'en'] = 'en'
 STATIC_PATH = 'static/' + LANG
 USER_AGENT = 'https://github.com/5j9/citer'
 
