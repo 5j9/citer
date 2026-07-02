@@ -117,6 +117,7 @@ def request(
         return enhanced_stream_ctx(ctx)
 
     r = mortal_session().request(method, url, headers=headers, **kwargs)
+    assert r is not None
     r.raise_for_status()
     return r
 
