@@ -18,13 +18,13 @@ from lib.doi import doi_data, doi_search
 from lib.googlebooks import google_books_data
 from lib.html import (
     ALLOW_ALL_ORIGINS,
-    CSS,
     CSS_HEADERS,
     CSS_PATH,
-    DEFAULT_SCR,
-    JS,
     JS_HEADERS,
     JS_PATH,
+    css,
+    default_scr,
+    js,
     scr_to_html,
 )
 from lib.isbn_oclc import isbn_data, oclc_data, worldcat_data
@@ -121,14 +121,14 @@ BytesTuple = tuple[bytes]
 StartResponse = Callable[[str, list[tuple[str, str]]], Callable]
 
 
-def css(start_response: StartResponse, _) -> BytesTuple:
+def css_response(start_response: StartResponse, _) -> BytesTuple:
     start_response('200 OK', [*CSS_HEADERS])
-    return (CSS,)
+    return (css,)
 
 
-def js(start_response: StartResponse, _) -> BytesTuple:
+def js_response(start_response: StartResponse, _) -> BytesTuple:
     start_response('200 OK', [*JS_HEADERS])
-    return (JS,)
+    return (js,)
 
 
 def page_does_not_exist(start_response: StartResponse, _) -> BytesTuple:
@@ -221,7 +221,7 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
     ) = parse_params(environ)
     if not user_input:
         response_body = scr_to_html(
-            DEFAULT_SCR, date_format, pipe_format, input_type
+            default_scr, date_format, pipe_format, input_type
         ).encode()
         start_response('200 OK', [*http_headers])
         return (response_body,)
@@ -261,8 +261,8 @@ def lazy_version_info(start_response: StartResponse, environ: dict):
 
 
 get_handler: Callable[[str], Callable[[StartResponse, dict], BytesTuple]] = {
-    f'/{CSS_PATH}.css': css,
-    f'/{JS_PATH}.js': js,
+    f'/{CSS_PATH}.css': css_response,
+    f'/{JS_PATH}.js': js_response,
     '/': root,
     '/citer.fcgi': root,  # for backward compatibility
     '/version': lazy_version_info,

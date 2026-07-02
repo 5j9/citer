@@ -8,32 +8,32 @@ from config import LANG, STATIC_PATH
 
 htmldir = dirname(__file__)
 
-CSS = open(f'{htmldir}/common.css', 'rb').read()
+css = open(f'{htmldir}/common.css', 'rb').read()
 if LANG == 'fa':
-    CSS = CSS.replace(b'right;', b'left;')
+    css = css.replace(b'right;', b'left;')
 
 ALLOW_ALL_ORIGINS = ('Access-Control-Allow-Origin', '*')
 CACHE_FOREVER = ('Cache-Control', 'immutable, public, max-age=31536000')
 CSS_HEADERS = (
     ALLOW_ALL_ORIGINS,
     ('Content-Type', 'text/css; charset=UTF-8'),
-    ('Content-Length', str(len(CSS))),
+    ('Content-Length', str(len(css))),
     CACHE_FOREVER,
 )
 
-JS = open(f'{htmldir}/common.js', 'rb').read()
+js = open(f'{htmldir}/common.js', 'rb').read()
 if LANG == 'en':
-    JS += open(f'{htmldir}/{LANG}.js', 'rb').read()
+    js += open(f'{htmldir}/{LANG}.js', 'rb').read()
 # Invalidate cache after css change.
 JS_HEADERS = (
     ALLOW_ALL_ORIGINS,
     ('Content-Type', 'application/javascript; charset=UTF-8'),
-    ('Content-Length', str(len(JS))),
+    ('Content-Length', str(len(js))),
     CACHE_FOREVER,
 )
 
-JS_PATH = STATIC_PATH + str(adler32(JS))
-CSS_PATH = STATIC_PATH + str(adler32(CSS))
+JS_PATH = STATIC_PATH + str(adler32(js))
+CSS_PATH = STATIC_PATH + str(adler32(css))
 # None-zero-padded day directive is os dependant ('%#d' or '%-d')
 # See http://stackoverflow.com/questions/904928/
 HTML_SUBST = Template(
@@ -70,9 +70,9 @@ def scr_to_html(
 
 # Predefined responses
 if LANG == 'en':
-    DEFAULT_SCR = ('Generated citation will appear here...', '', '')
+    default_scr = ('Generated citation will appear here...', '', '')
 
-    HTTPERROR_SCR = (
+    httperror_scr = (
         'HTTP error:',
         'One or more of the web resources required to '
         'create this citation are not accessible at this moment.',
@@ -81,8 +81,8 @@ if LANG == 'en':
 
 else:  # LANG == 'fa'
     # Predefined responses
-    DEFAULT_SCR = ('یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '')
-    HTTPERROR_SCR = (
+    default_scr = ('یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '')
+    httperror_scr = (
         'خطای اچ‌تی‌تی‌پی:',
         'یک یا چند مورد از منابع اینترنتی مورد '
         'نیاز برای ساخت این یادکرد در این لحظه '
