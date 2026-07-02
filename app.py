@@ -211,6 +211,16 @@ def parse_params(
 
 
 def root(start_response: StartResponse, environ: dict) -> BytesTuple:
+    # 1. Anti-bot validation for data processing requests
+    if environ.get('REQUEST_METHOD') == 'POST':
+        # WSGI prefixes custom client HTTP headers with 'HTTP_' and converts them to uppercase
+        if (
+            environ.get('HTTP_X_GATEWAY_VALIDATION')
+            != 'CITER_IS_NOT_INTENDED_FOR_BOTS'
+        ):
+            start_response('403 Forbidden', [('Content-Type', 'text/plain')])
+            return (b'Forbidden: Bot activity detected.',)
+
     (
         date_format,
         pipe_format,
@@ -219,6 +229,12 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
         headers,
         scr_to_resp_body,
     ) = parse_params(environ)
+
+    # 2. Deflect GET queries. Force user_input to empty string so the server
+    # only delivers the shell page, leaving query processing to client-side JS.
+    if environ.get('REQUEST_METHOD') == 'GET':
+        user_input = ''
+
     if not user_input:
         response_body = scr_to_html(
             default_scr, date_format, pipe_format, input_type
