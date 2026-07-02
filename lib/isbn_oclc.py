@@ -42,7 +42,7 @@ def isbn_data(
             isbn = m[0]
         else:
             # search for isbn10
-            isbn = isbn10_search(isbn_container_str)[0]  # type: ignore
+            isbn = isbn10_search(isbn_container_str)[0]  # pyright: ignore[reportOptionalSubscript]
 
     if (iranian_isbn := isbn_info(isbn) == 'Iran') is True:
         ketabir_result_list = []
@@ -76,7 +76,7 @@ def isbn_data(
 
     if iranian_isbn is True:
         ketabir_thread.join()  # type: ignore
-        if ketabir_result_list:  # type: ignore
+        if ketabir_result_list:  # pyright: ignore[reportPossiblyUnboundVariable]
             ketabir_dict = ketabir_result_list[0]
             d = combine_dicts(ketabir_dict, d)
 

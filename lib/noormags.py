@@ -27,7 +27,7 @@ def noormags_data(url: str) -> dict:
 def get_bibtex(noormags_url):
     """Get BibTex file content from a noormags_url. Return as string."""
     page_text = request(noormags_url).text
-    article_id = BIBTEX_ARTICLE_ID_SEARCH(page_text)[0]  # type: ignore
+    article_id = BIBTEX_ARTICLE_ID_SEARCH(page_text)[0]  # pyright: ignore[reportOptionalSubscript]
     url = 'http://www.noormags.ir/view/fa/citation/bibtex/' + article_id
     return request(url).text
 
@@ -35,7 +35,7 @@ def get_bibtex(noormags_url):
 def get_ris(noormags_url):
     """Get ris file content from a noormags url. Return as string."""
     page_text = request(noormags_url).text
-    article_id = RIS_ARTICLE_ID_SEARCH(page_text)[0]  # type: ignore
+    article_id = RIS_ARTICLE_ID_SEARCH(page_text)[0]  # pyright: ignore[reportOptionalSubscript]
     return request(
         'http://www.noormags.ir/view/fa/citation/ris/' + article_id
     ).text
