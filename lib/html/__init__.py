@@ -59,9 +59,11 @@ def scr_to_html(
     scr: tuple, date_format: str, pipe_format: str, input_type: str
 ):
     """Insert sfn_cit_ref into the HTML template and return response_body."""
-    sfn, cit, ref = [escape(i) for i in scr]
+    sfn, cit, ref = scr
+    # Extract the template part from <ref name="xxx">template</ref>
+    cit_only = ref.split('>', 1)[1].rsplit('</ref>', 1)[0] if ref else ''
     return (
-        HTML_SUBST(shortened=sfn + '\n\n' + cit, named_ref=ref)
+        HTML_SUBST(shortened=escape(sfn) + '\n\n' + escape(cit), named_ref=escape(ref), cit_only=escape(cit_only))
         .replace(f'{date_format}"', f'{date_format}" checked', 1)
         .replace(f'{pipe_format}"', f'{pipe_format}" checked', 1)
         .replace(f'="{input_type}"', f'="{input_type}" selected', 1)
