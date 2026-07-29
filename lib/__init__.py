@@ -68,7 +68,7 @@ def mortal_session() -> Session:
     return session
 
 
-Method = Literal['GET'] | Literal['POST'] | Literal['HEAD']
+Method = Literal['GET', 'POST', 'HEAD']
 
 
 @overload

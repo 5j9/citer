@@ -55,9 +55,9 @@ def citoid_data(query: str, quote=False, /) -> dict:
     elif contributors is not None:
         d['authors'] = contributors
 
-    if (publisher := get('publisher')) is not None:
-        d['publisher'] = publisher
-    elif (publisher := get('university')) is not None:
+    if (publisher := get('publisher')) is not None or (
+        publisher := get('university')
+    ) is not None:
         d['publisher'] = publisher
 
     if (cite_type := d['cite_type']) == 'journalArticle':

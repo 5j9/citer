@@ -175,7 +175,7 @@ original_request = lib.request
 lib.request = fake_request
 
 # this import needs to placed after Session patch
-from lib.pubmed import NCBI_URL  # noqa
+from lib.pubmed import NCBI_URL
 
 if REMOVE_UNUSED_TESTDATA is True:
     all_testdata_files = {f.name for f in TESTDATA.iterdir()}

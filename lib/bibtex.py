@@ -40,8 +40,7 @@ def parse(bibtex: str) -> dict:
         d['authors'] = names = []
         names_append = names.append
         for author in author.split(' and '):
-            if author.endswith(' and'):
-                author = author[:-4]
+            author = author.removesuffix(' and')
             if not author:
                 continue
             names_append(first_last(author))
@@ -51,8 +50,7 @@ def parse(bibtex: str) -> dict:
         d['editors'] = names = []
         names_append = names.append
         for editor in editor.split(' and '):
-            if editor.endswith(' and'):
-                editor = editor[:-4]
+            editor = editor.removesuffix(' and')
             if not editor:
                 continue
             names_append(first_last(editor))

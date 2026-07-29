@@ -26,8 +26,6 @@ RM_DASH_SPACE = str.maketrans('', '', '- ')
 class IsbnError(Exception):
     """Raise when bibliographic information is not available."""
 
-    pass
-
 
 def isbn_data(
     isbn_container_str: str,

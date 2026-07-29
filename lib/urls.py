@@ -122,8 +122,6 @@ LANG_SEARCH = rc(r'\slang=["\']?([a-z]{2})\b').search
 class ContentTypeError(ValueError):
     """Raise when content-type header does not start with 'text/'."""
 
-    pass
-
 
 class ContentLengthError(ValueError):
     """Raise when content-length header indicates a very long content."""
@@ -378,7 +376,7 @@ def _analyze_home(parsed_url: tuple, home_list: HomeList) -> None:
         ContentTypeError,
         ContentLengthError,
     ):
-        return None
+        return
 
     if m := SITE_NAME_SEARCH(html):
         home_list[0] = m['result']
