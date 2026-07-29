@@ -30,6 +30,7 @@ ignore = [
     'BLE001', # blind-except
     'DTZ', # flake8-datetimez
     'E721', # Do not compare types, use `isinstance()`
+    'PLE2502', # bidirectional-unicode
     'PLW1510', # subprocess-run-without-check
     'RUF001', # ambiguous-unicode-character-string
     'RUF002', # ambiguous-unicode-character-docstring
