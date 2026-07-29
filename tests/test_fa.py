@@ -119,7 +119,7 @@ def test_google_books_ending_page():
     r = googlebooks_scr(
         'https://www.google.com/books/edition/So_You_Want_to_Sing_World_Music/OlCwDwAAQBAJ?hl=en&gbpv=1&dq=Darya+Dadvar&pg=PA293&printsec=frontcover'
     )[2]
-    assert r[-19:] == '| صفحه=293}}‏</ref>'
+    assert r[-19:] == '| صفحه=293}}\u200f</ref>'
 
 
 def test_google_books_1():
