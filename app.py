@@ -144,6 +144,8 @@ def page_does_not_exist(start_response: StartResponse, _) -> BytesTuple:
 def echo(url: str, /):
     try:
         url, text = url_text(url)
+    except CurlError as e:
+        url, text = type(e).__name__, f'CurlError code: {e.code}'
     except Exception as e:
         url, text = type(e).__name__, ''
     raise ReturnError(url, '', text)
