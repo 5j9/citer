@@ -62,7 +62,7 @@ def copy_config():
                 b"(USER_AGENT = '.*)'\n",
                 rb'\1 v' + committer_date + b"'\n",
                 (HOME / '.citer_config').read_bytes(),
-                1,
+                count=1,
             )
         )
 
