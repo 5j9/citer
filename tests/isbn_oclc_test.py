@@ -88,7 +88,7 @@ def test_citoid_only():  # 31
 
 
 def test_invalid_oclc():
-    with raises(CurlError) as e:
+    with raises(CurlError):
         oclc_data('99999999999999')
 
 

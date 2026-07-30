@@ -46,7 +46,7 @@ def ncbi(type_: str, id_: str) -> dict:
     """Return the NCBI data for the given id_. PMC"""
     try:
         return citoid_data(f'PMC{id_}' if type_ == 'pmcid' else id_)
-    except Exception:
+    except Exception:  # noqa: S110
         pass
     # According to https://www.ncbi.nlm.nih.gov/pmc/tools/get-metadata/
     if type_ == 'pmid':

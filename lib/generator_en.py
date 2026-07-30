@@ -300,9 +300,7 @@ def names2para(names, pipe, fn_parameter, ln_parameter, nofn_parameter=None):
 def names1para(translators, pipe, para):
     """Take list of names. Return the string to be appended to citation."""
     s = f'{pipe}{para}='
-    c = 0
-    for first, last in translators:
-        c += 1
+    for c, (first, last) in enumerate(translators, 1):
         if c == 1:
             s += fullname(first, last)
         elif c == len(translators):

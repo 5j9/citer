@@ -39,21 +39,21 @@ def parse(bibtex: str) -> dict:
     if author := g('author'):
         d['authors'] = names = []
         names_append = names.append
-        for author in author.split(' and '):
-            author = author.removesuffix(' and')
-            if not author:
+        for auth in author.split(' and '):
+            auth = auth.removesuffix(' and')
+            if not auth:
                 continue
-            names_append(first_last(author))
+            names_append(first_last(auth))
         del d['author']
     # editor, not tested, just a copy of author
     if editor := g('editor'):
         d['editors'] = names = []
         names_append = names.append
-        for editor in editor.split(' and '):
-            editor = editor.removesuffix(' and')
-            if not editor:
+        for ed in editor.split(' and '):
+            ed = ed.removesuffix(' and')
+            if not ed:
                 continue
-            names_append(first_last(editor))
+            names_append(first_last(ed))
         del d['editor']
     if pages := g('pages'):
         d['page'] = pages.replace(' ', '').replace('--', '–').replace('-', '–')

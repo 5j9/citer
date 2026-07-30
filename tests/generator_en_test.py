@@ -59,8 +59,7 @@ def test_names2para_single_name():
     assert sfn_cit_ref({'authors': [['single_name'], ['John', 'Doe']]}) == (
         '{{sfn|single_name|Doe|p=}}',
         '* {{cite | author1=single_name | last2=Doe | first2=John | title=}}',
-        '<ref name="o537">{{cite | author1=single_name | last2=Doe | first2=John | '
-        'title= | page=}}</ref>',
+        '<ref name="o537">{{cite | author1=single_name | last2=Doe | first2=John | title= | page=}}</ref>',
     )
 
 
