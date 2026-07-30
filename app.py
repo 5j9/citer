@@ -141,7 +141,7 @@ def page_does_not_exist(start_response: StartResponse, _) -> BytesTuple:
     return (b'404 not found',)
 
 
-def echo(url: str, _: str, /):
+def echo(url: str, /):
     try:
         url, text = url_text(url)
     except Exception as e:
