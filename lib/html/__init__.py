@@ -74,8 +74,10 @@ if LANG == 'en':
 
     httperror_scr = (
         'HTTP error:',
-        'One or more of the web resources required to '
-        'create this citation are not accessible at this moment.',
+        (
+            'One or more of the web resources required to '
+            'create this citation are not accessible at this moment.'
+        ),
         '',
     )
 
@@ -84,8 +86,10 @@ else:  # LANG == 'fa'
     default_scr = ('یادکرد ساخته‌شده اینجا نمایان خواهد شد...', '', '')
     httperror_scr = (
         'خطای اچ‌تی‌تی‌پی:',
-        'یک یا چند مورد از منابع اینترنتی مورد '
-        'نیاز برای ساخت این یادکرد در این لحظه '
-        'در دسترس نیستند و یا ورودی نامعتبر است.',
+        (
+            'یک یا چند مورد از منابع اینترنتی مورد '
+            'نیاز برای ساخت این یادکرد در این لحظه '
+            'در دسترس نیستند و یا ورودی نامعتبر است.'
+        ),
         '',
     )
