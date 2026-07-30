@@ -145,7 +145,10 @@ def echo(url: str, /):
     try:
         url, text = url_text(url)
     except CurlError as e:
-        url, text = type(e).__name__, f'CurlError code: {e.code}'
+        # Get the full traceback as a string
+        import traceback
+
+        url, text = f'{e!r}', traceback.format_exc()
     except Exception as e:
         url, text = type(e).__name__, ''
     raise ReturnError(url, '', text)
