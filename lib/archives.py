@@ -50,13 +50,16 @@ def _archive_data(archive_url: str, m: Match, archive_html: str):
         ):
             # and original title is the same as archive title
             d |= og_d
+            if d['publisher']:
+                d['website'] = None
             d['url-status'] = 'live'
         else:
             # otherwise title does not match, meaning that the content
             # probably has changed and the original data cannot be trusted
             d['url-status'] = 'unfit'
     else:
-        d['website'] = urlparse(original_url).hostname.removeprefix('www.')  # type: ignore
+        if not d['publisher']:
+            d['website'] = urlparse(original_url).hostname.removeprefix('www.')  # type: ignore
         d['url-status'] = 'dead'
     return d
 

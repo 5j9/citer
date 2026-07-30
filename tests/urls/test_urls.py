@@ -105,7 +105,7 @@ def test_huffingtonpost1():
         '| first=Annelise '
         '| title=When Killer Whales Kill: Why the movie'
         ' "Blackfish" Should Sink Captive Whale Programs '
-        '| website=The Huffington Post '
+        '| publisher=The Huffington Post '
         '| date=2013-08-01 '
         '| url=http://www.huffingtonpost.ca/annelise-sorg/'
         'blackfish-killer-whale-seaworld_b_3686306.html '
@@ -126,7 +126,7 @@ def test_huffingtonpost2():
         '| first=Jeremy '
         "| title=Beyond Obama's Plan: "
         'A New Economic Vision for Addressing Climate Change '
-        '| website=The Huffington Post '
+        '| publisher=The Huffington Post '
         '| date=2014-06-02 '
         '| url=http://www.huffingtonpost.com/jeremy-rifkin/'
         'obamas-climate-change-plan_b_5427656.html '
@@ -256,7 +256,7 @@ def test_bbc1():
     ct = (
         '* {{cite web '
         "| title=US 'received Qatar assurances' on Afghan prisoner deal "
-        '| website=BBC News '
+        '| publisher=BBC News '
         '| date=2014-06-01 '
         '| url=http://www.bbc.com/news/world-asia-27653361 '
         '| ref={{sfnref|BBC News|2014}} '
@@ -272,7 +272,7 @@ def test_bbc2():
         '| last=Gage '
         '| first=Suzi '
         '| title=Sea otter return boosts ailing seagrass in California '
-        '| website=BBC News '
+        '| publisher=BBC News '
         '| date=2013-08-26 '
         '| url=http://www.bbc.com/news/science-environment-23814524 '
         '| access-date='
@@ -290,7 +290,7 @@ def test_bbc3():
         '| last=Gage '
         '| first=Suzi '
         '| title=Sea otter return boosts ailing seagrass in California '
-        '| website=BBC News '
+        '| publisher=BBC News '
         '| date=2013-08-26 '
         '| url=http://www.bbc.com/news/science-environment-23814524 '
         '| access-date='
@@ -338,7 +338,7 @@ def test_bbc6():
         '| last=Amos '
         '| first=Jonathan '
         '| title=European Space Agency picks Plato planet-hunting mission '
-        '| website=BBC News '
+        '| publisher=BBC News '
         '| date=2014-02-20 '
         '| url=http://www.bbc.com/news/science-environment-26267918 '
         '| access-date='
@@ -589,7 +589,7 @@ def test_oth4():
         '| first=Tia '
         "| title='Revolutionary' Physics:"
         ' Do Sterile Neutrinos Lurk in the Universe? '
-        '| website=Live Science '
+        '| publisher=Live Science '
         '| date=2014-07-01 '
         '| url=http://www.livescience.com/46619-sterile-neutrino-experiment-beginning.html?cmpid=514645_20140702_27078936 '
         '| access-date='
@@ -679,7 +679,7 @@ def test_oth10():
         '| first2=David '
         '| title='
         'Woman who lost brother on MH370 mourns relatives on board MH17 '
-        '| website=The Times & The Sunday Times '
+        '| publisher=The Times '
         '| date=2014-07-18 '
         '| url=https://www.thetimes.co.uk/article/woman-who-lost-brother-on-mh370-mourns-relatives-on-board-mh17-r07q5rwppl0 '
         '| access-date='
@@ -789,7 +789,7 @@ def test_empty_meta_author_content():
     assert (
         '* {{cite web '
         "| title=UAE's Enoc pays Iran $4 billion in oil dues "
-        '| website=Al Jazeera '
+        '| publisher=Al Jazeera '
         '| date=2017-05-29 '
         '| url=http://www.aljazeera.com/news/2017/05/uae-enoc-pays-iran-4-billion-oil-dues-170529171315570.html '
         '| ref={{sfnref|Al Jazeera|2017}} '
@@ -839,7 +839,7 @@ def test_abc_author():
     assert (
         '* {{cite web | last=Ferguson | first=Kathleen '
         '| title=Glow worms in Wollemi National Park survived Gospers Mountain bushfire '
-        '| website=ABC News '
+        '| publisher=ABC News '
         '| date=2020-09-06 | url=https://www.abc.net.au/news/2020-09-06/'
         'glow-worms-in-wollemi-national-park-survived-summer-bushfire/'
         '12634762 | access-date='
@@ -856,7 +856,7 @@ def test_language_not_de_csbc():
         '| last=Martin '
         '| first=Emmie '
         "| title=In San Francisco, households earning $117,000 qualify as 'low income' "
-        '| website=CNBC '
+        '| publisher=CNBC '
         '| date=2018-06-28 '
         '| url=https://www.cnbc.com/2018/06/28/families-earning-117000-qualify-as-low-income-in-san-francisco.html '
         '| access-date='
@@ -871,7 +871,7 @@ def test_language_not_zh():
         '| last=Jonscher '
         '| first=Samantha '
         "| title=Malcolm Abbott's domestic violence past shows 'urgent action' required to support First Nations "
-        '| website=ABC News '
+        '| publisher=ABC News '
         '| date=2022-05-14 '
         '| url=https://www.abc.net.au/news/2022-05-15/malcolm-abbott-domestic-violence-prevention-fails/101059440 '
         '| access-date='
@@ -922,7 +922,7 @@ def test_find_website_meta_pipe():
         'https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html'
     )
     assert scr[1][:-12] == (
-        '* {{cite web | last=Хмілевська | first=Вікторія | title=Очільник Херсонської ОВА: Середній рівень підтоплення на ранок | website=Зеркало недели | date=2023-06-08 | url=https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html | language=uk | access-date='
+        '* {{cite web | last=Хмілевська | first=Вікторія | title=Очільник Херсонської ОВА: Середній рівень підтоплення на ранок | publisher=Zn.ua | date=2023-06-08 | url=https://zn.ua/ukr/war/ochilnik-khersonskoji-ova-serednij-riven-pidtoplennja-na-ranok-5-6-metra-evakujovano-majzhe-2-tisjachi-ljudej-.html | language=uk | access-date='
     )
 
 
@@ -932,7 +932,7 @@ def test_pipe_in_home_title_as_website():
         'https://babel.ua/en/news/94854-russia-submitted-a-statement-against-ukraine-to-the-international-criminal-court-kyiv-is-accused-of-destroying-the-kakhovka-hpp'
     )
     assert scr[1][:-12] == (
-        '* {{cite web | last=Telishevska | first=Sofiia | title=Russia submitted a statement against Ukraine to the International Criminal Court. Kyiv is accused of destroying the Kakhovka HPP | website=Бабель  | date=2023-06-08 | url=https://babel.ua/en/news/94854-russia-submitted-a-statement-against-ukraine-to-the-international-criminal-court-kyiv-is-accused-of-destroying-the-kakhovka-hpp | access-date='
+        '* {{cite web | last=Telishevska | first=Sofiia | title=Russia submitted a statement against Ukraine to the International Criminal Court. Kyiv is accused of destroying the Kakhovka HPP | publisher=Babel | date=2023-06-08 | url=https://babel.ua/en/news/94854-russia-submitted-a-statement-against-ukraine-to-the-international-criminal-court-kyiv-is-accused-of-destroying-the-kakhovka-hpp | access-date='
     )
 
 

@@ -22,7 +22,7 @@ def test_live_og_link():
         '| first=Hunter '
         '| title=LOOK: Bieber Fan Had $100K Worth Of Plastic Surgery To '
         'Look Like His Idol '
-        '| website=The Huffington Post '
+        '| publisher=The Huffington Post '
         '| date=2013-10-19 '
         '| url=http://www.huffingtonpost.com/2013/10/19/'
         'plastic-surgery-justin-bieber-100k_n_4128563.html?'

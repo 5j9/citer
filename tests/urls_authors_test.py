@@ -109,11 +109,7 @@ def test_byline_to_names_schema_author():
 def test_authors_meta_tag_with_no_quote():  # 28
     # <meta property=article:author content="Brian Truitt"/>
     assert (
-        '{{cite web | last=Truitt | first=Brian '
-        "| title='Star Wars': Disney+ switches up controversial "
-        'Han Solo/Greedo scene | website=USA TODAY | date=2019-11-12 '
-        '| url=https://www.usatoday.com/story/entertainment/movies/2019/11/12/star-wars-disney-plus-changes-controversial-han-solo-greedo-scene/2576097001/ '
-        '| access-date='
+        """{{cite web | last=Truitt | first=Brian | title='Star Wars': Disney+ switches up controversial Han Solo/Greedo scene | publisher=USA TODAY | date=2019-11-12 | url=https://www.usatoday.com/story/entertainment/movies/2019/11/12/star-wars-disney-plus-changes-controversial-han-solo-greedo-scene/2576097001/ | access-date="""
     ) == urls_scr(
         'https://www.usatoday.com/story/entertainment/movies/2019/11/12/star-wars-disney-plus-changes-controversial-han-solo-greedo-scene/2576097001/'
     )[1][2:-12]
