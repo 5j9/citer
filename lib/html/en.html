@@ -10,31 +10,70 @@
 
 <body>
 	<form id="form">
-		<select class="input-legend" name="input_type" id="input_type" onchange="onInputTypeSelect();">
-			<option value="url-doi-isbn">URL/DOI/ISBN</option>
-			<option value="pmid">PMID</option>
-			<option value="pmcid">PMCID</option>
-			<option value="oclc">OCLC Number</option>
-		</select>:
+		<fieldset class="input-legend">
+			<legend>Input type:</legend>
+			<label>
+				<input type="radio" name="input_type" value="url-doi-isbn" checked onchange="onInputTypeSelect()">
+				URL/DOI/ISBN
+			</label>
+			<label>
+				<input type="radio" name="input_type" value="pmid" onchange="onInputTypeSelect()">
+				PMID
+			</label>
+			<label>
+				<input type="radio" name="input_type" value="pmcid" onchange="onInputTypeSelect()">
+				PMCID
+			</label>
+			<label>
+				<input type="radio" name="input_type" value="oclc" onchange="onInputTypeSelect()">
+				OCLC Number
+			</label>
+		</fieldset>
+
 		<div id="inputs">
 			<input id="user_input" name="user_input" autofocus>
 			<input type="submit" id="submit" value="Submit">
 		</div>
-		<p class="input-legend">Date format:</p>
-		<input type="radio" name="dateformat" value="%Y-%m-%d" id="ymd" onclick="onDateChange()">2020-01-01
-		<input type="radio" name="dateformat" value="%B %{d}, %Y" id="bbdy" onclick="onDateChange()">January 1, 2020
-		<input type="radio" name="dateformat" value="%b %{d}, %Y" id="bdy" onclick="onDateChange()">Jan 1, 2020
-		<input type="radio" name="dateformat" value="%{d} %B %Y" id="dbby" onclick="onDateChange()">1 January 2020
-		<input type="radio" name="dateformat" value="%{d} %b %Y" id="dby" onclick="onDateChange()">1 Jan 2020
-		<br>
-		<p class="input-legend">Pipe spacing:</p>
-		<input type="radio" name="pipeformat" value=" | " id="both" onclick="onPipeChange()">{{cite book | last=Smith |
-		first=Bob}}
-		<input type="radio" name="pipeformat" value=" |" id="before" onclick="onPipeChange()">{{cite book |last=Smith
-		|first=Bob}}
-		<input type="radio" name="pipeformat" value="|" id="none" onclick="onPipeChange()">{{cite
-		book|last=Smith|first=Bob}}
-		<br><br>
+
+		<fieldset class="input-legend">
+			<legend>Date format:</legend>
+			<label>
+				<input type="radio" name="dateformat" value="%Y-%m-%d" id="ymd" onchange="onDateChange()">
+				2020-01-01
+			</label>
+			<label>
+				<input type="radio" name="dateformat" value="%B %{d}, %Y" id="bbdy" onchange="onDateChange()">
+				January 1, 2020
+			</label>
+			<label>
+				<input type="radio" name="dateformat" value="%b %{d}, %Y" id="bdy" onchange="onDateChange()">
+				Jan 1, 2020
+			</label>
+			<label>
+				<input type="radio" name="dateformat" value="%{d} %B %Y" id="dbby" onchange="onDateChange()">
+				1 January 2020
+			</label>
+			<label>
+				<input type="radio" name="dateformat" value="%{d} %b %Y" id="dby" onchange="onDateChange()">
+				1 Jan 2020
+			</label>
+		</fieldset>
+
+		<fieldset class="input-legend">
+			<legend>Pipe spacing:</legend>
+			<label>
+				<input type="radio" name="pipeformat" value=" | " id="both" onchange="onPipeChange()">
+				{{cite book | last=Smith | first=Bob}}
+			</label>
+			<label>
+				<input type="radio" name="pipeformat" value=" |" id="before" onchange="onPipeChange()">
+				{{cite book |last=Smith |first=Bob}}
+			</label>
+			<label>
+				<input type="radio" name="pipeformat" value="|" id="none" onchange="onPipeChange()">
+				{{cite book|last=Smith|first=Bob}}
+			</label>
+		</fieldset>
 	</form>
 	<a href="https://en.wikipedia.org/wiki/Help:Shortened_footnotes">Shortened footnote</a> and citation:
 	<br>

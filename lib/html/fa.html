@@ -10,12 +10,25 @@
 
 <body>
 	<form id="form">
-		<select class="input-legend" name="input_type" id="input_type" onchange="onInputTypeSelect();">
-			<option value="url-doi-isbn">نشانی وب/شابک/شناسهٔ برنمود رقمی</option>
-			<option value="pmid">PMID</option>
-			<option value="pmcid">PMCID</option>
-			<option value="oclc">OCLC</option>
-		</select>:
+		<fieldset class="input-legend">
+			<legend>نوع ورودی:</legend>
+			<label>
+				<input type="radio" name="input_type" value="url-doi-isbn" checked onchange="onInputTypeSelect()">
+				نشانی وب/شابک/شناسهٔ برنمود رقمی
+			</label>
+			<label>
+				<input type="radio" name="input_type" value="pmid" onchange="onInputTypeSelect()">
+				PMID
+			</label>
+			<label>
+				<input type="radio" name="input_type" value="pmcid" onchange="onInputTypeSelect()">
+				PMCID
+			</label>
+			<label>
+				<input type="radio" name="input_type" value="oclc" onchange="onInputTypeSelect()">
+				OCLC
+			</label>
+		</fieldset>
 		<div id="inputs">
 			<input id="user_input" name="user_input" autofocus>
 			<input type="submit" id="submit" value="ثبت درخواست">

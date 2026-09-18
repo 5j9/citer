@@ -10,7 +10,7 @@ htmldir = dirname(__file__)
 
 css = open(f'{htmldir}/common.css', 'rb').read()
 if LANG == 'fa':
-    css = css.replace(b'right;', b'left;')
+    css = css.replace(b'right;', b'LEFT;').replace(b'left;', b'RIGHT;')
 
 ALLOW_ALL_ORIGINS = ('Access-Control-Allow-Origin', '*')
 CACHE_FOREVER = ('Cache-Control', 'immutable, public, max-age=31536000')
