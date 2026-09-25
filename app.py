@@ -74,7 +74,9 @@ json_headers = (
 
 
 def html_data(user_input: dict):
-    return url_data(user_input['url'], html=user_input['html'])
+    return url_data(
+        user_input['url'], html=user_input['html'], check_home=False
+    )
 
 
 def url_doi_isbn_data(user_input: str, /) -> dict:
@@ -216,17 +218,24 @@ def parse_params(
     )
 
 
-def root(start_response: StartResponse, environ: dict) -> BytesTuple:
-    # 1. Anti-bot validation for data processing requests
-    if environ.get('REQUEST_METHOD') == 'POST':
-        # WSGI prefixes custom client HTTP headers with 'HTTP_' and converts them to uppercase
-        if (
+def looks_like_a_bot(environ: dict, input_type: str) -> bool:
+    # Anti-bot validation for data processing requests.
+    return (
+        environ.get('REQUEST_METHOD') == 'POST'
+        and (
+            # WSGI prefixes custom client HTTP headers with
+            # 'HTTP_' and converts them to uppercase.
             environ.get('HTTP_X_GATEWAY_VALIDATION')
             != 'CITER_IS_NOT_INTENDED_FOR_BOTS'
-        ):
-            start_response('403 Forbidden', [('Content-Type', 'text/plain')])
-            return (b'Forbidden: Bot activity detected.',)
+        )
+        # POSTs that cause Citer to perform network fetching require the
+        # gateway validation header;
+        # POSTs containing already-fetched HTML don't.
+        and input_type != 'html'
+    )
 
+
+def root(start_response: StartResponse, environ: dict) -> BytesTuple:
     (
         date_format,
         pipe_format,
@@ -235,6 +244,10 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
         headers,
         scr_to_resp_body,
     ) = parse_params(environ)
+
+    if looks_like_a_bot(environ, input_type):
+        start_response('403 Forbidden', [('Content-Type', 'text/plain')])
+        return (b'Forbidden: Bot activity detected.',)
 
     # 2. Deflect GET queries. Force user_input to empty string so the server
     # only delivers the shell page, leaving query processing to client-side JS.
