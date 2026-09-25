@@ -1,9 +1,7 @@
 from functools import partial
 from urllib.parse import quote_plus
 
-from regex import compile as rc
-
-from lib import four_digit_num, request
+from lib import four_digit_num, rc, request
 from lib.commons import find_any_date
 
 TRANSLATE = {
