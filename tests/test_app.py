@@ -163,3 +163,27 @@ def test_http_error_in_fetching_doi(mock_url_data, mock_doi_data):
     mock_doi_data.assert_called_once_with('10.5555/1105634.1105641', True)
     mock_url_data.assert_called_once_with(user_input)
     assert result is NotImplemented
+
+
+def test_html_input_not_blocked():
+    m = Mock(return_value={})
+    with patch.dict(input_type_to_resolver, {'html': m}):
+        start_response = Mock()
+        root(
+            start_response,
+            {
+                'REQUEST_METHOD': 'POST',
+                'CONTENT_LENGTH': '121',
+                'wsgi.input': BytesIO(
+                    b'{'
+                    b'"user_input": {"html": "<HTML>", "url": "<URL>"},'
+                    b'"input_type": "html",'
+                    b'"dateformat": "%#d %B %Y",'
+                    b'"pipeformat": " | "'
+                    b'}'
+                ),
+            },
+        )
+
+    m.assert_called_once_with({'html': '<HTML>', 'url': '<URL>'})
+    assert start_response.call_args.args[0] != '403 Forbidden'
