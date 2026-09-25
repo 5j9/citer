@@ -255,15 +255,16 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
     except HTTPError as e:
         status = '502 Bad Gateway'
         scr = f'{e!r}', '', ''
+    except ReturnError as e:
+        status = '500 Internal Server Error'
+        scr = e.args
+    except CurlError as e:
+        status = '500 Internal Server Error'
+        scr = type(e).__name__, '', ''
     except Exception as e:
         status = '500 Internal Server Error'
-
-        if isinstance(e, ReturnError):
-            scr = e.args
-        else:
-            if not isinstance(e, CurlError):
-                logger.exception(user_input)
-            scr = type(e).__name__, '', ''
+        logger.exception(user_input)
+        scr = type(e).__name__, '', ''
     else:
         try:
             scr = data_to_sfn_cit_ref(d, date_format, pipe_format)
