@@ -5,6 +5,7 @@ from json import JSONDecodeError, dumps, loads
 from urllib.parse import parse_qs, unquote, urlparse
 
 from curl_cffi import CurlError
+from curl_cffi.requests.exceptions import HTTPError
 
 from lib import logger
 from lib.archives import archive_org_data, archive_today_data
@@ -251,6 +252,9 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
 
     try:
         d = data_func(user_input)
+    except HTTPError as e:
+        status = '502 Bad Gateway'
+        scr = f'{e!r}', '', ''
     except Exception as e:
         status = '500 Internal Server Error'
 
