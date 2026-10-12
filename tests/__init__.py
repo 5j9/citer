@@ -116,7 +116,7 @@ def dump_connection_error(hsh):
         json_dump({'raise': True}, f)
 
 
-# noinspection PyDecorator
+# pyrefly: ignore [invalid-decorator]
 @staticmethod
 def fake_request(
     url, *, spoof=False, method: lib.Method = 'GET', stream=False, **kwargs
@@ -168,11 +168,11 @@ def fake_request(
 def real_request():
     lib.request = original_request
     yield
-    lib.request = fake_request
+    lib.request = fake_request  # type: ignore
 
 
 original_request = lib.request
-lib.request = fake_request
+lib.request = fake_request  # type: ignore
 
 # this import needs to placed after Session patch
 from lib.pubmed import NCBI_URL

@@ -7,7 +7,7 @@ from os.path import abspath, dirname
 from random import choice, choices, seed
 from ssl import CERT_NONE, create_default_context
 from string import ascii_lowercase, digits
-from typing import Literal, overload
+from typing import Any, Literal, overload
 
 from curl_cffi.requests import Response, Session
 from regex import compile as rc
@@ -122,7 +122,7 @@ def request(
     return r
 
 
-rc = partial(rc, cache_pattern=False)
+rc: Any = partial(rc, cache_pattern=False)
 
 
 def four_digit_num(s: str) -> str | None:

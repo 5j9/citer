@@ -299,13 +299,15 @@ def lazy_version_info(start_response: StartResponse, environ: dict):
     return version_info(start_response, environ)
 
 
-get_handler: Callable[[str], Callable[[StartResponse, dict], BytesTuple]] = {
+get_handler: Callable[
+    [str], Callable[[StartResponse, dict], BytesTuple] | None
+] = {
     f'/{CSS_PATH}.css': css_response,
     f'/{JS_PATH}.js': js_response,
     '/': root,
     '/citer.fcgi': root,  # for backward compatibility
     '/version': lazy_version_info,
-}.get  # type: ignore
+}.get
 
 
 def app(environ: dict, start_response: StartResponse) -> BytesTuple:

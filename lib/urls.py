@@ -3,7 +3,7 @@ from difflib import get_close_matches
 from functools import partial
 from html import unescape as html_unescape
 from threading import Thread
-from typing import Any, Protocol
+from typing import Any
 from urllib.parse import urlparse
 
 from curl_cffi import CurlError
@@ -14,12 +14,6 @@ from lib.citoid import citoid_data
 from lib.commons import ANYDATE_PATTERN, Search, find_any_date, rc
 from lib.doi import crossref_data
 from lib.urls_authors import CONTENT_ATTR, IV, find_authors
-
-
-class Joinable(Protocol):
-    @staticmethod
-    def join(): ...
-
 
 MAX_RESPONSE_LENGTH = 10_000_000  # in bytes
 
@@ -206,7 +200,7 @@ def find_site_name(
     hostname: str,
     authors: list[tuple[str, str]],
     home_list: HomeList,
-    thread: Joinable,
+    thread: Thread | None,
 ) -> str:
     """Return (site's name as a string, where).
 
@@ -228,10 +222,10 @@ def find_site_name(
             html_title, hostname, authors, home_list, thread
         )[2]:
             return site_name
-    # noinspection PyBroadException
     try:
         # using home_title
-        thread.join()
+        if thread is not None:
+            thread.join()
         home_site_name, home_title = home_list
         if home_site_name is not None:
             return home_site_name
@@ -255,7 +249,7 @@ def find_title(
     hostname: str,
     authors: list[tuple[str, str]],
     home_list: HomeList,
-    thread: Joinable,
+    thread: Thread | None,
 ) -> str | None:
     """Return (title_string, where_info)."""
     if (m := TITLE_SEARCH(html)) is not None:
@@ -277,7 +271,7 @@ def parse_title(
     hostname: str,
     authors: list[tuple[str, str]] | None,
     home_list: HomeList | None = None,
-    thread: Joinable | None = None,
+    thread: Thread | None = None,
 ) -> tuple[str | None, str, str | None]:
     """Return (intitle_author, pure_title, intitle_sitename).
 
@@ -394,7 +388,7 @@ def _analyze_home(parsed_url: tuple, home_list: HomeList) -> None:
 
 def analyze_home(
     parsed_url: tuple, check_home=True, /
-) -> tuple[Joinable, HomeList]:
+) -> tuple[Thread | None, HomeList]:
     home_list: HomeList = [None, None]
     if check_home is True:
         home_thread = Thread(
@@ -402,7 +396,7 @@ def analyze_home(
         )
         home_thread.start()
     else:
-        home_thread = Joinable
+        home_thread = None
 
     return home_thread, home_list
 

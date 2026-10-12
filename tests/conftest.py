@@ -16,6 +16,6 @@ if READONLY_TESTDATA:
     disable_socket()
     from curl_cffi import requests
 
-    requests.Response = requests.Session = NotImplementedError(
+    requests.Response = requests.Session = NotImplementedError(  # type: ignore
         'No network in READONLY_TESTDATA mode'
     )
