@@ -14,12 +14,14 @@ assert '^10%.([^/]+)/[^%s–]-[^%.,]$' in identifiers, (
 configuration = get(
     'https://en.wikipedia.org/wiki/Module:Citation/CS1/Configuration?action=raw'
 ).text
-new_set = search(
+m = search(
     r'\nlocal function build_free_doi_registrants_table\(\)'
     r'[^{]*?\{}[^{]*?'  # skip local registrants_t = {};
     r'(\{[\s\S]+?})',
     configuration,
-)[1]
+)
+assert m is not None
+new_set = m[1]
 with open(__file__ + '/../../lib/doi.py', 'r+') as f:
     data = f.read()
     output = sub(
