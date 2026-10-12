@@ -61,8 +61,8 @@ def ncbi(type_: str, id_: str) -> dict:
         raise NCBIError(json_response)
     result_get = json_response['result'][id_].get
     d = {}
-    doi = None
     articleids = result_get('articleids', ())
+    crossref_dict = crossref_thread = None
     for articleid in articleids:
         if (idtype := articleid['idtype']) == 'doi':
             doi = articleid['value']
@@ -134,11 +134,10 @@ def ncbi(type_: str, id_: str) -> dict:
     if (lang := result_get('lang')) is not None:
         d['language'] = lang[0]
 
-    if doi:
-        # noinspection PyUnboundLocalVariable
+    if crossref_thread:
         crossref_thread.join()
-        # noinspection PyUnboundLocalVariable
-        d |= crossref_dict
+        if crossref_dict:
+            d |= crossref_dict
 
     return d
 
