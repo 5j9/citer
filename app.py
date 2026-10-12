@@ -99,6 +99,7 @@ def url_doi_isbn_data(user_input: str, /) -> dict:
                 return data_func(parsed_url)
             elif data_func is google_encrypted_data:
                 return data_func(url, parsed_url)
+            # pyrefly: ignore [bad-argument-type, missing-argument]
             return data_func(url)
 
         # DOIs contain dots
@@ -251,20 +252,18 @@ def root(start_response: StartResponse, environ: dict) -> BytesTuple:
 
     # 2. Deflect GET queries. Force user_input to empty string so the server
     # only delivers the shell page, leaving query processing to client-side JS.
-    if environ.get('REQUEST_METHOD') == 'GET':
-        user_input = ''
-
-    if not user_input:
+    if environ.get('REQUEST_METHOD') == 'GET' or not user_input:
         response_body = scr_to_html(
             default_scr, date_format, pipe_format, input_type
         ).encode()
         start_response('200 OK', [*http_headers])
         return (response_body,)
 
-    data_func = input_type_to_resolver[input_type]
+    type_resolver = input_type_to_resolver[input_type]
 
     try:
-        d = data_func(user_input)
+        # pyrefly: ignore [bad-argument-type]
+        d = type_resolver(user_input)
     except HTTPError as e:
         status = '502 Bad Gateway'
         scr = f'{e!r}', '', ''
