@@ -25,13 +25,12 @@ def fake_resolver(*_):
 
 
 def assert_and_patch_resolver(url, resolver):
-    d = get_resolver.__self__
     netloc = urlparse('http://' + url).netloc
     if netloc[:4] == 'www.':
         netloc = netloc[4:]
     tldless_netloc = netloc.rpartition('.')[0]
-    assert d[tldless_netloc] == resolver
-    return patch.dict(d, {tldless_netloc: fake_resolver})
+    assert get_resolver(tldless_netloc) == resolver
+    return patch.dict(get_resolver.__self__, {tldless_netloc: fake_resolver})
 
 
 def assert_scr(url, resolver):
