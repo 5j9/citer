@@ -48,13 +48,15 @@ ignore = [
     'SIM103', # Return the condition directly
     'SIM115', # Use a context manager for opening files
 ]
+unfixable = ["F401"]  # unused-import
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
 
-[tool.pytest.ini_options]
-addopts = '--quiet --tb=short'
-
+[tool.pytest]
+addopts = ["--quiet", "--tb=short", "--report-chars=N"]
+truncation_limit_lines = 0
+truncation_limit_chars = 0
 [tool.uv.build-backend]
 module-root = ""
 module-name = "citer"
