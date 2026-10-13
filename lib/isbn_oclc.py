@@ -40,7 +40,8 @@ def isbn_data(
             isbn = m[0]
         else:
             # search for isbn10
-            isbn = isbn10_search(isbn_container_str)[0]  # pyright: ignore[reportOptionalSubscript]
+            # pyrefly: ignore[unsupported-operation]
+            isbn = isbn10_search(isbn_container_str)[0]
 
     ketabir_result_list = None
     if iranian_isbn := isbn_info(isbn) == 'Iran':

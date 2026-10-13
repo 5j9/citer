@@ -13,6 +13,13 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/5j9/citer"
+
+[tool.pyrefly.errors]
+incompatible-comparison = "warn"
+
+[tool.pyrefly]
+infer-with-first-use = false
+
 [tool.ruff]
 line-length = 79
 format.quote-style = 'single'
@@ -47,21 +54,6 @@ combine-as-imports = true
 
 [tool.pytest.ini_options]
 addopts = '--quiet --tb=short'
-
-[tool.pyright]
-typeCheckingMode = 'standard'
-reportDeprecated = "warning"
-reportPropertyTypeMismatch = "warning"
-reportUnnecessaryCast = "warning"
-reportUnnecessaryContains = "warning"
-reportUnnecessaryIsInstance = "warning"
-reportUnnecessaryTypeIgnoreComment = true
-reportInvalidStringEscapeSequence = false
-reportConstantRedefinition = 'error'
-reportTypeCommentUsage = 'warning'
-reportUnnecessaryComparison = 'warning'
-venvPath = "."
-venv = ".venv"
 
 [tool.uv.build-backend]
 module-root = ""

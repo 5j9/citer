@@ -30,7 +30,8 @@ def ris_data(noorlib_url) -> str:
     # be)[1]
     """Get ris file content from a noormags url. Return as string."""
     pagetext: str = request(noorlib_url).text
-    article_id: str = RIS_ARTICLE_ID_SEARCH(pagetext)[0]  # pyright: ignore[reportOptionalSubscript]
+    # pyrefly: ignore[unsupported-operation]
+    article_id: str = RIS_ARTICLE_ID_SEARCH(pagetext)[0]
     url: str = (
         'http://www.noormags.ir/view/CitationHandler.ashx?format=RIS&id='
         + article_id

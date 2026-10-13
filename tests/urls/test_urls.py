@@ -937,7 +937,7 @@ def test_pipe_in_home_title_as_website():
 
 
 def test_lang_search():
-    assert LANG_SEARCH('<html lang=en>')[1] == 'en'  # pyright: ignore[reportOptionalSubscript]
+    assert (m := LANG_SEARCH('<html lang=en>')) is not None and m[1] == 'en'
 
 
 @patch(
