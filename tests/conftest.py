@@ -110,7 +110,7 @@ class FakeResponse:
 used_testdata: set[str] = set()
 
 
-def build_fake_request(config: Config):
+def build_fake_request(config: Config, original_request):
     print_test_filename = config.getoption('--print-test-filename')
     remove_unused_testdata = config.getoption('--remove-unused-testdata')
     force_overwrite_testdata = config.getoption('--force-overwrite-testdata')
@@ -200,13 +200,10 @@ def build_fake_request(config: Config):
     return fake_request
 
 
-original_request: Any
-
-
 def pytest_configure(config: Config) -> None:
     global original_request
     original_request = lib.request
-    lib.request = build_fake_request(config)  # type: ignore
+    lib.request = build_fake_request(config, original_request)  # type: ignore
 
     if not config.getoption('--online'):
         disable_socket()
