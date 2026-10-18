@@ -111,9 +111,9 @@ def dump_response(hsh, response: Response, redacted_url: str) -> None:
         f.write(response.content)
 
 
-def dump_connection_error(hsh):
-    with open(f'{TESTDATA}/{hsh}.json', 'w') as f:
-        json_dump({'raise': True}, f)
+def dump_connection_error(hsh, redacted_url):
+    with open(f'{TESTDATA}/{hsh}.json', 'w', encoding='utf8') as f:
+        json_dump({'raise': True, 'url': redacted_url}, f)
 
 
 # pyrefly: ignore [invalid-decorator]
@@ -145,7 +145,7 @@ def fake_request(
                     url, method=method, data=data, spoof=spoof, **kwargs
                 )
             except CurlError:
-                dump_connection_error(sha1_hex)
+                dump_connection_error(sha1_hex, redacted_url)
                 raise
         dump_response(sha1_hex, response, redacted_url)
 
