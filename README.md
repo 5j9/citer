@@ -31,3 +31,31 @@ The default language is English and can be changed to Persian using the setting 
 
 ## Known issues
 * The bookmarklet does not work on archive.org (issue #26) or any other website that does not allow opening external links. One needs to use Citer directly in such cases.
+
+## Running Tests
+
+Citer uses pytest for testing. To run the test suite, execute:
+
+```sh
+uv run pytest
+```
+
+By default, tests run in offline mode using cached responses from `tests/testdata`. To allow network access when a cached response is unavailable, use `--online`:
+
+```sh
+uv run pytest --online
+```
+
+Other useful options:
+
+- `--force-overwrite-testdata`: Regenerate cached responses, even when cached versions already exist.
+- `--remove-unused-testdata`: Remove unused test data files after the test run.
+- `--print-test-filename`: Print the filenames of cached responses used by tests.
+
+For example, to regenerate cached responses using the network:
+
+```sh
+uv run pytest --online --force-overwrite-testdata
+```
+
+**Warning:** `--remove-unused-testdata` deletes cache files that were not used during the test run. Use it with care.
