@@ -16,5 +16,5 @@
 		"via": "2.0 heroku-router"
 	},
 	"status_code": 200,
-	"url": "https://api.unpaywall.org/v2/10.1023/a:1018715525493?email=<UNPAYWALL_EMAIL>"
+	"url": "https://api.unpaywall.org/v2/10.1023/a:1018715525493"
 }

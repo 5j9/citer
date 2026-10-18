@@ -5,7 +5,7 @@
 		"access-control-allow-methods": "POST, GET, OPTIONS, PUT, DELETE, PATCH",
 		"access-control-allow-origin": "*",
 		"content-encoding": "br",
-		"content-length": "1109",
+		"content-length": "455",
 		"content-type": "application/json",
 		"date": "Sun, 18 Oct 2026 11:28:01 GMT",
 		"nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
@@ -16,5 +16,5 @@
 		"via": "2.0 heroku-router"
 	},
 	"status_code": 200,
-	"url": "https://api.unpaywall.org/v2/10.1073/pnas.2015159118?email=<UNPAYWALL_EMAIL>"
+	"url": "https://api.unpaywall.org/v2/10.1023/A:1018715525493"
 }
