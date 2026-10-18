@@ -3,7 +3,6 @@ from functools import partial
 from hashlib import sha1
 from json import dump, load, loads
 from pathlib import Path
-from typing import Any
 
 from curl_cffi import CurlError, Response
 from pytest import Config, Parser, fixture
@@ -201,9 +200,7 @@ def build_fake_request(config: Config, original_request):
 
 
 def pytest_configure(config: Config) -> None:
-    global original_request
-    original_request = lib.request
-    lib.request = build_fake_request(config, original_request)  # type: ignore
+    lib.request = build_fake_request(config, lib.request)  # type: ignore
 
     if not config.getoption('--online'):
         disable_socket()
