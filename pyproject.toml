@@ -64,6 +64,5 @@ module-name = "citer"
 [dependency-groups]
 dev = [
     "pytest-socket>=0.7.0",
-    "python-decouple>=3.8",
     "types-regex>=2026.9.29.20261005",
 ]

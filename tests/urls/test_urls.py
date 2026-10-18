@@ -11,7 +11,7 @@ from lib.urls import (
     _analyze_home,
     url_data,
 )
-from tests import FakeResponse
+from tests.conftest import FakeResponse
 
 
 def urls_scr(url, date_format='%Y-%m-%d'):
