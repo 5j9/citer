@@ -1,5 +1,5 @@
 from functools import partial
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlparse
 
 from lib import four_digit_num, rc, request
 from lib.commons import find_any_date
@@ -90,3 +90,10 @@ def citoid_data(query: str, quote=False, /) -> dict:
             d['date'] = found_date
 
     return d
+
+
+def jstor_data(url: str) -> dict:
+    id_ = urlparse(url).path.rpartition('/')[2]
+    dictionary = citoid_data(url, True)
+    dictionary['jstor'] = id_
+    return dictionary

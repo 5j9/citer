@@ -9,6 +9,7 @@ from curl_cffi.requests.exceptions import HTTPError
 
 from lib import logger
 from lib.archives import archive_org_data, archive_today_data
+from lib.citoid import jstor_data
 from lib.commons import (
     ReturnError,
     data_to_sfn_cit_ref,
@@ -29,7 +30,6 @@ from lib.html import (
     scr_to_html,
 )
 from lib.isbn_oclc import isbn_data, oclc_data, worldcat_data
-from lib.jstor import jstor_data
 from lib.ketabir import ketabir_data
 from lib.noorlib import noorlib_data
 from lib.noormags import noormags_data
