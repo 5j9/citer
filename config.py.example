@@ -9,3 +9,4 @@ NCBI_EMAIL = ''
 NCBI_TOOL = ''
 # https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/
 NCBI_API_KEY = ''
+UNPAYWALL_EMAIL = NCBI_EMAIL

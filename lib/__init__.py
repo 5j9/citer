@@ -12,7 +12,7 @@ from typing import Literal, overload
 from curl_cffi.requests import Response, Session
 from regex import compile as rc
 
-from config import USER_AGENT
+from config import UNPAYWALL_EMAIL, USER_AGENT
 
 
 def get_logger():
@@ -272,20 +272,23 @@ free_doi_fullmatch = rc(r'10\.([^/]+)/[^\s–]*?[^.,]').fullmatch
 
 
 def open_access_url(doi: str) -> str | None:
-    # The following pattern is equavalant of '^10%.([^/]+)/[^%s–]-[^%.,]$' in
-    # https://en.wikipedia.org/wiki/Module:Citation/CS1/Identifiers .
+    # The following pattern is equivalent to '^10%.([^/]+)/[^%s–]-[^%.,]$' in
+    # https://en.wikipedia.org/wiki/Module:Citation/CS1/Identifiers.
     m = free_doi_fullmatch(doi)
     if m is not None:
         if m[1] in known_free_doi_registrants:
             return ''
 
     try:
-        oa = request(f'https://api.openaccessbutton.org/find?id={doi}').json()
+        oa = request(
+            f'https://api.unpaywall.org/v2/{doi}?email={UNPAYWALL_EMAIL}'
+        ).json()
     except Exception:
         logger.exception('Failed checking OA for doi: %s', doi)
         return None
     else:
-        return oa.get('url')
+        location = oa.get('best_oa_location')
+        return location.get('url') if location else None
 
 
 type_to_cite = {

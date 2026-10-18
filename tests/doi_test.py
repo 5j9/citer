@@ -225,15 +225,16 @@ def test_non_crossref_doi():  # 35
         '* {{cite journal | last1=Hein | first1=Andreas M. | last2=Baxter '
         '| first2=Stephen '
         '| title=Artificial Intelligence for Interstellar Travel '
-        '| journal=arXiv | publisher=arXiv | doi=10.48550/ARXIV.1811.06526 | doi-access=free '
+        '| journal=arXiv | publisher=arXiv | doi=10.48550/ARXIV.1811.06526 '
         '| url=https://arxiv.org/abs/1811.06526 '
         '| access-date='
     )
     # lacks required journal parameter
     assert citoid_scr('10.48550/arXiv.1811.06526')[1][:-12] == (
         '* {{cite journal | last1=Hein | first1=Andreas M. | last2=Baxter | '
-        'first2=Stephen | title=Artificial Intelligence for Interstellar Travel | '
-        'date=2018 | doi=10.48550/ARXIV.1811.06526 | doi-access=free | url=https://arxiv.org/abs/1811.06526 | access-date='
+        'first2=Stephen | title=Artificial Intelligence for Interstellar Travel '
+        '| publisher=arXiv '
+        '| date=2018 | doi=10.48550/ARXIV.1811.06526 | url=https://arxiv.org/abs/1811.06526 | access-date='
     )
 
 
@@ -264,7 +265,7 @@ def test_sfn_extract_year_from_date():
     assert s == '{{sfn|Almeida|Viala|Nachtigall|Broe|2021|p=}}'
     assert (
         c[:-12]
-        == '* {{cite journal | last1=Almeida | first1=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | doi-access=free | url=https://www.pnas.org/content/pnas/118/20/e2015159118.full.pdf | access-date='
+        == '* {{cite journal | last1=Almeida | first1=Diego Dantas | last2=Viala | first2=Vincent Louis | last3=Nachtigall | first3=Pedro Gabriel | last4=Broe | first4=Michael | last5=Gibbs | first5=H. Lisle | last6=Serrano | first6=Solange Maria de Toledo | last7=Moura-da-Silva | first7=Ana Maria | last8=Ho | first8=Paulo Lee | last9=Nishiyama-Jr | first9=Milton Yutaka | last10=Junqueira-de-Azevedo | first10=Inácio L. M. | title=Tracking the recruitment and evolution of snake toxins using the evolutionary context provided by the <i>Bothrops jararaca</i> genome | journal=Proceedings of the National Academy of Sciences | publisher=Proceedings of the National Academy of Sciences | volume=118 | issue=20 | date=2021-05-10 | issn=0027-8424 | doi=10.1073/pnas.2015159118 | doi-access=free | url=https://www.ncbi.nlm.nih.gov/pmc/articles/8157943 | access-date='
     )
     s, c, r = citoid_scr('10.1073/pnas.2015159118')
     assert s == '{{sfn|Almeida|Viala|Nachtigall|Broe|2021|p=}}'
@@ -279,7 +280,7 @@ def test_sfn_extract_year_from_date():
         'provided by the Bothrops jararaca genome | journal=Proceedings of the '
         'National Academy of Sciences | volume=118 | issue=20 | date=2021-05-18 | '
         'issn=0027-8424 | pmid=33972420 | pmc=8157943 | '
-        'doi=10.1073/pnas.2015159118 | doi-access=free | url=https://www.pnas.org/content/pnas/118/20/e2015159118.full.pdf | access-date='
+        'doi=10.1073/pnas.2015159118 | doi-access=free | url=https://www.ncbi.nlm.nih.gov/pmc/articles/8157943 | access-date='
     )
 
 
