@@ -281,7 +281,8 @@ def open_access_url(doi: str) -> str | None:
 
     try:
         oa = request(
-            f'https://api.unpaywall.org/v2/{doi}?email={UNPAYWALL_EMAIL}'
+            f'https://api.unpaywall.org/v2/{doi}',
+            params={'email': UNPAYWALL_EMAIL},
         ).json()
     except Exception:
         logger.exception('Failed checking OA for doi: %s', doi)

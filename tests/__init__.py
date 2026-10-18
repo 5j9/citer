@@ -9,7 +9,6 @@ from curl_cffi import CurlError
 from curl_cffi.requests import Response
 
 import lib
-from config import UNPAYWALL_EMAIL
 from tests.conftest import (
     FORCE_OVERWRITE_TESTDATA,
     PRINT_TEST_FILENAME,
@@ -124,7 +123,7 @@ def fake_request(
 ):
     redacted_url = url.replace(
         NCBI_URL, NCBI_URL[: NCBI_URL.find('?')] + '?_REDACTED_PARAMS_'
-    ).replace(UNPAYWALL_EMAIL, '<UNPAYWALL_EMAIL>')
+    )
 
     data: dict | None = kwargs.pop('data', None)
     if data is not None:
