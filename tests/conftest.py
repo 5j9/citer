@@ -212,7 +212,7 @@ def pytest_configure(config: Config) -> None:
 
 
 @fixture(scope='session', autouse=True)
-def session_manager(pytestconfig: Config):
+def _track_unused_files(pytestconfig: Config):
     if not pytestconfig.getoption('--remove-unused-testdata'):
         yield
         return
